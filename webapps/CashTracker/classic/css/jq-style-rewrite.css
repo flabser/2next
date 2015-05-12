@@ -1,0 +1,80 @@
+html body .ui-dialog,html body .ui-button {
+	font-size: 1em !important;
+}
+
+html body .ui-dialog {
+	max-width: 98%;
+}
+
+.ui-widget-overlay {
+	z-index: 3 !important;
+}
+
+.ui-widget {
+	font-size: 13px;
+}
+
+#tabs {
+	border-radius: 0px;
+	border: none;
+	background: #fff
+}
+
+#tabs .ui-tabs-nav li {
+	font-weight: normal;
+	float: left;
+	white-space: nowrap;
+}
+
+#tabs .ui-tabs-nav li a {
+	float: left;
+	padding: 0.5em 1em;
+	text-decoration: none;
+	font-size: 12.8px;
+}
+
+#tabs .ui-tabs-panel {
+	padding: 0;
+}
+
+#tabs .ui-tabs-nav {
+	background: none repeat scroll 0 0 transparent;
+	border-left: medium none;
+	border-radius: 0 0 0 0;
+	border-right: medium none;
+	border-top: medium none;
+	width: 99.5%;
+	background: #FFFFFF;
+	padding-top: 0.3em;
+	padding-left: 0.3em;
+}
+
+.ui-autocomplete {
+	max-height: 600px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 20px;
+}
+
+.ui-datepicker-trigger {
+	cursor: pointer;
+	margin-top: 1px;
+	margin-left: 1px;
+	position: relative;
+	top: 1px;
+}
+
+img.ui-datepicker-trigger {
+	top: 0;
+	vertical-align: middle;
+}
+
+.table-border-gray {
+	border-collapse: collapse;
+}
+
+.table-border-gray td {
+	border: 1px solid #ccc;
+	font-size: 95%;
+	padding: 5px;
+}

@@ -1,0 +1,21 @@
+/* lang-icon */
+[class^="lang-icon-"] {
+	background: url(../img/welcome-ui-sprite.png) 32px 32px no-repeat transparent;
+	display: inline-block;
+	height: 16px;
+	line-height: 16px;
+	margin: 0;
+	width: 22px;
+}
+
+.lang-icon-kaz {
+	background-position: 0 0;
+}
+
+.lang-icon-rus {
+	background-position: 0 -16px;
+}
+
+.lang-icon-eng {
+	background-position: 0 -32px;
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="operations" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/operations.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>saldo</name>
+		<events>
+			<doscript source="file">cashtracker.page.saldo.Calculate</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>filter</name>
+		<value>filter_type_operation</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">cashtracker.page.actionbar.Operations</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>view_content</name>
+		<events>
+			<doscript source="file">cashtracker.page.views.Operations</doscript>
+		</events>
+	</element>
+	<caption name="viewnamecaption" source="KEYWORD">Операции</caption>
+	<caption name="viewtext" source="KEYWORD">Описание</caption>
+	<caption name="viewnumber" source="KEYWORD">Сумма</caption>
+	<caption name="viewtext1">Касса</caption>
+	<caption name="viewtext2">Тип операции</caption>
+	<caption name="viewdate" source="KEYWORD">Дата</caption>
+</rule>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<param name="encoding" value="UTF-8" />	
+			
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{kk:mm:ss} %p %c: %m%n" />
+		</layout>
+	</appender>
+		
+	
+	
+	
+	<appender name="file" class="com.flabser.log.DailyRollingFileAppender">
+		<param name="File" value="logs/today.log" />	
+		<param name="DatePattern" value="dd-MM-yyyy'.log'"/>					 
+		<!--<param name="MaxFileSize" value="500KB" />
+		-->
+		<param name="maxBackupIndex" value="30" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%t] %C{2} - %m%n" />
+		</layout>
+	</appender>
+	
+
+	
+	<root>
+		<priority value="debug" />
+		<appender-ref ref="console" />
+		<!--<appender-ref ref="gui" />-->
+		<appender-ref ref="file" />
+	</root>
+</log4j:configuration>

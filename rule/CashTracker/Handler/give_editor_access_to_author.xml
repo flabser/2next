@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule app="" id="give_editor_access_to_author" isvalid="true" mode="ON" type="HANDLER">
+	<description />
+	<trigger>MANUALLY</trigger>
+	<waitresponse>true</waitresponse>
+	<rununderuser source="STATIC" type="TEXT" />
+	<events>
+		<trigger source="file">cashtracker.handler.modify_access.GiveEditorAccessToAuthor</trigger>
+	</events>
+</rule>

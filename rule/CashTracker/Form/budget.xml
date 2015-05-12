@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="budget" mode="on">
+	<description>Budget</description>
+	<xsltfile>forms/budget.xsl</xsltfile>
+	<doctype>main</doctype>
+	<events>
+		<queryopen source="file">cashtracker.form.budget.QueryOpen</queryopen>
+		<querysave source="file">cashtracker.form.budget.QuerySave</querysave>
+	</events>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>shared-form-vocabulary</name>
+		<value>shared-form-vocabulary</value>
+	</element>
+	<caption name="title" source="KEYWORD">Бюджет</caption>
+	<caption name="name" source="KEYWORD">Название</caption>
+	<caption name="moderator" source="KEYWORD">Модератор</caption>
+</rule>

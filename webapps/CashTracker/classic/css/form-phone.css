@@ -1,0 +1,31 @@
+.phone .control-group {
+	border-bottom: 1px dotted #D9D9D9;
+	margin-bottom: 8px;
+}
+
+.phone .control-label {
+	color: #000;
+	font-weight: bold;
+	float: none;
+	text-align: left;
+}
+
+.phone .dialog .control-label {
+	width: auto !important;
+}
+
+.phone .control-label:before {
+	content: '' !important;
+}
+
+.phone .controls {
+	margin: 0;
+}
+
+.phone .form-control {
+	padding: .5em;
+}
+
+.phone .input {
+	width: 100% !important;
+}

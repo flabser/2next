@@ -1,0 +1,31 @@
+.saldo {
+	font-weight: bold;
+	padding: .1em;
+	text-align: right;
+	text-decoration: none;
+}
+
+.saldo>span {
+	padding: 2px;
+	text-decoration: none;
+	margin-right: .3em;
+}
+
+.saldo-sum {
+	border: 1px solid #CCC;
+	color: #333;
+}
+
+.saldo-plus {
+	color: #006512;
+}
+
+.saldo-minus {
+	color: #DD0000;
+}
+
+.saldo-selected {
+	text-align: left;
+	font-size: .95em;
+	font-weight: normal;
+}

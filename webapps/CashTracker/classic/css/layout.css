@@ -1,0 +1,67 @@
+.layout {
+	background: #FFF;
+	box-shadow: 0 0 3px #999;
+	margin: 0px auto;
+	max-width: 1366px;
+	min-height: 100%;
+	min-width: 320px;
+	position: relative;
+	width: 100%;
+}
+
+.tablet .layout, .phone .layout, .layout_fullscreen .layout {
+	max-width: 100%;
+}
+
+.layout_header {
+	border: none;
+	box-shadow: 0 0 3px #999;
+	display: block;
+	max-width: 1366px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 3;
+}
+
+.layout_aside {
+	background-color: #FAFAFA;
+	bottom: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	position: fixed;
+	top: 0;
+	transition: all .15s;
+	z-index: 2;
+}
+
+.tablet .layout_aside, .phone .layout_aside {
+	background: #FFF url(../img/yellow_background.png) 0 0 no-repeat;
+	border: none;
+	z-index: 5;
+}
+
+/* layout_content */
+.layout_content {
+	border: none;
+	height: auto;
+	margin: 60px 0px 10px 250px;
+	padding: 0;
+	position: relative;
+}
+
+.tablet .layout_content, .phone .layout_content {
+	margin: 60px 0px 10px 0px;
+}
+
+/* content-overlay */
+.content-overlay {
+	background: rgba(0, 0, 0, .3);
+	display: none;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 4;
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="employer" mode="on">
+	<description>User</description>
+	<xsltfile>forms/user.xsl</xsltfile>
+	<doctype>employer</doctype>
+	<events>
+		<queryopen source="file">cashtracker.form.employer.QueryOpen</queryopen>
+		<querysave source="file">cashtracker.form.employer.QuerySave</querysave>
+	</events>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>shared-form-vocabulary</name>
+		<value>shared-form-vocabulary</value>
+	</element>
+	<glossary mode="on" id="roles" source="macro">APPLICATION_ROLES</glossary>
+	<caption name="title" source="KEYWORD">Пользователь</caption>
+	<caption name="fullname" source="KEYWORD">Имя пользователя</caption>
+	<caption name="email" source="KEYWORD">E-mail</caption>
+	<caption name="account" source="KEYWORD">Имеет доступ к счетам</caption>
+	<caption name="btn_invite" source="KEYWORD">Отправить приглашение</caption>
+</rule>

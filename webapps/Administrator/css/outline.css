@@ -1,0 +1,107 @@
+.globalentry {
+	display: block;
+	font-size: 0.9em;
+	padding: 1px;
+}
+
+a.globalentry:hover {
+	text-decoration: underline;
+}
+
+.ui-widget {
+	font-family: Verdana, Arial, Helvetica, sans-serif !important;
+	font-size: 14px !important;
+}
+
+.appentry {
+	vertical-align: 5px;
+	font-size: 0.8em;
+	margin-left: 1em
+}
+
+.outlineEntry {
+	margin-top: 2px;
+}
+
+.entry {
+	vertical-align: 5px;
+	font-size: 0.7em;
+	margin-left: 2em
+}
+
+.entrys {
+	vertical-align: 6px;
+	font-size: .7em;
+	height: 17px;
+	padding-bottom: 3px;
+}
+
+.entrys a:hover {
+	text-decoration: underline;
+}
+
+#wrapper {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 26px;
+	min-width: 1024px;
+	/*overflow:auto;*/
+}
+
+#outline {
+	width: 255px;
+	float: left;
+}
+
+#outline-header {
+	display: block;
+}
+
+#outline-container {
+	display: block;
+	padding: 0 3px 0 15px;
+	top: 40px;
+	bottom: 5px;
+	left: 0px;
+	width: 255px;
+}
+
+#view {
+	position: absolute;
+	top: 0px;
+	left: 240px;
+	right: 10px;
+}
+
+.viewtable tr {
+	height: 25px
+}
+
+.viewtable {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	border-collapse: collapse;
+	table-layout: fixed;
+	min-width: 500px;
+}
+
+.sidebar-nav {
+	font-family: arial;
+	margin-top: .5em;
+}
+
+.sidebar-nav-list {
+	list-style: none;
+	padding: 5px;
+	margin: 5px;
+}
+
+.nav-item {
+	padding: 2px;
+}
+
+.nav-active {
+	background-color: #DDE0EC;
+}

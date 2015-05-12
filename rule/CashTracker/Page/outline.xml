@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="outline" mode="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<element mode="ON" type="SCRIPT">
+		<name>app_menu</name>
+		<events>
+			<doscript source="file">cashtracker.page.nav.AppMenu</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>ws</name>
+		<events>
+			<doscript source="file">cashtracker.page.ws.AvailableApps</doscript>
+		</events>
+	</element>
+	<caption name="page" source="KEYWORD">Страница</caption>
+	<caption name="documents" source="KEYWORD">Документов</caption>
+	<caption name="from" source="KEYWORD">из</caption>
+	<caption name="search" source="KEYWORD">Поиск</caption>
+	<caption name="exit" source="KEYWORD">Выйти</caption>
+	<caption name="logout" source="KEYWORD">Завершить работу</caption>
+</rule>

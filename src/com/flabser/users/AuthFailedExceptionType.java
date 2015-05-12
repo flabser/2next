@@ -1,0 +1,5 @@
+package com.flabser.users;
+
+public enum AuthFailedExceptionType {
+	NO_USER_SESSION, PASSWORD_INCORRECT, ANSWER_WRONG, UNANSWERED_QUESTION, SYSTEM_DATABASE_HAS_NOT_ANSWERED
+}

@@ -1,0 +1,40 @@
+.btable {
+	background: #FFF;
+	border: 1px solid #CED6DB;
+	border-collapse: collapse;
+	display: table;
+	width: 100%;
+}
+
+.btable-head {
+	display: table-row;
+	background: #F9F9F9;
+	border: 1px solid #eceff1;
+	border-bottom: 2px solid #CED6DB;
+	font-size: .9em;
+	text-align: left;
+}
+
+.btable-head .btable-cell {
+	vertical-align: middle;
+}
+
+.btable-row {
+	display: table-row;
+}
+
+.btable-cell {
+	display: table-cell;
+	border: 1px solid #eceff1;
+	padding: .4em;
+	vertical-align: top;
+}
+
+.tablet .btable-row .btable-cell, .phone .btable-row .btable-cell {
+	padding: 1em 8px;
+}
+
+.phone .btable, .phone .btable-cell {
+	border-left: none;
+	border-right: none;
+}

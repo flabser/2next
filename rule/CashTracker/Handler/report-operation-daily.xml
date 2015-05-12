@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule id="report-operation-daily" app="" type="HANDLER" isvalid="true" mode="OFF">
+	<description>report-operation-daily</description>
+	<rununderuser source="STATIC" type="TEXT">[supervisor]</rununderuser>
+	<trigger>SCHEDULER</trigger>
+	<scheduler mode="ON">
+		<starttime>02:00</starttime>
+		<nextstart></nextstart>
+	</scheduler>
+	<tohandle source="MACRO" type="TEXT">UNKNOWN</tohandle>
+	<events>
+		<trigger source="file">cashtracker.handler.notify.ReportOperationDaily</trigger>
+	</events>
+</rule>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule app="" id="insert_not_exists_field" isvalid="true" mode="ON" type="HANDLER">
+	<description />
+	<trigger>MANUALLY</trigger>
+	<waitresponse>true</waitresponse>
+	<rununderuser source="STATIC" type="TEXT" />
+	<events>
+		<trigger source="file">cashtracker.handler.InsertNotExistsField</trigger>
+	</events>
+</rule>

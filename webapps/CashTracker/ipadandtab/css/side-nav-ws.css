@@ -1,0 +1,112 @@
+/* nav-ws */
+.nav-ws {
+	background: #FFF url(../img/yellow_background.jpg) 0 0 no-repeat;
+	right: -200px;
+	top: 0 !important;
+	width: 200px;
+	z-index: 5;
+}
+
+body.nav-ws-open {
+	overflow: hidden;
+}
+
+.nav-ws-open .content-overlay {
+	display: block;
+}
+
+.nav-ws-open .nav-ws {
+	-moz-transform: translate(-200px, 0);
+	-webkit-transform: translate(-200px, 0);
+	transform: translate(-200px, 0);
+}
+
+/* nav-ws-toggle */
+.nav-ws-toggle {
+	cursor: pointer;
+	display: inline-block;
+	margin-top: 16px;
+	width: 20px;
+}
+
+.nav-ws-toggle:hover,
+.nav-ws-toggle:focus {
+	box-shadow: 0 0 3px #999;
+}
+
+.nav-ws-toggle:before {
+	border-left: 8px solid #5E5E5E;
+	border-right: 8px solid #5E5E5E;
+	content: '';
+	display: block;
+	height: 8px;
+}
+
+.nav-ws-toggle:after {
+	border-left: 8px solid #5E5E5E;
+	border-right: 8px solid #5E5E5E;
+	content: "";
+	display: block;
+	height: 8px;
+	margin-top: 4px;
+}
+
+.ws-apps {
+	padding: 4px;
+}
+
+.ws-app {
+	display: block;
+	font-size: 1em;
+	margin: .3em 0;
+	padding: 6px;
+}
+
+.ws-app-current {
+	background-color: rgba(0, 0, 0, .1);
+}
+
+.ws-app .ws-app-logo {
+	float: left;
+	height: 32px;
+	padding-top: 6px;
+	width: 32px;
+}
+
+.ws-app img {
+	max-height: 32px;
+	max-width: 32px;
+}
+
+.ws-app .ws-app-name {
+	font-size: 1em;
+	min-height: 32px;
+	margin: 0px;
+	padding: 3px;
+	overflow: hidden;
+}
+
+.ws-app small {
+	color: #000;
+	display: block;
+}
+
+.ws-exit {
+	background: #34495E;
+	border-radius: 3px;
+	color: #FFF;
+	display: block;
+	margin: 10px 0;
+	padding: 6px;
+	text-align: center;
+}
+
+.ws-logout {
+	background: #F00;
+	border-radius: 3px;
+	color: #FFF;
+	display: block;
+	margin: 10px 0 35px;
+	padding: 6px;
+	text-align: center;
+}

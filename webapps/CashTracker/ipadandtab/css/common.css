@@ -1,0 +1,148 @@
+html,body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: #F7F7F7;
+	font: 13px/1.6 Verdana, Arial, Helvetica, sans-serif;
+}
+
+*, ::before, ::after {
+	box-sizing: border-box;
+}
+
+a {
+	color: #2222CC;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+img {
+	max-width: 100%;
+}
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: ' ';
+	clear: both;
+	height: 0;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+* html .clearfix {
+	height: 1%;
+}
+
+.clearfix {
+	display: block;
+}
+
+.hidden {
+	display: none;
+}
+
+.overflow-hidden {
+	overflow: hidden;
+}
+
+.pull-left {
+	float: left;
+}
+
+.pull-right {
+	float: right;
+}
+
+.container {
+	clear: both;
+	display: block;
+	float: none;
+	padding: 2px 1px;
+}
+.container:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: ' ';
+	clear: both;
+	height: 0;
+}
+
+/* alert */
+.alert {
+	padding: .5em;
+	margin-bottom: .3em;
+	border: 1px solid transparent;
+}
+
+.alert-warning {
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+	color: #8a6d3b;
+}
+
+.alert-danger {
+	background-color: #f2dede;
+	border-color: #ebccd1;
+	color: #a94442;
+}
+
+/* progress */
+.progress {
+	background-color: #F5F5F5;
+	border-radius: 4px;
+	box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.102);
+	height: 20px;
+	margin: 10px 0;
+	overflow: hidden;
+}
+
+.progress-bar {
+	background-color: #428BCA;
+	box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.149);
+	color: #FFFFFF;
+	float: left;
+	font-size: 12px;
+	height: 100%;
+	line-height: 20px;
+	text-align: center;
+	transition: width 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0;
+	width: 0%;
+}
+
+.progress-bar-success {
+	background: transparent url(/SharedResources/jquery/css/base/images/pbar-ani.gif) repeat-x;
+	color: #000;
+}
+
+/* responsive */
+html body .mobile {
+	display: none;
+}
+
+html body .ipadandtab .mobile {
+	display: block;
+}
+
+.ipadandtab .desktop {
+	display: none;
+}
+
+@media ( max-width : 800px) {
+	html body .mobile {
+		display: block;
+	}
+	html body .desktop {
+		display: none;
+	}
+}

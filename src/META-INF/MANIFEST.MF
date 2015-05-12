@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Class-Path: junit-4.11.jar hamcrest-core-1.3.jar hamcrest-library-1.3.
+ jar annotations-api.jar antlr-2.7.7.jar asm-3.2.jar bgzhandler.jar co
+ mmons-beanutils-1.8.0.jar commons-codec-1.6.jar commons-collections-2
+ .1.1.jar commons-dbcp-1.4.jar commons-digester-1.7.jar commons-discov
+ ery-0.2.jar commons-fileupload-1.3.1.jar commons-io-1.4.jar commons-l
+ ang3-3.3.2.jar commons-logging-1.1.1.jar commons-pool-1.6.jar cstat.j
+ ar ecj-3.7.2.jar ftindex.jar groovy-all-2.0.5.jar gson-2.2.4.jar h2-1
+ .3.170.jar httpclient-4.2.jar httpcore-4.2.jar jasper.jar jdom-1.1.3.
+ jar joda-time-2.3.jar jsp-api.jar log4j-1.2.15.jar lucene-core-3.0.3.
+ jar mail.jar NCSO.jar plugin.jar rome-1.0.jar saxon9he.jar servlet-ap
+ i.jar smack.jar smackx.jar tomcat-dbcp.jar tomcat-embed-core.jar tomc
+ at-embed-jasper.jar tomcat-embed-logging-juli.jar tomcat-embed-loggin
+ g-log4j.jar tomcat-juli.jar xercesImpl.jar crypto-common.jar iolajcp2
+ .jar softkey_jce_applet-1.2.jar sign-applet.jar xmlsec-1.4.4.jar cryp
+ to.gammaprov.jar crypto.tsp.jar iText-2.1.7.jar jasperreports-4.7.0.j
+ ar org.eclipse.jdt.core_3.7.0.v_B61.jar jfreechart-1.0.14.jar jasperr
+ eports-applet-4.7.0.jar org.eclipse.jdt.core.manipulation_1.4.0.v2011
+ 0505-0800.jar jcommon-1.0.17.jar jxl-2.6.10.jar org.eclipse.jdt.core_
+ 3.7.1.xx-20110929-1800-e37.jar jasperreports-javaflow-4.7.0.jar jtds-
+ 1.3.0.jar postgresql-9.2-1004.jdbc4.jar sqljdbc4.jar slf4j-api-1.7.6.
+ jar log4jdbc4-1.2.jar itext-pdfa-5.4.5.jar itextpdf-5.4.5.jar itext-x
+ tra-5.4.5.jar axis.jar saaj.jar jaxrpc.jar wsdl4j.jar ant.jar ant-lau
+ ncher.jar
+Main-Class: kz.pchelka.server.Server
+

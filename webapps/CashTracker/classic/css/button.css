@@ -1,0 +1,119 @@
+.btn {
+	background-color: #FFF;
+	border: 1px solid #CDCDCD;
+	border-radius: 2px;
+	box-sizing: border-box;
+	color: #243140;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 1em;
+	font-weight: normal;
+	margin: 0 1px 1px 1px;
+	outline: 0;
+	padding: 5px 9px;
+	text-align: center;
+	text-decoration: none;
+	text-shadow: 0px 1px rgba(255, 255, 255, 0.196);
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+.btn:hover {
+	background-color: #efefef;
+	color: #243140;
+	text-decoration: none;
+}
+
+.btn:active {
+	background-color: #dfdfdf;
+}
+
+.btn[disabled],.btn.disabled {
+	cursor: not-allowed;
+	opacity: 0.65;
+	pointer-events: none;
+}
+
+.btn-def {
+	background-color: #F5F6F7;
+}
+
+.btn-primary {
+	border: 1px solid #FFCE00;
+}
+
+.btn-primary:hover {
+	background-color: #FFF1A8;
+}
+
+.btn-primary:active {
+	background-color: #FFED81;
+}
+
+.btn-picklist {
+	background: transparent url(/SharedResources/img/iconset/report_magnify.png) no-repeat !important;
+	border: none !important;
+	height: 22px;
+	margin-left: 3px;
+	vertical-align: middle;
+	width: 22px;
+}
+
+.btn-clear {
+	background: transparent url(/SharedResources/img/classic/cross.gif) no-repeat !important;
+	border: none !important;
+	height: 16px;
+	margin-left: 3px;
+	vertical-align: middle;
+	width: 16px;
+}
+
+/* action_icon */
+.action_icon {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	background-size: cover;
+	display: none;
+	height: 16px;
+	margin-right: 3px;
+	vertical-align: middle;
+	width: 16px;
+}
+
+.action_save_and_close,.action_save_user_profile {
+	border: 1px solid #FFCE00;
+}
+
+.action_save_and_close:hover,.action_save_user_profile:hover {
+	background: #FFF1A8;
+}
+
+.action_save_and_close:active,.action_save_user_profile:active {
+	background: #FFED81 !important;
+}
+
+.action_save_and_close>.action_icon,.action_save_user_profile>.action_icon {
+	background-image: url(/SharedResources/img/classic/icons/disk.png);
+	display: inline-block;
+}
+
+.action_close>.action_icon {
+	background-image: url(/SharedResources/img/iconset/cross.png);
+	display: inline-block;
+}
+
+.action_new_document>.action_icon,.action_new_glossary>.action_icon {
+	background-image: url(/SharedResources/img/classic/icons/page_white.png);
+	display: inline-block;
+}
+
+.action_delete_document>.action_icon {
+	background-image: url(/SharedResources/img/classic/icons/page_white_delete.png);
+	display: inline-block;
+}
+
+.action_history_back>.action_icon {
+	background-image: url(/SharedResources/img/iconset/back_2.png);
+	display: inline-block;
+}

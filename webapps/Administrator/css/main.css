@@ -1,0 +1,78 @@
+table{	
+	font-size: 0.9em;
+	border-collapse: collapse;
+	border:0;
+}
+
+img{
+	border:none;
+}
+
+#outline{	
+	width:22%;	
+	float:left;
+}
+
+html {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	width: 98%;
+	height: 98%;
+	overflow-x:hidden;
+}
+
+* html #container {
+	height: 100%;
+}
+
+#container {
+	position: relative;
+	width: 95%;
+	margin: 0 auto;	
+	min-height: 95%;
+	
+}
+
+.clearfloat {
+	clear: both;
+}
+
+.empty {
+	height: 20px;
+}
+
+.button{
+	vertical-align:4.5px;
+	margin-left:3px;
+	font-size: 1.0em;	
+}
+
+a {
+	color: #0000CC;
+	text-decoration:none;
+}
+a :hover {text-decoration:underline;}
+.doclink {color:#1A3DC1 !important;text-decoration:none;}
+.doclink:hover, .doclink :hover { color:#FF0000 !important; text-decoration:underline !important;}
+.doclink font:hover {text-decoration:none;}
+.actionlink {text-decoration:none; color:#444444;}
+.actionlink font {vertical-align:1px;margin-left:1px;font-size:13px;}
+.doclink_action :hover {color:#1A3DC1; text-decoration:underline;}
+
+#footer{
+	position:fixed;
+	bottom:0px;
+	border-top:1px solid #ccc;
+	width:100%; 
+	left:0px; 
+	height:30px;
+	background:none repeat scroll 0 0 #FFFFDD; 
+	min-width: 1020px;
+}
+
+#footer a ,#footer font{
+	text-decoration:none;
+	color: #444444 ;  
+	font: 85%/2 Arial ;
+}
+#footer a :hover {text-decoration:underline;}
+.gray-border-table td{border:1px solid #ccc;}

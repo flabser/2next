@@ -1,0 +1,215 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: #DEE1E5;
+	font: 13px/1.43 Verdana, Arial, Helvetica, sans-serif;
+}
+
+*, ::before, ::after {
+	box-sizing: border-box;
+}
+
+a {
+	color: #2222CC;
+	margin: auto;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+/* a:hover,a:hover:visited {
+	color: #EE0000;
+} */
+
+/* fix: content overflow */
+fieldset {
+	display: block;
+	min-width: inherit; /* chrome */
+}
+
+/* fix: content overflow */
+@-moz-document url-prefix () {
+	fieldset {
+		display: table-column !important; /* moz */
+	}
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+button+button {
+	margin-left: 3px;
+}
+
+button img {
+	margin-right: .3em;
+	max-height: 1.3em;
+	vertical-align: middle;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+.no_transition * {
+	transition: none !important;
+}
+
+/* position */
+.pull-left {
+	float: left;
+}
+
+.pull-right {
+	float: right;
+}
+
+/* clearfix */
+.clearfix:after {
+	content: ' ';
+	clear: both;
+	display: block;
+	font-size: 0;
+	height: 0;
+	visibility: hidden;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+* html .clearfix {
+	height: 1%;
+}
+
+.clearfix {
+	display: block;
+}
+
+.hidden {
+	display: none;
+}
+
+.wsnowrap {
+	white-space: nowrap;
+}
+
+.hint {
+	color: #555;
+}
+
+.text-center {
+	text-align: center;
+}
+
+/* span width */
+[class^="span"], [class*=" span"] {
+	max-width: 100%;
+}
+
+.span12 {
+	width: 940px;
+}
+
+.span11 {
+	width: 860px;
+}
+
+.span10 {
+	width: 780px;
+}
+
+.span9 {
+	width: 700px;
+}
+
+.span8 {
+	width: 620px;
+}
+
+.span7 {
+	width: 540px;
+}
+
+.span6 {
+	width: 460px;
+}
+
+.span5 {
+	width: 380px;
+}
+
+.span4 {
+	width: 300px;
+}
+
+.span3 {
+	width: 220px;
+}
+
+.span2 {
+	width: 140px;
+}
+
+.span1 {
+	width: 60px;
+}
+
+/* alert */
+.alert {
+	border: 1px solid transparent;
+	padding: .5em;
+	margin-bottom: .3em;
+}
+
+.alert-warning {
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+	color: #8a6d3b;
+}
+
+.alert-danger {
+	background-color: #f2dede;
+	border-color: #ebccd1;
+	color: #a94442;
+}
+
+/* progress */
+.progress {
+	background-color: #F5F5F5;
+	border-radius: 4px;
+	box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.102);
+	height: 20px;
+	margin: 10px 0;
+	overflow: hidden;
+}
+
+.progress-bar {
+	background-color: #428BCA;
+	box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.149);
+	color: #FFFFFF;
+	float: left;
+	font-size: 12px;
+	height: 100%;
+	line-height: 20px;
+	text-align: center;
+	transition: width 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0;
+	width: 0%;
+}
+
+.progress-bar-success {
+	background: transparent url(/SharedResources/jquery/css/base/images/pbar-ani.gif) repeat-x;
+	color: #000;
+}
+
+.collapse .collapsible {
+	display: none;
+}

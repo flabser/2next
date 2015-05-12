@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule app="" id="reset_editor_access" isvalid="true" mode="ON" type="HANDLER">
+	<description />
+	<trigger>MANUALLY</trigger>
+	<waitresponse>true</waitresponse>
+	<rununderuser source="STATIC" type="TEXT" />
+	<events>
+		<trigger source="file">cashtracker.handler.modify_access.ResetEditorAccess</trigger>
+	</events>
+</rule>

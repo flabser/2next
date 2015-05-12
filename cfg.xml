@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<tn>
+    <adminapp mode="on"/>
+    <hostname>localhost</hostname>
+    <port/>
+      
+    <applications default="CashTracker">
+		<app>
+			<name mode="on">CashTracker</name>
+		</app>
+	</applications>
+		
+		
+    <ssl mode="OFF">
+        <port>38789</port>
+    	<keypass>123456</keypass>
+    	<keystore>c:\tmp\ssl\aikonamedia.jks</keystore>
+    	<clientauth mode="OFF">
+	   	 	<truststorepass>123456</truststorepass>
+	    	<truststorefile>c:\tmp\ssl\truststore.jks</truststorefile>
+    	</clientauth>
+    </ssl>
+   
+    <mailagent mode="ON">
+        <smtphost>192.168.0.1</smtphost>
+        <defaultsender>info@flabs.kz</defaultsender>
+    </mailagent>
+       
+   
+</tn>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="costcenter" mode="on">
+	<description>Место возникновения</description>
+	<xsltfile>forms/costcenter.xsl</xsltfile>
+	<doctype>glossary</doctype>
+	<events>
+		<queryopen source="file">cashtracker.form.costcenter.QueryOpen</queryopen>
+		<querysave source="file">cashtracker.form.costcenter.QuerySave</querysave>
+	</events>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>shared-form-vocabulary</name>
+		<value>shared-form-vocabulary</value>
+	</element>
+	<caption name="title" source="KEYWORD">Место возникновения</caption>
+	<caption name="name" source="KEYWORD">Название</caption>
+	<caption name="bank_account" source="KEYWORD">Расчетный счет</caption>
+</rule>

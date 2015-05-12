@@ -1,0 +1,16 @@
+.page-info {
+	padding: .2em .1em;
+}
+
+.page-info-title {
+	padding: 0 8px;
+}
+
+.page-info-title small {
+	float: right;
+	text-align: right;
+}
+
+.page-info-doc-count {
+	
+}

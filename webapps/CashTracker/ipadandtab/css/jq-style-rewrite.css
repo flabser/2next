@@ -1,0 +1,5 @@
+html body .ui-dialog,
+html body .ui-button,
+html body .ui-widget {
+	font-size: 15px !important;
+}

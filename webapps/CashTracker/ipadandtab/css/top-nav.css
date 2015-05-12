@@ -1,0 +1,155 @@
+.main-header {
+	background: #FFF url(../img/yellow_background.jpg) no-repeat;
+	border-bottom: 1px solid #FFE976;
+}
+
+.nav {
+	height: 53px;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	vertical-align: middle;
+}
+
+.nav img {
+	vertical-align: middle;
+}
+
+.nav a {
+	display: block;
+	height: 53px;
+	padding: 15px 16px;
+	text-decoration: none;
+	width: 100%;
+}
+
+.nav a,.nav a:visited {
+	color: #333;
+	text-decoration: none;
+}
+
+.nav a:hover,.nav a:active {
+	background-color: #FEE55E;
+}
+
+.nav-item {
+	display: inline-block;
+	float: left;
+	height: 100%;
+	min-width: 54px;
+	text-align: center;
+}
+
+.nav-item.splitter {
+	border-right: 1px solid #FEE55E;
+}
+
+.nav .menu-toggle {
+	
+}
+
+.nav .menu-toggle-bar {
+	padding-top: 21px;
+	padding-bottom: 15px;
+}
+
+.sub-menu.view-hover:hover .menu-nav {
+	display: block;
+}
+
+.sub-menu {
+	text-align: left;
+}
+
+.sub-menu .menu-toggle {
+	min-width: 54px;
+	text-align: center;
+}
+
+.sub-menu.active {
+	background-color: #FEE55E;
+}
+
+.sub-menu.active .menu-nav {
+	display: block;
+}
+
+.nav .add-operation {
+	
+}
+
+/*  */
+.dropdown-menu {
+	transition: all 0.2s cubic-bezier(0, 0, 0.58, 1) 0;
+}
+
+.dropdown-menu .menu-item>a {
+	height: auto;
+	padding: 12px;
+}
+
+.menu-overlay {
+	background-color: #000;
+	bottom: 0px;
+	height: 100%;
+	opacity: .3;
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	left: 0xp;
+	width: 100%;
+	z-index: 1;
+}
+
+.menu-nav {
+	background-color: #FFF;
+	border-left: 1px solid #F0CB12;
+	border-right: 1px solid #F0CB12;
+	border-bottom: 1px solid #F0CB12;
+	box-shadow: 2px 2px 2px -2px #656972;
+	border-radius: 0 0 6px 6px;
+	display: none;
+	list-style: none;
+	margin-top: 1px;
+	max-width: 90%;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	right: 0;
+	z-index: 1000;
+}
+
+.menu-icon-bar {
+	background-color: #563D7C;
+	border-radius: 1px;
+	display: block;
+	height: 2px;
+	margin-bottom: 3px;
+	width: 22px;
+}
+
+form.search {
+	border: 0;
+	max-width: 100%;
+	padding: 4px;
+	width: 260px;
+}
+
+form.search .keyword {
+	border: 0;
+	outline: 0;
+	padding: 8px;
+	width: 100%;
+}
+
+.search-button-submit {
+	background: transparent url(/SharedResources/img/classic/loupe_blue.gif) no-repeat center center;
+	border: none;
+	height: 22px;
+	margin-left: 3px;
+	width: 26px;
+}
+
+.app-title {
+	padding-left: 8px;
+}

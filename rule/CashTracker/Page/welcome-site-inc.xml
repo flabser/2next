@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="welcome-site-inc" mode="on" anonymous="on">
+	<description></description>
+	<caching>CACHING_IN_USER_SESSION_SCOPE</caching>
+
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="file">cashtracker.page.Welcome</doscript>
+		</events>
+	</element>
+
+	<caption name="user_profile" source="KEYWORD">Профиль</caption>
+	<caption name="sign_out" source="KEYWORD">Выйти</caption>
+	<caption name="unrequired" source="KEYWORD">Можно заполнить позже</caption>
+
+	<caption name="login_title" source="KEYWORD">Вход</caption>
+	<caption name="login_login" source="KEYWORD">E-mail</caption>
+	<caption name="login_pwd" source="KEYWORD">Пароль</caption>
+	<caption name="login_alien_device" source="KEYWORD">Не запоминать меня</caption>
+	<caption name="login_button" source="KEYWORD">Войти</caption>
+	<caption name="lost_password" source="KEYWORD">Забыл пароль</caption>
+
+	<caption name="reg_title" source="KEYWORD">Регистрация</caption>
+	<caption name="reg_budget_name" source="KEYWORD">Имя бюджета</caption>
+	<caption name="reg_email" source="KEYWORD">E-mail</caption>
+	<caption name="reg_email_inf" source="KEYWORD">На этот e-mail будет отправлено письмо подтверждения</caption>
+	<caption name="reg_email_invalid" source="KEYWORD">Не корректный</caption>
+	<caption name="reg_email_exists" source="KEYWORD">Пользователь с таким e-mail существует</caption>
+	<caption name="reg_pwd" source="KEYWORD">Придумайте пароль</caption>
+	<caption name="reg_pwd_inf" source="KEYWORD">В пароле минимум 8 символов, используйте буквы и цифры</caption>
+	<caption name="reg_pwd_weak" source="KEYWORD">Слабый пароль</caption>
+	<caption name="reg_button" source="KEYWORD">Зарегистрироваться</caption>
+	<caption name="reg_terms" source="KEYWORD">Пользуясь сервисом вы соглащаетесь с условиями использования</caption>
+
+	<caption name="or" source="KEYWORD">также</caption>
+	<caption name="use_oauth" source="KEYWORD">можно использовать соц.сети</caption>
+
+	<caption name="operations" source="KEYWORD">Операции</caption>
+	<caption name="privacy" source="KEYWORD">Соглашение о конфиденциальности</caption>
+	<caption name="terms" source="KEYWORD">Условия использования</caption>
+	<caption name="about" source="KEYWORD">О проекте</caption>
+	<caption name="help" source="KEYWORD">Помощь</caption>
+</rule>

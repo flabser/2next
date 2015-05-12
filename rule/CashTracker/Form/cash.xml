@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="cash" mode="on">
+	<description>Касса</description>
+	<xsltfile>forms/cash.xsl</xsltfile>
+	<doctype>glossary</doctype>
+	<events>
+		<queryopen source="file">cashtracker.form.cash.QueryOpen</queryopen>
+		<querysave source="file">cashtracker.form.cash.QuerySave</querysave>
+	</events>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>shared-form-vocabulary</name>
+		<value>shared-form-vocabulary</value>
+	</element>
+	<caption name="title" source="KEYWORD">Касса</caption>
+	<caption name="name" source="KEYWORD">Название</caption>
+	<caption name="user" source="KEYWORD">Пользователь</caption>
+	<caption name="amountcontrol" source="KEYWORD">Сумма контроля</caption>
+	<caption name="observers" source="KEYWORD">Наблюдатели</caption>
+	<caption name="btn_send_invite" source="KEYWORD">Отправить приглашение</caption>
+</rule>

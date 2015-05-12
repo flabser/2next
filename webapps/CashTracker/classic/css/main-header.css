@@ -1,0 +1,174 @@
+.main-header {
+	background: #fff59d url(../img/yellow_background.png) 0 0 no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	line-height: 60px;
+	position: relative;
+}
+
+.main-header .brand {
+	display: inline-block;
+	margin: 0;
+}
+
+.main-header .brand-logo {
+	margin: 0 4px;
+	max-height: 58px;
+	vertical-align: middle;
+}
+
+.main-header .brand-title {
+	color: #494949;
+	font-size: 1.6em;
+	margin-left: .5em;
+	vertical-align: middle;
+}
+
+.main-header .nav {
+	height: 60px;
+	left: 260px;
+	position: absolute;
+	right: 0;
+	text-align: right;
+	top: 0;
+}
+
+.main-header .nav-item .fa {
+	color: #333;
+	font-size: 22px;
+}
+
+.main-header .nav-item {
+	display: inline-block;
+	height: 100%;
+	position: relative;
+	text-align: center;
+	vertical-align: top;
+	width: 48px;
+}
+
+.main-header .nav-add {
+	float: left;
+}
+
+.main-header .nav-add i.fa {
+	font-size: 28px;
+	line-height: 60px;
+}
+
+.main-header .nav-toggle {
+	padding-top: 5px;
+}
+
+.main-header .search {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 200px;
+}
+
+.main-header .search .search-keyword {
+	background: transparent;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	padding: 6px 32px 6px 6px;
+	transition: all .15s;
+	vertical-align: middle;
+	width: 100%;
+}
+
+.main-header .search-keyword:focus, .main-header .search:hover .search-keyword {
+	background: white;
+	border: 1px solid #CCC;
+}
+
+.main-header .search-button {
+	background: transparent;
+	border: none;
+	height: 100%;
+	line-height: 1;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 5px;
+	text-align: center;
+	top: 0;
+	width: 22px;
+}
+
+.main-header .search-toggle {
+	cursor: pointer;
+	display: none;
+	padding-top: 2px;
+}
+
+.search-toggle-back {
+	display: none;
+	padding-top: 4px;
+	position: absolute;
+	left: 0;
+	width: 20px;
+}
+
+.main-header .search-open.search {
+	display: block;
+}
+
+.main-header .add-new {
+	background: transparent;
+	border: none;
+}
+
+@media ( max-width : 768px) {
+	.main-header .brand-title {
+		font-size: 1em;
+	}
+	.main-header .nav {
+		left: 20px;
+	}
+	.main-header .nav-add {
+		float: none;
+	}
+	.main-header .nav-search {
+		width: 48px;
+	}
+	.main-header .search {
+		background: #fff59d url(../img/yellow_background.png) 0 0 no-repeat;
+		display: none;
+		height: 60px;
+		left: 0;
+		padding-left: 8px;
+		padding-right: 8px;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 99;
+	}
+	.main-header .search .search-keyword {
+		background-color: #FFF;
+		position: static;
+		width: 89% !important;
+	}
+	.main-header .search-toggle {
+		display: block;
+		right: 0;
+		width: 48px;
+	}
+	.search-toggle-back {
+		display: block;
+	}
+}
+
+@media ( max-width : 480px) {
+	.main-header .brand-logo {
+		max-width: 32px;
+	}
+}
+
+@media ( max-width : 360px) {
+	.main-header .brand-logo {
+		display: none;
+	}
+}

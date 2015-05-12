@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><rule mode="on" type="global">
+	<description>SmartFinance</description>
+	<appname>CashTracker</appname>
+	<implemantion>com.flabser.solutions.cashtracker.Database</implemantion>
+	<entrypoint>Provider?type=page&amp;id=welcome</entrypoint>
+	<langs>
+		<entry id="RUS">Русский</entry>
+		<entry id="ENG">English</entry>
+	</langs>
+
+	<skins>
+		<entry default="on" errorpage="error.xsl" id="classic" path="./webapps/CashTracker/classic/xsl/">Classic</entry>
+		<!-- <entry errorpage="error.xsl" id="ipadandtab" path="./webapps/CashTracker/ipadandtab/xsl/">IPadAndTab</entry> -->
+	</skins>
+	
+	<oauth>
+		<provider id="vk" mode="ON">
+			<auth_uri/>
+			<response_type/>
+			<scope/>
+			<redirect_uri/>
+			<icon/>
+		</provider>
+	</oauth>
+</rule>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="welcome" mode="on" anonymous="on">
+	<description></description>
+	<caching>CACHING_IN_USER_SESSION_SCOPE</caching>
+	<xsltfile>site/welcome.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>welcome-site-inc</name>
+		<value>welcome-site-inc</value>
+	</element>
+	<caption name="title" source="KEYWORD">CashTracker</caption>
+</rule>

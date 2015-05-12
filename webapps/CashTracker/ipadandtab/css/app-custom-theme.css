@@ -1,0 +1,131 @@
+.doc-title {
+	padding: 0 .5em;
+}
+
+.doc-title h3 {
+	font-family: "Georgia", serif;
+	font-size: 1.3em;
+	font-weight: normal;
+}
+
+.doc-author {
+	font-size: .8em;
+	padding: 4px;
+	text-align: right;
+}
+
+.ui-dialog {
+	margin: auto;
+	max-width: 96% !important;
+}
+
+.btn-picklist {
+	background: transparent url(/SharedResources/img/iconset/report_magnify.png) no-repeat !important;
+	border: none !important;
+	height: 22px;
+	margin-left: 3px;
+	vertical-align: middle;
+	width: 26px;
+}
+
+.btn-clear {
+	background: transparent url(/SharedResources/img/classic/cross.gif) no-repeat !important;
+	border: none !important;
+	height: 22px;
+	margin-left: 3px;
+	vertical-align: middle;
+	width: 22px;
+}
+
+/* ct_app_ui_notify_block */
+.ct_app_ui_notify_block {
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999;
+}
+
+.ct_app_ui_notify_block_inner {
+	background-color: rgba(0, 0, 0, 0.8);
+	border-bottom: 1px solid #999;
+	color: white;
+	display: block;
+	padding: .5em .1em;
+	position: relative;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 98%;
+	width: 420px;
+	z-index: 9999;
+}
+
+.ct_app_ui_notify_info {
+	background-color: rgba(10, 54, 93, 0.8);
+	border-color: #004076;
+}
+.ct_app_ui_notify_warn {
+	background-color: rgba(209, 124, 0, 0.8);
+	border-color: #AD6700;
+}
+.ct_app_ui_notify_error {
+	background-color: rgba(225, 10, 10, 0.8);
+	border-color: #D61700;
+}
+/* /ct_app_ui_notify_block */
+
+
+/* form_submit_wait_block */
+.form_submit_wait_block {
+	background-color: rgba(0, 0, 0, 0.5);
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 9999;
+}
+
+.form_submit_wait_block_inner {
+	color: white;
+	position: fixed;
+	margin-top: 10%;
+	text-align: center;
+	width: 100%;
+}
+/* /form_submit_wait_block */
+
+
+table.users-which-read {
+	font-size: .9em;
+	min-width: 50%;
+	max-width: 100%;
+}
+
+table.users-which-read th {
+	border-bottom: 1px solid #F2F2F2;
+	color: #666;
+	text-align: left;
+}
+
+table.users-which-read td {
+	border-bottom: 1px dotted #666;
+	padding: .2em;
+}
+
+@media ( max-width : 960px) , handheld {
+	table.users-which-read {
+		width: 100%;
+	}
+}
+
+.att-list {
+	
+}
+
+.att-list .image-box {
+	border: 1px solid #CCC;
+}

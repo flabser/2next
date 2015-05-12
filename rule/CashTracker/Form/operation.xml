@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="operation" mode="on">
+	<description>Операция</description>
+	<xsltfile>forms/operation.xsl</xsltfile>
+	<doctype>main</doctype>
+	<events>
+		<queryopen source="file">cashtracker.form.operation.QueryOpen</queryopen>
+		<querysave source="file">cashtracker.form.operation.QuerySave</querysave>
+		<postsave source="file">cashtracker.form.operation.PostSave</postsave>
+	</events>
+	<glossary mode="on" id="typeoperation" source="static">
+		<description>Тип операции</description>
+		<value><![CDATA[
+			<entry><skey>in</skey><name>Приход</name></entry>
+			<entry><skey>out</skey><name>Расход</name></entry>
+			<entry><skey>transfer</skey><name>Перевод</name></entry>
+			<entry><skey>calcstaff</skey><name>Расчет с персоналом</name></entry>
+			<entry><skey>received</skey><name>Получение</name></entry>
+			<entry><skey>withdraw</skey><name>withdraw</name></entry>
+			<entry><skey>getcash</skey><name>getcash</name></entry>]]>
+		</value>
+	</glossary>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>shared-form-vocabulary</name>
+		<value>shared-form-vocabulary</value>
+	</element>
+	<caption name="title" source="KEYWORD">Операция</caption>
+	<caption name="doctype" source="KEYWORD">Операция</caption>
+	<caption name="reg_date" source="KEYWORD">Дата регистрации</caption>
+	<caption name="date" source="KEYWORD">Дата операции</caption>
+	<caption name="cash" source="KEYWORD">Касса</caption>
+	<caption name="category" source="KEYWORD">Тип операции</caption>
+	<caption name="subcategory" source="KEYWORD">Под тип операции</caption>
+	<caption name="typeoperation" source="KEYWORD">Тип операции</caption>
+	<caption name="targetcash" source="KEYWORD">Целевая касса</caption>
+	<caption name="summa" source="KEYWORD">Сумма</caption>
+	<caption name="month" source="KEYWORD">Месяц</caption>
+	<caption name="costcenter" source="KEYWORD">Место возникновения</caption>
+	<caption name="personal" source="KEYWORD">Сотрудник</caption>
+	<caption name="basis" source="KEYWORD">Основание</caption>
+	<caption name="through" source="KEYWORD">Через</caption>
+	<caption name="documented" source="KEYWORD">Подтверждено документом</caption>
+</rule>

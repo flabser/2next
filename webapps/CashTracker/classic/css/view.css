@@ -1,0 +1,117 @@
+.view {
+	background: #FFF;
+	min-width: 280px;
+	padding: 6px;
+	position: relative;
+}
+
+.phone .view {
+	padding: 2px;
+}
+
+.view-header {
+	margin: 0;
+	max-width: 100%;
+	min-width: 280px;
+	padding: 2px;
+	position: relative;
+}
+
+.view-table {
+	padding: 0;
+}
+
+.view table {
+	width: 100%;
+}
+
+.view-table th {
+	background: #F2F2F2 linear-gradient(#FFF, #F2F2F2);
+	border: 1px solid #CED6DB;
+	border-bottom: 2px solid #CED6DB;
+	font-size: .9em;
+	padding: 4px;
+}
+
+.view-table th a {
+	padding: 0;
+}
+
+.view-table td {
+	border: 1px solid #CED6DB;
+	padding: 0 5px;
+	vertical-align: top;
+	word-wrap: break-word;
+}
+
+.view-table input[type=checkbox], .view-table input[type=checkbox] {
+	margin: 4px 0;
+}
+
+.view-table .document:hover {
+	background: #F5F5F5;
+}
+
+.view-table .document a {
+	color: #333;
+	display: block;
+	height: 100%;
+	margin: 0;
+	padding: .2em 0;
+	text-decoration: none;
+}
+
+.view-table .document:hover a {
+	color: #0000EE;
+}
+
+.view-empty {
+	color: #666;
+	font-size: 1.3em;
+}
+
+.view .unread {
+	font-weight: bold;
+}
+
+.view .page-info {
+	margin: 8px 0;
+	padding: 4px 0;
+}
+
+.phone .view .page-info {
+	font-size: 18px;
+	margin: 0;
+	padding: 4px 0;
+}
+
+.view .page-info>h3 {
+	font-size: 22px;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+
+.phone .view .page-info>h3 {
+	font-size: 18px;
+}
+
+.view .entry-count {
+	margin-left: .3em;
+}
+
+.vt-arrow {
+	background: url(/SharedResources/img/classic/arrow_blue.gif) no-repeat center 2px;
+	display: inline-block;
+	height: 16px;
+	margin: 0 5px;
+	width: 16px;
+}
+
+.negative-sum {
+	color: #E02117 !important;
+}
+
+.view-table .response a {
+	display: inline;
+}

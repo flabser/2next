@@ -1,0 +1,32 @@
+@media ( max-width : 768px) , handheld {
+	html body .fieldset .control-label {
+		color: #444;
+		font-weight: bold;
+		float: none;
+		text-align: left;
+	}
+	html body .dialog.fieldset .control-label {
+		width: auto !important;
+	}
+	html body .fieldset .control-label:before {
+		content: '' !important;
+	}
+	html body .form-control {
+		max-width: 100%;
+		padding: .5em;
+		width: 100%;
+	}
+	html body input[type="text"],
+	html body input[type="number"],
+	html body input[type="email"],
+	html body input[type="url"],
+	html body input[type="search"],
+	html body input[type="password"],
+	html body input[type="file"],
+	html body textarea,
+	html body select {
+		max-width: 100%;
+		padding: .5em;
+		width: 100%;
+	}
+}

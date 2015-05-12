@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="reg-user" mode="on" anonymous="on">
+	<description></description>
+	<rununderuser source="STATIC" type="TEXT">[observer]</rununderuser>
+	<xsltfile>xhr/reg-user.xsl</xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="file">cashtracker.page.app.RegUser</doscript>
+		</events>
+	</element>
+</rule>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><rule app="" id="backupDocuments" isvalid="true" mode="ON" type="HANDLER">
+	<description/>
+	<rununderuser source="STATIC" type="TEXT">[observer]</rununderuser>
+	<trigger>SCHEDULER</trigger>
+	<scheduler mode="ON">
+		<starttime>16:10</starttime>
+		<nextstart/>
+		<days>MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY</days>
+	</scheduler>
+	<events>
+		<trigger source="file">cashtracker.handler.backup.BackupAllDocs</trigger>
+	</events>
+</rule>

@@ -1,0 +1,92 @@
+.nextbase-dialog {
+	font-size: .8em;
+}
+
+.nextbase-dialog-container {
+	overflow: auto;
+	position: relative;
+}
+
+.loading-state {
+	background: url(/SharedResources/img/classic/ajax-loader-small.gif) no-repeat left top;
+	display: block;
+	height: 2em;
+}
+
+.dialog-warn {
+	border-left: 2px solid #F90 !important;
+	margin: .5em !important;
+}
+
+.dialog-error {
+	border-left: 2px solid #F00 !important;
+	margin: .5em !important;
+}
+
+ul.dialog-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.dialog-list.dialog-list-response {
+	margin-left: 1.1em;
+}
+
+.dialog-list-item {
+	border-bottom: 1px dotted #CCC;
+	display: block;
+	padding: .7em .2em;
+}
+
+.dialog-list-item input[type="checkbox"],
+.dialog-list-item input[type="radio"] {
+	margin-right: .3em;
+}
+
+.dialog-list-item:hover {
+	background-color: #FFEF9B;
+}
+
+/* dialog-filter */
+.dialog-filter {
+	background-color: #F6F5F3;
+	border-bottom: 1px solid #D9D9D9;
+	padding: .3em;
+	text-align: left;
+}
+
+.dialog-filter input[type=text] {
+	border: 1px solid #AAA;
+	padding: .3em;
+}
+
+/* responsive */
+.nextbase-dialog-responsive {
+	height: auto;
+	position: fixed;
+	top: 3px;
+	max-height: 98%;
+	max-width: 98%;
+	width: 500px;
+}
+
+.nextbase-dialog-responsive .nextbase-dialog-container {
+	overflow: auto;
+	position: relative;
+}
+
+.nextbase-dialog-responsive .ui-dialog-titlebar {
+    display: none;
+}
+
+.nextbase-dialog-responsive .ui-dialog-buttonpane {
+    background: #FFF;
+    bottom: 0;
+    height: auto;
+    left: 0;
+    right: 0;
+    padding: 0;
+    position: absolute;
+    z-index: 999;
+}

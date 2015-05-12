@@ -1,0 +1,159 @@
+.in-view {
+	display: none;
+}
+
+.view-context .in-view {
+	display: block;
+}
+
+.view-header {
+	margin: 0;
+}
+
+.view-table {
+	margin: 8px 0;
+}
+
+.view-table a:hover {
+	text-decoration: none;
+}
+
+.view-table-head {
+	padding: .3em .2em;
+	margin: .3em 0;
+}
+
+.view-table-head th {
+	padding: 0 .5em;
+}
+
+.view-table-body {
+	background-color: #FFF;
+	padding: 0 0 2em;
+}
+
+.vt-row {
+	background-color: #FFF;
+	border-top: 1px solid #E0E0E0;
+	overflow: hidden;
+	padding: 0;
+	position: relative;
+	width: 100%;
+}
+
+.vt-row:before {
+	content: '';
+	display: table;
+}
+
+.vt-row:after {
+	clear: both;
+}
+
+.vt-row:hover,.vt-row:active,.vt-row:focus {
+	background-color: #FFF5B7;
+}
+
+.vt-cell {
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: middle;
+}
+
+.vt-checkbox {
+	/* background-color: #CCC; */
+	height: 100%;
+	position: absolute;
+	vertical-align: middle;
+	width: 55px;
+}
+
+.vt-checkbox-label {
+	display: block;
+	height: 100%;
+	padding: 1em 0;
+	position: relative;
+	text-align: left;
+}
+
+.vt-checkbox-label input {
+	margin-left: 10px;
+}
+
+.vt-saldo {
+	color: #2222D5;
+	padding-top: .3em;
+}
+
+.vt-attach {
+	height: 16px;
+	width: 16px;
+}
+
+.vt-inf {
+	display: block;
+	height: 100%;
+	float: right;
+	margin: 0px;
+}
+
+.vt-sum {
+	background-color: #446CB3;
+	border-radius: 0 0 0 3px;
+	color: #FFF;
+	display: block;
+	font-size: .9em;
+	font-weight: normal;
+	margin-left: 3px;
+	padding: 2px 4px;
+}
+
+.vt-sum.negative-sum {
+	background-color: #E74C3D;
+	color: white;
+}
+
+.vt-cell-attach-icon {
+	float: right;
+}
+
+.vt-view-text {
+	color: #333;
+	display: block;
+	height: 100%;
+	margin-left: 30px;
+	overflow: hidden;
+	padding: 1em .2em;
+	word-wrap: break-word;
+}
+
+.vt-arrow {
+	background: url(/SharedResources/img/classic/arrow_blue.gif) no-repeat;
+	display: inline-block;
+	height: 16px;
+	margin: 0 .2em;
+	width: 16px;
+}
+
+.view-table-body .unread {
+	font-weght: bold;
+}
+
+.vt-add {
+	color: #666;
+	font-size: .9em;
+	padding: 2px;
+}
+.vt-1 {
+	margin-left: 4px;
+	padding: 2px 4px;
+}
+.vt-4 {
+	padding: 2px 4px;
+}
+
+@media ( max-width : 720px ) , handheld {
+	.vt-checkbox-label,.vt-view-text {
+		padding: 1.3em .2em;
+	}
+}

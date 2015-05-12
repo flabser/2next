@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="subcategory" mode="on">
+	<description>Под тип операции</description>
+	<xsltfile>forms/subcategory.xsl</xsltfile>
+	<doctype>glossary</doctype>
+	<events>
+		<queryopen source="file">cashtracker.form.subcategory.QueryOpen</queryopen>
+		<querysave source="file">cashtracker.form.subcategory.QuerySave</querysave>
+	</events>
+	<glossary mode="on" id="category_refers_to" source="static">
+		<description>Разрешить для операции по</description>
+		<value><![CDATA[
+			<entry><skey>cash</skey><name>Кассе</name></entry>
+			<entry><skey>bank</skey><name>Банку</name></entry>
+			<entry><skey>planning</skey><name>Планирование</name></entry>]]>
+		</value>
+	</glossary>
+	<glossary mode="on" id="typeoperation" source="static">
+		<description>Тип операции</description>
+		<value><![CDATA[
+			<entry><skey></skey><name></name></entry>
+			<entry><skey>in</skey><name>Приход</name></entry>
+			<entry><skey>out</skey><name>Расход</name></entry>
+			<entry><skey>transfer</skey><name>Перевод</name></entry>
+			<entry><skey>calcstaff</skey><name>Расчет с персоналом</name></entry>
+			<entry><skey>received</skey><name>Получение</name></entry>
+			<entry><skey>withdraw</skey><name>withdraw</name></entry>
+			<entry><skey>getcash</skey><name>getcash</name></entry>]]>
+		</value>
+	</glossary>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>shared-form-vocabulary</name>
+		<value>shared-form-vocabulary</value>
+	</element>
+	<caption name="title" source="KEYWORD">Под тип операции</caption>
+	<caption name="name" source="KEYWORD">Наименование</caption>
+	<caption name="amountcontrol" source="KEYWORD">Сумма контроля</caption>
+	<caption name="category_refers_to" source="KEYWORD">Разрешить для операции по</caption>
+	<caption name="typeoperation" source="KEYWORD">Тип операции</caption>
+	<caption name="requiredocument" source="KEYWORD">Требовать подтверждающий документ</caption>
+	<caption name="requirecostcenter" source="KEYWORD">Требовать заполнения места вонзникновения затрат</caption>
+	<caption name="accessroles" source="KEYWORD">Доступ по роли</caption>
+	<caption name="comment" source="KEYWORD">Комментарий</caption>
+	<caption name="by_formula" source="KEYWORD">Вычислять по формуле</caption>
+	<caption name="formula" source="KEYWORD">Форула</caption>
+</rule>

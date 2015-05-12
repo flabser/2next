@@ -1,0 +1,142 @@
+.oper-table {
+	
+}
+
+.oper-table .btable-head {
+	text-align: center;
+}
+
+.tcell-checkbox {
+	text-align: center;
+	width: 32px;
+}
+
+.tcell-icon {
+	text-align: center;
+	width: 26px;
+}
+
+.tcell-cash {
+	width: 12em;
+}
+
+.tcell-date {
+	text-align: center;
+	width: 8em;
+}
+
+.btable-head .tcell-sum {
+	text-align: center;
+}
+
+.tcell-sum {
+	width: 8em;
+}
+
+.vt-sum {
+	
+}
+
+.vt-sum-minus {
+	color: #E02117;
+}
+
+.oper-table [class^="operation-type-icon-"] {
+	float: right;
+}
+
+.oper-table .tcell-sum [class^="operation-type-icon-"] {
+	float: left;
+}
+
+@media ( max-width : 768px) {
+	.oper-table .btable-row:after {
+		clear: both;
+		content: '';
+		display: table;
+	}
+	.btable.oper-table, .oper-table  .btable-head, .oper-table  .btable-row, .oper-table  .btable-cell {
+		border: none;
+		display: block;
+	}
+	.oper-table .btable-head {
+		display: none;
+	}
+	.oper-table .btable-row {
+		background: #FFF;
+		border-bottom: 1px solid #eceff1;
+		max-height: 80px;
+		min-height: 80px;
+		overflow: hidden;
+		padding: 0;
+		position: relative;
+	}
+	.oper-table .btable-row .btable-cell {
+		float: none;
+		padding: 2px;
+	}
+	.oper-table .btable-row .tcell-checkbox {
+		position: relative;
+		top: 10px;
+	}
+	.oper-table .btable-row .tcell-cash, .oper-table .btable-row .tcell-vt {
+		left: 38px;
+		position: absolute;
+		right: 110px;
+		text-align: left;
+		top: 0px;
+	}
+	.oper-table .btable-row .tcell-cash {
+		line-height: 1em;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.oper-table .btable-row .tcell-cash a {
+		color: #666;
+	}
+	.oper-table .btable-row .tcell-vt {
+		bottom: 0;
+		line-height: 1em;
+		max-height: 4em;
+		overflow: hidden;
+		top: 18px;
+		line-height: 1em
+	}
+	.oper-table .btable-row .tcell-vt a {
+		display: block;
+		height: 100%;
+	}
+	.oper-by-cash-table .btable-row .tcell-vt {
+		top: 0px;
+	}
+	.oper-table .btable-row .tcell-sum, .oper-table .btable-row .tcell-date, .oper-table .btable-row .tcell-icon {
+		display: block;
+		float: none;
+		margin: 0;
+		position: absolute;
+		right: 0;
+		text-align: right;
+		top: 0;
+		width: 105px;
+	}
+	.oper-table .btable-row .tcell-date {
+		top: 22px;
+	}
+	.oper-table .btable-row .tcell-date a {
+		color: #666;
+	}
+	.oper-table .btable-row .tcell-icon {
+		top: 46px;
+	}
+	.oper-table .btable-row .vt-sum.vt-sum-minus {
+		color: #FFF;
+		background-color: #E74C3D;
+	}
+	.oper-table .btable-row .vt-sum {
+		background-color: #446CB3;
+		border-radius: 2px;
+		color: white;
+		padding: 2px;
+	}
+}

@@ -1,0 +1,41 @@
+.actionbar {margin-top:10px; padding-top:5px; padding-bottom:5px;}	
+.action {font-size:0.9em;}
+.pagenavblock {margin-left:3; width:1.2em; text-align:center;}
+.pagenav {font-size:0.8em;}
+.th {text-align:center; font-size:0.9em; font-weight: bold;	background-color:#dde0ec;}
+.viewtable {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.width1 {
+	width: 10%;
+}
+
+.width2 {
+	width: 20%;
+}
+
+.width3 {
+	width: 30%;
+}
+
+.width4 {
+	width: 40%;
+}
+
+.width5 {
+	width: 50%;
+}
+
+.width5 {
+	width: 50%;
+}
+
+.width6 {
+	width: 60%;
+}
+
+.width7 {
+	width: 70%;
+}

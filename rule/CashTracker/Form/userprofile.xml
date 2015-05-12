@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="form" id="userprofile" mode="on">
+	<description></description>
+	<xsltfile>forms/userprofile.xsl</xsltfile>
+	<doctype>USERPROFILE</doctype>
+	<events>
+		<queryopen source="file">cashtracker.form.userprofile.QueryOpen</queryopen>
+	</events>
+	<glossary mode="on" id="langs" source="macro">AVAILABLE_LANGS</glossary>
+	<glossary mode="on" id="skins" source="macro">AVAILABLE_SKINS</glossary>
+	<glossary mode="on" id="roles" source="macro">APPLICATION_ROLES</glossary>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>shared-form-vocabulary</name>
+		<value>shared-form-vocabulary</value>
+	</element>
+	<caption name="title" source="KEYWORD">User profile</caption>
+	<caption name="settings" source="KEYWORD">Настройки системы</caption>
+	<caption name="lang" source="KEYWORD">Язык интерфейса</caption>
+	<caption name="interface" source="KEYWORD">Интерфейс</caption>
+	<caption name="filtermanage" source="KEYWORD">Управление фильтрами</caption>
+	<caption name="refreshperiod" source="KEYWORD">Периодичность обновления видов</caption>
+	<caption name="name" source="KEYWORD">Название</caption>
+	<caption name="category" source="KEYWORD">Категория</caption>
+	<caption name="author" source="KEYWORD">Автор</caption>
+	<caption name="datereg" source="KEYWORD">Дата регистрации</caption>
+	<caption name="keyword" source="KEYWORD">Ключевое слово</caption>
+	<caption name="oldpassword" source="KEYWORD">Старый пароль</caption>
+	<caption name="newpassword" source="KEYWORD">Новый пароль</caption>
+	<caption name="repeatnewpassword" source="KEYWORD">Повтор нового пароля</caption>
+	<caption name="role" source="KEYWORD">Роли</caption>
+	<caption name="group" source="KEYWORD">Группы</caption>
+	<caption name="doctype" source="KEYWORD">Тип документа</caption>
+	<caption name="skin" source="KEYWORD">Оформление</caption>
+	<caption name="employer" source="KEYWORD">Сотрудник</caption>
+	<caption name="chinese" source="KEYWORD">Китайский</caption>
+	<caption name="docfilter" source="KEYWORD">Фильтр документов</caption>
+	<caption name="countdocinview" source="KEYWORD">Количество документов в виде</caption>
+	<caption name="department" source="KEYWORD">Департамент</caption>
+	<caption name="postid" source="KEYWORD">Должность</caption>
+	<caption name="fullname" source="KEYWORD">Полное имя</caption>
+	<caption name="shortname" source="KEYWORD">Сокращенное имя</caption>
+	<caption name="groups" source="KEYWORD">Группы</caption>
+	<caption name="filter" source="KEYWORD">Фильтры</caption>
+	<caption name="min" source="KEYWORD">мин</caption>
+	<caption name="password" source="KEYWORD">Пароль</caption>
+	<caption name="attachments_cert" source="KEYWORD">Сертификат ЭЦП</caption>
+</rule>

@@ -1,0 +1,184 @@
+.form-wrapper.hidden {
+	display: none;
+}
+
+.form-header {
+	
+}
+
+.form-content {
+	
+}
+
+.form-group {
+	margin-bottom: .8em;
+}
+
+.fieldset {
+	background: #FFF;
+	border: none;
+	margin: .5em .4em;
+	padding: 0;
+}
+
+.fieldset .legend {
+	background: #2C3E50;
+	border: none;
+	border-radius: 6px 6px 0 0;
+	box-sizing: border-box;
+	color: #FFF;
+	display: block;
+	font-size: .9em;
+	font-weight: bold;
+	margin: 0;
+	padding: .5em 0;
+	text-indent: 1em;
+	width: 100%;
+}
+
+.fieldset[disabled] input,
+.fieldset[disabled] select {
+	background-color: #FAFAFA;
+}
+
+.fieldset .fieldset-container {
+	border: 1px solid #2C3E50;
+	border-top: none;
+	list-style: none;
+	margin: 0;
+	padding: .2em;
+}
+
+.fieldset .control-group {
+	display: block;
+	border-bottom: 1px dotted #D9D9D9;
+	margin: 0;
+	overflow: hidden;
+	padding: .3em 3px;
+}
+
+.fieldset .control-group-separator {
+	display: block;
+	border-bottom: 1px dotted #D9D9D9;
+	height: 1px;
+}
+
+.fieldset .control-label {
+	color: #000;
+	display: block;
+	float: left;
+	font-size: 1em;
+	margin: 0;
+	padding: .2em;
+	text-align: right;
+	vertical-align: top;
+	width: 225px;
+}
+
+.fieldset .control-label:empty {
+	visibility: hidden;
+}
+
+.fieldset .control-label:before {
+	content: ':';
+	color: #555;
+	float: right;
+	margin: 0 .3em;
+	overflow: hidden;
+}
+
+.fieldset .controls {
+	border-box: content-box;
+	display: block;
+	padding: .2em;
+	margin: 0;
+	max-width: 100%;
+	min-height: 1.1em;
+	overflow: hidden;
+}
+
+.form-control {
+	background: white;
+	border: 2px solid #D9D9D9;
+	border-radius: 2px;
+	box-sizing: border-box;
+	color: #333;
+	display: inline-block;
+	font-size: 1em;
+	max-width: 100%;
+	padding: .2em;
+	vertical-align: top;
+}
+
+.form-control:focus {
+	border: 2px solid #AAA;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="password"],
+input[type="file"],
+input:not([type]),
+textarea {
+	background: white;
+	border: 1px solid #D3D3D3;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.157);
+	border-left: 1px solid rgba(0, 0, 0, 0.267);
+	border-right: 1px solid rgba(0, 0, 0, 0.267);
+	border-top: 1px solid rgba(0, 0, 0, 0.377);
+	box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.196), inset 0px 1px 1px rgba(0, 0, 0, 0.102);
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	color: #333; /* 626262 */
+	display: inline-block;
+	font-size: 1em;
+	max-width: 100%;
+	padding: .2em;
+	vertical-align: top;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="password"]:focus,
+input[type="file"]:focus,
+textarea:focus {
+	background-color: #FFFCCE;
+	border-color: #888;
+}
+
+form input[disabled],
+form select[disabled],
+form textarea[disabled] {
+	background: #FAFAFA;
+}
+
+textarea {
+	min-height: 5em;
+	width: 100%;
+}
+
+input[type='checkbox'] + .input-label {
+	font-size: 1em;
+	margin-left: .3em;
+}
+
+select {
+	background: #F4F6FB;
+	border: 2px solid #D3DAE7;
+	color: #626262;
+	display: inline-block;
+	font-size: 1em;
+	margin: 0px;
+	min-height: 1.2em;
+	padding: .2em;
+}
+
+select:focus {
+	color: #3C3C3C;
+}

@@ -1,0 +1,68 @@
+.attach {
+	padding: 5px;
+}
+
+.attach .upload {
+	
+}
+
+.attach-files {
+	margin: 1em 0;
+}
+
+.rtfcontent {
+	border-top: 1px solid #2C3E50;
+	margin-top: 10px;
+	position: relative;
+}
+
+.rtf-entry {
+	border-bottom: 1px solid #CCC;
+	margin: 2px 0 8px;
+	max-width: 100%;
+	min-height: 32px;
+	overflow: hidden;
+	padding: 2px;
+	position: relative;
+	vertical-align: top;
+}
+
+.rtf-entry.to-delete .rtf-file {
+	color: #666;
+	text-decoration: line-through;
+}
+
+.rtf-entry.to-delete .rtf-action,.rtf-entry.to-delete .attach-preview {
+	display: none;
+}
+
+.rtf-entry img {
+	max-width: 100%;
+}
+
+.rtf-comment {
+	color: #555;
+	display: block;
+	font-size: .8em;
+}
+
+.rtf-action {
+	float: right;
+}
+
+.rtf-action .button+.button {
+	margin-left: 5px;
+}
+
+img.attach-preview {
+	box-shadow: 0 0 5px #555;
+	margin: 10px 0;
+	max-height: 600px;
+}
+
+.rtf-loading {
+	background: url(/SharedResources/img/classic/ajax-loader-small.gif) no-repeat left top;
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+}
