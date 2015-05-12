@@ -1,52 +1,85 @@
-/* .oper-table {
-	
+.operations {
+	display: block;
 }
 
-.oper-table .btable-head {
-	text-align: center;
+.op-head {
+	background: #F5F5F5;
+	margin-bottom: 2px;
+	padding: 4px 0;
 }
 
-.tcell-checkbox {
+.operations .document a {
+	padding: .4em .6em;
+}
+
+.op-wrap {
+	position: relative;
+}
+
+.op-action {
+	background: #FFF;
+	box-shadow: 0 0 3px #CCC;
+	display: none;
+	padding: .4em;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 2;
+}
+
+.op-wrap:hover .op-action {
+	display: block;
+}
+
+.op-row {
+	border-bottom: 1px solid #F5F5F5;
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	z-index: 1;
+}
+
+.op-cell {
+	border-right: 1px solid #666;
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: middle;
+}
+
+.op-checkbox {
 	text-align: center;
 	width: 32px;
 }
 
-.tcell-icon {
+.op-icon {
 	text-align: center;
 	width: 26px;
 }
 
-.tcell-cash {
-	width: 12em;
+.op-cash {
+	text-align: center;
+	width: 110px;
 }
 
-.tcell-date {
+.op-date {
 	text-align: center;
+	width: 95px;
+}
+
+.op-head .op-sum {
+	text-align: center;
+}
+
+.op-sum {
+	text-align: right;
 	width: 8em;
 }
 
-.btable-head .tcell-sum {
-	text-align: center;
-}
-
-.tcell-sum {
-	width: 8em;
-}
-
-.vt-sum {
-	
-}
-
-.vt-sum-minus {
+.op-sum-minus {
 	color: #E02117;
 }
 
-.oper-table [class^="operation-type-icon-"] {
-	float: right;
-}
-
-.oper-table .tcell-sum [class^="operation-type-icon-"] {
-	float: left;
+.op-vt {
 }
 
 @media ( max-width : 768px) {
@@ -139,4 +172,4 @@
 		color: white;
 		padding: 2px;
 	}
-} */
+}

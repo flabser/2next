@@ -16,13 +16,11 @@ body.touch.wlc {
 	background: none;
 	border-bottom: 1px solid #F6F5F3;
 	box-shadow: none;
-	max-width: 100%;
-	position: relative;
+	height: 70px;
 }
 
 .wlc .layout_content {
 	margin: 0;
-	padding: 0;
 }
 
 .wlc .layout_footer {
@@ -34,6 +32,7 @@ body.touch.wlc {
 
 .wlc .main-header {
 	background: #FFF;
+	height: 70px;
 }
 
 .wlc .container {
@@ -240,7 +239,7 @@ body.touch.wlc {
 
 .reg_form-inp-btn {
 	text-align: left;
-	width: 21%;
+	width: 23%;
 }
 
 .wlc input.input {
@@ -418,52 +417,10 @@ body.touch.wlc {
 
 /* login-form */
 .login {
-	background: #FFF;
 	border-radius: 3px;
-	box-shadow: 0 0 6px #000;
-	left: 50%;
-	margin-left: -160px;
+	margin: 0 auto;
 	max-width: 100%;
-	padding: 1em;
-	position: fixed;
-	top: -800px;
-	transition: top .20s;
-	z-index: 999;
 	width: 320px;
-}
-
-.touch .login {
-	display: none;
-	position: absolute;
-	top: 80px;
-}
-
-.login-form-open .login {
-	top: 80px;
-}
-
-.touch.login-form-open .login {
-	display: block;
-}
-
-.login-dlg-close {
-	color: #999;
-	cursor: pointer;
-	display: block;
-	font-size: 16px;
-	line-height: 1;
-	padding: 6px;
-	position: absolute;
-	right: 5px;
-	top: 5px;
-}
-
-.login-form-open .content-overlay {
-	display: block;
-}
-
-.touch.login-form-open .content-overlay {
-	display: none;
 }
 
 .login-form {

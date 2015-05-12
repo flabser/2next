@@ -1,6 +1,5 @@
 .layout {
 	background: #FFF;
-	box-shadow: 0 0 3px #999;
 	margin: 0px auto;
 	max-width: 1366px;
 	min-height: 100%;
@@ -13,24 +12,34 @@
 	max-width: 100%;
 }
 
+/* layout_header */
 .layout_header {
 	border: none;
 	box-shadow: 0 0 3px #999;
 	display: block;
-	max-width: 1366px;
-	position: fixed;
-	top: 0;
+	height: 60px;
+	line-height: 60px;
+	max-width: inherit;
+	position: relative;
 	width: 100%;
 	z-index: 3;
 }
 
+.tablet .layout_header, .phone .layout_header {
+	height: 50px;
+	line-height: 50px;
+	position: fixed;
+	top: 0;
+}
+
+/* layout_aside */
 .layout_aside {
-	background-color: #FAFAFA;
+	background-color: #FFF;
 	bottom: 0;
 	overflow-y: auto;
 	overflow-x: hidden;
 	position: fixed;
-	top: 0;
+	top: 60px;
 	transition: all .15s;
 	z-index: 2;
 }
@@ -38,20 +47,22 @@
 .tablet .layout_aside, .phone .layout_aside {
 	background: #FFF url(../img/yellow_background.png) 0 0 no-repeat;
 	border: none;
-	z-index: 5;
+	top: 0;
+	z-index: 99;
 }
 
 /* layout_content */
 .layout_content {
 	border: none;
 	height: auto;
-	margin: 60px 0px 10px 250px;
+	margin: 0 0 10px 235px;
 	padding: 0;
 	position: relative;
 }
 
 .tablet .layout_content, .phone .layout_content {
-	margin: 60px 0px 10px 0px;
+	margin: 0 0 10px 0px;
+	padding-top: 50px;
 }
 
 /* content-overlay */
@@ -64,4 +75,16 @@
 	top: 0;
 	width: 100%;
 	z-index: 4;
+}
+
+/* main-load */
+.main-load {
+	background: #FFF url(../img/loader.gif) center center no-repeat;
+	display: block;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 9999;
 }

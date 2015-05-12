@@ -905,14 +905,11 @@ var nbApp = {
 nbApp.init = function() {
 	var md = new MobileDetect(window.navigator.userAgent);
 	if (md.phone()) {
-		$('body').addClass('phone');
-		this.uiMakeTouch();
+		this.uiMakeTouch('phone');
 	} else if (md.tablet()) {
-		$('body').addClass('tablet');
-		this.uiMakeTouch();
+		this.uiMakeTouch('tablet');
 	} else if (window.innerWidth <= 800) {
-		$('body').addClass('phone');
-		this.uiMakeTouch();
+		this.uiMakeTouch('phone');
 	}
 
 	this.initScrollSpyActionBar();
@@ -920,13 +917,23 @@ nbApp.init = function() {
 	this.initUI();
 	this.uiToggleAvailableActions();
 	$('body').removeClass('no_transition');
+	$('#main-load').css('display', 'none');
+};
+
+nbApp.uiWindowResize = function() {
+	if (window.innerWidth <= 800) {
+		this.uiMakeTouch('phone');
+	} else {
+		$('body').removeClass('phone');
+
+	}
 };
 
 /*
  * uiMakeTouch
  */
-nbApp.uiMakeTouch = function() {
-	$('body').addClass('touch layout_fullscreen');
+nbApp.uiMakeTouch = function(device) {
+	$('body').addClass(device);
 };
 
 /*
@@ -951,7 +958,7 @@ nbApp.uiHideOpenedNav = function(e) {
 };
 
 nbApp.toggleSearchForm = function() {
-	$('#search-form-block').toggleClass('search-open');
+	$('body').toggleClass('search-open');
 };
 
 /*
@@ -1169,23 +1176,31 @@ nbApp.usersWhichReadInTable = function(el, doctype, id) {
 
 nbApp.initUI = function() {
 
-	$('.js-toggle-nav-app').mousedown(function(e) {
+	$('#toggle-nav-app').mousedown(function(e) {
 		e.preventDefault();
 		nbApp.uiToggleNavApp();
 	});
 
-	$('.js-toggle-nav-ws').mousedown(function(e) {
+	$('#toggle-nav-ws').mousedown(function(e) {
 		e.preventDefault();
 		nbApp.uiToggleNavWorkspace();
 	});
 
-	if ($('.js-content-overlay')) {
-		$('.js-content-overlay').mousedown(function(e) {
+	$('#toggle-head-search').click(function() {
+		nbApp.toggleSearchForm();
+	});
+
+	$('#search-close').mousedown(function() {
+		nbApp.toggleSearchForm();
+	});
+
+	if ($('#content-overlay')) {
+		$('#content-overlay').mousedown(function(e) {
 			e.preventDefault();
 			nbApp.uiHideOpenedNav();
 		});
 
-		$('.js-content-overlay')[0].addEventListener('touchstart', function(e) {
+		$('#content-overlay')[0].addEventListener('touchstart', function(e) {
 			e.preventDefault();
 			nbApp.uiHideOpenedNav();
 		}, false);
@@ -1230,6 +1245,19 @@ nbApp.initUI = function() {
 	if (typeof $.fn.tabs !== 'undefined') {
 		$('#tabs').tabs();
 	}
+
+	$('.js-swipe-entry').bind("swipe", function(h) {
+		console.log(h);
+		/*if (h.gesture.deltaX < -70) {
+			console.log('swipe left');
+			$(h.target).parent('.entry-wrap').addClass('entry-action-open');
+		} else if (h.gesture.deltaX > 30) {
+			console.log('swipe right');
+			$(h.target).parent('.entry-wrap').removeClass('entry-action-open');
+		}*/
+
+		// $(this).parent('.entry-wrap').addClass('entry-action-open');
+	});
 };
 
 nbApp.xhrSaveUserProfile = function(formNode) {
@@ -1955,6 +1983,13 @@ nbApp.xhrSendInvite = function(email) {
 	});
 };
 
+nbApp.xhrGetCostCenterJson = function() {
+	return nb.ajax({
+		method : "GET",
+		datatype : 'JSON',
+		url : "Provider?type=page&id=costcenter-json"
+	});
+};
 /*
  * appendSaldoToElTitleByDocDate
  */
@@ -1993,16 +2028,6 @@ nbApp.wlc.init = function() {
 	});
 	//
 	$('.js-ShowLoginForm').click(nbApp.wlc.loginFormOpen);
-
-/*	$('.js-content-overlay')[0].addEventListener('touchstart', function(e) {
-		e.preventDefault();
-		nbApp.wlc.loginFormClose();
-	}, false);
-
-	$('.js-content-overlay').mousedown(function(e) {
-		e.preventDefault();
-		nbApp.wlc.loginFormClose();
-	});*/
 
 	if (location.hash === "#sign-in") {
 		nbApp.wlc.loginFormOpen();

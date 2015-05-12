@@ -21,16 +21,6 @@ nbApp.wlc.init = function() {
 	//
 	$('.js-ShowLoginForm').click(nbApp.wlc.loginFormOpen);
 
-/*	$('.js-content-overlay')[0].addEventListener('touchstart', function(e) {
-		e.preventDefault();
-		nbApp.wlc.loginFormClose();
-	}, false);
-
-	$('.js-content-overlay').mousedown(function(e) {
-		e.preventDefault();
-		nbApp.wlc.loginFormClose();
-	});*/
-
 	if (location.hash === "#sign-in") {
 		nbApp.wlc.loginFormOpen();
 	}

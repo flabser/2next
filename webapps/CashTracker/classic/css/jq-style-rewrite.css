@@ -1,4 +1,4 @@
-html body .ui-dialog,html body .ui-button {
+html body .ui-dialog, html body .ui-button {
 	font-size: 1em !important;
 }
 
@@ -15,9 +15,8 @@ html body .ui-dialog {
 }
 
 #tabs {
-	border-radius: 0px;
 	border: none;
-	background: #fff
+	border-radius: 0px;
 }
 
 #tabs .ui-tabs-nav li {
@@ -28,9 +27,9 @@ html body .ui-dialog {
 
 #tabs .ui-tabs-nav li a {
 	float: left;
+	font-size: 12.8px;
 	padding: 0.5em 1em;
 	text-decoration: none;
-	font-size: 12.8px;
 }
 
 #tabs .ui-tabs-panel {
@@ -38,15 +37,17 @@ html body .ui-dialog {
 }
 
 #tabs .ui-tabs-nav {
-	background: none repeat scroll 0 0 transparent;
+	background: transparent;
 	border-left: medium none;
-	border-radius: 0 0 0 0;
+	border-radius: 0;
 	border-right: medium none;
 	border-top: medium none;
-	width: 99.5%;
-	background: #FFFFFF;
 	padding-top: 0.3em;
 	padding-left: 0.3em;
+}
+
+.ui-tabs {
+	background: transparent;
 }
 
 .ui-autocomplete {

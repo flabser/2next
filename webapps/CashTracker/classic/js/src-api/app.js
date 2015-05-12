@@ -7,14 +7,11 @@ var nbApp = {
 nbApp.init = function() {
 	var md = new MobileDetect(window.navigator.userAgent);
 	if (md.phone()) {
-		$('body').addClass('phone');
-		this.uiMakeTouch();
+		this.uiMakeTouch('phone');
 	} else if (md.tablet()) {
-		$('body').addClass('tablet');
-		this.uiMakeTouch();
+		this.uiMakeTouch('tablet');
 	} else if (window.innerWidth <= 800) {
-		$('body').addClass('phone');
-		this.uiMakeTouch();
+		this.uiMakeTouch('phone');
 	}
 
 	this.initScrollSpyActionBar();
@@ -22,13 +19,23 @@ nbApp.init = function() {
 	this.initUI();
 	this.uiToggleAvailableActions();
 	$('body').removeClass('no_transition');
+	$('#main-load').css('display', 'none');
+};
+
+nbApp.uiWindowResize = function() {
+	if (window.innerWidth <= 800) {
+		this.uiMakeTouch('phone');
+	} else {
+		$('body').removeClass('phone');
+
+	}
 };
 
 /*
  * uiMakeTouch
  */
-nbApp.uiMakeTouch = function() {
-	$('body').addClass('touch layout_fullscreen');
+nbApp.uiMakeTouch = function(device) {
+	$('body').addClass(device);
 };
 
 /*
@@ -53,7 +60,7 @@ nbApp.uiHideOpenedNav = function(e) {
 };
 
 nbApp.toggleSearchForm = function() {
-	$('#search-form-block').toggleClass('search-open');
+	$('body').toggleClass('search-open');
 };
 
 /*

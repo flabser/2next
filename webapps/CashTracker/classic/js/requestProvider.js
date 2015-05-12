@@ -19,3 +19,11 @@ nbApp.xhrSendInvite = function(email) {
 		url : "Provider?type=page&id=send-invite&invite_to=" + email + "&nocache=" + Date.now()
 	});
 };
+
+nbApp.xhrGetCostCenterJson = function() {
+	return nb.ajax({
+		method : "GET",
+		datatype : 'JSON',
+		url : "Provider?type=page&id=costcenter-json"
+	});
+};

@@ -20,6 +20,7 @@
 .action-bar {
 	margin: 0;
 	padding: 4px 2px;
+	vertical-align: middle;
 }
 
 .action-bar:after {
@@ -29,16 +30,6 @@
 	font-size: 0;
 	height: 0;
 	visibility: hidden;
-}
-
-.action-group {
-	display: inline-block;
-	margin: 0;
-	vertical-align: middle;
-}
-
-.action-group+.action-group {
-	margin-left: 5px;
 }
 
 .action-bar-dynamic {

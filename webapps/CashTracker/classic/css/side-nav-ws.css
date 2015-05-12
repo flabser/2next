@@ -2,9 +2,13 @@
 .nav-ws {
 	background: #FFF url(../img/yellow_background.png) 0 0 no-repeat;
 	right: -200px;
+	top: 0 !important;
 	width: 200px;
 	z-index: 5;
-	right: -200px;
+}
+
+.nav-ws .fa {
+	color: #666;
 }
 
 body.nav-ws-open {
@@ -19,34 +23,6 @@ body.nav-ws-open {
 	-moz-transform: translate(-200px, 0);
 	-webkit-transform: translate(-200px, 0);
 	transform: translate(-200px, 0);
-}
-
-/* nav-ws-toggle */
-.nav-ws-toggle {
-	cursor: pointer;
-	display: inline-block;
-	width: 20px;
-}
-
-.nav-ws-toggle:hover, .nav-ws-toggle:focus {
-	box-shadow: 0 0 3px #999;
-}
-
-.nav-ws-toggle:before {
-	border-left: 8px solid #333;
-	border-right: 8px solid #333;
-	content: '';
-	display: block;
-	height: 8px;
-}
-
-.nav-ws-toggle:after {
-	border-left: 8px solid #333;
-	border-right: 8px solid #333;
-	content: "";
-	display: block;
-	height: 8px;
-	margin-top: 4px;
 }
 
 .ws-apps {
@@ -113,7 +89,7 @@ body.nav-ws-open {
 	width: 100%;
 }
 
-.touch .nav-ws footer {
+.tablet .nav-ws footer, .phone .nav-ws footer {
 	bottom: 0;
 	position: absolute;
 }

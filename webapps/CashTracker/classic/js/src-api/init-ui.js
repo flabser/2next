@@ -1,22 +1,30 @@
 nbApp.initUI = function() {
 
-	$('.js-toggle-nav-app').mousedown(function(e) {
+	$('#toggle-nav-app').mousedown(function(e) {
 		e.preventDefault();
 		nbApp.uiToggleNavApp();
 	});
 
-	$('.js-toggle-nav-ws').mousedown(function(e) {
+	$('#toggle-nav-ws').mousedown(function(e) {
 		e.preventDefault();
 		nbApp.uiToggleNavWorkspace();
 	});
 
-	if ($('.js-content-overlay')) {
-		$('.js-content-overlay').mousedown(function(e) {
+	$('#toggle-head-search').click(function() {
+		nbApp.toggleSearchForm();
+	});
+
+	$('#search-close').mousedown(function() {
+		nbApp.toggleSearchForm();
+	});
+
+	if ($('#content-overlay')) {
+		$('#content-overlay').mousedown(function(e) {
 			e.preventDefault();
 			nbApp.uiHideOpenedNav();
 		});
 
-		$('.js-content-overlay')[0].addEventListener('touchstart', function(e) {
+		$('#content-overlay')[0].addEventListener('touchstart', function(e) {
 			e.preventDefault();
 			nbApp.uiHideOpenedNav();
 		}, false);
@@ -61,4 +69,17 @@ nbApp.initUI = function() {
 	if (typeof $.fn.tabs !== 'undefined') {
 		$('#tabs').tabs();
 	}
+
+	$('.js-swipe-entry').bind("swipe", function(h) {
+		console.log(h);
+		/*if (h.gesture.deltaX < -70) {
+			console.log('swipe left');
+			$(h.target).parent('.entry-wrap').addClass('entry-action-open');
+		} else if (h.gesture.deltaX > 30) {
+			console.log('swipe right');
+			$(h.target).parent('.entry-wrap').removeClass('entry-action-open');
+		}*/
+
+		// $(this).parent('.entry-wrap').addClass('entry-action-open');
+	});
 };
