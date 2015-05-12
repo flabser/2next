@@ -1,0 +1,21 @@
+/bin/
+/target/
+/backup/
+/logs/
+/tmp/
+/webserver/
+/*_data/
+
+# app settings
+/rule/*/global.xml
+/rule/*/global.dat
+
+# nodejs modules
+node_modules
+
+*.class
+/.groovy
+/.settings
+.classpath
+.project
+cfg.xml1
