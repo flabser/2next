@@ -1,0 +1,61 @@
+@import 'lib/base.css';
+
+
+/* =Typography
+-----------------------------------------------------------------------------*/
+body {
+	min-width: 960px;
+	font-family: "Helvetica Neue", Arial, Tahoma, "Trebuchet MS", sans-serif;
+}
+
+h1 {
+	font-size: 40px;
+	margin-bottom: .7em;
+}
+
+
+pre {
+	padding: 1.5em;
+	overflow: auto;
+	border: 1px dashed #ddd;
+}
+
+
+/* =Links
+-----------------------------------------------------------------------------*/
+a, a.blue { color: #537597; }
+a:hover {
+	color: #b71818 !important;
+	text-decoration: underline;
+}
+a.red:hover {
+	color: #000 !important;
+}
+h1 a, h2 a, h3 a {
+	color: #000;
+}
+
+
+
+/* =Layout
+-----------------------------------------------------------------------------*/
+#page {
+	padding: 60px 0;
+	width: 960px;
+	margin: auto;
+}
+
+
+
+/* =Boxes
+-----------------------------------------------------------------------------*/
+.soft_box { background-color: #f6f6f6; }
+.flow_box { background-color: #fbf7ea; }
+.blue_box { background-color: #e9f1f6; }
+.yellow_box { background-color: #f7f5d1; }
+.green_box { background-color: #eaf9c5; }
+.red_box { background-color: #f7e5e5; }
+.soft_box, .flow_box, .blue_box, .yellow_box, .green_box, .red_box {
+	padding: 2em;
+	margin-bottom: 1.5em;
+}

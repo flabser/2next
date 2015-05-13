@@ -1,0 +1,38 @@
+/*
+	Icons
+*/
+.ico { display: -moz-inline-box; display:inline-block; text-decoration: none; background-repeat: no-repeat; }
+.ico:hover { text-decoration: none; }
+.ico9 { height:9px; width:9px; line-height: 9px; }
+.ico9:hover { background-position: -9px; }
+.ico10 { height:10px; width:10px; line-height: 10px; }
+.ico10:hover { background-position: -10px; }
+.ico11 { height:11px; width:11px; line-height: 11px; }
+.ico11:hover { background-position: -11px; }
+.ico12 { height:12px; width:12px; line-height: 12px; }
+.ico12:hover { background-position: -12px; }
+.ico13 { height:13px; width:13px; line-height: 13px; }
+.ico13:hover { background-position: -13px; }
+.ico14 { height:14px; width:14px; line-height: 14px; }
+.ico14:hover { background-position: -14px; }
+.ico15 { height:15px; width:15px; line-height: 15px; }
+.ico15:hover { background-position: -15px; }
+.ico16 { height:16px; width:16px; line-height: 16px; }
+.ico16:hover { background-position: -16px !important;; }
+.ico18 { height:18px; width:18px; line-height: 18px; }
+.ico18:hover { background-position: -18px; }
+.ico20 { height: 20px; width: 20px; line-height: 20px; }
+.ico20:hover { background-position: -20px; }
+.ico24 { height:24px; width:24px; line-height: 24px; }
+.ico24:hover { background-position: -24px; }
+.ico32 { height:32px; width:32px; line-height: 32px; }
+.ico32:hover { background-position: -32px; }
+.ico36 { height:36px; width:36px; line-height: 36px; }
+.ico36:hover { background-position: -36px; }
+.ico_no_hover, .ico_no_hover:hover { background-position: 0% !important; }
+
+
+
+.ico_now { background: url(../../i/ico_now.png); }
+.ico_turn { background: url(../../i/ico_turn.png); }
+

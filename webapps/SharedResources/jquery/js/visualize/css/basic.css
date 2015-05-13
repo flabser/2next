@@ -1,0 +1,10 @@
+/* page styles */
+body { font-family: "Segoe UI", Frutiger,Tahoma,Helvetica,"Helvetica Neue", Arial, sans-serif;  }
+table {  border-collapse: collapse; margin: 5px auto 30px; min-width:500px ; font-size:13px;  right:0px; left:0px; bottom:5px; top:0px}
+td, th { 
+   text-align: center; 
+   border: 1px solid #ddd; 
+   padding:2px 5px; 
+   }
+   
+caption {margin: 0 0 .5em; font-weight: bold; font-size:15px  }
