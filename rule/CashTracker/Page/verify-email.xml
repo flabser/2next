@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="verify-email" mode="on" anonymous="on">
+	<description></description>
+	<rununderuser source="STATIC" type="TEXT">[observer]</rununderuser>
+	<xsltfile>site/verify-email.xsl</xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="file">cashtracker.page.app.VerifyEMail</doscript>
+		</events>
+	</element>
+
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>welcome-site-inc</name>
+		<value>welcome-site-inc</value>
+	</element>
+
+	<caption name="title" source="KEYWORD">Подтверждение E-mail</caption>
+	<caption name="verify-error" source="KEYWORD">Не верные данные</caption>
+	<caption name="verify-done" source="KEYWORD">Проверка прошла успешно. Теперь вы можете войти.</caption>
+</rule>

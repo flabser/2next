@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="costcenter" mode="on" history="on">
+	<description>Справочник / Место возникновения</description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/costcenter.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">cashtracker.page.actionbar.CostCenter</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>view_content</name>
+		<events>
+			<doscript source="file">cashtracker.page.views.CostCenter</doscript>
+		</events>
+	</element>
+	<caption name="viewnamecaption" source="KEYWORD">Место возникновения</caption>
+	<caption name="viewtext1" source="KEYWORD">Наименование</caption>
+</rule>

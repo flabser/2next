@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="cash" mode="on" history="on">
+	<description>Справочник Касса</description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/cash.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">cashtracker.page.actionbar.Cash</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="QUERY">
+		<name>view_content</name>
+		<query source="static">form = 'cash'</query>
+		<doctype>glossary</doctype>
+	</element>
+	<caption name="category" source="KEYWORD">Справочник</caption>
+	<caption name="viewnamecaption" source="KEYWORD">Касса</caption>
+	<caption name="viewtext1" source="KEYWORD">Наименование</caption>
+</rule>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="search" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/search.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>saldo</name>
+		<events>
+			<doscript source="file">cashtracker.page.saldo.Calculate</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">cashtracker.page.actionbar.Search</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>view_content</name>
+		<events>
+			<doscript source="file">cashtracker.page.views.Search</doscript>
+		</events>
+	</element>
+	<caption name="viewnamecaption" source="KEYWORD">Поиск</caption>
+	<caption name="addtofav" source="KEYWORD">Добавить в избранное</caption>
+	<caption name="removefromfav" source="KEYWORD">Удалить с избранного</caption>
+	<caption name="goback" source="KEYWORD">Вернуться к списку документов</caption>
+</rule>

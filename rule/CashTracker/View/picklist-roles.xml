@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="view" id="picklist-roles">
+	<description>Роли</description>
+	<query>none</query>
+	<xsltfile>views/picklist-roles.xsl</xsltfile>
+	<glossary mode="on" id="roles" source="macro">APPLICATION_ROLES</glossary>
+</rule>

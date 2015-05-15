@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="get-document-data" mode="on">
+	<description></description>
+	<xsltfile>views/document-data.xsl</xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="file">cashtracker.page.oth.GetDocumentData</doscript>
+		</events>
+	</element>
+</rule>

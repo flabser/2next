@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="picklist-category-formula" mode="on" history="off">
+	<description>Тип операции</description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>views/picklist-category-formula.xsl</xsltfile>
+	<element mode="ON" type="QUERY">
+		<name>view_content</name>
+		<query source="static">form = 'category' and category_refers_to != 'hidden'</query>
+		<doctype>glossary</doctype>
+	</element>
+</rule>

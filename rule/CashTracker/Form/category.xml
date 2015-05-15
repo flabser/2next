@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rule type="form" id="category" mode="on">
-	<description>Тип операции</description>
+	<description>Категория</description>
 	<xsltfile>forms/category.xsl</xsltfile>
 	<doctype>glossary</doctype>
 	<events>
@@ -32,7 +32,7 @@
 		<name>shared-form-vocabulary</name>
 		<value>shared-form-vocabulary</value>
 	</element>
-	<caption name="title" source="KEYWORD">Тип операции</caption>
+	<caption name="title" source="KEYWORD">Категория</caption>
 	<caption name="name" source="KEYWORD">Наименование</caption>
 	<caption name="amountcontrol" source="KEYWORD">Сумма контроля</caption>
 	<caption name="category_refers_to" source="KEYWORD">Разрешить для операции по</caption>

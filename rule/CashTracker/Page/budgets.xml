@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="budgets" mode="on" history="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/budgets.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>saldo</name>
+		<events>
+			<doscript source="file">cashtracker.page.saldo.Calculate</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>filter</name>
+		<value>filter_type_operation</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">cashtracker.page.actionbar.Budget</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>view_content</name>
+		<events>
+			<doscript source="file">cashtracker.page.views.Budgets</doscript>
+		</events>
+	</element>
+	<caption name="viewnamecaption" source="KEYWORD">Свойства бюджета</caption>
+	<caption name="viewtext2" source="KEYWORD">Название</caption>
+	<caption name="viewtext3">Модератор</caption>
+</rule>

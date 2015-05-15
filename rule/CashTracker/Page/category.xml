@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="category" mode="on" history="on">
+	<description>Справочник / Категории</description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/category.xsl</xsltfile>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>outline</name>
+		<value>outline</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>action_bar</name>
+		<events>
+			<doscript source="file">cashtracker.page.actionbar.Category</doscript>
+		</events>
+	</element>
+	<element mode="ON" type="QUERY">
+		<name>view_content</name>
+		<query source="static">form = 'category'</query>
+		<doctype>glossary</doctype>
+	</element>
+	<caption name="category" source="KEYWORD">Справочник</caption>
+	<caption name="viewnamecaption" source="KEYWORD">Категории</caption>
+	<caption name="viewtext1" source="KEYWORD">Наименование</caption>
+	<caption name="viewtext3" source="KEYWORD">Тип</caption>
+	<caption name="viewtext4" source="KEYWORD">Разрешено для операции</caption>
+</rule>

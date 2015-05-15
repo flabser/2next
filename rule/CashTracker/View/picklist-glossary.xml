@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="view" id="picklist-glossary">
+	<description>picklist-glossary</description>
+	<query>picklist-glossary</query>
+	<xsltfile>views/picklist-glossary.xsl</xsltfile>
+</rule>

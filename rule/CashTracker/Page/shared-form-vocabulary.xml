@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="page" id="shared-form-vocabulary" mode="on">
+	<description></description>
+	<caption name="close" source="KEYWORD">Закрыть</caption>
+	<caption name="cancel" source="KEYWORD">Отмена</caption>
+
+	<caption name="saved" source="KEYWORD">Сохраненный</caption>
+	<caption name="newdoc" source="KEYWORD">Новый документ</caption>
+	<caption name="editing" source="KEYWORD">Редактирование</caption>
+	<caption name="readonly" source="KEYWORD">Только для чтения</caption>
+	<caption name="modenotdefined" source="KEYWORD">Режим не определен</caption>
+	<caption name="author" source="KEYWORD">Автор</caption>
+
+	<caption name="properties" source="KEYWORD">Свойства</caption>
+	<caption name="attachments" source="KEYWORD">Вложения</caption>
+	<caption name="additional" source="KEYWORD">Дополнительно</caption>
+
+	<caption name="info_status_doc" source="KEYWORD">Состояние документа</caption>
+	<caption name="info_permissions" source="KEYWORD">Права доступа</caption>
+	<caption name="info_read" source="KEYWORD">Информация о прочтении</caption>
+	<caption name="info_readers" source="KEYWORD">Кем прочтен</caption>
+	<caption name="info_read_time" source="KEYWORD">Время прочтения</caption>
+	<caption name="info_ds" source="KEYWORD">ЭЦП</caption>
+
+	<caption name="attach" source="KEYWORD">Прикрепить</caption>
+	<caption name="attach_delete" source="KEYWORD">Удалить</caption>
+	<caption name="attach_open" source="KEYWORD">Открыть</caption>
+	<caption name="attach_preview" source="KEYWORD">Просмотр</caption>
+	<caption name="attach_add_comment" source="KEYWORD">Добавить комментарий</caption>
+</rule>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="query" id="responses">
+	<description>Ответные документы</description>
+	<query source="macro">responses</query>
+	<doctype>document</doctype>
+
+	<field mode="on" type="viewtext">
+		<value source="resultset">VIEWTEXT</value>
+		<attrvalue></attrvalue>
+	</field>
+</rule>

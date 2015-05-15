@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="picklist-costcenter" mode="on" history="off">
+	<description>Место возникновения</description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/picklist-glossary.xsl</xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<name>view_content</name>
+		<events>
+			<doscript source="file">cashtracker.page.views.CostCenter</doscript>
+		</events>
+	</element>
+</rule>

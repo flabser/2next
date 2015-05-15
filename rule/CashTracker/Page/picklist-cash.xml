@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="picklist-cash" mode="on" history="off">
+	<description>Касса</description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/picklist-glossary.xsl</xsltfile>
+	<element mode="ON" type="QUERY">
+		<name>view_content</name>
+		<query source="static">form = 'cash'</query>
+		<doctype>glossary</doctype>
+	</element>
+</rule>

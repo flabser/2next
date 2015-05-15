@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="retry-send-verify-email" mode="on" anonymous="on">
+	<description></description>
+	<rununderuser source="STATIC" type="TEXT">[observer]</rununderuser>
+	<xsltfile>site/retry-send-verify-email.xsl</xsltfile>
+
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>welcome-site-inc</name>
+		<value>welcome-site-inc</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>retry-verify-email</name>
+		<events>
+			<doscript source="file">cashtracker.page.app.RetrySendVerifyEMail</doscript>
+		</events>
+	</element>
+
+	<caption name="title" source="KEYWORD">Повторная отправка письма для удостоверения e-mail</caption>
+	<caption name="btn_verify_send" source="KEYWORD">Отправить</caption>
+</rule>

@@ -29,7 +29,7 @@
 	<caption name="reg_date" source="KEYWORD">Дата регистрации</caption>
 	<caption name="date" source="KEYWORD">Дата операции</caption>
 	<caption name="cash" source="KEYWORD">Касса</caption>
-	<caption name="category" source="KEYWORD">Тип операции</caption>
+	<caption name="category" source="KEYWORD">Категория</caption>
 	<caption name="subcategory" source="KEYWORD">Под тип операции</caption>
 	<caption name="typeoperation" source="KEYWORD">Тип операции</caption>
 	<caption name="targetcash" source="KEYWORD">Целевая касса</caption>

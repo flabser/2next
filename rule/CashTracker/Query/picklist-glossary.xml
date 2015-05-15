@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="query" id="picklist-glossary">
+	<description>picklist-glossary</description>
+	<doctype>glossary</doctype>
+	<query source="static">form = '$form'</query>
+	<sortby source="static">name</sortby>
+	<cache mode="OFF" />
+</rule>
