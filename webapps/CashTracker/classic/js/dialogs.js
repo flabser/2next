@@ -147,7 +147,6 @@ nbApp.dialogChoiceCostCenter = function(el) {
 
 nbApp.dialogChoiceBossAndDemp = function(el, fieldName, isMulti) {
 	var dlg = nb.dialog.show({
-		effect : "shake",
 		targetForm : el.form.name,
 		fieldName : fieldName,
 		dialogFilterListItem : ".tree-entry",

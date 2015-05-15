@@ -70,16 +70,23 @@ nbApp.initUI = function() {
 		$('#tabs').tabs();
 	}
 
-	$('.js-swipe-entry').bind("swipe", function(h) {
-		console.log(h);
-		/*if (h.gesture.deltaX < -70) {
-			console.log('swipe left');
-			$(h.target).parent('.entry-wrap').addClass('entry-action-open');
-		} else if (h.gesture.deltaX > 30) {
-			console.log('swipe right');
-			$(h.target).parent('.entry-wrap').removeClass('entry-action-open');
-		}*/
+	$('.js-swipe-entry').on("touchend", function(e) {
+		nbApp.touch.touchEnd(e);
+	});
+	$('.js-swipe-entry').on("touchmove", function(e) {
+		nbApp.touch.touchMove(e);
+	});
+	$('.js-swipe-entry').bind("touchstart", function(e) {
+		nbApp.touch.touchStart(e);
+	});
 
-		// $(this).parent('.entry-wrap').addClass('entry-action-open');
+	$('.entries').on("touchend", function(e) {
+		// nbApp.touchEnd(e);
+	});
+	$('.entries').on("touchmove", function(e) {
+		// nbApp.touchMove(e);
+	});
+	$('.entries').bind("touchstart", function(e) {
+		// nbApp.touchStart(e);
 	});
 };

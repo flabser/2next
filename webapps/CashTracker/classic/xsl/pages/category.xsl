@@ -8,12 +8,11 @@
 	</xsl:template>
 
 	<xsl:template name="_content">
-		<div class="view">
+		<div class="view view_category">
 			<div class="view-header">
 				<xsl:call-template name="page-info" />
-				<xsl:apply-templates select="//actionbar" />
 			</div>
-			<div class="view-table">
+			<div class="view-content">
 				<xsl:call-template name="view-table" />
 			</div>
 			<input type="hidden" name="page_id" id="page_id" value="{@id}" />
@@ -21,38 +20,61 @@
 	</xsl:template>
 
 	<xsl:template name="view-table">
-		<xsl:choose>
-			<xsl:when test="//view_content//query/entry">
-				<div class="btable">
-					<xsl:apply-templates select="//view_content" mode="view-table-head" />
-					<xsl:apply-templates select="//view_content//query/entry" mode="view-table-body" />
+		<header class="entries-head">
+			<div class="head-wrap">
+				<label class="entry-select">
+					<input type="checkbox" data-toggle="docid" class="all" />
+				</label>
+				<div class="entry-captions">
+					<span class="vcategory-icon-type"></span>
+					<span class="vcategory-name">
+						<xsl:value-of select="//captions/viewtext1/@caption" />
+					</span>
 				</div>
-			</xsl:when>
-			<xsl:otherwise>
-				<div class="btable">
-					<xsl:apply-templates select="//view_content" mode="view-table-head" />
-				</div>
-				<div class="view-empty"></div>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-
-	<xsl:template match="view_content" mode="view-table-head">
-		<div class="btable-head">
-			<div class="btable-cell tcell-checkbox">
-				<input type="checkbox" data-toggle="docid" class="all" />
 			</div>
-			<div class="btable-cell tcell-icon"></div>
-			<xsl:apply-templates select="//request/page/captions/viewtext1" mode="table-title-cell" />
+		</header>
+		<div class="entries">
+			<xsl:apply-templates select="//view_content//query/entry" mode="view-table-body" />
 		</div>
 	</xsl:template>
 
 	<xsl:template match="entry" mode="view-table-body">
-		<div data-ddbid="{@id}" class="btable-row document {@docid}" id="{@docid}{@doctype}">
-			<div class="btable-cell tcell-checkbox">
+		<div class="entry-wrap">
+			<div class="entry-actions">
+				<a class="entry-action action-delete" href="#" onclick="">
+					<i class="fa fa-trash" />
+				</a>
+			</div>
+			<div data-ddbid="{@id}" class="entry document js-swipe-entry">
+				<label class="entry-select">
+					<input type="checkbox" name="docid" id="{@id}" value="{@doctype}" />
+				</label>
+				<xsl:if test="hasresponse = 'true'">
+					<xsl:call-template name="viewCategory">
+						<xsl:with-param name="colspan" select="'3'" />
+					</xsl:call-template>
+				</xsl:if>
+				<a href="{@url}" class="entry-link">
+					<div class="entry-fields">
+						<span class="entry-field vcategory-icon-type">
+							<i>
+								<xsl:attribute name="class" select="concat('operation-type-icon-', viewcontent/viewtext3)" />
+							</i>
+						</span>
+						<span class="entry-field vcategory-name">
+							<xsl:value-of select="viewcontent/viewtext1" />
+						</span>
+					</div>
+				</a>
+			</div>
+		</div>
+		<xsl:apply-templates select="responses" />
+		
+		<!-- <div data-ddbid="{@id}" class="btable-row document {@docid}" id="{@docid}{@doctype}">
+			<div class="btable-cell cell-checkbox">
 				<input type="checkbox" name="docid" id="{@id}" value="{@doctype}" />
 			</div>
-			<div class="btable-cell tcell-icon">
+			<div class="btable-cell cell-icon">
 				<span>
 					<xsl:attribute name="class" select="concat('operation-type-icon-', viewcontent/viewtext3)" />
 				</span>
@@ -71,7 +93,7 @@
 				</a>
 			</div>
 		</div>
-		<xsl:apply-templates select="responses" />
+		<xsl:apply-templates select="responses" /> -->
 	</xsl:template>
 
 	<xsl:template match="*" mode="table-title-cell">

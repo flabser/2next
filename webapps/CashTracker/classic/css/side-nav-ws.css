@@ -4,11 +4,11 @@
 	right: -200px;
 	top: 0 !important;
 	width: 200px;
-	z-index: 5;
+	z-index: 6;
 }
 
 .nav-ws .fa {
-	color: #666;
+	color: #646464;
 }
 
 body.nav-ws-open {

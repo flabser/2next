@@ -45,9 +45,10 @@ nbApp.delSelectedDocument = function(dbID, typedel) {
 	}
 
 	if (ids.length === 0) {
-		nb.dialog.warn({
-			message : nb.getText('no_selected_documents', 'Не выбран документ для удаления')
-		});
+		nb.utils.notify({
+			message : nb.getText('no_selected_documents', 'Не выбран документ для удаления'),
+			type : 'error'
+		}).show().remove(2000);
 		return;
 	}
 

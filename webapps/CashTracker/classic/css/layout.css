@@ -6,6 +6,7 @@
 	min-width: 320px;
 	position: relative;
 	width: 100%;
+	z-index: 3;
 }
 
 .tablet .layout, .phone .layout, .layout_fullscreen .layout {
@@ -22,7 +23,7 @@
 	max-width: inherit;
 	position: relative;
 	width: 100%;
-	z-index: 3;
+	z-index: 5;
 }
 
 .tablet .layout_header, .phone .layout_header {
@@ -41,7 +42,7 @@
 	position: fixed;
 	top: 60px;
 	transition: all .15s;
-	z-index: 2;
+	z-index: 4;
 }
 
 .tablet .layout_aside, .phone .layout_aside {
@@ -74,7 +75,7 @@
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: 4;
+	z-index: 6;
 }
 
 /* main-load */

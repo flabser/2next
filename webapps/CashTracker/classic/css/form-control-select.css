@@ -1,0 +1,49 @@
+.select {
+	display: inline-block;
+}
+
+.select_button {
+	background: #FFFFFF;
+	border: 1px solid #CBCBCB;
+	border-radius: 3px;
+	color: #999999;
+	cursor: pointer;
+	display: inline-block;
+	height: 26px;
+	padding-left: 8px;
+	white-space: nowrap;
+}
+
+.select_button:hover {
+	border-color: #B2B2B2;
+}
+
+.select_text {
+	color: #333;
+	line-height: 26px;
+}
+
+.select_button-open .select_icon_dropdown {
+	content: '-';
+}
+
+.select_icon_dropdown {
+	content: '+';
+	display: inline-block;
+}
+
+.select_popup {
+	
+}
+
+.select_list {
+	
+}
+
+.select_item {
+	
+}
+
+.select_item-selected {
+	
+}

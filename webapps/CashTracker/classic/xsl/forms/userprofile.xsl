@@ -124,20 +124,20 @@
 									</div>
 									<div class="controls">
 										<div class="span4">
-											<div style="float:left;width:80%">
+											<div style="position:relative">
 												<input type="text" name="instmsgaddress" value="{//fields/instmsgaddress}" style="width:100%" />
+												<xsl:choose>
+													<xsl:when test="//fields/instmsgstatus = 'false'">
+														<span style="display:block;background:#555;height:4px;position:absolute;right:5px;top:5px;width:4px;" title="off"></span>
+													</xsl:when>
+													<xsl:when test="//fields/instmsgstatus = 'true'">
+														<span style="display:block;background:#5CB85C;height:4px;position:absolute;right:5px;top:5px;width:4px;" title="on"></span>
+													</xsl:when>
+													<xsl:otherwise>
+														<span style="display:block;background:#555;height:4px;position:absolute;right:5px;top:5px;width:4px;" title="off"></span>
+													</xsl:otherwise>
+												</xsl:choose>
 											</div>
-											<xsl:choose>
-												<xsl:when test="//fields/instmsgstatus = 'false'">
-													<img src="/SharedResources/img/iconset/bullet_red.png" title="Instant Messenger off" />
-												</xsl:when>
-												<xsl:when test="//fields/instmsgstatus = 'true'">
-													<img src="/SharedResources/img/iconset/bullet_gren.png" title="Instant Messenger on" />
-												</xsl:when>
-												<xsl:otherwise>
-													<img src="/SharedResources/img/iconset/bullet_red.png" title="Instant Messenger off" />
-												</xsl:otherwise>
-											</xsl:choose>
 										</div>
 									</div>
 								</div>

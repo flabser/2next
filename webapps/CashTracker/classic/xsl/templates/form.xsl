@@ -80,7 +80,7 @@
 		<xsl:param name="required" />
 		<xsl:param name="display-mode" /> <!-- inline, block -->
 
-		<label class="form-control">
+		<label class="input-wrapper">
 			<input type="{$type}" name="{../name()}" value="{skey}">
 				<xsl:if test="position() = 1 and $required = 'required'">
 					<xsl:attribute name="required">required</xsl:attribute>
@@ -158,6 +158,46 @@
 				</xsl:otherwise>
 			</xsl:choose>
 			<xsl:value-of select="@viewtext" />
+		</option>
+	</xsl:template>
+
+	<!-- select-view-entry -->
+	<xsl:template match="query" mode="select-view-entry">
+		<xsl:param name="name" />
+		<xsl:param name="value" />
+		<xsl:param name="required" />
+		<xsl:param name="keyAttr" />
+
+		<select name="${name}">
+			<xsl:if test="$required = 'required'">
+				<xsl:attribute name="required">required</xsl:attribute>
+			</xsl:if>
+			<option value=""></option>
+			<xsl:apply-templates select="entry" mode="select-view-entry">
+				<xsl:with-param name="value" select="$value" />
+				<xsl:with-param name="keyAttr" select="$keyAttr" />
+			</xsl:apply-templates>
+		</select>
+	</xsl:template>
+
+	<!-- select-view-entry-option -->
+	<xsl:template match="entry" mode="select-view-entry">
+		<xsl:param name="value" />
+		<xsl:param name="keyAttr" />
+
+		<option>
+			<xsl:if test="@id = $value or @docid = $value">
+				<xsl:attribute name="selected">selected</xsl:attribute>
+			</xsl:if>
+			<xsl:choose>
+				<xsl:when test="$keyAttr = 'docid'">
+					<xsl:attribute name="value" select="@docid" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:attribute name="value" select="@id" />
+				</xsl:otherwise>
+			</xsl:choose>
+			<xsl:value-of select="viewcontent/viewtext" />
 		</option>
 	</xsl:template>
 

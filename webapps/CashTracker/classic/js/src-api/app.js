@@ -27,7 +27,6 @@ nbApp.uiWindowResize = function() {
 		this.uiMakeTouch('phone');
 	} else {
 		$('body').removeClass('phone');
-
 	}
 };
 
@@ -86,9 +85,15 @@ nbApp.uiToggleAvailableActions = function(e) {
 };
 
 nbApp.parseXmlMessageToJson = function(xml) {
-	return nb.utils.parseMessageToJson(xml); // $.xml2json(xml);
+	return nb.utils.parseMessageToJson(xml);
 };
 
 $(document).ready(function() {
 	nbApp.init();
+	window.onunload = window.onbeforeunload = function() {
+		$('#main-load').css({
+			'background-color' : 'rgba(255,255,255,.5)',
+			'display' : 'block'
+		});
+	};
 });

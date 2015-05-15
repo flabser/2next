@@ -36,11 +36,6 @@
 					<xsl:if test="$editmode != 'edit'">
 						<xsl:attribute name="disabled">disabled</xsl:attribute>
 					</xsl:if>
-					<legend class="legend">
-						<div class="legend-tab">
-							<xsl:value-of select="document/captions/properties/@caption" />
-						</div>
-					</legend>
 
 					<div class="fieldset-container">
 						<div class="control-group">
@@ -55,7 +50,12 @@
 							<div class="control-label">
 								<xsl:value-of select="//captions/user/@caption" />
 								<xsl:if test="$editmode = 'edit'">
-									<button type="button" class="btn-picklist" title="{//captions/user/@caption}" onclick="nbApp.dialogChoiceBossAndDemp(this, 'user', false)" />
+									<button type="button" class="btn-text">
+										<xsl:attribute name="class" select="'btn-text btn-picklist'" />
+										<xsl:attribute name="title" select="//captions/user/@caption" />
+										<xsl:attribute name="onclick">nbApp.dialogChoiceBossAndDemp(this, 'user', false)</xsl:attribute>
+										<i class="fa fa-user" />
+									</button>
 								</xsl:if>
 							</div>
 							<div class="controls">
@@ -65,6 +65,7 @@
 								</xsl:call-template>
 								<div>
 									<button class="btn btn-def" onclick="nbApp.sendInvite(this.form.user.value);return false;">
+										<i class="fa fa-envelope" />
 										<xsl:value-of select="//captions/btn_send_invite/@caption" />
 									</button>
 									<div class="hint">
@@ -85,7 +86,12 @@
 							<div class="control-label">
 								<xsl:value-of select="//captions/observers/@caption" />
 								<xsl:if test="$editmode = 'edit'">
-									<button type="button" class="btn-picklist" title="{//captions/observers/@caption}" onclick="nbApp.dialogChoiceBossAndDemp(this, 'observers')" />
+									<button type="button" class="btn-text">
+										<xsl:attribute name="class" select="'btn-text btn-picklist'" />
+										<xsl:attribute name="title" select="//captions/user/@caption" />
+										<xsl:attribute name="onclick">nbApp.dialogChoiceBossAndDemp(this, 'observers')</xsl:attribute>
+										<i class="fa fa-users" />
+									</button>
 								</xsl:if>
 							</div>
 							<div class="controls">

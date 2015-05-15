@@ -8,13 +8,12 @@
 	</xsl:template>
 
 	<xsl:template name="_content">
-		<div class="view">
+		<div class="view view_op">
 			<div class="view-header">
 				<xsl:call-template name="page-info" />
-				<xsl:apply-templates select="//actionbar" />
 			</div>
-			<xsl:apply-templates select="//filter" mode="filter-container" />
-			<div class="view-table">
+			<xsl:apply-templates select="//filter2" mode="filter-container" />
+			<div class="view-content">
 				<xsl:call-template name="view-table" />
 			</div>
 			<input type="hidden" name="page_id" id="page_id" value="{@id}" />
@@ -22,20 +21,49 @@
 	</xsl:template>
 
 	<xsl:template name="view-table">
-		<xsl:choose>
-			<xsl:when test="//view_content//query/entry">
-				<div class="btable oper-table">
-					<xsl:apply-templates select="//view_content" mode="view-table-head" />
-					<xsl:apply-templates select="//view_content//query/entry" mode="view-table-body" />
+		<header class="entries-head">
+			<div class="head-wrap op-head">
+				<label class="entry-select">
+					<input type="checkbox" data-toggle="docid" class="all" />
+				</label>
+				<div class="entry-captions">
+					<span class="op-icon-att">
+						<i class="fa fa-paperclip" />
+					</span>
+					<span class="op-account">
+						<xsl:call-template name="sortingcell">
+							<xsl:with-param name="namefield">
+								<xsl:value-of select="'VIEWTEXT1'" />
+							</xsl:with-param>
+							<xsl:with-param name="sortorder" select="//query/columns/viewtext1/sorting/@order" />
+							<xsl:with-param name="sortmode" select="//query/columns/viewtext1/sorting/@mode" />
+						</xsl:call-template>
+					</span>
+					<span class="op-date">
+						<xsl:call-template name="sortingcell">
+							<xsl:with-param name="namefield">
+								<xsl:value-of select="'VIEWDATE'" />
+							</xsl:with-param>
+							<xsl:with-param name="sortorder" select="//query/columns/viewdate/sorting/@order" />
+							<xsl:with-param name="sortmode" select="//query/columns/viewdate/sorting/@mode" />
+						</xsl:call-template>
+					</span>
+					<span class="op-amount">
+						<xsl:call-template name="sortingcell">
+							<xsl:with-param name="namefield">
+								<xsl:value-of select="'VIEWNUMBER'" />
+							</xsl:with-param>
+							<xsl:with-param name="sortorder" select="//query/columns/viewnumber/sorting/@order" />
+							<xsl:with-param name="sortmode" select="//query/columns/viewnumber/sorting/@mode" />
+						</xsl:call-template>
+					</span>
+					<span class="entry-field op-costcenter"></span>
 				</div>
-			</xsl:when>
-			<xsl:otherwise>
-				<div class="btable oper-table">
-					<xsl:apply-templates select="//view_content" mode="view-table-head" />
-				</div>
-				<div class="view-empty"></div>
-			</xsl:otherwise>
-		</xsl:choose>
+			</div>
+		</header>
+		<div class="entries">
+			<xsl:apply-templates select="//view_content//query/entry" mode="view-table-body" />
+		</div>
 	</xsl:template>
 
 	<!-- filter -->
@@ -88,109 +116,60 @@
 	</xsl:template>
 	<!-- /filter -->
 
-	<xsl:template match="view_content" mode="view-table-head">
-		<div class="btable-head">
-			<div class="btable-cell tcell-checkbox">
-				<input type="checkbox" data-toggle="docid" class="all" />
-			</div>
-			<div class="btable-cell tcell-icon"></div>
-			<div class="btable-cell tcell-cash">
-				<xsl:call-template name="sortingcell">
-					<xsl:with-param name="namefield">
-						<xsl:value-of select="'VIEWTEXT1'" />
-					</xsl:with-param>
-					<xsl:with-param name="sortorder" select="//query/columns/viewtext1/sorting/@order" />
-					<xsl:with-param name="sortmode" select="//query/columns/viewtext1/sorting/@mode" />
-				</xsl:call-template>
-			</div>
-			<div class="btable-cell tcell-date">
-				<xsl:call-template name="sortingcell">
-					<xsl:with-param name="namefield">
-						<xsl:value-of select="'VIEWDATE'" />
-					</xsl:with-param>
-					<xsl:with-param name="sortorder" select="//query/columns/viewdate/sorting/@order" />
-					<xsl:with-param name="sortmode" select="//query/columns/viewdate/sorting/@mode" />
-				</xsl:call-template>
-			</div>
-			<div class="btable-cell tcell-sum">
-				<xsl:call-template name="sortingcell">
-					<xsl:with-param name="namefield">
-						<xsl:value-of select="'VIEWNUMBER'" />
-					</xsl:with-param>
-					<xsl:with-param name="sortorder" select="//query/columns/viewnumber/sorting/@order" />
-					<xsl:with-param name="sortmode" select="//query/columns/viewnumber/sorting/@mode" />
-				</xsl:call-template>
-			</div>
-			<div class="btable-cell tcell-vt">
-				<xsl:value-of select="//captions/viewtext/@caption" />
-			</div>
-		</div>
-	</xsl:template>
-
 	<xsl:template match="entry" mode="view-table-body">
-		<div title="" data-ddbid="{@id}" class="btable-row document {@docid} js_saldo_on_date" id="{@docid}{@doctype}">
-			<xsl:if test="@isread = '0'">
-				<xsl:attribute name="class" select="concat('document ', @docid, ' unread')" />
-			</xsl:if>
-			<div class="btable-cell tcell-checkbox">
-				<input type="checkbox" name="docid" id="{@id}" value="{@id}" />
+		<div class="entry-wrap">
+			<div class="entry-actions">
+				<a class="entry-action action-delete" href="#" onclick="">
+					<i class="fa fa-trash" />
+				</a>
 			</div>
-			<div class="btable-cell tcell-icon">
-				<xsl:apply-templates select=".[@hasattach &gt; 0]" mode="attach-icon" />
-			</div>
-			<div class="btable-cell tcell-cash">
-				<xsl:if test="hasresponse='true'">
-					<xsl:choose>
-						<xsl:when test=".[responses]">
-							<a style="vertical-align:top; margin-left:1px; margin-right:5px" id="a{@docid}">
-								<xsl:attribute name='href'>javascript:nbApp.viewThreadCollapse('{@docid}', '{@doctype}', <xsl:value-of
-									select="position()" />, 1)</xsl:attribute>
-								<img src="/SharedResources/img/classic/minus.gif" id="img{@docid}" />
-							</a>
-						</xsl:when>
-						<xsl:otherwise>
-							<a style="vertical-align:top; margin-left:1px; margin-right:5px" id="a{@docid}">
-								<xsl:attribute name='href'>javascript:nbApp.viewThreadExpand('{@docid}', '{@doctype}', <xsl:value-of
-									select="position()" />, 1)</xsl:attribute>
-								<img src="/SharedResources/img/classic/plus.gif" id="img{@docid}" />
-							</a>
-						</xsl:otherwise>
-					</xsl:choose>
+			<div data-ddbid="{@id}" class="entry document js-swipe-entry js_saldo_on_date">
+				<xsl:if test="@isread = '0'">
+					<xsl:attribute name="class" select="'document unread'" />
 				</xsl:if>
-				<a href="{@url}">
-					<xsl:value-of select="viewcontent/viewtext1" />
-				</a>
-			</div>
-			<div class="btable-cell tcell-date">
-				<a href="{@url}">
-					<xsl:value-of select="substring(viewcontent/viewdate, 0, 11)" />
-				</a>
-			</div>
-			<div class="btable-cell tcell-sum">
-				<a href="{@url}">
-					<span class="vt-sum">
-						<xsl:if test="viewcontent/viewnumber &lt; 0">
-							<xsl:attribute name="class">vt-sum vt-sum-minus</xsl:attribute>
-						</xsl:if>
-						<xsl:value-of select="format-number(viewcontent/viewnumber, '### ###', 'df')" />
-					</span>
-					<!-- <span> <xsl:attribute name="class" select="concat('operation-type-icon-', viewcontent/viewtext3)" /> </span> -->
-				</a>
-			</div>
-			<div class="btable-cell tcell-vt">
-				<a href="{@url}" class="viewtext">
-					<xsl:call-template name="replace-string">
-						<xsl:with-param name="text" select="viewcontent/viewtext" />
-						<xsl:with-param name="replace" select="' -&gt; '" />
-						<xsl:with-param name="with">
-							<xsl:copy-of select="$VIEW_TEXT_ARROW" />
-						</xsl:with-param>
-					</xsl:call-template>
+				<label class="entry-select">
+					<input type="checkbox" name="docid" id="{@id}" value="{@doctype}" />
+				</label>
+				<a href="{@url}" class="entry-link">
+					<div class="entry-fields">
+						<span class="entry-field op-icon-att">
+							<xsl:apply-templates select=".[@hasattach &gt; 0]" mode="attach-icon" />
+						</span>
+						<span class="entry-field op-account">
+							<xsl:value-of select="viewcontent/viewtext1" />
+						</span>
+						<span class="entry-field op-date">
+							<xsl:value-of select="substring(viewcontent/viewdate, 0, 11)" />
+						</span>
+						<span class="entry-field op-amount">
+							<xsl:if test="viewcontent/viewnumber &lt; 0">
+								<xsl:attribute name="class">entry-field op-amount op-amount-minus</xsl:attribute>
+							</xsl:if>
+							<xsl:value-of select="format-number(viewcontent/viewnumber, '### ###', 'df')" />
+						</span>
+						<span class="entry-field vcategory-icon-type">
+							<i>
+								<xsl:attribute name="class" select="concat('operation-type-icon-', viewcontent/viewtext3)" />
+							</i>
+						</span>
+						<span class="entry-field op-costcenter">
+							<xsl:value-of select="viewcontent/viewtext4" />
+						</span>
+						<span class="entry-field op-vt">
+							<span>
+								<xsl:call-template name="replace-string">
+									<xsl:with-param name="text" select="viewcontent/viewtext" />
+									<xsl:with-param name="replace" select="' -&gt; '" />
+									<xsl:with-param name="with">
+										<xsl:copy-of select="$VIEW_TEXT_ARROW" />
+									</xsl:with-param>
+								</xsl:call-template>
+							</span>
+						</span>
+					</div>
 				</a>
 			</div>
 		</div>
-
-		<xsl:apply-templates select="responses" />
 	</xsl:template>
 
 </xsl:stylesheet>

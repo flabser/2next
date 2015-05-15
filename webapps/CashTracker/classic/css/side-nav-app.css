@@ -9,7 +9,7 @@
 }
 
 .nav-app .fa {
-	color: #666;
+	color: #646464;
 }
 
 body.nav-app-open {
@@ -20,7 +20,7 @@ body.nav-app-open {
 	display: block;
 }
 
-.tablet .nav-app-open .nav-app, .phone.nav-app-open .nav-app {
+.tablet.nav-app-open .nav-app, .phone.nav-app-open .nav-app {
 	-moz-transform: translate(230px, 0);
 	-webkit-transform: translate(230px, 0);
 	transform: translate(230px, 0);

@@ -22,14 +22,18 @@ html body .ui-dialog {
 #tabs .ui-tabs-nav li {
 	font-weight: normal;
 	float: left;
+	margin-right: 1px;
 	white-space: nowrap;
 }
 
 #tabs .ui-tabs-nav li a {
 	float: left;
-	font-size: 12.8px;
 	padding: 0.5em 1em;
 	text-decoration: none;
+}
+
+.phone #tabs .ui-tabs-nav li a {
+	padding: 8px 5px;
 }
 
 #tabs .ui-tabs-panel {
@@ -38,12 +42,11 @@ html body .ui-dialog {
 
 #tabs .ui-tabs-nav {
 	background: transparent;
-	border-left: medium none;
+	border-left: none;
 	border-radius: 0;
-	border-right: medium none;
-	border-top: medium none;
-	padding-top: 0.3em;
-	padding-left: 0.3em;
+	border-right: none;
+	border-top: none;
+	padding-left: 3px;
 }
 
 .ui-tabs {

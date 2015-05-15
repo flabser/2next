@@ -8,11 +8,10 @@
 	height: inherit;
 	line-height: inherit;
 	position: relative;
-	white-space: nowrap;
 }
 
 .main-header .fa {
-	color: #666;
+	color: #646464;
 	font-size: 24px;
 	vertical-align: middle;
 }
@@ -21,6 +20,7 @@
 	display: inline-block;
 	height: inherit;
 	line-height: inherit;
+	min-width: 48px;
 	position: relative;
 	text-align: center;
 	vertical-align: top;
@@ -47,11 +47,6 @@
 }
 
 /* */
-.head-item.action-bar {
-	height: inherit;
-	width: auto;
-}
-
 .head-nav-app-toggle {
 	display: none;
 	width: 30px;
@@ -75,13 +70,31 @@
 	padding-bottom: 2px;
 }
 
-.main-header .nav-create {
+/* nav-action */
+.nav-action {
 	background: transparent;
 	border: none;
+	color: #444;
+	font-size: 18px;
+	margin-right: 5px;
+	padding: 0 .3em;
+	width: auto;
 }
 
-.main-header .nav-create i.fa {
-	font-size: 28px;
+.nav-action .action-label {
+	margin-left: 3px;
+}
+
+.main-header .nav-action i.fa {
+	font-size: 18px;
+}
+
+.tablet .nav-action, .phone .nav-action {
+	float: right;
+}
+
+.phone .nav-action .action-label {
+	display: none;
 }
 
 /* nav-search */

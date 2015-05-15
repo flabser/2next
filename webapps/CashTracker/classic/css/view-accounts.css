@@ -1,0 +1,32 @@
+.view_accounts {
+	
+}
+
+.vaccount-name {
+	min-width: 110px;
+	width: 22%;
+}
+
+.vaccount-user {
+	color: #666;
+	width: 22%;
+}
+
+.vaccount-observers {
+	width: 22%;
+}
+
+.vaccount-amount-control {
+	color: #E02117;
+	text-align: right;
+	width: 110px;
+}
+
+@media ( max-width : 570px) {
+	.view_accounts .entry-field.vaccount-observers {
+		display: none;
+	}
+	.vaccount-amount-control {
+		text-align: left;
+	}
+}

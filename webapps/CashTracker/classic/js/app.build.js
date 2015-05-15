@@ -925,7 +925,6 @@ nbApp.uiWindowResize = function() {
 		this.uiMakeTouch('phone');
 	} else {
 		$('body').removeClass('phone');
-
 	}
 };
 
@@ -984,11 +983,17 @@ nbApp.uiToggleAvailableActions = function(e) {
 };
 
 nbApp.parseXmlMessageToJson = function(xml) {
-	return nb.utils.parseMessageToJson(xml); // $.xml2json(xml);
+	return nb.utils.parseMessageToJson(xml);
 };
 
 $(document).ready(function() {
 	nbApp.init();
+	window.onunload = window.onbeforeunload = function() {
+		$('#main-load').css({
+			'background-color' : 'rgba(255,255,255,.5)',
+			'display' : 'block'
+		});
+	};
 });
 
 nbApp.attachInitFileUpload = function(elSelector) {
@@ -1246,17 +1251,24 @@ nbApp.initUI = function() {
 		$('#tabs').tabs();
 	}
 
-	$('.js-swipe-entry').bind("swipe", function(h) {
-		console.log(h);
-		/*if (h.gesture.deltaX < -70) {
-			console.log('swipe left');
-			$(h.target).parent('.entry-wrap').addClass('entry-action-open');
-		} else if (h.gesture.deltaX > 30) {
-			console.log('swipe right');
-			$(h.target).parent('.entry-wrap').removeClass('entry-action-open');
-		}*/
+	$('.js-swipe-entry').on("touchend", function(e) {
+		nbApp.touch.touchEnd(e);
+	});
+	$('.js-swipe-entry').on("touchmove", function(e) {
+		nbApp.touch.touchMove(e);
+	});
+	$('.js-swipe-entry').bind("touchstart", function(e) {
+		nbApp.touch.touchStart(e);
+	});
 
-		// $(this).parent('.entry-wrap').addClass('entry-action-open');
+	$('.entries').on("touchend", function(e) {
+		// nbApp.touchEnd(e);
+	});
+	$('.entries').on("touchmove", function(e) {
+		// nbApp.touchMove(e);
+	});
+	$('.entries').bind("touchstart", function(e) {
+		// nbApp.touchStart(e);
 	});
 };
 
@@ -1304,7 +1316,7 @@ nbApp.initScrollSpySide = function() {
 
 	var offsetTop = 0;
 	var sideOnTop = false;
-	var $side = []; // $('.nav-app .side');
+	var $side = $('.nav-app');
 
 	if ($side.length) {
 		offsetTop = $('.layout_header')[0].clientHeight;
@@ -1316,12 +1328,12 @@ nbApp.initScrollSpySide = function() {
 	function scrollSpySide() {
 		if (window.pageYOffset > offsetTop) {
 			if (!sideOnTop) {
-				$side.css('margin-top', '0px');
+				$side.css('top', '0px');
 				sideOnTop = true;
 			}
 		} else {
 			if (sideOnTop) {
-				$side.css('margin-top', '');
+				$side.css('top', '');
 				sideOnTop = false;
 			}
 		}
@@ -1435,6 +1447,193 @@ var calendarStrings = {
 	}
 };
 
+;
+$(function() {
+	nbApp.touch = {};
+
+	var touch = nbApp.touch;
+	var t = 150;
+	var i = 80;
+	var n = 200;
+	var s = 70;
+	var a = 10;
+	var o = 10;
+	var r = true;
+	var l = "js-swipe";
+
+	touch.touchStart = function(touchEvent) {
+		if (1 === touchEvent.originalEvent.touches.length) {
+			touch.tapSwipedMessage = Boolean(touch.swipedMsg);
+			touch.hideSwipedMsg();
+			touch.resetValue(touchEvent);
+		}
+	};
+
+	touch.touchMove = function(touchEvent) {
+		var changedTouch = touchEvent.originalEvent.changedTouches[0];
+		if (touch.isValidTouch(touchEvent)) {
+			touch.delta = touch.x - changedTouch.pageX;
+			touch.defineUserAction(changedTouch);
+			if (touch.startSwipe) {
+				if (!touch.startSwipeTriggered) {
+					touch.startSwipeTriggered = true;
+				}
+				r && touch.move(touchEvent.currentTarget);
+				touchEvent.preventDefault();
+			}
+		}
+	};
+
+	touch.touchEnd = function(touchEvent) {
+		if (touch.isValidTouch(touchEvent, true) && touch.startSwipe) {
+			touch.swipedMsg = touchEvent.currentTarget;
+			if (touch.delta > i || new Date - touch.startTime < n) {
+				// qu.animations.setStyle(touch.swipedMsg, -s, 0, t);
+
+				touch.swipedMsg.style.cssText = '';
+
+				var parent = $(touch.swipedMsg).parent('.entry-wrap');
+				parent.addClass('entry-action-open');
+
+				touch.swipedMsg.classList.add(l);
+			} else {
+				touch.hideSwipedMsg();
+			}
+			touchEvent.stopPropagation();
+			touchEvent.preventDefault()
+		}
+	};
+
+	touch.hideSwipedMsg = function() {
+		if (touch.swipedMsg) {
+			var i = touch.swipedMsg;
+			setTimeout(function() {
+				i.classList.remove(l);
+				i = null
+			}, t);
+			// qu.animations.setStyle(touch.swipedMsg, 0, 0, t);
+
+			touch.swipedMsg.style.cssText = '';
+
+			var parent = $(touch.swipedMsg).parent('.entry-wrap');
+			parent.removeClass('entry-action-open');
+
+			touch.swipedMsg = null
+		}
+	};
+
+	touch.resetValue = function(t) {
+		var i = t.originalEvent.changedTouches[0];
+		touch.touchId = i.identifier;
+		touch.startTime = new Date;
+		touch.startSwipe = !1;
+		touch.startScroll = !1;
+		touch.delta = 0;
+		touch.x = i.pageX;
+		touch.y = i.pageY;
+		touch.startSwipeTriggered = !1
+	};
+
+	touch.bindEvents = function(t, i) {
+		t["touchstart " + i] = touch.touchStart;
+		t["touchend " + i] = touch.touchEnd;
+		t["touchmove " + i] = touch.touchMove
+	};
+
+	touch.defineUserAction = function(t) {
+		Math.abs(touch.y - t.pageY) > o && !touch.startSwipe ? touch.startScroll = !0 : touch.delta > a
+				&& !touch.startScroll && (touch.startSwipe = !0)
+	};
+
+	touch.isValidTouch = function(t, i) {
+		var n = i ? "changedTouches" : "targetTouches";
+		return t.originalEvent[n][0].identifier === touch.touchId
+	};
+
+	touch.move = function(el) {
+		var i = Math.min(-touch.delta, 0);
+		-s > i && (i = -s + (s + i) / 8);
+		// qu.animations.setStyle(el, i, 0, 0)
+
+		el.style.cssText = 'transition:transform 0ms ease-in-out;-moz-transform:translate3d(' + i + 'px,0,0);-webkit-transform:translate3d(' + i + 'px,0,0);transform:translate3d(' + i + 'px,0,0)';
+	};
+});
+;
+$(function() {
+
+	var isShow = false;
+	var clickYOffset = 0;
+	var click = false;
+	var arrowUp = '▲';
+	var arrowDown = '▼';
+
+	var to_top = $('<div class="to_top"><div class="to_top-panel"><div class="to_top-button"></div></div></div>');
+
+	$('body').append(to_top);
+
+	var btn = $('.to_top-button', to_top);
+
+	$('.to_top-panel', to_top).click(function() {
+		click = true;
+
+		if (!clickYOffset) {
+			clickYOffset = window.pageYOffset;
+			btn.html(arrowDown);
+			$.scrollTo($('body'), 100, {
+				axis : 'y'
+			});
+		} else {
+			btn.html(arrowUp);
+			$.scrollTo($('body'), 100, {
+				axis : 'y',
+				offset : clickYOffset
+			});
+			clickYOffset = 0;
+		}
+	});
+
+	$(document).bind('mousewheel', function(event, delta) {
+		if (click) {
+			click = false;
+			clickYOffset = 0;
+			btn.html(arrowUp);
+
+			if (window.pageYOffset == 0 && delta > 0) {
+				show_or_hide();
+			}
+		} else {
+			if (isShow && window.pageYOffset == 0) {
+				to_top.hide();
+				isShow = false;
+				clickYOffset = 0;
+			}
+		}
+	});
+
+	$(window).scroll(show_or_hide);
+
+	function show_or_hide() {
+		if (click) {
+			return;
+		}
+
+		if (window.pageYOffset > 300) {
+			if (!isShow) {
+				to_top.show();
+				btn.html(arrowUp);
+				isShow = true;
+			}
+		} else {
+			if (isShow) {
+				to_top.hide();
+				btn.html(arrowDown);
+				isShow = false;
+			}
+		}
+	}
+
+	show_or_hide();
+});
 nbApp.saveUserProfile = function() {
 
 	if ($('#newpwd').val() != $('#newpwd2').val()) {
@@ -1527,9 +1726,10 @@ nbApp.delSelectedDocument = function(dbID, typedel) {
 	}
 
 	if (ids.length === 0) {
-		nb.dialog.warn({
-			message : nb.getText('no_selected_documents', 'Не выбран документ для удаления')
-		});
+		nb.utils.notify({
+			message : nb.getText('no_selected_documents', 'Не выбран документ для удаления'),
+			type : 'error'
+		}).show().remove(2000);
 		return;
 	}
 
@@ -1835,7 +2035,6 @@ nbApp.dialogChoiceCostCenter = function(el) {
 
 nbApp.dialogChoiceBossAndDemp = function(el, fieldName, isMulti) {
 	var dlg = nb.dialog.show({
-		effect : "shake",
 		targetForm : el.form.name,
 		fieldName : fieldName,
 		dialogFilterListItem : ".tree-entry",

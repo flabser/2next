@@ -11,9 +11,8 @@
 		<div class="view">
 			<div class="view-header">
 				<xsl:call-template name="page-info" />
-				<xsl:apply-templates select="//actionbar" />
 			</div>
-			<div class="view-table">
+			<div class="view-content">
 				<xsl:call-template name="view-table" />
 			</div>
 			<input type="hidden" name="page_id" id="page_id" value="{@id}" />
@@ -39,7 +38,7 @@
 
 	<xsl:template match="view_content" mode="view-table-head">
 		<div class="btable-head">
-			<div class="btable-cell tcell-checkbox">
+			<div class="btable-cell cell-checkbox">
 				<input type="checkbox" data-toggle="docid" class="all" />
 			</div>
 			<div class="btable-cell">
@@ -53,7 +52,7 @@
 
 	<xsl:template match="entry" mode="view-table-body">
 		<div data-ddbid="{@id}" class="btable-row document {@docid}" id="{@docid}{@doctype}">
-			<div class="btable-cell tcell-checkbox">
+			<div class="btable-cell cell-checkbox">
 				<input type="checkbox" name="docid" id="{@id}" value="{@doctype}" />
 			</div>
 			<div class="btable-cell">

@@ -11,9 +11,8 @@
 		<div class="view">
 			<div class="view-header">
 				<xsl:call-template name="page-info" />
-				<xsl:apply-templates select="//actionbar" />
 			</div>
-			<div class="view-table">
+			<div class="view-content">
 				<xsl:call-template name="view-table" />
 			</div>
 			<input type="hidden" name="page_id" id="page_id" value="{@id}" />

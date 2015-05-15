@@ -32,11 +32,6 @@
 					<xsl:if test="$editmode != 'edit'">
 						<xsl:attribute name="disabled">disabled</xsl:attribute>
 					</xsl:if>
-					<legend class="legend">
-						<div class="legend-tab">
-							<xsl:value-of select="//captions/properties/@caption" />
-						</div>
-					</legend>
 
 					<div class="fieldset-container">
 						<div class="control-group">

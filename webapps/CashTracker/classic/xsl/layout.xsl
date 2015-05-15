@@ -25,9 +25,10 @@
 				<xsl:with-param name="w_title" select="$w_title" />
 				<xsl:with-param name="include" select="$include" />
 			</xsl:call-template>
-			<body class="no_transition {$body_class}">
-				<div class="content-overlay js-content-overlay"></div>
-				<div class="layout {$aside_collapse}">
+			<body class="no_transition {$body_class}" onresize="nbApp.uiWindowResize()">
+				<div class="main-load" id="main-load"></div>
+				<div class="layout layout_header-fixed {$aside_collapse}">
+					<div class="content-overlay" id="content-overlay"></div>
 					<header class="layout_header">
 						<xsl:call-template name="main-header" />
 					</header>
@@ -55,23 +56,22 @@
 				<xsl:value-of select="$w_title" />
 			</title>
 			<link rel="shortcut icon" href="favicon.ico" />
+			<meta name="format-detection" content="telephone=no" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-			<link type="text/css" rel="stylesheet"
-				href="/SharedResources/jquery/css/jquery-ui-1.10.4.custom/css/smoothness/jquery-ui-1.10.4.custom.min.css" />
+			<link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css" />
+			<link type="text/css" rel="stylesheet" href="/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
 			<link type="text/css" rel="stylesheet" href="classic/css/all.min.css" />
 
 			<xsl:call-template name="STYLE_FIX_FIELDSET" />
 
-			<script type="text/javascript" src="/SharedResources/jquery/js/jquery-1.11.0.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/jquery/js/jquery-ui-1.10.4.custom.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-1.11.3.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
 
-			<script type="text/javascript" src="/SharedResources/jquery/js/ui/minified/i18n/jquery.ui.datepicker-ru.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/jquery/js/cookie/jquery.cookie.js"></script>
-			<script type="text/javascript" src="/SharedResources/jquery/js/scrollTo/scrollTo.js"></script>
-			<script type="text/javascript" src="/SharedResources/jquery/js/jquery.number.js"></script>
-			<script type="text/javascript" src="/SharedResources/jquery/js/jquery.xml2json.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.cookie.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.scrollTo.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.mobile.touch.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.number.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/js/mobile-detect.min.js"></script>
 
 			<script type="text/javascript" src="classic/js/app.build.js"></script>
@@ -82,47 +82,63 @@
 
 	<xsl:template name="main-header">
 		<div class="main-header">
-			<div class="nav-app-toggle js-toggle-nav-app"></div>
-			<div class="brand">
+			<div class="head-item head-nav-app-toggle" id="toggle-nav-app">
+				<div class="nav-app-toggle"></div>
+			</div>
+			<div class="head-item brand">
 				<img alt="logo" src="{$APP_LOGO_IMG_SRC}" class="brand-logo" />
 				<span class="brand-title">
 					<xsl:value-of select="$APP_NAME" />
 				</span>
 			</div>
-			<div class="nav">
-				<xsl:if test="not(document)">
-					<div class="nav-item nav-add">
-						<button class="add-new" onclick="alert('была бы такая кнопка, нажимаешь а она все делает')">
-							<i class="fa fa-pencil-square-o" />
-						</button>
-					</div>
-					<div class="nav-item nav-search">
-						<div class="search-toggle" title="Поиск" onclick="nbApp.toggleSearchForm()">
-							<i class="fa fa-search" />
-						</div>
-						<div class="search" id="search-form-block">
-							<div class="search-toggle-back" onclick="nbApp.toggleSearchForm()">
-								<i class="fa fa-chevron-left" />
-							</div>
-							<form action="Provider" method="get" name="search">
-								<input type="hidden" name="type" value="page" />
-								<input type="hidden" name="id" value="search" />
-								<input type="search" name="keyword" value="{//search_keyword}" class="search-keyword" required="required"
-									placeholder="Поиск" />
-								<button type="submit" class="search-button" title="Поиск" value="">
-									<i class="fa fa-search" />
-								</button>
-							</form>
-						</div>
-					</div>
-				</xsl:if>
-				<div class="nav-item nav-toggle">
-					<div class="nav-ws-toggle js-toggle-nav-ws"></div>
-				</div>
+			<div class="head-item head-nav-ws-toggle">
+				<div class="nav-ws-toggle" id="toggle-nav-ws"></div>
 			</div>
+			<xsl:if test="not(document)">
+				<div class="head-item nav-search-toggle" title="Поиск" id="toggle-head-search">
+					<i class="fa fa-search" />
+				</div>
+				<div class="head-item nav-search" id="search-block">
+					<div class="search-toggle-back" id="search-close">
+						<i class="fa fa-chevron-left" />
+					</div>
+					<form action="Provider" method="GET" name="search">
+						<input type="hidden" name="type" value="page" />
+						<input type="hidden" name="id" value="search" />
+						<input type="search" name="keyword" value="{//search_keyword}" class="search-keyword" required="required"
+							placeholder="Поиск" />
+						<button type="submit" class="search-btn" title="Поиск">
+							<i class="fa fa-search" />
+						</button>
+					</form>
+				</div>
+				<xsl:apply-templates select="//actionbar/action[@id = 'add_new']" mode="header" />
+			</xsl:if>
 		</div>
 	</xsl:template>
 
 	<xsl:template name="main-footer" />
+
+	<xsl:template match="action" mode="header">
+		<a class="no-desktop head-item nav-action" title="{@hint}" href="#" data-action="{@id}">
+			<xsl:if test="js">
+				<xsl:attribute name="href" select="concat('javascript:', js)" />
+			</xsl:if>
+			<xsl:if test="@url != ''">
+				<xsl:attribute name="href" select="@url" />
+			</xsl:if>
+			<xsl:choose>
+				<xsl:when test="@id = 'add_new'">
+					<i class="fa fa-plus" />
+				</xsl:when>
+				<xsl:when test="@id = 'delete_document'">
+					<i class="fa fa-remove" />
+				</xsl:when>
+			</xsl:choose>
+			<span class="action-label">
+				<xsl:value-of select="@caption" />
+			</span>
+		</a>
+	</xsl:template>
 
 </xsl:stylesheet>

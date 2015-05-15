@@ -1,22 +1,3 @@
-.action-bar-top.action-bar-fixed {
-	background: #FFF;
-	/* background: #fff59d url(../img/yellow_background.png) 0 0 no-repeat;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover; */
-
-	border: 1px solid #CCC;
-	border-top: none;
-	box-shadow: 0 9px 9px -9px #999;
-	max-width: inherit;
-	overflow: hidden;
-	position: fixed;
-	top: 62px;
-	width: inherit;
-	z-index: 3;
-}
-
 .action-bar {
 	margin: 0;
 	padding: 4px 2px;
@@ -32,74 +13,27 @@
 	visibility: hidden;
 }
 
-.action-bar-dynamic {
-	display: block;
-	margin: 0;
+.btn.action_save_and_close, .btn.action_save_user_profile {
+	background-color: #FFED81;
+	border: 1px solid #FFCE00;
 }
 
-.action-bar-container {
-	display: block;
-	position: relative;
-	text-align: left;
+.btn.action_save_and_close:hover, .btn.action_save_user_profile:hover {
+	background: #FFF1A8;
 }
 
-.action-bar-dynamic.active {
-	display: block;
+.btn.action_save_and_close:active, .btn.action_save_user_profile:active {
+	background: #FFED81 !important;
 }
 
-.action-bar-dynamic.active.expanded .action-bar-container {
-	display: block;
-}
-
-.action-bar-toggle {
-	background: #E5E7ED;
-	border: 0px none currentColor;
-	box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-	box-sizing: border-box;
-	color: #243140;
-	cursor: pointer;
+.action-icon {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	background-size: cover;
 	display: none;
-	float: right;
-	padding: 1.4em;
-	position: relative;
-	text-align: center;
-	text-shadow: 0px 1px rgba(255, 255, 255, 0.196);
-}
-
-.action-bar-toggle:active {
-	background: #CDD1DC !important;
-	color: #1D2938;
-}
-
-.action-bar-toggle:hover {
-	background: #DCDFE7;
-	color: #243140;
-}
-
-.action-target-count {
-	color: #333;
-	display: inline-block;
-	padding: .5em;
-}
-
-@media ( max-width : 768px ) , handheld {
-	.action-bar-dynamic {
-		bottom: 1px;
-		display: none;
-		position: fixed;
-		right: 0;
-		z-index: 998;
-	}
-	.action-bar-dynamic .action-bar-container {
-		background-color: rgba(0, 0, 0, 0.8);
-		display: none;
-		padding: .5em .5em 1.3em .5em;
-		text-align: center;
-	}
-	.action-bar-dynamic .action-bar-toggle {
-		display: block;
-	}
-	.action-target-count {
-		color: #FFF;
-	}
+	height: 16px;
+	margin-right: 3px;
+	vertical-align: middle;
+	width: 16px;
 }

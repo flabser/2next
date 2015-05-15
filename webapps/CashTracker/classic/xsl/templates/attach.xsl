@@ -29,15 +29,11 @@
 				<span class="rtf-comment"></span>
 				<div class="rtf-action">
 					<a href="javascript:void(0)" class="attach-action-add-comment" title="{$caption_add_comment}" data-click="add_comment">
-						<i>
-							<img src="/SharedResources/img/classic/icons/comment_add.png" />
-						</i>
+						<i class="fa fa-comment-o"></i>
 						<xsl:value-of select="$caption_add_comment" />
 					</a>
 					<a href="javascript:void(0)" class="attach-action-remove-file" title="{$caption_delete_file}" data-click="remove">
-						<i>
-							<img src="/SharedResources/img/iconset/cross.png" height="13px" />
-						</i>
+						<i class="fa fa-remove"></i>
 						<xsl:value-of select="$caption_delete_file" />
 					</a>
 				</div>
@@ -65,23 +61,19 @@
 					<xsl:if
 						test="$extension = 'jpg' or $extension = 'jpeg' or $extension = 'gif' or $extension = 'bmp' or $extension = 'png'">
 						<a href="javascript:void(0)" class="attach-action-preview" title="preview" onclick="nbApp.attachPreview(this)">
-							<i class="icon-eye-open"></i>
+							<i class="fa fa-eye"></i>
 							<xsl:value-of select="$caption_file_preview" />
 						</a>
 					</xsl:if>
 					<xsl:if test="false() and comment = ''">
 						<a href="javascript:void(0)" class="attach-action-add-comment" title="{$caption_add_comment}" onclick="nbApp.attachAddComment(this, '{@hash}')">
-							<i>
-								<img src="/SharedResources/img/classic/icons/comment_add.png" />
-							</i>
+							<i class="fa fa-comment-o"></i>
 							<xsl:value-of select="$caption_add_comment" />
 						</a>
 					</xsl:if>
 					<a href="javascript:void(0)" class="attach-action-remove-file" title="{$caption_delete_file}"
 						onclick="nbApp.attachRemove(this, '{$formsesid}', '{@filename}', '{@hash}')">
-						<i>
-							<img src="/SharedResources/img/iconset/cross.png" height="13px" />
-						</i>
+						<i class="fa fa-remove"></i>
 						<xsl:value-of select="$caption_delete_file" />
 					</a>
 				</div>

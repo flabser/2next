@@ -24,8 +24,8 @@
 			<xsl:with-param name="active_aside_id" select="document/fields/cash" />
 			<xsl:with-param name="aside_collapse" select="'aside_collapse'" />
 			<xsl:with-param name="include">
-				<script src="/SharedResources/jquery/js/jquery-fileupload/js/jquery.fileupload.js"></script>
-				<script src="/SharedResources/jquery/js/jquery-fileupload/js/vendor/jquery.ui.widget.js"></script>
+				<script src="/SharedResources/jquery/jquery-fileupload/js/jquery.fileupload.js"></script>
+				<script src="/SharedResources/jquery/jquery-fileupload/js/vendor/jquery.ui.widget.js"></script>
 				<script type="text/javascript">
 					var ddbid = '<xsl:value-of select="document/@id" />';
 					<![CDATA[
@@ -59,6 +59,7 @@
 						<![CDATA[
 						$(function() {
 							$('#date').datepicker({
+								dateFormat: "dd.mm.yy",
 								showOn: 'focus',
 								regional: ['ru'],
 								firstDay: 1,
@@ -85,9 +86,9 @@
 
 	<xsl:template name="_content">
 		<header class="form-header">
-			<h3>
+			<h3 class="doc-title">
 				<small id="saldo" class="pull-right" title="Сальдо"></small>
-				<div class="doc-title">
+				<div>
 					<xsl:value-of select="document/captions/title/@caption" />
 					<xsl:if test="document/fields/vn and document/fields/vn != ''">
 						<xsl:value-of select="concat(' № ', document/fields/vn)" />
@@ -101,13 +102,13 @@
 		</header>
 		<section class="form-content">
 			<div id="tabs">
-				<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-					<li class="ui-state-default ui-corner-top">
+				<ul class="ui-tabs-nav">
+					<li>
 						<a href="#tabs-1">
 							<xsl:value-of select="document/captions/properties/@caption" />
 						</a>
 					</li>
-					<li class="ui-state-default ui-corner-top">
+					<li>
 						<a href="#tabs-2">
 							<xsl:value-of select="document/captions/attachments/@caption" />
 							<xsl:if test="count(//document/fields/rtfcontent/entry) gt 0">
@@ -117,20 +118,13 @@
 							</xsl:if>
 						</a>
 					</li>
-					<li class="ui-state-default ui-corner-top">
+					<li>
 						<a href="#tabs-3">
 							<xsl:value-of select="document/captions/additional/@caption" />
 						</a>
 					</li>
-					<span style="float:right; font-size:.8em">
-						<xsl:value-of select="//document/captions/author/@caption" />
-						:
-						<span style="font-weight:normal;">
-							<xsl:value-of select="document/fields/author" />
-						</span>
-					</span>
 				</ul>
-				<div class="ui-tabs-panel" id="tabs-1">
+				<div id="tabs-1">
 					<form action="Provider" name="frm" method="post" id="frm" enctype="application/x-www-form-urlencoded">
 						<input type="hidden" name="last_page" value="{history/entry[@type = 'page'][last()]}" disabled="disabled" />
 						<fieldset name="property" class="fieldset">
@@ -162,8 +156,9 @@
 									<div class="control-label">
 										<xsl:value-of select="document/captions/category/@caption" />
 										<xsl:if test="$editmode = 'edit'">
-											<button type="button" class="btn-picklist" onclick="nbApp.dialogChoiceCategory(this)">
+											<button type="button" class="btn-text" onclick="nbApp.dialogChoiceCategory(this)">
 												<xsl:attribute name="title" select="document/captions/category/@caption" />
+												<i class="fa fa-list-alt icn-btn"></i>
 											</button>
 										</xsl:if>
 									</div>
@@ -221,21 +216,14 @@
 								<div class="control-group">
 									<div class="control-label">
 										<xsl:value-of select="document/captions/costcenter/@caption" />
-										<xsl:if test="$editmode = 'edit'">
-											<button type="button" class="btn-picklist">
-												<xsl:if test="document/fields/typeoperation ='transfer' and document/@status != 'new'">
-													<xsl:attribute name="style">display:none</xsl:attribute>
-												</xsl:if>
-												<xsl:attribute name="title" select="document/captions/costcenter/@caption" />
-												<xsl:attribute name="onclick">nbApp.dialogChoiceCostCenter(this)</xsl:attribute>
-											</button>
-										</xsl:if>
 									</div>
 									<div class="controls">
-										<xsl:call-template name="field">
+										<xsl:apply-templates select="//page[@id = 'costcenter-list']//query" mode="select-view-entry">
+											<xsl:with-param name="required" select="''" />
 											<xsl:with-param name="name" select="'costcenter'" />
-											<xsl:with-param name="node" select="document/fields/costcenter" />
-										</xsl:call-template>
+											<xsl:with-param name="value" select="document/fields/costcenter" />
+											<xsl:with-param name="keyAttr" select="'docid'" />
+										</xsl:apply-templates>
 									</div>
 								</div>
 								<!-- Основание -->
@@ -253,7 +241,7 @@
 								<!-- documented -->
 								<div class="control-group">
 									<div class="controls">
-										<label class="form-control">
+										<label class="input-wrapper">
 											<input type="checkbox" name="documented" id="documented" value="1">
 												<xsl:attribute name="title" select="document/fields/documented/@caption" />
 												<xsl:if test="document/fields/requiredocument='1' or $editmode='readonly'">

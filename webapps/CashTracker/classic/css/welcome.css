@@ -2,8 +2,10 @@ body.wlc {
 	background-color: #FFF;
 }
 
-body.touch.wlc {
-	font-size: 14px;
+@media ( max-width : 768px) {
+	body.wlc {
+		font-size: 14px;
+	}
 }
 
 .wlc .layout {
@@ -17,10 +19,12 @@ body.touch.wlc {
 	border-bottom: 1px solid #F6F5F3;
 	box-shadow: none;
 	height: 70px;
+	position: relative;
 }
 
 .wlc .layout_content {
 	margin: 0;
+	padding: 0 !important;
 }
 
 .wlc .layout_footer {
@@ -142,18 +146,25 @@ body.touch.wlc {
 	text-align: center;
 }
 
-.touch .wlc_promo h1 {
-	font-size: 24px;
-	padding: 1em;
-}
-
-.touch .wlc_promo h1 div {
-	display: inline-block;
+@media ( max-width : 768px) {
+	.wlc_promo h1 {
+		font-size: 24px;
+		padding: 1em;
+	}
+	.wlc_promo h1 div {
+		display: inline-block;
+	}
 }
 
 .wlc-child-page .wlc_promo h1 {
 	font-size: 18px;
 	padding: 1em;
+}
+
+@media ( max-width : 768px) {
+	.wlc-child-page .wlc_promo h1 {
+		padding: .8em;
+	}
 }
 
 .wlc-child-page .wlc_promo h1 div {
@@ -180,9 +191,11 @@ body.touch.wlc {
 	margin: 0;
 }
 
-.touch .wlc-page-content h1 {
-	font-size: 1.4em;
-	margin-top: 0;
+@media ( max-width : 768px) {
+	.wlc-page-content h1 {
+		font-size: 1.4em;
+		margin-top: 0;
+	}
 }
 
 .wlc-page-content section {

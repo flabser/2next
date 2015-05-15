@@ -13,6 +13,24 @@ body {
 	box-sizing: border-box;
 }
 
+/* on-desktop */
+.on-desktop {
+	
+}
+
+html body.tablet .on-desktop, html body.phone .on-desktop {
+	display: none !important;
+}
+
+/* no-desktop */
+html body .no-desktop {
+	display: none;
+}
+
+html body.tablet .no-desktop, html body.phone .no-desktop {
+	display: block;
+}
+
 a {
 	color: #2222CC;
 	margin: auto;

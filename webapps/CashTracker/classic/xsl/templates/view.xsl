@@ -12,28 +12,28 @@
 				<xsl:when test="$sortorder = 'ASC' and $sortmode = 'ON'">
 					<xsl:attribute name="href">javascript:nbApp.viewSortColumn('<xsl:value-of select="/request/@id" />', '<xsl:value-of
 						select="$namefield" />', 'desc')</xsl:attribute>
-					<img src="/SharedResources/img/iconset/br_up_green.png" style="margin-right:7px; height:12px; width:12px" />
+					<i class="fa fa-chevron-up" style="color:green;"></i>
 				</xsl:when>
 				<xsl:when test="$sortmode = 'OFF' or $sortorder = 'DESC'">
 					<xsl:attribute name="href">javascript:nbApp.viewSortColumn('<xsl:value-of select="/request/@id" />', '<xsl:value-of
 						select="$namefield" />', 'asc')</xsl:attribute>
-					<img src="/SharedResources/img/iconset/br_up.png" style="height:12px; width:12px; margin-right:7px" />
+					<i class="fa fa-chevron-up" style="color:black;"></i>
 				</xsl:when>
 				<xsl:when test="$sortmode = 'OFF'">
 					<xsl:attribute name="href">javascript:nbApp.viewSortColumn('<xsl:value-of select="/request/@id" />', '<xsl:value-of
 						select="$namefield" />', 'asc')</xsl:attribute>
-					<img src="/SharedResources/img/iconset/br_up.png" style="height:12px; width:12px; margin-right:7px" />
+					<i class="fa fa-chevron-up" style="color:black;"></i>
 				</xsl:when>
 			</xsl:choose>
-			<span style="vertical-align:2px">
+			<span style="margin:0 2px">
 				<xsl:value-of select="//page/captions/*[name() = lower-case($namefield)]/@caption" />
 			</span>
 			<xsl:choose>
 				<xsl:when test="$sortorder = 'DESC' and $sortmode = 'ON'">
-					<img src="/SharedResources/img/iconset/br_down_green.png" style="margin-left:7px; height:12px; width:12px" />
+					<i class="fa fa-chevron-down" style="color:green;"></i>
 				</xsl:when>
 				<xsl:when test="$sortmode = 'OFF' or $sortorder = 'ASC'">
-					<img src="/SharedResources/img/iconset/br_down.png" style="margin-left:7px; height:12px; width:12px" />
+					<i class="fa fa-chevron-down" style="color:black;"></i>
 				</xsl:when>
 			</xsl:choose>
 		</a>
@@ -41,7 +41,7 @@
 
 	<xsl:template name="page-info">
 		<div class="page-info">
-			<h3>
+			<header>
 				<div class="pull-right">
 					<xsl:apply-templates select="//saldo/response/content/saldo" />
 				</div>
@@ -61,14 +61,21 @@
 						</small>
 					</sup>
 				</xsl:if>
-			</h3>
-			<div class="clearfix"></div>
+			</header>
+			<nav>
+				<div class="pull-right">
+					<xsl:apply-templates select="//view_content" mode="page-navigator" />
+				</div>
+				<div class="on-desktop">
+					<xsl:apply-templates select="//actionbar" />
+				</div>
+			</nav>
 		</div>
 	</xsl:template>
 
 	<!-- attach-icon -->
 	<xsl:template match="entry" mode="attach-icon">
-		<img src="/SharedResources/img/classic/icons/attach.png" title="Вложений в документе: {@hasattach}" />
+		<i class="fa fa-paperclip" title="Вложений в документе: {@hasattach}" />
 	</xsl:template>
 
 	<!-- viewCategory -->

@@ -30,11 +30,6 @@
 					<xsl:if test="$editmode != 'edit'">
 						<xsl:attribute name="disabled">disabled</xsl:attribute>
 					</xsl:if>
-					<legend class="legend">
-						<div class="legend-tab">
-							<xsl:value-of select="//captions/properties/@caption" />
-						</div>
-					</legend>
 
 					<div class="fieldset-container">
 						<div class="control-group">
@@ -81,9 +76,10 @@
 								</input>
 								<div class="formula control_visibility_target span7">
 									<label>
-										<xsl:value-of select="//captions/formula/@caption" />
-										<button type="button" class="btn-picklist" onclick="nbApp.dialogChoiceCategoryForFormula(this)">
+										<button type="button" class="btn-text btn-picklist" onclick="nbApp.dialogChoiceCategoryForFormula(this)">
 											<xsl:attribute name="title" select="//captions/formula/@caption" />
+											<xsl:value-of select="//captions/formula/@caption" />
+											<i class="fa fa-list-alt icn-btn"></i>
 										</button>
 									</label>
 									<br />
@@ -96,7 +92,7 @@
 						</div>
 						<div class="control-group">
 							<div class="controls">
-								<label class="form-control">
+								<label class="input-wrapper">
 									<input type="checkbox" name="disable_selection" value="1">
 										<xsl:attribute name="title" select="//captions/disable_selection/@caption" />
 										<xsl:if test="//fields/disable_selection = '1'">
@@ -108,7 +104,7 @@
 									</span>
 								</label>
 								<br />
-								<label class="form-control">
+								<label class="input-wrapper">
 									<input type="checkbox" name="requiredocument" value="1">
 										<xsl:attribute name="title" select="//captions/requiredocument/@caption" />
 										<xsl:if test="//fields/requiredocument = '1'">
@@ -120,7 +116,7 @@
 									</span>
 								</label>
 								<br />
-								<label class="form-control">
+								<label class="input-wrapper">
 									<input type="checkbox" name="requirecostcenter" value="1">
 										<xsl:attribute name="title" select="//captions/requirecostcenter/@caption" />
 										<xsl:if test="//fields/requirecostcenter = '1'">
@@ -136,12 +132,14 @@
 						<div class="control-group">
 							<div class="control-label">
 								<xsl:value-of select="//captions/accessroles/@caption" />
-								<button type="button" class="btn-picklist">
+								<button type="button" class="btn-text">
 									<xsl:attribute name="title" select="//captions/accessroles/@caption" />
 									<xsl:attribute name="onclick">nbApp.dialogChoiceAccessRoles(this)</xsl:attribute>
+									<i class="fa fa-list-alt icn-btn"></i>
 								</button>
-								<button type="button" class="btn-clear">
+								<button type="button" class="btn-text">
 									<xsl:attribute name="onclick">nbApp.clearFormField('accessroles');</xsl:attribute>
+									<i class="fa fa-remove icn-btn"></i>
 								</button>
 							</div>
 							<div class="controls">

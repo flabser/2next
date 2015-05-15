@@ -8,12 +8,11 @@
 	</xsl:template>
 
 	<xsl:template name="_content">
-		<div class="view">
+		<div class="view view_accounts">
 			<div class="view-header">
 				<xsl:call-template name="page-info" />
-				<xsl:apply-templates select="//actionbar" />
 			</div>
-			<div class="view-table">
+			<div class="view-content">
 				<xsl:call-template name="view-table" />
 			</div>
 			<input type="hidden" name="page_id" id="page_id" value="{@id}" />
@@ -21,41 +20,60 @@
 	</xsl:template>
 
 	<xsl:template name="view-table">
-		<xsl:choose>
-			<xsl:when test="//view_content//query/entry">
-				<div class="btable">
-					<xsl:apply-templates select="//view_content" mode="view-table-head" />
-					<xsl:apply-templates select="//view_content//query/entry" mode="view-table-body" />
+		<header class="entries-head">
+			<div class="head-wrap">
+				<label class="entry-select">
+					<input type="checkbox" data-toggle="docid" class="all" />
+				</label>
+				<div class="entry-captions">
+					<span class="vaccount-name">
+						<xsl:value-of select="//captions/viewtext1/@caption" />
+					</span>
+					<span class="vaccount-user">
+						<xsl:value-of select="//captions/viewtext2/@caption" />
+					</span>
+					<span class="vaccount-observers">
+						<xsl:value-of select="//captions/viewtext3/@caption" />
+					</span>
+					<span class="vaccount-amount-control">
+						<xsl:value-of select="//captions/viewnumber/@caption" />
+					</span>
 				</div>
-			</xsl:when>
-			<xsl:otherwise>
-				<div class="btable">
-					<xsl:apply-templates select="//view_content" mode="view-table-head" />
-				</div>
-				<div class="view-empty"></div>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-
-	<xsl:template match="view_content" mode="view-table-head">
-		<div class="btable-head">
-			<div class="btable-cell tcell-checkbox">
-				<input type="checkbox" data-toggle="docid" class="all" />
 			</div>
-			<div class="btable-cell">
-				<xsl:value-of select="//captions/viewtext1/@caption" />
-			</div>
+		</header>
+		<div class="entries">
+			<xsl:apply-templates select="//view_content//query/entry" mode="view-table-body" />
 		</div>
 	</xsl:template>
 
 	<xsl:template match="entry" mode="view-table-body">
-		<div data-ddbid="{@id}" class="btable-row document {@docid}" id="{@docid}{@doctype}">
-			<div class="btable-cell tcell-checkbox">
-				<input type="checkbox" name="docid" id="{@id}" value="{@doctype}" />
+		<div class="entry-wrap">
+			<div class="entry-actions">
+				<a class="entry-action action-delete" href="#" onclick="">
+					<i class="fa fa-trash" />
+				</a>
 			</div>
-			<div class="btable-cell">
-				<a href="{@url}" title="{@viewtext}" class="doclink viewtext">
-					<xsl:value-of select="viewcontent/viewtext1" />
+			<div data-ddbid="{@id}" class="entry document js-swipe-entry">
+				<label class="entry-select">
+					<input type="checkbox" name="docid" id="{@id}" value="{@doctype}" />
+				</label>
+				<a href="{@url}" class="entry-link">
+					<div class="entry-fields">
+						<span class="entry-field vaccount-name">
+							<xsl:value-of select="viewcontent/viewtext1" />
+						</span>
+						<span class="entry-field vaccount-user">
+							<xsl:value-of select="viewcontent/viewtext2" />
+						</span>
+						<span class="entry-field vaccount-observers">
+							<span>
+								<xsl:value-of select="viewcontent/viewtext3" />
+							</span>
+						</span>
+						<span class="entry-field vaccount-amount-control">
+							<xsl:value-of select="viewcontent/viewnumber" />
+						</span>
+					</div>
 				</a>
 			</div>
 		</div>

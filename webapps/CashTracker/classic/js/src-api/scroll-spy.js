@@ -2,7 +2,7 @@ nbApp.initScrollSpySide = function() {
 
 	var offsetTop = 0;
 	var sideOnTop = false;
-	var $side = []; // $('.nav-app .side');
+	var $side = $('.nav-app');
 
 	if ($side.length) {
 		offsetTop = $('.layout_header')[0].clientHeight;
@@ -14,12 +14,12 @@ nbApp.initScrollSpySide = function() {
 	function scrollSpySide() {
 		if (window.pageYOffset > offsetTop) {
 			if (!sideOnTop) {
-				$side.css('margin-top', '0px');
+				$side.css('top', '0px');
 				sideOnTop = true;
 			}
 		} else {
 			if (sideOnTop) {
-				$side.css('margin-top', '');
+				$side.css('top', '');
 				sideOnTop = false;
 			}
 		}

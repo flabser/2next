@@ -2,20 +2,9 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 	<xsl:template match="actionbar">
-		<xsl:param name="fixed_top" select="'action-bar-top'" />
-
-		<xsl:if test="count(//action) > 0 or //view_content">
-			<div class="action-bar {$fixed_top}">
-				<xsl:if test="count(//action) > 0">
-					<div class="action-group">
-						<xsl:apply-templates select="//action" />
-					</div>
-				</xsl:if>
-				<xsl:if test="//view_content">
-					<div class="action-group pull-right">
-						<xsl:apply-templates select="//view_content" mode="page-navigator" />
-					</div>
-				</xsl:if>
+		<xsl:if test="count(//action) > 0">
+			<div class="action-bar">
+				<xsl:apply-templates select="//action" />
 			</div>
 		</xsl:if>
 	</xsl:template>
@@ -28,8 +17,9 @@
 			<xsl:if test="@url != ''">
 				<xsl:attribute name="href" select="@url" />
 			</xsl:if>
-			<i class="action_icon"></i>
-			<xsl:value-of select="@caption" />
+			<span>
+				<xsl:value-of select="@caption" />
+			</span>
 		</a>
 	</xsl:template>
 

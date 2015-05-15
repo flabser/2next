@@ -18,48 +18,9 @@
 			</xsl:call-template>
 			<body class="wlc no_transition {$body_class}">
 				<xsl:if test="$UI_CLIENT = 'mobile'">
-					<xsl:attribute name="class" select="concat('wlc no_transition touch mobile ',  $body_class)" />
+					<xsl:attribute name="class" select="concat('wlc no_transition phone ',  $body_class)" />
 				</xsl:if>
-				<div class="content-overlay js-content-overlay"></div>
-				<xsl:if test="@userid = 'anonymous'">
-					<div class="login js-login-form">
-						<div class="login-dlg-close" onclick="nbApp.wlc.loginFormClose()">x</div>
-						<h4>
-							<xsl:value-of select="//captions/login_title/@caption" />
-						</h4>
-						<form action="Login" method="post" name="login-form" class="login-form">
-							<input type="hidden" name="type" value="login" />
-							<input class="input" type="text" name="login" value="" required="required" placeholder="{//captions/login_login/@caption}" />
-							<input class="input" type="password" name="pwd" value="" required="required" placeholder="{//captions/login_pwd/@caption}" />
-							<div class="login-form-bottom">
-								<label class="noauth">
-									<input type="checkbox" name="noauth" value="1" />
-									<xsl:value-of select="//captions/login_alien_device/@caption" />
-								</label>
-								<button type="submit" class="btn">
-									<xsl:value-of select="//captions/login_button/@caption" />
-								</button>
-							</div>
-						</form>
-						<div class="social">
-							<a href="#vk" rel="nofollow">
-								<i class="social-icon-vk" />
-							</a>
-							<a href="#fb" rel="nofollow">
-								<i class="social-icon-fb" />
-							</a>
-							<a href="#twitter" rel="nofollow">
-								<i class="social-icon-twitter" />
-							</a>
-						</div>
-						<footer>
-							<a href="?type=page&amp;id=password-recovery" rel="nofollow">
-								<xsl:value-of select="//captions/lost_password/@caption" />
-							</a>
-							<br />
-						</footer>
-					</div>
-				</xsl:if>
+				<div class="content-overlay" id="content-overlay"></div>
 				<div class="layout">
 					<header class="layout_header">
 						<xsl:call-template name="main-header" />
@@ -86,11 +47,11 @@
 
 			<xsl:call-template name="STYLE_FIX_FIELDSET" />
 
-			<script type="text/javascript" src="/SharedResources/jquery/js/jquery-1.11.0.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/jquery/js/cookie/jquery.cookie.js"></script>
+			<script type="text/javascript" src="/SharedResources/jquery/jquery-1.11.3.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/jquery/cookie/jquery.cookie.js"></script>
 			<script type="text/javascript" src="/SharedResources/js/mobile-detect.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jso/build/jso.js"></script>
 			<script type="text/javascript" src="classic/js/app.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/js/jso/build/jso.js"></script>
 			<script type="text/javascript">
 				$(document).ready(nbApp.wlc.init);
 			</script>
@@ -111,13 +72,22 @@
 					</a>
 				</nav>
 				<nav class="header-nav pull-right">
-					<a class="nav-item" href="?type=page&amp;id=about">
-						<xsl:value-of select="//captions/about/@caption" />
-					</a>
-					<xsl:if test="@userid = 'anonymous'">
-						<a href="#" class="nav-item btn-login js-ShowLoginForm">
+					<xsl:if test="@id != 'login'">
+						<a class="nav-item" href="?type=page&amp;id=about">
+							<xsl:value-of select="//captions/about/@caption" />
+						</a>
+					</xsl:if>
+					<xsl:if test="@id = 'login'">
+						<a href="?type=page&amp;id=welcome" class="nav-item btn-login">
 							<span>
-								<xsl:value-of select="//captions/login_button/@caption" />
+								<xsl:value-of select="//captions/reg/@caption" />
+							</span>
+						</a>
+					</xsl:if>
+					<xsl:if test="@id != 'login' and @userid = 'anonymous'">
+						<a href="?type=page&amp;id=login" class="nav-item btn-login">
+							<span>
+								<xsl:value-of select="//captions/login/@caption" />
 							</span>
 						</a>
 					</xsl:if>
