@@ -1,0 +1,56 @@
+.hotnav-accesskey{
+	background:#FFFFFF none repeat scroll 0 0;
+	border:1px solid #333333;
+	border-radius:3px;
+	color:#333333 !important;
+	display:none;
+	height:11px;
+	line-height:11px;
+	padding:4px;
+	opacity:0.8;
+	position:absolute;
+/* 	right:0; 
+	bottom:0;*/
+	vertical-align:middle;
+	margin-left:-18px;
+	font-weight:bold;
+	font-size:14px;
+}
+
+button .hotnav-accesskey{
+	background:#FFFFFF none repeat scroll 0 0;
+	border:1px solid #333333;
+	border-radius:3px;
+	color:#333333 !important;
+	display:none;
+	height:11px;
+	line-height:11px;
+	padding:4px;
+	opacity:0.8;
+	position:absolute;
+ 	right:0; 
+	bottom:0;
+	vertical-align:middle;
+	margin-left:-8px;
+	font-weight:bold;
+	font-size:14px;
+}
+
+#docwrapper button .hotnav-accesskey{
+	background:#FFFFFF none repeat scroll 0 0;
+	border:1px solid #333333;
+	border-radius:3px;
+	color:#333333 !important;
+	display:none;
+	height:11px;
+	line-height:11px;
+	padding:4px;
+	opacity:0.8;
+	position:absolute;
+ 	right:0; 
+	bottom:0;
+	vertical-align:middle;
+	margin-left:-8px;
+	font-weight:bold;
+	font-size:14px;
+}
