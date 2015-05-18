@@ -32,6 +32,8 @@ public class PortalInit extends HttpServlet{
 			}catch(Exception e){
 				AppEnv.logger.errorLogEntry(e);
 			}
+		}else if(app.equalsIgnoreCase("JaxREST")) {
+			
 		}else{
 			String global = Environment.webAppToStart.get(app).global;
 			env = new AppEnv(app, global);		

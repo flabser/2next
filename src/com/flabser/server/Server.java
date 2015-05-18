@@ -41,7 +41,8 @@ public class Server{
 		}
 		
 			
-		//	Host host = webServerInst.addJaxRestHandler() ;
+		Host host = webServerInst.addApplication("JaxREST", "/JaxREST", "JaxREST");
+		//webServerInst.addJaxRestHandler() ;
 		
 		HashSet<Host> hosts = new HashSet<Host>();
 		//	hosts.add(host);			
@@ -56,7 +57,7 @@ public class Server{
 			
 		}
 
-		hosts.add(webServerInst.addApplication("JaxREST", "/JaxREST", "JaxREST"));
+		//hosts.add(webServerInst.addApplication("", "/Jax", "Jax"));
 		
 		String info = webServerInst.initConnectors();
 		Server.logger.verboseLogEntry("Webserver start ("  + info + ")");
