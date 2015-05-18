@@ -40,22 +40,24 @@ public class Server{
 			hosts.add(host);			
 		}
 		
-		/*if(Environment.adminConsoleEnable){				
-			Host host = webServerInst.addJaxRestHandler() ;
+			
+		//	Host host = webServerInst.addJaxRestHandler() ;
 		
-			HashSet<Host> hosts = new HashSet<Host>();
-			hosts.add(host);			
-		}*/
+		HashSet<Host> hosts = new HashSet<Host>();
+		//	hosts.add(host);			
+		
 		
 		Server.logger.normalLogEntry("Applications are starting...");
 				
-		HashSet<Host> hosts = new HashSet<Host>();
+		//HashSet<Host> hosts = new HashSet<Host>();
 		for(Site webApp: Environment.webAppToStart.values()){			
 			hosts.add(webServerInst.addApplication(webApp.name, "/" + webApp.appBase, webApp.appBase));
 			Server.logger.verboseLogEntry(webApp.name + " " + webApp.appBase);
 			
 		}
 
+		hosts.add(webServerInst.addApplication("JaxREST", "/JaxREST", "JaxREST"));
+		
 		String info = webServerInst.initConnectors();
 		Server.logger.verboseLogEntry("Webserver start ("  + info + ")");
 		webServerInst.startContainer();

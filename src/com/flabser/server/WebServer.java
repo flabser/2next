@@ -17,7 +17,7 @@ import java.net.MalformedURLException;
 
 
 public class WebServer implements IWebServer {
-	private Tomcat tomcat;
+	private static Tomcat tomcat;
 	private static final String defaultWelcomeList[]={"index.html", "index.htm"};
 
 	@Override
