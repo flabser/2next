@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rule type="query" id="bossandemppicklist">
-	<description>Структура</description>
-	<rununderuser source="static">[observer]</rununderuser>
-	<doctype>STRUCTURE</doctype>
-	<query source="macro">EXPANDED_STRUCTURE</query>
-</rule>

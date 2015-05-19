@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rule type="view" id="docthread" history="off">
-	<description>Ответные адокументы</description>
-	<query>glossary-responses</query>
-	<xsltfile>views/docthread.xsl</xsltfile>
-</rule>

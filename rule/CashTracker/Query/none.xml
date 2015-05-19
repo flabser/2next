@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rule type="query" id="none">
-	<description>none</description>
-	<rununderuser source="static">null</rununderuser>
-	<doctype>document</doctype>
-	<query source="static">form = 'null'</query>
-</rule>
