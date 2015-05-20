@@ -12,6 +12,7 @@ public class ResourceLoader extends Application {
 	        
 	        // register root resource
 	        classes.add(Hello.class);
+	        classes.add(RestProvider.class);
 	        return classes;
 	    }
 }

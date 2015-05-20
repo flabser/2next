@@ -1,17 +1,14 @@
 package com.flabser.scriptprocessor.page;
 
 import java.util.ArrayList;
-
-import com.flabser.script._IXMLContent;
-
-
+import com.flabser.runtimeobj.page.Element;
 
 public class PublishResult {
 	public boolean continueOpen;
-	public ArrayList<_IXMLContent> toPublishElement = new ArrayList<_IXMLContent>();
-	public ArrayList<_IXMLContent> toPublish = new ArrayList<_IXMLContent>();
+	public ArrayList<Element> toPublishElement = new ArrayList<Element>();
+	public ArrayList<Element> toPublish = new ArrayList<Element>();
 	
-	PublishResult(boolean cs, ArrayList<_IXMLContent> toPublish, ArrayList<_IXMLContent> toPublishElement){
+	PublishResult(boolean cs, ArrayList<Element> toPublish, ArrayList<Element> toPublishElement){
 		continueOpen = cs;
 		this.toPublish = toPublish;
 		this.toPublishElement = toPublishElement;

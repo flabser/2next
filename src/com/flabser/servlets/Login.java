@@ -16,7 +16,7 @@ import com.flabser.users.UserApplicationProfile;
 import com.flabser.users.UserSession;
 import com.flabser.util.ResponseType;
 import com.flabser.util.Util;
-import com.flabser.util.XMLResponse;
+import com.flabser.util.Response;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;

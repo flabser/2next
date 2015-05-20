@@ -2,6 +2,7 @@ package com.flabser.users;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import com.flabser.script._IXMLContent;
 
 public class UserApplicationProfile implements _IXMLContent{
@@ -20,9 +21,9 @@ public class UserApplicationProfile implements _IXMLContent{
 	}
 	
 	
-	public String toXML(){
-		String qaText = "";		
-		return "<entry><appname>" + appName + "</appname><loginmode></loginmode>" + qaText + "</entry>";
+	public StringBuffer toXML(){
+		StringBuffer output = new StringBuffer(1000);
+		return output.append("<entry><appname>" + appName + "</appname><loginmode></loginmode>" + output + "</entry>");
 	}
 	
 }

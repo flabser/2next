@@ -18,6 +18,7 @@ import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
+import com.flabser.script._Page;
 import com.flabser.script.concurrency._AJAXHandler;
 import com.flabser.scriptprocessor.page.IAsyncScript;
 import com.flabser.servlets.BrowserType;
@@ -85,10 +86,10 @@ public class UserSession implements Const, ICache {
 		currentUser.setSession(this);
 	}
 
-	public void setObject(String name, StringBuffer obj) {
-		HashMap<String, StringBuffer> cache = null;
+	public void setObject(String name, _Page obj) {
+		HashMap<String, _Page> cache = null;
 		if (jses != null) {
-			cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
+			cache = (HashMap<String, _Page>) jses.getAttribute("cache");
 		}
 		if (cache == null) {
 			cache = new HashMap<>();
@@ -220,7 +221,7 @@ public class UserSession implements Const, ICache {
 	}
 
 	@Override
-	public StringBuffer getPage(Page page, Map<String, String[]> formData)
+	public _Page getPage(Page page, Map<String, String[]> formData)
 			throws ClassNotFoundException, RuleException {
 		String cid = page.getID() + "_";
 		Object obj = getObject(cid);
@@ -228,19 +229,19 @@ public class UserSession implements Const, ICache {
 		if (c != null) {
 			String cache = c[0];
 			if (obj == null || cache.equalsIgnoreCase("reload")) {
-				StringBuffer buffer = page.getContent(formData);
+				_Page buffer = page.getContent(formData);
 				setObject(cid, buffer);
 				return buffer;
 			} else {
-				return (StringBuffer) obj;
+				return (_Page) obj;
 			}
 		} else {
 			if (obj == null) {
-				StringBuffer buffer = page.getContent(formData);
+				_Page buffer = page.getContent(formData);
 				setObject(cid, buffer);
 				return buffer;
 			} else {
-				return (StringBuffer) obj;
+				return (_Page) obj;
 			}
 		}
 

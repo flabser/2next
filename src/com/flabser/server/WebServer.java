@@ -82,7 +82,9 @@ public class WebServer implements IWebServer {
 			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
 			Wrapper w = Tomcat.addServlet(context, "Jersey REST Service",  resourceConfig());
 			w.setLoadOnStartup(1);
-				
+			w.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
+		//	context.addParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
+			
 			context.addServletMapping("/*", "Jersey REST Service");
 			context.setDisplayName("JaxREST");
 		} else {

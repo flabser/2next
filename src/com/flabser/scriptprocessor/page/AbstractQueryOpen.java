@@ -9,6 +9,7 @@ import java.util.HashSet;
 import com.flabser.appenv.AppEnv;
 import com.flabser.localization.SentenceCaption;
 import com.flabser.localization.Vocabulary;
+import com.flabser.runtimeobj.page.Element;
 import com.flabser.script._Document;
 import com.flabser.script._Exception;
 import com.flabser.script._ExceptionType;
@@ -26,7 +27,7 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 	private _Document doc;
 	private boolean continueOpen = true;
 	private String lang;
-	private ArrayList<_IXMLContent> toPublish = new ArrayList<_IXMLContent>();
+	private ArrayList<Element> toPublish = new ArrayList<Element>();
 
 	private _WebFormData webFormData;
 	private AppEnv env;
@@ -57,45 +58,45 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 		this.continueOpen = false;
 	}
 
-	public void publishElement(_IXMLContent value){
+	public void publishElement(Element value){
 		toPublishElement.add(value);
 	}
 
 	public void publishValue(String entryName, Object value) throws _Exception {		
 		if (value == null) {
-			toPublish.add(new ScriptShowField(entryName, ""));
+			toPublish.add(new Element(entryName, ""));
 		}else if (value instanceof String) {
-			toPublish.add(new ScriptShowField(entryName, (String)value));
+			toPublish.add(new Element(entryName, (String)value));
 		}else if (value instanceof _IXMLContent) {
-			toPublish.add(new ScriptShowField(entryName,(_IXMLContent)value));
+			toPublish.add(new Element(entryName,(_IXMLContent)value));
 		}else if (value instanceof Date) {
-			toPublish.add(new ScriptShowField(entryName, _Helper.getDateAsString((Date)value)));
+			toPublish.add(new Element(entryName, _Helper.getDateAsString((Date)value)));
 		}else if (value instanceof Enum) {
-			toPublish.add(new ScriptShowField(entryName, ((Enum)value).name()));
+			toPublish.add(new Element(entryName, ((Enum)value).name()));
 		}else if (value instanceof BigDecimal) {
-			toPublish.add(new ScriptShowField(entryName, value.toString()));
+			toPublish.add(new Element(entryName, value.toString()));
 		}
 	}
 
-	public void publishValue(String entryName, Collection<_IXMLContent> col) throws _Exception{
+	public void publishValue(String entryName, Collection<Element> col) throws _Exception{
 		String entries = "";
-		for (_IXMLContent o:col) {
+		for (Element o:col) {
 			//entries += XMLUtil.getAsTagValue(o.toXML());
 			entries += o.toXML();
 		}		
-		toPublish.add(new ScriptShowField(entryName, entries,true));
+		toPublish.add(new Element(entryName, entries,true));
 	}
 
 	public void publishValue(String entryName, ArrayList <?> list) throws _Exception {
 		String result = "";
 		for (Object val: list){
-			if(val instanceof _IXMLContent){
+			if(val instanceof Element){
 				result += "<entry>" +  ((_IXMLContent) val).toXML() + "</entry>";
 			}else{
 				result += "<entry>" +  XMLUtil.getAsTagValue(val.toString()) + "</entry>";
 			}
 		}
-		toPublish.add(new ScriptShowField(entryName, result, true));
+		toPublish.add(new Element(entryName, result, true));
 
 	}
 
@@ -104,36 +105,36 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 			SentenceCaption s = vocabulary.getSentenceCaption(value, lang);	
 			value = s.word;
 		}
-		toPublish.add(new ScriptShowField(entryName, value));
+		toPublish.add(new Element(entryName, value));
 	}
 
 	public void publishValue(boolean noConvert, String entryName, String value){
-		toPublish.add(new ScriptShowField(entryName, value, noConvert));
+		toPublish.add(new Element(entryName, value, noConvert));
 	}
 
 	public void publishValue(String entryName, int value){
-		toPublish.add(new ScriptShowField(entryName, Integer.toString(value)));
+		toPublish.add(new Element(entryName, Integer.toString(value)));
 	}
 
 	public void publishValue(String entryName, double value){
-		toPublish.add(new ScriptShowField(entryName, Double.toString(value)));
+		toPublish.add(new Element(entryName, Double.toString(value)));
 	}
 
 	public void publishValue(String entryName, HashSet value) throws _Exception{
 		String result = "";
 		for (Object val: value){
-			if(val instanceof _IXMLContent){
-				result += "<entry>" +  ((_IXMLContent) val).toXML() + "</entry>";
+			if(val instanceof Element){
+				result += "<entry>" +  ((Element) val).toXML() + "</entry>";
 			}else{
 				result += "<entry>" +  XMLUtil.getAsTagValue(val.toString()) + "</entry>";
 			}
 
 		}
-		toPublish.add(new ScriptShowField(entryName, result, true));
+		toPublish.add(new Element(entryName, result, true));
 	}
 
 	public void publishValue(String entryName, int idValue, String value){
-		toPublish.add(new ScriptShowField(entryName, idValue, value));
+		toPublish.add(new Element(entryName, idValue, value));
 	}
 
 	public void publishGlossaryValue(String entryName, int idValue) throws _Exception{
@@ -226,7 +227,7 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 
 	public void publishEmployer(String entryName,  HashSet value) throws _Exception{
 		if (value != null){
-			toPublish.add(new ScriptShowField(entryName, getEmployersXMLPieceList(value),true));
+			toPublish.add(new Element(entryName, getEmployersXMLPieceList(value),true));
 		}else{
 			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, entryName + ":Set of Employers is null");
 		}
@@ -234,7 +235,7 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 
 	public void publishEmployer(String entryName,  Collection<String> value) throws _Exception{
 		if (value != null){
-			toPublish.add(new ScriptShowField(entryName, getEmployersXMLPieceList(value),true));
+			toPublish.add(new Element(entryName, getEmployersXMLPieceList(value),true));
 		}else{
 			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, entryName + ":Collection of Employers is null");
 		}
@@ -259,7 +260,7 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 		}catch(Throwable e){
 			continueOpen = new Boolean(false);
 			e.printStackTrace();
-			toPublish.add(new ScriptShowField("error",e.getMessage() + ", " + ScriptProcessorUtil.getGroovyError(e.getStackTrace())));
+			toPublish.add(new Element("error",e.getMessage() + ", " + ScriptProcessorUtil.getGroovyError(e.getStackTrace())));
 			//msg = "QuerySaveScript: " + e.getClass().getSimpleName() + " " + e.getMessage();
 		}
 		PublishResult qsr = new PublishResult(continueOpen, toPublish, toPublishElement);
@@ -272,7 +273,7 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 		}catch(Throwable e){
 			continueOpen = new Boolean(false);
 			e.printStackTrace();
-			toPublish.add(new ScriptShowField("error",e.getMessage() + ", " + ScriptProcessorUtil.getGroovyError(e.getStackTrace())));
+			toPublish.add(new Element("error",e.getMessage() + ", " + ScriptProcessorUtil.getGroovyError(e.getStackTrace())));
 			//msg = "QuerySaveScript: " + e.getClass().getSimpleName() + " " + e.getMessage();
 		}
 		PublishResult qsr = new PublishResult(continueOpen, toPublish, toPublishElement);

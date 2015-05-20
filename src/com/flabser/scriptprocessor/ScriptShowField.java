@@ -4,6 +4,7 @@ import com.flabser.script._Exception;
 import com.flabser.script._IXMLContent;
 import com.flabser.util.XMLUtil;
 
+@Deprecated
 public class ScriptShowField implements _IXMLContent {
 	private String name;
 	private String value = "";
@@ -53,8 +54,9 @@ public class ScriptShowField implements _IXMLContent {
 	}
 
 	@Override
-	public String toXML() throws _Exception {		
-		return XMLPiece;
+	public StringBuffer toXML() throws _Exception {	
+		StringBuffer output = new StringBuffer(5000);
+		return output.append(XMLPiece);
 	}
 
 }

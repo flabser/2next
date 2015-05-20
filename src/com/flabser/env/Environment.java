@@ -29,6 +29,7 @@ import com.flabser.log.ILogger;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
+import com.flabser.script._Page;
 import com.flabser.server.Server;
 import com.flabser.util.XMLUtil;
 
@@ -336,15 +337,15 @@ public class Environment implements Const, ICache {
 	}
 
 	@Override
-	public StringBuffer getPage(Page page, Map <String, String[]> formData) throws ClassNotFoundException, RuleException{
+	public _Page getPage(Page page, Map <String, String[]> formData) throws ClassNotFoundException, RuleException{
 		Object obj = cache.get(page.getID());
 		String cacheParam = formData.get("cache")[0];
 		if (obj == null || cacheParam.equalsIgnoreCase("reload")) {
-			StringBuffer buffer = page.getContent(formData);
+			_Page buffer = page.getContent(formData);
 			cache.put(page.getID(), buffer);
 			return buffer;
 		} else {
-			return (StringBuffer) obj;
+			return (_Page) obj;
 		}
 
 	}

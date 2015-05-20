@@ -1,10 +1,12 @@
 package com.flabser.servlets;
 
 import net.sf.saxon.s9api.SaxonApiException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.exception.PortalException;
@@ -18,6 +20,7 @@ import com.flabser.rule.IRule;
 import com.flabser.rule.Skin;
 import com.flabser.rule.page.PageRule;
 import com.flabser.runtimeobj.page.Page;
+import com.flabser.script._Exception;
 import com.flabser.scriptprocessor.page.DoAsyncProcessor;
 import com.flabser.server.Server;
 import com.flabser.servlets.sitefiles.AttachmentHandler;
@@ -27,6 +30,7 @@ import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -279,7 +283,12 @@ public class Provider extends HttpServlet implements Const {
 		Page page = new Page(env, userSession, pageRule);
 		// result.output.append(page.process(fields, request, response, id,
 		// userSession, jses));
-		result.output.append(page.process(fields));
+		try {
+			result.output.append(page.process(fields).toXML());
+		} catch (_Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (page.fileGenerated) {
 			result.publishAs = PublishAsType.OUTPUTSTREAM;
 			result.filePath = page.generatedFilePath;

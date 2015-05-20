@@ -1,7 +1,7 @@
 package com.flabser.scriptprocessor;
 
 import com.flabser.script._Document;
-import com.flabser.script._Tag;
+import com.flabser.script._Element;
 
 
 public class ScriptProcessorUtil {
@@ -71,8 +71,8 @@ public class ScriptProcessorUtil {
 		}		
 	}*/
 	
-	public static _Tag getScriptError(StackTraceElement stack[]){	
-		_Tag tag = new _Tag("stack","");
+	public static _Element getScriptError(StackTraceElement stack[]){	
+		_Element tag = new _Element("stack","");
 		for (int i=0; i<stack.length; i++){
 			tag.addTag("entry", stack[i].getClassName()+"(" + stack[i].getMethodName() + ":" + Integer.toString(stack[i].getLineNumber()) + ")");			
 		}

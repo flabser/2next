@@ -7,11 +7,11 @@ import java.util.Map;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.localization.Vocabulary;
+import com.flabser.runtimeobj.page.Element;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
-import com.flabser.users.User;
 import com.flabser.users.UserSession;
-import com.flabser.util.XMLResponse;
+import com.flabser.util.Response;
 
 public class DoProcessor {
 	public ArrayList<IQuerySaveTransaction> transactionToPost = new ArrayList<IQuerySaveTransaction>();
@@ -32,7 +32,7 @@ public class DoProcessor {
 	}
 
 
-	public XMLResponse processScript(String className) throws ClassNotFoundException {		
+	public Response processScript(String className) throws ClassNotFoundException {		
 		try {		
 			Class pageClass = Class.forName(className);		
 			groovyObject = (GroovyObject) pageClass.newInstance();

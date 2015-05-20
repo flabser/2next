@@ -7,7 +7,7 @@ import com.flabser.servlets.sitefiles.FileUploadListener;
 import com.flabser.servlets.sitefiles.RequestWrapper;
 import com.flabser.servlets.sitefiles.UploadedFile;
 import com.flabser.util.ResponseType;
-import com.flabser.util.XMLResponse;
+import com.flabser.util.Response;
 import com.flabser.util.XMLUtil;
 
 import javax.servlet.Servlet;
@@ -97,7 +97,7 @@ public class Uploader extends HttpServlet implements Const, Servlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestWrapper wrappedReq = null;
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        XMLResponse resp = new XMLResponse(ResponseType.UPLOAD_FILE);
+        Response resp = new Response(ResponseType.UPLOAD_FILE);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {

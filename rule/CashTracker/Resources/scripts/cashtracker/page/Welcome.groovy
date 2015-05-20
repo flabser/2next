@@ -16,10 +16,8 @@ class Welcome extends _DoScript {
 		publishElement("serverversion", ent.getServerVersion())
 		publishElement("build", ent.getBuildTime())
 		publishElement("org", ent.getGeneralName())
-		publishElement("img", ent.getLogoImg())
 		publishElement("appname", ent.getAppName())
 		publishElement("availablelangs", ent.getAvailableLangs())
-		publishElement("availableskins", ent.getAvailableSkins())
 		publishElement("availableapps", ent.getAvailableApps())
 	}
 }

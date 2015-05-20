@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.flabser.dataengine.Const;
 import com.flabser.exception.RuleException;
 import com.flabser.localization.Localizator;
@@ -15,6 +16,7 @@ import com.flabser.rule.RuleProvider;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
+import com.flabser.script._Page;
 
 public class AppEnv implements Const, ICache{ 
 	public boolean isValid;
@@ -26,7 +28,7 @@ public class AppEnv implements Const, ICache{
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
 
-	private HashMap<String, StringBuffer> cache = new HashMap<String, StringBuffer>();
+	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 
 	public AppEnv(String at){
 		isValid = true;
@@ -90,7 +92,7 @@ public class AppEnv implements Const, ICache{
 	
 
 	@Override
-	public StringBuffer getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
 		boolean reload = false;
 		Object obj = cache.get(page.getID());	
 		String p[] = formData.get("cache");
@@ -101,11 +103,11 @@ public class AppEnv implements Const, ICache{
 			}
 		}		
 		if (obj == null || reload){
-			StringBuffer buffer = page.getContent(formData);
+			_Page buffer = page.getContent(formData);
 			cache.put(page.getID(),buffer);
 			return buffer;
 		}else{
-			return (StringBuffer)obj;	
+			return (_Page)obj;	
 		}
 
 	}

@@ -52,7 +52,7 @@ public class _JSONHandler implements _IXMLContent{
 	}
 	
 	@Override
-	public String toXML() throws _Exception {
+	public StringBuffer toXML() throws _Exception {
 		switch (template){
 		case POPULATE_SPOT:
 			jsLauncherCode =  "<![CDATA[" +                       
@@ -97,8 +97,8 @@ public class _JSONHandler implements _IXMLContent{
 		
 		
 		
-	             
-		return "<js id=\"" + jsID + "\">" + jsLauncherCode + "</js>";
+		StringBuffer output = new StringBuffer(1000);         
+		return output.append("<js id=\"" + jsID + "\">" + jsLauncherCode + "</js>");
 	}
 	
 }

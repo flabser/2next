@@ -7,6 +7,7 @@ import com.flabser.exception.RuleException;
 import com.flabser.rule.page.PageRule;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Document;
+import com.flabser.script._Page;
 import com.flabser.script._Session;
 import com.flabser.scriptprocessor.ScriptEvent;
 
@@ -32,7 +33,7 @@ public abstract class AbstractPostSave extends ScriptEvent implements IPostSaveS
 		this.env = env;
 	}
 	
-	public StringBuffer startPage(String id, HashMap<String, String[]> formData) throws RuleException, ClassNotFoundException{
+	public _Page startPage(String id, HashMap<String, String[]> formData) throws RuleException, ClassNotFoundException{
 		PageRule pageRule = (PageRule) env.ruleProvider.getRule("page", id);	
 		Page page = new Page(env, ses.getUser().getSession() , pageRule);		
 		return page.process(formData);

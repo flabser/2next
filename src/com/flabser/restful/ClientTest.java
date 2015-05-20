@@ -10,7 +10,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
 
-public class Test {
+public class ClientTest {
 
   public static void main(String[] args) {  
     ClientConfig config = new ClientConfig();
