@@ -9,6 +9,8 @@
 	<xsl:import href="templates/saldo.xsl" />
 	<xsl:import href="templates/utils.xsl" />
 
+	<xsl:variable name="isAjaxRequest" select="//ajax = '1'" />
+
 	<xsl:output method="html" encoding="utf-8" indent="no" />
 	<xsl:decimal-format name="df" grouping-separator=" " />
 
@@ -61,7 +63,7 @@
 
 			<link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css" />
 			<link type="text/css" rel="stylesheet" href="/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
-			<link type="text/css" rel="stylesheet" href="classic/css/all.min.css" />
+			<link type="text/css" rel="stylesheet" href="css/all.min.css" />
 
 			<xsl:call-template name="STYLE_FIX_FIELDSET" />
 
@@ -74,7 +76,7 @@
 			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.number.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/js/mobile-detect.min.js"></script>
 
-			<script type="text/javascript" src="classic/js/app.build.js"></script>
+			<script type="text/javascript" src="js/app.build.js"></script>
 
 			<xsl:copy-of select="$include" />
 		</head>

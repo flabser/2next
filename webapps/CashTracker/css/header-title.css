@@ -1,0 +1,16 @@
+.header-title {
+	border-bottom: 1px solid #E6E6E6;
+	font-size: 22px;
+	font-weight: normal;
+	margin: 0;
+	padding: 16px 10px 10px;
+}
+
+.tablet .header-title, .phone .header-title {
+	font-size: 16px;
+	padding: 14px 6px 8px;
+}
+
+.header-title .entry-count {
+	margin: 0 .3em;
+}

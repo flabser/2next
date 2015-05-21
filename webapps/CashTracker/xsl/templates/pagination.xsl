@@ -23,13 +23,11 @@
 	<xsl:variable name="pagination_maxpage" select="//view_content//query/@maxpage" />
 	<xsl:variable name="pagination_count" select="7" />
 	<xsl:variable name="pagination_center" select="3" />
-	<xsl:variable name="c_o_e_id" select="//current_outline_entry/response/content/entry/@entryid" />
-	<xsl:variable name="c_o_e_title" select="//current_outline_entry/response/content/entry" />
-	<xsl:variable name="c_o_e_custom_param" select="//current_outline_entry/response/content/customparam" />
+	<xsl:variable name="c_o_e_id" select="//outline//current/entry/@entryid" />
 
 	<xsl:variable name="refer_url">
 		<xsl:value-of
-			select="concat('Provider?type=', //request/@type, '&amp;id=', $page_id, '&amp;entryid=', $c_o_e_id, '&amp;title=', $c_o_e_title, $c_o_e_custom_param, '&amp;page=')" />
+			select="concat('Provider?type=', //request/@type, '&amp;id=', $page_id, '&amp;entryid=', $c_o_e_id, '&amp;page=')" />
 	</xsl:variable>
 
 	<xsl:template match="view_content" mode="page-navigator">

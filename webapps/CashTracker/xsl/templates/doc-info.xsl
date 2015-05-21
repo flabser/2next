@@ -6,7 +6,7 @@
 			<div class="fieldset-container">
 				<div class="control-group">
 					<div class="control-label">
-						<xsl:value-of select="//captions/author/@caption" />
+						<xsl:value-of select="//captions/info_author/@caption" />
 					</div>
 					<div class="controls">
 						<xsl:value-of select="//fields/author" />
@@ -19,10 +19,10 @@
 					<div class="controls">
 						<xsl:choose>
 							<xsl:when test="document/@status='new'">
-								<xsl:value-of select="//captions/newdoc/@caption" />
+								<xsl:value-of select="//captions/info_newdoc/@caption" />
 							</xsl:when>
 							<xsl:otherwise>
-								<xsl:value-of select="//captions/saved/@caption" />
+								<xsl:value-of select="//captions/info_saved/@caption" />
 							</xsl:otherwise>
 						</xsl:choose>
 					</div>
@@ -34,19 +34,19 @@
 					<div class="controls">
 						<xsl:choose>
 							<xsl:when test="document/@editmode='view'">
-								<xsl:value-of select="//captions/readonly/@caption" />
+								<xsl:value-of select="//captions/info_readonly/@caption" />
 							</xsl:when>
 							<xsl:when test="document/@editmode='readonly'">
-								<xsl:value-of select="//captions/readonly/@caption" />
+								<xsl:value-of select="//captions/info_readonly/@caption" />
 							</xsl:when>
 							<xsl:when test="document/@editmode='edit'">
-								<xsl:value-of select="//captions/editing/@caption" />
+								<xsl:value-of select="//captions/info_editing/@caption" />
 							</xsl:when>
 							<xsl:when test="document/@editmode='noaccess'">
-								<xsl:value-of select="//captions/readonly/@caption" />
+								<xsl:value-of select="//captions/info_readonly/@caption" />
 							</xsl:when>
 							<xsl:otherwise>
-								<xsl:value-of select="//captions/modenotdefined/@caption" />
+								<xsl:value-of select="//captions/info_modenotdefined/@caption" />
 							</xsl:otherwise>
 						</xsl:choose>
 					</div>

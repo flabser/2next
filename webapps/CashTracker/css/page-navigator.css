@@ -1,6 +1,6 @@
 .pagination {
 	text-align: center;
-	margin: 2px 0;
+	padding: 4px 4px 2px;
 }
 
 .pagination a {
@@ -9,10 +9,10 @@
 	border-radius: 2px;
 	color: #444;
 	display: inline-block;
-	font-size: 1em;
+	line-height: 1.3em;
 	margin: 1px;
 	outline: 0;
-	padding: 4px 9px;
+	padding: 5px 9px;
 	text-align: center;
 	text-decoration: none;
 }

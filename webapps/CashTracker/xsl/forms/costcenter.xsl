@@ -8,17 +8,23 @@
 	<xsl:variable name="editmode" select="/request/document/@editmode" />
 
 	<xsl:template match="/request">
-		<xsl:call-template name="layout">
-			<xsl:with-param name="w_title" select="concat(document/captions/name/@caption, ' - ', $APP_NAME)" />
-			<xsl:with-param name="aside_collapse" select="'aside_collapse'" />
-		</xsl:call-template>
+		<xsl:choose>
+			<xsl:when test="$isAjaxRequest">
+				<xsl:call-template name="_content" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="layout">
+					<xsl:with-param name="w_title" select="concat(document/captions/name/@caption, ' - ', $APP_NAME)" />
+				</xsl:call-template>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="_content">
 		<header class="form-header">
-			<h3 class="doc-title">
+			<h1 class="header-title">
 				<xsl:value-of select="document/captions/title/@caption" />
-			</h3>
+			</h1>
 			<xsl:apply-templates select="//actionbar">
 				<xsl:with-param name="fixed_top" select="''" />
 			</xsl:apply-templates>
@@ -26,7 +32,7 @@
 		<section class="form-content">
 			<form action="Provider" name="frm" method="post" id="frm" enctype="application/x-www-form-urlencoded">
 				<input type="hidden" name="last_page" value="{history/entry[@type = 'page'][last()]}" disabled="disabled" />
-				<fieldset name="properties" class="fieldset">
+				<fieldset class="fieldset">
 					<xsl:if test="$editmode != 'edit'">
 						<xsl:attribute name="disabled">disabled</xsl:attribute>
 					</xsl:if>

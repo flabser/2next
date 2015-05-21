@@ -29,7 +29,7 @@
 					versions of Lorem Ipsum.
 				</section>
 				<section>
-					<img src="classic/img/screen/desktop-ui.png" />
+					<img src="img/screen/desktop-ui.png" />
 				</section>
 				<section>
 					Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной

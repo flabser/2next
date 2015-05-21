@@ -6,9 +6,9 @@
 	<xsl:variable name="attach_get_url"
 		select="concat('Provider?type=getattach&amp;formsesid=', $formsesid, '&amp;doctype=', //document/@doctype, '&amp;field=rtfcontent&amp;id=rtfcontent&amp;file=')" />
 
-	<xsl:variable name="caption_add_comment" select="//document/captions/attach_add_comment/@caption" />
-	<xsl:variable name="caption_delete_file" select="//document/captions/attach_delete/@caption" />
-	<xsl:variable name="caption_file_preview" select="//document/captions/attach_preview/@caption" />
+	<xsl:variable name="caption_add_comment" select="//captions/attach_add_comment/@caption" />
+	<xsl:variable name="caption_delete_file" select="//captions/attach_delete/@caption" />
+	<xsl:variable name="caption_file_preview" select="//captions/attach_preview/@caption" />
 
 	<xsl:template name="attach">
 		<div class="attach">
@@ -21,7 +21,7 @@
 					<div id="attach-files" class="attach-files"></div>
 				</div>
 			</xsl:if>
-			<xsl:apply-templates select="//document/fields/rtfcontent" />
+			<xsl:apply-templates select="//fields/rtfcontent" />
 		</div>
 		<div id="template-rtfcontent-entry" style="display:none;">
 			<div class="rtf-entry">

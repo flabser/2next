@@ -3,7 +3,7 @@
 	bottom: 0;
 	display: none;
 	left: 0;
-	opacity: 0.4;
+	opacity: 0.5;
 	position: fixed;
 	top: 0;
 	width: 50%;
@@ -43,22 +43,11 @@
 
 @media ( max-width : 1366px ) {
 	.to_top {
-		bottom: 0;
-		display: none;
-		left: 0;
-		opacity: 0.4;
-		position: fixed;
-		top: 0;
 		width: 45px;
 		z-index: 4;
 	}
 	.to_top .to_top-button {
 		bottom: 0;
-		height: 45px;
-		left: 0;
-		padding: 4px;
-		position: absolute;
 		top: auto;
-		width: 45px;
 	}
 }

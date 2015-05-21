@@ -7,20 +7,18 @@
 
 	<xsl:output method="html" encoding="utf-8" indent="no" />
 	<xsl:variable name="editmode" select="//document/@editmode" />
-	<xsl:variable name="doctype" select="//captions/doctypemultilang/@caption" />
 
 	<xsl:template match="/request">
 		<xsl:call-template name="layout">
 			<xsl:with-param name="w_title" select="concat('Профиль: ', //fields/fullname)" />
-			<xsl:with-param name="aside_collapse" select="'aside_collapse'" />
 		</xsl:call-template>
 	</xsl:template>
 
 	<xsl:template name="_content">
 		<header class="form-header">
-			<h3 class="doc-title">
+			<h1 class="header-title">
 				<xsl:value-of select="concat(//fields/title, ' - ', //fields/fullname)" />
-			</h3>
+			</h1>
 			<xsl:apply-templates select="//actionbar">
 				<xsl:with-param name="fixed_top" select="''" />
 			</xsl:apply-templates>
@@ -30,19 +28,14 @@
 				<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header">
 					<li>
 						<a href="#tabs-1">
-							<xsl:value-of select="//captions/properties/@caption" />
+							<xsl:value-of select="//captions/tab_property/@caption" />
 						</a>
 					</li>
 					<li>
 						<a href="#tabs-2">
-							<xsl:value-of select="//captions/interface/@caption" />
+							<xsl:value-of select="//captions/tab_interface/@caption" />
 						</a>
 					</li>
-					<!-- <li>
-						<a href="#tabs-3">
-							<xsl:value-of select="//captions/attachments_cert/@caption" />
-						</a>
-					</li> -->
 				</ul>
 				<form action="Provider" name="frm" method="post" id="userProfile" enctype="application/x-www-form-urlencoded">
 					<div class="ui-tabs-panel" id="tabs-1">
@@ -52,32 +45,6 @@
 							</xsl:if>
 
 							<div class="fieldset-container">
-								<!-- <div class="control-group">
-									<div class="control-label">
-										<xsl:value-of select="//captions/department/@caption" />
-									</div>
-									<div class="controls">
-										<xsl:if test="//fields/department != '0'">
-											<xsl:value-of select="//fields/department" />
-										</xsl:if>
-									</div>
-								</div>
-								<div class="control-group">
-									<div class="control-label">
-										<xsl:value-of select="//captions/postid/@caption" />
-									</div>
-									<div class="controls">
-										<xsl:value-of select="//fields/post" />
-									</div>
-								</div>
-								<div class="control-group">
-									<div class="control-label">
-										<xsl:value-of select="//captions/shortname/@caption" />
-									</div>
-									<div class="controls">
-										<xsl:value-of select="//fields/shortname" />
-									</div>
-								</div> -->
 								<div class="control-group">
 									<div class="control-label">
 										ID
@@ -128,13 +95,16 @@
 												<input type="text" name="instmsgaddress" value="{//fields/instmsgaddress}" style="width:100%" />
 												<xsl:choose>
 													<xsl:when test="//fields/instmsgstatus = 'false'">
-														<span style="display:block;background:#555;height:4px;position:absolute;right:5px;top:5px;width:4px;" title="off"></span>
+														<span style="display:block;background:#555;height:4px;position:absolute;right:5px;top:5px;width:4px;"
+															title="off"></span>
 													</xsl:when>
 													<xsl:when test="//fields/instmsgstatus = 'true'">
-														<span style="display:block;background:#5CB85C;height:4px;position:absolute;right:5px;top:5px;width:4px;" title="on"></span>
+														<span style="display:block;background:#5CB85C;height:4px;position:absolute;right:5px;top:5px;width:4px;"
+															title="on"></span>
 													</xsl:when>
 													<xsl:otherwise>
-														<span style="display:block;background:#555;height:4px;position:absolute;right:5px;top:5px;width:4px;" title="off"></span>
+														<span style="display:block;background:#555;height:4px;position:absolute;right:5px;top:5px;width:4px;"
+															title="off"></span>
 													</xsl:otherwise>
 												</xsl:choose>
 											</div>
@@ -328,15 +298,6 @@
 					</div>
 					<input type="hidden" name="id" value="userprofile" />
 				</form>
-				<!-- <div id="tabs-3">
-					<form action="Uploader" name="upload" id="upload" method="post" enctype="multipart/form-data">
-						<fieldset class="fieldset" disabled="disabled">
-							<input type="hidden" name="type" value="rtfcontent" />
-							<input type="hidden" name="formsesid" value="{formsesid}" />
-							<xsl:call-template name="attach_cert" />
-						</fieldset>
-					</form>
-				</div> -->
 			</div>
 		</section>
 	</xsl:template>

@@ -8,17 +8,23 @@
 	<xsl:variable name="editmode" select="//document/@editmode" />
 
 	<xsl:template match="/request">
-		<xsl:call-template name="layout">
-			<xsl:with-param name="w_title" select="concat(//captions/name/@caption, ' - ', $APP_NAME)" />
-			<xsl:with-param name="aside_collapse" select="'aside_collapse'" />
-		</xsl:call-template>
+		<xsl:choose>
+			<xsl:when test="$isAjaxRequest">
+				<xsl:call-template name="_content" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="layout">
+					<xsl:with-param name="w_title" select="concat(//captions/name/@caption, ' - ', $APP_NAME)" />
+				</xsl:call-template>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="_content">
 		<header class="form-header">
-			<h3 class="doc-title">
+			<h1 class="header-title">
 				<xsl:value-of select="//captions/title/@caption" />
-			</h3>
+			</h1>
 			<xsl:apply-templates select="//actionbar">
 				<xsl:with-param name="fixed_top" select="''" />
 			</xsl:apply-templates>
@@ -26,7 +32,7 @@
 		<section class="form-content">
 			<form action="Provider" name="frm" method="post" id="frm" enctype="application/x-www-form-urlencoded">
 				<input type="hidden" name="last_page" value="{history/entry[@type = 'page'][last()]}" disabled="disabled" />
-				<fieldset name="properties" class="fieldset">
+				<fieldset class="fieldset">
 					<xsl:if test="$editmode != 'edit'">
 						<xsl:attribute name="disabled">disabled</xsl:attribute>
 					</xsl:if>
@@ -132,21 +138,20 @@
 						<div class="control-group">
 							<div class="control-label">
 								<xsl:value-of select="//captions/accessroles/@caption" />
-								<button type="button" class="btn-text">
-									<xsl:attribute name="title" select="//captions/accessroles/@caption" />
-									<xsl:attribute name="onclick">nbApp.dialogChoiceAccessRoles(this)</xsl:attribute>
-									<i class="fa fa-list-alt icn-btn"></i>
-								</button>
-								<button type="button" class="btn-text">
-									<xsl:attribute name="onclick">nbApp.clearFormField('accessroles');</xsl:attribute>
-									<i class="fa fa-remove icn-btn"></i>
-								</button>
 							</div>
 							<div class="controls">
-								<xsl:call-template name="field">
-									<xsl:with-param name="name" select="'accessroles'" />
-									<xsl:with-param name="node" select="//fields/accessroles" />
-								</xsl:call-template>
+								<select name="accessroles" class="span7">
+									<option></option>
+									<xsl:for-each select="//roles/entry">
+										<option>
+											<xsl:attribute name="value" select="name" />
+											<xsl:if test="//fields/accessroles = name">
+												<xsl:attribute name="selected" select="'selected'" />
+											</xsl:if>
+											<xsl:value-of select="concat(name, ' - ', description)" />
+										</option>
+									</xsl:for-each>
+								</select>
 							</div>
 						</div>
 						<div class="control-group">

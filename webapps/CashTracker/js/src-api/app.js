@@ -90,10 +90,11 @@ nbApp.parseXmlMessageToJson = function(xml) {
 
 $(document).ready(function() {
 	nbApp.init();
+	$('#main-load').css({
+		'background-color' : 'rgba(255,255,255,.5)'
+	});
+
 	window.onunload = window.onbeforeunload = function() {
-		$('#main-load').css({
-			'background-color' : 'rgba(255,255,255,.5)',
-			'display' : 'block'
-		});
+		$('#main-load').show();
 	};
 });

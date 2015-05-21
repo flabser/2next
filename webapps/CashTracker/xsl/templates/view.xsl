@@ -40,37 +40,35 @@
 	</xsl:template>
 
 	<xsl:template name="page-info">
-		<div class="page-info">
-			<header>
-				<div class="pull-right">
-					<xsl:apply-templates select="//saldo/response/content/saldo" />
-				</div>
+		<h1 class="header-title">
+			<div class="pull-right">
+				<xsl:apply-templates select="//saldo/response/content/saldo" />
+			</div>
 
-				<xsl:variable name="co_entry" select="//app_menu//current/entry" />
-				<xsl:variable name="ro_entry" select="//response/content/outline/entry" />
-				<xsl:if test="$co_entry != $ro_entry[@id = $co_entry/@id]/@caption">
-					<xsl:value-of select="$ro_entry[@id = $co_entry/@id]/@caption" />
-				</xsl:if>
-				<xsl:if test="$co_entry = $ro_entry[@id = $co_entry/@id]/@caption or not($ro_entry[@id = $co_entry/@id]/@caption)">
-					<xsl:value-of select="$co_entry" />
-				</xsl:if>
-				<xsl:if test="//view_content//query/@count">
-					<sup class="entry-count">
-						<small>
-							<xsl:value-of select="concat('(', //view_content//query/@count, ')')" />
-						</small>
-					</sup>
-				</xsl:if>
-			</header>
-			<nav>
-				<div class="pull-right">
-					<xsl:apply-templates select="//view_content" mode="page-navigator" />
-				</div>
-				<div class="on-desktop">
-					<xsl:apply-templates select="//actionbar" />
-				</div>
-			</nav>
-		</div>
+			<xsl:variable name="co_entry" select="//app_menu//current/entry" />
+			<xsl:variable name="ro_entry" select="//response/content/outline/entry" />
+			<xsl:if test="$co_entry != $ro_entry[@id = $co_entry/@id]/@caption">
+				<xsl:value-of select="$ro_entry[@id = $co_entry/@id]/@caption" />
+			</xsl:if>
+			<xsl:if test="$co_entry = $ro_entry[@id = $co_entry/@id]/@caption or not($ro_entry[@id = $co_entry/@id]/@caption)">
+				<xsl:value-of select="$co_entry" />
+			</xsl:if>
+			<xsl:if test="//view_content//query/@count">
+				<sup class="entry-count">
+					<small>
+						<xsl:value-of select="concat('(', //view_content//query/@count, ')')" />
+					</small>
+				</sup>
+			</xsl:if>
+		</h1>
+		<nav class="nav-action-bar">
+			<div class="pull-right">
+				<xsl:apply-templates select="//view_content" mode="page-navigator" />
+			</div>
+			<div class="on-desktop">
+				<xsl:apply-templates select="//actionbar" />
+			</div>
+		</nav>
 	</xsl:template>
 
 	<!-- attach-icon -->

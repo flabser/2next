@@ -43,15 +43,15 @@
 			</title>
 			<link rel="shortcut icon" href="favicon.ico" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-			<link type="text/css" rel="stylesheet" href="classic/css/all.min.css" />
+			<link type="text/css" rel="stylesheet" href="css/all.min.css" />
 
 			<xsl:call-template name="STYLE_FIX_FIELDSET" />
 
-			<script type="text/javascript" src="/SharedResources/jquery/jquery-1.11.3.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/jquery/cookie/jquery.cookie.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-1.11.3.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.cookie.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/js/mobile-detect.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/vendor/jso/build/jso.js"></script>
-			<script type="text/javascript" src="classic/js/app.min.js"></script>
+			<script type="text/javascript" src="js/app.min.js"></script>
 			<script type="text/javascript">
 				$(document).ready(nbApp.wlc.init);
 			</script>

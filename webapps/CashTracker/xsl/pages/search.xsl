@@ -4,7 +4,14 @@
 	<xsl:import href="../layout.xsl" />
 
 	<xsl:template match="/request">
-		<xsl:call-template name="layout" />
+		<xsl:choose>
+			<xsl:when test="$isAjaxRequest">
+				<xsl:call-template name="_content" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="layout" />
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="_content">

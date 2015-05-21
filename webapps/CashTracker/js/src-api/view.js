@@ -39,7 +39,7 @@ nbApp.delSelectedDocument = function(dbID, typedel) {
 
 	var ids;
 	if (dbID) {
-		ids = ['docid=' + dbID];
+		ids = 'docid=' + dbID;
 	} else {
 		ids = nbApp.getSelectedDocumentsAsParam();
 	}

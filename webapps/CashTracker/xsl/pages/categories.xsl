@@ -4,7 +4,14 @@
 	<xsl:import href="../layout.xsl" />
 
 	<xsl:template match="/request">
-		<xsl:call-template name="layout" />
+		<xsl:choose>
+			<xsl:when test="$isAjaxRequest">
+				<xsl:call-template name="_content" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="layout" />
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="_content">
@@ -39,9 +46,9 @@
 	</xsl:template>
 
 	<xsl:template match="entry" mode="view-table-body">
-		<div class="entry-wrap">
+		<div class="entry-wrap  js-entrywrap{@docid}">
 			<div class="entry-actions">
-				<a class="entry-action action-delete" href="#" onclick="">
+				<a class="entry-action action-delete" data-ddbid="{@id}" href="#">
 					<i class="fa fa-trash" />
 				</a>
 			</div>
@@ -49,7 +56,7 @@
 				<label class="entry-select">
 					<input type="checkbox" name="docid" id="{@id}" value="{@doctype}" />
 				</label>
-				<xsl:if test="hasresponse = 'true'">
+				<xsl:if test="@hasresponse = '1'">
 					<xsl:call-template name="viewCategory">
 						<xsl:with-param name="colspan" select="'3'" />
 					</xsl:call-template>
@@ -69,31 +76,24 @@
 			</div>
 		</div>
 		<xsl:apply-templates select="responses" />
-		
-		<!-- <div data-ddbid="{@id}" class="btable-row document {@docid}" id="{@docid}{@doctype}">
-			<div class="btable-cell cell-checkbox">
-				<input type="checkbox" name="docid" id="{@id}" value="{@doctype}" />
-			</div>
-			<div class="btable-cell cell-icon">
-				<span>
-					<xsl:attribute name="class" select="concat('operation-type-icon-', viewcontent/viewtext3)" />
-				</span>
-			</div>
-			<div class="btable-cell">
-				<xsl:if test="hasresponse = 'true'">
-					<xsl:call-template name="viewCategory">
-						<xsl:with-param name="colspan" select="'3'" />
-					</xsl:call-template>
-				</xsl:if>
-				<a href="{@url}" title="{@viewtext}" class="doclink viewtext">
-					<xsl:if test="hasresponse = 'true'">
-						<xsl:attribute name="style" select="'display:inline;'" />
-					</xsl:if>
-					<xsl:value-of select="viewcontent/viewtext1" />
-				</a>
-			</div>
-		</div>
-		<xsl:apply-templates select="responses" /> -->
+	</xsl:template>
+
+	<xsl:template name="viewCategory2">
+		<xsl:param name="colspan" />
+
+		<span class="vcategory-expander">
+			<xsl:choose>
+				<xsl:when test="category[node()] or responses[node()]">
+					<a id="a{@docid}" class="minus" onclick="nbApp.expandCollapseCategory(this, '{@docid}', '{@doctype}')">-</a>
+				</xsl:when>
+				<xsl:otherwise>
+					<a id="a{@docid}" class="plus" onclick="nbApp.expandCollapseCategory(this, '{@docid}', '{@doctype}')">+</a>
+				</xsl:otherwise>
+			</xsl:choose>
+		</span>
+		<span>
+			<xsl:value-of select="viewtext" />
+		</span>
 	</xsl:template>
 
 	<xsl:template match="*" mode="table-title-cell">

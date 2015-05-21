@@ -4,9 +4,7 @@
 }
 
 .view-header {
-	margin: 0;
-	padding: 6px 2px 0;
-	position: relative;
+	
 }
 
 .view-header:after {
@@ -19,7 +17,7 @@
 }
 
 .view-content {
-	padding: 6px 1px;
+	
 }
 
 /* document */
@@ -70,10 +68,11 @@
 
 .head-wrap {
 	background: #F5F5F5;
-	border-bottom: 1px solid #F5F5F5;
+	border-bottom: 1px solid #EEE;
+	border-top: 1px solid #EEE;
 	display: block;
 	height: 40px;
-	line-height: 40px;
+	line-height: 38px;
 	overflow: hidden;
 	position: relative;
 	vertical-align: top;
@@ -83,7 +82,7 @@
 
 .head-wrap .entry-select {
 	height: 40px;
-	line-height: 40px;
+	line-height: 38px;
 	margin: 0;
 	padding: 0 !important;
 }

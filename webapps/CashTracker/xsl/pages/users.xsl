@@ -4,15 +4,14 @@
 	<xsl:import href="../layout.xsl" />
 
 	<xsl:template match="/request">
-		<xsl:call-template name="layout">
-			<xsl:with-param name="include">
-				<style>
-					.view-table a {display:inline;}
-					.struct ul, .struct li { list-style: none; }
-					.struct li { padding: .4em; }
-				</style>
-			</xsl:with-param>
-		</xsl:call-template>
+		<xsl:choose>
+			<xsl:when test="$isAjaxRequest">
+				<xsl:call-template name="_content" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="layout" />
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="_content">
@@ -28,40 +27,39 @@
 	</xsl:template>
 
 	<xsl:template name="view-table">
-		<xsl:choose>
-			<xsl:when test="//structure/query/entry">
-				<div class="struct">
-					<xsl:apply-templates select="//structure/query/entry" mode="struct" />
-				</div>
-			</xsl:when>
-			<xsl:otherwise>
-				<div class="view-empty"></div>
-			</xsl:otherwise>
-		</xsl:choose>
+		<xsl:apply-templates select="//structure/query/entry" mode="struct" />
 	</xsl:template>
 
 	<xsl:template match="query/entry" mode="struct">
-		<!-- <ul> -->
-		<!-- <li> <input type="checkbox" name="docid" id="{@id}" value="{@doctype}" /> <a href="{@url}"> <xsl:value-of select="viewtext" 
-			/> </a> </li> -->
 		<xsl:apply-templates select="responses" mode="struct" />
-		<!-- </ul> -->
 	</xsl:template>
 
 	<xsl:template match="responses" mode="struct">
-		<!-- <li> -->
-		<ul>
+		<div class="entries">
 			<xsl:apply-templates select="./entry" mode="struct" />
-		</ul>
-		<!-- </li> -->
+		</div>
 	</xsl:template>
 
 	<xsl:template match="responses/entry" mode="struct">
-		<li>
-			<a href="{@url}">
-				<xsl:value-of select="userid" />
-			</a>
-		</li>
+		<div class="entry-wrap">
+			<div class="entry-actions">
+				<a class="entry-action action-delete" data-ddbid="{@id}" href="#">
+					<i class="fa fa-trash" />
+				</a>
+			</div>
+			<div data-ddbid="{@id}" class="entry document js-swipe-entry">
+				<label class="entry-select">
+					<input type="checkbox" name="docid" value="{@docid}" />
+				</label>
+				<a href="{@url}" class="entry-link">
+					<div class="entry-fields">
+						<span class="entry-field">
+							<xsl:value-of select="userid" />
+						</span>
+					</div>
+				</a>
+			</div>
+		</div>
 	</xsl:template>
 
 </xsl:stylesheet>

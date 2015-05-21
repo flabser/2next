@@ -8,11 +8,17 @@
 	<xsl:variable name="editmode" select="//document/@editmode" />
 
 	<xsl:template match="/request">
-		<xsl:call-template name="layout">
-			<xsl:with-param name="w_title" select="concat(//captions/title/@caption, ' - ', $APP_NAME)" />
-			<xsl:with-param name="aside_collapse" select="'aside_collapse'" />
-			<xsl:with-param name="active_aside_id" select="'budgets'" />
-		</xsl:call-template>
+		<xsl:choose>
+			<xsl:when test="$isAjaxRequest">
+				<xsl:call-template name="_content" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="layout">
+					<xsl:with-param name="w_title" select="concat(//captions/title/@caption, ' - ', $APP_NAME)" />
+					<xsl:with-param name="active_aside_id" select="'budgets'" />
+				</xsl:call-template>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="_content">
@@ -21,7 +27,7 @@
 				<xsl:call-template name="form_content" />
 			</xsl:when>
 			<xsl:otherwise>
-				<h1 style="padding:2em;">
+				<h1>
 					<xsl:value-of select="//error" />
 				</h1>
 			</xsl:otherwise>
@@ -30,9 +36,9 @@
 
 	<xsl:template name="form_content">
 		<header class="form-header">
-			<h3 class="doc-title">
+			<h1 class="header-title">
 				<xsl:value-of select="//captions/title/@caption" />
-			</h3>
+			</h1>
 			<xsl:apply-templates select="//actionbar">
 				<xsl:with-param name="fixed_top" select="''" />
 			</xsl:apply-templates>
@@ -40,15 +46,10 @@
 		<section class="form-content">
 			<form action="Provider" name="frm" method="post" id="frm" enctype="application/x-www-form-urlencoded">
 				<input type="hidden" name="last_page" value="{history/entry[@type = 'page'][last()]}" disabled="disabled" />
-				<fieldset name="property" class="fieldset">
+				<fieldset class="fieldset">
 					<xsl:if test="$editmode != 'edit'">
 						<xsl:attribute name="disabled">disabled</xsl:attribute>
 					</xsl:if>
-					<legend class="legend">
-						<div class="legend-tab">
-							<xsl:value-of select="//captions/properties/@caption" />
-						</div>
-					</legend>
 
 					<div class="fieldset-container">
 						<div class="control-group">

@@ -1,17 +1,16 @@
 .form-header {
-	border-bottom: 1px solid #E6E6E6;
-	padding: 6px;
+	
 }
 
 .form-content {
-	padding: 6px;
+	padding: 6px 0;
 }
 
 /* fieldset */
 .fieldset {
 	border: none;
 	margin: 0;
-	padding: 8px 0;
+	padding: 8px;
 }
 
 .fieldset .legend {
@@ -50,6 +49,12 @@
 	padding: 0 0 6px;
 }
 
+.tablet .control-group, .phone .control-group {
+	border-bottom-color: #F2F2F4;
+	margin-bottom: 8px;
+	padding-bottom: 8px;
+}
+
 .control-group-separator {
 	display: block;
 	border: none;
@@ -73,6 +78,7 @@
 }
 
 .control-group .control-label:before {
+	color: #999;
 	content: ':';
 	float: right;
 	margin: 0 0 0 1px;
@@ -87,6 +93,13 @@
 	min-height: inherit;
 	overflow: hidden;
 	padding: 2px;
+}
+
+.control-group.control-group-vertical .control-label, .control-group.control-group-vertical .controls {
+	display: block;
+	float: none;
+	margin: 0;
+	text-align: left;
 }
 
 /* form control */
@@ -246,32 +259,6 @@ textarea {
 	.control-group .controls {
 		margin-left: 115px;
 	}
-}
-
-/* doc-title */
-.doc-title {
-	font-size: 22px;
-	font-weight: normal;
-	margin: 10px 0;
-}
-
-@media ( max-width : 768px ) {
-	.doc-title {
-		font-size: 16px;
-		margin: 3px 0;
-	}
-}
-
-.tablet .doc-title, .phone .doc-title {
-	font-size: 16px;
-	margin: 3px 0;
-	padding: 8px 5px;
-}
-
-.tablet .control-group, .phone .control-group {
-	border-bottom-color: #F2F2F4;
-	margin-bottom: 8px;
-	padding-bottom: 8px;
 }
 
 /* ----------------------------- */
