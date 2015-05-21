@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="windows-1251"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	<xsl:output method="html" encoding="windows-1251" />
+	<xsl:output method="html" encoding="UTF-8" />
 	<xsl:template name="author_field">		
 		<div style="border-bottom: 1px solid gray; width:98%">	
-       		 <div style="float:right;margin-right:2%"><xsl:value-of select="concat('Автор: ',../@user)"/></div>
+       		 <div style="float:right;margin-right:2%"><xsl:value-of select="concat('РђРІС‚РѕСЂ: ',../@user)"/></div>
         </div>
 	</xsl:template>
 	
@@ -18,7 +18,7 @@
 	
 	<xsl:template name="description_field">
 		<tr>
-			<td class="fc">Описание&#xA0;:</td>
+			<td class="fc">РћРїРёСЃР°РЅРёРµ&#xA0;:</td>
 			<td>
 				<textarea name="description" rows="3" cols="50" class="rof">
 					<xsl:value-of select="description"/>
@@ -29,27 +29,27 @@
 	
 	<xsl:template name="isvalid_field">
 		<tr>
-			<td class="fc" style="height:30">Состояние&#xA0;:</td>
+			<td class="fc" style="height:30">РЎРѕСЃС‚РѕСЏРЅРёРµ&#xA0;:</td>
 				<td>
 					<xsl:choose>
 						<xsl:when test="isvalid = 'true'">
 							<img src="img/isvalid.gif" />
-							<font style="margin-left:5;font-size:0.6em">корректно</font>
+							<font style="margin-left:5;font-size:0.6em">РєРѕСЂСЂРµРєС‚РЅРѕ</font>
 						</xsl:when>
 						<xsl:otherwise>
 							<img src="img/isnotvalid.gif" />
-							<font style="margin-left:5;font-size:0.6em">не корректно</font>
+							<font style="margin-left:5;font-size:0.6em">РЅРµ РєРѕСЂСЂРµРєС‚РЅРѕ</font>
 						</xsl:otherwise>
 					</xsl:choose>
 					&#xA0;&#xA0;
 					<xsl:choose>
 						<xsl:when test="ison = 'true'">
 							<img src="img/run.gif" />
-							<font style="margin-left:5;font-size:0.6em">работает</font>
+							<font style="margin-left:5;font-size:0.6em">СЂР°Р±РѕС‚Р°РµС‚</font>
 						</xsl:when>
 						<xsl:otherwise>
 							<img src="img/stop.gif" />
-							<font style="margin-left:5;font-size:0.6em">остановлено</font>
+							<font style="margin-left:5;font-size:0.6em">РѕСЃС‚Р°РЅРѕРІР»РµРЅРѕ</font>
 						</xsl:otherwise>
 					</xsl:choose>
 				</td>

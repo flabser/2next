@@ -2,12 +2,8 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 	<xsl:import href="templates/constants.xsl" />
-	<xsl:import href="templates/outline.xsl" />
-	<xsl:import href="templates/nav-ws.xsl" />
-	<xsl:import href="templates/view.xsl" />
-	<xsl:import href="templates/actions.xsl" />
-	<xsl:import href="templates/saldo.xsl" />
-	<xsl:import href="templates/utils.xsl" />
+	<xsl:import href="templates/side-nav.xsl" />
+	<!-- <xsl:import href="templates/view.xsl" /> -->
 
 	<xsl:output method="html" encoding="utf-8" indent="no" />
 	<xsl:decimal-format name="df" grouping-separator=" " />
@@ -15,7 +11,6 @@
 	<xsl:template name="layout">
 		<xsl:param name="w_title" select="concat(//captions/viewnamecaption/@caption, ' - ', $APP_NAME)" />
 		<xsl:param name="active_aside_id" select="//app_menu/response/content/current/entry/@id" />
-		<xsl:param name="aside_collapse" select="''" />
 		<xsl:param name="include" select="''" />
 		<xsl:param name="body_class" select="''" />
 
@@ -25,23 +20,17 @@
 				<xsl:with-param name="w_title" select="$w_title" />
 				<xsl:with-param name="include" select="$include" />
 			</xsl:call-template>
-			<body class="no_transition {$body_class}" onresize="nbApp.uiWindowResize()">
-				<div class="main-load" id="main-load"></div>
-				<div class="layout layout_header-fixed {$aside_collapse}">
+			<body class="no_transition layout_fullscreen {$body_class}">
+				<!-- <div class="main-load" id="main-load"></div> -->
+				<div class="layout">
 					<div class="content-overlay" id="content-overlay"></div>
-					<header class="layout_header">
-						<xsl:call-template name="main-header" />
-					</header>
-					<xsl:apply-templates select="//app_menu" mode="outline">
-						<xsl:with-param name="active-entry-id" select="$active_aside_id" />
-					</xsl:apply-templates>
+					<aside class="layout_aside">
+						<xsl:call-template name="main_side" />
+					</aside>
 					<section class="layout_content">
 						<xsl:call-template name="_content" />
 					</section>
-					<xsl:apply-templates select="//availableapps" mode="ws" />
-					<xsl:call-template name="main-footer" />
 				</div>
-				<xsl:call-template name="util-js-mark-as-read" />
 			</body>
 		</html>
 	</xsl:template>
@@ -61,7 +50,6 @@
 
 			<link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css" />
 			<link type="text/css" rel="stylesheet" href="/SharedResources/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
-			<link type="text/css" rel="stylesheet" href="classic/css/all.min.css" />
 
 			<xsl:call-template name="STYLE_FIX_FIELDSET" />
 
@@ -70,75 +58,46 @@
 
 			<script type="text/javascript" src="/SharedResources/jquery/cookie/jquery.cookie.js"></script>
 			<script type="text/javascript" src="/SharedResources/jquery/jquery.scrollTo.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/jquery/jquery.mobile.touch.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/jquery/jquery.number.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/js/mobile-detect.min.js"></script>
 
-			<script type="text/javascript" src="classic/js/app.build.js"></script>
+			<link rel="stylesheet" href="css/main.css" />
+			<link rel="stylesheet" href="css/form.css" />
+			<link rel="stylesheet" href="css/dialogs.css" />
+			<link rel="stylesheet" href="css/view.css" />
+			<link rel="stylesheet" href="css/all.min.css" />
+
+			<script src="scripts/stdlib/dynamicform.js"></script>
+			<script src="scripts/outline.js"></script>
+			<script src="scripts/service.js"></script>
+			<script src="scripts/dialogs.js"></script>
+			<script src="scripts/form.js"></script>
+
+			<script>
+				$(document).ready(function(){
+				$(".outline-ch").expander(true);
+				});
+			</script>
 
 			<xsl:copy-of select="$include" />
 		</head>
 	</xsl:template>
 
-	<xsl:template name="main-header">
-		<div class="main-header">
-			<div class="head-item head-nav-app-toggle" id="toggle-nav-app">
-				<div class="nav-app-toggle"></div>
-			</div>
-			<div class="head-item brand">
-				<img alt="logo" src="{$APP_LOGO_IMG_SRC}" class="brand-logo" />
-				<span class="brand-title">
-					<xsl:value-of select="$APP_NAME" />
-				</span>
-			</div>
-			<div class="head-item head-nav-ws-toggle">
-				<div class="nav-ws-toggle" id="toggle-nav-ws"></div>
-			</div>
-			<xsl:if test="not(document)">
-				<div class="head-item nav-search-toggle" title="Поиск" id="toggle-head-search">
-					<i class="fa fa-search" />
-				</div>
-				<div class="head-item nav-search" id="search-block">
-					<div class="search-toggle-back" id="search-close">
-						<i class="fa fa-chevron-left" />
-					</div>
-					<form action="Provider" method="GET" name="search">
-						<input type="hidden" name="type" value="page" />
-						<input type="hidden" name="id" value="search" />
-						<input type="search" name="keyword" value="{//search_keyword}" class="search-keyword" required="required"
-							placeholder="Поиск" />
-						<button type="submit" class="search-btn" title="Поиск">
-							<i class="fa fa-search" />
-						</button>
-					</form>
-				</div>
-				<xsl:apply-templates select="//actionbar/action[@id = 'add_new']" mode="header" />
-			</xsl:if>
+	<xsl:template name="main_side">
+		<div class="side">
+			<header>
+				<h1>Administrator</h1>
+			</header>
+			<section>
+				<xsl:call-template name="outline" />
+			</section>
+			<footer>
+				<a href="Logout" title="{outline/fields/logout/@caption}" class="logout">
+					<img src="img/logout.gif" alt="" />
+					logout
+				</a>
+				<div class="copy">NextBase © 2014</div>
+			</footer>
 		</div>
-	</xsl:template>
-
-	<xsl:template name="main-footer" />
-
-	<xsl:template match="action" mode="header">
-		<a class="no-desktop head-item nav-action" title="{@hint}" href="#" data-action="{@id}">
-			<xsl:if test="js">
-				<xsl:attribute name="href" select="concat('javascript:', js)" />
-			</xsl:if>
-			<xsl:if test="@url != ''">
-				<xsl:attribute name="href" select="@url" />
-			</xsl:if>
-			<xsl:choose>
-				<xsl:when test="@id = 'add_new'">
-					<i class="fa fa-plus" />
-				</xsl:when>
-				<xsl:when test="@id = 'delete_document'">
-					<i class="fa fa-remove" />
-				</xsl:when>
-			</xsl:choose>
-			<span class="action-label">
-				<xsl:value-of select="@caption" />
-			</span>
-		</a>
 	</xsl:template>
 
 </xsl:stylesheet>

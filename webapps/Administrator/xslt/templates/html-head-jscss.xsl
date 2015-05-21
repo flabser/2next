@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1251"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 	<xsl:template name="view-html-head-jscss">
@@ -8,7 +8,6 @@
 		<link rel="stylesheet" href="css/outline.css" />
 		<link rel="stylesheet" href="css/layout.css" />
 		<link type="text/css" rel="stylesheet" href="/SharedResources/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
-		<link rel="stylesheet" href="css/all.min.css" />
 
 		<script type="text/javascript" src="/SharedResources/jquery/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript" src="/SharedResources/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>

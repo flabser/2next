@@ -1,11 +1,57 @@
-.actionbar {margin-top:10px; padding-top:5px; padding-bottom:5px;}	
-.action {font-size:0.9em;}
-.pagenavblock {margin-left:3; width:1.2em; text-align:center;}
-.pagenav {font-size:0.8em;}
-.th {text-align:center; font-size:0.9em; font-weight: bold;	background-color:#dde0ec;}
+.actionbar {
+	margin-top: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.action {
+	font-size: 0.9em;
+}
+
+.pagenavblock {
+	margin-left: 3;
+	width: 1.2em;
+	text-align: center;
+}
+
+.pagenav {
+	font-size: 0.8em;
+}
+
 .viewtable {
 	border-collapse: collapse;
 	width: 100%;
+}
+
+.viewtable thead {
+	background-color: #dde0ec;
+}
+
+.viewtable thead th {
+	text-align: center;
+	font-size: 0.9em;
+	font-weight: bold;
+}
+
+.viewtable td {
+	border: 1px solid #CCC;
+	padding: .4em;
+}
+
+.col-select {
+	text-align: center;
+	width: 32px;
+}
+
+.col-icon {
+	text-align: center;
+	width: 32px;
+}
+
+.col-datetime {
+	min-width: 100px;
+	text-align: center;
+	width: 11%;
 }
 
 .width1 {
