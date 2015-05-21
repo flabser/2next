@@ -5,7 +5,6 @@ public class ProviderResult{
 	public PublishAsType publishAs = PublishAsType.XML;
 	public String forwardTo;
 	public String xslt;
-	public String title;
 	public boolean disableClientCache;
 	public String filePath;
 	public String originalAttachName;

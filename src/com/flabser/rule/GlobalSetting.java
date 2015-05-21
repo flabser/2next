@@ -1,21 +1,17 @@
 package com.flabser.rule;
 
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-
 import com.flabser.appenv.AppEnv;
 import com.flabser.env.Environment;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.users.UserRoleCollection;
 import com.flabser.util.XMLUtil;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class GlobalSetting {
 	public String description;
@@ -29,17 +25,14 @@ public class GlobalSetting {
 	public ArrayList <Lang> langsList = new ArrayList <Lang>();
 	public boolean multiLangEnable;
 	public Lang primaryLang;	
-	public ArrayList <Skin> skinsList = new ArrayList <Skin>();	
-	public HashMap <String, Skin> skinsMap = new HashMap <String, Skin>();
-	public Skin defaultSkin;
 	public String vocabulary = "vocabulary.xml";
 	public UserRoleCollection roleCollection = new UserRoleCollection();
-	
 	
 		
 	public GlobalSetting(String path, AppEnv env){	
 		rulePath = "rule" + File.separator + env.appType;
 		primaryRulePath = Environment.primaryAppDir + rulePath;
+		
 		try {
 			Document doc = null;
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -72,27 +65,8 @@ public class GlobalSetting {
 
 			if (langsList.size() > 1) multiLangEnable = true;
 
-			NodeList skins = XMLUtil.getNodeList(doc, "/rule/skins/entry");
-			for (int i = 0; i < skins.getLength(); i++) {
-				Skin skin = new Skin(skins.item(i));
-				if ( skin.isOn == RunMode.ON ) {
-					skinsList.add(skin);
-					skinsMap.put(skin.id, skin);
-					if(skin.isDefault){
-						defaultSkin = skin;
-					}
-				}
-			}
-
-			if (skinsList.size() > 0 && defaultSkin == null){
-				defaultSkin = skinsList.get(0);
-			}
-
-			if (defaultSkin == null){
-				AppEnv.logger.warningLogEntry("A default skin has not defined. Probably it may cause an error ");
-			}else{
-				AppEnv.logger.normalLogEntry(defaultSkin.id + " is default skin");
-			}
+		
+			
 
 
 			NodeList roles = XMLUtil.getNodeList(doc, "/rule/roles/entry");

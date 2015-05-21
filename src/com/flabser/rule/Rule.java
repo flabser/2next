@@ -4,11 +4,14 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+
 import javax.xml.parsers.*;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
@@ -74,6 +77,7 @@ public abstract class Rule implements IElement, IRule{
 						
 			xsltFile = XMLUtil.getTextContent(doc,"/rule/xsltfile");
 			if (!xsltFile.equals("")) publishAs = PublishAsType.HTML;
+			xsltFile = "webapps" + File.separator + env.appType + File.separator + "xsl" + File.separator  + xsltFile;
 			description = XMLUtil.getTextContent(doc,"/rule/description");		
 		
 			

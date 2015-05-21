@@ -151,16 +151,14 @@ public class Login extends HttpServlet implements Const {
 				request.getRequestDispatcher("/Error?type=ws_auth_error")
 						.forward(request, response);
 			} catch (IOException e1) {
-				new PortalException(e, env, response,ProviderExceptionType.INTERNAL, PublishAsType.HTML, userSession.skin);
+				new PortalException(e, env, response,ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 			} catch (ServletException e2) {
-				new PortalException(e, env, response,ProviderExceptionType.INTERNAL, PublishAsType.HTML, userSession.skin);
+				new PortalException(e, env, response,ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 			}
 		} catch (IOException ioe) {
-			new PortalException(ioe, env, response, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(ioe, env, response, PublishAsType.HTML);
 		} catch (IllegalStateException ise) {
-			new PortalException(ise, env, response, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(ise, env, response, PublishAsType.HTML);
 		} catch (Exception e) {
 			new PortalException(e, response, ProviderExceptionType.INTERNAL,
 					PublishAsType.HTML);
