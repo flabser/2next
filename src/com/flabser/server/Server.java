@@ -41,7 +41,7 @@ public class Server{
 		}
 		
 			
-		Host host = webServerInst.addApplication("JaxREST", "/JaxREST", "JaxREST");
+		//Host host = webServerInst.addApplication("JaxREST", "/JaxREST", "JaxREST");
 		//webServerInst.addJaxRestHandler() ;
 		
 		HashSet<Host> hosts = new HashSet<Host>();

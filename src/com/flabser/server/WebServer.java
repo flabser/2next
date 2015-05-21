@@ -142,6 +142,11 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",  resourceConfig());
+		w1.setLoadOnStartup(1);
+		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
+		context.addServletMapping("/RestProvider/*", "Jersey REST Service");
+		
 		return null;
 	}
 
