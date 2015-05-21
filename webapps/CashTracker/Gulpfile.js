@@ -5,14 +5,14 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var csso = require('gulp-csso');
 
-var js_files = ['../../SharedResources/scripts/modernizr.js',
-                '../../SharedResources/nb/js/nb.build.js',
+var js_files = ['../SharedResources/scripts/modernizr.js',
+                '../SharedResources/nb/js/nb.build.js',
                 './js/src-api/*.js',
                 './js/*.js',
 				'!./js/*.build.js',
 				'!./js/*.min.js'];
 
-var css_files = ['../../SharedResources/css/normalize.css',
+var css_files = ['../SharedResources/css/normalize.css',
                  './css/*.css',
                  '!./css/all.min.css'];
 
