@@ -8,11 +8,6 @@
 		<entry id="ENG">English</entry>
 	</langs>
 
-	<skins>
-		<entry default="on" errorpage="error.xsl" id="classic" path="./webapps/CashTracker/classic/xsl/">Classic</entry>
-		<!-- <entry errorpage="error.xsl" id="ipadandtab" path="./webapps/CashTracker/ipadandtab/xsl/">IPadAndTab</entry> -->
-	</skins>
-	
 	<oauth>
 		<provider id="vk" mode="ON">
 			<auth_uri/>

@@ -40,7 +40,6 @@ public class AdminProvider extends HttpServlet implements Const{
 	private static final long serialVersionUID = 2352885167311108325L;
 	private ISystemDatabase sysDb;
 	private AppEnv env;
-	private String defaultSkin = "pchelka";
 	private ServletContext context;
 	
 	public void init (ServletConfig config)throws ServletException{
@@ -105,7 +104,7 @@ public class AdminProvider extends HttpServlet implements Const{
 					//result = service(request, app, id, key);
 				} 
 			}else{
-				throw new PortalException("Request is incorrect(type=null)", env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML, defaultSkin);
+				throw new PortalException("Request is incorrect(type=null)", env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML);
 				//return;
 			}
 
@@ -117,7 +116,7 @@ public class AdminProvider extends HttpServlet implements Const{
 
 			if (onlyXML != null) result.publishAs = PublishAsType.XML;	
 
-			AdminProviderOutput po = new AdminProviderOutput(type, element, id, result.output, request, response, userSession, jses, dbID);
+			AdminProviderOutput po = new AdminProviderOutput(type, element, id, result.output, request,  userSession, jses, dbID);
 			
 			if (result.publishAs == PublishAsType.HTML){
 				if (result.disableClientCache){
@@ -172,11 +171,11 @@ public class AdminProvider extends HttpServlet implements Const{
 
 
 		}catch(XSLTFileNotFoundException xfnf){
-			new PortalException(xfnf, env, response, PublishAsType.HTML, defaultSkin);
+			new PortalException(xfnf, env, response, PublishAsType.HTML);
 		}catch (IOException ioe) {
-			new PortalException(ioe,env,response, PublishAsType.HTML, defaultSkin);
+			new PortalException(ioe,env,response, PublishAsType.HTML);
 		}catch (Exception e) {		
-			new PortalException(e,env,response, PublishAsType.HTML, defaultSkin);					
+			new PortalException(e,env,response, PublishAsType.HTML);					
 		}
 	}		
 

@@ -9,7 +9,6 @@ import com.flabser.env.Environment;
 import com.flabser.log.LogFiles;
 import com.flabser.rule.Lang;
 import com.flabser.rule.Role;
-import com.flabser.rule.Skin;
 import com.flabser.server.Server;
 
 public class ServiceHandler implements Const {
@@ -67,12 +66,6 @@ public class ServiceHandler implements Const {
 			xmlFragment.append("<entry>" + lang.toXML() + "</entry>");		
 		}
 		xmlFragment.append("</availablelangs>");
-
-		xmlFragment.append("<skins>");
-		for(Skin skin: env.globalSetting.skinsList){
-			xmlFragment.append("<entry>" + skin.toXML() + "</entry>");		
-		}
-		xmlFragment.append("</skins>");
 
 		xmlFragment.append("<roles>");
 		for(Role role: env.globalSetting.roleCollection.getRolesMap().values()){

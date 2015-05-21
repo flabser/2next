@@ -17,7 +17,6 @@ import com.flabser.exception.TransformatorException;
 import com.flabser.exception.XSLTFileNotFoundException;
 import com.flabser.localization.LocalizatorException;
 import com.flabser.rule.IRule;
-import com.flabser.rule.Skin;
 import com.flabser.rule.page.PageRule;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Exception;
@@ -125,8 +124,7 @@ public class Provider extends HttpServlet implements Const {
 						String reqEnc = request.getCharacterEncoding();
 						type = new String(((String) type).getBytes("ISO-8859-1"), reqEnc);
 						new PortalException("Request has been undefined, type=" + type + ", id=" + id + ", key=" + key,
-								env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML,
-								userSession.skin);
+								env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML);
 						return;
 					}
 
@@ -145,16 +143,11 @@ public class Provider extends HttpServlet implements Const {
 						if (result.disableClientCache) {
 							disableCash(response);
 						}
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, response, userSession,
-								jses, result.title, result.addHistory);
+						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession,
+								jses, result.addHistory);
 						response.setContentType("text/html");
-						Skin skin = null;
-						if (po.browser == BrowserType.IPAD_SAFARI || po.browser == BrowserType.ANDROID) {
-							skin = env.globalSetting.skinsMap.get("ipadandtab");
-						} else {
-							skin = env.globalSetting.skinsMap.get(userSession.skin);
-						}
-						if (po.prepareXSLT(env, skin, result.xslt)) {
+						
+						if (po.prepareXSLT(env, result.xslt)) {
 							String outputContent = po.getStandartOutput();
 							// long start_time = System.currentTimeMillis(); //
 							// for speed debuging
@@ -175,8 +168,8 @@ public class Provider extends HttpServlet implements Const {
 							disableCash(response);
 						}
 						response.setContentType("text/xml;charset=utf-8");
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, response, userSession,
-								jses, result.title, result.addHistory);
+						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession,
+								jses,  result.addHistory);
 						String outputContent = po.getStandartUTF8Output();
 						// System.out.println(outputContent);
 						PrintWriter out = response.getWriter();
@@ -186,8 +179,8 @@ public class Provider extends HttpServlet implements Const {
 						if (result.disableClientCache) {
 							disableCash(response);
 						}
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, response, userSession,
-								jses, result.title, result.addHistory);
+						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession,
+								jses,  result.addHistory);
 						String outputContent = po.getPlainText();
 						response.setContentType("text/text;charset=utf-8");
 						response.getWriter().println(outputContent);
@@ -227,35 +220,28 @@ public class Provider extends HttpServlet implements Const {
 				}
 
 			} catch (IOException e1) {
-				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML,
-						userSession.skin);
+				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 			} catch (ServletException e2) {
-				new PortalException(e2, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML,
-						userSession.skin);
+				new PortalException(e2, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 			}
 		} catch (RuleException rnf) {
 			new PortalException(rnf, env, response, ProviderExceptionType.RULENOTFOUND);
 		} catch (XSLTFileNotFoundException xfnf) {
-			new PortalException(xfnf, env, response, ProviderExceptionType.XSLTNOTFOUND, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(xfnf, env, response, ProviderExceptionType.XSLTNOTFOUND, PublishAsType.HTML);
 		} catch (IOException ioe) {
-			new PortalException(ioe, env, response, PublishAsType.HTML, userSession.skin);
+			new PortalException(ioe, env, response, PublishAsType.HTML);
 		} catch (IllegalStateException ise) {
-			new PortalException(ise, env, response, PublishAsType.HTML, userSession.skin);
+			new PortalException(ise, env, response, PublishAsType.HTML);
 		} catch (AttachmentHandlerException e) {
-			new PortalException(e, env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(e, env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML);
 		} catch (UserException e) {
-			new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML, userSession.skin);
+			new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 		} catch (SaxonApiException e) {
-			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML);
 		} catch (TransformatorException e) {
-			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML);
 		} catch (ClassNotFoundException e) {
-			new PortalException(e, env, response, ProviderExceptionType.CLASS_NOT_FOUND_EXCEPTION, PublishAsType.HTML,
-					userSession.skin);
+			new PortalException(e, env, response, ProviderExceptionType.CLASS_NOT_FOUND_EXCEPTION, PublishAsType.HTML);
 		} catch (ServerException e) {
 			new PortalException(e, response, ProviderExceptionType.SERVER, PublishAsType.HTML);
 		} catch (Exception e) {

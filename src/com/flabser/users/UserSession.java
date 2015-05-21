@@ -5,16 +5,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.omg.CORBA.UserException;
-
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
-import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
@@ -23,14 +20,13 @@ import com.flabser.script.concurrency._AJAXHandler;
 import com.flabser.scriptprocessor.page.IAsyncScript;
 import com.flabser.servlets.BrowserType;
 import com.flabser.servlets.Cookies;
-
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
 
 public class UserSession implements Const, ICache {
 	public User currentUser;
 	public HistoryEntryCollection history;
-	public String lang, skin = "";
+	public String lang;
 	public int pageSize;
 	public String host = "localhost";
 	private IDatabase dataBase;
@@ -67,7 +63,6 @@ public class UserSession implements Const, ICache {
 		this.jses = jses;
 		appCookies = new Cookies(request);
 		lang = appCookies.currentLang;
-		skin = appCookies.currentSkin;
 		pageSize = appCookies.pageSize;
 
 		AppEnv env = (AppEnv) context.getAttribute("portalenv");
@@ -131,9 +126,9 @@ public class UserSession implements Const, ICache {
 		response.addCookie(cpCookie);
 	}
 
-	public void addHistoryEntry(String type, String url, String title)
+	public void addHistoryEntry(String type, String url)
 			throws UserException {
-		HistoryEntry entry = new HistoryEntry(type, url, title);
+		HistoryEntry entry = new HistoryEntry(type, url);
 		history.add(entry);
 	}
 
@@ -170,12 +165,10 @@ public class UserSession implements Const, ICache {
 		}
 
 		public Object getEntries() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		public HistoryEntry getLastEntry() {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -184,15 +177,13 @@ public class UserSession implements Const, ICache {
 	public class HistoryEntry {
 		public String URL;
 		public String URLforXML;
-		public String title;
 		public String type;
 		public Date time;
 		public boolean isPageURL;
 
-		HistoryEntry(String type, String url, String title) {
+		HistoryEntry(String type, String url) {
 			URL = url;
 			URLforXML = url;
-			this.title = title;
 			this.type = type;
 			time = new Date();
 			isPageURL = isPage(url);

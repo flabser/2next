@@ -19,7 +19,6 @@ import java.io.*;
 public class PortalException extends Exception implements Const{	
 	private Enum type = ProviderExceptionType.INTERNAL;
 	private AppEnv env;
-	private String currentSkin = "";
 
 	private static final long serialVersionUID = 3214292820186296427L;
 	private Source xsltSource;
@@ -34,20 +33,18 @@ public class PortalException extends Exception implements Const{
 		message(errorMessage(e), response, publishAs);
 	}
 	
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response, PublishAsType publishAs, String defaultSkin){
+	public PortalException(Exception e, AppEnv env, HttpServletResponse response, PublishAsType publishAs){
 		super(e);
 		this.env = env;
-		if (defaultSkin != null) currentSkin = defaultSkin;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		response.setContentType("text/xml;charset=utf-8");
 		xsltSource = getXSLT();
 		message(errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(String text,Exception e, AppEnv env, HttpServletResponse response,  ProviderExceptionType type, PublishAsType publishAs, String defaultSkin){
+	public PortalException(String text,Exception e, AppEnv env, HttpServletResponse response,  ProviderExceptionType type, PublishAsType publishAs){
 		super(e);
 		this.env = env;
-		if (defaultSkin != null) currentSkin = defaultSkin;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		response.setContentType("text/xml;charset=utf-8");
 		this.type = type;
@@ -64,10 +61,9 @@ public class PortalException extends Exception implements Const{
 		message(errorMessage(e), response, PublishAsType.XML);
 	}
 
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response,  Enum type, PublishAsType publishAs, String defaultSkin){
+	public PortalException(Exception e, AppEnv env, HttpServletResponse response,  Enum type, PublishAsType publishAs){
 		super(e);
 		this.env = env;	
-		if (defaultSkin != null) currentSkin = defaultSkin;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		response.setContentType("text/xml;charset=utf-8");
 		this.type = type;
@@ -76,10 +72,9 @@ public class PortalException extends Exception implements Const{
 	}
 
 
-	public PortalException(String text,AppEnv env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs, String defaultSkin){
+	public PortalException(String text,AppEnv env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs){
 		super(text);
 		this.env = env;
-		if (defaultSkin != null) currentSkin = defaultSkin;
 		this.type = type;
 		xsltSource = getXSLT();
 		message(text, response, publishAs);	

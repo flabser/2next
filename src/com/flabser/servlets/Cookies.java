@@ -7,7 +7,6 @@ public class Cookies {
 	public boolean wAuthCookiesIsValid;
 	public boolean authCookiesIsValid;
 	public String currentLang = "RUS";
-	public String currentSkin;
 	public String wAuthHash = "0";
 	public String authHash = "0";
 	public int pageSize = 20;
@@ -19,9 +18,7 @@ public class Cookies {
 		if (cooks != null){			
 			for (int i = 0; i < cooks.length; i++){
 				if (cooks[i].getName().equals("lang")){
-					currentLang = cooks[i].getValue();
-				}else if (cooks[i].getName().equals("skin")){
-					currentSkin = cooks[i].getValue();
+					currentLang = cooks[i].getValue();				
 				}else if (cooks[i].getName().equals("wauth")){
 					wAuthHash = cooks[i].getValue();
 					wAuthCookiesIsValid = true;					
@@ -45,7 +42,7 @@ public class Cookies {
 
 	
 	public String toString(){
-		return "auth=" + authHash + ", wauth=" + wAuthHash + ", " + currentLang + "," + currentSkin + ", " + pageSize;
+		return "auth=" + authHash + ", wauth=" + wAuthHash + ", " + currentLang + "," + pageSize;
 	}
 	
 }
