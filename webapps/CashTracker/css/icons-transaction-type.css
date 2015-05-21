@@ -1,6 +1,6 @@
 [class^="operation-type-icon-"],
 [class*=" operation-type-icon-"] {
-	background: transparent url(/SharedResources/img/classic/operation-icon-sprite.png) no-repeat 16px 16px;
+	background: transparent url(../img/operation-icon-sprite.png) no-repeat 16px 16px;
 	display: inline-block;
 	height: 14px;
 	line-height: 1em;
