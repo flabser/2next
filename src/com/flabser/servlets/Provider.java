@@ -92,7 +92,6 @@ public class Provider extends HttpServlet implements Const {
 								}
 							}
 						}
-
 					}
 
 					if (type.equals("json")) {
@@ -128,8 +127,7 @@ public class Provider extends HttpServlet implements Const {
 						return;
 					}
 
-					if ((userSession.browserType == BrowserType.APPLICATION && result.publishAs != PublishAsType.OUTPUTSTREAM)
-							|| onlyXML != null) {
+					if ( result.publishAs == PublishAsType.XML|| onlyXML != null) {
 						result.publishAs = PublishAsType.XML;
 						result.addHistory = false;
 					}

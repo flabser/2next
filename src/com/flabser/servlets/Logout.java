@@ -6,10 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
-import com.flabser.env.Environment;
 import com.flabser.exception.PortalException;
 import com.flabser.users.UserSession;
-import com.flabser.users.UserSession.HistoryEntry;
 
 public class Logout extends HttpServlet implements Const {
 	private static final long serialVersionUID = 1L;
@@ -53,8 +51,8 @@ public class Logout extends HttpServlet implements Const {
 			
 						if (userSession != null){
 
-							HistoryEntry entry = userSession.history.getLastEntry();
-							Cookie ruCookie = new Cookie("ru",entry.URL);
+							//HistoryEntry entry = userSession.history.getLastEntry();
+							Cookie ruCookie = new Cookie("ru",env.globalSetting.entryPoint);
 							ruCookie.setMaxAge(99999);						
 							response.addCookie(ruCookie);
 						}

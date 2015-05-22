@@ -1,24 +1,13 @@
 package com.flabser.users;
 
-
 import org.apache.catalina.realm.RealmBase;
-import org.apache.commons.codec.binary.Base64;
-
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseFactory;
-import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.util.Util;
-import com.flabser.util.XMLUtil;
-
-import java.io.*;
-import java.security.*;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateEncodingException;
-import java.security.cert.CertificateException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -39,7 +28,6 @@ public class User implements Const {
     private boolean isSupervisor;
     private int hash;
     private UserSession session;
-    private String publicKey = "";
 	public AppEnv env;
 
     public User() {
@@ -54,13 +42,6 @@ public class User implements Const {
         userID = "anonymous";
     }
 
-   
-
-
-
-    public User(String string, AppEnv env2) {
-		// TODO Auto-generated constructor stub
-	}
 
 	public String getUserID() {
         return userID;

@@ -55,7 +55,7 @@ public class Login extends HttpServlet implements Const {
 		//	String noAuth = request.getParameter("noauth");
 			String noHash = request.getParameter("nohash");
 			HttpSession jses;
-			User user = null;
+			
 			ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 
 			if (env == null || env.appType.equalsIgnoreCase("administrator")) {
@@ -116,7 +116,7 @@ public class Login extends HttpServlet implements Const {
 				}
 			
 			} else {
-
+				User user = new User();
 				Cookies appCookies = new Cookies(request);
 				if (noHash != null) {
 					user = systemDatabase.checkUser(login, pwd, user);

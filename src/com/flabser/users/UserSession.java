@@ -18,7 +18,6 @@ import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
 import com.flabser.script.concurrency._AJAXHandler;
 import com.flabser.scriptprocessor.page.IAsyncScript;
-import com.flabser.servlets.BrowserType;
 import com.flabser.servlets.Cookies;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -32,13 +31,10 @@ public class UserSession implements Const, ICache {
 	private IDatabase dataBase;
 
 	private HttpSession jses;
-	public BrowserType browserType;
 	private Cookies appCookies;
 
-	public UserSession(User user, String implemantion, String appID)
-			throws UserException, ClassNotFoundException,
-			InstantiationException, IllegalAccessException,
-			DatabasePoolException {
+	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
+			InstantiationException, IllegalAccessException, DatabasePoolException {
 		currentUser = user;
 		currentUser.setSession(this);
 		if (!currentUser.getUserID().equalsIgnoreCase(Const.sysUser)) {
@@ -48,6 +44,7 @@ public class UserSession implements Const, ICache {
 		dataBase = (IDatabase) cls.newInstance();
 		UserApplicationProfile app = user.enabledApps.get(appID);
 		dataBase.init(app.dbURL, user.getUserID(), app.dbPwd);
+		
 	}
 
 	public UserSession(User user) throws UserException {
@@ -59,7 +56,8 @@ public class UserSession implements Const, ICache {
 
 	}
 
-	public UserSession(ServletContext context, HttpServletRequest request,	HttpServletResponse response, HttpSession jses)	throws AuthFailedException, UserException {
+	public UserSession(ServletContext context, HttpServletRequest request, HttpServletResponse response,
+			HttpSession jses) throws AuthFailedException, UserException {
 		this.jses = jses;
 		appCookies = new Cookies(request);
 		lang = appCookies.currentLang;
@@ -74,7 +72,7 @@ public class UserSession implements Const, ICache {
 			throw new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, "");
 		} else {
 			currentUser = new User();
-			UserApplicationProfile userAppProfile = currentUser.enabledApps.get(env.appType);			
+			UserApplicationProfile userAppProfile = currentUser.enabledApps.get(env.appType);
 			initHistory();
 		}
 
@@ -97,8 +95,7 @@ public class UserSession implements Const, ICache {
 
 	public Object getObject(String name) {
 		try {
-			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses
-					.getAttribute("cache");
+			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 			return cache.get(name);
 		} catch (Exception e) {
 			return null;
@@ -126,8 +123,7 @@ public class UserSession implements Const, ICache {
 		response.addCookie(cpCookie);
 	}
 
-	public void addHistoryEntry(String type, String url)
-			throws UserException {
+	public void addHistoryEntry(String type, String url) throws UserException {
 		HistoryEntry entry = new HistoryEntry(type, url);
 		history.add(entry);
 	}
@@ -169,6 +165,11 @@ public class UserSession implements Const, ICache {
 		}
 
 		public HistoryEntry getLastEntry() {
+			try {
+				return history.getLast();
+			} catch (Exception e) {
+				//return new HistoryEntry("view", currentUser.getAppEnv().globalSetting.defaultRedirectURL, "");
+			}
 			return null;
 		}
 
@@ -212,8 +213,7 @@ public class UserSession implements Const, ICache {
 	}
 
 	@Override
-	public _Page getPage(Page page, Map<String, String[]> formData)
-			throws ClassNotFoundException, RuleException {
+	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
 		String cid = page.getID() + "_";
 		Object obj = getObject(cid);
 		String c[] = formData.get("cache");
@@ -240,8 +240,7 @@ public class UserSession implements Const, ICache {
 
 	@Override
 	public void flush() {
-		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses
-				.getAttribute("cache");
+		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 		if (cache != null)
 			cache.clear();
 	}

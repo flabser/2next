@@ -53,7 +53,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 
 	public User checkUser(String login, String pwd, User user) {
 		Connection conn = dbPool.getConnection();
-		AppEnv env = user.getAppEnv();
+		
 		try{
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
@@ -78,7 +78,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 						}
 						
 						if(pwdHash.equals(password)){
-							user = initUser(conn, rs, env, login);
+							user = initUser(conn, rs, login);
 							user.isAuthorized = true;
 							if(password.length() < 11){//!!!!
 								pswToPswHash(user, pwd);
@@ -88,7 +88,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 					}else{
 						password = rs.getString("PWD");
 						if(pwd.equals(password)){
-							user = initUser(conn, rs, env, login);
+							user = initUser(conn, rs, login);
 							user.isAuthorized = true;	
 							pswToPswHash(user, password);
 						}	
@@ -96,7 +96,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 				}else{
 					password = rs.getString("PWD");
 					if(pwd.equals(password)){
-						user = initUser(conn, rs, env, login);
+						user = initUser(conn, rs, login);
 						user.isAuthorized = true;
 						pswToPswHash(user, password);
 					}
@@ -115,8 +115,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 	}
 
 	public User checkUser(String login, String pwd, String hashAsText, User user) {
-		Connection conn = dbPool.getConnection();
-		AppEnv env = user.getAppEnv();
+		Connection conn = dbPool.getConnection();		
 		try{
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
@@ -133,20 +132,20 @@ public class SystemDatabase implements ISystemDatabase, Const {
 						String pwdHash = pwd;
 						int hash = rs.getInt("LOGINHASH");
 						if (checkHash(hashAsText, hash)) {
-							user = initUser(conn, rs, env, login);
+							user = initUser(conn, rs, login);
 							user.isAuthorized = true;
 						} else if (checkHashPSW(pwdHash, password)) {
-							user = initUser(conn, rs, env, login);
+							user = initUser(conn, rs, login);
 							user.isAuthorized = true;
 						}
 					} else {
 						password = rs.getString("PWD");
 						int hash = rs.getInt("LOGINHASH");
 						if (checkHash(hashAsText, hash)) {
-							user = initUser(conn, rs, env, login);
+							user = initUser(conn, rs, login);
 							user.isAuthorized = true;
 						} else if (pwd.equals(password)) {
-							user = initUser(conn, rs, env, login);
+							user = initUser(conn, rs, login);
 							user.isAuthorized = true;
 						}
 					}
@@ -154,10 +153,10 @@ public class SystemDatabase implements ISystemDatabase, Const {
 					password = rs.getString("PWD");
 					int hash = rs.getInt("LOGINHASH");
 					if(checkHash(hashAsText, hash)){
-						user = initUser(conn, rs, env, login);
+						user = initUser(conn, rs, login);
 						user.isAuthorized = true;
 					}else if(pwd.equals(password)){
-						user = initUser(conn, rs, env, login);
+						user = initUser(conn, rs, login);
 						user.isAuthorized = true;
 						pswToPswHash(user, password);
 					}
@@ -176,8 +175,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 	}
 	
 	public User checkUserHash(String login, String pwd, String hashAsText, User user) {
-		Connection conn = dbPool.getConnection();
-		AppEnv env = user.getAppEnv();
+		Connection conn = dbPool.getConnection();	
 		try{
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
@@ -199,10 +197,10 @@ public class SystemDatabase implements ISystemDatabase, Const {
 						}
 						int hash = rs.getInt("LOGINHASH");
 						if (checkHash(hashAsText, hash)) {
-							user = initUser(conn, rs, env, login);
+							user = initUser(conn, rs, login);
 							user.isAuthorized = true;
 						} else if (checkHashPSW(pwdHash, password)) {
-							user = initUser(conn, rs, env, login);
+							user = initUser(conn, rs,  login);
 							user.isAuthorized = true;
 							if(password.length() < 11){
 								pswToPswHash(user, pwd);
@@ -212,10 +210,10 @@ public class SystemDatabase implements ISystemDatabase, Const {
 						password = rs.getString("PWD");
 						int hash = rs.getInt("LOGINHASH");
 						if(checkHash(hashAsText, hash)){
-							user = initUser(conn, rs, env, login);
+							user = initUser(conn, rs, login);
 							user.isAuthorized = true;
 						}else if(pwd.equals(password)){
-							user = initUser(conn, rs, env, login);
+							user = initUser(conn, rs, login);
 							user.isAuthorized = true;
 							pswToPswHash(user, password);
 							//user.setPassword("");
@@ -229,10 +227,10 @@ public class SystemDatabase implements ISystemDatabase, Const {
 					password = rs.getString("PWD");
 					int hash = rs.getInt("LOGINHASH");
 					if(checkHash(hashAsText, hash)){
-						user = initUser(conn, rs, env, login);
+						user = initUser(conn, rs, login);
 						user.isAuthorized = true;
 					}else if(pwd.equals(password)){
-						user = initUser(conn, rs, env, login);
+						user = initUser(conn, rs, login);
 						user.isAuthorized = true;
 						pswToPswHash(user, password);
 						//user.setPassword("");
@@ -271,8 +269,8 @@ public class SystemDatabase implements ISystemDatabase, Const {
 	//	user.setPassword("");
 	}
 	
-	private User initUser(Connection conn, ResultSet rs, AppEnv env, String login) throws SQLException{
-		User user = new User(login, env);		
+	private User initUser(Connection conn, ResultSet rs, String login) throws SQLException{
+		User user = new User();		
 		user.fill(rs);			
 		while(rs.next()){
 			UserApplicationProfile ap = new UserApplicationProfile(rs);			
