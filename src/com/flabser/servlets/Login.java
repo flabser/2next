@@ -130,7 +130,7 @@ public class Login extends HttpServlet implements Const {
 				
 				String userID = user.getUserID();
 				jses = request.getSession(true);
-				userSession = new UserSession(user, env.globalSetting.implemantion, env.appType);
+				userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
 
 				AppEnv.logger.normalLogEntry(userID + " has connected");
 				// / IUsersActivity ua =

@@ -44,7 +44,7 @@ public class ServiceHandler implements Const {
 		for(AppEnv env: Environment.getApplications()){
 			xmlFragment += "<entry>";
 			xmlFragment += "<apptype>" + env.appType + "</apptype>";
-			xmlFragment += "<implemantion>" + env.globalSetting.implemantion + "</implemantion>";
+			xmlFragment += "<implemantion>" + env.globalSetting.implementation + "</implemantion>";
 			xmlFragment += "</entry>";
 		}
 		xmlFragment += "</applications>";

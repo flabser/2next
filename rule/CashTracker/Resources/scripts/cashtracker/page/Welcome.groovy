@@ -15,7 +15,6 @@ class Welcome extends _DoScript {
 		def ent = session.getAppEntourage()
 		publishElement("serverversion", ent.getServerVersion())
 		publishElement("build", ent.getBuildTime())
-		publishElement("org", ent.getGeneralName())
 		publishElement("appname", ent.getAppName())
 		publishElement("availablelangs", ent.getAvailableLangs())
 		publishElement("availableapps", ent.getAvailableApps())

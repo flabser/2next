@@ -3,7 +3,7 @@ package com.flabser.script;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.flabser.rule.Caption;
+import com.flabser.localization.SentenceCaption;
 import com.flabser.rule.page.CachingStrategyType;
 import com.flabser.runtimeobj.page.Element;
 import com.flabser.runtimeobj.page.Page;
@@ -13,10 +13,10 @@ public class _Page implements _IXMLContent{
 	private String id;	
 	private CachingStrategyType caching;
 	private String elapsed_time; 
-	private ArrayList<_Page> includedPage = new ArrayList<_Page>();
+	private ArrayList<_Page> includedPages = new ArrayList<_Page>();
 	private HashMap<String, Element> elementsMap = new HashMap<String, Element>();
 	private ArrayList<Element> elementsList = new ArrayList<Element>();
-	private ArrayList<Element> captions;
+	private ArrayList<SentenceCaption> captions;
 	
 	public _Page(Page page, _WebFormData webFormData) {
 
@@ -36,7 +36,7 @@ public class _Page implements _IXMLContent{
 
 	
 	public void addPage(_Page page) {
-		includedPage.add(page);
+		includedPages.add(page);
 	}
 	
 	
@@ -53,11 +53,22 @@ public class _Page implements _IXMLContent{
 		
 	}
 	
+	public ArrayList<_Page> getIncludedPages() {
+		return includedPages;
+	}
+	
+	public ArrayList<Element> getElements() {
+		return elementsList;
+	}
 
-	public void setCaptions(ArrayList<Element> captions) {
+	public void setCaptions(ArrayList<SentenceCaption> captions) {
 		this.captions = captions;
 	}
 
+	public ArrayList<SentenceCaption> getCaptions() {
+		return captions;
+	}
+	
 	@Override
 	public StringBuffer toXML() throws _Exception {
 		StringBuffer output = new StringBuffer(5000);
@@ -67,12 +78,12 @@ public class _Page implements _IXMLContent{
 			 output.append(e.toXML());
 		 }
 		 
-		 for(_Page p: includedPage) {
+		 for(_Page p: includedPages) {
 			 output.append(p.toXML());
 		 }
 		
 		 StringBuffer captionsText = new StringBuffer("<captions>");
-		 for(Element c: captions) {
+		 for(SentenceCaption c: captions) {
 			 captionsText.append(c.toXML());
 		 }
 		 captionsText.append("</captions>");

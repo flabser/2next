@@ -52,14 +52,14 @@ public class Vocabulary {
 		Sentence sent = words.get(keyWord.trim());
 		if (sent == null){
 			Environment.logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");			
-			SentenceCaption primary = new SentenceCaption(keyWord,keyWord);
+			SentenceCaption primary = new SentenceCaption(keyWord, keyWord,keyWord);
 			return primary;
 		}else{
 			SentenceCaption caption = sent.words.get(lang);	
 			if (caption != null){
 				return caption;	
 			}else{
-				SentenceCaption primary = new SentenceCaption(keyWord,keyWord);
+				SentenceCaption primary = new SentenceCaption(keyWord,keyWord,keyWord);
 				return primary;
 			}
 			

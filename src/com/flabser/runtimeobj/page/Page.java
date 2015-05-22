@@ -3,11 +3,13 @@ package com.flabser.runtimeobj.page;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.localization.LocalizatorException;
+import com.flabser.localization.SentenceCaption;
 import com.flabser.rule.Caption;
 import com.flabser.rule.page.ElementRule;
 import com.flabser.rule.page.PageRule;
@@ -48,11 +50,17 @@ public class Page implements Const {
 		return glossariesAsText.append("</glossaries>").toString();
 	}
 
-	public ArrayList<Element> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
-		ArrayList<Element> captionsList = new ArrayList<Element>();
+	public ArrayList<SentenceCaption> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
+		ArrayList<SentenceCaption> captionsList = new ArrayList<SentenceCaption>();
 		
 		for (Caption cap : captions) {
-			captionsList.add(new Element(cap.captionID, captionTextSupplier.getValueAsCaption(cap.source, cap.value).toAttrValue()));		
+			SentenceCaption sc = captionTextSupplier.getValueAsCaption(cap.source, cap.captionID);
+		/*	Element v = new Element("caption", sc.word);
+			Element h = new Element("hint", sc.hint);
+			Element captElement = new Element(cap.captionID);
+			captElement.addTag(v);
+			captElement.addTag(h);*/
+			captionsList.add(sc);		
 		}
 		return captionsList;// captionsText.append("</captions>").toString();
 	}
@@ -120,6 +128,7 @@ public class Page implements Const {
 				}
 			}
 		}
+		userSession.lang = "RUS";
 		SourceSupplier captionTextSupplier = new SourceSupplier(env, userSession.lang);
 		pp.setCaptions(getCaptions(captionTextSupplier, rule.captions));
 		return pp;

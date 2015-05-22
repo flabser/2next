@@ -12,14 +12,10 @@ public class WebDocument implements _IXMLContent {
 	
 	public WebDocument(Element root){
 		rootTag = root;		
-	}
-	
-	public void setRootAttr(String attrName, String attrValue){
-		rootTag.attrs.put(attrName, attrValue);			
-	}
+	}	
 	
 	public void setTag(Element tag){
-		rootTag.tags.clear();
+		rootTag.elements.clear();
 		rootTag.addTag(tag);
 	}
 	

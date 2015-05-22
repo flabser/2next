@@ -6,12 +6,10 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -33,13 +31,13 @@ public class RestProvider {
 
 	@Context
 	ServletContext context;
-	//@Context
-	// HttpServletRequest request;
+	@Context
+	HttpServletRequest request;
 
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public _Page produceJSON(@PathParam("id") String id, @QueryParam("pageid") String pageid) {
+	public _Page produceJSON(@PathParam("id") String id) {
 
 		HttpSession jses = null;
 		UserSession userSession = null;
@@ -50,14 +48,14 @@ public class RestProvider {
 			rule = env.ruleProvider.getRule("page", id);
 			if (rule != null) {
 				if (!rule.isAnonymousAccessAllowed()) {
-			//		jses = request.getSession(true);
+					jses = request.getSession(true);
 					userSession = (UserSession) jses.getAttribute("usersession");
 					if (userSession == null)
 						throw new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, null);
 				} else {
-			//		jses = request.getSession(false);
+					jses = request.getSession(false);
 					if (jses == null) {
-			//			jses = request.getSession(true);
+						jses = request.getSession(true);
 						userSession = new UserSession(new User());
 						jses.setAttribute("usersession", userSession);
 					} else {
@@ -72,8 +70,8 @@ public class RestProvider {
 			}
 			PageRule pageRule = (PageRule) rule;
 			HashMap<String, String[]> fields = new HashMap<String, String[]>();
-		//	Map<String, String[]> parMap = request.getParameterMap();
-		//	fields.putAll(parMap);
+			Map<String, String[]> parMap = request.getParameterMap();
+			fields.putAll(parMap);
 			Page page = new Page(env, userSession, pageRule);
 			_Page pojoPage = page.process(fields);
 			return pojoPage;

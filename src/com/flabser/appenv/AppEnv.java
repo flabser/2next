@@ -86,7 +86,7 @@ public class AppEnv implements Const, ICache{
 	}
 
 	public String toString(){
-		return appType + "(" + globalSetting.implemantion + ")";
+		return appType + "(" + globalSetting.implementation + ")";
 	}
 
 	

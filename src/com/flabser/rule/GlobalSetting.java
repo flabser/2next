@@ -18,7 +18,7 @@ public class GlobalSetting {
 	public String rulePath;
 	public String primaryRulePath;
 	public String appName;
-	public String implemantion;
+	public String implementation;
 	public RunMode isOn;	
 	public boolean isValid;
 	public String entryPoint;
@@ -48,7 +48,7 @@ public class GlobalSetting {
 
 			description = XMLUtil.getTextContent(doc, "/rule/description");
 			appName = XMLUtil.getTextContent(doc, "/rule/appname");
-			implemantion = XMLUtil.getTextContent(doc, "/rule/implemantion");
+			implementation = XMLUtil.getTextContent(doc, "/rule/impl");
 			
 			entryPoint = XMLUtil.getTextContent(doc, "/rule/entrypoint");
 			

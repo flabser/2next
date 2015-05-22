@@ -16,8 +16,8 @@ class AppMenu extends _DoScript {
 
 		def rootTag = new _Element("current")
 		def entryTag = new _Element("entry", formData.getEncodedValueSilently("title"))
-		entryTag.setAttr("entryid", formData.getValueSilently("entryid"))
-		entryTag.setAttr("id", formData.getValueSilently("id"))
+//		entryTag.setAttr("entryid", formData.getValueSilently("entryid"))
+//		entryTag.setAttr("id", formData.getValueSilently("id"))
 
 		if (formData.getEncodedValueSilently("id") == "operationsbycash") {
 			def customParam = new _Element("customparam", "&cashid=" + formData.getValueSilently("cashid"))

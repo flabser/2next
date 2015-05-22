@@ -10,10 +10,8 @@ import com.flabser.util.XMLUtil;
 
 public class Sentence {
 	public boolean isOn = true; 
-	public boolean isValid;
 	public Language lang;
 	public String keyWord;
-	public int code;
 	public HashMap<String, SentenceCaption> words = new HashMap<String, SentenceCaption>();
 
 	Sentence(){
@@ -27,16 +25,15 @@ public class Sentence {
 				return;
 			}
 			keyWord = XMLUtil.getTextContent(node,"@keyword", false);
-			code = XMLUtil.getNumberContent(node,"@code",0);
 			String primaryHint = XMLUtil.getTextContent(node,"@hint", false);
-			SentenceCaption primary = new SentenceCaption(keyWord,primaryHint);
+			SentenceCaption primary = new SentenceCaption(keyWord, keyWord, primaryHint);
 			words.put(primaryLang, primary);
 			NodeList entries =  XMLUtil.getNodeList(node,"entry");   
 			for(int i = 0; i < entries.getLength(); i++){
 				Node wordNode = entries.item(i);
 				Language l = Language.valueOf(XMLUtil.getTextContent(wordNode,"@lang",true,"UNKNOWN", false).toUpperCase());
 				String hint = XMLUtil.getTextContent(wordNode,"@hint", false);
-				SentenceCaption c = new SentenceCaption(wordNode.getTextContent(),hint);
+				SentenceCaption c = new SentenceCaption(keyWord, wordNode.getTextContent(),hint);
 				words.put(l.toString(),c);				
 			}
 

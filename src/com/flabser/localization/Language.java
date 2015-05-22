@@ -4,8 +4,8 @@ public enum Language {
 	ENG, 
 	RUS, 
 	KAZ, 
-	ZHO,
 	ARA,
 	CHN,
+	BG,
 	UNKNOWN
 }

@@ -90,18 +90,18 @@ public class SourceSupplier implements Const {
 	
 
 
-	public SentenceCaption getValueAsCaption(ValueSourceType sourceType, String value){
+	public SentenceCaption getValueAsCaption(ValueSourceType sourceType, String keyWord){
 		try{
 			switch (sourceType){
 			case KEYWORD:	
 			//	System.out.println("value=" + value);
-				return vocabulary.getSentenceCaption(value, lang);				
+				return vocabulary.getSentenceCaption(keyWord, lang);				
 			default:	
-				return new SentenceCaption(value, value);
+				return new SentenceCaption(keyWord, keyWord, keyWord);
 			}
 		}catch(Exception e){
-			env.logger.warningLogEntry("Sentence for value \"" + value + "\" has not found therefore return value itself");
-			return new SentenceCaption(value, value);
+			env.logger.warningLogEntry("Sentence for value \"" + keyWord + "\" has not found therefore return value itself");
+			return new SentenceCaption(keyWord, keyWord, keyWord);
 		}
 	}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><rule mode="on" type="global">
 	<description>SmartFinance</description>
 	<appname>CashTracker</appname>
-	<implemantion>com.flabser.solutions.cashtracker.Database</implemantion>
+	<impl>com.flabser.solutions.cashtracker.Database</impl>
 	<entrypoint>Provider?type=page&amp;id=welcome</entrypoint>
 	<langs>
 		<entry id="RUS">Русский</entry>
