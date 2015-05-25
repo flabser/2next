@@ -9,7 +9,7 @@ import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.pool.IDBConnectionPool;
 import com.flabser.users.TempUser;
 import com.flabser.users.User;
-import com.flabser.users.UserApplicationProfile;
+import com.flabser.users.ApplicationProfile;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,10 +30,9 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		Connection conn = dbPool.getConnection();
 		try{
 			conn.setAutoCommit(false);
-			createUserTable(getUsersDDE(), "USERS");
-			createUserTable(getEnabledAppDDE(), "ENABLEDAPPS");
-			createUserTable(getQADDE(),"QA");
-			createUserTable(getHolidaysDDE(), "HOLIDAYS");
+			createUserTable(DDEScripts.getUsersDDE(), "USERS");
+			createUserTable(DDEScripts.getEnabledAppDDE(), "ENABLEDAPPS");	
+			createUserTable(DDEScripts.getHolidaysDDE(), "HOLIDAYS");
          	isValid = true;
 			conn.commit();
 		}catch(Throwable e){
@@ -270,11 +269,13 @@ public class SystemDatabase implements ISystemDatabase, Const {
 	}
 	
 	private User initUser(Connection conn, ResultSet rs, String login) throws SQLException{
+		boolean isNext = true;
 		User user = new User();		
 		user.fill(rs);			
-		while(rs.next()){
-			UserApplicationProfile ap = new UserApplicationProfile(rs);			
-			user.enabledApps.put(ap.appName, ap);	
+		while(isNext||rs.next()){
+			ApplicationProfile ap = new ApplicationProfile(rs);			
+			user.enabledApps.put(ap.solution, ap);
+			isNext = false;
 		}	
 		return user;		
 		
@@ -377,8 +378,8 @@ public class SystemDatabase implements ISystemDatabase, Const {
 	}
 
 	public User reloadUserData(User user, String userID) {
-		return user;	
-		/*Connection conn = dbPool.getConnection();
+
+		Connection conn = dbPool.getConnection();
 		try{
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();			
@@ -392,14 +393,8 @@ public class SystemDatabase implements ISystemDatabase, Const {
 					Statement statement = conn.createStatement();	
 					ResultSet resultSet = statement.executeQuery(addSQL);
 					while(resultSet.next()){
-						UserApplicationProfile ap = new UserApplicationProfile(resultSet.getString("APP"),resultSet.getInt("LOGINMODE"));
-						String qaSQL = "select * from QA where QA.DOCID=" + user.docID + " AND QA.APP='" + ap.appName + "'";
-						Statement s1 = conn.createStatement();	
-						ResultSet rs1 = s1.executeQuery(qaSQL);
-						while(rs1.next()){
-							ap.getQuestionAnswer().add(ap.new QuestionAnswer(rs1.getString("QUESTION"),rs1.getString("ANSWER")));
-						}	
-						user.enabledApps.put(ap.appName, ap);
+						ApplicationProfile ap = new ApplicationProfile(resultSet);
+						user.enabledApps.put(ap.solution, ap);
 					}
 					resultSet.close();
 					statement.close();
@@ -410,13 +405,13 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			rs.close();	
 			s.close();
 			conn.commit();
-			//	user.addSupervisorRole();
+
 		}catch(Throwable e){	
 			DatabaseUtil.debugErrorPrint(e);
 		}finally{	
 			dbPool.returnConnection(conn);
 		}
-		return user;*/
+		return user;
 	}
 
 	public User getUser(int docID) {
@@ -529,70 +524,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		return createUserTab;
 	}
 
-	private String getUsersDDE(){
-		String createTable="CREATE TABLE users( docid serial NOT NULL, "
-				+ "userid character varying(32),  "
-				+ "email character varying(32),  "
-				+ "pwd character varying(32),  "
-				+ "regdate timestamp without time zone DEFAULT now(), "
-				+ "isappadmin integer, "
-				+ "isadmin integer, "
-				+ "isobserver integer, "
-				+ "loginhash integer, "
-				+ "publickey character varying(6144), "
-				+ "pwdhash character varying(1024), "
-				+ "lastDefaultURL varchar(128), " 
-				+ "CONSTRAINT users_pkey PRIMARY KEY (docid), CONSTRAINT users_userid_unique UNIQUE (userid))";
-
-		createTable += ";CREATE TABLE temp_users(id serial NOT NULL, "
-				+ "userid character varying(10), "
-				+ "pwd character varying(32), "
-				+ "regdate timestamp without time zone DEFAULT now(), "
-				+ "starttime timestamp without time zone, "
-				+ "lifetime integer DEFAULT 0,"
-				+ "CONSTRAINT temp_users_primary_key PRIMARY KEY (id), CONSTRAINT temp_users_userid_key UNIQUE (userid))";
-
-		return createTable;
-	}
-
-	private String getEnabledAppDDE(){
-		String dde = "create table ENABLEDAPPS(ID serial NOT NULL, " +
-				"DOCID int, " +
-				"APP varchar(32), " +
-				"defaultURL varchar(128), " +
-				"dburl varchar(128), " +
-				"dbpwd varchar(32), " +				
-				"LOGINMODE int, " +
-				"FOREIGN KEY (DOCID) REFERENCES USERS(DOCID))";
-		return dde;
-	} 
-
-	private String getQADDE(){
-		String dde = "create table QA(ID serial NOT NULL, " +
-				"DOCID int, " +
-				"APP varchar(32), " +
-				"QUESTION varchar(150), " +
-				"ANSWER varchar(100), " +
-				"LANG varchar(5), " +
-				"MAXATTEMPT int, " +
-				"INVALIDATE timestamp," +
-				"FOREIGN KEY (DOCID) REFERENCES USERS(DOCID))";
-		return dde;
-	} 
-
-	private String getHolidaysDDE() {
-		String dde = "CREATE TABLE HOLIDAYS (ID serial NOT NULL, " +
-				" COUNTRY VARCHAR(10) , " +
-				" TITLE VARCHAR(64), " +
-				" REPEAT INT, " +
-				" STARTDATE TIMESTAMP, " +
-				" CONTINUING INT, " +
-				" ENDDATE TIMESTAMP, " +
-				" IFFALLSON INT, " +
-				" COMMENT VARCHAR(64))";
-		return dde;
-	}
-
+	
 	public int insert(User user) {
 		Connection conn = dbPool.getConnection();
 		try{
@@ -615,32 +547,19 @@ public class SystemDatabase implements ISystemDatabase, Const {
 
 			PreparedStatement pst = conn.prepareStatement(insertUser/*, PreparedStatement.RETURN_GENERATED_KEYS*/);
 			pst.executeUpdate();
-//			ResultSet rs = pst.getGeneratedKeys();
-//			while(rs.next()){
-//				key = rs.getInt(1);
-//			}
+			 rs = pst.getGeneratedKeys();
+			while(rs.next()){
+				key = rs.getInt(1);
+			}
 
-			/*	if (user.enabledApps.isEmpty()) {
-				for(AppEnv appEnv: Environment.getApplications()){
-					if (!appEnv.globalSetting.isWorkspace){
-						ApplicationProfile ap = new ApplicationProfile(appEnv.appType,0);
-						user.setEnabledApp(ap.appName, ap);
-					}
-				}
-			}*/
+		
 
-			/*for(UserApplicationProfile app: user.enabledApps.values()){				
-				String insertURL = "insert into ENABLEDAPPS(DOCID, APP, LOGINMODE)values(" + key + ", '" + app.appName +"'," + app.loginMode + ")";
+			for(ApplicationProfile app: user.enabledApps.values()){				
+				String insertURL = "insert into ENABLEDAPPS(DOCID, APP)values(" + key + ", '" + app.solution +"')";
 				pst = conn.prepareStatement(insertURL);
 				pst.executeUpdate();	
-				if (app.loginMode == UserApplicationProfile.LOGIN_AND_QUESTION){
-					for(UserApplicationProfile.QuestionAnswer qa : app.getQuestionAnswer()){
-						insertURL = "insert into QA(DOCID, APP, QUESTION, ANSWER)values(" + key + ",'" + app.appName + "','" + qa.controlQuestion +"','" + qa.answer + "')";
-						pst = conn.prepareStatement(insertURL);
-						pst.executeUpdate();
-					}			
-				}
-			}*/
+				
+			}
 
 			conn.commit();
 			pst.close();
@@ -856,8 +775,8 @@ public class SystemDatabase implements ISystemDatabase, Const {
 					Statement statement = conn.createStatement();	
 					ResultSet resultSet = statement.executeQuery(addSQL);
 					while(resultSet.next()){
-						UserApplicationProfile ap = new UserApplicationProfile(resultSet);
-						user.enabledApps.put(ap.appName, ap);
+						ApplicationProfile ap = new ApplicationProfile(resultSet);
+						user.enabledApps.put(ap.solution, ap);
 					}
 					resultSet.close();
 					statement.close();

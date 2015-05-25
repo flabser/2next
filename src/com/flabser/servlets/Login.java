@@ -1,40 +1,28 @@
 package com.flabser.servlets;
 
 import org.apache.catalina.realm.RealmBase;
-
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
-import com.flabser.env.Environment;
 import com.flabser.exception.PortalException;
 import com.flabser.users.AuthFailedException;
 import com.flabser.users.AuthFailedExceptionType;
-import com.flabser.users.LoginModeType;
 import com.flabser.users.User;
-import com.flabser.users.UserApplicationProfile;
 import com.flabser.users.UserSession;
-import com.flabser.util.ResponseType;
-import com.flabser.util.Util;
-import com.flabser.util.Response;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
-
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
+
 public class Login extends HttpServlet implements Const {
-	private static final long serialVersionUID = 1L;
 	private AppEnv env;
-	private HashMap<String, UserSession> unauthorizedUserSessions = new HashMap<String, UserSession>();
-	private static final int numOfAttempt = 5;
 
 	public void init(ServletConfig config) throws ServletException {
 		ServletContext context = config.getServletContext();
@@ -185,13 +173,14 @@ public class Login extends HttpServlet implements Const {
 
 	}
 
-	private String getRedirect(HttpSession jses, Cookies appCookies) {
-		String callingPage = (String) jses.getAttribute("callingPage");
-		if (callingPage != null && (!callingPage.equalsIgnoreCase(""))) {
+	private String getRedirect(HttpSession jses, Cookies appCookies){
+		String callingPage = (String)jses.getAttribute("callingPage");
+		if( callingPage != null && (!callingPage.equalsIgnoreCase(""))){
 			jses.removeAttribute("callingPage");
 			return callingPage;
+		}else{
+			return env.globalSetting.defaultRedirectURL;		
 		}
-		return callingPage;
 	}
 
 	public class CallingPageCookie {
@@ -207,32 +196,6 @@ public class Login extends HttpServlet implements Const {
 				}
 			}
 		}
-	}
-
-	/*
-	 * public static void addEDSCookies(EDSSetting es, HttpServletResponse
-	 * response) { Cookie providerCook = new Cookie("provider",(es.provider !=
-	 * null ? es.provider.toString() : "")); providerCook.setMaxAge(99999);
-	 * providerCook.setPath("/"); response.addCookie(providerCook); Cookie
-	 * digestAlgoCook = new Cookie("digestAlgo",(es.digestAlg != null ?
-	 * es.digestAlg.toString() : "")); digestAlgoCook.setMaxAge(99999);
-	 * digestAlgoCook.setPath("/"); response.addCookie(digestAlgoCook); Cookie
-	 * signAlgoCook = new Cookie("signAlgo",(es.signAlg != null ?
-	 * es.signAlg.toString() : "")); signAlgoCook.setMaxAge(99999);
-	 * signAlgoCook.setPath("/"); response.addCookie(signAlgoCook); }
-	 */
-	private int getQuestionAttempCount(HttpSession jses) {
-		try {
-			String countAsString = (String) jses.getAttribute("qa_count");
-			int count = Integer.parseInt(countAsString) - 1;
-			countAsString = Integer.toString(count);
-			jses.setAttribute("qa_count", countAsString);
-			return count;
-		} catch (Exception e) {
-			jses.setAttribute("qa_count", Integer.toString(numOfAttempt));
-			return numOfAttempt;
-		}
-
 	}
 
 }

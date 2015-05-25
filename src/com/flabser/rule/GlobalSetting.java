@@ -2,13 +2,16 @@ package com.flabser.rule;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.env.Environment;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.users.UserRoleCollection;
 import com.flabser.util.XMLUtil;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -22,11 +25,13 @@ public class GlobalSetting {
 	public RunMode isOn;	
 	public boolean isValid;
 	public String entryPoint;
+	public String defaultRedirectURL;
 	public ArrayList <Lang> langsList = new ArrayList <Lang>();
 	public boolean multiLangEnable;
 	public Lang primaryLang;	
 	public String vocabulary = "vocabulary.xml";
 	public UserRoleCollection roleCollection = new UserRoleCollection();
+	
 	
 		
 	public GlobalSetting(String path, AppEnv env){	
@@ -51,6 +56,11 @@ public class GlobalSetting {
 			implementation = XMLUtil.getTextContent(doc, "/rule/impl");
 			
 			entryPoint = XMLUtil.getTextContent(doc, "/rule/entrypoint");
+			
+			defaultRedirectURL = XMLUtil.getTextContent(doc, "/rule/defaultredirecturl");
+			if(defaultRedirectURL.equalsIgnoreCase("")){
+				defaultRedirectURL = "Error?type=default_url_not_defined";
+			}
 			
 			NodeList langs = XMLUtil.getNodeList(doc, "/rule/langs/entry");
 			for (int i = 0; i < langs.getLength(); i++) {

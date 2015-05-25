@@ -4,7 +4,8 @@ import com.flabser.script.*
 import com.flabser.scriptprocessor.*
 import com.flabser.script.events.*
 import com.flabser.script.actions.*
-import com.flabser.util.XMLResponse;
+import com.flabser.users.*
+import com.flabser.solutions.*
 
 
 class RegUser extends _DoScript {
@@ -47,8 +48,17 @@ class RegUser extends _DoScript {
 		user.setPasswordHash(regForm.pwd)
 		user.setEmail(regForm.email)
 
-		Set<String> complexUserID = ["[observer]"]
-		if (user.save(complexUserID, "[observer]") == -1) {
+		
+		ApplicationProfile ap = new ApplicationProfile()
+		ap.solution = SolutionsType.CASHTRACKER
+		ap.owner = user.getUserID()
+		ap.dbURL = "jdbc:postgresql://localhost/" + SolutionsType.CASHTRACKER + "_" + user.getUserID()
+		ap.dbLogin = ap.owner
+		ap.dbPwd = regForm.pwd
+		
+		user.addApplication(ap)
+
+		if (user.save()) {
 			publishElement("error", "save-error")
 			return
 		}

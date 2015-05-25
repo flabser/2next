@@ -42,8 +42,9 @@ public class UserSession implements Const, ICache {
 		}
 		Class cls = Class.forName(implemantion);
 		dataBase = (IDatabase) cls.newInstance();
-		UserApplicationProfile app = user.enabledApps.get(appID);
-		dataBase.init(app.dbURL, user.getUserID(), app.dbPwd);
+		ApplicationProfile app = user.enabledApps.get(appID);
+		dataBase.init(app);
+		//dataBase.init(app.dbURL, user.getUserID(), app.dbPwd);
 		
 	}
 
@@ -72,7 +73,7 @@ public class UserSession implements Const, ICache {
 			throw new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, "");
 		} else {
 			currentUser = new User();
-			UserApplicationProfile userAppProfile = currentUser.enabledApps.get(env.appType);
+			ApplicationProfile userAppProfile = currentUser.enabledApps.get(env.appType);
 			initHistory();
 		}
 

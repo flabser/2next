@@ -3,6 +3,7 @@
 	<appname>CashTracker</appname>
 	<impl>com.flabser.solutions.cashtracker.Database</impl>
 	<entrypoint>Provider?type=page&amp;id=welcome</entrypoint>
+	<defaultredirecturl>Provider?type=page&amp;id=operations</defaultredirecturl>
 	<langs>
 		<entry id="RUS">Русский</entry>
 		<entry id="ENG">English</entry>

@@ -6,7 +6,7 @@ import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.RuleException;
 import com.flabser.localization.LocalizatorException;
 import com.flabser.users.User;
-import com.flabser.users.UserApplicationProfile;
+import com.flabser.users.ApplicationProfile;
 
 public class UserServices {
 	private ISystemDatabase sysDatabase;
@@ -21,7 +21,7 @@ public class UserServices {
 		User user = sysDatabase.getUser(userID);
 
 
-		for(UserApplicationProfile app: user.enabledApps.values()){
+		for(ApplicationProfile app: user.enabledApps.values()){
 			ea += app.toXML();		
 		}
 
@@ -74,7 +74,7 @@ public class UserServices {
 			User user = it.next();
 			xmlFragment += "<entry docid=\"" + user.docID + "\" ><userid>" + user.getUserID() + "</userid>" +		
 					"<isadministrator>" + user.isSupervisor() + "</isadministrator><email>" + user.getEmail() + "</email>" +
-					"<jid>" + user.getInstMsgAddress() + "</jid><redirecturl></redirecturl>" +
+					"<redirecturl></redirecturl>" +
 					"</entry>";
 		}
 
