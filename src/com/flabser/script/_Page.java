@@ -16,7 +16,7 @@ public class _Page implements _IXMLContent{
 	private ArrayList<_Page> includedPages = new ArrayList<_Page>();
 	private HashMap<String, Element> elementsMap = new HashMap<String, Element>();
 	private ArrayList<Element> elementsList = new ArrayList<Element>();
-	private ArrayList<SentenceCaption> captions;
+	private ArrayList<HashMap> captions;
 	
 	public _Page(Page page, _WebFormData webFormData) {
 
@@ -61,11 +61,11 @@ public class _Page implements _IXMLContent{
 		return elementsList;
 	}
 
-	public void setCaptions(ArrayList<SentenceCaption> captions) {
+	public void setCaptions(ArrayList<HashMap> captions) {
 		this.captions = captions;
 	}
 
-	public ArrayList<SentenceCaption> getCaptions() {
+	public ArrayList<HashMap> getCaptions() {
 		return captions;
 	}
 	
@@ -83,9 +83,9 @@ public class _Page implements _IXMLContent{
 		 }
 		
 		 StringBuffer captionsText = new StringBuffer("<captions>");
-		 for(SentenceCaption c: captions) {
+		/* for(SentenceCaption c: captions) {
 			 captionsText.append(c.toXML());
-		 }
+		 }*/
 		 captionsText.append("</captions>");
 		 
 		return output.append(captionsText).append("</page>");

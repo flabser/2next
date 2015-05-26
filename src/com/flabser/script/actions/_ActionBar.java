@@ -1,10 +1,7 @@
 package com.flabser.script.actions;
 
 import java.util.ArrayList;
-
 import com.flabser.rule.constants.RunMode;
-import com.flabser.script._Exception;
-import com.flabser.script._ExceptionType;
 import com.flabser.script._Session;
 
 
@@ -15,11 +12,7 @@ public class _ActionBar {
 		
 	private ArrayList<_Action> actions = new ArrayList<_Action>();
 	private _Session session;
-	
-	public _ActionBar() throws _Exception{
-		throw new _Exception(_ExceptionType.CONSTRUCTOR_UNDEFINED, "Defaul constructor undefined, you should use  \"new _ActionBar(_Session)\"");
-	}
-	
+		
 	public _ActionBar(_Session ses){
 		session = ses;
 	}

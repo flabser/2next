@@ -50,8 +50,9 @@ public class Page implements Const {
 		return glossariesAsText.append("</glossaries>").toString();
 	}
 
-	public ArrayList<SentenceCaption> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
-		ArrayList<SentenceCaption> captionsList = new ArrayList<SentenceCaption>();
+	public ArrayList<HashMap> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
+		//ArrayList<SentenceCaption> captionsList = new ArrayList<SentenceCaption>();
+		ArrayList<HashMap> captionsList = new ArrayList<HashMap>();
 		
 		for (Caption cap : captions) {
 			SentenceCaption sc = captionTextSupplier.getValueAsCaption(cap.source, cap.captionID);
@@ -60,7 +61,12 @@ public class Page implements Const {
 			Element captElement = new Element(cap.captionID);
 			captElement.addTag(v);
 			captElement.addTag(h);*/
-			captionsList.add(sc);		
+			HashMap m = new HashMap();
+			HashMap w = new HashMap();
+			w.put("caption", sc.word);
+			w.put("hint", sc.hint);			
+			m.put(cap.captionID, w);
+			captionsList.add(m);		
 		}
 		return captionsList;// captionsText.append("</captions>").toString();
 	}
