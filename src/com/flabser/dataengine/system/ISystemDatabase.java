@@ -3,10 +3,13 @@ package com.flabser.dataengine.system;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.flabser.dataengine.activity.IActivity;
 import com.flabser.users.TempUser;
 import com.flabser.users.User;
 
 public interface ISystemDatabase {
+	
+	IActivity getActivity();
 	
 	User checkUser(String userID, String pwd, User user);
 	User checkUser(String userID, String pwd, String hash, User user);

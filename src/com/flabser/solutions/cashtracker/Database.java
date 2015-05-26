@@ -18,6 +18,7 @@ public class Database extends DatabaseCore {
 			ClassNotFoundException, DatabasePoolException {
 		this.appProfile = appProfile;
 		pool = new DBConnectionPool(); 
+		appProfile.dbLogin = "postgres";
 		pool.initConnectionPool(driver, appProfile.dbURL, appProfile.dbLogin, appProfile.dbPwd);
 		
 	}
@@ -26,7 +27,7 @@ public class Database extends DatabaseCore {
 	public IDeployer getDeployer() {
 		return new Deployer(appProfile);
 	}
-	
+		
 	@Override
 	public int getVersion() {
 		return 1;

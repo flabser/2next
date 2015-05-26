@@ -29,7 +29,7 @@ public class ProviderOutput{
 		this.request = request;
 		this.jses = jses;
 
-		browser = getBrowserType(request);
+		browser = ServletUtil.getBrowserType(request);
 		
 		this.userSession = userSession;	
 
@@ -106,35 +106,6 @@ public class ProviderOutput{
 		}	
 	}
 
-	 private static BrowserType getBrowserType(HttpServletRequest request) {
-	        String userAgent = request.getHeader("user-agent");
-	        if (userAgent == null || userAgent.length() == 0) {
-	            return BrowserType.APPLICATION;
-	        }
-	        //Server.logger.verboseLogEntry("userAgent=" + userAgent);
-	        if (userAgent.indexOf("MSIE") != -1) {
-	            return BrowserType.IE;
-	        } else if (userAgent.indexOf("Firefox") != -1 && userAgent.indexOf("Android") == -1) {
-	            return BrowserType.FIREFOX;
-	        } else if (userAgent.indexOf("Chrome") != -1 && userAgent.indexOf("Android") == -1) {
-	            return BrowserType.CHROME;
-	        } else if (userAgent.indexOf("Opera") != -1 && userAgent.indexOf("Android") == -1) {
-	            return BrowserType.OPERA;
-	        } else if (userAgent.indexOf("iPad") != -1) {
-	            return BrowserType.IPAD_SAFARI;
-	        } else if (userAgent.indexOf("iPhone") != -1) {
-	            return BrowserType.IPAD_SAFARI;
-	        } else if (userAgent.indexOf("Android") != -1) {
-	            return BrowserType.ANDROID;
-	        } else if (userAgent.indexOf("P1000") != -1) {
-	            return BrowserType.GALAXY_TAB_SAFARI;
-	        } else if (userAgent.indexOf("Safari") != -1) {
-	            return BrowserType.SAFARI;
-	        } else if (userAgent.indexOf("CFNetwork") != -1) {
-	            return BrowserType.APPLICATION;
-	        } else {
-	            return BrowserType.UNKNOWN;
-	        }
-	    }
+	
 
 }

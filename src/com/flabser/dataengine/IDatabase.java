@@ -1,8 +1,6 @@
 package com.flabser.dataengine;
 
 import java.sql.ResultSet;
-
-import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.users.ApplicationProfile;
@@ -15,7 +13,7 @@ public interface IDatabase {
 	IDeployer getDeployer();
 
 	IFTIndexEngine getFTSearchEngine();
-	IActivity getActivity();
+
 	
 	ResultSet select(String condition, User user);
 	ResultSet insert(String condition, User user);

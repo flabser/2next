@@ -1,4 +1,4 @@
-package com.flabser.dataengine;
+package com.flabser.dataengine.activity;
 
 public enum UsersActivityType {
 	UNKNOWN(1009), MARKED_AS_READ(1001), MARKED_AS_UNREAD(1002), COMPOSED(1003), 

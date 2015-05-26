@@ -5,6 +5,7 @@ import org.apache.catalina.realm.RealmBase;
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseUtil;
+import com.flabser.dataengine.activity.*;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.pool.IDBConnectionPool;
 import com.flabser.users.TempUser;
@@ -31,7 +32,11 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		try{
 			conn.setAutoCommit(false);
 			createUserTable(DDEScripts.getUsersDDE(), "USERS");
-			createUserTable(DDEScripts.getEnabledAppDDE(), "ENABLEDAPPS");	
+			createUserTable(DDEScripts.getEnabledAppDDE(), "APPS");
+			createUserTable(DDEScripts.getUserRolesDDE(), "USER_ROLES");
+			createUserTable(DDEScripts.getGroupsDDE(), "GROUPS");
+			createUserTable(DDEScripts.getUserGroupsDDE(), "USER_GROUPS");
+			createUserTable(DDEScripts.getUsersActivityDDE(), "USERS_ACTIVITY");
 			createUserTable(DDEScripts.getHolidaysDDE(), "HOLIDAYS");
          	isValid = true;
 			conn.commit();
@@ -44,6 +49,12 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		}
 	}
 
+	@Override
+	public IActivity getActivity() {	
+		return new Activity(dbPool);
+	}
+
+	
 	public int calcStartEntry(int pageNum, int pageSize){
 		int pageNumMinusOne = pageNum;
 		pageNumMinusOne -- ;
@@ -56,7 +67,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		try{
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
-			String sql = "select * from USERS, ENABLEDAPPS where USERS.DOCID = ENABLEDAPPS.DOCID and USERID = '" + login + "'";
+			String sql = "select * from USERS, APPS where USERS.DOCID = APPS.DOCID and USERID = '" + login + "'";
 			ResultSet rs = s.executeQuery(sql);
 			String password = "";
 
@@ -118,7 +129,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		try{
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
-			String sql = "select * from USERS, ENABLEDAPPS where USERS.DOCID = ENABLEDAPPS.DOCID and USERID = '" + login + "'";
+			String sql = "select * from USERS, APPS where USERS.DOCID = APPS.DOCID and USERID = '" + login + "'";
 			ResultSet rs = s.executeQuery(sql);
 			String password = "";
 
@@ -178,7 +189,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		try{
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
-			String sql = "select * from USERS, ENABLEDAPPS where USERS.DOCID = ENABLEDAPPS.DOCID and USERID = '" + login + "'";
+			String sql = "select * from USERS, APPS where USERS.DOCID = APPS.DOCID and USERID = '" + login + "'";
 			ResultSet rs = s.executeQuery(sql);
 			String password = "";
 
@@ -274,7 +285,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		user.fill(rs);			
 		while(isNext||rs.next()){
 			ApplicationProfile ap = new ApplicationProfile(rs);			
-			user.enabledApps.put(ap.solution, ap);
+			user.enabledApps.put(ap.appName, ap);
 			isNext = false;
 		}	
 		return user;		
@@ -389,12 +400,12 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			if(rs.next()){
 				user.fill(rs);				
 				if (user.isValid){
-					String addSQL = "select * from ENABLEDAPPS where ENABLEDAPPS.DOCID=" + user.docID;
+					String addSQL = "select * from APPS where APPS.DOCID=" + user.docID;
 					Statement statement = conn.createStatement();	
 					ResultSet resultSet = statement.executeQuery(addSQL);
 					while(resultSet.next()){
 						ApplicationProfile ap = new ApplicationProfile(resultSet);
-						user.enabledApps.put(ap.solution, ap);
+						user.enabledApps.put(ap.appName, ap);
 					}
 					resultSet.close();
 					statement.close();
@@ -421,14 +432,14 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		try{
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();			
-			String sql = "select * from USERS, ENABLEDAPPS where USERS.DOCID=ENABLEDAPPS.DOCID and " +
+			String sql = "select * from USERS, APPS where USERS.DOCID=APPS.DOCID and " +
 					"USERS.DOCID=" + docID;
 			String sql = "select * from USERS where USERS.DOCID=" + docID;
 			ResultSet rs = s.executeQuery(sql);				
 			if(rs.next()){
 				user.fill(rs);			
 				if (user.isValid){
-					String addSQL = "select * from ENABLEDAPPS where ENABLEDAPPS.DOCID=" + docID;
+					String addSQL = "select * from APPS where APPS.DOCID=" + docID;
 					Statement statement = conn.createStatement();	
 					ResultSet resultSet = statement.executeQuery(addSQL);
 					while(resultSet.next()){
@@ -464,7 +475,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		Connection conn = dbPool.getConnection();
 		try{
 			conn.setAutoCommit(false);
-			String delEnApp = "delete from ENABLEDAPPS where DOCID = "+docID;
+			String delEnApp = "delete from APPS where DOCID = "+docID;
 			PreparedStatement  pst = conn.prepareStatement(delEnApp);
 			pst.executeUpdate();
 			String delUserTab="delete from USERS where DOCID = " + docID;
@@ -555,7 +566,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		
 
 			for(ApplicationProfile app: user.enabledApps.values()){				
-				String insertURL = "insert into ENABLEDAPPS(DOCID, APP)values(" + key + ", '" + app.solution +"')";
+				String insertURL = "insert into APPS(DOCID, APP)values(" + key + ", '" + app.appName +"')";
 				pst = conn.prepareStatement(insertURL);
 				pst.executeUpdate();	
 				
@@ -596,7 +607,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			PreparedStatement pst = conn.prepareStatement(userUpdateSQL);
 			pst.executeUpdate();
 			conn.commit();
-			String delSQL = "delete from ENABLEDAPPS where DOCID = " + user.docID;
+			String delSQL = "delete from APPS where DOCID = " + user.docID;
 			pst = conn.prepareStatement(delSQL);
 			pst.executeUpdate();
 
@@ -605,7 +616,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			pst.executeUpdate();
 
 			for(UserApplicationProfile app: user.enabledApps.values()){
-				String insertURL = "insert into ENABLEDAPPS(DOCID, APP, LOGINMODE)values (" + user.docID + ", '" + app.appName + "'," + app.loginMode + ")";
+				String insertURL = "insert into APPS(DOCID, APP, LOGINMODE)values (" + user.docID + ", '" + app.appName + "'," + app.loginMode + ")";
 				PreparedStatement pst0 = conn.prepareStatement(insertURL);
 				pst0.executeUpdate();
 
@@ -644,7 +655,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			if (rs.next()){
 				user.fill(rs);
 				if (user.isValid){
-					String addSQL = "select * from ENABLEDAPPS where ENABLEDAPPS.DOCID=" + user.docID;
+					String addSQL = "select * from APPS where APPS.DOCID=" + user.docID;
 					Statement statement = conn.createStatement();	
 					ResultSet resultSet = statement.executeQuery(addSQL);
 					while(resultSet.next()){
@@ -771,12 +782,12 @@ public class SystemDatabase implements ISystemDatabase, Const {
 				User user = new User();
 				user.fill(rs);
 				if (user.isValid){
-					String addSQL = "select * from ENABLEDAPPS where ENABLEDAPPS.DOCID=" + user.docID;
+					String addSQL = "select * from APPS where APPS.DOCID=" + user.docID;
 					Statement statement = conn.createStatement();	
 					ResultSet resultSet = statement.executeQuery(addSQL);
 					while(resultSet.next()){
 						ApplicationProfile ap = new ApplicationProfile(resultSet);
-						user.enabledApps.put(ap.solution, ap);
+						user.enabledApps.put(ap.appName, ap);
 					}
 					resultSet.close();
 					statement.close();
@@ -798,6 +809,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		}
 	}
 
+	
 	
 
 }

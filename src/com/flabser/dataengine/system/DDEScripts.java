@@ -29,7 +29,7 @@ public class DDEScripts {
 	}
 
 	public static String getEnabledAppDDE(){
-		String dde = "create table ENABLEDAPPS(ID serial NOT NULL, " +
+		String dde = "create table APPS(ID serial NOT NULL, " +
 				"DOCID int, " +
 				"APP varchar(32), " +
 				"defaultURL varchar(128), " +
@@ -40,6 +40,51 @@ public class DDEScripts {
 		return dde;
 	} 
 
+	 public static String getUserRolesDDE() {
+	        String dde = "CREATE TABLE USER_ROLES (" +
+	                " UID serial NOT NULL," +
+	                " EMPID int NOT NULL," +
+	                " NAME varchar(64)," +
+	                " TYPE int NOT NULL," +
+	                " APPID varchar(256)," +
+	                " UNIQUE (EMPID, NAME, TYPE, APPID))";
+	        return dde;
+	    }
+	 
+	 public static String getGroupsDDE() {
+	        String dde = "create table GROUPS(GROUPID serial NOT NULL, " +
+	                " GROUPNAME varchar(32) UNIQUE NOT NULL, " +
+	                " FORM varchar(32), " +
+	                " DESCRIPTION varchar(256), " +
+	                " OWNER varchar(32), " +
+	                " TYPE int," +
+	                " PARENTDOCID int," +
+	                " PARENTDOCTYPE int," +
+	                " VIEWTEXT varchar(2048), " +	              
+	                " DEFAULTRULEID varchar(32))";
+	        return dde;
+	    }
+
+	    public static String getUserGroupsDDE() {
+	        String dde = "create table USER_GROUPS(UID serial NOT NULL, " +
+	                " EMPID int NOT NULL," +
+	                " GROUPID int NOT NULL," +
+	                " TYPE int," +
+	                " UNIQUE (EMPID, GROUPID))";
+	        return dde;
+	    }
+
+	    public static String getUsersActivityDDE() {
+	        String dde = "create table USERS_ACTIVITY(ID serial NOT NULL, " +
+	                " TYPE int NOT NULL," +
+	                " DBID varchar(128), " +
+	                " USERID varchar(32), " +
+	                " CLIENTIP char(15), " +
+	                " EVENTTIME timestamp," +
+	                " VIEWTEXT varchar(2048))";
+	        return dde;
+	    }
+	    
 	public static String getHolidaysDDE() {
 		String dde = "CREATE TABLE HOLIDAYS (ID serial NOT NULL, " +
 				" COUNTRY VARCHAR(10) , " +

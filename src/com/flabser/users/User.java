@@ -13,15 +13,17 @@ import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.solutions.SolutionsType;
 import com.flabser.util.Util;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+
 public class User implements Const {
 	public int docID;
 	public boolean isValid = false;
-	public HashMap<SolutionsType, ApplicationProfile> enabledApps = new HashMap<SolutionsType, ApplicationProfile>();
+	public HashMap<String, ApplicationProfile> enabledApps = new HashMap<String, ApplicationProfile>();
+	private HashSet<UserRole> roles = new HashSet<UserRole>();    
+    private HashSet<UserGroup> groups = new HashSet<UserGroup>();
 	public boolean isAuthorized;
 	public String lastURL;
 
@@ -30,7 +32,6 @@ public class User implements Const {
 	private String password;
 	private String passwordHash = "";
 	private String email = "";
-	private String instMsgAddress = "";
 	private boolean isSupervisor;
 	private int hash;
 	private UserSession session;
@@ -190,7 +191,7 @@ public class User implements Const {
 	}
 
 	public void addApplication(ApplicationProfile ap) {
-		enabledApps.put(ap.solution, ap);
+		enabledApps.put(ap.appName, ap);
 	}
 
 	public void setHash(int hash) {
@@ -281,8 +282,8 @@ public class User implements Const {
 	}
 
 	public String usersByKeytoXML() {
-		return "<userid>" + userID + "</userid>" + "<key>" + docID + "</key>" + "<email>" + email + "</email><imid>"
-				+ instMsgAddress + "</imid>";
+		return "<userid>" + userID + "</userid>" + "<key>" + docID + "</key>" + "<email>" + email + "</email>";
+
 	}
 
 	public String getAppURLAsXml() {

@@ -423,20 +423,5 @@ public class Provider extends HttpServlet implements Const {
 		response.setHeader("Cache-Control", "no-cache, must-revalidate, private, no-store, s-maxage=0, max-age=0");
 		response.setHeader("Pragma", "no-cache");
 		response.setDateHeader("Expires", 0);
-	}
-
-	private int[] getParentDocProp(HttpServletRequest request) {
-		int[] prop = new int[2];
-		try {
-			prop[0] = Integer.parseInt(request.getParameter("parentdocid"));
-		} catch (NumberFormatException nfe) {
-			prop[0] = 0;
-		}
-		try {
-			prop[1] = Integer.parseInt(request.getParameter("parentdoctype"));
-		} catch (NumberFormatException nfe) {
-			prop[1] = DOCTYPE_UNKNOWN;
-		}
-		return prop;
-	}
+	}	
 }

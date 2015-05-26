@@ -1,19 +1,23 @@
 package com.flabser.servlets;
 
 import org.apache.catalina.realm.RealmBase;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.PortalException;
 import com.flabser.users.AuthFailedException;
 import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
@@ -22,6 +26,7 @@ import java.util.HashMap;
 
 
 public class Login extends HttpServlet implements Const {
+	private static final long serialVersionUID = 1L;
 	private AppEnv env;
 
 	public void init(ServletConfig config) throws ServletException {
@@ -121,9 +126,8 @@ public class Login extends HttpServlet implements Const {
 				userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
 
 				AppEnv.logger.normalLogEntry(userID + " has connected");
-				// / IUsersActivity ua =
-				// env.getDataBase().getUserActivity();
-				// ua.postLogin(userSession.browserType, user);
+				IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
+				ua.postLogin(ServletUtil.getBrowserType(request), user);
 
 				String redirect = "";
 
