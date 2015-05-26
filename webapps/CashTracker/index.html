@@ -1,36 +1,123 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Administrator</title>
-		<script>
-			function key(event){
-				if(event.keyCode==13){
-					submitForm()
-			    }
-			}
-			function submitForm(){
-				document.form.submit();
-			}
-		</script>
-		
-	</head>
-	<body onkeypress="key(event)" style="background-image: url(img/f.gif);">
-		<br/><br/>
-		<form action="Login" method="post" id="frm" name="form">
-			<br/><br/>
-			<table width="100%" border="0">
-				<tr>
-					<td width="39%" align="right" style="font-size:9pt;">
-						<br/><br/>
-						<font style="font-size: 2.0em">CashTracker</font>						
-						<br/>version 1.5 Copyright&#xA0;&#169;&#xA0;NB devteam 2015
-						<br/><br/><br/>
-						<img src="img/nextbase.png" style="border:none;">
-					</td>
-					
-				</tr>
-			</table>
-		</form>
-	</body>
+    <title>CashTracker</title>
+    <meta content="no-cache" http-equiv="Pragma"></meta>
+    <meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"></meta>
+    <meta content="0" http-equiv="Expires"></meta>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/all.min.css" />
+
+    <script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.cookie.min.js"></script>
+	<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.scrollTo.min.js"></script>
+	<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.mobile.touch.min.js"></script>
+	<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.number.min.js"></script>
+	<script type="text/javascript" src="/SharedResources/js/mobile-detect.min.js"></script>
+
+    <script src="js/lib/require.js"></script>
+    <script src="js/app/views/LayoutView.js"></script>
+    <script src="js/app/views/AppMenuView.js"></script>
+    <script src="js/app/views/ContentView.js"></script>
+    <script src="js/app/app.js"></script>
+</head>
+
+<body class="no_transition">
+    <div class="page-loading">loading...</div>
+    <div id="page-root" class="layout" style="display:none">
+        <div class="content-overlay" id="content-overlay"></div>
+        <header class="layout_header">
+            <div class="main-header">
+                <div class="head-item head-nav-app-toggle" id="toggle-nav-app">
+                    <div class="nav-app-toggle"></div>
+                </div>
+                <div class="head-item brand">
+                    <img alt="logo" src="/SharedResources/logos/cashtracker_small.png" class="brand-logo" />
+                    <span class="brand-title">CashTracker</span>
+                </div>
+                <div class="head-item head-nav-ws-toggle">
+                    <div class="nav-ws-toggle" id="toggle-nav-ws"></div>
+                </div>
+                <div class="head-item nav-search-toggle" title="Поиск" id="toggle-head-search">
+                    <i class="fa fa-search"></i>
+                </div>
+                <div class="head-item nav-search" id="search-block">
+                    <div class="search-toggle-back" id="search-close">
+                        <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <form action="Provider" method="GET" name="search">
+                        <input type="hidden" name="type" value="page" />
+                        <input type="hidden" name="id" value="search" />
+                        <input type="search" name="keyword" value="" class="search-keyword" required="required" placeholder="Поиск" />
+                        <button type="submit" class="search-btn" title="Поиск">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+                <a class="no-desktop head-item nav-action" href="#new" data-action="add_new">
+                    <i class="fa fa-plus"></i>
+                    <span class="action-label"></span>
+                </a>
+            </div>
+        </header>
+        <aside class="layout_aside nav-app" id="nav-app">
+        </aside>
+        <section class="layout_content" id="content"></section>
+        <aside class="layout_aside nav-ws">
+            <header>
+                <a href="Provider?type=edit&element=userprofile&id=userprofile" title="Профиль" class="user">
+                    <i class="fa fa-user"></i> {{username}}
+                </a>
+            </header>
+            <script type="text/x-handlebars-template" id="tpl_ws_apps">
+                <section class="ws-apps">
+                </section>
+            </script>
+            <footer>
+                <a href="Logout" class="ws-exit">
+                    <i class="fa fa-sign-out"></i>{{logout}}
+                </a>
+            </footer>
+        </aside>
+    </div>
+    <script type="text/x-handlebars-template" id="tpl_app_menu">
+        <div class="side">
+            <div class="side-container">
+                {{#each items}}
+                    <div class="side-nav">
+                        <div class="side-header" data-role="side-tree-toggle">
+                            <span class="side-tree-toggle"></span>
+                            <span>{{title}}</span>
+                        </div>
+                        <ul class="side-tree">
+                            {{> tpl_app_menu_item}}
+                        </ul>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </script>
+    <script type="text/x-handlebars-template" id="tpl_app_menu_item">
+        {{#each items}}
+            <li class="side-tree-item">
+                <a href="{{url}}">
+                    <i class="fa fa-file-o"></i>{{title}}
+                </a>
+            </li>
+            {{#if items}}
+                <ul class="side-tree">
+                    {{> tpl_app_menu_item}}
+                </ul>
+            {{/if}}
+        {{/each}}
+    </script>
+</body>
+
 </html>
