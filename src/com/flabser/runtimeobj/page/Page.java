@@ -61,11 +61,21 @@ public class Page implements Const {
 			Element captElement = new Element(cap.captionID);
 			captElement.addTag(v);
 			captElement.addTag(h);*/
-			HashMap m = new HashMap();
+			
+			
+			/*HashMap m = new HashMap();  // model 1
 			HashMap w = new HashMap();
 			w.put("caption", sc.word);
 			w.put("hint", sc.hint);			
+			m.put(cap.captionID, w);*/
+			
+			HashMap m = new HashMap();  // model 2
+			String[] w = new String[2];
+			w[0] = sc.word;
+			w[1] = sc.hint;			
 			m.put(cap.captionID, w);
+			
+			
 			captionsList.add(m);		
 		}
 		return captionsList;// captionsText.append("</captions>").toString();

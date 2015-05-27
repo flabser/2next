@@ -2,7 +2,6 @@ package com.flabser.script;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import com.flabser.localization.SentenceCaption;
 import com.flabser.rule.page.CachingStrategyType;
 import com.flabser.runtimeobj.page.Element;
@@ -83,9 +82,9 @@ public class _Page implements _IXMLContent{
 		 }
 		
 		 StringBuffer captionsText = new StringBuffer("<captions>");
-		/* for(SentenceCaption c: captions) {
-			 captionsText.append(c.toXML());
-		 }*/
+		for(HashMap c: captions) {
+			// captionsText.append(c.toXML());
+		 }
 		 captionsText.append("</captions>");
 		 
 		return output.append(captionsText).append("</page>");

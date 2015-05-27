@@ -3,20 +3,16 @@ package com.flabser.scriptprocessor;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-
 import com.flabser.env.Environment;
 import com.flabser.localization.Vocabulary;
 import com.flabser.runtimeobj.page.Element;
 import com.flabser.script._Exception;
 import com.flabser.script._Helper;
 import com.flabser.script._IXMLContent;
-import com.flabser.script._JSONHandler;
-import com.flabser.script._Page;
 import com.flabser.script._Session;
 import com.flabser.script._URL;
 import com.flabser.script.concurrency._AJAXHandler;
 import com.flabser.script.constants._JSONTemplate;
-import com.flabser.users.UserSession;
 
 public class ScriptEvent {
 	protected Vocabulary vocabulary;
@@ -44,9 +40,7 @@ public class ScriptEvent {
 		if (value == null) {
 			toPublishElement.add(new Element(entryName, ""));
 		}else if (value instanceof String) {
-			toPublishElement.add(new Element(entryName, (String)value));
-		}else if (value instanceof _IXMLContent) {
-			toPublishElement.add(new Element(entryName, (_IXMLContent)value));
+			toPublishElement.add(new Element(entryName, (String)value));		
 		}else if (value instanceof Date) {
 			toPublishElement.add(new Element(entryName, _Helper.getDateAsString((Date)value)));
 		}else if (value instanceof Enum) {
@@ -56,10 +50,7 @@ public class ScriptEvent {
 		}
 	}
 	
-	public void publishElement(_IXMLContent value){
-	//	toPublishElement.add(value);
-	}
-	
+		
 	public void publishElement(String spot, String launcher, _AJAXHandler value, boolean async, _JSONTemplate template){
 /*		_JSONHandler jsHandler = new _JSONHandler(spot, launcher, value, template);
 		UserSession userSession = ses.getUser().getSession();

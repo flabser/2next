@@ -9,7 +9,6 @@ import com.flabser.runtimeobj.page.Element;
 public class Response {
 	public ResponseType type;
 	public boolean resultFlag;
-	protected static final String xmlTextUTF8Header = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 	private String responseStatus = "undefined";
 	private ArrayList<Element> elementsList = new ArrayList<Element>();
 	private String elapsed_time = "";
@@ -74,20 +73,7 @@ public class Response {
 		result.append("</response>");
 		return result.toString();
 	}
-
-	public String toCompleteXML() {
-		return xmlTextUTF8Header + toXML();
-	}
-
-	public void addMessage(String originalName) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setMessage(String string) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	public void setFormSesID(String formSesID) {
 		// TODO Auto-generated method stub

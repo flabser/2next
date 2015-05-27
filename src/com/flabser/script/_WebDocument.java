@@ -5,10 +5,7 @@ import com.flabser.runtimeobj.page.WebDocument;
 public class _WebDocument implements _IXMLContent {
 	WebDocument document;
 	
-	public _WebDocument(_Element rootTag){		
-			document = new WebDocument(rootTag.getRuntimeTag());	
-	}	
-
+	
 	public WebDocument getDocument() {
 		return document;
 	}

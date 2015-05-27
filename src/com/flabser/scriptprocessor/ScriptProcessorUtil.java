@@ -1,5 +1,6 @@
 package com.flabser.scriptprocessor;
 
+import com.flabser.runtimeobj.page.Element;
 import com.flabser.script._Document;
 import com.flabser.script._Element;
 
@@ -71,10 +72,10 @@ public class ScriptProcessorUtil {
 		}		
 	}*/
 	
-	public static _Element getScriptError(StackTraceElement stack[]){	
-		_Element tag = new _Element("stack","");
+	public static Element getScriptError(StackTraceElement stack[]){	
+		Element tag = new Element("stack","");
 		for (int i=0; i<stack.length; i++){
-			tag.addTag("entry", stack[i].getClassName()+"(" + stack[i].getMethodName() + ":" + Integer.toString(stack[i].getLineNumber()) + ")");			
+			tag.addTag(new Element("entry", stack[i].getClassName()+"(" + stack[i].getMethodName() + ":" + Integer.toString(stack[i].getLineNumber()) + ")"));			
 		}
 		return tag;
 	}

@@ -116,16 +116,16 @@ public class Uploader extends HttpServlet implements Const, Servlet {
                         resp.setFormSesID(wrappedReq.formSesID);
                         UploadedFile uf = newFilesObj[i];
                         if (uf != null) {
-                            resp.addMessage(uf.originalName);
+/*                            resp.addMessage(uf.originalName);
                             resp.addMessage(uf.commentField);
                             resp.addMessage(uf.localPath);
                             resp.addMessage(uf.id);
                             if (wrappedReq.extInfo) {
                                 resp.addMessage(uf.fullName);
-                            }
+                            }*/
                         } else {
                             resp.setResponseStatus(false);
-                            resp.setMessage("error: file name has not provided");
+                           // resp.setMessage("error: file name has not provided");
                         }
                     }
                     response.setContentType("text/xml;charset=utf-8");
@@ -142,7 +142,7 @@ public class Uploader extends HttpServlet implements Const, Servlet {
             } catch (Exception e) {
                 e.printStackTrace();
                 resp.setResponseStatus(false);
-                resp.setMessage(e.getMessage());
+          //      resp.setMessage(e.getMessage());
             }
             response.setCharacterEncoding("utf-8");
 

@@ -39,11 +39,7 @@ public class _Element {
 
 	_Element(Element tag) {
 		runtimeTag = tag;
-	}
-
-	public Element getRuntimeTag() {
-		return runtimeTag;
-	}
+	}	
 
 	public _Element addTag(_Element tag) {
 		runtimeTag.elements.add(tag.runtimeTag);
@@ -54,13 +50,7 @@ public class _Element {
 		Element tag = new Element(tagName, "");
 		runtimeTag.elements.add(tag);
 		return new _Element(tag);
-	}
-
-	public _Element addTag(String tagName, BigDecimal tagValue) {
-		Element tag = new Element(tagName, tagValue);
-		runtimeTag.elements.add(tag);
-		return new _Element(tag);
-	}
+	}	
 
 	public _Element addTag(String tagName, int tagValue) {
 		Element tag = new Element(tagName, tagValue);

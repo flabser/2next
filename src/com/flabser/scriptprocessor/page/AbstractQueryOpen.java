@@ -66,9 +66,7 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 		if (value == null) {
 			toPublish.add(new Element(entryName, ""));
 		}else if (value instanceof String) {
-			toPublish.add(new Element(entryName, (String)value));
-		}else if (value instanceof _IXMLContent) {
-			toPublish.add(new Element(entryName,(_IXMLContent)value));
+			toPublish.add(new Element(entryName, (String)value));		
 		}else if (value instanceof Date) {
 			toPublish.add(new Element(entryName, _Helper.getDateAsString((Date)value)));
 		}else if (value instanceof Enum) {
@@ -78,27 +76,7 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 		}
 	}
 
-	public void publishValue(String entryName, Collection<Element> col) throws _Exception{
-		String entries = "";
-		for (Element o:col) {
-			//entries += XMLUtil.getAsTagValue(o.toXML());
-			entries += o.toXML();
-		}		
-		toPublish.add(new Element(entryName, entries,true));
-	}
-
-	public void publishValue(String entryName, ArrayList <?> list) throws _Exception {
-		String result = "";
-		for (Object val: list){
-			if(val instanceof Element){
-				result += "<entry>" +  ((_IXMLContent) val).toXML() + "</entry>";
-			}else{
-				result += "<entry>" +  XMLUtil.getAsTagValue(val.toString()) + "</entry>";
-			}
-		}
-		toPublish.add(new Element(entryName, result, true));
-
-	}
+	
 
 	public void publishValue(String entryName, String value, boolean translate){
 		if (translate){
@@ -108,10 +86,7 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 		toPublish.add(new Element(entryName, value));
 	}
 
-	public void publishValue(boolean noConvert, String entryName, String value){
-		toPublish.add(new Element(entryName, value, noConvert));
-	}
-
+	
 	public void publishValue(String entryName, int value){
 		toPublish.add(new Element(entryName, Integer.toString(value)));
 	}
@@ -130,12 +105,9 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 			}
 
 		}
-		toPublish.add(new Element(entryName, result, true));
+		toPublish.add(new Element(entryName, result));
 	}
 
-	public void publishValue(String entryName, int idValue, String value){
-		toPublish.add(new Element(entryName, idValue, value));
-	}
 
 	public void publishGlossaryValue(String entryName, int idValue) throws _Exception{
 		/*try{
@@ -151,15 +123,6 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 
 	}
 
-	public void publishDepartment(String entryName, ArrayList<Integer> vals) throws _Exception {
-		try {
-			for (Integer val : vals) {
-				publishDepartment(entryName, val);
-			}
-		} catch (Exception e) {
-			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, entryName);
-		}
-	}
 
 	public void publishGlossaryValue(String entryName,  ArrayList<Integer> vals) throws _Exception{
 		try{
@@ -212,34 +175,10 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 		}*/
 	}
 
-	public void publishDepartment(String entryName, int depID) throws _Exception {
-		/*if (depID != 0) {
-			Department dep = env.getDataBase().getStructure().getDepartment(depID, new User(Const.sysUser));
-			if (dep != null) {
-				toPublish.add(new ScriptShowField(entryName, depID, dep.getFullName()));
-			} else {
-				AppEnv.logger.warningLogEntry("Department \"" + depID + "\" has not found");
-			}
-		} else {
-			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, entryName + ":depID of Department is null");
-		}*/
-	}
+	
 
-	public void publishEmployer(String entryName,  HashSet value) throws _Exception{
-		if (value != null){
-			toPublish.add(new Element(entryName, getEmployersXMLPieceList(value),true));
-		}else{
-			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, entryName + ":Set of Employers is null");
-		}
-	}
 
-	public void publishEmployer(String entryName,  Collection<String> value) throws _Exception{
-		if (value != null){
-			toPublish.add(new Element(entryName, getEmployersXMLPieceList(value),true));
-		}else{
-			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, entryName + ":Collection of Employers is null");
-		}
-	}
+	
 
 	public void publishAttachment(String entryName,  String fieldName) throws _Exception{
 		/*_Field field = doc.getField(fieldName);
