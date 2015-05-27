@@ -45,7 +45,7 @@ public class _Exception extends Exception {
     public String getLocalizedMessage() {
         String lang = "eng";
         if (session != null) {
-            lang = session.getUser().getSession().lang;
+           // lang = session.getUser().getSession().lang;
         }
 
         String bundleName = "kz.flabs.i18n.errormessages.ErrorMessages";

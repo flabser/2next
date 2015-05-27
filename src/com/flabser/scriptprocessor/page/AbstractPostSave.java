@@ -35,7 +35,7 @@ public abstract class AbstractPostSave extends ScriptEvent implements IPostSaveS
 	
 	public _Page startPage(String id, HashMap<String, String[]> formData) throws RuleException, ClassNotFoundException{
 		PageRule pageRule = (PageRule) env.ruleProvider.getRule("page", id);	
-		Page page = new Page(env, ses.getUser().getSession() , pageRule);		
+		Page page = new Page(env, null , pageRule);		
 		return page.process(formData);
 	}
 	

@@ -25,7 +25,7 @@ class AppMenu extends _DoScript {
 		}
 
 		rootTag.addTag(entryTag)
-		setContent(new _WebDocument(rootTag))
+	//	publishElement(new _WebDocument(rootTag))
 
 		//
 		def operations = new _Outline(getLocalizedWord("Операции", lang),
@@ -93,6 +93,6 @@ class AppMenu extends _DoScript {
 			list.add(properties)*/
 		}
 
-		setContent(list)
+		//publishElement(list)
 	}
 }

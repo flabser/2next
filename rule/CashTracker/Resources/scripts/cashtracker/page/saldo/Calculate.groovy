@@ -8,7 +8,7 @@ class Calculate extends _DoScript {
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
-		def db = session.getCurrentDatabase()
+		/*def db = session.getCurrentDatabase()
 		def saldoValue
 		def viewParam = session.createViewEntryCollectionParam()
 				.setPageNum(0)
@@ -37,6 +37,6 @@ class Calculate extends _DoScript {
 		saldoTag.addTag("plus", saldoValue[1].setScale(2, BigDecimal.ROUND_DOWN))
 		saldoTag.addTag("minus", saldoValue[2].setScale(2, BigDecimal.ROUND_DOWN))
 
-		setContent(new _XMLDocument(saldoTag))
+		setContent(new _XMLDocument(saldoTag))*/
 	}
 }

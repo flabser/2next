@@ -2,12 +2,9 @@ package com.flabser.script;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import com.flabser.localization.SentenceCaption;
 import com.flabser.rule.page.CachingStrategyType;
 import com.flabser.runtimeobj.page.Element;
 import com.flabser.runtimeobj.page.Page;
-
 
 public class _Page implements _IXMLContent{	
 	private String id;	

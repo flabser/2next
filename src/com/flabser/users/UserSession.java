@@ -35,8 +35,7 @@ public class UserSession implements Const, ICache {
 
 	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
 			InstantiationException, IllegalAccessException, DatabasePoolException {
-		currentUser = user;
-		currentUser.setSession(this);
+		currentUser = user;	
 		if (!currentUser.getUserID().equalsIgnoreCase(Const.sysUser)) {
 			initHistory();
 		}
@@ -49,8 +48,7 @@ public class UserSession implements Const, ICache {
 	}
 
 	public UserSession(User user) throws UserException {
-		currentUser = user;
-		currentUser.setSession(this);
+		currentUser = user;		
 		if (!currentUser.getUserID().equalsIgnoreCase(Const.sysUser)) {
 			initHistory();
 		}
@@ -77,7 +75,7 @@ public class UserSession implements Const, ICache {
 			initHistory();
 		}
 
-		currentUser.setSession(this);
+	
 	}
 
 	public void setObject(String name, _Page obj) {

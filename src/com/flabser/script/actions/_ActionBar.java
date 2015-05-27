@@ -1,11 +1,15 @@
 package com.flabser.script.actions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.flabser.rule.constants.RunMode;
+import com.flabser.runtimeobj.page.Element;
+import com.flabser.script.IPOJOContent;
 import com.flabser.script._Session;
 
 
-public class _ActionBar {
+public class _ActionBar implements IPOJOContent {
 	public RunMode isOn = RunMode.ON;
 	public String caption = "";
 	public String hint = "";
@@ -32,6 +36,16 @@ public class _ActionBar {
 	
 	public String toString(){
 		return toXML();
+	}
+
+	@Override
+	public HashMap<String, String> getObject() {
+		HashMap<String, String> elementsMap = new HashMap<String, String>();
+		elementsMap.put("mode", isOn.name());
+		elementsMap.put("caption", caption);
+		elementsMap.put("hint", hint);
+		elementsMap.put("action", isOn.name());
+		return elementsMap;
 	}
 	
 	
