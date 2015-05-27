@@ -84,8 +84,7 @@ public class _Page implements _IXMLContent{
 		
 		 StringBuffer captionsText = new StringBuffer("<captions>");
 		for(String[] c: captions) {
-			
-			// captionsText.append(c.toXML());
+			captionsText.append("<" + c[0] +  " caption=\"" + c[1] + "\" hint=\"" + c[2] + "\" />");
 		 }
 		 captionsText.append("</captions>");
 		 
