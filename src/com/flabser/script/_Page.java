@@ -2,7 +2,9 @@ package com.flabser.script;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
+import com.flabser.localization.SentenceCaption;
 import com.flabser.rule.page.CachingStrategyType;
 import com.flabser.runtimeobj.page.Element;
 import com.flabser.runtimeobj.page.Page;
@@ -16,7 +18,7 @@ public class _Page implements _IXMLContent {
 	private ArrayList <_Page> includedPages = new ArrayList <_Page>();
 	private HashMap <String, Element> elementsMap = new HashMap <String, Element>();
 	private ArrayList <Element> elementsList = new ArrayList <Element>();
-	private HashMap <?, ?> captions;
+	private HashMap <String, SentenceCaption> captions;
 
 	public _Page(Page page, _WebFormData webFormData) {
 
@@ -57,11 +59,11 @@ public class _Page implements _IXMLContent {
 		return elementsList;
 	}
 
-	public void setCaptions(HashMap <?, ?> captions) {
+	public void setCaptions(HashMap <String, SentenceCaption> captions) {
 		this.captions = captions;
 	}
 
-	public HashMap <?, ?> getCaptions() {
+	public HashMap <String, SentenceCaption> getCaptions() {
 		return captions;
 	}
 
@@ -78,9 +80,11 @@ public class _Page implements _IXMLContent {
 		}
 
 		StringBuffer captionsText = new StringBuffer("<captions>");
-		/* for(SentenceCaption c: captions) {
-			 captionsText.append(c.toXML());
-		 }*/
+		for (Entry <String, SentenceCaption> entry : captions.entrySet()) {
+			captionsText.append("<" + entry.getKey() + " caption=\"" + entry.getValue().word + "\" hint=\""
+					+ entry.getValue().hint + "\" />");
+		}
+
 		captionsText.append("</captions>");
 
 		return output.append(captionsText).append("</page>");

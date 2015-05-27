@@ -50,39 +50,16 @@ public class Page implements Const {
 		return glossariesAsText.append("</glossaries>").toString();
 	}
 
-	public HashMap <String, HashMap <String, String>> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
+	public HashMap <String, SentenceCaption> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
 		//ArrayList<SentenceCaption> captionsList = new ArrayList<SentenceCaption>();
 		// ArrayList<String[]> captionsList = new ArrayList<String[]>();
 		
-		HashMap <String, HashMap <String, String>> captionsList = new HashMap <String, HashMap <String, String>>();
+		HashMap <String, SentenceCaption> captionsList = new HashMap <String, SentenceCaption>();
 		
 		for (Caption cap : captions) {
 			SentenceCaption sc = captionTextSupplier.getValueAsCaption(cap.source, cap.captionID);
-		/*	Element v = new Element("caption", sc.word);
-			Element h = new Element("hint", sc.hint);
-			Element captElement = new Element(cap.captionID);
-			captElement.addTag(v);
-			captElement.addTag(h);*/
-			
-			
-			//*HashMap m = new HashMap();  // model 1
-			HashMap <String, String> w = new HashMap <String, String>();
-			w.put("caption", sc.word);
-			w.put("hint", sc.hint);			
-			captionsList.put(cap.captionID, w);
-			
-			/*HashMap m = new HashMap();  // model 2
-			String[] w = new String[2];
-			w[0] = sc.word;
-			w[1] = sc.hint;			
-			m.put(cap.captionID, w);*/
-			
-			 
-			/*String[] w = new String[3];  // model 3
-			w[0] = cap.captionID;
-			w[1] = sc.word;
-			w[2] = sc.hint;				
-			captionsList.add(w);	*/	
+
+			captionsList.put(cap.captionID, sc);
 		}
 		return captionsList;// captionsText.append("</captions>").toString();
 	}
