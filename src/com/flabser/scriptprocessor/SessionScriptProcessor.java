@@ -15,17 +15,7 @@ public class SessionScriptProcessor extends ScriptProcessor{
 		//session = new _Session(db.getParent(), user, this);
 	}
 
-	public String[] processString(String script) {
-		try{
-			IScriptSource myObject = setScriptLauncher(script, false);	
-			myObject.setSession(session);
-			return myObject.sessionProcess();
-		}catch(Exception e){
-			ScriptProcessor.logger.errorLogEntry(script);
-			ScriptProcessor.logger.errorLogEntry(e);
-			return null;
-		}
-	}
+	
 
 	public String[] processString(Class<GroovyObject> groovyClass) {
 		try{

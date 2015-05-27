@@ -1,6 +1,5 @@
 package com.flabser.script;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import com.flabser.runtimeobj.page.Element;

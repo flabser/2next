@@ -14,19 +14,6 @@ public class SimpleScriptProcessorWithLang extends ScriptProcessor{
 		session = ses;
 	}
 	
-	
-	public String[] processString(String script){
-		try{
-			IScriptSource myObject = setScriptLauncher(script, false);			
-			myObject.setSession(this.session);
-			myObject.setLang(lang);
-			return myObject.sessionLangProcess();
-		}catch(Exception e){
-			ScriptProcessor.logger.errorLogEntry(script);
-			ScriptProcessor.logger.errorLogEntry(e);
-			return null;
-		}
-	}
 
 	public String toString(){
 		return "type=" + ScriptProcessorType.SIMPLE_WITH_LANG.toString();

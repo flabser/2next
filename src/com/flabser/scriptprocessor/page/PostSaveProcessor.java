@@ -67,16 +67,7 @@ public class PostSaveProcessor extends Thread {
 		this.scriptClass = postSaveClass;		
 	}
 	
-	public static String normalizeScript(String script) {
-		String beforeScript = 
-				"import java.util.HashSet;" +
-				"import kz.flabs.dataengine.Const;" +
-			    "import kz.flabs.scriptprocessor.form.postsave.*;" +  
-				ScriptProcessorUtil.packageList +
-				"class Foo extends AbstractPostSaveScript{";
-			String afterScript = "}";
-			return beforeScript + script + afterScript;		
-	}
+	
 
 	
 }

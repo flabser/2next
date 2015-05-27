@@ -16,19 +16,6 @@ public class SimpleScriptProcessor extends ScriptProcessor{
 		session = ses;
 	}
 	
-	
-	public String[] processString(String script){
-		try{
-			IScriptSource myObject = setScriptLauncher(script, false);			
-			myObject.setSession(this.session);			
-			return myObject.sessionProcess();
-		}catch(Exception e){
-			ScriptProcessor.logger.errorLogEntry(script);
-			ScriptProcessor.logger.errorLogEntry(e);
-			return null;
-		}
-	}
-	
 	public String[] processString(Class<GroovyObject> groovyClass){
 		try{
 			IScriptSource myObject = (IScriptSource) groovyClass.newInstance();	
