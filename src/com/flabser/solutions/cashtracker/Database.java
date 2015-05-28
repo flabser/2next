@@ -1,31 +1,24 @@
 package com.flabser.solutions.cashtracker;
 
 import java.sql.ResultSet;
+
 import com.flabser.dataengine.DatabaseCore;
+import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.ft.IFTIndexEngine;
-import com.flabser.dataengine.pool.DBConnectionPool;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.User;
 
-public class Database extends DatabaseCore {
-	private static final String driver = "org.postgresql.Driver";
-	private ApplicationProfile appProfile;
+public class Database extends DatabaseCore implements IDatabase {
+	public static final String driver = "org.postgresql.Driver";
 	
 	@Override
 	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, DatabasePoolException {
-		this.appProfile = appProfile;
-		pool = new DBConnectionPool(); 
-		appProfile.dbLogin = "postgres";
+		pool = getPool(driver, appProfile);		
 		pool.initConnectionPool(driver, appProfile.dbURL, appProfile.dbLogin, appProfile.dbPwd);
 		
-	}
-
-	@Override
-	public IDeployer getDeployer() {
-		return new Deployer(appProfile);
 	}
 		
 	@Override
@@ -69,6 +62,11 @@ public class Database extends DatabaseCore {
 	public void shutdown() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public IDeployer getDeployer() {
+		return new Deployer();
 	}
 
 

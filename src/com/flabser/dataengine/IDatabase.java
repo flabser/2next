@@ -1,6 +1,7 @@
 package com.flabser.dataengine;
 
 import java.sql.ResultSet;
+
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.users.ApplicationProfile;

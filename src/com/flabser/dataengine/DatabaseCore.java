@@ -1,20 +1,19 @@
 package com.flabser.dataengine;
 
-import java.sql.ResultSet;
-import com.flabser.dataengine.ft.IFTIndexEngine;
+import com.flabser.dataengine.pool.DBConnectionPool;
+import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.pool.IDBConnectionPool;
-import com.flabser.users.User;
+import com.flabser.users.ApplicationProfile;
 
-public abstract class DatabaseCore  implements IDatabase {
+public abstract class DatabaseCore {
 	protected IDBConnectionPool pool;
-		
-	abstract public int getVersion();
-	abstract public IFTIndexEngine getFTSearchEngine();
-	abstract public ResultSet select(String condition, User user);
-	abstract public ResultSet insert(String condition, User user);
-	abstract public ResultSet update(String condition, User user);
-	abstract public ResultSet delete(String condition, User user);
-	abstract public void shutdown();
-
+	
+	protected IDBConnectionPool getPool(String driver, ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+		pool = new DBConnectionPool(); 
+		appProfile.dbLogin = "postgres"; //temporary login
+		pool.initConnectionPool(driver, appProfile.dbURL, appProfile.dbLogin, appProfile.dbPwd);
+		return pool;
+	}
+	
 	
 }

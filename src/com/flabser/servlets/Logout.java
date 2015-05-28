@@ -4,9 +4,13 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
+import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.activity.IActivity;
 import com.flabser.exception.PortalException;
+import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
 public class Logout extends HttpServlet implements Const {
@@ -33,9 +37,11 @@ public class Logout extends HttpServlet implements Const {
 			if (jses != null){
 				userSession = (UserSession)jses.getAttribute("usersession");			
 				if (userSession != null){
-		//			IUsersActivity ua = env.getDataBase().getUserActivity();
-					String userID = userSession.currentUser.getUserID();
-		//			ua.postLogout(userSession.currentUser);
+					User user = userSession.currentUser;
+						String userID = user.getUserID();
+					IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
+					ua.postLogout(ServletUtil.getClientIpAddr(request), user);
+
 					AppEnv.logger.normalLogEntry(userID + " logout");					
 				}
 

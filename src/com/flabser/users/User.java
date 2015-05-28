@@ -265,6 +265,7 @@ public class User implements Const {
 					System.out.println(e);
 					e.printStackTrace();
 					IDeployer dbDeployer = dataBase.getDeployer();
+					dbDeployer.init(appProfile);
 					dbDeployer.deploy();
 				}
 			}

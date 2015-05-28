@@ -47,15 +47,15 @@ public class Activity implements IActivity {
 	}
 
 	@Override
-	public int postLogout(User user) {
+	public int postLogout(String ip, User user) {
 		 int key = 0;
 	        Connection conn = pool.getConnection();
 	        try {
 	            conn.setAutoCommit(false);
 	            Statement s = conn.createStatement();
 	            String sql = "insert into USERS_ACTIVITY(TYPE, DBID, USERID, EVENTTIME, CLIENTIP) values ("
-	                    + UsersActivityType.LOGGED_OUT.getCode() + ",'" + Class.class.getPackage().toString() + "', '" + user.getUserID() + "', '" + sqlDateTimeFormat.format(new java.util.Date()) +
-	                    "', '" + user.getEmail() + "')";
+	                    + UsersActivityType.LOGGED_OUT.getCode() + ",'system', '" + user.getUserID() + "', '" + sqlDateTimeFormat.format(new java.util.Date()) +
+	                    "', '" + ip + "')";
 	            s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 	            ResultSet rs = s.getGeneratedKeys();
 	            if (rs.next()) {

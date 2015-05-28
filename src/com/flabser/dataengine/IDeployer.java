@@ -1,7 +1,10 @@
 package com.flabser.dataengine;
 
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.users.ApplicationProfile;
+
 public interface IDeployer {
-	boolean isStructureActual();
+	void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException;	
 	int deploy();
 	int remove();
 }
