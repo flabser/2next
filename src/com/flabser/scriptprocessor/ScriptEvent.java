@@ -3,11 +3,9 @@ package com.flabser.scriptprocessor;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-
 import com.flabser.env.Environment;
 import com.flabser.localization.Vocabulary;
 import com.flabser.runtimeobj.page.Element;
-import com.flabser.script.IPOJOContent;
 import com.flabser.script._Exception;
 import com.flabser.script._Helper;
 import com.flabser.script._IXMLContent;
@@ -35,14 +33,6 @@ public class ScriptEvent {
 	}
 
 	public void publishElement(String entryName, String value){
-		toPublishElement.add(new  Element(entryName, value));
-	}
-	
-	public void publishElement(String entryName, IPOJOContent value){
-		toPublishElement.add(new Element(entryName,value.getObject()));
-	}
-	
-	public void publishElement(String entryName, Element value){
 		toPublishElement.add(new  Element(entryName, value));
 	}
 	

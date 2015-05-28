@@ -1,6 +1,7 @@
 package com.flabser.script.actions;
 
 import com.flabser.rule.constants.RunMode;
+import com.flabser.script._Exception;
 import com.flabser.script._Session;
 import com.flabser.util.XMLUtil;
 

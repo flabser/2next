@@ -77,7 +77,7 @@ public class DDEScripts {
 	    public static String getUsersActivityDDE() {
 	        String dde = "create table USERS_ACTIVITY(ID serial NOT NULL, " +
 	                " TYPE int NOT NULL," +
-	                " DBID varchar(64), " +
+	                " DBID varchar(128), " +
 	                " USERID varchar(32), " +
 	                " CLIENTIP char(15), " +
 	                " EVENTTIME timestamp," +

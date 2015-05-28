@@ -127,7 +127,7 @@ public class Login extends HttpServlet implements Const {
 
 				AppEnv.logger.normalLogEntry(userID + " has connected");
 				IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
-				ua.postLogin(ServletUtil.getClientIpAddr(request), user);
+				ua.postLogin(ServletUtil.getBrowserType(request), user);
 
 				String redirect = "";
 

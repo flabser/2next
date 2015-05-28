@@ -48,7 +48,7 @@ public class _Session extends _ScriptingObject {
 	}
 
 
-	/*public String getAppURL() {
+	public String getAppURL() {
 		return user.getSession().host + "/" + user.env.appType;
 	}
 
@@ -56,7 +56,7 @@ public class _Session extends _ScriptingObject {
 	public String getCurrentHost() {
 		return user.getSession().host;
 	}
-*/
+
 	public String getCurrentUserID() {
 		return user.getUserID();
 	}
@@ -101,7 +101,7 @@ public class _Session extends _ScriptingObject {
 		PageRule rule;
 		try {
 			rule = (PageRule) env.ruleProvider.getRule("page", id);
-			Page page = new Page(env, null, rule);
+			Page page = new Page(env, user.getSession(), rule);
 			return new _Page(page, webFormData);
 		} catch (RuleException e) {
 			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, e.getMessage() + " function: _Session.getPage("

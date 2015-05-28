@@ -34,6 +34,7 @@ public class User implements Const {
 	private String email = "";
 	private boolean isSupervisor;
 	private int hash;
+	private UserSession session;
 	public AppEnv env;
 
 	public User() {
@@ -296,7 +297,15 @@ public class User implements Const {
 		 * xmlContent.append(app.getValue().toXML()); }
 		 * xmlContent.append("</entry>"); } return xmlContent.toString();
 		 */
-	}	
+	}
+
+	public void setSession(UserSession session) {
+		this.session = session;
+	}
+
+	public UserSession getSession() {
+		return session;
+	}
 
 	public String getPublicKey() {
 

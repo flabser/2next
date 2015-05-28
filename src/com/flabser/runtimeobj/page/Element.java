@@ -2,8 +2,6 @@ package com.flabser.runtimeobj.page;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-
 import com.flabser.script._IXMLContent;
 import com.flabser.util.Util;
 import com.flabser.util.XMLUtil;
@@ -36,11 +34,6 @@ public class Element  implements _IXMLContent {
 
 	public Element(String tagName, Element scriptError) {
 		// TODO Auto-generated constructor stub
-	}
-
-	public Element(String entryName, HashMap<String, String> object) {
-		name = entryName;
-		value = object;
 	}
 
 	public Element addTag(String tagName, int tagValue){

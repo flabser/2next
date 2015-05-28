@@ -1,30 +1,30 @@
 package com.flabser.localization;
 
-public class SentenceCaption{
+public class SentenceCaption {
+
 	public String keyWord;
 	public String word;
 	public String hint;
 
-	public SentenceCaption(){
+	public SentenceCaption() {
 		this.hint = word;
 	}
-	
-	public SentenceCaption(String keyword, String caption, String hint){
+
+	public SentenceCaption(String keyword, String caption, String hint) {
 		this.keyWord = keyword;
 		this.word = caption;
-		if (hint.equals("")){
+		if (hint.isEmpty()) {
 			this.hint = caption;
-		}else{
+		} else {
 			this.hint = hint;
 		}
 	}
-	
-	public String toAttrValue(){
-		return "<" + keyWord + " caption=\"" + word + "\" hint=\"" + hint + "\" ></" + keyWord + ">";		
+
+	public String toAttrValue() {
+		return "<" + keyWord + " caption=\"" + word + "\" hint=\"" + hint + "\" ></" + keyWord + ">";
 	}
 
 	public Object toXML() {
-		return "<" + keyWord + " caption=\"" + word + "\" hint=\"" + hint + "\" ></" + keyWord + ">";	
+		return "<" + keyWord + " caption=\"" + word + "\" hint=\"" + hint + "\" ></" + keyWord + ">";
 	}
-	
 }
