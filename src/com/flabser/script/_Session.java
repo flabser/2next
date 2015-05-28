@@ -19,7 +19,7 @@ import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
 
-public class _Session extends _ScriptingObject {
+public class _Session {
 
 	private _Database db;
 	private IDatabase dataBase;
@@ -141,9 +141,5 @@ public class _Session extends _ScriptingObject {
 		return new HashSet <String>();
 	}
 
-	public void setDocumentInConext(_Document doc) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }

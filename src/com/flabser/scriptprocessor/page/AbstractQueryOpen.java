@@ -38,7 +38,7 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 
 	public void setDocument(_Document doc){
 		this.doc = doc;
-		ses.setDocumentInConext(doc);
+		//ses.setDocumentInConext(doc);
 	}
 
 	public void setFormData(_WebFormData webFormData){

@@ -7,88 +7,81 @@ import com.flabser.util.Util;
 
 public class _Element {
 
-	private Element runtimeTag;
+	private Element element;
 
 	public _Element() {
-		runtimeTag = new Element("", "");
+		element = new Element("", "");
 	}
 
-	public _Element(String tagName) {
-		runtimeTag = new Element(tagName, "");
+	public _Element(String name) {
+		element = new Element(name, "");
 	}
 
-	public _Element(String tagName, String tagValue) {
-		runtimeTag = new Element(tagName, tagValue);
+	public _Element(String name, String value) {
+		element = new Element(name, value);
 	}
 
-	public _Element(String tagName, Object tagValue) {
-		runtimeTag = new Element(tagName, tagValue.toString());
+	public _Element(String name, Object value) {
+		element = new Element(name, value.toString());
 	}
 
-	public _Element(String tagName, int tagValue) {
-		runtimeTag = new Element(tagName, tagValue);
+	public _Element(String name, int value) {
+		element = new Element(name, value);
 	}
 
-	public _Element(String tagName, Collection <_Element> tags) {
-		runtimeTag = new Element(tagName, "");
-		for (_Element t : tags) {
-			addTag(t);
+	public _Element(String name, Collection <_Element> elements) {
+		element = new Element(name, "");
+		for (_Element t : elements) {
+			addElements(t);
 		}
 	}
 
 	_Element(Element tag) {
-		runtimeTag = tag;
+		element = tag;
 	}	
 
-	public _Element addTag(_Element tag) {
-		runtimeTag.elements.add(tag.runtimeTag);
+	public _Element addElements(_Element tag) {
+		element.elements.add(tag.element);
 		return tag;
 	}
 
-	public _Element addTag(String tagName) {
-		Element tag = new Element(tagName, "");
-		runtimeTag.elements.add(tag);
-		return new _Element(tag);
+	public _Element addElement(String name) {
+		Element element = new Element(name, "");
+		element.elements.add(element);
+		return new _Element(element);
 	}	
 
-	public _Element addTag(String tagName, int tagValue) {
-		Element tag = new Element(tagName, tagValue);
-		runtimeTag.elements.add(tag);
-		return new _Element(tag);
+	public _Element addElement(String name, int value) {
+		Element element = new Element(name, value);
+		element.elements.add(element);
+		return new _Element(element);
 	}
 
-	public _Element addTag(String tagName, Date tagValue) {
-		Element tag = new Element(tagName, Util.dateTimeFormat.format(tagValue));
-		runtimeTag.elements.add(tag);
-		return new _Element(tag);
+	public _Element addElement(String tagName, Date tagValue) {
+		Element element = new Element(tagName, Util.dateTimeFormat.format(tagValue));
+		element.elements.add(element);
+		return new _Element(element);
 	}
 
-	public void addTag(String tagName, Collection <_Element> tagsList) {
+	public void addElement(String tagName, Collection <_Element> tagsList) {
 		for (_Element t : tagsList) {
-			runtimeTag.elements.add(t.runtimeTag);
+			element.elements.add(t.element);
 		}
 	}
 
-	public _Element addTag(String tagName, String tagValue) {
-		Element tag = new Element(tagName, tagValue);
-		runtimeTag.elements.add(tag);
-		return new _Element(tag);
-	}
-
-	public _Element addCDATATag(String tagName, String tagValue) {
-		Element tag = new Element(tagName, "<![CDATA[" + tagValue + "]]>");
-		runtimeTag.elements.add(tag);
-		return new _Element(tag);
+	public _Element addElement(String name, String value) {
+		Element element = new Element(name, value);
+		element.elements.add(element);
+		return new _Element(element);
 	}
 
 
-
-	public void setTagValue(String tagValue) {
-		runtimeTag.value = tagValue;
+	public void setValue(String tagValue) {
+		element.value = tagValue;
 	}
 
-	public void setTagValue(int tagValue) {
-		runtimeTag.value = Integer.toString(tagValue);
+	public void setValue(int tagValue) {
+		element.value = Integer.toString(tagValue);
 	}	
 
 }

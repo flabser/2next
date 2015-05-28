@@ -25,7 +25,7 @@ public abstract class AbstractQuerySave extends ScriptEvent implements IQuerySav
 
 	public void setDocument(_Document doc){
 		this.doc = doc;
-		ses.setDocumentInConext(doc);
+		//ses.setDocumentInConext(doc);
 	}
 
 

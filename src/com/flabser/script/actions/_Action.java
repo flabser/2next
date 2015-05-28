@@ -1,7 +1,5 @@
 package com.flabser.script.actions;
 
-import java.util.HashMap;
-
 import com.flabser.rule.constants.RunMode;
 import com.flabser.script._IContent;
 import com.flabser.util.XMLUtil;
