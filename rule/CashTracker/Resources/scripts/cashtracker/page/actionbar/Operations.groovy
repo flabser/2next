@@ -21,6 +21,6 @@ class Operations extends _DoScript {
 			actionBar.addAction(_new)
 			actionBar.addAction(new _Action(getLocalizedWord("Удалить", lang), getLocalizedWord("Удалить", lang), _ActionType.DELETE_DOCUMENT))
 		}
-		publishElement((IPOJOContent)actionBar)
+		publishElement("actionbar",actionBar)
 	}
 }

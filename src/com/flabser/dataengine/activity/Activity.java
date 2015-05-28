@@ -5,10 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.pool.IDBConnectionPool;
-import com.flabser.servlets.BrowserType;
 import com.flabser.users.User;
 
 public class Activity implements IActivity {

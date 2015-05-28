@@ -1,12 +1,16 @@
 package com.flabser.script.actions;
 
+import java.util.HashMap;
+
 import com.flabser.rule.constants.RunMode;
 import com.flabser.script._Exception;
+import com.flabser.script._IPOJOContent;
+import com.flabser.script._IXMLContent;
 import com.flabser.script._Session;
 import com.flabser.util.XMLUtil;
 
 
-public class _Action {
+public class _Action  implements _IPOJOContent, _IXMLContent  {
 	public RunMode isOn = RunMode.ON;
 	public String caption;
 	public String hint;
@@ -52,32 +56,26 @@ public class _Action {
 		url = u;
 	}
 
-	public String toXML(){
-		return "<action  mode=\"" + isOn + "\"" + XMLUtil.getAsAttribute("url", url) + " id=\"" + customID + "\" caption=\"" + caption + "\" hint=\"" +  hint + "\">" + type + getJson(type) + "</action>";
+	public StringBuffer toXML(){
+		StringBuffer output = new StringBuffer(1000);
+		output.append("<action  mode=\"" + isOn + "\"" + XMLUtil.getAsAttribute("url", url) + " id=\"" + customID + "\" caption=\"" + caption + "\" hint=\"" +  hint + "\">" + type + "</action>");
+		return output;
 	}
 
 	void setSession(_Session ses){
 		session = ses;
 	}
 
-	private String getJson(_ActionType type){
-		switch (type){
-		case CLOSE:
-		/*	try {
-				return "<js><![CDATA[window.location.href = \"" + session.getLastPageURL() + "\"]]></js>";
-			} catch (_Exception e) {
-				return "<js><![CDATA[window.location.href = \"" + session.getLastURL() + "\"]]></js>";
-			}*/
-		case GET_DOCUMENT_ACCESSLIST:
-			/*_Document doc = session.getDocumentInConext();
-			if (doc != null){
-				return "<js><![CDATA[window.location.href = \"Provider?type=service&operation=get_accesslist&id=get_accesslist&docid=" + doc.getID() + "\"]]></js>";
-			}else{
-				return "<js><![CDATA[window.location.href = \"Provider?type=service&operation=get_accesslist&id=get_accesslist&docid==\"]]></js>";
-			}*/
-		default:
-			return "";
-		}
+
+	@Override
+	public HashMap<String, Object> getJsonObject() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("mode", isOn.name());
+		map.put("url", url);
+		map.put("id", customID);
+		map.put("caption", caption);
+		map.put("hint", hint);
+		map.put("type", type.name());
+		return map;
 	}
-	//Provider?type=page&id=accesslist&docid=3W93088orWwWo63r
 }

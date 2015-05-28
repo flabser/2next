@@ -3,12 +3,13 @@ package com.flabser.scriptprocessor;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+
 import com.flabser.env.Environment;
 import com.flabser.localization.Vocabulary;
 import com.flabser.runtimeobj.page.Element;
 import com.flabser.script._Exception;
 import com.flabser.script._Helper;
-import com.flabser.script._IXMLContent;
+import com.flabser.script._IPOJOContent;
 import com.flabser.script._Session;
 import com.flabser.script._URL;
 import com.flabser.script.concurrency._AJAXHandler;
@@ -34,6 +35,10 @@ public class ScriptEvent {
 
 	public void publishElement(String entryName, String value){
 		toPublishElement.add(new  Element(entryName, value));
+	}
+	
+	public void publishElement(String entryName, _IPOJOContent value){
+		toPublishElement.add(new  Element(entryName, value.getJsonObject()));
 	}
 	
 	public void publishElement(String entryName, Object value) throws _Exception {		
