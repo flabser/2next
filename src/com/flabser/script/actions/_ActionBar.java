@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.flabser.rule.constants.RunMode;
-import com.flabser.script._IPOJOContent;
-import com.flabser.script._IXMLContent;
+import com.flabser.script._IContent;
 import com.flabser.script._Session;
 
 
-public class _ActionBar implements _IPOJOContent, _IXMLContent {
+public class _ActionBar implements _IContent {
 	public RunMode isOn = RunMode.ON;
 	public String caption = "";
-	public String hint = "";
-		
+	public String hint = "";		
 	private ArrayList<_Action> actions = new ArrayList<_Action>();
 	private _Session session;
 		
@@ -22,8 +20,23 @@ public class _ActionBar implements _IPOJOContent, _IXMLContent {
 	}
 	
 	void addAction(_Action action){
-		action.setSession(session);
 		actions.add(action);
+	}
+	
+	public RunMode getIsOn() {
+		return isOn;
+	}	
+
+	public String getCaption() {
+		return caption;
+	}	
+
+	public String getHint() {
+		return hint;
+	}
+	
+	public ArrayList<_Action> getActions() {
+		return actions;
 	}
 	
 	public StringBuffer toXML(){
@@ -35,21 +48,17 @@ public class _ActionBar implements _IPOJOContent, _IXMLContent {
 		return  output.append("</actionbar>");
 	}
 	
-	public String toString(){
-		return toXML().toString();
-	}
-
-	@Override
-	public HashMap<String, Object> getJsonObject() {
+	/*@Override
+	public HashMap<String, Object> getScriptObject() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("mode", isOn.name());
 		map.put("caption", caption);
 		map.put("hint", hint);
 		for (_Action a: actions) {
-			map.put(a.customID, a.getJsonObject());
+			map.put(a.customID, a.getScriptObject());
 		}
 		return map;
 	}
-	
+	*/
 	
 }

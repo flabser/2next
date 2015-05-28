@@ -9,12 +9,12 @@ import com.flabser.scriptprocessor.ScriptEvent;
 import com.flabser.scriptprocessor.ScriptProcessorUtil;
 import com.flabser.util.ResponseType;
 import com.flabser.util.Util;
-import com.flabser.util.Response;
+import com.flabser.util.ScriptResponse;
 
 public abstract class AbstractPageScript extends ScriptEvent implements IPageScript {
 	private String lang;
 	private _WebFormData formData;
-	private Response resp = new Response(ResponseType.RESULT_OF_PAGE_SCRIPT);
+	private ScriptResponse resp = new ScriptResponse(ResponseType.RESULT_OF_PAGE_SCRIPT);
 
 	public void setSession(_Session ses){			
 		this.ses = ses;
@@ -27,25 +27,21 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 	public void setCurrentLang(Vocabulary vocabulary, String lang){
 		this.lang = lang;
 		this.vocabulary = vocabulary;
-	}	
-
-	/*public void setContent(Object document) {
-		toPublishElement.add(new Element(document));
-	}*/
+	}		
 
 	public void println(Exception e) throws _Exception{
 		String errText = e.toString();
 		System.out.println(errText);
-		Element element = new Element("error",errText);
-		element.addTag(new Element("error_stack",ScriptProcessorUtil.getScriptError(e.getStackTrace())));
-		publishElement("error",element);		
+		Element element = new Element("error",errText + "stack:" + ScriptProcessorUtil.getScriptError(e.getStackTrace()));	
+		publishElement(element);		
 	}
+	
 
 	public void println(String e){		
 		System.out.println(e);
 	}
 
-	public Response process(){
+	public ScriptResponse process(){
 
 		long start_time = System.currentTimeMillis();
 		try{					

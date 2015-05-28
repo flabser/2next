@@ -3,15 +3,12 @@ package com.flabser.script;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-
-import com.flabser.localization.SentenceCaption;
 import com.flabser.rule.page.CachingStrategyType;
 import com.flabser.runtimeobj.page.Element;
 import com.flabser.runtimeobj.page.Page;
 
 
-public class _Page implements _IXMLContent {
-
+public class _Page {
 	private String id;
 	private CachingStrategyType caching;
 	private String elapsed_time;
@@ -47,8 +44,6 @@ public class _Page implements _IXMLContent {
 
 	public void addElements(ArrayList <Element> elements) {
 		elementsList.addAll(elements);
-		// elementsMap.put(key, element);
-
 	}
 
 	public ArrayList <_Page> getIncludedPages() {
@@ -67,12 +62,13 @@ public class _Page implements _IXMLContent {
 		return captions;
 	}
 
-	@Override
+
 	public StringBuffer toXML() throws _Exception {
 		StringBuffer output = new StringBuffer(5000);
 		output.append("<page id=\"" + id + "\" cache=\"" + caching + "\" elapsed_time = \"" + elapsed_time + "\" >");
-		for (Element e : elementsList) {
-			output.append(e.toXML());
+		
+		for (Element e : elementsList) {	
+			output.append(e.toXML());		
 		}
 
 		for (_Page p : includedPages) {

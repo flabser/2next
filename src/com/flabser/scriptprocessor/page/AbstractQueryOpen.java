@@ -2,10 +2,8 @@ package com.flabser.scriptprocessor.page;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-
 import com.flabser.appenv.AppEnv;
 import com.flabser.localization.SentenceCaption;
 import com.flabser.localization.Vocabulary;
@@ -14,12 +12,10 @@ import com.flabser.script._Document;
 import com.flabser.script._Exception;
 import com.flabser.script._ExceptionType;
 import com.flabser.script._Helper;
-import com.flabser.script._IXMLContent;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.scriptprocessor.ScriptEvent;
 import com.flabser.scriptprocessor.ScriptProcessorUtil;
-import com.flabser.scriptprocessor.ScriptShowField;
 import com.flabser.util.XMLUtil;
 
 public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpenScript {	

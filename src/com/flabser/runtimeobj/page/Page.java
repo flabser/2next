@@ -20,7 +20,7 @@ import com.flabser.supplier.SourceSupplier;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.util.Util;
-import com.flabser.util.Response;
+import com.flabser.util.ScriptResponse;
 
 public class Page implements Const {
 	public boolean fileGenerated;
@@ -109,12 +109,12 @@ public class Page implements Const {
 					break;
 				case SCRIPT:
 					DoProcessor sProcessor = new DoProcessor(env, userSession, userSession.lang, fields);
-					Response xmlResp = sProcessor.processScript(elementRule.doClassName);
+					ScriptResponse scriptResp = sProcessor.processScript(elementRule.doClassName);
 
 					for (IQuerySaveTransaction toPostObects : sProcessor.transactionToPost) {
 						toPostObects.post();
 					}
-					pp.addElements(xmlResp.getElements());
+					pp.addElements(scriptResp.getElements());
 					
 
 					break;

@@ -257,7 +257,7 @@ public class Provider extends HttpServlet implements Const {
 	}
 
 	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule,
-			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException {
+			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException, _Exception {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		result.addHistory = pageRule.addToHistory;
@@ -265,14 +265,7 @@ public class Provider extends HttpServlet implements Const {
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
 		Page page = new Page(env, userSession, pageRule);
-		// result.output.append(page.process(fields, request, response, id,
-		// userSession, jses));
-		try {
-			result.output.append(page.process(fields).toXML());
-		} catch (_Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		result.output.append(page.process(fields).toXML());
 		if (page.fileGenerated) {
 			result.publishAs = PublishAsType.OUTPUTSTREAM;
 			result.filePath = page.generatedFilePath;

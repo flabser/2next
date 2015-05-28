@@ -1,11 +1,9 @@
 package com.flabser.script.outline;
 
 import java.util.ArrayList;
-
 import com.flabser.rule.constants.RunMode;
-import com.flabser.script._IXMLContent;
 
-public class _Outline  implements _IXMLContent {
+public class _Outline {
 	public RunMode isOn = RunMode.ON;
 	public String caption = "";
 	public String hint = "";

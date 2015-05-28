@@ -8,9 +8,9 @@ class Calculate extends _DoScript {
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
-		/*def db = session.getCurrentDatabase()
+		def db = session.getCurrentDatabase()
 		def saldoValue
-		def viewParam = session.createViewEntryCollectionParam()
+/*		def viewParam = session.createViewEntryCollectionParam()
 				.setPageNum(0)
 				.setPageSize(0)
 				.setUseFilter(true)
@@ -30,13 +30,16 @@ class Calculate extends _DoScript {
 			saldoValue = SaldoUtils.getViewNumberTotal(db, viewParam)
 		} else {
 			saldoValue = SaldoUtils.getViewNumberTotal(db, viewParam.setQuery("form = 'operation'"))
-		}
+		}*/
 
-		def saldoTag = new _Tag("saldo")
-		saldoTag.addTag("sum", saldoValue[0].setScale(2, BigDecimal.ROUND_DOWN))
-		saldoTag.addTag("plus", saldoValue[1].setScale(2, BigDecimal.ROUND_DOWN))
-		saldoTag.addTag("minus", saldoValue[2].setScale(2, BigDecimal.ROUND_DOWN))
+		
+		/*saldoTag.put("sum", saldoValue[0].setScale(2, BigDecimal.ROUND_DOWN))
+		saldoTag.put("plus", saldoValue[1].setScale(2, BigDecimal.ROUND_DOWN))
+		saldoTag.put("minus", saldoValue[2].setScale(2, BigDecimal.ROUND_DOWN))*/
 
-		setContent(new _XMLDocument(saldoTag))*/
+	
+		publishElement("sum", 0) // for example
+		publishElement("plus", 0)
+		publishElement("minus", 0)
 	}
 }

@@ -7,7 +7,7 @@ import com.flabser.servlets.sitefiles.FileUploadListener;
 import com.flabser.servlets.sitefiles.RequestWrapper;
 import com.flabser.servlets.sitefiles.UploadedFile;
 import com.flabser.util.ResponseType;
-import com.flabser.util.Response;
+import com.flabser.util.ScriptResponse;
 import com.flabser.util.XMLUtil;
 
 import javax.servlet.Servlet;
@@ -97,7 +97,7 @@ public class Uploader extends HttpServlet implements Const, Servlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestWrapper wrappedReq = null;
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        Response resp = new Response(ResponseType.UPLOAD_FILE);
+        ScriptResponse resp = new ScriptResponse(ResponseType.UPLOAD_FILE);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -113,7 +113,7 @@ public class Uploader extends HttpServlet implements Const, Servlet {
 
                 if (!wrappedReq.isRichTextUpload()) {
                     for (int i = 0; i < newFilesObj.length; i++) {
-                        resp.setFormSesID(wrappedReq.formSesID);
+                 //       resp.setFormSesID(wrappedReq.formSesID);
                         UploadedFile uf = newFilesObj[i];
                         if (uf != null) {
 /*                            resp.addMessage(uf.originalName);
@@ -134,7 +134,7 @@ public class Uploader extends HttpServlet implements Const, Servlet {
                         UploadedFile uf = newFilesObj[i];
                         String funcNum = request.getParameter("CKEditorFuncNum");
                         if (uf != null) {
-                            resp.addScript("text/javascript", "window.parent.CKEDITOR.tools.callFunction(" + funcNum + ", 'Provider?type=getattach&formsesid=" + wrappedReq.formSesID + "&doctype=896&key=" + uf.id + "&field=rtfcontent&id=rtfcontent&file=" + XMLUtil.getAsTagValue(uf.originalName) + "', '');");
+                       //     resp.addScript("text/javascript", "window.parent.CKEDITOR.tools.callFunction(" + funcNum + ", 'Provider?type=getattach&formsesid=" + wrappedReq.formSesID + "&doctype=896&key=" + uf.id + "&field=rtfcontent&id=rtfcontent&file=" + XMLUtil.getAsTagValue(uf.originalName) + "', '');");
                         }
                     }
                     response.setContentType("text/html;charset=utf-8");
@@ -146,7 +146,7 @@ public class Uploader extends HttpServlet implements Const, Servlet {
             }
             response.setCharacterEncoding("utf-8");
 
-            response.getWriter().println(resp.toXML());
+          //  response.getWriter().println(resp.toXML());
         }
     }
 

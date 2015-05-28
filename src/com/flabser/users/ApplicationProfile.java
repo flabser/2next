@@ -4,9 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.flabser.appenv.AppEnv;
 import com.flabser.env.Environment;
-import com.flabser.script._IXMLContent;
 
-public class ApplicationProfile implements _IXMLContent{
+public class ApplicationProfile{
 	public String appName;
 	public String owner;
 	public String defaultURL;

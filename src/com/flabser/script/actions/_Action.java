@@ -3,22 +3,17 @@ package com.flabser.script.actions;
 import java.util.HashMap;
 
 import com.flabser.rule.constants.RunMode;
-import com.flabser.script._Exception;
-import com.flabser.script._IPOJOContent;
-import com.flabser.script._IXMLContent;
-import com.flabser.script._Session;
+import com.flabser.script._IContent;
 import com.flabser.util.XMLUtil;
 
 
-public class _Action  implements _IPOJOContent, _IXMLContent  {
+public class _Action  implements _IContent  {
 	public RunMode isOn = RunMode.ON;
 	public String caption;
 	public String hint;
 	public _ActionType type;
 	public String customID;
-
-	private _Session session;
-	private String url = "";
+	String url = "";
 
 	public _Action(_ActionType type){
 		this.type = type;
@@ -62,13 +57,8 @@ public class _Action  implements _IPOJOContent, _IXMLContent  {
 		return output;
 	}
 
-	void setSession(_Session ses){
-		session = ses;
-	}
-
-
-	@Override
-	public HashMap<String, Object> getJsonObject() {
+	/*@Override
+	public HashMap<String, Object> getScriptObject() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("mode", isOn.name());
 		map.put("url", url);
@@ -77,5 +67,5 @@ public class _Action  implements _IPOJOContent, _IXMLContent  {
 		map.put("hint", hint);
 		map.put("type", type.name());
 		return map;
-	}
+	}*/
 }
