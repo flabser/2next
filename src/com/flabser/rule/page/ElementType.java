@@ -3,7 +3,6 @@ package com.flabser.rule.page;
 
 public enum ElementType {
 	UNKNOWN(1000),
-	STATIC_TAG(1001),
 	SCRIPT(1002),
 	INCLUDED_PAGE(1003), 
 	QUERY(1004);

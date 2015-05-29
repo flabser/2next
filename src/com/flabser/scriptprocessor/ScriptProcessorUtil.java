@@ -10,7 +10,7 @@ public class ScriptProcessorUtil {
 	public static Element getScriptError(StackTraceElement stack[]){	
 		Element tag = new Element("stack","");
 		for (int i=0; i<stack.length; i++){
-			tag.addTag(new Element("entry", stack[i].getClassName()+"(" + stack[i].getMethodName() + ":" + Integer.toString(stack[i].getLineNumber()) + ")"));			
+			tag.addElement(new Element("entry", stack[i].getClassName()+"(" + stack[i].getMethodName() + ":" + Integer.toString(stack[i].getLineNumber()) + ")"));			
 		}
 		return tag;
 	}

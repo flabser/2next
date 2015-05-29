@@ -23,8 +23,6 @@ import java.io.IOException;
 public class ElementRule implements  Const {
 	public ElementType type;
 	public boolean isValid = true;
-	public String name;
-	public boolean hasElementName;
 	public RunMode isOn;
 	public String value;
 	public String doClassName;
@@ -37,9 +35,6 @@ public class ElementRule implements  Const {
 	public ElementRule(Node node, IElement parent) {
 		parentRule = parent;
 		try {
-			name = XMLUtil.getTextContent(node, "name", false);
-			if (!name.equals(""))
-				hasElementName = true;
 			String mode = XMLUtil.getTextContent(node, "@mode", false);
 			if (mode.equalsIgnoreCase("off")) {
 				isOn = RunMode.OFF;
@@ -48,10 +43,7 @@ public class ElementRule implements  Const {
 
 			type = ElementType.valueOf(XMLUtil.getTextContent(node, "@type",
 					true, "UNKNOWN", false));
-			switch (type) {
-			case STATIC_TAG:
-				value = XMLUtil.getTextContent(node, "value", false);
-				break;
+			switch (type) {			
 			case SCRIPT:
 				Node qoNode = XMLUtil.getNode(node, "events/doscript", false);
 				doClassName = getClassName(qoNode, "doscript");
@@ -72,7 +64,7 @@ public class ElementRule implements  Const {
 	}
 
 	public String toString() {
-		return "name=\"" + name + "\", value=" + value;
+		return "value=" + value;
 	}
 
 	private String getClassName(Node node, String normailzator){		

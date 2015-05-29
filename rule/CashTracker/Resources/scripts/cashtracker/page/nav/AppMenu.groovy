@@ -21,10 +21,10 @@ class AppMenu extends _DoScript {
 
 		if (formData.getEncodedValueSilently("id") == "operationsbycash") {
 			def customParam = new _Element("customparam", "&cashid=" + formData.getValueSilently("cashid"))
-			rootTag.addTag(customParam)
+			rootTag.addElement(customParam)
 		}
 
-		rootTag.addTag(entryTag)
+		rootTag.addElement(entryTag)
 	//	publishElement(new _WebDocument(rootTag))
 
 		//
@@ -93,6 +93,6 @@ class AppMenu extends _DoScript {
 			list.add(properties)*/
 		}
 
-		//publishElement(list)
+		publishElement("outline", outline)
 	}
 }

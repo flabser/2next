@@ -5,32 +5,30 @@ import com.flabser.script._Exception;
 import com.flabser.script._IContent;
 
 public class Element{
-	public String name = "";
-	public Object value;
-	public ArrayList<Element> elements =  new ArrayList<Element>();
+	private String name = "";
+	private Object value;
+	private ArrayList<Element> elements =  new ArrayList<Element>();
 
-	public Element(String tagName, String tagValue){
-		name = tagName;
-		value = tagValue;
+	public Element(String name, String value){
+		this.name = name;
+		this.value = value;
 	}
 
-	public Element(String tagName, int tagValue){
-		name = tagName;
-		value = Integer.toString(tagValue);
+	public Element(String name, int value){
+		this.name = name;
+		this.value = Integer.toString(value);
 	}
 		
-	public Element addTag(Element tag){		
+	public void addElement(Element tag){		
 		elements.add(tag);
-		return tag;
-	}
-	
+	}	
 	
 	public Element(String entryName, _IContent object) {
 		name = entryName;
 		value = object;
 	}
 	
-	public StringBuffer toXML() throws _Exception{
+	public StringBuffer toPublishAsXML() throws _Exception{
 		StringBuffer output = new StringBuffer(1000);
 		
 		if (!name.equalsIgnoreCase(""))	output.append("<" + name + ">");
@@ -45,7 +43,7 @@ public class Element{
 			if (e.value instanceof _IContent) {
 				output.append(((_IContent)e.value).toXML());
 			}else {
-				output.append(e.toXML());
+				output.append(e.toPublishAsXML());
 			}
 			
 		}
@@ -54,6 +52,22 @@ public class Element{
 		return output;			
 			
 				
+	}
+
+	public void setValue(String value) {
+		this.value = value;		
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Object getValue() {
+		return value;
+	}
+
+	public ArrayList<Element> getElements() {
+		return elements;
 	}
 		
 }

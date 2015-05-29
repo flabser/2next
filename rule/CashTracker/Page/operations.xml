@@ -4,27 +4,22 @@
 	<caching>NO_CACHING</caching>
 	<xsltfile>pages/operations.xsl</xsltfile>
 	<element mode="ON" type="INCLUDED_PAGE">
-		<name>outline</name>
 		<value>outline</value>
 	</element>
 	<element mode="ON" type="SCRIPT">
-		<name>saldo</name>
 		<events>
 			<doscript source="file">cashtracker.page.saldo.Calculate</doscript>
 		</events>
 	</element>
-	<element mode="ON" type="INCLUDED_PAGE">
-		<name>filter</name>
+	<element mode="ON" type="INCLUDED_PAGE">	
 		<value>filter_type_operation</value>
 	</element>
 	<element mode="ON" type="SCRIPT">
-		<name>action_bar</name>
 		<events>
 			<doscript source="file">cashtracker.page.actionbar.Operations</doscript>
 		</events>
 	</element>
 	<element mode="ON" type="SCRIPT">
-		<name>view_content</name>
 		<events>
 			<doscript source="file">cashtracker.page.views.Operations</doscript>
 		</events>

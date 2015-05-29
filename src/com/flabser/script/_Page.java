@@ -68,7 +68,7 @@ public class _Page {
 		output.append("<page id=\"" + id + "\" cache=\"" + caching + "\" elapsed_time = \"" + elapsed_time + "\" >");
 		
 		for (Element e : elementsList) {	
-			output.append(e.toXML());		
+			output.append(e.toPublishAsXML());		
 		}
 
 		for (_Page p : includedPages) {

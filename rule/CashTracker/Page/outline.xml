@@ -2,14 +2,12 @@
 <rule type="page" id="outline" mode="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<element mode="ON" type="SCRIPT">
-		<name>app_menu</name>
+	<element mode="ON" type="SCRIPT">		
 		<events>
 			<doscript source="file">cashtracker.page.nav.AppMenu</doscript>
 		</events>
 	</element>
-	<element mode="ON" type="SCRIPT">
-		<name>ws</name>
+	<element mode="ON" type="SCRIPT">		
 		<events>
 			<doscript source="file">cashtracker.page.ws.AvailableApps</doscript>
 		</events>

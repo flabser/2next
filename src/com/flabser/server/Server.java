@@ -15,7 +15,7 @@ public class Server{
 	public static com.flabser.log.ILogger logger;
 	public static final String serverVersion = "1.0.0";
 	public static String compilationTime = "";
-	public static final String serverTitle = "2Next" + serverVersion;
+	public static final String serverTitle = "2Next " + serverVersion;
 	public static Date startTime = new Date();
 	public static IDatabase dataBase;
 	public static IWebServer webServerInst;

@@ -5,9 +5,13 @@ import java.util.Date;
 import com.flabser.runtimeobj.page.Element;
 import com.flabser.util.Util;
 
-public class _Element {
+public class _Element implements _IContent {
 
 	private Element element;
+
+	public Element getElement() {
+		return element;
+	}
 
 	public _Element() {
 		element = new Element("", "");
@@ -21,10 +25,7 @@ public class _Element {
 		element = new Element(name, value);
 	}
 
-	public _Element(String name, Object value) {
-		element = new Element(name, value.toString());
-	}
-
+	
 	public _Element(String name, int value) {
 		element = new Element(name, value);
 	}
@@ -32,7 +33,7 @@ public class _Element {
 	public _Element(String name, Collection <_Element> elements) {
 		element = new Element(name, "");
 		for (_Element t : elements) {
-			addElements(t);
+			addElement(t);
 		}
 	}
 
@@ -40,48 +41,70 @@ public class _Element {
 		element = tag;
 	}	
 
-	public _Element addElements(_Element tag) {
-		element.elements.add(tag.element);
-		return tag;
+	public void addElement(_Element e) {
+		element.addElement(e.element);
+	
 	}
 
 	public _Element addElement(String name) {
-		Element element = new Element(name, "");
-		element.elements.add(element);
+		element.addElement(new Element(name, ""));
 		return new _Element(element);
 	}	
 
 	public _Element addElement(String name, int value) {
-		Element element = new Element(name, value);
-		element.elements.add(element);
+		element.addElement(new Element(name, value));
 		return new _Element(element);
 	}
 
-	public _Element addElement(String tagName, Date tagValue) {
-		Element element = new Element(tagName, Util.dateTimeFormat.format(tagValue));
-		element.elements.add(element);
+	public _Element addElement(String tagName, Date value) {
+		element.addElement(new Element(tagName, Util.dateTimeFormat.format(value)));
 		return new _Element(element);
 	}
 
 	public void addElement(String tagName, Collection <_Element> tagsList) {
 		for (_Element t : tagsList) {
-			element.elements.add(t.element);
+			element.addElement(t.element);
 		}
 	}
 
 	public _Element addElement(String name, String value) {
-		Element element = new Element(name, value);
-		element.elements.add(element);
+		element.addElement(new Element(name, value));
 		return new _Element(element);
 	}
 
 
-	public void setValue(String tagValue) {
-		element.value = tagValue;
+	public void setValue(String value) {
+		element.setValue(value);
 	}
 
-	public void setValue(int tagValue) {
-		element.value = Integer.toString(tagValue);
+	public void setValue(int value) {
+		element.setValue(Integer.toString(value));
+	}
+
+	@Override
+	public StringBuffer toXML() throws _Exception {
+		StringBuffer output = new StringBuffer(1000);
+		
+		if (!element.getName().equalsIgnoreCase(""))	output.append("<" + element.getName() + ">");
+		
+		if (element.getValue() instanceof _IContent) {
+			output.append(((_IContent)element.getValue()).toXML());
+		}else {
+			output.append(element.getValue());
+		}
+		
+		for (Element e : element.getElements()) {
+			if (e.getValue() instanceof _IContent) {
+				output.append(((_IContent)e.getValue()).toXML());
+			}else {
+				output.append(e.toPublishAsXML());
+			}
+			
+		}
+		if (!element.getName().equalsIgnoreCase(""))	output.append("</" + element.getName() + ">");
+		
+		return output;			
+			
 	}	
 
 }

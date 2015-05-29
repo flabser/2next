@@ -103,10 +103,7 @@ public class Page implements Const {
 
 		if (rule.elements.size() > 0) {
 			loop: for (ElementRule elementRule : rule.elements) {
-				switch (elementRule.type) {
-				case STATIC_TAG:
-					pp.addElement(elementRule.value, new Element(elementRule.name, elementRule.value));
-					break;
+				switch (elementRule.type) {			
 				case SCRIPT:
 					DoProcessor sProcessor = new DoProcessor(env, userSession, userSession.lang, fields);
 					ScriptResponse scriptResp = sProcessor.processScript(elementRule.doClassName);
@@ -125,7 +122,7 @@ public class Page implements Const {
 					pp.addPage(page.process(fields));
 					break;
 				default:
-					pp.addElement(elementRule.value, new Element(elementRule.name, elementRule.value));
+					break;				
 				}
 			}
 		}

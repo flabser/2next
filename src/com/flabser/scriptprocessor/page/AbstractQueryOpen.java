@@ -95,7 +95,7 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 		String result = "";
 		for (Object val: value){
 			if(val instanceof Element){
-				result += "<entry>" +  ((Element) val).toXML() + "</entry>";
+				result += "<entry>" +  ((Element) val).toPublishAsXML() + "</entry>";
 			}else{
 				result += "<entry>" +  XMLUtil.getAsTagValue(val.toString()) + "</entry>";
 			}

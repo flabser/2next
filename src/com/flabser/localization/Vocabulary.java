@@ -35,7 +35,7 @@ public class Vocabulary {
 		Sentence sent = words.get(keyWord);
 		if (sent == null && keyWord !="№"){
 			if (globalSetting.multiLangEnable){
-				Environment.logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");	
+//				Environment.logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");	
 			}
 			returnVal[0] = keyWord;
 			returnVal[1] = "";
@@ -51,7 +51,7 @@ public class Vocabulary {
 	public SentenceCaption getSentenceCaption(String keyWord, String lang){		
 		Sentence sent = words.get(keyWord.trim());
 		if (sent == null){
-			Environment.logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");			
+	//		Environment.logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");			
 			SentenceCaption primary = new SentenceCaption(keyWord, keyWord,keyWord);
 			return primary;
 		}else{
