@@ -21,9 +21,9 @@ public class SystemDatabase implements ISystemDatabase, Const {
 	public static boolean isValid;
 	public static String jdbcDriver = "org.postgresql.Driver";
 	private IDBConnectionPool dbPool;
-	private static String connectionURL = "jdbc:postgresql://localhost/nbsystem";
-	private static String dbUser = "postgres";
-	private static String dbUserPwd = "3287";
+	static String connectionURL = "jdbc:postgresql://localhost/nbsystem";
+	static String dbUser = "postgres";
+	static String dbUserPwd = "3287";
 
 	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException{		
 		dbPool = new com.flabser.dataengine.pool.DBConnectionPool();
@@ -499,7 +499,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		try{	
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
-			String sql = "select * from "+tableName;
+			String sql = "select * from " + tableName;
 			s.executeQuery(sql);
 			s.close();
 			conn.commit();
@@ -809,7 +809,11 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		}
 	}
 
-	
+	@Override
+	public IApplicationDatabase getApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+		return new ApplicationDatabase();
+	}
+
 	
 
 }

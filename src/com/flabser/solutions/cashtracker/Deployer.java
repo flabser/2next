@@ -10,27 +10,30 @@ import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.users.ApplicationProfile;
 
 public class Deployer extends DatabaseCore implements IDeployer {
-	
+	ApplicationProfile appProfile;
+
 	@Override
-	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException, DatabasePoolException {
-		pool = getPool(Database.driver, appProfile);		
+	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+		this.appProfile = appProfile;
+		pool = getPool(Database.driver, appProfile);	
 	}
 
 	@Override
-	public int deploy() {		
+	public int deploy() {
 		Connection conn = pool.getConnection();
-		try{
+		try {			
+			conn = pool.getConnection();
 			conn.setAutoCommit(false);
 			createTable(DDEScripts.getAccountDDE(), "ACCOUNT");
 			createTable(DDEScripts.getTransactionDDE(), "TRANSACTION");
-			createTable(DDEScripts.getCostCenterDDE(), "COSTCENTER");			
+			createTable(DDEScripts.getCostCenterDDE(), "COSTCENTER");
 			conn.commit();
-		}catch(Throwable e){
-            AppEnv.logger.errorLogEntry(e);
-            e.printStackTrace();
+		} catch (Throwable e) {
+			AppEnv.logger.errorLogEntry(e);
+			e.printStackTrace();
 			DatabaseUtil.debugErrorPrint(e);
-		}finally{
+
+		} finally {
 			pool.returnConnection(conn);
 		}
 		return 0;
@@ -41,44 +44,45 @@ public class Deployer extends DatabaseCore implements IDeployer {
 		return 0;
 	}
 
-	private boolean createTable(String createTableScript, String tableName){
+	private boolean createTable(String createTableScript, String tableName) {
 		Connection conn = pool.getConnection();
 		boolean createUserTab = false;
-		try{
+		try {
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
-			if(!hasTable(tableName)){
-				if (s.execute(createTableScript)){
+			if (!hasTable(tableName)) {
+				if (s.execute(createTableScript)) {
 					AppEnv.logger.errorLogEntry("Unable to create table \"" + tableName + "\"");
 				}
 			}
 
-			createUserTab = true;			
+			createUserTab = true;
 			s.close();
 			conn.commit();
-		}catch(Throwable e){
+		} catch (Throwable e) {
 			DatabaseUtil.debugErrorPrint(e);
 			createUserTab = false;
-		} finally {		
-			pool.returnConnection(conn);	
+		} finally {
+			pool.returnConnection(conn);
 		}
 		return createUserTab;
 	}
-	
-	private boolean hasTable(String tableName){
+
+	private boolean hasTable(String tableName) {
 		Connection conn = pool.getConnection();
-		try{	
+		try {
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
-			String sql = "select * from "+tableName;
+			String sql = "select * from " + tableName;
 			s.executeQuery(sql);
 			s.close();
 			conn.commit();
 			return true;
-		}catch(Throwable e){
+		} catch (Throwable e) {
 			return false;
 		} finally {
 			pool.returnConnection(conn);
 		}
 	}
+	
 }

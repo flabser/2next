@@ -9,8 +9,9 @@ public class ApplicationProfile{
 	public String appName;
 	public String owner;
 	public String defaultURL;
+	public String dbHost = "localhost";
 	public String dbLogin;
-	public String dbURL;
+	public String dbName;
 	public String dbPwd;
 
 	public ApplicationProfile(){
@@ -21,7 +22,7 @@ public class ApplicationProfile{
 	public ApplicationProfile(ResultSet rs) throws SQLException {
 		appName = rs.getString("APP");
 	//	defaultURL = rs.getString("DEFAULTURL");
-		dbURL = rs.getString("DBURL");
+		dbName = rs.getString("DBURL");
 		dbPwd = rs.getString("DBPWD");
 	}
 	
@@ -35,6 +36,14 @@ public class ApplicationProfile{
 	public String getImpl() {
 		AppEnv env = Environment.getApplication(appName);
 		return env.globalSetting.implementation;
+	}
+	
+	public String getDbName() {
+		return appName + "_" + dbLogin;
+	}
+	
+	public String getURI() {
+		return "jdbc:postgresql://" + dbHost + "/" + dbName;
 	}
 	
 }

@@ -16,7 +16,7 @@ import com.flabser.dataengine.pool.DatabasePoolExceptionType;
 import com.flabser.server.Server;
 
 public class DBConnectionPool  implements IDBConnectionPool {
-    protected GenericObjectPool connectionPool;
+    protected GenericObjectPool<Connection> connectionPool;
     protected static int timeBetweenEvictionRunsMillis = 1000 * 60 * 15;
 
 
@@ -25,7 +25,7 @@ public class DBConnectionPool  implements IDBConnectionPool {
     public void initConnectionPool(String driver, String dbURL, String userName, String password) throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         Properties props = null;
         Class.forName(driver).newInstance();
-        connectionPool = new GenericObjectPool(null);
+        connectionPool = new GenericObjectPool<Connection>(null);
         connectionPool.setTestOnBorrow(true);
         connectionPool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_BLOCK);
         connectionPool.setMaxWait(15000);

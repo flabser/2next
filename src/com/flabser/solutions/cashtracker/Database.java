@@ -16,9 +16,7 @@ public class Database extends DatabaseCore implements IDatabase {
 	@Override
 	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, DatabasePoolException {
-		pool = getPool(driver, appProfile);		
-		pool.initConnectionPool(driver, appProfile.dbURL, appProfile.dbLogin, appProfile.dbPwd);
-		
+		pool = getPool(driver, appProfile);			
 	}
 		
 	@Override

@@ -12,6 +12,7 @@ import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
+import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.Environment;
 import com.flabser.exception.PortalException;
@@ -29,9 +30,9 @@ import com.flabser.servlets.sitefiles.AttachmentHandler;
 import com.flabser.users.UserSession;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 
 public class AdminProvider extends HttpServlet implements Const{
@@ -101,7 +102,7 @@ public class AdminProvider extends HttpServlet implements Const{
 				}else if (type.equalsIgnoreCase("delete")) {
 					//result = delete(request, app,  element, id);
 				}else if(type.equalsIgnoreCase("service")){
-					//result = service(request, app, id, key);
+					result = service(request, app, id, key);
 				} 
 			}else{
 				throw new PortalException("Request is incorrect(type=null)", env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML);
@@ -355,29 +356,18 @@ public class AdminProvider extends HttpServlet implements Const{
 		result.output.append("</delete>");*/
 		return result;
 	}
-	private ProviderResult service(HttpServletRequest request, String app, String id, String key) throws ClassNotFoundException{
+	
+	private ProviderResult service(HttpServletRequest request, String app, String id, String key) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, DatabasePoolException{
 		ProviderResult result = new ProviderResult();	
 		String operation = request.getParameter("operation");
-        if(operation.equalsIgnoreCase("restore_from_backup")){
-            if(id != null && id.trim().length() > 0 && new File(Environment.backupDir + File.separator + id).exists()){
-                File dir = new File(Environment.backupDir + File.separator + id);
-                File[] listDirDocs = dir.listFiles(new FileFilter() {
-                    @Override
-                    public boolean accept(File pathname) {
-                        return pathname.isDirectory();
-                    }
-                });
-              
-            }
-
-        
+        if(operation.equalsIgnoreCase("deploy")){
+			UserServices us = new UserServices();
+			result.output.append(us.deploy(key));			
+		}else if (operation.equalsIgnoreCase("remove")) {
+			UserServices us = new UserServices();
+			result.output.append(us.remove(key));	  
 		}
 		return result;		
 	}
-
-
-
-
-	
 
 }

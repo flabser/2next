@@ -32,6 +32,8 @@ public interface ISystemDatabase {
 	int update(TempUser tempUser);
 	ArrayList<User> getAllUsers(String condition, int calcStartEntry,	int pageSize);
 	
+	IApplicationDatabase getApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException;
+	
 	
 	
 }
