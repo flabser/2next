@@ -1,11 +1,10 @@
-define('LayoutView', [
+define('views/ApplicationView', [
     'jquery',
     'backbone',
-    'AppMenuView',
-    'ContentView'
-], function($, Backbone, AppMenuView, ContentView) {
+    'views/AppMenuView'
+], function($, Backbone, AppMenuView) {
 
-    var LayoutView = Backbone.View.extend({
+    var ApplicationView = Backbone.View.extend({
         el: '#page-root',
 
         className: 'layout',
@@ -18,17 +17,14 @@ define('LayoutView', [
             }
 
             this.$el.addClass(this.className);
-            ContentView.setLayoutView(this);
-            AppMenuView.render();
-            $('body').removeClass('no_transition');
         },
 
         events: {
             'click #toggle-nav-ws': 'toggleWsNav',
             'click #toggle-nav-app': 'toggleAppNav',
-            'click #content-overlay': 'hideOpenedNav',
+            'mousedown #content-overlay': 'hideOpenedNav',
             'touchstart #content-overlay': 'hideOpenedNav',
-            'submit form[name=search]': 'contentViewSearch',
+            'submit form[name=search]': 'searchSubmit',
             'click #toggle-head-search': 'toggleSearchForm',
             'mousedown #search-close': 'toggleSearchForm',
             'click a': 'loadContent'
@@ -54,21 +50,19 @@ define('LayoutView', [
             $('body').toggleClass('search-open');
         },
 
-        contentViewSearch: function(e) {
+        searchSubmit: function(e) {
             e.preventDefault();
             ContentView.search(e.target);
-        },
-
-        loadContent: function(uri) {
-            ContentView.load(uri);
         },
 
         render: function() {
             this.$el.show();
             $('.page-loading').remove();
+            AppMenuView.render();
+            $('body').removeClass('no_transition');
             return this;
         }
     });
 
-    return new LayoutView();
+    return ApplicationView;
 });

@@ -1,6 +1,6 @@
-define('User', ['underscore', 'backbone.localStorage'], function(_, Backbone) {
+define('models/User', ['underscore', 'backbone.localStorage'], function(_, Backbone) {
 
-    var store = new Backbone.LocalStorage(window.store || "User");
+    var store = new Backbone.LocalStorage(window.store || "Users");
 
     var User = Backbone.Model.extend({
         localStorage: store,

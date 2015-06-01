@@ -1,4 +1,4 @@
-define('AppMenuView', ['backbone', 'handlebars'], function(Backbone, Handlebars) {
+define('views/AppMenuView', ['backbone', 'handlebars'], function(Backbone, Handlebars) {
 
     var AppMenuView = Backbone.View.extend({
         el: '#nav-app',
@@ -12,13 +12,13 @@ define('AppMenuView', ['backbone', 'handlebars'], function(Backbone, Handlebars)
                 title: 'Operations',
                 items: [{
                     title: 'all',
-                    url: '#!operations'
+                    url: '#!transactions'
                 }, {
                     title: 'cash1',
-                    url: '#!operations/1'
+                    url: '#!transaction/1'
                 }, {
                     title: 'cash2',
-                    url: '#!operations/2'
+                    url: '#!transaction/2'
                 }]
             }, {
                 title: 'Users',
