@@ -1,4 +1,4 @@
-define('UserProfile', ['underscore', 'backbone.localStorage'], function(_, Backbone) {
+define('models/UserProfile', ['underscore', 'backbone.localStorage'], function(_, Backbone) {
 
     var store = new Backbone.LocalStorage(window.store || "UserProfile");
 

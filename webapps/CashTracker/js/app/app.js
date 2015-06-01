@@ -1,32 +1,45 @@
-require.config({
-    baseUrl: './js',
-    paths: {
-        jquery: '/SharedResources/vendor/jquery/jquery-1.11.3.min',
-        jqueryui: '/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min',
-        backbone: 'lib/backbone-min',
-        underscore: 'lib/underscore-min',
-        'backbone.localStorage': 'lib/backbone.localStorage',
-        handlebars: 'lib/handlebars.amd.min',
-        CashTrackerRouter: 'app/router',
-        LayoutView: 'app/views/LayoutView',
-        ContentView: 'app/views/ContentView'
-    },
-    shim: {
-        underscore: {
-            exports: '_'
-        },
-        backbone: {
-            deps: ['underscore', 'jquery', 'jqueryui'],
-            exports: 'Backbone'
-        },
-        'backbone.localStorage': {
-            deps: ['backbone'],
-            exports: 'Backbone'
-        }
-    }
-});
+define('App', ['backbone',
+    'views/ApplicationView',
+    'views/TransactionsView',
+    'views/TransactionView',
+    'views/AccountsView',
+    'views/AccountView',
+    'views/CategoriesView',
+    'views/CategoryView',
+    'views/CostCentersView',
+    'views/CostCenterView',
+    'views/UsersView',
+    'views/UserView'
+], function(Backbone,
+    ApplicationView,
+    TransactionsView,
+    TransactionView,
+    AccountsView,
+    AccountView,
+    CategoriesView,
+    CategoryView,
+    CostCentersView,
+    CostCenterView,
+    UsersView,
+    UserView) {
 
-require(['backbone', 'CashTrackerRouter'], function(Backbone, CashTrackerRouter) {
-    new CashTrackerRouter();
-    Backbone.history.start();
+    'use strict';
+
+    var App = {
+        ApplicationView: new ApplicationView(),
+        TransactionsView: new TransactionsView(),
+        TransactionView: new TransactionView(),
+        AccountsView: new AccountsView(),
+        AccountView: new AccountView(),
+        CategoriesView: new CategoriesView(),
+        CategoryView: new CategoryView(),
+        CostCentersView: new CostCentersView(),
+        CostCenterView: new CostCenterView(),
+        UsersView: new UsersView(),
+        UserView: new UserView()
+    };
+
+    App.ApplicationView.render();
+
+    return App;
 });

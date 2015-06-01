@@ -7,6 +7,7 @@
     <meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"></meta>
     <meta content="0" http-equiv="Expires"></meta>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
@@ -22,11 +23,7 @@
 	<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.number.min.js"></script>
 	<script type="text/javascript" src="/SharedResources/js/mobile-detect.min.js"></script>
 
-    <script src="js/lib/require.js"></script>
-    <script src="js/app/views/LayoutView.js"></script>
-    <script src="js/app/views/AppMenuView.js"></script>
-    <script src="js/app/views/ContentView.js"></script>
-    <script src="js/app/app.js"></script>
+    <script data-main="js/app/main" src="js/lib/require.js"></script>
 </head>
 
 <body class="no_transition">
@@ -117,6 +114,25 @@
                 </ul>
             {{/if}}
         {{/each}}
+    </script>
+    <script type="text/x-handlebars-template" id="tpl_actionbar">
+        <div class="action-bar">
+            {{> tpl_action}}
+        </div>
+    </script>
+    <script type="text/x-handlebars-template" id="tpl_action">
+        <a class="btn action_{{id}}" title="{{hint}}" href="{{url}}" data-action="{{id}}">
+            <span>{{caption}}</span>
+        </a>
+    </script>
+    <script type="text/x-handlebars-template" id="tpl_content">
+        <header>
+            <h1>{{title}}</h1>
+            {{> tpl_actionbar}}
+        </header>
+        <section>
+            view
+        </section>
     </script>
 </body>
 
