@@ -35,12 +35,7 @@ public class ScriptSource implements IScriptSource{
 	@Override
 	public void setConnection(Connection conn) {
 		connection = conn;
-	}
-	
-/*	@Override
-	public void setDocumentCollection(_DocumentCollection col) {
-		collection = col;
-	}*/
+	}	
 
 	@Override
 	public String providerHandlerProcess()throws Exception {
@@ -66,10 +61,7 @@ public class ScriptSource implements IScriptSource{
 		return lang;
 	//	return  doHandler(session, collection) ;
 	}
-
-	/*public String doHandler(_Session session, _DocumentCollection collection) throws Exception{
-		return "";
-	}*/
+	
 
 	public void setUser(String user){
 	}

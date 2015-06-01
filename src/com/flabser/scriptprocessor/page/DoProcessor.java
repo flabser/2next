@@ -4,10 +4,8 @@ import groovy.lang.GroovyObject;
 
 import java.util.ArrayList;
 import java.util.Map;
-
 import com.flabser.appenv.AppEnv;
 import com.flabser.localization.Vocabulary;
-import com.flabser.runtimeobj.page.Element;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.users.UserSession;

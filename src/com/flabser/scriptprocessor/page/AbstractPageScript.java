@@ -1,7 +1,7 @@
 package com.flabser.scriptprocessor.page;
 
 import com.flabser.localization.Vocabulary;
-import com.flabser.runtimeobj.page.Element;
+import com.flabser.script._Element;
 import com.flabser.script._Exception;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
@@ -32,8 +32,8 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 	public void println(Exception e) throws _Exception{
 		String errText = e.toString();
 		System.out.println(errText);
-		Element element = new Element("error",errText + "stack:" + ScriptProcessorUtil.getScriptError(e.getStackTrace()));	
-		publishElement(element);		
+		_Element element = new _Element("error",errText + "stack:" + ScriptProcessorUtil.getScriptError(e.getStackTrace()));	
+		publishElement("error",element);		
 	}
 	
 

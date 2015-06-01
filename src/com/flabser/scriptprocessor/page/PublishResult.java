@@ -1,16 +1,14 @@
 package com.flabser.scriptprocessor.page;
 
 import java.util.ArrayList;
-import com.flabser.runtimeobj.page.Element;
+import com.flabser.script._IContent;
 
 public class PublishResult {
 	public boolean continueOpen;
-	public ArrayList<Element> toPublishElement = new ArrayList<Element>();
-	public ArrayList<Element> toPublish = new ArrayList<Element>();
+	public ArrayList<_IContent> toPublishElement = new ArrayList<_IContent>();
 	
-	PublishResult(boolean cs, ArrayList<Element> toPublish, ArrayList<Element> toPublishElement){
+	PublishResult(boolean cs, ArrayList<_IContent> toPublish, ArrayList<_IContent> toPublishElement){
 		continueOpen = cs;
-		this.toPublish = toPublish;
 		this.toPublishElement = toPublishElement;
 	}
 }

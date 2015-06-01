@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import com.flabser.rule.page.CachingStrategyType;
-import com.flabser.runtimeobj.page.Element;
 import com.flabser.runtimeobj.page.Page;
 
 
@@ -13,8 +12,8 @@ public class _Page {
 	private CachingStrategyType caching;
 	private String elapsed_time;
 	private ArrayList <_Page> includedPages = new ArrayList <_Page>();
-	private HashMap <String, Element> elementsMap = new HashMap <String, Element>();
-	private ArrayList <Element> elementsList = new ArrayList <Element>();
+	private HashMap <String, _IContent> elementsMap = new HashMap <String, _IContent>();
+	private ArrayList <_IContent> elementsList = new ArrayList <_IContent>();
 	private HashMap <String, String[]> captions;
 
 	public _Page(Page page, _WebFormData webFormData) {
@@ -37,12 +36,12 @@ public class _Page {
 		includedPages.add(page);
 	}
 
-	public void addElement(String key, Element element) {
+	public void addElement(String key, _IContent element) {
 		elementsMap.put(key, element);
 		elementsList.add(element);
 	}
 
-	public void addElements(ArrayList <Element> elements) {
+	public void addElements(ArrayList <_IContent> elements) {
 		elementsList.addAll(elements);
 	}
 
@@ -50,7 +49,7 @@ public class _Page {
 		return includedPages;
 	}
 
-	public ArrayList <Element> getElements() {
+	public ArrayList <_IContent> getElements() {
 		return elementsList;
 	}
 
@@ -67,8 +66,8 @@ public class _Page {
 		StringBuffer output = new StringBuffer(5000);
 		output.append("<page id=\"" + id + "\" cache=\"" + caching + "\" elapsed_time = \"" + elapsed_time + "\" >");
 		
-		for (Element e : elementsList) {	
-			output.append(e.toPublishAsXML());		
+		for (_IContent e : elementsList) {	
+			output.append(e.toXML());		
 		}
 
 		for (_Page p : includedPages) {

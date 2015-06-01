@@ -1,29 +1,23 @@
 package com.flabser.scriptprocessor.page;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
 import com.flabser.appenv.AppEnv;
-import com.flabser.localization.SentenceCaption;
 import com.flabser.localization.Vocabulary;
-import com.flabser.runtimeobj.page.Element;
 import com.flabser.script._Document;
 import com.flabser.script._Exception;
 import com.flabser.script._ExceptionType;
-import com.flabser.script._Helper;
+import com.flabser.script._IContent;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.scriptprocessor.ScriptEvent;
-import com.flabser.scriptprocessor.ScriptProcessorUtil;
-import com.flabser.util.XMLUtil;
+
 
 public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpenScript {	
 	private _Session ses;
 	private _Document doc;
 	private boolean continueOpen = true;
 	private String lang;
-	private ArrayList<Element> toPublish = new ArrayList<Element>();
+	private ArrayList<_IContent> toPublish = new ArrayList<_IContent>();
 
 	private _WebFormData webFormData;
 	private AppEnv env;
@@ -53,57 +47,6 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 	public void stopOpen(){
 		this.continueOpen = false;
 	}
-
-	public void publishElement(Element value){
-		toPublishElement.add(value);
-	}
-
-	public void publishValue(String entryName, Object value) throws _Exception {		
-		if (value == null) {
-			toPublish.add(new Element(entryName, ""));
-		}else if (value instanceof String) {
-			toPublish.add(new Element(entryName, (String)value));		
-		}else if (value instanceof Date) {
-			toPublish.add(new Element(entryName, _Helper.getDateAsString((Date)value)));
-		}else if (value instanceof Enum) {
-			toPublish.add(new Element(entryName, ((Enum)value).name()));
-		}else if (value instanceof BigDecimal) {
-			toPublish.add(new Element(entryName, value.toString()));
-		}
-	}
-
-	
-
-	public void publishValue(String entryName, String value, boolean translate){
-		if (translate){
-			SentenceCaption s = vocabulary.getSentenceCaption(value, lang);	
-			value = s.word;
-		}
-		toPublish.add(new Element(entryName, value));
-	}
-
-	
-	public void publishValue(String entryName, int value){
-		toPublish.add(new Element(entryName, Integer.toString(value)));
-	}
-
-	public void publishValue(String entryName, double value){
-		toPublish.add(new Element(entryName, Double.toString(value)));
-	}
-
-	public void publishValue(String entryName, HashSet value) throws _Exception{
-		String result = "";
-		for (Object val: value){
-			if(val instanceof Element){
-				result += "<entry>" +  ((Element) val).toPublishAsXML() + "</entry>";
-			}else{
-				result += "<entry>" +  XMLUtil.getAsTagValue(val.toString()) + "</entry>";
-			}
-
-		}
-		toPublish.add(new Element(entryName, result));
-	}
-
 
 	public void publishGlossaryValue(String entryName, int idValue) throws _Exception{
 		/*try{
@@ -190,7 +133,8 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 	}
 
 	public PublishResult process1(){
-		try{
+		return null;
+	/*	try{
 			doQueryOpen(ses, webFormData, lang);		
 		}catch(Throwable e){
 			continueOpen = new Boolean(false);
@@ -199,11 +143,12 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 			//msg = "QuerySaveScript: " + e.getClass().getSimpleName() + " " + e.getMessage();
 		}
 		PublishResult qsr = new PublishResult(continueOpen, toPublish, toPublishElement);
-		return qsr;	
+		return qsr;	*/
 	}
 
 	public PublishResult process2(){
-		try{
+		return null;
+		/*try{
 			doQueryOpen(ses, doc, webFormData, lang);		
 		}catch(Throwable e){
 			continueOpen = new Boolean(false);
@@ -212,7 +157,7 @@ public abstract class AbstractQueryOpen extends ScriptEvent implements IQueryOpe
 			//msg = "QuerySaveScript: " + e.getClass().getSimpleName() + " " + e.getMessage();
 		}
 		PublishResult qsr = new PublishResult(continueOpen, toPublish, toPublishElement);
-		return qsr;	
+		return qsr;	*/
 	}
 
 

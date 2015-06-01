@@ -1,15 +1,21 @@
 package com.flabser.script;
 
 import java.util.ArrayList;
+
 import com.flabser.appenv.AppEnv;
+import com.flabser.rule.Lang;
 import com.flabser.server.Server;
+import com.flabser.users.ApplicationProfile;
+import com.flabser.users.User;
 
 
 public class _AppEntourage {
 	private AppEnv env;
+	private _Session ses;
 
 	public _AppEntourage(_Session ses, AppEnv env) {
-		this.env = env;
+		this.ses = ses;
+		this.env = env;		
 	}
 
 	public String getServerVersion(){
@@ -25,53 +31,28 @@ public class _AppEntourage {
 		return env.appType;
 	}
 
-	public ArrayList<_Element> getAvailableLangs() throws _Exception{
-		return null;
-		/*ViewEntryCollection vec = new ViewEntryCollection(ses, 100);
-
-
+	public ArrayList<String[]> getAvailableLangs() throws _Exception{
+		ArrayList<String[]> list = new ArrayList<String[]>();
+		
 		for(Lang l: env.globalSetting.langsList){
-			String p[] = {l.isOn.toString(),l.id,l.name,Boolean.toString(l.isPrimary)};
-			try {
-				IViewEntry entry = new ViewEntry(p);
-				vec.add(entry);
-			} catch (SQLException e) {
-				throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, "internal error: function: _Document.getAvailableLangs()");
-			}
+			String[] p = {l.isOn.toString(),l.id,l.name,Boolean.toString(l.isPrimary)};			
+			list.add(p);
 		}
-		return vec.getScriptingObj();*/
+		return list;
 	}
 	
-	public ArrayList<_Element>  getAvailableApps() throws _Exception{
-		return null;
-		/*ViewEntryCollection vec = new ViewEntryCollection(ses, 100);
-		_Employer emp = ses.getCurrentAppUser();
+	public ArrayList<String[]>  getAvailableApps() throws _Exception{
+		User user = ses.getUser();
+		ArrayList<String[]> list = new ArrayList<String[]>();
 		
-		for(AppEnv appEnv: Environment.getApplications()){
-			if (appEnv.isValid && !appEnv.globalSetting.isWorkspace){					
-				if (emp.isAuthorized()){
-					Collection<UserApplicationProfile> enabledApps;
-					try {
-						enabledApps = emp.getEnabledApps();
-					} catch (DocumentException e1) {
-						throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, "internal error: function: _Document.getAvailableApps()");
-					}	
-					for(UserApplicationProfile uap: enabledApps){
-						if(uap.appName.equals(appEnv.appType)){	
-
-							String p[] = {appEnv.appType, appEnv.globalSetting.defaultRedirectURL, appEnv.globalSetting.logo, appEnv.globalSetting.orgName, appEnv.globalSetting.description};
-							try {
-								IViewEntry entry = new ViewEntry(p);
-								vec.add(entry);
-							} catch (SQLException e) {
-								throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, "internal error: function: _Document.getAvailableApps()");
-							}
-
-						}
-					}
-				}
-			}*/
+		for(ApplicationProfile app: user.enabledApps.values()){
+			String p[] = {app.appName,  app.owner};	
+			list.add(p);
 		}
+		return list;
+	}
+		
+	
 
 	
 }
