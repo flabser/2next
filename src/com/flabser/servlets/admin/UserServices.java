@@ -36,11 +36,10 @@ public class UserServices {
 
 		if (user.getUserID() != null) {
 			xmlContent += "<userid>" + user.getUserID() + "</userid>" + "<docid>" + user.docID + "</docid>"
-					+ "<fullname></fullname>" + "<email>" + user.getEmail() + "</email>" +
+					+ "<fullname></fullname><email>" + user.getEmail() + "</email>" +
 
 					"<password>" + user.getPassword() + "</password>" + "<isadmin>" + user.isSupervisor()
-					+ "</isadmin>" + "<pk>" + user.getPublicKey() + "</pk>" + "<isadmin>" + user.isSupervisor()
-					+ "</isadmin>" + "<hash>" + user.getHash() + "</hash>" + "<enabledapps>" + ea + "</enabledapps>";
+					+ "</isadmin><hash>" + user.getHash() + "</hash>" + "<enabledapps>" + ea + "</enabledapps>";
 
 			// SourceSupplier ss = new SourceSupplier(user.getUserID());
 			// xmlContent += "<glossaries><apps>" +

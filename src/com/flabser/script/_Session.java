@@ -36,7 +36,7 @@ public class _Session {
 	}
 
 	public String getAppURL() {
-		return user.getSession().host + "/" + user.env.appType;
+		return user.getSession().host + "/" + env.appType;
 	}
 	
 	public String getCurrentUserID() {

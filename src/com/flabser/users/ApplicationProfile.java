@@ -21,8 +21,9 @@ public class ApplicationProfile{
 	
 	public ApplicationProfile(ResultSet rs) throws SQLException {
 		appName = rs.getString("APP");
-	//	defaultURL = rs.getString("DEFAULTURL");
-		dbName = rs.getString("DBURL");
+		dbHost	= rs.getString("DBHOST");
+		dbName = rs.getString("DBNAME");
+		dbLogin = rs.getString("DBLOGIN");
 		dbPwd = rs.getString("DBPWD");
 	}
 	

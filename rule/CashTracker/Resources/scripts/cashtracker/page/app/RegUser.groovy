@@ -43,10 +43,11 @@ class RegUser extends _DoScript {
 		// reg user
 		com.flabser.users.User user = session.getUser()
 		user.setUserID(regForm.email)
+		user.setUserName(regForm.userName)
 		user.setPassword(regForm.pwd)
 		user.setPasswordHash(regForm.pwd)
 		user.setEmail(regForm.email)
-
+		user.setStatus(UserStatusType.NOT_VERIFIED)
 		
 		def appName = session.getGlobalSettings().appName;
 		ApplicationProfile ap = new ApplicationProfile()
@@ -58,7 +59,7 @@ class RegUser extends _DoScript {
 		
 		user.addApplication(ap)
 
-		if (user.save()) {
+		if (!user.save()) {
 			publishElement("error", "save-error")
 			return
 		}
@@ -66,7 +67,7 @@ class RegUser extends _DoScript {
 		publishElement("process", "user-reg")
 
 		// create verify doc
-		VerifyDoc vd = VerifyDoc.createVerifyDoc(session, regForm)
+	/*	VerifyDoc vd = VerifyDoc.createVerifyDoc(session, regForm)
 		if (vd != null) {
 			// SendVerifyEMail
 			SendVerifyEMail sve = new SendVerifyEMail(session, vd)
@@ -77,7 +78,7 @@ class RegUser extends _DoScript {
 			}
 		} else {
 			publishElement("error", "verify-email")
-		}
+		}*/
 	}
 
 	

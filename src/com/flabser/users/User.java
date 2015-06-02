@@ -1,8 +1,6 @@
 package com.flabser.users;
 
 import org.apache.catalina.realm.RealmBase;
-
-import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
@@ -13,7 +11,6 @@ import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.util.Util;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -30,23 +27,19 @@ public class User implements Const {
 	private transient ISystemDatabase sysDatabase;
 	private String userID;
 	private String userName;
+	private Date primaryRegDate;
+	private Date regDate;
 	private String password;
 	private String passwordHash = "";
 	private String email = "";
-	private boolean isSupervisor;
+	private int isSupervisor;
 	private int hash;
+	private String verifyCode;
+	private UserStatusType status = UserStatusType.UNKNOWN;
 	private UserSession session;
-	public AppEnv env;
 
 	public User() {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
-		userID = "anonymous";
-	}
-
-	public User(AppEnv env) {
-		this.env = env;
-		this.sysDatabase = DatabaseFactory.getSysDatabase();
-
 		userID = "anonymous";
 	}
 
@@ -76,23 +69,20 @@ public class User implements Const {
 		return userGroups;
 	}
 
-	public String getFullName() {
-		return email;
-
-	}
-
 	public void fill(ResultSet rs) throws SQLException {
 		try {
 			docID = rs.getInt("DOCID");
+			userName = rs.getString("USERNAME");
+			primaryRegDate = rs.getTimestamp("PRIMARYREGDATE");
+			regDate = rs.getTimestamp("REGDATE");
 			userID = rs.getString("USERID");
 			setEmail(rs.getString("EMAIL"));
+			isSupervisor = rs.getInt("ISSUPERVISOR");
 			password = rs.getString("PWD");
 			passwordHash = rs.getString("PWDHASH");
-			int isa = rs.getInt("ISADMIN");
-			if (isa == 1) {
-				isSupervisor = true;
-			}
 			setHash(rs.getInt("LOGINHASH"));
+			verifyCode = rs.getString("VERIFYCODE");
+			status = UserStatusType.getType(rs.getInt("STATUS"));
 			isValid = true;
 		} catch (Exception e) {
 			isValid = false;
@@ -108,22 +98,21 @@ public class User implements Const {
 	}
 
 	public void setPassword(String password) throws WebFormValueException {
-		/*
-		 * if (!("".equalsIgnoreCase(password))) { if
-		 * (Util.pwdIsCorrect(password)) { this.password = password; } else {
-		 * throw new
-		 * WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT,
-		 * "password"); } }
-		 */
+		if (!("".equalsIgnoreCase(password))) {
+			if (Util.pwdIsCorrect(password)) {
+				this.password = password;
+			} else {
+				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
+			}
+		}
 	}
 
 	public void setPasswordHash(String password) throws WebFormValueException {
 		if (!("".equalsIgnoreCase(password))) {
 			if (Util.pwdIsCorrect(password)) {
-				// this.passwordHash = password.hashCode()+"";
-				// this.passwordHash = getMD5Hash(password);
-				RealmBase rb = null;
-				this.passwordHash = rb.Digest(password, "MD5", "UTF-8");
+				this.passwordHash = password.hashCode() + "";
+				//this.passwordHash = getMD5Hash(password);
+				this.passwordHash = RealmBase.Digest(password, "MD5", "UTF-8");
 			} else {
 				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
 			}
@@ -151,35 +140,22 @@ public class User implements Const {
 	}
 
 	public boolean isSupervisor() {
+		if (isSupervisor == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public int getIsSupervisor() {
 		return isSupervisor;
 	}
 
-	public int getIsAdmin() {
-		if (isSupervisor) {
-			return 1;
-		} else {
-			return 0;
-		}
-	}
-
 	public void setAdmin(boolean isAdmin) {
-		this.isSupervisor = isAdmin;
-	}
-
-	public void setAdmin(String isAdmin) {
-		if (isAdmin.equalsIgnoreCase("1")) {
-			this.isSupervisor = true;
+		if (isAdmin) {
+			this.isSupervisor = 1;
 		} else {
-			this.isSupervisor = false;
-		}
-	}
-
-	public void setAdmin(String[] isAdmin) {
-		try {
-			String value = isAdmin[0];
-			setAdmin(value);
-		} catch (Exception e) {
-			this.isSupervisor = false;
+			isSupervisor = 0;
 		}
 	}
 
@@ -259,16 +235,17 @@ public class User implements Const {
 
 			for (ApplicationProfile appProfile : enabledApps.values()) {
 				IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
-				int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.owner, appProfile.dbPwd);
+				int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.owner,
+						appProfile.dbPwd);
 				if (res == 0 || res == 1) {
 					Class cls = Class.forName(appProfile.getImpl());
 					IDatabase dataBase = (IDatabase) cls.newInstance();
 					IDeployer ad = dataBase.getDeployer();
 					ad.init(appProfile);
 					ad.deploy();
-				}else {
+				} else {
 					return false;
-				}				
+				}
 			}
 		}
 		return true;
@@ -288,19 +265,6 @@ public class User implements Const {
 
 	}
 
-	public String getAppURLAsXml() {
-		return email;
-		/*
-		 * StringBuffer xmlContent = new StringBuffer(1000); for
-		 * (Map.Entry<String, UserApplicationProfile> app :
-		 * enabledApps.entrySet()) { xmlContent.append("<entry " + "url=\"" +
-		 * enabledApps.get(app) + "\">" + XMLUtil.getAsTagValue(app.getKey()));
-		 * if (app.getValue() != null) {
-		 * xmlContent.append(app.getValue().toXML()); }
-		 * xmlContent.append("</entry>"); } return xmlContent.toString();
-		 */
-	}
-
 	public void setSession(UserSession session) {
 		this.session = session;
 	}
@@ -309,23 +273,40 @@ public class User implements Const {
 		return session;
 	}
 
-	public String getPublicKey() {
-
-		return null;
+	public String getUserName() {
+		return userName;
 	}
 
-	public AppEnv getAppEnv() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public void fillFieldsToSave(Object object, HashMap<String, String[]> parMap) {
-		// TODO Auto-generated method stub
-
+	public String getVerifyCode() {
+		return verifyCode;
 	}
 
-	public void setName(String nickName) {
-		userName = nickName;
+	public void setVerifyCode(String verifyCode) {
+		this.verifyCode = verifyCode;
+	}
 
+	public Date getPrimaryRegDate() {
+		return primaryRegDate;
+	}
+
+	public Date getRegDate() {
+		if (regDate == null) regDate = new Date();
+		return regDate;
+	}
+
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+
+	public UserStatusType getStatus() {
+		return status;
+	}
+
+	public void setStatus(UserStatusType status) {
+		this.status = status;
 	}
 }

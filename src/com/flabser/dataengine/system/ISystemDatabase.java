@@ -15,9 +15,8 @@ public interface ISystemDatabase {
 	User checkUser(String userID, String pwd, String hash, User user);
 	User checkUserHash(String userID, String pwd, String hash, User user);
 
-	User getUser(String userID);
-	User reloadUserData(User user, String userID);
-	User reloadUserData(User user, int hash);
+	User getUser(String userID);	
+	
 
 	int update(User user);
 	int insert(User user);

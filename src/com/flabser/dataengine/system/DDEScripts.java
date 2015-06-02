@@ -4,26 +4,19 @@ public class DDEScripts {
 	
 	public static String getUsersDDE(){
 		String createTable="CREATE TABLE users( docid serial NOT NULL, "
+				+ "username character varying(128),  "
 				+ "userid character varying(32),  "
 				+ "email character varying(32),  "
 				+ "pwd character varying(32),  "
-				+ "regdate timestamp without time zone DEFAULT now(), "
-				+ "isappadmin integer, "
-				+ "isadmin integer, "
-				+ "isobserver integer, "
+				+ "primaryregdate timestamp without time zone DEFAULT now(), "
+				+ "regdate timestamp without time zone, "
+				+ "ISSUPERVISOR integer, "
 				+ "loginhash integer, "
-				+ "publickey character varying(6144), "
 				+ "pwdhash character varying(1024), "
-				+ "lastDefaultURL varchar(128), " 
+				+ "lastDefaultURL varchar(128), "
+				+ "status integer,"
+				+ "verifycode character varying(64),"
 				+ "CONSTRAINT users_pkey PRIMARY KEY (docid), CONSTRAINT users_userid_unique UNIQUE (userid))";
-
-		createTable += ";CREATE TABLE temp_users(id serial NOT NULL, "
-				+ "userid character varying(10), "
-				+ "pwd character varying(32), "
-				+ "regdate timestamp without time zone DEFAULT now(), "
-				+ "starttime timestamp without time zone, "
-				+ "lifetime integer DEFAULT 0,"
-				+ "CONSTRAINT temp_users_primary_key PRIMARY KEY (id), CONSTRAINT temp_users_userid_key UNIQUE (userid))";
 
 		return createTable;
 	}
@@ -32,10 +25,11 @@ public class DDEScripts {
 		String dde = "create table APPS(ID serial NOT NULL, " +
 				"DOCID int, " +
 				"APP varchar(32), " +
-				"defaultURL varchar(128), " +
-				"dburl varchar(128), " +
+				"owner varchar(64), " +
+				"dbhost varchar(64), " +
+				"dbname varchar(64), " +
+				"dblogin varchar(64), " +
 				"dbpwd varchar(32), " +				
-				"LOGINMODE int, " +
 				"FOREIGN KEY (DOCID) REFERENCES USERS(DOCID))";
 		return dde;
 	} 

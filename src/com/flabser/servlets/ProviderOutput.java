@@ -80,7 +80,7 @@ public class ProviderOutput{
 
 	public String getStandartUTF8Output(){
 		String localUserName = "";				
-		localUserName = userSession.currentUser.getFullName();	
+		localUserName = userSession.currentUser.getUserName();	
 
 		String queryString = request.getQueryString();
 		if (queryString != null){
