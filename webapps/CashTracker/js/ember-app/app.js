@@ -1,50 +1,49 @@
 define('App', [
-    'views/ApplicationView',
-    'controllers/ApplicationController',
+    'views/application',
+    'controllers/application',
 
-    'routes/TransactionsRoute',
-    'views/TransactionsView',
-    'controllers/TransactionsController',
+    'routes/transactions',
+    'views/transactions',
+    'controllers/transactions',
 
-    'routes/TransactionRoute',
-    'views/TransactionView',
-    'controllers/TransactionController',
+    'routes/transaction',
+    'views/transaction',
+    'controllers/transaction',
 
-    'routes/AccountsRoute',
-    'views/AccountsView',
-    'controllers/AccountsController',
+    'routes/accounts',
+    'views/accounts',
+    'controllers/accounts',
 
-    'routes/AccountRoute',
-    'views/AccountView',
-    'controllers/AccountController',
+    'routes/account',
+    'views/account',
+    'controllers/account',
 
-    'routes/CategoriesRoute',
-    'views/CategoriesView',
-    'controllers/CategoriesController',
+    'routes/categories',
+    'views/categories',
+    'controllers/categories',
 
-    'routes/CategoryRoute',
-    'views/CategoryView',
-    'controllers/CategoryController',
+    'routes/category',
+    'views/category',
+    'controllers/category',
 
-    'routes/CostCentersRoute',
-    'views/CostCentersView',
-    'controllers/CostCentersController',
+    'routes/cost_centers',
+    'views/cost_centers',
+    'controllers/cost_centers',
 
-    'routes/CostCenterRoute',
-    'views/CostCenterView',
-    'controllers/CostCenterController',
+    'routes/cost_center',
+    'views/cost_center',
+    'controllers/cost_center',
 
-    'routes/UsersRoute',
-    'views/UsersView',
-    'controllers/UsersController',
+    'routes/users',
+    'views/users',
+    'controllers/users',
 
-    'routes/UserRoute',
-    'views/UserView',
-    'controllers/UserController',
+    'routes/user',
+    'views/user',
+    'controllers/user',
 
     /* route */
-    'router',
-    'routes/IndexRoute'
+    'router'
 ], function(
     ApplicationView,
     ApplicationController,
@@ -89,8 +88,7 @@ define('App', [
     UserView,
     UserController,
 
-    Router,
-    IndexRoute) {
+    Router) {
 
     'use strict';
 
@@ -138,8 +136,7 @@ define('App', [
         UserView: UserView,
         UserController: UserController,
 
-        Router: Router,
-        IndexRoute: IndexRoute
+        Router: Router
     };
 
     return App;

@@ -1,1 +1,77 @@
-account
+<header class="form-header">
+    <h1 class="header-title">{{title}}</h1> {{actionbar}}
+</header>
+<section class="form-content">
+    <form action="Provider" name="frm" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset class="fieldset" {{disabled}}>
+            <div class="fieldset-container">
+                <div class="control-group">
+                    <div class="control-label">
+                        {{captions.name}}
+                    </div>
+                    <div class="controls">
+                        <input type="text" value="{//fields/name}" name="name" class="span7" required="required" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        {{captions.user}}
+                        <xsl:if test="$editmode = 'edit'">
+                            <button type="button" class="btn-text">
+                                <xsl:attribute name="class" select="'btn-text btn-picklist'" />
+                                <xsl:attribute name="title" select="//captions/user/@caption" />
+                                <xsl:attribute name="onclick">nbApp.dialogChoiceBossAndDemp(this, 'user', false)</xsl:attribute>
+                                <i class="fa fa-user" />
+                            </button>
+                        </xsl:if>
+                    </div>
+                    <div class="controls">
+                        <xsl:call-template name="field">
+                            <xsl:with-param name="name" select="'user'" />
+                            <xsl:with-param name="node" select="//fields/user" />
+                        </xsl:call-template>
+                        <div>
+                            <button class="btn btn-def" onclick="nbApp.sendInvite(this.form.user.value);return false;">
+                                <i class="fa fa-envelope" />
+                                <xsl:value-of select="//captions/btn_send_invite/@caption" />
+                            </button>
+                            <div class="hint">
+                                На email пользователя будет отправлено приглашение.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <xsl:value-of select="//captions/amountcontrol/@caption" />
+                    </div>
+                    <div class="controls">
+                        <input type="text" name="amountcontrol" value="{//fields/amountcontrol}" class="span2" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <xsl:value-of select="//captions/observers/@caption" />
+                        <xsl:if test="$editmode = 'edit'">
+                            <button type="button" class="btn-text">
+                                <xsl:attribute name="class" select="'btn-text btn-picklist'" />
+                                <xsl:attribute name="title" select="//captions/user/@caption" />
+                                <xsl:attribute name="onclick">nbApp.dialogChoiceBossAndDemp(this, 'observers')</xsl:attribute>
+                                <i class="fa fa-users" />
+                            </button>
+                        </xsl:if>
+                    </div>
+                    <div class="controls">
+                        <xsl:call-template name="field">
+                            <xsl:with-param name="name" select="'observers'" />
+                            <xsl:with-param name="node" select="//fields/observers" />
+                        </xsl:call-template>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <input type="hidden" name="type" value="save" />
+        <input type="hidden" name="id" value="cash" />
+        <input type="hidden" name="key" value="{{docid}}" />
+    </form>
+</section>

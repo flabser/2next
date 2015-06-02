@@ -1,6 +1,6 @@
 define('config', {
     app_name: 'CashTracker',
-    urlArgs: "v=" + (new Date()).getTime(),
+    urlArgs: 'v=' + (new Date()).getTime(),
     baseUrl: './js',
     paths: {
         App: 'ember-app/app',
@@ -12,19 +12,25 @@ define('config', {
         routes: 'ember-app/routes',
         /* libs */
         ember: 'lib/ember.min',
+        'ember-data': 'lib/ember-data',
+        'ember-template-compiler': 'lib/ember-template-compiler',
         text: 'lib/requirejs-text',
         jquery: '/SharedResources/vendor/jquery/jquery-1.11.3.min',
         'jquery.ui': '/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min'
     },
     shim: {
         ember: {
-            deps: ['jquery'],
+            deps: ['jquery', 'ember-template-compiler'],
             exports: 'Ember'
+        },
+        'ember-data': {
+            deps: ['jquery', 'ember'],
+            exports: 'DS'
         },
         'jquery.ui': ['jquery']
     },
     hbs: {
         disableI18n: true,
-        templateExtension: "html"
+        templateExtension: 'html'
     }
 });

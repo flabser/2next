@@ -1,1 +1,63 @@
-accounts
+<div class="view view_accounts">
+    <div class="view-header">
+        <!-- <xsl:call-template name="page-info" /> -->
+        <h1>accounts</h1>
+        <a href="#/account/new">new</a>
+    </div>
+    <div class="view-content">
+        <header class="entries-head">
+            <div class="head-wrap">
+                <label class="entry-select">
+                    <input type="checkbox" data-toggle="docid" class="all" />
+                </label>
+                <div class="entry-captions">
+                    <span class="vaccount-name">
+						captions/viewtext1
+					</span>
+                    <span class="vaccount-user">
+						captions/viewtext2
+					</span>
+                    <span class="vaccount-observers">
+						captions/viewtext3
+					</span>
+                    <span class="vaccount-amount-control">
+						captions/viewnumber
+					</span>
+                </div>
+            </div>
+        </header>
+        <div class="entries">
+            <div class="entry-wrap">
+                <div class="entry-actions">
+                    <a class="entry-action action-delete" data-ddbid="{@id}" href="#">
+                        <i class="fa fa-trash" />
+                    </a>
+                </div>
+                <div data-ddbid="{@id}" class="entry document js-swipe-entry">
+                    <label class="entry-select">
+                        <input type="checkbox" name="docid" id="{@id}" value="{@doctype}" />
+                    </label>
+                    <a href="{{url}}" class="entry-link">
+                        <div class="entry-fields">
+                            <span class="entry-field vaccount-name">
+							<xsl:value-of select="viewcontent/viewtext1" />
+						</span>
+                            <span class="entry-field vaccount-user">
+							<xsl:value-of select="viewcontent/viewtext2" />
+						</span>
+                            <span class="entry-field vaccount-observers">
+							<span>
+								<xsl:value-of select="viewcontent/viewtext3" />
+							</span>
+                            </span>
+                            <span class="entry-field vaccount-amount-control">
+							<xsl:value-of select="viewcontent/viewnumber" />
+						</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="page_id" id="page_id" value="{@id}" />
+</div>
