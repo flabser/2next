@@ -7,8 +7,14 @@ define('views/ApplicationView', [
 
     var ApplicationView = Ember.View.extend({
         classNames: ['layout'],
+
         controller: ApplicationController,
-        defaultTemplate: Ember.Handlebars.compile(tpl)
+
+        template: Ember.Handlebars.compile(tpl),
+
+        willInsertElement: function() {
+            $('.page-loading').hide();
+        }
     });
 
     return ApplicationView;

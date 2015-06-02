@@ -12,14 +12,13 @@ define('config', {
         routes: 'ember-app/routes',
         /* libs */
         ember: 'lib/ember.min',
-        handlebars: 'lib/handlebars.amd.min',
         text: 'lib/requirejs-text',
         jquery: '/SharedResources/vendor/jquery/jquery-1.11.3.min',
         'jquery.ui': '/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min'
     },
     shim: {
         ember: {
-            deps: ['handlebars', 'jquery'],
+            deps: ['jquery'],
             exports: 'Ember'
         },
         'jquery.ui': ['jquery']

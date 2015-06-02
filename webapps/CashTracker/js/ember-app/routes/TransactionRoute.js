@@ -2,9 +2,9 @@ define('routes/TransactionRoute', ['ember'], function(Ember) {
     "use strict";
 
     var Route = Ember.Route.extend({
-        model: {
-            userName: 'Medet'
-        }
+        hideOpenedNav: function() {
+            $('body').removeClass('nav-app-open nav-ws-open');
+        }.on('activate')
     });
 
     return Route;

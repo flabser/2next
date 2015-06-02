@@ -1,4 +1,4 @@
-define('routes/IndexRoute', ['ember'], function(Ember) {
+define('routes/ApplicationRoute', ['ember'], function(Ember) {
     "use strict";
 
     var Route = Ember.Route.extend();

@@ -11,11 +11,11 @@
         <div class="head-item head-nav-ws-toggle" {{action 'navUserMenuToggle' on='mouseDown'}}>
             <div class="nav-ws-toggle" id="toggle-nav-ws"></div>
         </div>
-        <div class="head-item nav-search-toggle" title="Поиск" id="toggle-head-search">
+        <div class="head-item nav-search-toggle" title="Поиск" id="toggle-head-search" {{action 'toggleSearchForm' on='mouseDown'}}>
             <i class="fa fa-search"></i>
         </div>
         <div class="head-item nav-search" id="search-block">
-            <div class="search-toggle-back" id="search-close">
+            <div class="search-toggle-back" id="search-close" {{action 'toggleSearchForm' on='mouseDown'}}>
                 <i class="fa fa-chevron-left"></i>
             </div>
             <form action="Provider" method="GET" name="search">
