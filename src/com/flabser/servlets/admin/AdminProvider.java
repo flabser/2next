@@ -98,7 +98,7 @@ public class AdminProvider extends HttpServlet implements Const{
 				}else if (type.equalsIgnoreCase("edit")) {					
 					result = edit(request, app,  element, id, key);				
 				}else if (type.equalsIgnoreCase("save")) { 
-					//result = save(request, app, dbID, element, id);
+					result = save(request, app, dbID, element, id);
 				}else if (type.equalsIgnoreCase("delete")) {
 					//result = delete(request, app,  element, id);
 				}else if(type.equalsIgnoreCase("service")){

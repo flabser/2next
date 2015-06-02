@@ -10,7 +10,7 @@ import java.util.Properties;
 import com.flabser.dataengine.DatabaseUtil;
 
 public class ApplicationDatabase implements IApplicationDatabase {
-	private Properties props = new Properties();
+	private Properties props = new Properties(); 
 	private String dbURL;
 
 	ApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -21,12 +21,14 @@ public class ApplicationDatabase implements IApplicationDatabase {
 	}
 
 	@Override
-	public int createDatabase(String host, String name) throws SQLException {
+	public int createDatabase(String host, String name, String owner, String dbPwd) throws SQLException {
 		if (!hasDatabase(name)) {
 			Connection conn = DriverManager.getConnection(dbURL, props);
-			try {
-				PreparedStatement st = conn.prepareStatement("CREATE DATABASE " + name);
-				st.executeUpdate();
+			try {				
+				Statement st  = conn.createStatement();
+				st.executeUpdate("CREATE USER  " + owner + " WITH password '" + dbPwd + "'");
+				st.executeUpdate("CREATE DATABASE " + name + " WITH OWNER = " + owner + " ENCODING = 'UTF8'" );
+				st.executeUpdate("GRANT ALL privileges ON DATABASE " + name + " TO " + owner);
 				st.close();
 				return 0;
 			} catch (Throwable e) {

@@ -31,8 +31,7 @@ class RegUser extends _DoScript {
 			return
 		}
 
-		//
-		def db = session.getCurrentDatabase()
+
 		def sdb = com.flabser.dataengine.DatabaseFactory.getSysDatabase()
 
 		boolean userExists = sdb.getUser(regForm.email).isValid
@@ -49,10 +48,11 @@ class RegUser extends _DoScript {
 		user.setEmail(regForm.email)
 
 		
+		def appName = session.getGlobalSettings().appName;
 		ApplicationProfile ap = new ApplicationProfile()
-		ap.solution = SolutionsType.CASHTRACKER
-		ap.owner = user.getUserID()
-		ap.dbURL = "jdbc:postgresql://localhost/" + SolutionsType.CASHTRACKER + "_" + user.getUserID()
+		ap.appName = appName
+		ap.owner = (user.getUserID().replace("@","_").replace(".","_")).toLowerCase()
+		ap.dbName = appName.toLowerCase() + "_" + ap.owner
 		ap.dbLogin = ap.owner
 		ap.dbPwd = regForm.pwd
 		

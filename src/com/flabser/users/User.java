@@ -8,27 +8,28 @@ import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
-import com.flabser.solutions.SolutionsType;
 import com.flabser.util.Util;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-
 
 public class User implements Const {
 	public int docID;
 	public boolean isValid = false;
 	public HashMap<String, ApplicationProfile> enabledApps = new HashMap<String, ApplicationProfile>();
-	private HashSet<UserRole> roles = new HashSet<UserRole>();    
-    private HashSet<UserGroup> groups = new HashSet<UserGroup>();
+	private HashSet<UserRole> roles = new HashSet<UserRole>();
+	private HashSet<UserGroup> groups = new HashSet<UserGroup>();
 	public boolean isAuthorized;
 	public String lastURL;
 
 	private transient ISystemDatabase sysDatabase;
 	private String userID;
+	private String userName;
 	private String password;
 	private String passwordHash = "";
 	private String email = "";
@@ -244,8 +245,7 @@ public class User implements Const {
 	}
 
 	public boolean save() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException {
-
+			DatabasePoolException, SQLException {
 		int result = 0;
 		if (docID == 0) {
 			result = sysDatabase.insert(this);
@@ -256,21 +256,22 @@ public class User implements Const {
 		if (result < 0) {
 			return false;
 		} else {
+
 			for (ApplicationProfile appProfile : enabledApps.values()) {
-				Class cls = Class.forName(appProfile.getImpl());
-				IDatabase dataBase = (IDatabase) cls.newInstance();
-				try {
-					dataBase.init(appProfile);
-				} catch (Exception e) {
-					System.out.println(e);
-					e.printStackTrace();
-					IDeployer dbDeployer = dataBase.getDeployer();
-					dbDeployer.init(appProfile);
-					dbDeployer.deploy();
-				}
+				IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
+				int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.owner, appProfile.dbPwd);
+				if (res == 0 || res == 1) {
+					Class cls = Class.forName(appProfile.getImpl());
+					IDatabase dataBase = (IDatabase) cls.newInstance();
+					IDeployer ad = dataBase.getDeployer();
+					ad.init(appProfile);
+					ad.deploy();
+				}else {
+					return false;
+				}				
 			}
-			return true;
 		}
+		return true;
 
 	}
 
@@ -320,6 +321,11 @@ public class User implements Const {
 
 	public void fillFieldsToSave(Object object, HashMap<String, String[]> parMap) {
 		// TODO Auto-generated method stub
+
+	}
+
+	public void setName(String nickName) {
+		userName = nickName;
 
 	}
 }

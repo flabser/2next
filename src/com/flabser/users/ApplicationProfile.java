@@ -11,9 +11,9 @@ public class ApplicationProfile{
 	public String defaultURL;
 	public String dbHost = "localhost";
 	public String dbLogin;
-	public String dbName;
 	public String dbPwd;
-
+	private String dbName;
+	
 	public ApplicationProfile(){
 		
 	}
@@ -39,7 +39,7 @@ public class ApplicationProfile{
 	}
 	
 	public String getDbName() {
-		return appName + "_" + dbLogin;
+		return dbName;
 	}
 	
 	public String getURI() {

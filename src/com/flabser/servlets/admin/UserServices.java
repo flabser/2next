@@ -95,17 +95,13 @@ public class UserServices {
 		User user = sysDatabase.getUser(userID);
 		IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
 		for (ApplicationProfile appProfile : user.enabledApps.values()) {
-			int res = appDb.createDatabase("localhost", appProfile.dbName);
-			if (res == 0 || res == 1) {
-				AppEnv env = Environment.getApplication(appProfile.appName);
-				if (env != null) {
-					Class cls = Class.forName(env.globalSetting.implementation);
+			int res = appDb.createDatabase("localhost", appProfile.getDbName(), appProfile.owner, appProfile.dbPwd);
+			if (res == 0 || res == 1) {				
+					Class cls = Class.forName(appProfile.getImpl());
 					IDatabase dataBase = (IDatabase) cls.newInstance();
 					IDeployer ad = dataBase.getDeployer();
 					ad.init(appProfile);
-					ad.deploy();
-
-				}
+					ad.deploy();				
 			}
 		}
 		return result;
@@ -117,7 +113,7 @@ public class UserServices {
 		User user = sysDatabase.getUser(userID);
 		IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
 		for (ApplicationProfile appProfile : user.enabledApps.values()) {
-			int res = appDb.removeDatabase("localhost", appProfile.dbName);
+			int res = appDb.removeDatabase("localhost", appProfile.getDbName());
 			
 		}
 		return result;
