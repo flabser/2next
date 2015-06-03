@@ -105,7 +105,7 @@
 								</a>
 								<a class="nav-item btn-logout" href="Logout">
 									<span>
-										<xsl:value-of select="//captions/sign_out/@caption" />
+										<xsl:value-of select="//captions/logout/@caption" />
 									</span>
 								</a>
 							</div>

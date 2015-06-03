@@ -18,7 +18,7 @@
 		<div class="wlc-page-content">
 			<div class="container">
 				<h1 class="text-center">
-					<xsl:value-of select="//captions/title/@caption" />
+					<xsl:value-of select="//captions/login_title/@caption" />
 				</h1>
 				<section>
 					<div class="login">

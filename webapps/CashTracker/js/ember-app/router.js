@@ -8,43 +8,29 @@ define('router', ['ember'], function(Ember) {
             path: '/'
         });
 
-        this.resource('transactions', {
-            path: '/transactions'
-        });
+        this.resource('transactions');
 
-        this.resource('transaction', {
-            path: '/transaction'
-        }, function() {
+        this.resource('transaction', function() {
             this.route('new');
             this.route('edit', {
                 path: '/:transaction_id'
             });
         });
 
-        this.resource('users', {
-            path: '/users'
-        });
+        this.resource('users');
 
-        this.resource('accounts', {
-            path: '/accounts'
-        });
+        this.resource('accounts');
 
-        this.resource('account', {
-            path: '/account'
-        }, function() {
+        this.resource('account', function() {
             this.route('new');
             this.route('edit', {
                 path: '/:account_id'
             });
         });
 
-        this.resource('categories', {
-            path: '/categories'
-        });
+        this.resource('categories');
 
-        this.resource('category', {
-            path: '/category'
-        }, function() {
+        this.resource('category', function() {
             this.route('new');
             this.route('edit', {
                 path: '/:category_id'

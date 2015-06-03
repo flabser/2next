@@ -18,7 +18,7 @@
 		<div class="wlc-page-content">
 			<div class="container">
 				<h1>
-					<xsl:value-of select="//captions/title/@caption" />
+					<xsl:value-of select="//captions/retry_send_verify_email_title/@caption" />
 				</h1>
 				<section>
 					<div class="error">
@@ -37,7 +37,7 @@
 						</div>
 						<div class="reg_form-inp-btn">
 							<button class="btn-submit" type="submit" name="sendVerify" value="send">
-								<xsl:value-of select="//captions/btn_verify_send/@caption" />
+								<xsl:value-of select="//captions/retry_send_verify_email_btn_send/@caption" />
 							</button>
 						</div>
 					</form>

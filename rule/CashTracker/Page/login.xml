@@ -9,5 +9,5 @@
 		<value>welcome-site-inc</value>
 	</element>
 
-	<caption name="title" source="KEYWORD">Авторизация</caption>
+	<caption name="login_title" />
 </rule>

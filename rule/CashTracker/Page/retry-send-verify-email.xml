@@ -15,6 +15,6 @@
 		</events>
 	</element>
 
-	<caption name="title" source="KEYWORD">Повторная отправка письма для удостоверения e-mail</caption>
-	<caption name="btn_verify_send" source="KEYWORD">Отправить</caption>
+	<caption name="retry_send_verify_email_title" />
+	<caption name="retry_send_verify_email_btn_send" />
 </rule>

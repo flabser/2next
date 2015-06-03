@@ -14,7 +14,7 @@
 		<value>welcome-site-inc</value>
 	</element>
 
-	<caption name="title" source="KEYWORD">Подтверждение E-mail</caption>
-	<caption name="verify-error" source="KEYWORD">Не верные данные</caption>
-	<caption name="verify-done" source="KEYWORD">Проверка прошла успешно. Теперь вы можете войти.</caption>
+	<caption name="verify_email_title" />
+	<caption name="verify_email_error" />
+	<caption name="verify_email_done" />
 </rule>

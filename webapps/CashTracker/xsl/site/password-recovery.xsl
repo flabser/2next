@@ -26,9 +26,9 @@
 		<div class="wlc-page-content">
 			<div class="container">
 				<h1>
-					<xsl:value-of select="//captions/title/@caption" />
+					<xsl:value-of select="//captions/pwd_recovery_title/@caption" />
 					<p>
-						<xsl:value-of select="//captions/title_send_description/@caption" />
+						<xsl:value-of select="//captions/pwd_recovery_description/@caption" />
 					</p>
 				</h1>
 				<section>
@@ -48,7 +48,7 @@
 						</div>
 						<div class="reg_form-inp-btn">
 							<button class="btn-submit" type="submit" name="action" value="recovery">
-								<xsl:value-of select="//captions/btn_recovery_send/@caption" />
+								<xsl:value-of select="//captions/pwd_recovery_btn_send/@caption" />
 							</button>
 						</div>
 					</form>
@@ -61,9 +61,9 @@
 		<div class="wlc-page-content">
 			<div class="container">
 				<h1>
-					<xsl:value-of select="//captions/title/@caption" />
+					<xsl:value-of select="//captions/pwd_recovery_title/@caption" />
 					<p>
-						<xsl:value-of select="//captions/title_pwd_description/@caption" />
+						<xsl:value-of select="//captions/pwd_recovery_new_pwd/@caption" />
 					</p>
 				</h1>
 				<section>
@@ -80,11 +80,11 @@
 						<input type="hidden" name="id" value="password-recovery" />
 						<input type="hidden" name="code" value="{//recovery-code}" />
 						<div class="reg_form-inp">
-							<input class="input span4" type="password" name="pwd" placeholder="new password" required="required" />
+							<input class="input span4" type="password" name="pwd" required="required" />
 						</div>
 						<div class="reg_form-inp-btn">
 							<button class="btn-submit" type="submit" name="action" value="recovery">
-								<xsl:value-of select="//captions/btn_recovery_pwd/@caption" />
+								<xsl:value-of select="//captions/pwd_recovery_btn_ok/@caption" />
 							</button>
 						</div>
 					</form>

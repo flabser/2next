@@ -18,14 +18,14 @@
 		<div class="wlc-page-content">
 			<div class="container">
 				<h1>
-					<xsl:value-of select="//captions/title/@caption" />
+					<xsl:value-of select="//captions/verify_email_title/@caption" />
 				</h1>
 				<section style="font-size:1.5em;">
 					<xsl:if test="//verify-result = 'error'">
-						<xsl:value-of select="//captions/verify-error/@caption" />
+						<xsl:value-of select="//captions/verify_email_error/@caption" />
 					</xsl:if>
 					<xsl:if test="//verify-result = 'ok'">
-						<xsl:value-of select="//captions/verify-done/@caption" />
+						<xsl:value-of select="//captions/verify_email_done/@caption" />
 					</xsl:if>
 				</section>
 			</div>
