@@ -252,7 +252,7 @@
 					</div>
 					<div class="social">
 						<div class="or">
-							<xsl:value-of select="//captions/or/@caption" />
+							<xsl:value-of select="//captions/login_or/@caption" />
 						</div>
 						<div>
 							<xsl:value-of select="//captions/use_oauth/@caption" />
