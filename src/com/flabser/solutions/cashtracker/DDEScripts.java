@@ -2,6 +2,19 @@ package com.flabser.solutions.cashtracker;
 
 public class DDEScripts {
 	
+	public static String getBudgetDDE() {
+        String createString = "CREATE TABLE BUDGET\n" +
+                "(\n" +
+                "  ID SERIAL NOT NULL,\n" +
+                "  NAME CHARACTER VARYING(64),\n" +
+                "  REGDATE TIMESTAMP WITHOUT TIME ZONE,\n" +
+                "  OWNER CHARACTER VARYING(128),\n" +
+                "  STATUS NUMERIC,\n" +
+                "  CONSTRAINT ACCOUNT_ID_PRIMARY_KEY PRIMARY KEY (ID)\n" +
+                ")";
+        return createString;
+    }
+	
 	public static String getAccountDDE() {
         String createString = "CREATE TABLE ACCOUNT\n" +
                 "(\n" +

@@ -17,9 +17,9 @@ public interface IDatabase {
 
 	
 	ResultSet select(String condition, User user);
-	ResultSet insert(String condition, User user);
-	ResultSet update(String condition, User user);
-	ResultSet delete(String condition, User user);	
+	int insert(String condition, User user);
+	int update(String condition, User user);
+	int delete(String condition, User user);	
 	
 	void shutdown();
 

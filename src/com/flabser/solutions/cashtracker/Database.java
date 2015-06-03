@@ -1,8 +1,14 @@
 package com.flabser.solutions.cashtracker;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
 
 import com.flabser.dataengine.DatabaseCore;
+import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.ft.IFTIndexEngine;
@@ -11,54 +17,89 @@ import com.flabser.users.ApplicationProfile;
 import com.flabser.users.User;
 
 public class Database extends DatabaseCore implements IDatabase {
+	public static final SimpleDateFormat sqlDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final String driver = "org.postgresql.Driver";
-	
+	private String dbURI;
+
 	@Override
 	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, DatabasePoolException {
-		pool = getPool(driver, appProfile);			
+		dbURI = appProfile.getURI();
+		pool = getPool(driver, appProfile);
 	}
-		
+
 	@Override
 	public int getVersion() {
 		return 1;
 	}
 
-	
-
 	@Override
 	public IFTIndexEngine getFTSearchEngine() {
-		// TODO Auto-generated method stub
-		return null;
+		return new FTIndexEngine(this);
 	}
 
 	@Override
 	public ResultSet select(String condition, User user) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet rs = null;
+		Connection conn = pool.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+
+			String sql = condition;
+			rs = s.executeQuery(sql);
+
+			conn.commit();
+			s.close();
+			rs.close();
+
+		} catch (SQLException e) {
+			DatabaseUtil.errorPrint(dbURI, e);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.returnConnection(conn);
+		}
+		return rs;
 	}
 
 	@Override
-	public ResultSet insert(String condition, User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public int insert(String condition, User user) {
+		Connection conn = pool.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement pst;
+			String sql = condition;
+			pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+			pst.executeUpdate();
+			int key = 0;
+			ResultSet rs = pst.getGeneratedKeys();
+			if (rs.next()) {
+				key = rs.getInt(1);
+			}
+			return key;
+		} catch (SQLException e) {
+			DatabaseUtil.errorPrint(dbURI, e);
+			return -1;
+		} finally {
+			pool.returnConnection(conn);
+		}
 	}
 
 	@Override
-	public ResultSet update(String condition, User user) {
+	public int update(String condition, User user) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 	@Override
-	public ResultSet delete(String condition, User user) {
+	public int delete(String condition, User user) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 	@Override
 	public void shutdown() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -66,7 +107,5 @@ public class Database extends DatabaseCore implements IDatabase {
 	public IDeployer getDeployer() {
 		return new Deployer();
 	}
-
-
 
 }

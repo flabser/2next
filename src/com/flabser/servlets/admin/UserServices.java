@@ -15,6 +15,7 @@ import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.localization.LocalizatorException;
+import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.users.User;
 import com.flabser.users.ApplicationProfile;
 
@@ -71,7 +72,7 @@ public class UserServices {
 		}
 		count = sysDatabase.getAllUsersCount(condition);
 		ArrayList<User> fl = sysDatabase
-				.getAllUsers(condition, sysDatabase.calcStartEntry(pageNum, pageSize), pageSize);
+				.getAllUsers(condition, RuntimeObjUtil.calcStartEntry(pageNum, pageSize), pageSize);
 
 		Iterator<User> it = fl.iterator();
 		while (it.hasNext()) {

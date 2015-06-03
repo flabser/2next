@@ -18,9 +18,6 @@ import com.flabser.server.Server;
 public class DBConnectionPool  implements IDBConnectionPool {
     protected GenericObjectPool<Connection> connectionPool;
     protected static int timeBetweenEvictionRunsMillis = 1000 * 60 * 15;
-
-
-    private DatabaseType dt = DatabaseType.DEFAULT;
     
     public void initConnectionPool(String driver, String dbURL, String userName, String password) throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         Properties props = null;
@@ -41,8 +38,6 @@ public class DBConnectionPool  implements IDBConnectionPool {
         new PoolingDataSource(connectionPool);
         connectionPool.setMaxIdle(200);
         connectionPool.setMaxActive(2000);
-
-        dt = DatabaseUtil.getDatabaseType(dbURL);
 
         checkConnection();
 
@@ -78,11 +73,6 @@ public class DBConnectionPool  implements IDBConnectionPool {
 
     public void close(Connection conn) {
 		
-    }
-
-    @Override
-    public DatabaseType getDatabaseType() {
-        return dt;
     }
 
     public void closeAll() {

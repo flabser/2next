@@ -1,8 +1,6 @@
 package com.flabser.runtimeobj;
 
 import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.flabser.dataengine.Const;
@@ -10,7 +8,6 @@ import com.flabser.util.Util;
 
 public class RuntimeObjUtil implements Const {
 	private static final int v = 60 * 60 * 1000;
-	private static final float PRIORITY_FACTOR = 2f;
 
 	int minPriority;
 	int maxPriority;
