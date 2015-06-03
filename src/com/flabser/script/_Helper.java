@@ -11,22 +11,13 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
-
-import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.util.Util;
 
 public class _Helper {
 
 	public static String getNormalizedRichText(String value){
 		return value.replace("&nbsp;", " ").replace("<br>", "<br/>").replace("&", "&amp;");
-	}
-
-	public static Date getCtrlDate(Date date , int priority, int complication){
-		Calendar d = Calendar.getInstance();
-		d.setTime(date);
-		Calendar ctrlDate = RuntimeObjUtil.getCtrlDate(d, priority, complication);
-		return ctrlDate.getTime();
-	}
+	}	
 
 	public static String getDateAsString() throws _Exception{
 		return getDateAsString(new Date());
@@ -69,60 +60,6 @@ public class _Helper {
 	}
 
 
-	/*public static kz.nextbase.script.coordination._Block parseCoordinationBlock(_Session ses, String complexString) throws _Exception{
-		kz.nextbase.script.coordination._Block block = new kz.nextbase.script.coordination._Block(ses);
-		try{
-			StringTokenizer t = new StringTokenizer(complexString,"`");
-			while(t.hasMoreTokens()){
-				String blockID = t.nextToken();
-				if (!blockID.equalsIgnoreCase("new")){
-					block.setBlockID(Integer.parseInt(blockID));
-				}
-				String coordType = t.nextToken();
-				if (coordType.equals("par")){
-					block.setBlockType(_BlockType.PARALLEL_COORDINATION);	
-				}else if(coordType.equals("ser")){
-					block.setBlockType(_BlockType.SERIAL_COORDINATION);	
-				}else if(coordType.equals("tosign")){
-					block.setBlockType(_BlockType.TO_SIGN);
-				}
-
-				String delayTime = t.nextToken();
-				block.setDelayTime(Integer.parseInt(delayTime));
-
-				try{
-					StringTokenizer t1 = new StringTokenizer(t.nextToken(),"^");
-					while(t1.hasMoreTokens()){
-						String coordinator = t1.nextToken();
-						kz.nextbase.script.coordination._Coordinator coord = ses.createCoordinator();
-
-						if (block.getBlockType() == _BlockType.TO_SIGN){
-							coord.setAsSigner();
-						}else{
-							coord.setAsReviewer();
-						}
-						coord.setUserID(coordinator);
-						block.addCoordinator(coord);
-					}
-					String coordStatus = t.nextToken();
-					if (coordStatus.length() > 0) {
-						if (coordStatus.equalsIgnoreCase("awaiting")){					
-							block.setBlockStatus(_BlockStatusType.AWAITING);
-						}
-					}
-				}catch (java.util.NoSuchElementException nse){
-
-				}
-
-
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-			throw new _Exception(_ExceptionType.FORMDATA_INCORRECT,"Parser error :parseCoordinationBlock(" + complexString + ")" + e);
-		}
-
-		return block;
-	}*/
 
 	public static Date convertStringToDate(String dateParam) throws _Exception{
 		int numPatterns = 6;
@@ -294,34 +231,6 @@ public class _Helper {
 		}
 		finally {
 			res.close();
-		}
-	}
-
-	public static void deleteTempData(File file) throws IOException {
-
-		if (file.isDirectory()) {
-
-			// directory is empty, then delete it
-			if (file.list().length == 0)
-				file.delete();
-			else {
-				// list all the directory contents
-				String[] files = file.list();
-
-				for (String temp : files) {
-					// construct the file structure
-					File fileDelete = new File(file, temp);
-					// recursive delete
-					deleteTempData(fileDelete);
-				}
-
-				// check the directory again, if empty then delete it
-				if (file.list().length == 0)
-					file.delete();
-			}
-		} else {
-			// if file, then delete it
-			file.delete();
 		}
 	}
 

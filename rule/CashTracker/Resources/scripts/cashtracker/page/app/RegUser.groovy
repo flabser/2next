@@ -66,19 +66,13 @@ class RegUser extends _DoScript {
 
 		publishElement("process", "user-reg")
 
-		// create verify doc
-	/*	VerifyDoc vd = VerifyDoc.createVerifyDoc(session, regForm)
-		if (vd != null) {
-			// SendVerifyEMail
-			SendVerifyEMail sve = new SendVerifyEMail(session, vd)
-			if (sve.sendResult) {
-				publishElement("process", "verify-email-send")
-			} else {
-				publishElement("error", "verify-email")
-			}
+		SendVerifyEMail sve = new SendVerifyEMail(session, user)
+		if (sve.sendResult) {
+			publishElement("process", "verify-email-send")
 		} else {
 			publishElement("error", "verify-email")
-		}*/
+		}		
+		
 	}
 
 	
