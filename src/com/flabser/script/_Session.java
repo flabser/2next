@@ -28,7 +28,7 @@ public class _Session {
 		return new _AppEntourage(this, env);
 	}
 
-	public IDatabase getDatabse() {
+	public IDatabase getDatabase() {
 		return dataBase;
 	}
 	

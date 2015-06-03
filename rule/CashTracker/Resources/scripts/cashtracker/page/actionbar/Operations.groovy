@@ -16,10 +16,10 @@ class Operations extends _DoScript {
 		def user = session.getUser()
 
 		if (user.hasRole(["ct_operations"])) {
-			def _new = new _Action(getLocalizedWord("Новая операция", lang), getLocalizedWord("Создать новую операцию", lang), "new_document")
+			def _new = new _Action(getLocalizedWord("New transaction", lang), getLocalizedWord("Compose new transaction", lang), "new_document")
 			_new.setURL("Provider?type=edit&id=operation&key=")
 			actionBar.addAction(_new)
-			actionBar.addAction(new _Action(getLocalizedWord("Удалить", lang), getLocalizedWord("Удалить", lang), _ActionType.DELETE_DOCUMENT))
+			actionBar.addAction(new _Action(getLocalizedWord("Delete", lang), getLocalizedWord("Delete choiced transaction", lang), _ActionType.DELETE_DOCUMENT))
 		}
 		publishElement("actionbar",actionBar)
 	}

@@ -4,19 +4,18 @@ import java.text.SimpleDateFormat
 import com.flabser.script.*
 import com.flabser.scriptprocessor.*
 import com.flabser.script.events.*
+import com.flabser.script.dbdata.*
 
 class Operations extends _DoScript {
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
 
-	/*	def viewParam = session.createViewEntryCollectionParam()
-		viewParam.setQuery("form = 'operation'")
-				.setPageNum(formData.getNumberValueSilently("page", 0))
-				.setUseFilter(true)
-				.setCheckResponse(true)
-				.setDateFormat(new SimpleDateFormat("dd.MM.yyyy"))
-
-		setContent(session.getCurrentDatabase().getCollectionOfDocuments(viewParam))*/
+		def db = session.getDatabase()
+		def sql = "SELECT * FROM TRANSACTION"
+		def rs = db.select(sql, session.getUser())
+	
+		publishElement("view", new _DataBox(rs))
 	}
+
 }

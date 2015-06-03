@@ -50,7 +50,7 @@ class RegUser extends _DoScript {
 		user.setStatus(UserStatusType.NOT_VERIFIED)
 		user.setVerifyCode(_Helper.randomValue)
 		
-		def appName = session.getGlobalSettings().appName;
+		/*def appName = session.getGlobalSettings().appName;
 		ApplicationProfile ap = new ApplicationProfile()
 		ap.appName = appName
 		ap.owner = (user.getUserID().replace("@","_").replace(".","_")).replace("-","_").toLowerCase()
@@ -58,7 +58,7 @@ class RegUser extends _DoScript {
 		ap.dbLogin = ap.owner
 		ap.dbPwd = regForm.pwd
 		
-		user.addApplication(ap)
+		user.addApplication(ap)*/
 
 		if (!user.save()) {
 			publishElement("error", "save-error")
