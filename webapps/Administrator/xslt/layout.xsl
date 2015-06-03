@@ -49,16 +49,16 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
 			<link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css" />
-			<link type="text/css" rel="stylesheet" href="/SharedResources/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
+			<link type="text/css" rel="stylesheet" href="/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
 
 			<xsl:call-template name="STYLE_FIX_FIELDSET" />
 
-			<script type="text/javascript" src="/SharedResources/jquery/jquery-1.11.3.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-1.11.3.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
 
-			<script type="text/javascript" src="/SharedResources/jquery/cookie/jquery.cookie.js"></script>
-			<script type="text/javascript" src="/SharedResources/jquery/jquery.scrollTo.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/jquery/jquery.number.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.cookie.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.scrollTo.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.number.min.js"></script>
 
 			<link rel="stylesheet" href="css/main.css" />
 			<link rel="stylesheet" href="css/form.css" />
@@ -66,11 +66,11 @@
 			<link rel="stylesheet" href="css/view.css" />
 			<link rel="stylesheet" href="css/all.min.css" />
 
-			<script src="scripts/stdlib/dynamicform.js"></script>
-			<script src="scripts/outline.js"></script>
-			<script src="scripts/service.js"></script>
-			<script src="scripts/dialogs.js"></script>
-			<script src="scripts/form.js"></script>
+			<script src="js/stdlib/dynamicform.js"></script>
+			<script src="js/outline.js"></script>
+			<script src="js/service.js"></script>
+			<script src="js/dialogs.js"></script>
+			<script src="js/form.js"></script>
 
 			<script>
 				$(document).ready(function(){

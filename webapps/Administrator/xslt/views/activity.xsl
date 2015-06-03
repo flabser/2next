@@ -26,29 +26,20 @@
 	</xsl:template>
 
 	<xsl:template match="/request[@element != 'activity']" mode="content_activity">
-		<header>
+		<header class="view-header">
 			<h1>
-				<font style="font-size:1.1em;">Activity</font>
-				&#xA0;&#xA0;Doctype&#xA0;
-				<font style="font-family:verdana; font-size:20px;">
+				Activity / Doctype
+				<small>
 					<xsl:value-of select="document/@doctype | query/@doctype" />
-				</font>
-				&#xA0;docID&#xA0;
-				<font style="font-family:verdana; font-size:20px;">
+				</small>
+				<xsl:text> docID </xsl:text>
+				<small>
 					<xsl:value-of select="document/@docid | query/@docid" />
-				</font>
+				</small>
 			</h1>
 			<div class="actionbar">
-				<table width="100%">
-					<tr>
-						<td width="50%">
-							<xsl:call-template name="showasxml_action" />
-						</td>
-						<td style="text-align:right">
-							<xsl:call-template name="close_action" />
-						</td>
-					</tr>
-				</table>
+				<xsl:call-template name="showasxml_action" />
+				<xsl:call-template name="close_action" />
 			</div>
 		</header>
 		<table class="viewtable">
