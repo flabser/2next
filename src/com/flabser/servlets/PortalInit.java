@@ -4,10 +4,12 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.env.Environment;
 import com.flabser.log.Log4jLogger;
+import com.flabser.rule.GlobalSetting;
 
 public class PortalInit extends HttpServlet{ 
 
@@ -24,6 +26,8 @@ public class PortalInit extends HttpServlet{
 		if (app.equalsIgnoreCase("Administrator")){
 			try{
 				env = new AppEnv(app);
+				env.globalSetting = new GlobalSetting();
+				env.globalSetting.entryPoint = "";	
 				Environment.systemBase = new com.flabser.dataengine.system.SystemDatabase();	
 				isValid = true;
 			}catch(DatabasePoolException e) {

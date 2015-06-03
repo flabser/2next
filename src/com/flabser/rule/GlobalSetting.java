@@ -32,6 +32,9 @@ public class GlobalSetting {
 	public String vocabulary = "vocabulary.xml";
 	public UserRoleCollection roleCollection = new UserRoleCollection();
 	
+	public GlobalSetting() {
+		
+	}
 	
 		
 	public GlobalSetting(String path, AppEnv env){	
