@@ -18,7 +18,6 @@ import java.util.HashMap;
 
 
 public class SystemDatabase implements ISystemDatabase, Const {
-	public static boolean isValid;
 	public static String jdbcDriver = "org.postgresql.Driver";
 	private IDBConnectionPool dbPool;
 	private static final SimpleDateFormat sqlDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -39,7 +38,6 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			createUserTable(DDEScripts.getUserGroupsDDE(), "USER_GROUPS");
 			createUserTable(DDEScripts.getUsersActivityDDE(), "USERS_ACTIVITY");
 			createUserTable(DDEScripts.getHolidaysDDE(), "HOLIDAYS");
-         	isValid = true;
 			conn.commit();
 		}catch(Throwable e){
             AppEnv.logger.errorLogEntry(e);
@@ -54,14 +52,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 	public IActivity getActivity() {	
 		return new Activity(dbPool);
 	}
-
 	
-	public int calcStartEntry(int pageNum, int pageSize){
-		int pageNumMinusOne = pageNum;
-		pageNumMinusOne -- ;
-		return pageNumMinusOne * pageSize;
-	}
-
 	public User checkUser(String login, String pwd, User user) {
 		Connection conn = dbPool.getConnection();
 		

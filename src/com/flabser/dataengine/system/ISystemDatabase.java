@@ -24,8 +24,6 @@ public interface ISystemDatabase {
 	HashMap<String, User> getAllAdministrators();
 	boolean deleteUser(int docID);
 	ArrayList<User> getUsers(String keyWord);
-
-	int calcStartEntry(int pageNum, int pageSize);
 	ArrayList<User> getAllUsers(String condition, int calcStartEntry,	int pageSize);	
 	IApplicationDatabase getApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException;
 	

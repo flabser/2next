@@ -1,13 +1,9 @@
 package com.flabser.script;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
-import com.flabser.exception.WebFormValueException;
 import com.flabser.rule.GlobalSetting;
 import com.flabser.rule.page.PageRule;
 import com.flabser.runtimeobj.page.Page;
@@ -32,6 +28,10 @@ public class _Session {
 		return new _AppEntourage(this, env);
 	}
 
+	public IDatabase getDatabse() {
+		return dataBase;
+	}
+	
 	public GlobalSetting getGlobalSettings() {
 		return env.globalSetting;
 	}

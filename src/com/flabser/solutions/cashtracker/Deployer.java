@@ -24,6 +24,7 @@ public class Deployer extends DatabaseCore implements IDeployer {
 		try {			
 			conn = pool.getConnection();
 			conn.setAutoCommit(false);
+			createTable(DDEScripts.getBudgetDDE(), "BUDGET");
 			createTable(DDEScripts.getAccountDDE(), "ACCOUNT");
 			createTable(DDEScripts.getTransactionDDE(), "TRANSACTION");
 			createTable(DDEScripts.getCostCenterDDE(), "COSTCENTER");

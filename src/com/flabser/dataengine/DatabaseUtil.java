@@ -2,7 +2,6 @@ package com.flabser.dataengine;
 
 import java.sql.*;
 import java.util.Collection;
-import java.util.Set;
 
 import com.flabser.server.Server;
 
@@ -135,17 +134,6 @@ public class DatabaseUtil implements Const {
         }
     }
 
-    public static DatabaseType getDatabaseType(String dbURL) {
-        if ( dbURL.contains("postgresql") ) {
-            return DatabaseType.POSTGRESQL;
-        } else if (dbURL.contains("sqlserver")) {
-            return DatabaseType.MSSQL;
-        }else if (dbURL.contains("nsf")) {
-            return DatabaseType.NSF;
-        } else {
-            return DatabaseType.H2;
-        }
-    }
 
     public static String prepareListToQuery(Collection<String> elements) {
         StringBuffer result = new StringBuffer(1000);
@@ -160,13 +148,6 @@ public class DatabaseUtil implements Const {
         return result.toString();
     }
 
-    public static String getPrimaryKeyColumnName(int docType) {
-        String columnName;
-
-                return columnName = "DOCID";
-      
-    }
-
     public static String getViewTextList(String prefix) {
         String list = "";
         for (int i = 1; i <= DatabaseConst.VIEWTEXT_COUNT; i++) {
@@ -176,11 +157,6 @@ public class DatabaseUtil implements Const {
             list = list.substring(0, list.length() - 1);
         }
         return list;
-    }
-
-
-    public static boolean hasAbsoluteReadAccess(Set<String> complexUserID) {
-        return (complexUserID.contains(Const.observerGroup[0]) && complexUserID.contains(Const.supervisorGroup[0]));
     }
 
     public static boolean hasFTIndex(Connection conn, String tableName) {
