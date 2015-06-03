@@ -2,9 +2,7 @@ package com.flabser.dataengine.system;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import com.flabser.dataengine.activity.IActivity;
-import com.flabser.users.TempUser;
 import com.flabser.users.User;
 
 public interface ISystemDatabase {
@@ -15,7 +13,8 @@ public interface ISystemDatabase {
 	User checkUser(String userID, String pwd, String hash, User user);
 	User checkUserHash(String userID, String pwd, String hash, User user);
 
-	User getUser(String userID);	
+	User getUser(String userID);
+	User getUserByVerifyCode(String userID);
 	
 
 	int update(User user);
@@ -27,10 +26,7 @@ public interface ISystemDatabase {
 	ArrayList<User> getUsers(String keyWord);
 
 	int calcStartEntry(int pageNum, int pageSize);
-	int insert(TempUser tempUser);
-	int update(TempUser tempUser);
-	ArrayList<User> getAllUsers(String condition, int calcStartEntry,	int pageSize);
-	
+	ArrayList<User> getAllUsers(String condition, int calcStartEntry,	int pageSize);	
 	IApplicationDatabase getApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException;
 	
 	

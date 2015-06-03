@@ -232,7 +232,7 @@ public class User implements Const {
 		if (result < 0) {
 			return false;
 		} else {
-
+			docID = result;
 			for (ApplicationProfile appProfile : enabledApps.values()) {
 				IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
 				int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.owner,

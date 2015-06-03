@@ -1,15 +1,16 @@
 package com.flabser.dataengine.system;
 
 import org.apache.catalina.realm.RealmBase;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.activity.*;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.pool.IDBConnectionPool;
-import com.flabser.users.TempUser;
 import com.flabser.users.User;
 import com.flabser.users.ApplicationProfile;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -388,6 +389,43 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		return reloadUserData(user, userID); 		
 	}
 
+	@Override
+	public User getUserByVerifyCode(String code) {
+		User user = new User();
+		Connection conn = dbPool.getConnection();
+		try{
+			conn.setAutoCommit(false);
+			Statement s = conn.createStatement();			
+			String sql = "select * from USERS where USERS.VERIFYCODE='" + code + "'";
+			ResultSet rs = s.executeQuery(sql);
+
+			if(rs.next()){
+				user.fill(rs);				
+				if (user.isValid){
+					String addSQL = "select * from APPS where APPS.DOCID=" + user.docID;
+					Statement statement = conn.createStatement();	
+					ResultSet resultSet = statement.executeQuery(addSQL);
+					while(resultSet.next()){
+						ApplicationProfile ap = new ApplicationProfile(resultSet);
+						user.enabledApps.put(ap.appName, ap);
+					}
+					resultSet.close();
+					statement.close();
+				}				
+			}
+			rs.close();	
+			s.close();
+			conn.commit();
+
+		}catch(Throwable e){	
+			DatabaseUtil.debugErrorPrint(e);
+		}finally{	
+			dbPool.returnConnection(conn);
+		}
+		return user;
+	}
+
+	
 	public User reloadUserData(User user, String userID) {
 
 		Connection conn = dbPool.getConnection();
@@ -577,7 +615,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			conn.commit();
 			pst.close();
 			stmt.close();
-			return 1;
+			return key;
 		}catch(Throwable e){
 			DatabaseUtil.debugErrorPrint(e);
 			return - 1;
@@ -602,9 +640,9 @@ public class SystemDatabase implements ISystemDatabase, Const {
 					"EMAIL='" + user.getEmail() + "', PWD='" + pwd + "', ISSUPERVISOR = " + user.getIsSupervisor() + "," +
 					"REGDATE='" + sqlDateTimeFormat.format(user.getRegDate()) + "'," +
 					"LOGINHASH = " + (user.getUserID() + user.getPassword()).hashCode() +", " +
-					"PWDHASH = " + user.getPasswordHash() + ", " +
+					"PWDHASH = '" + user.getPasswordHash() + "', " +
 					"LASTDEFAULTURL = '" + user.lastURL + "'," +
-                    "STATUS = " + user.getStatus().getCode() + "', VERIFYCODE='" + user.getVerifyCode() + "'" +
+                    "STATUS = " + user.getStatus().getCode() + ", VERIFYCODE='" + user.getVerifyCode() + "'" +
 					" where DOCID=" + user.docID;
 			PreparedStatement pst = conn.prepareStatement(userUpdateSQL);
 			pst.executeUpdate();
@@ -613,12 +651,10 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			pst = conn.prepareStatement(delSQL);
 			pst.executeUpdate();
 
-			delSQL = "delete from QA where DOCID = " + user.docID;
-			pst = conn.prepareStatement(delSQL);
-			pst.executeUpdate();
+			
 
 			for(ApplicationProfile app: user.enabledApps.values()){
-				String insertURL = "insert into APPS(DOCID, APP, DBHOST, DBANAME, DBLOGIN, DBPWD)values(" + user.docID + ", '" + app.appName +"','" + app.dbHost + "',"
+				String insertURL = "insert into APPS(DOCID, APP, DBHOST, DBNAME, DBLOGIN, DBPWD)values(" + user.docID + ", '" + app.appName +"','" + app.dbHost + "',"
 						+ "'" + app.getDbName() + "','" + app.dbLogin + "','" + app.dbPwd + "')";
 				PreparedStatement pst0 = conn.prepareStatement(insertURL);			pst0.executeUpdate();
 
@@ -626,7 +662,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			}
 			conn.commit();
 			pst.close();
-			return 1;
+			return user.docID;
 		}catch(Throwable e){
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;
@@ -662,37 +698,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		return users;
 	}
 
-	// TempUser
-	public TempUser getTempUser(String userid){
-
-		return new TempUser();
-	}
-
-	public int insert(TempUser user) {
-		Connection conn = dbPool.getConnection();
-
-		try {
-			conn.setAutoCommit(false);
-
-			String insertTempUser = "insert into TEMP_USERS (USERID) values('" + user.getCurrentUserID() + "')";
-
-			PreparedStatement pst = conn.prepareStatement(insertTempUser);
-			pst.executeUpdate();
-
-			conn.commit();
-			pst.close();
-			return 1;
-		}catch(Throwable e){
-			DatabaseUtil.debugErrorPrint(e);
-			return - 1;
-		}finally{		
-			dbPool.returnConnection(conn);
-		}
-	}
-
-	public int update(TempUser user) {
-		return -1;
-	}
+	
 
 	private boolean checkHash(String hashAsString, int hash){
 		try{
@@ -769,6 +775,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		return new ApplicationDatabase();
 	}
 
+	
 	
 
 }

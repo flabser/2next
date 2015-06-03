@@ -5,6 +5,7 @@ import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.rule.GlobalSetting;
@@ -37,6 +38,10 @@ public class _Session {
 
 	public String getAppURL() {
 		return user.getSession().host + "/" + env.appType;
+	}
+	
+	public String getFullAppURI() {
+		return Environment.getFullHostName() + "/" + env.appType;
 	}
 	
 	public String getCurrentUserID() {

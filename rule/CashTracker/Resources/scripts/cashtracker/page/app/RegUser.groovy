@@ -48,11 +48,12 @@ class RegUser extends _DoScript {
 		user.setPasswordHash(regForm.pwd)
 		user.setEmail(regForm.email)
 		user.setStatus(UserStatusType.NOT_VERIFIED)
+		user.setVerifyCode(_Helper.randomValue)
 		
 		def appName = session.getGlobalSettings().appName;
 		ApplicationProfile ap = new ApplicationProfile()
 		ap.appName = appName
-		ap.owner = (user.getUserID().replace("@","_").replace(".","_")).toLowerCase()
+		ap.owner = (user.getUserID().replace("@","_").replace(".","_")).replace("-","_").toLowerCase()
 		ap.dbName = appName.toLowerCase() + "_" + ap.owner
 		ap.dbLogin = ap.owner
 		ap.dbPwd = regForm.pwd
@@ -68,9 +69,14 @@ class RegUser extends _DoScript {
 
 		SendVerifyEMail sve = new SendVerifyEMail(session, user)
 		if (sve.sendResult) {
-			publishElement("process", "verify-email-send")
+			user.setStatus(UserStatusType.WAITING_FOR_VERIFYCODE)
+			if (user.save()) {
+				publishElement("error", "save-error")
+			}else {
+				publishElement("process", "verify-email-send")
+			}
 		} else {
-			publishElement("error", "verify-email")
+			publishElement("error", "verify-email-sending-error")
 		}		
 		
 	}
