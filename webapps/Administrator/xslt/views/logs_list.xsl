@@ -34,27 +34,27 @@
 			<xsl:call-template name="viewstat" />
 		</div>
 		<table class="viewtable">
-			<tr class="th" style="height:32px">
-				<td width="22px" class="thcell">
-					<input type="checkbox" id="allchbox" onClick="checkAll(this);" />
-				</td>
-				<td class="thcell">Name</td>
-				<td width="15%" class="thcell">Size</td>
-			</tr>
+			<thead>
+				<tr>
+					<td class="col-select">
+						<input type="checkbox" data-toggle="id" />
+					</td>
+					<td>Name</td>
+					<td width="15%">Size</td>
+				</tr>
+			</thead>
 			<xsl:for-each select="query/entry">
-				<tr onmouseover="javascript:elemBackground(this,'EEEEEE')" onmouseout="elemBackground(this,'FFFFFF')">
-					<xsl:variable name="num" select="position()" />
-					<xsl:attribute name="bgcolor">#ffffff</xsl:attribute>
-					<td style="border:1px solid #ccc; text-align:center">
+				<tr>
+					<td class="col-select">
 						<input type="checkbox" name="id" value="{name}" />
 					</td>
-					<td style="border: 1px solid #ccc; padding-left:5px">
-						<a class="doclink" title="{name}">
-							<xsl:attribute name="href">Provider?type=edit&amp;element=log&amp;id=<xsl:value-of select="name" /></xsl:attribute>
+					<td>
+						<a class="doclink">
+							<xsl:attribute name="href" select="concat('Provider?type=edit&amp;element=log&amp;id=', name)" />
 							<xsl:value-of select="name" />
 						</a>
 					</td>
-					<td class="title" style="border: 1px solid #ccc; padding-left:5px">
+					<td>
 						<xsl:value-of select="length" />
 					</td>
 				</tr>

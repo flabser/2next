@@ -3,14 +3,13 @@
 
 	<xsl:import href="templates/constants.xsl" />
 	<xsl:import href="templates/side-nav.xsl" />
-	<!-- <xsl:import href="templates/view.xsl" /> -->
 
 	<xsl:output method="html" encoding="utf-8" indent="no" />
 	<xsl:decimal-format name="df" grouping-separator=" " />
 
 	<xsl:template name="layout">
 		<xsl:param name="w_title" select="concat(//captions/viewnamecaption/@caption, ' - ', $APP_NAME)" />
-		<xsl:param name="active_aside_id" select="//app_menu/response/content/current/entry/@id" />
+		<xsl:param name="active_aside_id" select="//app_menu//current/entry/@id" />
 		<xsl:param name="include" select="''" />
 		<xsl:param name="body_class" select="''" />
 
@@ -21,10 +20,9 @@
 				<xsl:with-param name="include" select="$include" />
 			</xsl:call-template>
 			<body class="no_transition layout_fullscreen {$body_class}">
-				<!-- <div class="main-load" id="main-load"></div> -->
 				<div class="layout">
 					<div class="content-overlay" id="content-overlay"></div>
-					<aside class="layout_aside">
+					<aside class="layout_aside nav-app">
 						<xsl:call-template name="main_side" />
 					</aside>
 					<section class="layout_content">
@@ -49,22 +47,24 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
 			<link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css" />
-			<link type="text/css" rel="stylesheet" href="/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
+			<link rel="stylesheet" href="/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css" />
 
-			<xsl:call-template name="STYLE_FIX_FIELDSET" />
+			<script src="/SharedResources/vendor/jquery/jquery-1.11.3.min.js"></script>
+			<script src="/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
 
-			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-1.11.3.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
-
-			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.cookie.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.scrollTo.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.number.min.js"></script>
+			<script src="/SharedResources/vendor/jquery/jquery.cookie.min.js"></script>
+			<script src="/SharedResources/vendor/jquery/jquery.scrollTo.min.js"></script>
+			<script src="/SharedResources/vendor/jquery/jquery.number.min.js"></script>
 
 			<link rel="stylesheet" href="css/main.css" />
 			<link rel="stylesheet" href="css/form.css" />
 			<link rel="stylesheet" href="css/dialogs.css" />
 			<link rel="stylesheet" href="css/view.css" />
 			<link rel="stylesheet" href="css/all.min.css" />
+			<link rel="stylesheet" href="css/outline.css" />
+			<link rel="stylesheet" href="css/common.css" />
+			<link rel="stylesheet" href="css/layout.css" />
+			<link rel="stylesheet" href="css/side-nav-app.css" />
 
 			<script src="js/stdlib/dynamicform.js"></script>
 			<script src="js/outline.js"></script>
@@ -85,13 +85,13 @@
 	<xsl:template name="main_side">
 		<div class="side">
 			<header>
-				<h1>Administrator</h1>
+				<h1 class="header-admin">Administrator</h1>
 			</header>
 			<section>
 				<xsl:call-template name="outline" />
 			</section>
 			<footer>
-				<a href="Logout" title="{outline/fields/logout/@caption}" class="logout">
+				<a href="Logout" title="{//fields/logout/@caption}" class="logout">
 					<img src="img/logout.gif" alt="" />
 					logout
 				</a>
