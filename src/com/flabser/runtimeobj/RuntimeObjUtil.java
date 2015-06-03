@@ -17,68 +17,6 @@ public class RuntimeObjUtil implements Const {
 	int minComplication;
 	int maxComplication;
 
-
-
-	public static Calendar getCtrlDate(Calendar fromTime, int priority, int complication){
-		Calendar ctrlDate = Calendar.getInstance(), 
-				startDate = Calendar.getInstance(),
-				tempDate = Calendar.getInstance();
-		float  dayCount;
-		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy.HH.mm.ss");
-		try {
-			tempDate.setTime(format.parse("01.01.2000.18.00.00"));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		tempDate.set(fromTime.get(Calendar.YEAR), fromTime.get(Calendar.MONTH), 
-				fromTime.get(Calendar.DAY_OF_MONTH));
-
-		dayCount  = (priority + complication) / PRIORITY_FACTOR;         //по приоритету
-		//        dayCount  = (priority + complication) * COMPLICATION_FACTOR;   //по сложности
-
-		switch(fromTime.get(Calendar.DAY_OF_WEEK)){
-		case Calendar.SATURDAY: startDate.setTimeInMillis(tempDate.getTimeInMillis()-24 * v); break;
-		case Calendar.SUNDAY:   startDate.setTimeInMillis(tempDate.getTimeInMillis()-48 * v); break;
-		case Calendar.MONDAY:
-			if(fromTime.getTimeInMillis()<=tempDate.getTimeInMillis()-9 * v){
-				startDate.setTimeInMillis(tempDate.getTimeInMillis()-72 * v); break;
-			}
-		default:
-			if(fromTime.getTimeInMillis()>=tempDate.getTimeInMillis()){
-				startDate.setTimeInMillis(tempDate.getTimeInMillis()); break;
-			}
-			if(fromTime.getTimeInMillis()<=tempDate.getTimeInMillis()-9 * v){
-				startDate.setTimeInMillis(tempDate.getTimeInMillis()-24 * v); break;
-			}
-			startDate = (Calendar)fromTime.clone();
-		}
-
-
-		ctrlDate.setTimeInMillis(startDate.getTimeInMillis());
-		for(int i = 0; i < (int)dayCount; i++){
-			if(ctrlDate.get(Calendar.DAY_OF_WEEK)!=Calendar.FRIDAY){
-				ctrlDate.setTimeInMillis(ctrlDate.getTimeInMillis()+24 * v);
-			}else{
-				ctrlDate.setTimeInMillis(ctrlDate.getTimeInMillis()+72 * v);
-			}
-		}
-
-		tempDate.set(ctrlDate.get(Calendar.YEAR), ctrlDate.get(Calendar.MONTH), 
-				ctrlDate.get(Calendar.DAY_OF_MONTH));
-
-		ctrlDate.setTimeInMillis(ctrlDate.getTimeInMillis()+(int)((dayCount-(int)dayCount) * 8 * 60 * 60 * 1000));
-
-		if(ctrlDate.getTimeInMillis() > tempDate.getTimeInMillis()){
-			if(ctrlDate.get(Calendar.DAY_OF_WEEK)!=Calendar.FRIDAY){
-				ctrlDate.setTimeInMillis(tempDate.getTimeInMillis() + 15 * v);
-			}else{
-				ctrlDate.setTimeInMillis(tempDate.getTimeInMillis() + 63 * v);
-			}
-		}
-		return ctrlDate;
-	} 
-
 	public static int getDiffBetweenDays(Calendar currentDate, Calendar ctrlDate, Calendar[] holidays, boolean sixWorkdays){
 		int dayOfWeek, workDayCount, allDayCount, weekCount;
 		allDayCount = (int) Math.floor((ctrlDate.getTimeInMillis()  - currentDate.getTimeInMillis())/(v * 24));
@@ -131,37 +69,6 @@ public class RuntimeObjUtil implements Const {
 	}
 
 
-	public static String getTypeAttribute(int type){
-		String attr = "";
-		switch(type){
-		case TEXT:
-			attr = " type=\"string\"";
-			break;
-		case DATETIMES:
-			attr = " type=\"datetime\"";
-			break;
-		case NUMBERS:
-			attr = " type=\"number\"";
-			break;
-		case COMPLEX_OBJECT:
-			attr = " type=\"complex\"";
-			break;
-		case AUTHORS:
-			attr = " type=\"authors\"";
-			break;
-		case TEXTLIST:
-			attr = " type=\"map\"";
-			break;
-		case READERS:
-			attr = " type=\"readers\"";
-			break;
-		case FILES:
-			attr = " type=\"files\"";
-			break;
-
-		}
-		return attr;
-	}
 	public static int countMaxPage(int colCount, int pageSize){
 		float mp = (float)colCount/(float)pageSize;		
 		float d = Math.round(mp);

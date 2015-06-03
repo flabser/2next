@@ -10,16 +10,15 @@ import javax.servlet.http.HttpSession;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
-import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.Environment;
 import com.flabser.exception.PortalException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.XSLTFileNotFoundException;
 import com.flabser.localization.LocalizatorException;
 import com.flabser.log.LogFiles;
+import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.server.Server;
 import com.flabser.servlets.ProviderExceptionType;
 import com.flabser.servlets.ProviderResult;
@@ -39,12 +38,10 @@ public class AdminProvider extends HttpServlet implements Const{
 	public static final int pageSize = 30;
 
 	private static final long serialVersionUID = 2352885167311108325L;
-	private ISystemDatabase sysDb;
 	private AppEnv env;
 	private ServletContext context;
 	
 	public void init (ServletConfig config)throws ServletException{
-		sysDb = DatabaseFactory.getSysDatabase();
 		try{
 			context = config.getServletContext();
 			env = (AppEnv) context.getAttribute("portalenv");			
@@ -236,7 +233,7 @@ public class AdminProvider extends HttpServlet implements Const{
 		
 		}
 
-		//result.output.append("<query count=\"" + count + "\" currentpage=\"" + page + "\" maxpage=\"" + RuntimeObjUtil.countMaxPage(count, pageSize) + "\">" + content + "</query>");
+		result.output.append("<view count=\"" + count + "\" currentpage=\"" + page + "\" maxpage=\"" + RuntimeObjUtil.countMaxPage(count, pageSize) + "\">" + content + "</view>");
 		return result;
 	}
 

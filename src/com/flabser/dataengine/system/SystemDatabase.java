@@ -360,7 +360,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 		try{
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
-			String sql = "select * from USERS WHERE ISADMIN = 1";
+			String sql = "select * from USERS WHERE ISSUPERVISOR = 1";
 			ResultSet rs = s.executeQuery(sql);
 
 			while(rs.next()){
