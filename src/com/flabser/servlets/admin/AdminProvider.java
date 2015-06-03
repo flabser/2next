@@ -85,7 +85,7 @@ public class AdminProvider extends HttpServlet implements Const{
 			
 
 			if(jses.getAttribute("adminLoggedIn")==null){
-				response.sendRedirect("/");
+				response.sendRedirect(request.getContextPath());
 				return;
 			}
 
