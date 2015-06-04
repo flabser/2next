@@ -6,7 +6,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.flabser.dataengine.Const;
 import com.flabser.exception.TransformatorException;
 import com.flabser.exception.TransformatorExceptionType;
 
@@ -27,7 +26,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 
 
-public class SaxonTransformator implements IServletTransformator, Const{
+public class SaxonTransformator implements IServletTransformator{
 
 	public void toTrans(HttpServletResponse response, File xslFileObj,String xmlText) throws IOException, SaxonApiException, TransformatorException{
 		XsltExecutable exp = null;

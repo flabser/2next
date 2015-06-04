@@ -15,7 +15,6 @@ import com.flabser.scriptprocessor.ScriptEvent;
 public abstract class AbstractPostSave extends ScriptEvent implements IPostSaveScript {	
 	private _Session ses;
 	private _Document doc;
-	private AppEnv env;
 	
 	public void setSession(_Session ses){			
 		this.ses = ses;
@@ -29,15 +28,7 @@ public abstract class AbstractPostSave extends ScriptEvent implements IPostSaveS
 		
 	}
 	
-	public void setAppEnv(AppEnv env){
-		this.env = env;
-	}
 	
-	public _Page startPage(String id, HashMap<String, String[]> formData) throws RuleException, ClassNotFoundException{
-		PageRule pageRule = (PageRule) env.ruleProvider.getRule("page", id);	
-		Page page = new Page(env, ses.getUser().getSession() , pageRule);		
-		return page.process(formData);
-	}
 	
 	public void process(){
 		try{

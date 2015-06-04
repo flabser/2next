@@ -2,10 +2,7 @@ package com.flabser.localization;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-
-import com.flabser.env.Environment;
 import com.flabser.rule.GlobalSetting;
-import com.flabser.util.XMLUtil;
 
 import java.util.HashMap;
 
@@ -18,12 +15,11 @@ public class Vocabulary {
 		this.id = id;
 		this.globalSetting = globalSetting;
 		org.w3c.dom.Element root = doc.getDocumentElement();
-		Language primaryLang = Language.valueOf(XMLUtil.getTextContent(doc,"/vocabulary/@primary",true,"UNKNOWN", false).toUpperCase());
-		
+	
 		
 		NodeList nodename = root.getElementsByTagName("sentence");		
 		for(int i = 0; i<nodename.getLength();i++){			
-			Sentence sentence = new Sentence(nodename.item(i), primaryLang.toString());			
+			Sentence sentence = new Sentence(nodename.item(i), id);			
 			if (sentence.isOn){
 				words.put(sentence.keyWord, sentence);				
 			}
@@ -33,7 +29,7 @@ public class Vocabulary {
 	public String[] getWord(String keyWord, String lang){
 		String returnVal[] = new String[2];
 		Sentence sent = words.get(keyWord);
-		if (sent == null && keyWord !="№"){
+		if (sent == null){
 			if (globalSetting.multiLangEnable){
 //				Environment.logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");	
 			}
@@ -66,12 +62,5 @@ public class Vocabulary {
 		}
 	}
 		
-	public StringBuffer toXML(String lang) {
-		StringBuffer output = new StringBuffer(1000);
-		for(Sentence s: words.values()){
-			//output.append(new ViewEntry(s.words.get(lang).word,s.code).toXML());
-		}
-		return output;
-	}
-	
+		
 }

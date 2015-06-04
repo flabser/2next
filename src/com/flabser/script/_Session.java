@@ -3,10 +3,7 @@ package com.flabser.script;
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.env.Environment;
-import com.flabser.exception.RuleException;
 import com.flabser.rule.GlobalSetting;
-import com.flabser.rule.page.PageRule;
-import com.flabser.runtimeobj.page.Page;
 import com.flabser.script.actions._ActionBar;
 import com.flabser.script.mail._MailAgent;
 import com.flabser.users.User;
@@ -35,11 +32,7 @@ public class _Session {
 	public GlobalSetting getGlobalSettings() {
 		return env.globalSetting;
 	}
-
-	public String getAppURL() {
-		return user.getSession().host + "/" + env.appType;
-	}
-	
+		
 	public String getFullAppURI() {
 		return Environment.getFullHostName() + "/" + env.appType;
 	}
@@ -54,19 +47,6 @@ public class _Session {
 	
 	public _MailAgent getMailAgent() {
 		return new _MailAgent(this);
-	}
-
-	public _Page getPage(String id, _WebFormData webFormData) throws _Exception {
-		PageRule rule;
-		try {
-			rule = (PageRule) env.ruleProvider.getRule("page", id);
-			Page page = new Page(env, user.getSession(), rule);
-			return new _Page(page, webFormData);
-		} catch (RuleException e) {
-			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR, e.getMessage() + " function: _Session.getPage("
-					+ id + ")");
-		
-		}
 	}
 
 	public _URL getURLOfLastPage() throws _Exception {

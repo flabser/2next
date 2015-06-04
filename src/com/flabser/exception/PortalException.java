@@ -6,7 +6,6 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.server.Server;
 import com.flabser.servlets.ProviderExceptionType;
 import com.flabser.servlets.PublishAsType;
@@ -16,7 +15,7 @@ import java.io.*;
 
 
 
-public class PortalException extends Exception implements Const{	
+public class PortalException extends Exception{	
 	private Enum type = ProviderExceptionType.INTERNAL;
 	private AppEnv env;
 

@@ -6,14 +6,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.exception.PortalException;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
-public class Logout extends HttpServlet implements Const {
+public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AppEnv env;
 

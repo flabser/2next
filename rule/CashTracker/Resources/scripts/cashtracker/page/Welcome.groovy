@@ -18,5 +18,6 @@ class Welcome extends _DoScript {
 		publishElement("appname", ent.getAppName())
 		publishElement("availablelangs", ent.getAvailableLangs())
 		publishElement("availableapps", ent.getAvailableApps())
+
 	}
 }

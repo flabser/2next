@@ -2,7 +2,6 @@ package com.flabser.servlets;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.flabser.dataengine.Const;
 import com.flabser.servlets.sitefiles.FileUploadListener;
 import com.flabser.servlets.sitefiles.RequestWrapper;
 import com.flabser.servlets.sitefiles.UploadedFile;
@@ -21,7 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-public class Uploader extends HttpServlet implements Const, Servlet {
+public class Uploader extends HttpServlet implements Servlet {
     private static final long serialVersionUID = -5486823536445378485L;
 
     public Uploader() {

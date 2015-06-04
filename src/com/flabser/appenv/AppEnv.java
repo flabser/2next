@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.flabser.dataengine.Const;
 import com.flabser.exception.RuleException;
 import com.flabser.localization.Localizator;
 import com.flabser.localization.LocalizatorException;
@@ -18,7 +17,7 @@ import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
 
-public class AppEnv implements Const, ICache{ 
+public class AppEnv implements ICache{ 
 	public boolean isValid;
 	public String appType = "undefined";	
 	public RuleProvider ruleProvider;

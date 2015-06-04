@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.omg.CORBA.UserException;
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
@@ -22,7 +21,7 @@ import com.flabser.servlets.Cookies;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
 
-public class UserSession implements Const, ICache {
+public class UserSession implements ICache {
 	public User currentUser;
 	public HistoryEntryCollection history;
 	public String lang;
@@ -35,51 +34,19 @@ public class UserSession implements Const, ICache {
 
 	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
 			InstantiationException, IllegalAccessException, DatabasePoolException {
-		currentUser = user;
-		currentUser.setSession(this);
-		if (!currentUser.getUserID().equalsIgnoreCase(Const.sysUser)) {
-			initHistory();
-		}
+		currentUser = user;		
+		initHistory();		
 		Class cls = Class.forName(implemantion);
 		dataBase = (IDatabase) cls.newInstance();
 		ApplicationProfile app = user.enabledApps.get(appID);
 		dataBase.init(app);
-		//dataBase.init(app.dbURL, user.getUserID(), app.dbPwd);
-		
 	}
 
 	public UserSession(User user) throws UserException {
-		currentUser = user;
-		currentUser.setSession(this);
-		if (!currentUser.getUserID().equalsIgnoreCase(Const.sysUser)) {
-			initHistory();
-		}
-
+		currentUser = user;		
+		initHistory();
 	}
-
-	public UserSession(ServletContext context, HttpServletRequest request, HttpServletResponse response,
-			HttpSession jses) throws AuthFailedException, UserException {
-		this.jses = jses;
-		appCookies = new Cookies(request);
-		lang = appCookies.currentLang;
-		pageSize = appCookies.pageSize;
-
-		AppEnv env = (AppEnv) context.getAttribute("portalenv");
-		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
-
-		int userHash = Integer.parseInt(appCookies.authHash);
-		if (userHash == 0) {
-			AppEnv.logger.normalLogEntry("Authorization failed, login or password is incorrect/");
-			throw new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, "");
-		} else {
-			currentUser = new User();
-			ApplicationProfile userAppProfile = currentUser.enabledApps.get(env.appType);
-			initHistory();
-		}
-
-		currentUser.setSession(this);
-	}
-
+	
 	public void setObject(String name, _Page obj) {
 		HashMap<String, _Page> cache = null;
 		if (jses != null) {

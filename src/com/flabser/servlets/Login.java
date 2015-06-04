@@ -3,7 +3,6 @@ package com.flabser.servlets;
 import org.apache.catalina.realm.RealmBase;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.system.ISystemDatabase;
@@ -27,7 +26,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 
-public class Login extends HttpServlet implements Const {
+public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AppEnv env;
 
@@ -141,7 +140,7 @@ public class Login extends HttpServlet implements Const {
 					ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");					
 					user.addApplication(ap);
 					user.save();
-					redirect = "Provider?type=page&id=setup";
+					redirect = "Provider?id=setup";
 				}
 				
 				userSession = new UserSession(user, env.globalSetting.implementation, env.appType);

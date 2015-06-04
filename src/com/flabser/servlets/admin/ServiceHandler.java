@@ -4,14 +4,13 @@ import java.io.File;
 import java.util.*;
 import java.util.Map.Entry;
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.env.Environment;
 import com.flabser.log.LogFiles;
 import com.flabser.rule.Lang;
 import com.flabser.rule.Role;
 import com.flabser.server.Server;
 
-public class ServiceHandler implements Const {
+public class ServiceHandler{
 
 	private static int pageSize = 20;
 

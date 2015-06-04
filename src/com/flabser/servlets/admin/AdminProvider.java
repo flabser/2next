@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.env.Environment;
@@ -34,7 +33,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 
 
-public class AdminProvider extends HttpServlet implements Const{
+public class AdminProvider extends HttpServlet{
 	public static final int pageSize = 30;
 
 	private static final long serialVersionUID = 2352885167311108325L;
@@ -76,7 +75,7 @@ public class AdminProvider extends HttpServlet implements Const{
 			StringBuffer output = new StringBuffer(10000);		
 			boolean disableClientCache = false;
 
-			System.out.println("Web request type=" + type + ", element=" + element + ", id=" + id	+ ", app=" + app + ", dbid=" + dbID);
+			System.out.println("Web request type=" + type + ", element=" + element + ", id=" + id);
 			HttpSession jses = request.getSession(true);
 			jses.setAttribute("lang","EN");
 			jses.setAttribute("skin","");		

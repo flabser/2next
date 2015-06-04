@@ -10,7 +10,7 @@ import com.flabser.util.XMLUtil;
 
 public class Sentence {
 	public boolean isOn = true; 
-	public Language lang;
+	public LanguageType lang;
 	public String keyWord;
 	public HashMap<String, SentenceCaption> words = new HashMap<String, SentenceCaption>();
 
@@ -31,7 +31,7 @@ public class Sentence {
 			NodeList entries =  XMLUtil.getNodeList(node,"entry");   
 			for(int i = 0; i < entries.getLength(); i++){
 				Node wordNode = entries.item(i);
-				Language l = Language.valueOf(XMLUtil.getTextContent(wordNode,"@lang",true,"UNKNOWN", false).toUpperCase());
+				LanguageType l = LanguageType.valueOf(XMLUtil.getTextContent(wordNode,"@lang",true,"UNKNOWN", false).toUpperCase());
 				String hint = XMLUtil.getTextContent(wordNode,"@hint", false);
 				SentenceCaption c = new SentenceCaption(keyWord, wordNode.getTextContent(),hint);
 				words.put(l.toString(),c);				

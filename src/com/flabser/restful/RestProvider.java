@@ -45,7 +45,7 @@ public class RestProvider {
 		AppEnv env = (AppEnv) context.getAttribute("portalenv");
 		IRule rule;
 		try {
-			rule = env.ruleProvider.getRule("page", id);
+			rule = env.ruleProvider.getRule(id);
 			if (rule != null) {
 				if (!rule.isAnonymousAccessAllowed()) {
 					jses = request.getSession(true);

@@ -3,7 +3,6 @@ package com.flabser.dataengine.system;
 import org.apache.catalina.realm.RealmBase;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.activity.*;
 import com.flabser.dataengine.pool.DatabasePoolException;
@@ -16,8 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SystemDatabase implements ISystemDatabase, Const {
-	public static String jdbcDriver = "org.postgresql.Driver";
+public class SystemDatabase implements ISystemDatabase {
+	public static final String jdbcDriver = "org.postgresql.Driver";
 	private IDBConnectionPool dbPool;
 	private static final SimpleDateFormat sqlDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	static String connectionURL = "jdbc:postgresql://localhost/nbsystem";

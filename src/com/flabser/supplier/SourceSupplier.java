@@ -3,7 +3,6 @@ package com.flabser.supplier;
 import java.util.HashMap;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.localization.SentenceCaption;
 import com.flabser.localization.Vocabulary;
@@ -11,7 +10,7 @@ import com.flabser.rule.constants.ValueSourceType;
 import com.flabser.scriptprocessor.IScriptProcessor;
 import com.flabser.users.User;
 
-public class SourceSupplier implements Const {
+public class SourceSupplier {
 	public SourceSupplierContextType contextType;
 	public HashMap<String, Vocabulary> staticGlossaries = new HashMap<String, Vocabulary>();
 

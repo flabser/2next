@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.exception.PortalException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.ServerException;
@@ -35,7 +34,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-public class Provider extends HttpServlet implements Const {
+public class Provider extends HttpServlet{
 	private static final long serialVersionUID = 2352885167311108325L;
 	private AppEnv env;
 	private ServletContext context;
@@ -70,7 +69,7 @@ public class Provider extends HttpServlet implements Const {
 
 			if (env != null) {
 				if (id != null) {
-					IRule rule = env.ruleProvider.getRule(type, id);
+					IRule rule = env.ruleProvider.getRule(id);
 
 					if (rule != null) {
 						if (!rule.isAnonymousAccessAllowed()) {

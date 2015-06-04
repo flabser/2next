@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.localization.LocalizatorException;
@@ -22,7 +21,7 @@ import com.flabser.users.UserSession;
 import com.flabser.util.Util;
 import com.flabser.util.ScriptResponse;
 
-public class Page implements Const {
+public class Page{
 	public boolean fileGenerated;
 	public String generatedFilePath;
 	public String generatedFileOriginalName;
@@ -117,7 +116,7 @@ public class Page implements Const {
 					break;
 
 				case INCLUDED_PAGE:
-					PageRule rule = (PageRule) env.ruleProvider.getRule(PAGE_RULE, elementRule.value);
+					PageRule rule = (PageRule) env.ruleProvider.getRule(elementRule.value);
 					IncludedPage page = new IncludedPage(env, userSession, rule);
 					pp.addPage(page.process(fields));
 					break;

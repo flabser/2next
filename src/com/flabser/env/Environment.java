@@ -21,7 +21,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.RuleException;
@@ -34,7 +33,7 @@ import com.flabser.server.Server;
 import com.flabser.util.XMLUtil;
 
 
-public class Environment implements Const, ICache {
+public class Environment implements ICache {
 	public static int serverVersion;
 	public static String serverName;
 	public static String hostName;

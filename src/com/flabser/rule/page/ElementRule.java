@@ -9,7 +9,6 @@ import org.codehaus.groovy.control.MultipleCompilationErrorsException;
 import org.w3c.dom.Node;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.env.Environment;
 import com.flabser.rule.RuleValue;
 import com.flabser.rule.constants.RunMode;
@@ -19,7 +18,7 @@ import com.flabser.util.XMLUtil;
 import java.io.File;
 import java.io.IOException;
 
-public class ElementRule implements  Const {
+public class ElementRule{
 	public ElementType type;
 	public boolean isValid = true;
 	public RunMode isOn;

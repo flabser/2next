@@ -3,10 +3,9 @@ package com.flabser.runtimeobj;
 import java.io.File;
 import java.util.*;
 
-import com.flabser.dataengine.Const;
 import com.flabser.util.Util;
 
-public class RuntimeObjUtil implements Const {
+public class RuntimeObjUtil{
 	private static final int v = 60 * 60 * 1000;
 
 	int minPriority;

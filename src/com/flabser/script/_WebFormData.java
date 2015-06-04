@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.flabser.dataengine.Const;
-
 public class _WebFormData {
 	private Map<String, String[]> formData;
 	
@@ -109,23 +107,6 @@ public class _WebFormData {
 			return 0;
 		}
 	}
-	
-	@Deprecated
-	public int[] getParentDocID() throws _Exception{
-		int[] prop = new int[2]; 
-		try{
-			prop[0] = Integer.parseInt(getValue("parentdocid"));
-		}catch(Exception nfe){
-			prop[0] = 0;
-		}
-		try{
-			prop[1] = Integer.parseInt(getValue("parentdoctype"));
-		}catch(Exception nfe){
-			prop[1] = Const.DOCTYPE_UNKNOWN;
-		}
-		return prop;
-	}
-	
 	
 	
 	public String toString(){

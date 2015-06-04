@@ -6,13 +6,11 @@ import javax.xml.parsers.*;
 
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.Const;
 import com.flabser.rule.GlobalSetting;
 
 
-public class Localizator implements Const {
+public class Localizator{
 	private GlobalSetting globalSetting;
 	
 	public Localizator(GlobalSetting globalSetting) {

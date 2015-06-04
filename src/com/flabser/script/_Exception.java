@@ -43,37 +43,7 @@ public class _Exception extends Exception {
 	}
 
     public String getLocalizedMessage() {
-        String lang = "eng";
-        if (session != null) {
-            lang = session.getUser().getSession().lang;
-        }
-
-        String bundleName = "kz.flabs.i18n.errormessages.ErrorMessages";
-        Locale cur_locale;
-        switch (lang.toLowerCase()) {
-            case "rus":
-            cur_locale = new Locale("ru");
-                break;
-            case "eng":
-            cur_locale = new Locale("en");
-                break;
-            case "chn":
-            cur_locale = new Locale("zh");
-                break;
-            case "kaz":
-            cur_locale = new Locale("kk");
-                break;
-            default:
-                cur_locale = new Locale("en");
-                break;
-        }
-        ResourceBundle rb = ResourceBundle.getBundle(bundleName, cur_locale);
-        String error_message = this.errorText;
-        try {
-            error_message = rb.getString(error_message);
-        } catch (Exception e) {
-            AppEnv.logger.errorLogEntry("There was no translation found for the phrase: " + error_message);
-        }
+        String error_message = this.errorText; 
         return error_message + serviceAddInfo;
     }
 

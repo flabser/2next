@@ -8,7 +8,7 @@ class Calculate extends _DoScript {
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
-		def db = session.getCurrentDatabase()
+		def db = session.getDatabase()
 		def saldoValue
 /*		def viewParam = session.createViewEntryCollectionParam()
 				.setPageNum(0)

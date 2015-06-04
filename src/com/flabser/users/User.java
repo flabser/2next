@@ -2,7 +2,6 @@ package com.flabser.users;
 
 import org.apache.catalina.realm.RealmBase;
 
-import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
@@ -18,7 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class User implements Const {
+public class User {
 	public int docID;
 	public boolean isValid = false;
 	public HashMap<String, ApplicationProfile> enabledApps = new HashMap<String, ApplicationProfile>();
@@ -39,7 +38,6 @@ public class User implements Const {
 	private int hash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
-	private UserSession session;
 
 	public User() {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
@@ -60,15 +58,15 @@ public class User implements Const {
 
 	public HashSet<String> getAllUserGroups() {
 		HashSet<String> userGroups = new HashSet<String>();
-		if (userID.equals(sysUser)) {
+		/*if (userID.equals(sysUser)) {
 			userGroups = supervisorGroupAsSet;
-			userGroups.addAll(observerGroupAsList);
+			//userGroups.addAll(observerGroupAsList);
 		}
 		try {
 			// userGroups.addAll(appUser.getAllUserGroups());
 		} catch (Exception e) {
 			userGroups.add(userID);
-		}
+		}*/
 		return userGroups;
 	}
 
@@ -266,15 +264,7 @@ public class User implements Const {
 	public String usersByKeytoXML() {
 		return "<userid>" + userID + "</userid>" + "<key>" + docID + "</key>" + "<email>" + email + "</email>";
 
-	}
-
-	public void setSession(UserSession session) {
-		this.session = session;
-	}
-
-	public UserSession getSession() {
-		return session;
-	}
+	}	
 
 	public String getUserName() {
 		return userName;

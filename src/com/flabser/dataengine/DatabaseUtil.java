@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import com.flabser.server.Server;
 
-public class DatabaseUtil implements Const {
+public class DatabaseUtil{
 
     public static void errorPrint(Throwable e) {
         if (e instanceof SQLException) {
