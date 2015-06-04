@@ -382,7 +382,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 
 	@Override
 	public User getUserByVerifyCode(String code) {
-		User user = new User();
+		User user = null;
 		Connection conn = dbPool.getConnection();
 		try{
 			conn.setAutoCommit(false);
@@ -391,6 +391,7 @@ public class SystemDatabase implements ISystemDatabase, Const {
 			ResultSet rs = s.executeQuery(sql);
 
 			if(rs.next()){
+				user = new User();
 				user.fill(rs);				
 				if (user.isValid){
 					String addSQL = "select * from APPS where APPS.DOCID=" + user.docID;

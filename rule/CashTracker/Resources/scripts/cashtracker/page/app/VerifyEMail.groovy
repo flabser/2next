@@ -20,11 +20,13 @@ class VerifyEMail extends _DoScript {
 				user.setStatus(UserStatusType.REGISTERED)
 				if (user.save()) {
 					publishElement("process", "verify-ok")
+					publishElement("email", user.email)
 				}else {
 					publishElement("error", "save-error")
 				}
 			}else{
 				publishElement("process", "already-registered")
+				publishElement("email", user.email)
 			}
 		}else {
 			publishElement("error", "user-not-found")
