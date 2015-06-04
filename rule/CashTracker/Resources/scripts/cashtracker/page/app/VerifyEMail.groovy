@@ -15,17 +15,20 @@ class VerifyEMail extends _DoScript {
 
 		String code = formData.getValueSilently("code")
 		User user = DatabaseFactory.getSysDatabase().getUserByVerifyCode(code)
-		if (user != null && user.getStatus() ==  UserStatusType.WAITING_FOR_VERIFYCODE) {
-			user.setStatus(UserStatusType.REGISTERED)
-			if (user.save()) {
-				publishElement("process", "verify-ok")
-			}else {
-				publishElement("error", "save-error")				
+		if (user != null) {
+			if (user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
+				user.setStatus(UserStatusType.REGISTERED)
+				if (user.save()) {
+					publishElement("process", "verify-ok")
+				}else {
+					publishElement("error", "save-error")
+				}
+			}else{
+				publishElement("process", "already-registered")
 			}
 		}else {
 			publishElement("error", "user-not-found")
 			return
-		}		
-
+		}
 	}
 }

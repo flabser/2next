@@ -2,6 +2,8 @@ package com.flabser.users;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.env.Environment;
 
@@ -13,6 +15,7 @@ public class ApplicationProfile{
 	public String dbLogin;
 	public String dbPwd;
 	private String dbName;
+	private HashSet<User> members = new HashSet<User>();
 	
 	public ApplicationProfile(){
 		

@@ -71,9 +71,9 @@ class RegUser extends _DoScript {
 		if (sve.sendResult) {
 			user.setStatus(UserStatusType.WAITING_FOR_VERIFYCODE)
 			if (user.save()) {
-				publishElement("error", "save-error")
-			}else {
 				publishElement("process", "verify-email-send")
+			}else {
+				publishElement("error", "save-error")				
 			}
 		} else {
 			publishElement("error", "verify-email-sending-error")

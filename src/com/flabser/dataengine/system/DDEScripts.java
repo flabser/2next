@@ -33,6 +33,15 @@ public class DDEScripts {
 				"FOREIGN KEY (DOCID) REFERENCES USERS(DOCID))";
 		return dde;
 	} 
+	
+	public static String getMembersDDE(){
+		String createTable="CREATE MEMBERS users( docid serial NOT NULL, "
+				+ "appid character int,  "
+				+ "userid character varying(32),  "			
+				+ "FOREIGN KEY (DOCID) REFERENCES APPS(DOCID))";
+
+		return createTable;
+	}
 
 	 public static String getUserRolesDDE() {
 	        String dde = "CREATE TABLE USER_ROLES (" +
