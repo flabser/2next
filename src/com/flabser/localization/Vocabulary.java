@@ -2,11 +2,14 @@ package com.flabser.localization;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+
+import com.flabser.log.Log4jLogger;
 import com.flabser.rule.GlobalSetting;
 
 import java.util.HashMap;
 
 public class Vocabulary {
+	com.flabser.log.ILogger logger = new Log4jLogger("Vocabulary");
 	public String id;
 	public HashMap<String, Sentence> words = new HashMap<String, Sentence>();
 	public GlobalSetting globalSetting;
@@ -31,7 +34,8 @@ public class Vocabulary {
 		Sentence sent = words.get(keyWord);
 		if (sent == null){
 			if (globalSetting.multiLangEnable){
-//				Environment.logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");	
+				logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");	
+				System.out.println("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");	
 			}
 			returnVal[0] = keyWord;
 			returnVal[1] = "";
@@ -47,7 +51,8 @@ public class Vocabulary {
 	public SentenceCaption getSentenceCaption(String keyWord, String lang){		
 		Sentence sent = words.get(keyWord.trim());
 		if (sent == null){
-	//		Environment.logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");			
+			logger.warningLogEntry("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");	
+			System.out.println("Translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");	
 			SentenceCaption primary = new SentenceCaption(keyWord, keyWord,keyWord);
 			return primary;
 		}else{

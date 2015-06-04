@@ -4,180 +4,235 @@
 		<entry lang="RUS" hint="Операции">Операции</entry>
 		<entry lang="KAZ" hint="Операции">Операции</entry>
 		<entry lang="ENG" hint="Transactions">Transactions</entry>
+		<entry lang="BG" hint="Сделки">Сделки</entry>
 	</sentence>
 	<sentence mode="on" keyword="user_profile">
 		<entry lang="RUS" hint="Профиль">Профиль</entry>
 		<entry lang="KAZ" hint="Профиль">Профиль</entry>
 		<entry lang="ENG" hint="User Profile">User Profile</entry>
+		<entry lang="BG" hint="Потребителски профил">Потребителски профил</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="lost_password">
 		<entry lang="RUS" hint="Забыл пароль">Забыл пароль</entry>
 		<entry lang="KAZ" hint="Забыл пароль">Забыл пароль</entry>
-		<entry lang="ENG" hint="Forgot your password?">Forgot your password?</entry>
+		<entry lang="ENG" hint="Have you forgotten your password?">Have you forgotten your password?</entry>
+		<entry lang="BG" hint="Забравихте ли паролата си?">Забравихте ли паролата си?</entry>
 	</sentence>
 	<sentence mode="on" keyword="no_verify_mail">
-		<entry lang="RUS" hint="Не получил письмо подтверждения e-mail">Не получил письмо подтверждения e-mail</entry>
-		<entry lang="KAZ" hint="Не получил письмо подтверждения e-mail">Не получил письмо подтверждения e-mail</entry>
-		<entry lang="ENG" hint="Не получил письмо подтверждения e-mail">Не получил письмо подтверждения e-mail</entry>
+		<entry lang="RUS" hint="Не получили письмо подтверждения e-mail?">Не получили письмо подтверждения e-mail?
+		</entry>
+		<entry lang="KAZ" hint="Не получил письмо подтверждения e-mail">Не получил письмо подтверждения e-mail
+		</entry>
+		<entry lang="ENG" hint="Have you not received the e-mail?">Have you not received the e-mail?</entry>
+		<entry lang="BG" hint="Не сте ли получили имейла?">Не сте ли получили имейла?</entry>
 	</sentence>
 
 	<!-- login -->
 	<sentence mode="on" keyword="login_title">
 		<entry lang="RUS" hint="Авторизация">Авторизация</entry>
 		<entry lang="KAZ" hint="Авторизация">Авторизация</entry>
-		<entry lang="ENG" hint="Авторизация">Авторизация</entry>
+		<entry lang="ENG" hint="Authorization">Authorization</entry>
+		<entry lang="BG" hint="Упълномощаване">Упълномощаване</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_login">
 		<entry lang="RUS" hint="E-mail">E-mail</entry>
 		<entry lang="KAZ" hint="E-mail">E-mail</entry>
 		<entry lang="ENG" hint="E-mail">E-mail</entry>
+		<entry lang="BG" hint="E-mail">E-mail</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_pwd">
 		<entry lang="RUS" hint="Пароль">Пароль</entry>
 		<entry lang="KAZ" hint="Пароль">Пароль</entry>
 		<entry lang="ENG" hint="Password">Password</entry>
+		<entry lang="BG" hint="Парола">Парола</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_alien_device">
 		<entry lang="RUS" hint="Не запоминать меня">Не запоминать меня</entry>
 		<entry lang="KAZ" hint="Не запоминать меня">Не запоминать меня</entry>
-		<entry lang="ENG" hint="Не запоминать меня">Не запоминать меня</entry>
+		<entry lang="ENG" hint="Do not remember me">Do not remember me</entry>
+		<entry lang="BG" hint="Не ме помниш">Не ме помниш</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_button">
 		<entry lang="RUS" hint="Войти">Войти</entry>
 		<entry lang="KAZ" hint="Войти">Войти</entry>
 		<entry lang="ENG" hint="Log In">Log In</entry>
+		<entry lang="BG" hint="Влизане">Влизане</entry>
 	</sentence>
 	<sentence mode="on" keyword="logout">
 		<entry lang="RUS" hint="Завершить работу">Выход</entry>
 		<entry lang="KAZ" hint="Жұмысты аяқтау">Шығу</entry>
 		<entry lang="ENG" hint="Sign out">Sign out</entry>
+		<entry lang="BG" hint="Изход">Изход</entry>
 	</sentence>
 
 	<!-- reg -->
 	<sentence mode="on" keyword="reg_title">
 		<entry lang="RUS" hint="Регистрация">Регистрация</entry>
 		<entry lang="KAZ" hint="Регистрация">Регистрация</entry>
-		<entry lang="ENG" hint="Регистрация">Регистрация</entry>
+		<entry lang="ENG" hint="Registration">Registration</entry>
+		<entry lang="BG" hint="Регистрация">Регистрация</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_budget_name">
 		<entry lang="RUS" hint="Имя бюджета">Имя бюджета</entry>
 		<entry lang="KAZ" hint="Имя бюджета">Имя бюджета</entry>
-		<entry lang="ENG" hint="Имя бюджета">Имя бюджета</entry>
+		<entry lang="ENG" hint="Budget name">Budget name</entry>
+		<entry lang="BG" hint="Име на Бюджет">Име на Бюджет</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_email">
 		<entry lang="RUS" hint="E-mail">E-mail</entry>
 		<entry lang="KAZ" hint="E-mail">E-mail</entry>
 		<entry lang="ENG" hint="E-mail">E-mail</entry>
+		<entry lang="BG" hint="E-mail">E-mail</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_email_inf">
-		<entry lang="RUS" hint="На этот e-mail будет отправлено письмо подтверждения">На этот e-mail будет отправлено письмо подтверждения</entry>
-		<entry lang="KAZ" hint="На этот e-mail будет отправлено письмо подтверждения">На этот e-mail будет отправлено письмо подтверждения</entry>
-		<entry lang="ENG" hint="На этот e-mail будет отправлено письмо подтверждения">На этот e-mail будет отправлено письмо подтверждения</entry>
+		<entry lang="RUS"
+			hint="На этот e-mail будет отправлено письмо подтверждения">На этот e-mail будет отправлено письмо подтверждения</entry>
+		<entry lang="KAZ"
+			hint="На этот e-mail будет отправлено письмо подтверждения">На этот e-mail будет отправлено письмо подтверждения</entry>
+		<entry lang="ENG"
+			hint="The confirmation letter will be sent to this e-mail">The confirmation letter will be sent to this e-mail</entry>
+		<entry lang="BG"
+			hint="Писмото за потвърждение ще бъде изпратен на този имейл">Писмото за потвърждение ще бъде изпратен на този имейл</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_email_invalid">
 		<entry lang="RUS" hint="Не корректный">Не корректный</entry>
 		<entry lang="KAZ" hint="Не корректный">Не корректный</entry>
-		<entry lang="ENG" hint="Не корректный">Не корректный</entry>
+		<entry lang="ENG" hint="Incorrect">Incorrect</entry>
+		<entry lang="BG" hint="Неправилен">Неправилен</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_email_exists">
-		<entry lang="RUS" hint="Пользователь с таким e-mail существует">Пользователь с таким e-mail существует</entry>
-		<entry lang="KAZ" hint="Пользователь с таким e-mail существует">Пользователь с таким e-mail существует</entry>
-		<entry lang="ENG" hint="Пользователь с таким e-mail существует">Пользователь с таким e-mail существует</entry>
+		<entry lang="RUS" hint="Пользователь с таким e-mail существует">Пользователь с таким e-mail существует
+		</entry>
+		<entry lang="KAZ" hint="Пользователь с таким e-mail существует">Пользователь с таким e-mail существует
+		</entry>
+		<entry lang="ENG" hint="The user with this e-mail is exist">The user with this e-mail is exist
+		</entry>
+		<entry lang="BG" hint="Потребителят с този имейл е налице">Потребителят с този имейл е налице</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_pwd">
 		<entry lang="RUS" hint="Придумайте пароль">Придумайте пароль</entry>
 		<entry lang="KAZ" hint="Придумайте пароль">Придумайте пароль</entry>
-		<entry lang="ENG" hint="Придумайте пароль">Придумайте пароль</entry>
+		<entry lang="ENG" hint="Create password">Create password</entry>
+		<entry lang="BG" hint="Създай парола">Създай парола</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_pwd_inf">
-		<entry lang="RUS" hint="В пароле минимум 8 символов, используйте буквы и цифры">В пароле минимум 8 символов, используйте буквы и цифры</entry>
-		<entry lang="KAZ" hint="В пароле минимум 8 символов, используйте буквы и цифры">В пароле минимум 8 символов, используйте буквы и цифры</entry>
-		<entry lang="ENG" hint="В пароле минимум 8 символов, используйте буквы и цифры">В пароле минимум 8 символов, используйте буквы и цифры</entry>
+		<entry lang="RUS"
+			hint="В пароле минимум 8 символов, используйте буквы и цифры">В пароле минимум 8 символов, используйте буквы и цифры</entry>
+		<entry lang="KAZ"
+			hint="В пароле минимум 8 символов, используйте буквы и цифры">В пароле минимум 8 символов, используйте буквы и цифры</entry>
+		<entry lang="ENG"
+			hint="В пароле минимум 8 символов, используйте буквы и цифры">В пароле минимум 8 символов, используйте буквы и цифры</entry>
+		<entry lang="BG" hint=""></entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_pwd_weak">
 		<entry lang="RUS" hint="Слабый пароль">Слабый пароль</entry>
 		<entry lang="KAZ" hint="Слабый пароль">Слабый пароль</entry>
-		<entry lang="ENG" hint="Слабый пароль">Слабый пароль</entry>
+		<entry lang="ENG" hint="Weak password">Weak password</entry>
+		<entry lang="BG" hint="Слаба парола">Слаба парола</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_button">
 		<entry lang="RUS" hint="Зарегистрироваться">Зарегистрироваться</entry>
 		<entry lang="KAZ" hint="Зарегистрироваться">Зарегистрироваться</entry>
-		<entry lang="ENG" hint="Зарегистрироваться">Зарегистрироваться</entry>
+		<entry lang="ENG" hint="Register">Register</entry>
+		<entry lang="BG" hint="Регистрирайте се">Регистрирайте се</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_terms">
-		<entry lang="RUS" hint="Пользуясь сервисом вы соглащаетесь с условиями использования">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>
-		<entry lang="KAZ" hint="Пользуясь сервисом вы соглащаетесь с условиями использования">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>
-		<entry lang="ENG" hint="Пользуясь сервисом вы соглащаетесь с условиями использования">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>
+		<entry lang="RUS"
+			hint="Пользуясь сервисом вы соглащаетесь с условиями использования">Пользуясь сервисом вы соглащаетесь с условиями использования
+		</entry>
+		<entry lang="KAZ"
+			hint="Пользуясь сервисом вы соглащаетесь с условиями использования">Пользуясь сервисом вы соглащаетесь с условиями использования
+		</entry>
+		<entry lang="ENG"
+			hint="If you use the service, you agree to the terms of use">
+			If you use the service, you agree to the terms of use
+		</entry>
+		<entry lang="BG"
+			hint="Ако използвате услугата, вие се съгласявате с условията за ползване">Ако използвате услугата, вие се съгласявате с условията за
+			ползване
+		</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_or">
 		<entry lang="RUS" hint="также">также</entry>
 		<entry lang="KAZ" hint="также">также</entry>
-		<entry lang="ENG" hint="также">также</entry>
+		<entry lang="ENG" hint="also">also</entry>
+		<entry lang="BG" hint="също">също</entry>
 	</sentence>
 	<sentence mode="on" keyword="use_oauth">
 		<entry lang="RUS" hint="можно использовать соц.сети">можно использовать соц.сети</entry>
 		<entry lang="KAZ" hint="можно использовать соц.сети">можно использовать соц.сети</entry>
-		<entry lang="ENG" hint="можно использовать соц.сети">можно использовать соц.сети</entry>
+		<entry lang="ENG" hint="you can use some social networks ">you can use some social networks </entry>
+		<entry lang="BG" hint="Можете да използвате някои социални мрежи">Можете да използвате някои социални мрежи
+		</entry>
 	</sentence>
 
 	<!-- pages -->
-	<sentence mode="on" keyword="reg">
-		<entry lang="RUS" hint="Регистрация">Регистрация</entry>
-		<entry lang="KAZ" hint="Регистрация">Регистрация</entry>
-		<entry lang="ENG" hint="Регистрация">Регистрация</entry>
-	</sentence>
-	<sentence mode="on" keyword="login">
-		<entry lang="RUS" hint="Войти">Войти</entry>
-		<entry lang="KAZ" hint="Войти">Войти</entry>
-		<entry lang="ENG" hint="Log In">Log In</entry>
-	</sentence>
+
 	<sentence mode="on" keyword="privacy">
 		<entry lang="RUS" hint="Соглашение о конфиденциальности">Соглашение о конфиденциальности</entry>
 		<entry lang="KAZ" hint="Соглашение о конфиденциальности">Соглашение о конфиденциальности</entry>
-		<entry lang="ENG" hint="Соглашение о конфиденциальности">Соглашение о конфиденциальности</entry>
+		<entry lang="ENG" hint="Privacy agreement">Privacy agreement</entry>
+		<entry lang="BG" hint="Споразумение за конфиденциалност">Споразумение за конфиденциалност</entry>
 	</sentence>
 	<sentence mode="on" keyword="terms">
 		<entry lang="RUS" hint="Условия использования">Условия использования</entry>
 		<entry lang="KAZ" hint="Условия использования">Условия использования</entry>
-		<entry lang="ENG" hint="Условия использования">Условия использования</entry>
+		<entry lang="ENG" hint="Terms of Use">Terms of Use</entry>
+		<entry lang="BG" hint="Условия за ползване">Условия за ползване</entry>
 	</sentence>
 	<sentence mode="on" keyword="about">
 		<entry lang="RUS" hint="О проекте">О проекте</entry>
 		<entry lang="KAZ" hint="О проекте">О проекте</entry>
 		<entry lang="ENG" hint="About">About</entry>
+		<entry lang="BG" hint="За проекта">За проекта</entry>
 	</sentence>
 	<sentence mode="on" keyword="help">
 		<entry lang="RUS" hint="Помощь">Помощь</entry>
 		<entry lang="KAZ" hint="Помощь">Помощь</entry>
-		<entry lang="ENG" hint="Помощь">Помощь</entry>
+		<entry lang="ENG" hint="Help">Help</entry>
+		<entry lang="BG" hint="Помощ">Помощ</entry>
 	</sentence>
 
 	<!-- pwd_recovery -->
 	<sentence mode="on" keyword="pwd_recovery_title">
 		<entry lang="RUS" hint="Восстановление доступа">Восстановление доступа</entry>
 		<entry lang="KAZ" hint="Восстановление доступа">Восстановление доступа</entry>
-		<entry lang="ENG" hint="Восстановление доступа">Восстановление доступа</entry>
+		<entry lang="ENG" hint="Access recovery">Access recovery</entry>
+		<entry lang="BG" hint=""></entry>
 	</sentence>
 	<sentence mode="on" keyword="pwd_recovery_description">
-		<entry lang="RUS" hint="На зарегистрированный e-mail будет отправлена ссылка для сброса пароля">На зарегистрированный e-mail будет отправлена ссылка для сброса пароля</entry>
-		<entry lang="KAZ" hint="На зарегистрированный e-mail будет отправлена ссылка для сброса пароля">На зарегистрированный e-mail будет отправлена ссылка для сброса пароля</entry>
-		<entry lang="ENG" hint="На зарегистрированный e-mail будет отправлена ссылка для сброса пароля">На зарегистрированный e-mail будет отправлена ссылка для сброса пароля</entry>
+		<entry lang="RUS"
+			hint="На зарегистрированный e-mail будет отправлена ссылка для сброса пароля">На зарегистрированный e-mail будет отправлена ссылка для сброса
+			пароля
+		</entry>
+		<entry lang="KAZ"
+			hint="На зарегистрированный e-mail будет отправлена ссылка для сброса пароля">На зарегистрированный e-mail будет отправлена ссылка для сброса
+			пароля
+		</entry>
+		<entry lang="ENG"
+			hint="На зарегистрированный e-mail будет отправлена ссылка для сброса пароля">На зарегистрированный e-mail будет отправлена ссылка для сброса
+			пароля
+		</entry>
+		<entry lang="BG" hint=""></entry>
 	</sentence>
 	<sentence mode="on" keyword="pwd_recovery_new_pwd">
 		<entry lang="RUS" hint="Введите новый пароль">Введите новый пароль</entry>
 		<entry lang="KAZ" hint="Введите новый пароль">Введите новый пароль</entry>
 		<entry lang="ENG" hint="Введите новый пароль">Введите новый пароль</entry>
+		<entry lang="BG" hint=""></entry>
 	</sentence>
 	<sentence mode="on" keyword="pwd_recovery_btn_send">
 		<entry lang="RUS" hint="Отправить">Отправить</entry>
 		<entry lang="KAZ" hint="Отправить">Отправить</entry>
 		<entry lang="ENG" hint="Отправить">Отправить</entry>
+		<entry lang="BG" hint=""></entry>
 	</sentence>
 	<sentence mode="on" keyword="pwd_recovery_btn_ok">
 		<entry lang="RUS" hint="OK">OK</entry>
 		<entry lang="KAZ" hint="OK">OK</entry>
 		<entry lang="ENG" hint="OK">OK</entry>
+		<entry lang="BG" hint=""></entry>
 	</sentence>
 
 	<!-- verify_email -->
@@ -185,27 +240,44 @@
 		<entry lang="RUS" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
 		<entry lang="KAZ" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
 		<entry lang="ENG" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
+		<entry lang="BG" hint=""></entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_error">
 		<entry lang="RUS" hint="Не верные данные">Не верные данные</entry>
 		<entry lang="KAZ" hint="Не верные данные">Не верные данные</entry>
 		<entry lang="ENG" hint="Не верные данные">Не верные данные</entry>
+		<entry lang="BG" hint=""></entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_done">
-		<entry lang="RUS" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
-		<entry lang="KAZ" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
-		<entry lang="ENG" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
+		<entry lang="RUS" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете
+			войти.
+		</entry>
+		<entry lang="KAZ" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете
+			войти.
+		</entry>
+		<entry lang="ENG" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете
+			войти.
+		</entry>
+		<entry lang="BG" hint=""></entry>
 	</sentence>
 
 	<!-- retry_send_verify_email -->
 	<sentence mode="on" keyword="retry_send_verify_email_title">
-		<entry lang="RUS" hint="Повторная отправка письма для удостоверения e-mail">Повторная отправка письма для удостоверения e-mail</entry>
-		<entry lang="KAZ" hint="Повторная отправка письма для удостоверения e-mail">Повторная отправка письма для удостоверения e-mail</entry>
-		<entry lang="ENG" hint="Повторная отправка письма для удостоверения e-mail">Повторная отправка письма для удостоверения e-mail</entry>
+		<entry lang="RUS" hint="Повторная отправка письма для удостоверения e-mail">Повторная отправка письма для
+			удостоверения e-mail
+		</entry>
+		<entry lang="KAZ" hint="Повторная отправка письма для удостоверения e-mail">Повторная отправка письма для
+			удостоверения e-mail
+		</entry>
+		<entry lang="ENG" hint="Повторная отправка письма для удостоверения e-mail">Повторная отправка письма для
+			удостоверения e-mail
+		</entry>
+		<entry lang="BG" hint=""></entry>
 	</sentence>
 	<sentence mode="on" keyword="retry_send_verify_email_btn_send">
 		<entry lang="RUS" hint="Отправить">Отправить</entry>
 		<entry lang="KAZ" hint="Отправить">Отправить</entry>
 		<entry lang="ENG" hint="Отправить">Отправить</entry>
+		<entry lang="BG" hint=""></entry>
 	</sentence>
 </vocabulary>

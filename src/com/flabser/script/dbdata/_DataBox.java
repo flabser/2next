@@ -8,7 +8,7 @@ import com.flabser.script._IContent;
 public class _DataBox implements _IContent {
 
 	_DataBox(ResultSet rs){
-		
+	
 	}
 	
 	@Override
