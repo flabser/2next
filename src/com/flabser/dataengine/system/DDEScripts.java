@@ -16,6 +16,7 @@ public class DDEScripts {
 				+ "lastDefaultURL varchar(128), "
 				+ "status integer,"
 				+ "verifycode character varying(64),"
+				+ "preferredlang varchar(10),"
 				+ "CONSTRAINT users_pkey PRIMARY KEY (docid), CONSTRAINT users_userid_unique UNIQUE (userid))";
 
 		return createTable;

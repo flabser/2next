@@ -11,13 +11,13 @@ class SendVerifyEMail {
 	public SendVerifyEMail(_Session session, User user) {
 		def code = user.getVerifyCode()
 		def url = session.getFullAppURI()
-		def subj = "Подтверждение E-mail Вашей учетной записи CashTracker"
-		def msg = """<h4>Подтверждение E-mail</h4>
-					<p>Проигнорируйте это письмо, если вы не регистрировались на сайте
+		def subj = "Confirmation of the E-mail your account in CashTracker site"
+		def msg = """<h4>Confirmation of the E-mail</h4>
+					<p>Ignore this letter, if you have not registered on the site
 						<a href="${url}"><b>${url}</b></a>
 					</p>
 					<div>
-					<b>Пройдите по ссылке для подтверждения адреса</b><br/>
+					<b>Click on the link to confirmation your address</b><br/>
 					<a href="${url}/Provider?type=page&id=verify-email&code=${code}">
 						${url}/Provider?type=page&id=verify-email&code=${code}
 					</a></div>"""

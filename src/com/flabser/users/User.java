@@ -1,6 +1,7 @@
 package com.flabser.users;
 
 import org.apache.catalina.realm.RealmBase;
+
 import com.flabser.dataengine.Const;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
@@ -10,7 +11,9 @@ import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
+import com.flabser.localization.LanguageType;
 import com.flabser.util.Util;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -19,11 +22,11 @@ public class User implements Const {
 	public int docID;
 	public boolean isValid = false;
 	public HashMap<String, ApplicationProfile> enabledApps = new HashMap<String, ApplicationProfile>();
-	private HashSet<UserRole> roles = new HashSet<UserRole>();
-	private HashSet<UserGroup> groups = new HashSet<UserGroup>();
 	public boolean isAuthorized;
 	public String lastURL;
-
+	public LanguageType preferredLang = LanguageType.ENG;
+	private HashSet<UserRole> roles = new HashSet<UserRole>();
+	private HashSet<UserGroup> groups = new HashSet<UserGroup>();
 	private transient ISystemDatabase sysDatabase;
 	private String userID;
 	private String userName;
