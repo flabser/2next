@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="setup" mode="on" anonymous="on">
+	<description></description>
+	<xsltfile>xhr/setup.xsl</xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="file">cashtracker.page.app.Setup</doscript>
+		</events>
+	</element>
+</rule>
