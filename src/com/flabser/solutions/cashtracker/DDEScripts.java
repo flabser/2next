@@ -10,7 +10,7 @@ public class DDEScripts {
                 "  REGDATE TIMESTAMP WITHOUT TIME ZONE,\n" +
                 "  OWNER CHARACTER VARYING(128),\n" +
                 "  STATUS NUMERIC,\n" +
-                "  CONSTRAINT ACCOUNT_ID_PRIMARY_KEY PRIMARY KEY (ID)\n" +
+                "  CONSTRAINT BUDGET_ID_PRIMARY_KEY PRIMARY KEY (ID)\n" +
                 ")";
         return createString;
     }

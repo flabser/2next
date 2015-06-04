@@ -28,7 +28,6 @@ public class GlobalSetting {
 	public String defaultRedirectURL;
 	public ArrayList <Lang> langsList = new ArrayList <Lang>();
 	public boolean multiLangEnable;
-	public Lang primaryLang;	
 	public String vocabulary = "vocabulary.xml";
 	public UserRoleCollection roleCollection = new UserRoleCollection();
 	
@@ -69,10 +68,7 @@ public class GlobalSetting {
 			for (int i = 0; i < langs.getLength(); i++) {
 				Lang lang = new Lang(langs.item(i));
 				if ( lang.isOn == RunMode.ON ) {
-					langsList.add(lang);
-					if (lang.isPrimary){
-						primaryLang = lang;
-					}
+					langsList.add(lang);					
 				}
 			}
 

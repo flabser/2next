@@ -14,7 +14,7 @@ public class ApplicationProfile{
 	public String dbHost = "localhost";
 	public String dbLogin;
 	public String dbPwd;
-	private String dbName;
+	public String dbName;
 	private HashSet<User> members = new HashSet<User>();
 	
 	public ApplicationProfile(){

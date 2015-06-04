@@ -35,7 +35,7 @@ public class _AppEntourage {
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		
 		for(Lang l: env.globalSetting.langsList){
-			String[] p = {l.isOn.toString(),l.id,l.name,Boolean.toString(l.isPrimary)};			
+			String[] p = {l.isOn.toString(),l.id,l.name};			
 			list.add(p);
 		}
 		return list;

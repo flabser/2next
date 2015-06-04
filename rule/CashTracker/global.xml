@@ -5,8 +5,10 @@
 	<entrypoint>Provider?type=page&amp;id=login</entrypoint>
 	<defaultredirecturl>Provider?type=page&amp;id=operations</defaultredirecturl>
 	<langs>
-		<entry id="RUS">Русский</entry>
 		<entry id="ENG">English</entry>
+		<entry id="RUS">Русский</entry>
+		<entry id="KAZ">Казакша</entry>
+		<entry id="BG">Българский</entry>
 	</langs>
 
 	<roles>

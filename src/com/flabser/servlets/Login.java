@@ -8,10 +8,12 @@ import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.PortalException;
+import com.flabser.users.ApplicationProfile;
 import com.flabser.users.AuthFailedException;
 import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
+import com.flabser.util.Util;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -45,7 +47,7 @@ public class Login extends HttpServlet implements Const {
 		try {
 			String login = request.getParameter("login");
 			String pwd = request.getParameter("pwd");
-		//	String noAuth = request.getParameter("noauth");
+			String noAuth = request.getParameter("noauth");
 			String noHash = request.getParameter("nohash");
 			HttpSession jses;
 			
@@ -123,17 +125,29 @@ public class Login extends HttpServlet implements Const {
 				
 				String userID = user.getUserID();
 				jses = request.getSession(true);
-				userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
-
+				
 				AppEnv.logger.normalLogEntry(userID + " has connected");
 				IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 				ua.postLogin(ServletUtil.getClientIpAddr(request), user);
-
-				String redirect = "";
-
+				String redirect = getRedirect(jses, appCookies);
+				
+				ApplicationProfile app = user.enabledApps.get(env.appType);
+				if (app == null) {
+					ApplicationProfile ap = new ApplicationProfile();
+					ap.appName = env.appType;
+					ap.owner = (user.getUserID().replace("@","_").replace(".","_")).replace("-","_").toLowerCase();
+					ap.dbName = ap.appName.toLowerCase() + "_" + ap.owner;
+					ap.dbLogin = ap.owner;
+					ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");					
+					user.addApplication(ap);
+					user.save();
+					redirect = "Provider?type=page&id=setup";
+				}
+				
+				userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
 				jses.setAttribute("usersession", userSession);
 			
-				redirect = getRedirect(jses, appCookies);
+				
 				response.sendRedirect(redirect);
 
 			}

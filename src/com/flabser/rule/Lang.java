@@ -11,7 +11,6 @@ public class Lang {
 	public String description;  
 	public String id = "unknown";	
 	public String name;
-	public boolean isPrimary;
 
 	Lang(Node node){
 		id = XMLUtil.getTextContent(node,"@id", false);
@@ -22,11 +21,6 @@ public class Lang {
 			isValid = false;
 		}
 		
-		String ip = XMLUtil.getTextContent(node,"@isprimary", false);
-		if (ip.equalsIgnoreCase("true") || ip.equals("1")){
-			isPrimary = true;
-		}
-		
 	}
 
 	public String toString(){
@@ -34,7 +28,7 @@ public class Lang {
 	}
 	
 	public String toXML(){
-		return "<ison>" + isOn + "</ison><id>" + id + "</id><name>" + name + "</name><isprimary>" + isPrimary + "</isprimary>";
+		return "<ison>" + isOn + "</ison><id>" + id + "</id><name>" + name + "</name>";
 	}
 	
 }
