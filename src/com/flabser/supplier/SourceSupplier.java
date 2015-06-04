@@ -1,23 +1,14 @@
 package com.flabser.supplier;
 
-import groovy.lang.GroovyObject;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.dataengine.IDatabase;
-import com.flabser.env.Environment;
 import com.flabser.localization.SentenceCaption;
 import com.flabser.localization.Vocabulary;
 import com.flabser.rule.constants.ValueSourceType;
-import com.flabser.script._Session;
 import com.flabser.scriptprocessor.IScriptProcessor;
-import com.flabser.scriptprocessor.SessionScriptProcessor;
 import com.flabser.users.User;
 
 public class SourceSupplier implements Const {
@@ -32,15 +23,6 @@ public class SourceSupplier implements Const {
 	private IDatabase db;	
 	private User user;
 
-/*	public SourceSupplier(AppEnv env){
-		vocabulary = env.vocabulary;
-		contextType = SourceSupplierContextType.APP_ENVIRONMENT;
-		//user = new User(Const.sysUser);
-		_Session session = new _Session(env, user, this);
-		scriptProcessor = new SimpleScriptProcessor(session);	
-		this.env = env; 
-	}
-*/
 	public SourceSupplier(AppEnv env, String lang){
 		this.env = env;
 		contextType = SourceSupplierContextType.VOCABULARY;
@@ -48,46 +30,6 @@ public class SourceSupplier implements Const {
 		this.lang = lang;
 		//user = new User(Const.sysUser);
 	}
-
-
-/*	public SourceSupplier(User user, AppEnv env, String lang){
-		this.user = user;
-		this.env = env; 
-		this.lang = lang;
-		vocabulary = env.vocabulary;
-		contextType = SourceSupplierContextType.SIMPLE_WITH_LANG;
-	//	_Session session = new _Session(env, user,this);
-		scriptProcessor = new SimpleScriptProcessorWithLang(session, lang); 
-
-	}
-
-	public SourceSupplier(IDatabase db, String userID){
-		contextType = SourceSupplierContextType.DATABASE;
-		this.db = db;	
-		User user = new User();
-		this.user = user;
-		scriptProcessor = new SessionScriptProcessor(db, user); 
-		env = db.getParent();
-	}
-
-	public SourceSupplier(IDatabase db, User user){
-		contextType = SourceSupplierContextType.DATABASE;
-		this.db = db;
-		this.user = user;
-		scriptProcessor = new SessionScriptProcessor(db, user); 	
-	}
-
-	public SourceSupplier(String userID) {
-		contextType = SourceSupplierContextType.SIMPLE;
-		scriptProcessor = new SimpleScriptProcessor();
-		User user = new User(userID);
-		this.user = user;		
-	}*/
-
-
-	
-
-	
 
 
 	public SentenceCaption getValueAsCaption(ValueSourceType sourceType, String keyWord){

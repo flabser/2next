@@ -12,7 +12,6 @@ import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.Const;
 import com.flabser.env.Environment;
 import com.flabser.rule.RuleValue;
-import com.flabser.rule.constants.QueryType;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.rule.constants.ValueSourceType;
 import com.flabser.util.XMLUtil;
@@ -26,7 +25,6 @@ public class ElementRule implements  Const {
 	public RunMode isOn;
 	public String value;
 	public String doClassName;
-	public QueryType queryType = QueryType.UNKNOWN;
 	public RuleValue query;
 
 

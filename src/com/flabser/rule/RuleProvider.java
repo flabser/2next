@@ -189,28 +189,5 @@ public class RuleProvider implements Const {
         }
         return fl;
     }
-
-    private String getRuleTypeAsString (int ruleType){
-        switch (ruleType){
-            case STATICCONTENT_RULE:
-                return "static";
-            case VIEW_RULE:
-                return "view";
-            case FILTER_RULE:
-                return "filter";
-            case FORM_RULE:
-                return "form";
-            case QUERY_RULE:
-                return "query";
-            case PAGE_RULE:
-                return "page";
-            case HANDLER_RULE:
-                return "handler";
-            default:
-                return "unknown";
-        }
-
-    }
-
   
 }
