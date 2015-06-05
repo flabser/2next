@@ -1,11 +1,11 @@
 define('views/accounts', [
     'ember',
-    'text!templates/accounts.html'
+    'templates/accounts'
 ], function(Ember, tpl) {
     "use strict";
 
     var AccountsView = Ember.View.extend({
-        template: Ember.Handlebars.compile(tpl)
+        templateName: 'templates/accounts',
     });
 
     return AccountsView;

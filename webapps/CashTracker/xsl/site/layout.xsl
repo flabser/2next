@@ -153,7 +153,7 @@
 	</xsl:template>
 
 	<xsl:template match="availablelangs">
-		<xsl:if test="count(query/entry[viewcontent/viewtext = 'ON']) > 1">
+		<xsl:if test="count(value[entry = 'ON']) > 1">
 			<li class="select-lang">
 				<a href="#" onclick="return false;" class="lang-title">
 					<i>
@@ -163,15 +163,15 @@
 					</i>
 				</a>
 				<div class="langs" onclick="return void(0)">
-					<xsl:apply-templates select="query/entry[viewcontent/viewtext = 'ON']" mode="lang" />
+					<xsl:apply-templates select="value[entry[1] = 'ON']" mode="lang" />
 				</div>
 			</li>
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template match="entry" mode="lang">
-		<a class="lang" href="#" onclick="nbApp.wlc.setLang('{viewcontent/viewtext1}')">
-			<xsl:value-of select="viewcontent/viewtext2" />
+	<xsl:template match="value" mode="lang">
+		<a class="lang" href="#" onclick="nbApp.wlc.setLang('{entry[2]}')">
+			<xsl:value-of select="entry[3]" />
 		</a>
 	</xsl:template>
 
@@ -202,13 +202,13 @@
 			<div class="wlc_reg-inner">
 				<div class="container">
 					<h1 class="wlc_reg-header">
-						<xsl:value-of select="//captions/reg_title/@caption" />
+						<xsl:value-of select="//captions/reg/@caption" />
 					</h1>
 					<form action="Provider" method="post" name="form-reg" class="reg_form">
 						<input type="hidden" name="type" value="page" />
 						<input type="hidden" name="id" value="reg-user" />
 						<section>
-							<div class="reg_form-inp">
+							<div class="reg_form-inp" style="display:none;">
 								<input class="input" type="text" name="budget_name" value="" autocomplete="off"
 									placeholder="{//captions/reg_budget_name/@caption}" title="{//captions/reg_budget_name/@caption}" />
 								<div class="reg_form-inp-inf">

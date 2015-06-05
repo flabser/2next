@@ -8,6 +8,8 @@ define('router', ['ember'], function(Ember) {
             path: '/'
         });
 
+        this.resource('profile');
+
         this.resource('transactions');
 
         this.resource('transaction', function() {

@@ -18,28 +18,12 @@ nbApp.wlc.init = function() {
 		$(this).removeClass('invalid');
 		$(".reg-email-invalid,.reg-email-exists,.reg-pwd-weak").css("height", "0px");
 	});
-	//
-	$('.js-ShowLoginForm').click(nbApp.wlc.loginFormOpen);
-
-	if (location.hash === "#sign-in") {
-		nbApp.wlc.loginFormOpen();
-	}
-};
-
-nbApp.wlc.loginFormOpen = function() {
-	$("body").addClass("login-form-open");
-};
-
-nbApp.wlc.loginFormClose = function() {
-	$("body").removeClass("login-form-open");
-};
-
-nbApp.wlc.login = function(form) {
-	form.submit();
 };
 
 nbApp.wlc.setLang = function(lang) {
-	$.cookie('lang', lang);
+	$.cookie('lang', lang, {
+		path: '/'
+	});
 	window.location.reload();
 };
 
@@ -53,11 +37,11 @@ nbApp.wlc.reg = function(form) {
 	$(form).addClass("process");
 
 	nb.ajax({
-		method : 'POST',
-		datatype : 'text',
-		url : 'Provider?client=' + screen.height + 'x' + screen.width,
-		data : $(form).serialize(),
-		success : function(result) {
+		method: 'POST',
+		datatype: 'text',
+		url: 'Provider?client=' + screen.height + 'x' + screen.width,
+		data: $(form).serialize(),
+		success: function(result) {
 			var pr = result.split(",");
 			if (pr.indexOf("email") != -1) {
 				$("input[name=email]", form).addClass("invalid");
@@ -89,15 +73,15 @@ nbApp.wlc.reg = function(form) {
 
 			if (pr.indexOf("verify-email-send") != -1) {
 				nb.utils.notify({
-					type : "info",
-					message : "Для завершения регистрации подтвердите свой email"
+					type: "info",
+					message: "Для завершения регистрации подтвердите свой email"
 				}).show();
 			}
 		},
-		error : function(err) {
+		error: function(err) {
 			console.log(err);
 		},
-		complete : function() {
+		complete: function() {
 			$(form).removeClass("process");
 		}
 	});

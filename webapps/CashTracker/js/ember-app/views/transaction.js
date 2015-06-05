@@ -1,11 +1,11 @@
 define('views/transaction', [
     'ember',
-    'text!templates/transaction.html'
+    'templates/transaction'
 ], function(Ember, tpl) {
     "use strict";
 
     var TransactionView = Ember.View.extend({
-        template: Ember.Handlebars.compile(tpl)
+        templateName: 'templates/transaction',
     });
 
     return TransactionView;

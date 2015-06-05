@@ -1,11 +1,11 @@
 define('views/user', [
     'ember',
-    'text!templates/user.html'
+    'templates/user'
 ], function(Ember, tpl) {
     "use strict";
 
     var UserView = Ember.View.extend({
-        template: Ember.Handlebars.compile(tpl)
+        templateName: 'templates/user',
     });
 
     return UserView;

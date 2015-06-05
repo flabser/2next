@@ -1,13 +1,13 @@
 define('views/application', [
     'ember',
-    'text!templates/application.html'
+    'templates/application'
 ], function(Ember, tpl) {
     "use strict";
 
     var ApplicationView = Ember.View.extend({
         classNames: ['layout'],
 
-        template: Ember.Handlebars.compile(tpl),
+        templateName: 'templates/application',
 
         willInsertElement: function() {
             $('.page-loading').hide();

@@ -20,7 +20,7 @@ define('config', {
     },
     shim: {
         ember: {
-            deps: ['jquery', 'ember-template-compiler'],
+            deps: ['jquery'],
             exports: 'Ember'
         },
         'ember-data': {

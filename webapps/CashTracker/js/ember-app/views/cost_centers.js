@@ -1,11 +1,11 @@
 define('views/cost_centers', [
     'ember',
-    'text!templates/costcenters.html'
+    'templates/costcenters'
 ], function(Ember, tpl) {
     "use strict";
 
     var CostCentersView = Ember.View.extend({
-        template: Ember.Handlebars.compile(tpl)
+        templateName: 'templates/costcenters',
     });
 
     return CostCentersView;
