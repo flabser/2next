@@ -44,6 +44,11 @@ body.wlc {
     max-width: 980px;
 }
 
+.tablet.wlc .container,
+.phone.wlc .container {
+    max-width: 100%;
+}
+
 .footer-spacer {
     height: 100px;
 }
@@ -100,6 +105,7 @@ body.wlc {
     background: #FFF;
     box-shadow: 0 3px 3px rgba(26, 30, 34, 0.600);
     display: none;
+    margin: 0 5px;
     position: absolute;
     top: 69px;
     right: 0;
@@ -126,6 +132,17 @@ body.wlc {
     border-radius: 3px;
     color: white;
     padding: 4px;
+}
+
+.user-menu .fa {
+    font-size: 14px;
+    margin: 0 3px;
+}
+
+@media ( max-width: 567px) {
+    .user-menu .username span {
+        display: none;
+    }
 }
 
 /* wlc_promo */
@@ -223,6 +240,8 @@ body.wlc {
 
 .wlc_reg-inner {
     padding: 50px 1em;
+    margin: 0 auto;
+    max-width: 980px;
 }
 
 .wlc_reg-header {
@@ -247,6 +266,7 @@ body.wlc {
 .reg_form-inp,
 .reg_form-inp-btn {
     display: inline-block;
+    max-width: 300px;
     padding: 3px;
     text-align: left;
     vertical-align: top;
@@ -384,8 +404,8 @@ body.wlc {
 
 /* select-lang */
 .wlc .select-lang {
-	display: inline-block;
-	position: relative;
+    display: inline-block;
+    position: relative;
 }
 
 .select-lang:hover .langs {
@@ -400,6 +420,7 @@ body.wlc {
     display: none;
     padding: .5em 1em;
     position: absolute;
+    text-align: left;
     left: 0;
 }
 
@@ -468,9 +489,9 @@ body.wlc {
 }
 
 @media ( max-width: 768px) {
-	.footer-spacer {
-    	height: 170px;
-	}
+    .footer-spacer {
+        height: 170px;
+    }
     .wlc_reg-header {
         display: block;
     }
@@ -493,19 +514,21 @@ body.wlc {
         text-align: center;
         width: 100%;
     }
-    .reg_form .reg_form-inp {
+    .reg_form .reg_form-inp,
+    .reg_form .reg_form-inp-btn {
         text-align: center;
+        max-width: 100%;
         width: 100%;
     }
     .wlc .footer-nav .select-lang-li {
-    	display: block;
-    	padding: 12px;
-    	text-align: center;
+        display: block;
+        padding: 12px;
+        text-align: center;
     }
     .wlc .footer-nav .copy {
-    	display: block;
-    	float: none;
-    	padding: 12px;
-    	text-align: center;
-	}
+        display: block;
+        float: none;
+        padding: 12px;
+        text-align: center;
+    }
 }

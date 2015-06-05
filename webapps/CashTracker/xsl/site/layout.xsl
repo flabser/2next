@@ -43,6 +43,7 @@
 			</title>
 			<link rel="shortcut icon" href="favicon.ico" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+			<link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css" />
 			<link type="text/css" rel="stylesheet" href="css/all.min.css" />
 
 			<xsl:call-template name="STYLE_FIX_FIELDSET" />
@@ -77,7 +78,7 @@
 							<xsl:value-of select="//captions/about/@caption" />
 						</a>
 					</xsl:if>
-					<xsl:if test="@id = 'login'">
+					<xsl:if test="@id = 'login' and (@userid = 'anonymous' or @userid = '')">
 						<a href="?type=page&amp;id=welcome" class="nav-item btn-login">
 							<span>
 								<xsl:value-of select="//captions/reg/@caption" />
@@ -92,9 +93,13 @@
 						</a>
 					</xsl:if>
 					<xsl:if test="@userid != 'anonymous' and @userid != ''">
-						<div class="nav-dropdown">
+						<div class="nav-dropdown user-menu">
 							<a class="nav-title username" href="#" onclick="return false;">
-								<xsl:value-of select="@userid" />
+								<i class="fa fa-user user-icon"></i>
+								<span>
+									<xsl:value-of select="@userid" />
+								</span>
+								<i class="fa fa-caret-down"></i>
 							</a>
 							<div class="nav-dropdown-menu">
 								<a class="nav-item" href="?type=page&amp;id=operations">
