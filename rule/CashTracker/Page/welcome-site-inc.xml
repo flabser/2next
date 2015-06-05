@@ -11,6 +11,7 @@
 
 	<caption name="promo_line1" />
 	<caption name="promo_line2" />
+	<caption name="copyright" />
 
 	<caption name="operations" />
 	<caption name="user_profile" />
