@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <vocabulary primary="ENG">
+    <!-- promo -->
+    <sentence mode="on" keyword="promo_line1">
+        <entry lang="RUS" hint="Сервис для учета и планирования">Сервис для учета и планирования</entry>
+        <entry lang="KAZ" hint="Сервис для учета и планирования">Сервис для учета и планирования</entry>
+        <entry lang="ENG" hint="Сервис для учета и планирования">Сервис для учета и планирования</entry>
+        <entry lang="BG" hint="Сервис для учета и планирования">Сервис для учета и планирования</entry>
+    </sentence>
+    <sentence mode="on" keyword="promo_line2">
+        <entry lang="RUS" hint="корпоративных и семейных финансов">корпоративных и семейных финансов</entry>
+        <entry lang="KAZ" hint="корпоративных и семейных финансов">корпоративных и семейных финансов</entry>
+        <entry lang="ENG" hint="корпоративных и семейных финансов">корпоративных и семейных финансов</entry>
+        <entry lang="BG" hint="корпоративных и семейных финансов">корпоративных и семейных финансов</entry>
+    </sentence>
+
     <sentence mode="on" keyword="operations">
         <entry lang="RUS" hint="Операции">Операции</entry>
         <entry lang="KAZ" hint="Операции">Операции</entry>
@@ -227,6 +241,12 @@
         <entry lang="RUS" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
         <entry lang="KAZ" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
         <entry lang="ENG" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
+        <entry lang="BG" hint=""></entry>
+    </sentence>
+    <sentence mode="on" keyword="verify_email_already">
+        <entry lang="RUS" hint="E-mail подтвержден.">E-mail подтвержден.</entry>
+        <entry lang="KAZ" hint="E-mail тексеруден өтті.">E-mail тексеруден өтті.</entry>
+        <entry lang="ENG" hint="Email confirmed">Email confirmed</entry>
         <entry lang="BG" hint=""></entry>
     </sentence>
 
