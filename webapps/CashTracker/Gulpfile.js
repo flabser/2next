@@ -68,8 +68,14 @@ gulp.task('em_minify_js', function() {
 // --------------------------------
 
 // ember templates
-gulp.task('em_templates', function() {
+gulp.task('em_templates_trim', function() {
     gulp.src('./js/ember-app/templates/*.html')
+        .pipe(replace(/(\n|\s{2,})/g, ''))
+        .pipe(gulp.dest('./js/ember-app/templates/compiled'));
+});
+
+gulp.task('em_templates', function() {
+    gulp.src('./js/ember-app/templates/compiled/*.html')
         .pipe(emberTemplates({
             type: 'amd',
             compiler: require('./js/lib/ember-template-compiler'),
@@ -83,7 +89,7 @@ gulp.task('em_templates', function() {
 
 // run
 gulp.task('default', function() {
-    gulp.run('lint', 'em_lint', 'em_templates', 'em_minify_js', 'minify_js', 'minify_css');
+    gulp.run('lint', 'em_lint', 'em_templates_trim', 'em_templates', 'em_minify_js', 'minify_js', 'minify_css');
 
     gulp.watch(js_files, function(event) {
         gulp.run('minify_js');

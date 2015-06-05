@@ -84,17 +84,17 @@
 							</span>
 						</a>
 					</xsl:if>
-					<xsl:if test="@id != 'login' and @userid = 'anonymous'">
+					<xsl:if test="@id != 'login' and (@userid = 'anonymous' or @userid = '')">
 						<a href="?type=page&amp;id=login" class="nav-item btn-login">
 							<span>
 								<xsl:value-of select="//captions/login/@caption" />
 							</span>
 						</a>
 					</xsl:if>
-					<xsl:if test="@userid != 'anonymous'">
+					<xsl:if test="@userid != 'anonymous' and @userid != ''">
 						<div class="nav-dropdown">
 							<a class="nav-title username" href="#" onclick="return false;">
-								<xsl:value-of select="@username" />
+								<xsl:value-of select="@userid" />
 							</a>
 							<div class="nav-dropdown-menu">
 								<a class="nav-item" href="?type=page&amp;id=operations">
@@ -144,7 +144,9 @@
 					</li>
 					<xsl:apply-templates select="//availablelangs" />
 					<li class="copy">
-						<copy>@copyright</copy>
+						<copy>
+							<xsl:value-of select="//captions/copyright/@caption" />
+						</copy>
 					</li>
 				</ul>
 				<div class="clearfix" />
@@ -189,8 +191,10 @@
 			<div class="wlc_promo-inner">
 				<div class="wlc_promo-content container">
 					<h1>
-						Сервис для учета и планирования
-						<div>корпоративных и семейных финансов</div>
+						<xsl:value-of select="//captions/promo_line1/@caption" />
+						<div>
+							<xsl:value-of select="//captions/promo_line2/@caption" />
+						</div>
 					</h1>
 				</div>
 			</div>

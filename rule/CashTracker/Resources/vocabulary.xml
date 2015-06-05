@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <vocabulary primary="ENG">
+    <sentence mode="on" keyword="copyright">
+        <entry lang="RUS" hint="@copyright">@copyright</entry>
+        <entry lang="KAZ" hint="@copyright">@copyright</entry>
+        <entry lang="ENG" hint="@copyright">@copyright</entry>
+        <entry lang="BG" hint="@copyright">@copyright</entry>
+    </sentence>
+
     <!-- promo -->
     <sentence mode="on" keyword="promo_line1">
         <entry lang="RUS" hint="Сервис для учета и планирования">Сервис для учета и планирования</entry>

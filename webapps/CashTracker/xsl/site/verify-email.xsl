@@ -21,12 +21,17 @@
 					<xsl:value-of select="//captions/verify_email_title/@caption" />
 				</h1>
 				<section style="font-size:1.5em;">
-					<xsl:if test="//verify-result = 'error'">
-						<xsl:value-of select="//captions/verify_email_error/@caption" />
-					</xsl:if>
-					<xsl:if test="//verify-result = 'ok'">
-						<xsl:value-of select="//captions/verify_email_done/@caption" />
-					</xsl:if>
+					<xsl:choose>
+						<xsl:when test="//process = 'verify-ok'">
+							<xsl:value-of select="//captions/verify_email_done/@caption" />
+						</xsl:when>
+						<xsl:when test="//process = 'already-registered'">
+							<xsl:value-of select="//captions/verify_email_already/@caption" />
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="//captions/verify_email_error/@caption" />
+						</xsl:otherwise>
+					</xsl:choose>
 				</section>
 			</div>
 		</div>
