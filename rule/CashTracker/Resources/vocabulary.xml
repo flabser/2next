@@ -251,9 +251,9 @@
         <entry lang="BG" hint=""></entry>
     </sentence>
     <sentence mode="on" keyword="verify_email_already">
-        <entry lang="RUS" hint="E-mail подтвержден.">E-mail подтвержден.</entry>
-        <entry lang="KAZ" hint="E-mail тексеруден өтті.">E-mail тексеруден өтті.</entry>
-        <entry lang="ENG" hint="Email confirmed">Email confirmed</entry>
+        <entry lang="RUS" hint="Вы уже зарегистрированы">Вы уже зарегистрированы</entry>
+        <entry lang="KAZ" hint="Вы уже зарегистрированы">Вы уже зарегистрированы</entry>
+        <entry lang="ENG" hint="You are already registered">You are already registered</entry>
         <entry lang="BG" hint=""></entry>
     </sentence>
 
