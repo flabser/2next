@@ -59,6 +59,12 @@
         <entry lang="ENG" hint="Help">Help</entry>
         <entry lang="BG" hint="Помощ">Помощ</entry>
     </sentence>
+    <sentence mode="on" keyword="setup">
+        <entry lang="RUS" hint="Начальная настройка">Начальная настройка</entry>
+        <entry lang="KAZ" hint="Начальная настройка">Начальная настройка</entry>
+        <entry lang="ENG" hint="Начальная настройка">Начальная настройка</entry>
+        <entry lang="BG" hint="Начальная настройка">Начальная настройка</entry>
+    </sentence>
 
 	<!-- help -->
     <sentence mode="on" keyword="lost_password">
