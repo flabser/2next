@@ -369,7 +369,7 @@ body.wlc {
 .wlc .footer-nav li {
     display: inline-block;
     margin: 0;
-    padding: 8px;
+    padding: 6px 8px 4px 8px;
     vertical-align: top;
 }
 
@@ -383,10 +383,9 @@ body.wlc {
 }
 
 /* select-lang */
-.wlc .footer-nav .select-lang {
-    display: inline-block;
-    padding: 8px 8px 0;
-    position: relative;
+.wlc .select-lang {
+	display: inline-block;
+	position: relative;
 }
 
 .select-lang:hover .langs {
@@ -469,6 +468,9 @@ body.wlc {
 }
 
 @media ( max-width: 768px) {
+	.footer-spacer {
+    	height: 170px;
+	}
     .wlc_reg-header {
         display: block;
     }
@@ -495,4 +497,15 @@ body.wlc {
         text-align: center;
         width: 100%;
     }
+    .wlc .footer-nav .select-lang-li {
+    	display: block;
+    	padding: 12px;
+    	text-align: center;
+    }
+    .wlc .footer-nav .copy {
+    	display: block;
+    	float: none;
+    	padding: 12px;
+    	text-align: center;
+	}
 }

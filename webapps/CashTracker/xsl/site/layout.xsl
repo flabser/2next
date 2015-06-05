@@ -156,16 +156,18 @@
 
 	<xsl:template match="availablelangs">
 		<xsl:if test="count(value[entry = 'ON']) > 1">
-			<li class="select-lang">
-				<a href="#" onclick="return false;" class="lang-title">
-					<i>
-						<xsl:attribute name="class">
+			<li class="select-lang-li">
+				<div class="select-lang">
+					<a href="#" onclick="return false;" class="lang-title">
+						<i>
+							<xsl:attribute name="class">
 							<xsl:value-of select="concat('lang-icon-', lower-case(//@lang))" />
 						</xsl:attribute>
-					</i>
-				</a>
-				<div class="langs" onclick="return void(0)">
-					<xsl:apply-templates select="value[entry[1] = 'ON']" mode="lang" />
+						</i>
+					</a>
+					<div class="langs" onclick="return void(0)">
+						<xsl:apply-templates select="value[entry[1] = 'ON']" mode="lang" />
+					</div>
 				</div>
 			</li>
 		</xsl:if>
