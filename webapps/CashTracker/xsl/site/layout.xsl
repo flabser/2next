@@ -166,8 +166,8 @@
 					<a href="#" onclick="return false;" class="lang-title">
 						<i>
 							<xsl:attribute name="class">
-							<xsl:value-of select="concat('lang-icon-', lower-case(//@lang))" />
-						</xsl:attribute>
+								<xsl:value-of select="concat('lang-icon-', lower-case(//@lang))" />
+							</xsl:attribute>
 						</i>
 					</a>
 					<div class="langs" onclick="return void(0)">
