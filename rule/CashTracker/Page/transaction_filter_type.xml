@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="transaction_filter_type" mode="on">
+	<description></description>
+	<caching>CACHING_IN_USER_SESSION_SCOPE</caching>
+	<element mode="ON" type="SCRIPT">
+		<name>transaction_filter_type</name>
+		<events>
+			<doscript source="file">cashtracker.page.filter.TransactionTypeFilter</doscript>
+		</events>
+	</element>
+	<caption name="filter_reset" source="KEYWORD">Все</caption>
+</rule>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rule type="page" id="operations" mode="on" history="on">
+<rule type="page" id="transactions" mode="on" history="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>pages/operations.xsl</xsltfile>
+	<xsltfile>pages/transactions.xsl</xsltfile>
 	<element mode="ON" type="INCLUDED_PAGE">
 		<value>outline</value>
 	</element>
@@ -11,17 +11,17 @@
 			<doscript source="file">cashtracker.page.saldo.Calculate</doscript>
 		</events>
 	</element>
-	<element mode="ON" type="INCLUDED_PAGE">	
-		<value>filter_type_operation</value>
+	<element mode="ON" type="INCLUDED_PAGE">
+		<value>transaction_filter_type</value>
 	</element>
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.actionbar.Operations</doscript>
+			<doscript source="file">cashtracker.page.actionbar.Transactions</doscript>
 		</events>
 	</element>
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.views.Operations</doscript>
+			<doscript source="file">cashtracker.page.views.Transactions</doscript>
 		</events>
 	</element>
 	<caption name="viewnamecaption" source="KEYWORD">Операции</caption>

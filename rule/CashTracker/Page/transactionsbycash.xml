@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rule type="page" id="operationsbycash" mode="on" history="on">
+<rule type="page" id="transactionsbycash" mode="on" history="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>pages/operations-by-cash.xsl</xsltfile>
+	<xsltfile>pages/transactions-by-cash.xsl</xsltfile>
 	<element mode="ON" type="INCLUDED_PAGE">
 		<name>outline</name>
 		<value>outline</value>
@@ -15,18 +15,18 @@
 	</element>
 	<element mode="ON" type="INCLUDED_PAGE">
 		<name>filter</name>
-		<value>filter_type_operation</value>
+		<value>transaction_filter_type</value>
 	</element>
 	<element mode="ON" type="SCRIPT">
 		<name>action_bar</name>
 		<events>
-			<doscript source="file">cashtracker.page.actionbar.Operations</doscript>
+			<doscript source="file">cashtracker.page.actionbar.Transactions</doscript>
 		</events>
 	</element>
 	<element mode="ON" type="SCRIPT">
 		<name>view_content</name>
 		<events>
-			<doscript source="file">cashtracker.page.views.OperationsByCash</doscript>
+			<doscript source="file">cashtracker.page.views.TransactionsByCash</doscript>
 		</events>
 	</element>
 	<caption name="viewnamecaption" source="KEYWORD">Операции</caption>
