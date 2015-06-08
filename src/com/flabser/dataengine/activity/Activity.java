@@ -24,9 +24,9 @@ public class Activity implements IActivity {
 	        try {
 	            conn.setAutoCommit(false);
 	            Statement s = conn.createStatement();
-	            String sql = "insert into USERS_ACTIVITY(TYPE, DBID, USERID, EVENTTIME, CLIENTIP) values ("
+	            String sql = "insert into USERS_ACTIVITY(TYPE, DBID, USERID, EVENTTIME, CLIENTIP, VIEWTEXT) values ("
 	                    + UsersActivityType.LOGGED_IN.getCode() + ",'system', '" + user.getUserID()+ "', '" + sqlDateTimeFormat.format(new java.util.Date()) +
-	                    "','" + ip + "')";
+	                    "','" + ip + "','" + user.toString() + "')";
 	            s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 	            ResultSet rs = s.getGeneratedKeys();
 	            if (rs.next()) {
@@ -53,9 +53,9 @@ public class Activity implements IActivity {
 	        try {
 	            conn.setAutoCommit(false);
 	            Statement s = conn.createStatement();
-	            String sql = "insert into USERS_ACTIVITY(TYPE, DBID, USERID, EVENTTIME, CLIENTIP) values ("
+	            String sql = "insert into USERS_ACTIVITY(TYPE, DBID, USERID, EVENTTIME, CLIENTIP,VIEWTEXT) values ("
 	                    + UsersActivityType.LOGGED_OUT.getCode() + ",'system', '" + user.getUserID() + "', '" + sqlDateTimeFormat.format(new java.util.Date()) +
-	                    "', '" + ip + "')";
+	                    "', '" + ip + "','" + user.toString() + "')";
 	            s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 	            ResultSet rs = s.getGeneratedKeys();
 	            if (rs.next()) {

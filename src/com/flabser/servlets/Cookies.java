@@ -6,8 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Cookies {
 	public boolean wAuthCookiesIsValid;
 	public boolean authCookiesIsValid;
-	public String currentLang = "RUS";
-	public String wAuthHash = "0";
+	public String currentLang = "ENG";
 	public String authHash = "0";
 	public int pageSize = 20;
 	public String redirectURL;
@@ -18,10 +17,7 @@ public class Cookies {
 		if (cooks != null){			
 			for (int i = 0; i < cooks.length; i++){
 				if (cooks[i].getName().equals("lang")){
-					currentLang = cooks[i].getValue();				
-				}else if (cooks[i].getName().equals("wauth")){
-					wAuthHash = cooks[i].getValue();
-					wAuthCookiesIsValid = true;					
+					currentLang = cooks[i].getValue();	
 				}else if (cooks[i].getName().equals("auth")){
 					authHash = cooks[i].getValue();
 					authCookiesIsValid = true;
@@ -42,7 +38,7 @@ public class Cookies {
 
 	
 	public String toString(){
-		return "auth=" + authHash + ", wauth=" + wAuthHash + ", " + currentLang + "," + pageSize;
+		return "auth=" + authHash + ", " + currentLang + "," + pageSize;
 	}
 	
 }

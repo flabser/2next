@@ -33,7 +33,7 @@ public class WebServer implements IWebServer {
 		tomcat.setHostname(defaultHostName);
 		tomcat.setBaseDir("webserver");
 
-		StandardServer server = (StandardServer) this.tomcat.getServer();
+		StandardServer server = (StandardServer) WebServer.tomcat.getServer();
 		AprLifecycleListener listener = new AprLifecycleListener();
 		server.addLifecycleListener(listener);
 
@@ -72,21 +72,6 @@ public class WebServer implements IWebServer {
 			}
 			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
 			context.setDisplayName("Administrator");
-		} else if (docBase.equalsIgnoreCase("JaxREST")) {
-			String db = new File(Environment.primaryAppDir + "webapps/" + docBase).getAbsolutePath();
-			context = tomcat.addContext(URLPath, db);
-			for (int i = 0; i < defaultWelcomeList.length; i++) {
-				context.addWelcomeFile(defaultWelcomeList[i]);
-			}
-
-			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
-			Wrapper w = Tomcat.addServlet(context, "Jersey REST Service",  resourceConfig());
-			w.setLoadOnStartup(1);
-			w.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
-		//	context.addParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
-			
-			context.addServletMapping("/*", "Jersey REST Service");
-			context.setDisplayName("JaxREST");
 		} else {
 			if (siteName == null || siteName.equalsIgnoreCase("")) {
 				String db = new File("webapps/" + docBase).getAbsolutePath();

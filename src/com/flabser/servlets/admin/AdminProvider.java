@@ -75,7 +75,7 @@ public class AdminProvider extends HttpServlet{
 			StringBuffer output = new StringBuffer(10000);		
 			boolean disableClientCache = false;
 
-			System.out.println("Web request type=" + type + ", element=" + element + ", id=" + id);
+			System.out.println("Web request type=" + type + ", element=" + element + ", key=" + key);
 			HttpSession jses = request.getSession(true);
 			jses.setAttribute("lang","EN");
 			jses.setAttribute("skin","");		
@@ -140,7 +140,7 @@ public class AdminProvider extends HttpServlet{
 				}
 				response.setContentType("text/xml;charset=utf-8");	
 
-				String outputContent = po.getStandartUTF8Output();	
+				String outputContent = po.getStandartOutput();	
 				//System.out.println(outputContent);
 				PrintWriter out = response.getWriter();
 				out.println(outputContent);

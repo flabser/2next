@@ -42,7 +42,7 @@ class RegUser extends _DoScript {
 
 		// reg user
 		com.flabser.users.User user = session.getUser()
-		user.setUserID(regForm.email)
+		user.setLogin(regForm.email)
 		user.setUserName(regForm.userName)
 		user.setPassword(regForm.pwd)
 		user.setPasswordHash(regForm.pwd)

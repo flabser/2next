@@ -6,10 +6,6 @@ public class _Element implements _IContent {
 	private String name;
 	private Object value;
 
-	public _Element(String name) {
-		this.name = name;
-	}
-
 	public _Element(String name, String value) {
 		this.name = name;
 		this.value = value;

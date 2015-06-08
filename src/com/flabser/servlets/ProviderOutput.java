@@ -74,27 +74,8 @@ public class ProviderOutput{
 		}
 
 		return xmlTextUTF8Header + "<request " + queryString + " type=\"" + type + "\" lang=\"" + userSession.lang + "\" id=\"" + id + "\" " +
-		"useragent=\"" + browser + "\"  userid=\"" + userSession.currentUser.getUserID() + "\" >" +
+		"useragent=\"" + browser + "\"  userid=\"" + userSession.currentUser.getLogin() + "\" >" +
 		"<history>" + historyXML + "</history>" + output + "</request>";
-	}
-
-	public String getStandartUTF8Output(){
-		String localUserName = "";				
-		localUserName = userSession.currentUser.getUserName();	
-
-		String queryString = request.getQueryString();
-		if (queryString != null){
-			queryString = "querystring=\"" + queryString.replace("&","&amp;") + "\"";
-		}else{
-			queryString = "";
-		}
-
-		
-		String outputContent = xmlTextUTF8Header + "<request " + queryString + " type=\"" + type + "\"  lang=\"" + userSession.lang + "\" id=\"" + id + "\" " +
-				"useragent=\"" + browser + "\"  userid=\"" +  "\" " +
-				"username=\"" + localUserName + "\"><history>" + historyXML + "</history>" + output + "</request>";
-				
-		return outputContent;
 	}
 	
 	protected void addHistory() throws UserException{
