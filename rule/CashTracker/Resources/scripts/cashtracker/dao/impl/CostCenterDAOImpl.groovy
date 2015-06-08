@@ -7,6 +7,7 @@ import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
 
 import com.flabser.dataengine.IDatabase;
+import com.flabser.script._Session
 import com.flabser.users.User;
 
 
@@ -15,9 +16,9 @@ public class CostCenterDAOImpl implements CostCenterDAO {
 	private IDatabase db;
 	private User user;
 
-	public CostCenterDAOImpl(IDatabase em, User user) {
-		this.db = em;
-		this.user = user;
+	public CostCenterDAOImpl(_Session session) {
+		this.db = session.getDatabase();
+		this.user = session.getUser();
 	}
 
 	public List <CostCenter> findAll() {

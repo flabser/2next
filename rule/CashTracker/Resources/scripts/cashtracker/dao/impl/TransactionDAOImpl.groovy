@@ -10,6 +10,7 @@ import cashtracker.model.CostCenter;
 import cashtracker.model.Transaction;
 
 import com.flabser.dataengine.IDatabase;
+import com.flabser.script._Session
 import com.flabser.users.User;
 
 
@@ -18,9 +19,9 @@ public class TransactionDAOImpl implements TransactionDAO {
 	private IDatabase db;
 	private User user;
 
-	public TransactionDAOImpl(IDatabase em, User user) {
-		this.db = em;
-		this.user = user;
+	public TransactionDAOImpl(_Session session) {
+		this.db = session.getDatabase();
+		this.user = session.getUser();
 	}
 
 	public List <Transaction> findAll() {

@@ -16,15 +16,13 @@ class RegBudget extends _DoScript {
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
-		def db = session.getDatabase()
-		def user = session.getUser()
 
-		def dao = new BudgetDAOImpl(db, user)
+		def dao = new BudgetDAOImpl(session)
 		def budget = new Budget()
 
 		budget.setName(formData.getValueSilently("budgetname"))
 		budget.setRegDate(Database.sqlDateTimeFormat.format(new java.util.Date()))
-		budget.setOwner(user)
+		budget.setOwner(session.getUser())
 		budget.setStatus(BudgetStatusType.ACTIVE)
 
 		def res = dao.addBudget(budget)

@@ -7,6 +7,7 @@ import cashtracker.dao.CategoryDAO;
 import cashtracker.model.Category;
 
 import com.flabser.dataengine.IDatabase;
+import com.flabser.script._Session
 import com.flabser.users.User;
 
 
@@ -15,9 +16,9 @@ public class CategoryDAOImpl implements CategoryDAO {
 	private IDatabase db;
 	private User user;
 
-	public CategoryDAOImpl(IDatabase em, User user) {
-		this.db = em;
-		this.user = user;
+	public CategoryDAOImpl(_Session session) {
+		this.db = session.getDatabase();
+		this.user = session.getUser();
 	}
 
 	public List <Category> findAll() {

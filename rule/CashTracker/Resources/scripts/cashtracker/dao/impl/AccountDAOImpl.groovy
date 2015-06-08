@@ -7,6 +7,7 @@ import cashtracker.dao.AccountDAO;
 import cashtracker.model.Account;
 
 import com.flabser.dataengine.IDatabase;
+import com.flabser.script._Session
 import com.flabser.users.User;
 
 
@@ -15,9 +16,9 @@ public class AccountDAOImpl implements AccountDAO {
 	private IDatabase db;
 	private User user;
 
-	public AccountDAOImpl(IDatabase em, User user) {
-		this.db = em;
-		this.user = user;
+	public AccountDAOImpl(_Session session) {
+		this.db = session.getDatabase();
+		this.user = session.getUser();
 	}
 
 	public List <Account> findAll() {

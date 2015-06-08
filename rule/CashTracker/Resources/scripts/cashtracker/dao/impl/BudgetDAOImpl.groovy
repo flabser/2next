@@ -7,6 +7,7 @@ import cashtracker.dao.BudgetDAO;
 import cashtracker.model.Budget;
 
 import com.flabser.dataengine.IDatabase;
+import com.flabser.script._Session
 import com.flabser.users.User;
 
 
@@ -15,9 +16,9 @@ public class BudgetDAOImpl implements BudgetDAO {
 	private IDatabase db;
 	private User user;
 
-	public BudgetDAOImpl(IDatabase em, User user) {
-		this.db = em;
-		this.user = user;
+	public BudgetDAOImpl(_Session session) {
+		this.db = session.getDatabase();
+		this.user = session.getUser();
 	}
 
 	public List <Budget> findAll() {
