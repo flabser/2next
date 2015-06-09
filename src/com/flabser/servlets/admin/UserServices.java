@@ -35,17 +35,13 @@ public class UserServices {
 			ea += app.toXML();
 		}
 
-		if (user.getUserID() != null) {
-			xmlContent += "<userid>" + user.getUserID() + "</userid>" + "<docid>" + user.docID + "</docid>"
+		if (user.getLogin() != null) {
+			xmlContent += "<login>" + user.getLogin() + "</login>" + "<docid>" + user.id + "</docid>"
 					+ "<fullname></fullname><email>" + user.getEmail() + "</email>" +
 
 					"<password>" + user.getPassword() + "</password>" + "<isadmin>" + user.isSupervisor()
 					+ "</isadmin><hash>" + user.getHash() + "</hash>" + "<enabledapps>" + ea + "</enabledapps>";
 
-			// SourceSupplier ss = new SourceSupplier(user.getUserID());
-			// xmlContent += "<glossaries><apps>" +
-			// ss.getDataAsXML(ValueSourceType.MACRO, "",
-			// Macro.ALL_APPLICATIONS,"RUS") + "</apps></glossaries>";
 		}
 
 		return xmlContent;
@@ -53,10 +49,6 @@ public class UserServices {
 
 	public String getBlankUserAsXML() throws RuleException, LocalizatorException {
 		String xmlContent = "";
-		// SourceSupplier ss = new SourceSupplier(Const.sysUser);
-		// xmlContent += "<glossaries><apps>" +
-		// ss.getDataAsXML(ValueSourceType.MACRO, "",
-		// Macro.ALL_APPLICATIONS,"RUS") + "</apps></glossaries>";
 		return xmlContent;
 	}
 
@@ -77,9 +69,9 @@ public class UserServices {
 		Iterator<User> it = fl.iterator();
 		while (it.hasNext()) {
 			User user = it.next();
-			xmlFragment += "<entry docid=\"" + user.docID + "\" ><userid>" + user.getUserID() + "</userid>"
-					+ "<isadministrator>" + user.isSupervisor() + "</isadministrator><email>" + user.getEmail()
-					+ "</email>" + "<redirecturl></redirecturl>" + "</entry>";
+			xmlFragment += "<entry docid=\"" + user.id + "\" ><login>" + user.getLogin() + "</login>"
+					+ "<issupervisor>" + user.isSupervisor() + "</issupervisor><email>" + user.getEmail()
+					+ "</email><username>" + user.getUserName() + "</username>" + "</entry>";
 		}
 
 		return xmlFragment;
@@ -95,7 +87,7 @@ public class UserServices {
 		User user = sysDatabase.getUser(userID);
 		IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
 		for (ApplicationProfile appProfile : user.enabledApps.values()) {
-			int res = appDb.createDatabase("localhost", appProfile.getDbName(), appProfile.owner, appProfile.dbPwd);
+			int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.owner, appProfile.dbPwd);
 			if (res == 0 || res == 1) {				
 					Class cls = Class.forName(appProfile.getImpl());
 					IDatabase dataBase = (IDatabase) cls.newInstance();

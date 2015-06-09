@@ -18,17 +18,17 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class User {
-	public int docID;
+	public int id;
 	public boolean isValid = false;
 	public HashMap<String, ApplicationProfile> enabledApps = new HashMap<String, ApplicationProfile>();
 	public boolean isAuthorized;
 	public String lastURL;
 	public LanguageType preferredLang = LanguageType.ENG;
 	private HashSet<UserRole> roles = new HashSet<UserRole>();
-	private HashSet<UserGroup> groups = new HashSet<UserGroup>();
 	private transient ISystemDatabase sysDatabase;
-	private String userID;
+	private String login;
 	private String userName;
+	
 	private Date primaryRegDate;
 	private Date regDate;
 	private String password;
@@ -41,16 +41,12 @@ public class User {
 
 	public User() {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
-		userID = "anonymous";
+		login = "anonymous";
 	}
 
-	public String getUserID() {
-		return userID;
-	}
-
-	public void setUserID(String userID) {
+	public void setLogin(String l) {
 		try {
-			this.userID = userID;
+			this.login = l;
 		} catch (Exception e) {
 
 		}
@@ -72,11 +68,11 @@ public class User {
 
 	public void fill(ResultSet rs) throws SQLException {
 		try {
-			docID = rs.getInt("DOCID");
+			id = rs.getInt("ID");
 			userName = rs.getString("USERNAME");
 			primaryRegDate = rs.getTimestamp("PRIMARYREGDATE");
 			regDate = rs.getTimestamp("REGDATE");
-			userID = rs.getString("USERID");
+			login = rs.getString("LOGIN");
 			setEmail(rs.getString("EMAIL"));
 			isSupervisor = rs.getInt("ISSUPERVISOR");
 			password = rs.getString("PWD");
@@ -119,11 +115,7 @@ public class User {
 			}
 		}
 	}
-
-	public String getCurrentUserID() {
-		return userID;
-	}
-
+	
 	public String getEmail() {
 		return email;
 	}
@@ -152,8 +144,8 @@ public class User {
 		return isSupervisor;
 	}
 
-	public void setAdmin(boolean isAdmin) {
-		if (isAdmin) {
+	public void setSupervisor(boolean s) {
+		if (s) {
 			this.isSupervisor = 1;
 		} else {
 			isSupervisor = 0;
@@ -164,10 +156,7 @@ public class User {
 		return true;
 	}
 
-	public boolean hasGroup(String groupName) {
-		return true;
-	}
-
+	
 	public void addApplication(ApplicationProfile ap) {
 		enabledApps.put(ap.appName, ap);
 	}
@@ -223,20 +212,18 @@ public class User {
 
 	public boolean save() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
 			DatabasePoolException, SQLException {
-		int result = 0;
-		if (docID == 0) {
-			result = sysDatabase.insert(this);
+		if (id == 0) {
+			id = sysDatabase.insert(this);
 		} else {
-			result = sysDatabase.update(this);
+			id = sysDatabase.update(this);
 		}
 
-		if (result < 0) {
+		if (id < 0) {
 			return false;
 		} else {
-			docID = result;
 			for (ApplicationProfile appProfile : enabledApps.values()) {
 				IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
-				int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.owner,
+				int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.dbLogin,
 						appProfile.dbPwd);
 				if (res == 0 || res == 1) {
 					Class cls = Class.forName(appProfile.getImpl());
@@ -254,22 +241,27 @@ public class User {
 	}
 
 	public String toString() {
-		return "userID=" + userID + ", email=" + email;
+		return "userID=" + login + ", email=" + email;
 	}
 
 	public String toXML() {
-		return "<userid>" + userID + "</userid>";
+		return "<userid>" + login + "</userid>";
 	}
 
 	public String usersByKeytoXML() {
-		return "<userid>" + userID + "</userid>" + "<key>" + docID + "</key>" + "<email>" + email + "</email>";
+		return "<login>" + login + "</login><key>" + id + "</key><email>" + email + "</email>";
 
 	}	
+
+	public String getLogin() {
+		return login;
+	}
 
 	public String getUserName() {
 		return userName;
 	}
 
+	
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
@@ -286,8 +278,7 @@ public class User {
 		return primaryRegDate;
 	}
 
-	public Date getRegDate() {
-		if (regDate == null) regDate = new Date();
+	public Date getRegDate() {	
 		return regDate;
 	}
 
@@ -300,6 +291,9 @@ public class User {
 	}
 
 	public void setStatus(UserStatusType status) {
+		if ((this.status == UserStatusType.NOT_VERIFIED || this.status == UserStatusType.WAITING_FOR_VERIFYCODE) && status == UserStatusType.REGISTERED) {
+			regDate = new Date();
+		}
 		this.status = status;
 	}
 }

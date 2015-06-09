@@ -89,20 +89,21 @@ public class Provider extends HttpServlet{
 									userSession = new UserSession(new User());
 									jses.setAttribute("usersession", userSession);
 								}
+								Cookies cook = new Cookies(request);
+								userSession.lang = cook.currentLang;
 							}
 						}
 					}
 
-					if (type.equals("json")) {
-						result = json(userSession, id);
-
-					} else if (type.equalsIgnoreCase("page")) {
+					
+					if (type == null || type.equalsIgnoreCase("page")) {
 						result = page(response, request, rule, userSession);
 						if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
 							attachHandler = new AttachmentHandler(request, response, true);
 						}
 						// return;
-
+					}else if (type.equals("json")) {
+						result = json(userSession, id);
 					} else if (type.equalsIgnoreCase("search")) {
 						result = search(request, userSession);
 					} else if (type.equalsIgnoreCase("edit")) {
@@ -167,7 +168,7 @@ public class Provider extends HttpServlet{
 						response.setContentType("text/xml;charset=utf-8");
 						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession,
 								jses,  result.addHistory);
-						String outputContent = po.getStandartUTF8Output();
+						String outputContent = po.getStandartOutput();
 						// System.out.println(outputContent);
 						PrintWriter out = response.getWriter();
 						out.println(outputContent);

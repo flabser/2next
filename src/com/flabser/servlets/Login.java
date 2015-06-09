@@ -12,6 +12,7 @@ import com.flabser.users.AuthFailedException;
 import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
+import com.flabser.users.UserStatusType;
 import com.flabser.util.Util;
 
 import javax.servlet.ServletConfig;
@@ -25,7 +26,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AppEnv env;
@@ -35,13 +35,11 @@ public class Login extends HttpServlet {
 		env = (AppEnv) context.getAttribute("portalenv");
 	}
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		UserSession userSession = null;
 		try {
 			String login = request.getParameter("login");
@@ -49,7 +47,7 @@ public class Login extends HttpServlet {
 			String noAuth = request.getParameter("noauth");
 			String noHash = request.getParameter("nohash");
 			HttpSession jses;
-			
+
 			ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 
 			if (env == null || env.appType.equalsIgnoreCase("administrator")) {
@@ -65,8 +63,9 @@ public class Login extends HttpServlet {
 									jses.setAttribute("adminLoggedIn", true);
 									response.sendRedirect("Provider?type=view&element=users");
 								} else {
-									AppEnv.logger.warningLogEntry("Authorization failed, login or password is incorrect *");
-									throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT,login);
+									AppEnv.logger
+											.warningLogEntry("Authorization failed, login or password is incorrect *");
+									throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
 								}
 							} else {
 								if (admin.getPassword().equals(pwd)) {
@@ -74,8 +73,9 @@ public class Login extends HttpServlet {
 									jses.setAttribute("adminLoggedIn", true);
 									response.sendRedirect("Provider?type=view&element=users");
 								} else {
-									AppEnv.logger.warningLogEntry("Authorization failed, login or password is incorrect *");
-									throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT,login);
+									AppEnv.logger
+											.warningLogEntry("Authorization failed, login or password is incorrect *");
+									throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
 								}
 							}
 
@@ -85,16 +85,13 @@ public class Login extends HttpServlet {
 								jses.setAttribute("adminLoggedIn", true);
 								response.sendRedirect("Provider?type=view&element=users");
 							} else {
-								AppEnv.logger
-										.warningLogEntry("Authorization failed, login or password is incorrect *");
-								throw new AuthFailedException(
-										AuthFailedExceptionType.PASSWORD_INCORRECT,
-										login);
+								AppEnv.logger.warningLogEntry("Authorization failed, login or password is incorrect *");
+								throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
 							}
 						}
 					} else {
 						AppEnv.logger.warningLogEntry("Authorization failed, login or password is incorrect *");
-						throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT,login);
+						throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
 					}
 				} else {
 					if (login.equals("admin") && pwd.equals("G2xQoZp4eLK@")) {
@@ -105,68 +102,70 @@ public class Login extends HttpServlet {
 						response.sendRedirect("Provider?type=view&element=users");
 					} else {
 						AppEnv.logger.warningLogEntry("Authorization failed, special login or password is incorrect");
-						throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT,login);
+						throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
 					}
 				}
-			
+
 			} else {
 				User user = new User();
 				Cookies appCookies = new Cookies(request);
 				if (noHash != null) {
 					user = systemDatabase.checkUser(login, pwd, user);
 				} else {
-					user = systemDatabase.checkUserHash(login, pwd,
-							appCookies.authHash, user);
+					user = systemDatabase.checkUserHash(login, pwd, appCookies.authHash, user);
 				}
 				if (!user.isAuthorized)
-					throw new AuthFailedException(
-							AuthFailedExceptionType.PASSWORD_INCORRECT, login);
-				
-				String userID = user.getUserID();
+					throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
+
+				String userID = user.getLogin();
 				jses = request.getSession(true);
-				
+
 				AppEnv.logger.normalLogEntry(userID + " has connected");
 				IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 				ua.postLogin(ServletUtil.getClientIpAddr(request), user);
 				String redirect = getRedirect(jses, appCookies);
-				
-				ApplicationProfile app = user.enabledApps.get(env.appType);
-				if (app == null) {
-					ApplicationProfile ap = new ApplicationProfile();
-					ap.appName = env.appType;
-					ap.owner = (user.getUserID().replace("@","_").replace(".","_")).replace("-","_").toLowerCase();
-					ap.dbName = ap.appName.toLowerCase() + "_" + ap.owner;
-					ap.dbLogin = ap.owner;
-					ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");					
-					user.addApplication(ap);
-					user.save();
-					redirect = "Provider?id=setup";
+				if (user.getStatus() == UserStatusType.REGISTERED) {
+					ApplicationProfile app = user.enabledApps.get(env.appType);
+					if (app == null) {
+						ApplicationProfile ap = new ApplicationProfile();
+						ap.appName = env.appType;
+						ap.owner = user.getLogin();						
+						ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
+						ap.dbName = ap.appName.toLowerCase() + "_" + ap.dbLogin;
+						ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
+						ap.save();
+						user.addApplication(ap);
+						user.save();
+						redirect = "Provider?id=setup";
+					}
+				}else if (user.getStatus() == UserStatusType.NOT_VERIFIED
+						|| user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
+					throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED, login);
+				}else if (user.getStatus() == UserStatusType.DELETED) {
+					throw new AuthFailedException(AuthFailedExceptionType.DELETED, login);
 				}
 				
 				userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
 				jses.setAttribute("usersession", userSession);
-			
-				
+
 				response.sendRedirect(redirect);
 
 			}
 		} catch (AuthFailedException e) {
 			try {
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);			
-				request.getRequestDispatcher("/Error?type=ws_auth_error")
-						.forward(request, response);
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				request.getRequestDispatcher("/Error?type=ws_auth_error").forward(request, response);
 			} catch (IOException e1) {
-				new PortalException(e, env, response,ProviderExceptionType.INTERNAL, PublishAsType.HTML);
+				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 			} catch (ServletException e2) {
-				new PortalException(e, env, response,ProviderExceptionType.INTERNAL, PublishAsType.HTML);
+				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 			}
 		} catch (IOException ioe) {
 			new PortalException(ioe, env, response, PublishAsType.HTML);
 		} catch (IllegalStateException ise) {
 			new PortalException(ise, env, response, PublishAsType.HTML);
 		} catch (Exception e) {
-			new PortalException(e, response, ProviderExceptionType.INTERNAL,
-					PublishAsType.HTML);
+			new PortalException(e, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 		}
 	}
 
@@ -190,13 +189,13 @@ public class Login extends HttpServlet {
 
 	}
 
-	private String getRedirect(HttpSession jses, Cookies appCookies){
-		String callingPage = (String)jses.getAttribute("callingPage");
-		if( callingPage != null && (!callingPage.equalsIgnoreCase(""))){
+	private String getRedirect(HttpSession jses, Cookies appCookies) {
+		String callingPage = (String) jses.getAttribute("callingPage");
+		if (callingPage != null && (!callingPage.equalsIgnoreCase(""))) {
 			jses.removeAttribute("callingPage");
 			return callingPage;
-		}else{
-			return env.globalSetting.defaultRedirectURL;		
+		} else {
+			return env.globalSetting.defaultRedirectURL;
 		}
 	}
 

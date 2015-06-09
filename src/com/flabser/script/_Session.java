@@ -38,7 +38,7 @@ public class _Session {
 	}
 	
 	public String getCurrentUserID() {
-		return user.getUserID();
+		return user.getLogin();
 	}
 	
 	public _ActionBar createActionBar() {
@@ -59,7 +59,7 @@ public class _Session {
 	}	
 
 	public String toString() {
-		return "userid=" + user.getUserID() + ", database=" + dataBase.toString();
+		return "userid=" + user.getLogin() + ", database=" + dataBase.toString();
 	}
 
 }

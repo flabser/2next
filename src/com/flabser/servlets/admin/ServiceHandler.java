@@ -119,9 +119,9 @@ public class ServiceHandler{
 		if (maxPage < 1)maxPage = 1;
 		
 		LogFiles logs = new LogFiles();
-		return "<query count=\"" + fl.size() + "\" currentpage=\"" + pageNum
+		return "<view count=\"" + fl.size() + "\" currentpage=\"" + pageNum
 		+ "\" maxpage=\"" + maxPage + "\" path=\"" + logs.logDir
-		+ "\">" + fieldsAsXML + "</query>";
+		+ "\">" + fieldsAsXML + "</view>";
 	}
 
 	public String getLogsListWrapper(LogFiles logs) {

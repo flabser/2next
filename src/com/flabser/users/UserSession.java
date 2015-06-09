@@ -1,23 +1,17 @@
 package com.flabser.users;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.omg.CORBA.UserException;
-import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.RuleException;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
 import com.flabser.script.concurrency._AJAXHandler;
 import com.flabser.scriptprocessor.page.IAsyncScript;
-import com.flabser.servlets.Cookies;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -30,7 +24,6 @@ public class UserSession implements ICache {
 	private IDatabase dataBase;
 
 	private HttpSession jses;
-	private Cookies appCookies;
 
 	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
 			InstantiationException, IllegalAccessException, DatabasePoolException {
@@ -39,7 +32,7 @@ public class UserSession implements ICache {
 		Class cls = Class.forName(implemantion);
 		dataBase = (IDatabase) cls.newInstance();
 		ApplicationProfile app = user.enabledApps.get(appID);
-		dataBase.init(app);
+		if (app != null) dataBase.init(app);
 	}
 
 	public UserSession(User user) throws UserException {

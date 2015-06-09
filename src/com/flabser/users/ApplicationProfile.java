@@ -2,12 +2,14 @@ package com.flabser.users;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
 
 import com.flabser.appenv.AppEnv;
+import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.Environment;
 
-public class ApplicationProfile{
+public class ApplicationProfile {
+	public int id;
 	public String appName;
 	public String owner;
 	public String defaultURL;
@@ -15,39 +17,53 @@ public class ApplicationProfile{
 	public String dbLogin;
 	public String dbPwd;
 	public String dbName;
-	private HashSet<User> members = new HashSet<User>();
-	
-	public ApplicationProfile(){
-		
+
+	public ApplicationProfile() {
+
 	}
 
-	
 	public ApplicationProfile(ResultSet rs) throws SQLException {
-		appName = rs.getString("APP");
-		dbHost	= rs.getString("DBHOST");
+		id = rs.getInt("ID");
+		appName = rs.getString("APPNAME");
+		owner = rs.getString("OWNER");
+		dbHost = rs.getString("DBHOST");
 		dbName = rs.getString("DBNAME");
 		dbLogin = rs.getString("DBLOGIN");
 		dbPwd = rs.getString("DBPWD");
 	}
-	
-	
-	public StringBuffer toXML(){
-		StringBuffer output = new StringBuffer(1000);
-		return output.append("<entry><appname>" + appName + "</appname><loginmode></loginmode>" + output + "</entry>");
-	}
 
+	public StringBuffer toXML() {
+		StringBuffer output = new StringBuffer(1000);
+		return output.append("<entry><appname>" + appName + "</appname>" + output + "</entry>");
+	}
 
 	public String getImpl() {
 		AppEnv env = Environment.getApplication(appName);
 		return env.globalSetting.implementation;
 	}
-	
+
 	public String getDbName() {
 		return dbName;
 	}
-	
+
 	public String getURI() {
 		return "jdbc:postgresql://" + dbHost + "/" + dbName;
 	}
-	
+
+	public boolean save() {
+		ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
+
+		if (id == 0) {
+			id = sysDatabase.insert(this);
+		} else {
+			id = sysDatabase.update(this);
+		}
+
+		if (id < 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 }

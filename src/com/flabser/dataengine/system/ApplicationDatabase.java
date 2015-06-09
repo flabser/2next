@@ -21,14 +21,14 @@ public class ApplicationDatabase implements IApplicationDatabase {
 	}
 
 	@Override
-	public int createDatabase(String host, String name, String owner, String dbPwd) throws SQLException {
+	public int createDatabase(String host, String name, String dbUser, String dbPwd) throws SQLException {
 		if (!hasDatabase(name)) {
 			Connection conn = DriverManager.getConnection(dbURL, props);
 			try {				
 				Statement st  = conn.createStatement();
-				st.executeUpdate("CREATE USER  " + owner + " WITH password '" + dbPwd + "'");
-				st.executeUpdate("CREATE DATABASE " + name + " WITH OWNER = " + owner + " ENCODING = 'UTF8'" );
-				st.executeUpdate("GRANT ALL privileges ON DATABASE " + name + " TO " + owner);
+				st.executeUpdate("CREATE USER  " + dbUser + " WITH password '" + dbPwd + "'");
+				st.executeUpdate("CREATE DATABASE " + name + " WITH OWNER = " + dbUser + " ENCODING = 'UTF8'" );
+				st.executeUpdate("GRANT ALL privileges ON DATABASE " + name + " TO " + dbUser);
 				st.close();
 				return 0;
 			} catch (Throwable e) {

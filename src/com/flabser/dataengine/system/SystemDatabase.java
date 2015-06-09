@@ -19,7 +19,7 @@ public class SystemDatabase implements ISystemDatabase {
 	public static final String jdbcDriver = "org.postgresql.Driver";
 	private IDBConnectionPool dbPool;
 	private static final SimpleDateFormat sqlDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	static String connectionURL = "jdbc:postgresql://localhost/nbsystem";
+	static String connectionURL = "jdbc:postgresql://localhost/2next_system";
 	static String dbUser = "postgres";
 	static String dbUserPwd = "3287";
 
@@ -31,11 +31,10 @@ public class SystemDatabase implements ISystemDatabase {
 		try {
 			conn.setAutoCommit(false);
 			createUserTable(DDEScripts.getUsersDDE(), "USERS");
-			createUserTable(DDEScripts.getEnabledAppDDE(), "APPS");
-			createUserTable(DDEScripts.getUserRolesDDE(), "USER_ROLES");
-			createUserTable(DDEScripts.getGroupsDDE(), "GROUPS");
-			createUserTable(DDEScripts.getUserGroupsDDE(), "USER_GROUPS");
-			createUserTable(DDEScripts.getUsersActivityDDE(), "USERS_ACTIVITY");
+			createUserTable(DDEScripts.getAppsDDE(), "APPS");
+			createUserTable(DDEScripts.getUserAppsDDE(), "USERAPPS");
+			createUserTable(DDEScripts.getUserRolesDDE(), "USERROLES");
+			createUserTable(DDEScripts.getUsersActivityDDE(), "USERSACTIVITY");
 			createUserTable(DDEScripts.getHolidaysDDE(), "HOLIDAYS");
 			conn.commit();
 		} catch (Throwable e) {
@@ -179,7 +178,7 @@ public class SystemDatabase implements ISystemDatabase {
 		try {
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
-			String sql = "select * from USERS where USERID = '" + login + "'";
+			String sql = "select * from USERS where LOGIN = '" + login + "'";
 			ResultSet rs = s.executeQuery(sql);
 			String password = "";
 
@@ -251,7 +250,7 @@ public class SystemDatabase implements ISystemDatabase {
 		RealmBase rb = null;
 		String pwdHsh = rb.Digest(pwd, "MD5", "UTF-8");
 
-		String userUpdateSQL = "update USERS set PWD='', PWDHASH='" + pwdHsh + "'" + " where DOCID=" + user.docID;
+		String userUpdateSQL = "update USERS set PWD='', PWDHASH='" + pwdHsh + "'" + " where DOCID=" + user.id;
 		PreparedStatement pst = conn.prepareStatement(userUpdateSQL);
 		pst.executeUpdate();
 		conn.commit();
@@ -263,13 +262,7 @@ public class SystemDatabase implements ISystemDatabase {
 	private User initUser(Connection conn, ResultSet rs, String login) throws SQLException {
 		User user = new User();
 		user.fill(rs);
-		Statement s = conn.createStatement();
-		String sql = "select * from APPS where DOCID = " + user.docID;
-		ResultSet rs1 = s.executeQuery(sql);
-		if (rs1.next()) {
-			ApplicationProfile ap = new ApplicationProfile(rs1);
-			user.enabledApps.put(ap.appName, ap);
-		}
+		if (user.isValid) fillUserApp(conn, user);
 		return user;
 
 	}
@@ -343,7 +336,7 @@ public class SystemDatabase implements ISystemDatabase {
 				User user = new User();
 				user.fill(rs);
 				user.isValid = true;
-				users.put(user.getUserID(), user);
+				users.put(user.getLogin(), user);
 			}
 
 			rs.close();
@@ -377,15 +370,7 @@ public class SystemDatabase implements ISystemDatabase {
 				user = new User();
 				user.fill(rs);
 				if (user.isValid) {
-					String addSQL = "select * from APPS where APPS.DOCID=" + user.docID;
-					Statement statement = conn.createStatement();
-					ResultSet resultSet = statement.executeQuery(addSQL);
-					while (resultSet.next()) {
-						ApplicationProfile ap = new ApplicationProfile(resultSet);
-						user.enabledApps.put(ap.appName, ap);
-					}
-					resultSet.close();
-					statement.close();
+					fillUserApp(conn, user);
 				}
 			}
 			rs.close();
@@ -394,36 +379,29 @@ public class SystemDatabase implements ISystemDatabase {
 
 		} catch (Throwable e) {
 			DatabaseUtil.debugErrorPrint(e);
+			user = null;
 		} finally {
 			dbPool.returnConnection(conn);
 		}
 		return user;
 	}
 
-	public User reloadUserData(User user, String userID) {
+	public User reloadUserData(User user, String login) {
 
 		Connection conn = dbPool.getConnection();
 		try {
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
-			String sql = "select * from USERS where USERS.USERID='" + userID + "'";
+			String sql = "select * from USERS where USERS.LOGIN='" + login + "'";
 			ResultSet rs = s.executeQuery(sql);
 
 			if (rs.next()) {
 				user.fill(rs);
 				if (user.isValid) {
-					String addSQL = "select * from APPS where APPS.DOCID=" + user.docID;
-					Statement statement = conn.createStatement();
-					ResultSet resultSet = statement.executeQuery(addSQL);
-					while (resultSet.next()) {
-						ApplicationProfile ap = new ApplicationProfile(resultSet);
-						user.enabledApps.put(ap.appName, ap);
-					}
-					resultSet.close();
-					statement.close();
+					fillUserApp(conn, user);
 				}
 			} else {
-				user.setUserID(userID);
+				user.setLogin(login);
 			}
 			rs.close();
 			s.close();
@@ -535,19 +513,11 @@ public class SystemDatabase implements ISystemDatabase {
 			conn.setAutoCommit(false);
 			int key = 0;
 			Statement stmt = conn.createStatement();
-
-			ResultSet rs = stmt.executeQuery("select max(docid) from users");
-
-			if (rs.next())
-				key = rs.getInt(1) + 1;
-
-			String insertUser = "insert into USERS(DOCID, USERNAME, USERID, EMAIL, PWD, ISSUPERVISOR, PRIMARYREGDATE, REGDATE, LOGINHASH, PWDHASH, "
-					+ "LASTDEFAULTURL, STATUS, VERIFYCODE)" + " values("
-					+ key
-					+ ", '"
+			String sql = "insert into USERS(USERNAME, LOGIN, EMAIL, PWD, ISSUPERVISOR, PRIMARYREGDATE, REGDATE, LOGINHASH, PWDHASH, "
+					+ "LASTDEFAULTURL, STATUS, VERIFYCODE)" + " values('"
 					+ user.getUserName()
 					+ "','"
-					+ user.getUserID()
+					+ user.getLogin()
 					+ "',"
 					+ "'"
 					+ user.getEmail()
@@ -555,36 +525,25 @@ public class SystemDatabase implements ISystemDatabase {
 					+ user.getPassword()
 					+ "',"
 					+ user.getIsSupervisor()
-					+ ","
-					+ "'"
+					+ ",'"
 					+ sqlDateTimeFormat.format(new java.util.Date())
-					+ "',"
-					+ "'"
+					+ "','"
 					+ sqlDateTimeFormat.format(user.getRegDate())
 					+ "',"
-					+ (user.getUserID() + user.getPassword()).hashCode()
+					+ (user.getLogin() + user.getPassword()).hashCode()
 					+ ", '"
 					+ user.getPasswordHash()
-					+ "',"
-					+ "'"
+					+ "','"
 					+ user.lastURL + "'," + user.getStatus().getCode() + ",'" + user.getVerifyCode() + "')";
-
-			PreparedStatement pst = conn.prepareStatement(insertUser/*
-																	 * ,
-																	 * PreparedStatement
-																	 * .
-																	 * RETURN_GENERATED_KEYS
-																	 */);
+			PreparedStatement pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			pst.executeUpdate();
-			rs = pst.getGeneratedKeys();
-			while (rs.next()) {
+			ResultSet rs = pst.getGeneratedKeys();
+			if (rs.next()) {
 				key = rs.getInt(1);
 			}
 
 			for (ApplicationProfile app : user.enabledApps.values()) {
-				String insertURL = "insert into APPS(DOCID, APP, DBHOST, DBNAME, DBLOGIN, DBPWD)values(" + key + ", '"
-						+ app.appName + "','" + app.dbHost + "'," + "'" + app.getDbName() + "','" + app.dbLogin + "','"
-						+ app.dbPwd + "')";
+				String insertURL = "insert into USERAPPS(USERID, APPIDD)values(" + user.id + ", " + app.id + ")";
 				pst = conn.prepareStatement(insertURL);
 				pst.executeUpdate();
 
@@ -614,31 +573,29 @@ public class SystemDatabase implements ISystemDatabase {
 			} else {
 				pwd = user.getPassword();
 			}
-			String userUpdateSQL = "update USERS set USERID='" + user.getUserID() + "', USERNAME='"
-					+ user.getUserName() + "'," + "EMAIL='" + user.getEmail() + "', PWD='" + pwd + "', ISSUPERVISOR = "
+			String userUpdateSQL = "update USERS set LOGIN='" + user.getLogin() + "', USERNAME='" + user.getUserName()
+					+ "'," + "EMAIL='" + user.getEmail() + "', PWD='" + pwd + "', ISSUPERVISOR = "
 					+ user.getIsSupervisor() + "," + "REGDATE='" + sqlDateTimeFormat.format(user.getRegDate()) + "',"
-					+ "LOGINHASH = " + (user.getUserID() + user.getPassword()).hashCode() + ", " + "PWDHASH = '"
+					+ "LOGINHASH = " + (user.getLogin() + user.getPassword()).hashCode() + ", " + "PWDHASH = '"
 					+ user.getPasswordHash() + "', " + "LASTDEFAULTURL = '" + user.lastURL + "'," + "STATUS = "
-					+ user.getStatus().getCode() + ", VERIFYCODE='" + user.getVerifyCode() + "'" + " where DOCID="
-					+ user.docID;
+					+ user.getStatus().getCode() + ", VERIFYCODE='" + user.getVerifyCode() + "'" + " where ID="
+					+ user.id;
 			PreparedStatement pst = conn.prepareStatement(userUpdateSQL);
 			pst.executeUpdate();
 			conn.commit();
-			String delSQL = "delete from APPS where DOCID = " + user.docID;
+			String delSQL = "delete from USERAPPS where USERID = " + user.id;
 			pst = conn.prepareStatement(delSQL);
 			pst.executeUpdate();
 
 			for (ApplicationProfile app : user.enabledApps.values()) {
-				String insertURL = "insert into APPS(DOCID, APP, DBHOST, DBNAME, DBLOGIN, DBPWD)values(" + user.docID
-						+ ", '" + app.appName + "','" + app.dbHost + "'," + "'" + app.getDbName() + "','" + app.dbLogin
-						+ "','" + app.dbPwd + "')";
+				String insertURL = "insert into USERAPPS(USERID, APPID)values(" + user.id + ", " + app.id + ")";
 				PreparedStatement pst0 = conn.prepareStatement(insertURL);
 				pst0.executeUpdate();
 
 			}
 			conn.commit();
 			pst.close();
-			return user.docID;
+			return user.id;
 		} catch (Throwable e) {
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;
@@ -718,15 +675,7 @@ public class SystemDatabase implements ISystemDatabase {
 				User user = new User();
 				user.fill(rs);
 				if (user.isValid) {
-					String addSQL = "select * from APPS where APPS.DOCID=" + user.docID;
-					Statement statement = conn.createStatement();
-					ResultSet resultSet = statement.executeQuery(addSQL);
-					while (resultSet.next()) {
-						ApplicationProfile ap = new ApplicationProfile(resultSet);
-						user.enabledApps.put(ap.appName, ap);
-					}
-					resultSet.close();
-					statement.close();
+					fillUserApp(conn, user);
 				}
 				user.isValid = true;
 				users.add(user);
@@ -750,4 +699,57 @@ public class SystemDatabase implements ISystemDatabase {
 		return new ApplicationDatabase();
 	}
 
+	@Override
+	public int insert(ApplicationProfile ap) {
+		Connection conn = dbPool.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			int key = 0;
+			Statement stmt = conn.createStatement();
+			String sql = "insert into APPS(APPNAME, OWNER, DBHOST, DBNAME, DBLOGIN, DBPWD) values(" + "'" + ap.appName
+					+ "','" + ap.owner + "','" + ap.dbHost + "','" + ap.dbName + "','" + ap.dbLogin + "','" + ap.dbPwd
+					+ "')";
+
+			PreparedStatement pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+
+			pst.executeUpdate();
+			ResultSet rs = pst.getGeneratedKeys();
+			while (rs.next()) {
+				key = rs.getInt(1);
+			}
+			conn.commit();
+			pst.close();
+			stmt.close();
+			return key;
+		} catch (Throwable e) {
+			DatabaseUtil.debugErrorPrint(e);
+			return -1;
+		} finally {
+			dbPool.returnConnection(conn);
+		}
+	}
+
+	@Override
+	public int update(ApplicationProfile applicationProfile) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	private void fillUserApp(Connection conn, User user) throws SQLException {
+		Statement s = conn.createStatement();
+		ResultSet rs = s.executeQuery("select * from USERAPPS where USERID = " + user.id);
+		if (rs.next()) {
+			Statement s2 = conn.createStatement();
+			ResultSet rs2 = s2.executeQuery("select * from APPS where ID = " + rs.getInt("APPID"));
+			if (rs2.next()) {
+				ApplicationProfile ap = new ApplicationProfile(rs2);
+				user.enabledApps.put(ap.appName, ap);
+			}
+			rs2.close();
+			s2.close();
+		}
+		rs.close();
+		s.close();
+	}
+	
 }
