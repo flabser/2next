@@ -1,6 +1,5 @@
 package cashtracker.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import com.flabser.users.User;
@@ -23,6 +22,8 @@ public class Transaction {
 	private long parentCategory;
 
 	private long category;
+
+	private int account;
 
 	private BigDecimal amount;
 
@@ -52,7 +53,7 @@ public class Transaction {
 	}
 
 	public void setAuthor(User author) {
-		this.author = author.getUserID();
+		this.author = author.getLogin();
 	}
 
 	public int getType() {
@@ -77,6 +78,14 @@ public class Transaction {
 
 	public void setParentCategory(long parentCategory) {
 		this.parentCategory = parentCategory;
+	}
+
+	public int getAccount() {
+		return account;
+	}
+
+	public void setAccount(int account) {
+		this.account = account;
 	}
 
 	public Date getRegDate() {

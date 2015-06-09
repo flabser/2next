@@ -77,7 +77,7 @@ public class Account {
 	}
 
 	public void setOwner(User user) {
-		this.owner = user.getUserID();
+		this.owner = user.getLogin()
 	}
 
 	public String getObservers() {
