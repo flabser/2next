@@ -125,7 +125,7 @@ public class Page{
 				}
 			}
 		}
-		userSession.lang = "RUS";
+
 		SourceSupplier captionTextSupplier = new SourceSupplier(env, userSession.lang);
 		pp.setCaptions(getCaptions(captionTextSupplier, rule.captions));
 		return pp;

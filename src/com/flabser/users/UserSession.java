@@ -12,7 +12,6 @@ import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
 import com.flabser.script.concurrency._AJAXHandler;
 import com.flabser.scriptprocessor.page.IAsyncScript;
-import com.flabser.servlets.Cookies;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -25,7 +24,6 @@ public class UserSession implements ICache {
 	private IDatabase dataBase;
 
 	private HttpSession jses;
-	private Cookies appCookies;
 
 	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
 			InstantiationException, IllegalAccessException, DatabasePoolException {

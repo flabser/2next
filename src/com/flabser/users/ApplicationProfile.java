@@ -14,7 +14,7 @@ public class ApplicationProfile {
 	public String owner;
 	public String defaultURL;
 	public String dbHost = "localhost";
-	public String dbLogin;
+	public String dbUser;
 	public String dbPwd;
 	public String dbName;
 
@@ -28,7 +28,7 @@ public class ApplicationProfile {
 		owner = rs.getString("OWNER");
 		dbHost = rs.getString("DBHOST");
 		dbName = rs.getString("DBNAME");
-		dbLogin = rs.getString("DBLOGIN");
+		dbUser = rs.getString("DBLOGIN");
 		dbPwd = rs.getString("DBPWD");
 	}
 

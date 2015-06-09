@@ -89,6 +89,8 @@ public class Provider extends HttpServlet{
 									userSession = new UserSession(new User());
 									jses.setAttribute("usersession", userSession);
 								}
+								Cookies cook = new Cookies(request);
+								userSession.lang = cook.currentLang;
 							}
 						}
 					}

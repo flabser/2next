@@ -124,24 +124,25 @@ public class Login extends HttpServlet {
 				IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 				ua.postLogin(ServletUtil.getClientIpAddr(request), user);
 				String redirect = getRedirect(jses, appCookies);
-				if (user.getStatus() == UserStatusType.NOT_VERIFIED
-						|| user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
+				if (user.getStatus() == UserStatusType.REGISTERED) {
 					ApplicationProfile app = user.enabledApps.get(env.appType);
 					if (app == null) {
 						ApplicationProfile ap = new ApplicationProfile();
 						ap.appName = env.appType;
 						ap.owner = user.getLogin();						
-						ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_")).replace("-", "_")
-								.toLowerCase();
-						ap.dbName = ap.appName.toLowerCase() + "_" + ap.owner;
+						ap.dbUser = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
+						ap.dbName = ap.appName.toLowerCase() + "_" + ap.dbUser;
 						ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
 						ap.save();
 						user.addApplication(ap);
 						user.save();
 						redirect = "Provider?id=setup";
 					}
+				}else if (user.getStatus() == UserStatusType.NOT_VERIFIED
+						|| user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
+					throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED, login);
 				}else if (user.getStatus() == UserStatusType.DELETED) {
-					throw new AuthFailedException(AuthFailedExceptionType.USER_DELETED, login);
+					throw new AuthFailedException(AuthFailedExceptionType.DELETED, login);
 				}
 				
 				userSession = new UserSession(user, env.globalSetting.implementation, env.appType);

@@ -223,7 +223,7 @@ public class User {
 		} else {
 			for (ApplicationProfile appProfile : enabledApps.values()) {
 				IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
-				int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.owner,
+				int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.dbUser,
 						appProfile.dbPwd);
 				if (res == 0 || res == 1) {
 					Class cls = Class.forName(appProfile.getImpl());
