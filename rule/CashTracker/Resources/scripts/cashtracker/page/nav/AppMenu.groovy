@@ -11,86 +11,37 @@ class AppMenu extends _DoScript {
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
 
-		def list = []
 		def user = session.getUser()
-
-	/*	def rootTag = new _Element("current")
-		def entryTag = new _Element("entry", formData.getEncodedValueSilently("title"))
-//		entryTag.setAttr("entryid", formData.getValueSilently("entryid"))
-//		entryTag.setAttr("id", formData.getValueSilently("id"))
-
+		
+		def map = [:]
+		map.put("title",formData.getEncodedValueSilently("title"))
+		map.put("entry",formData.getEncodedValueSilently("title"))
+		map.put("entryid",formData.getEncodedValueSilently("entryid"))
+		map.put("id",formData.getEncodedValueSilently("id"))
 		if (formData.getEncodedValueSilently("id") == "operationsbycash") {
-			def customParam = new _Element("customparam", "&cashid=" + formData.getValueSilently("cashid"))
-			rootTag.addElement(customParam)
+			map.put("customparam","&cashid=" + formData.getValueSilently("cashid"))
 		}
+		publishElement("current-entry", map)
 
-		rootTag.addElement(entryTag)
-	//	publishElement(new _WebDocument(rootTag))*/
 
-		//
-		def operations = new _Outline(getLocalizedWord("Операции", lang),
-				getLocalizedWord("Операции", lang),
-				"_operations")
-		def cash = new _OutlineEntry(getLocalizedWord("Все", lang),
-				getLocalizedWord("Все", lang),
-				"operations",
-				"Provider?type=page&id=operations&page=0")
-	/*	def documents = session.currentDatabase.getCollectionOfGlossaries("form='cash'", 0, 0)
-		documents.getEntries().each {
-			def document = it.getDocument()
-			cash.addEntry(new _OutlineEntry(document.getValueString("name"),
-					document.getValueString("name"),
-					document.getValueString("name"),
-					"Provider?type=page&id=operationsbycash&cashid=" + document.getDocID() + "&page=0"))
-		}
-		operations.addEntry(cash)
-*/
 		def outline = new _Outline("", "", "outline")
-		outline.addOutline(operations)
-		list.add(operations)
+		def operations = new _Outline(getLocalizedWord("transactions", lang), getLocalizedWord("transactions", lang),	"_operations")
+		def cash = new _OutlineEntry(getLocalizedWord("All", lang),	getLocalizedWord("All", lang),"operations",	"Provider?id=transactions&page=0")
+		operations.addEntry(cash)
 
-		//
-		def users = new _Outline(getLocalizedWord("Участники", lang),
-				getLocalizedWord("Участники", lang),
-				"users")
-		users.addEntry(new _OutlineEntry(getLocalizedWord("Участники", lang),
-				getLocalizedWord("Участники", lang),
-				"users",
-				"Provider?type=page&id=users"))
-		list.add(users)
+		outline.addEntry(operations)
 
-		//
-		if (true || user.hasRole("ct_glossary")) {
-			def properties = new _Outline(getLocalizedWord("Параметры", lang),
-					getLocalizedWord("Параметры", lang),
-					"_glossary")
-			properties.addEntry(new _OutlineEntry(getLocalizedWord("Касса", lang),
-					getLocalizedWord("Касса", lang),
-					"cash",
-					"Provider?type=page&id=cash"))
-			properties.addEntry(new _OutlineEntry(getLocalizedWord("Тип операции", lang),
-					getLocalizedWord("Тип операции", lang),
-					"category",
-					"Provider?type=page&id=category"))
-			properties.addEntry(new _OutlineEntry(getLocalizedWord("Место возникновения", lang),
-					getLocalizedWord("Место возникновения", lang),
-					"costcenter",
-					"Provider?type=page&id=costcenter"))
+		def users = new _Outline(getLocalizedWord("members", lang),	getLocalizedWord("members", lang),"users")
+		users.addEntry(new _OutlineEntry(getLocalizedWord("members", lang),	getLocalizedWord("members", lang),"users","Provider?id=users"))
+		outline.addEntry(users)
 
-			/*//
-			def budgetParam = session.createViewEntryCollectionParam().setQuery("form = 'budget'")
-			def budgets = session.currentDatabase.getCollectionOfDocuments(budgetParam)
-			if (budgets.getCount()) {
-				def budget = budgets.entries[0].document
+		if (user.hasRole("ct_glossary")) {
+			def properties = new _Outline(getLocalizedWord("parameters", lang),getLocalizedWord("parameters", lang),"_glossary")
+			properties.addEntry(new _OutlineEntry(getLocalizedWord("account", lang),getLocalizedWord("account", lang),"cash","Provider?id=cash"))
+			properties.addEntry(new _OutlineEntry(getLocalizedWord("operation_type", lang),	getLocalizedWord("operation_type", lang),"category","Provider?id=category"))
+			properties.addEntry(new _OutlineEntry(getLocalizedWord("cost_center", lang),getLocalizedWord("cost_center", lang),"costcenter",	"Provider?id=costcenter"))
 
-				properties.addEntry(new _OutlineEntry(getLocalizedWord("Свойства бюджета", lang),
-						getLocalizedWord("Свойства бюджета", lang),
-						"budgets",
-						"Provider?type=edit&element=document&id=budget&docid=${budget.getID()}"))
-			}*/
-
-			outline.addOutline(properties)
-			list.add(properties)
+			outline.addEntry(properties)
 		}
 
 		publishElement("outline", outline)
