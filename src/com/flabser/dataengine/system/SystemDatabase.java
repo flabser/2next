@@ -675,15 +675,7 @@ public class SystemDatabase implements ISystemDatabase {
 				User user = new User();
 				user.fill(rs);
 				if (user.isValid) {
-					String addSQL = "select * from USERAPPS where USERID=" + user.id;
-					Statement statement = conn.createStatement();
-					ResultSet resultSet = statement.executeQuery(addSQL);
-					while (resultSet.next()) {
-						ApplicationProfile ap = new ApplicationProfile(resultSet);
-						user.enabledApps.put(ap.appName, ap);
-					}
-					resultSet.close();
-					statement.close();
+					fillUserApp(conn, user);
 				}
 				user.isValid = true;
 				users.add(user);
@@ -715,7 +707,7 @@ public class SystemDatabase implements ISystemDatabase {
 			int key = 0;
 			Statement stmt = conn.createStatement();
 			String sql = "insert into APPS(APPNAME, OWNER, DBHOST, DBNAME, DBLOGIN, DBPWD) values(" + "'" + ap.appName
-					+ "','" + ap.owner + "','" + ap.dbHost + "','" + ap.dbName + "','" + ap.dbUser + "','" + ap.dbPwd
+					+ "','" + ap.owner + "','" + ap.dbHost + "','" + ap.dbName + "','" + ap.dbLogin + "','" + ap.dbPwd
 					+ "')";
 
 			PreparedStatement pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);

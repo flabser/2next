@@ -11,7 +11,7 @@ public abstract class DatabaseCore {
 	protected IDBConnectionPool getPool(String driver, ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
 		pool = new DBConnectionPool(); 
 		//appProfile.dbLogin = "postgres"; //temporary login
-		pool.initConnectionPool(driver, appProfile.getURI(), appProfile.dbUser, appProfile.dbPwd);
+		pool.initConnectionPool(driver, appProfile.getURI(), appProfile.dbLogin, appProfile.dbPwd);
 		return pool;
 	}
 	

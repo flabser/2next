@@ -130,8 +130,8 @@ public class Login extends HttpServlet {
 						ApplicationProfile ap = new ApplicationProfile();
 						ap.appName = env.appType;
 						ap.owner = user.getLogin();						
-						ap.dbUser = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
-						ap.dbName = ap.appName.toLowerCase() + "_" + ap.dbUser;
+						ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
+						ap.dbName = ap.appName.toLowerCase() + "_" + ap.dbLogin;
 						ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
 						ap.save();
 						user.addApplication(ap);
