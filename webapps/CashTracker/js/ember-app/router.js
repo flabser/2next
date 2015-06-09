@@ -1,7 +1,9 @@
 define('router', ['ember'], function(Ember) {
     'use strict';
 
-    var Router = Ember.Router.extend();
+    var Router = Ember.Router.extend({
+        // location: 'history'
+    });
 
     Router.map(function() {
         this.resource('index', {

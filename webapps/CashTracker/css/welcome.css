@@ -257,6 +257,17 @@ body.wlc {
     position: relative;
 }
 
+.reg-result-ok {
+	background-color: #DFF0D8;
+	border-radius: 4px;
+	color: #3C763D;
+	display: none;
+	font-size: 22px;
+	font-weight: normal;
+	margin: 0 0 22px;
+	padding: .5em;
+}
+
 .reg_form section {
     position: relative;
 }
@@ -269,6 +280,7 @@ body.wlc {
 .reg_form-inp-btn {
     display: inline-block;
     max-width: 300px;
+    min-width: 240px;
     padding: 3px;
     text-align: left;
     vertical-align: top;
@@ -278,6 +290,10 @@ body.wlc {
 .reg_form-inp-btn {
     text-align: left;
     width: 23%;
+}
+
+.reg_form-inp-btn .btn-submit {
+	min-width: 240px;
 }
 
 .wlc input.input {

@@ -21,6 +21,7 @@
 					<xsl:attribute name="class" select="concat('wlc no_transition phone ',  $body_class)" />
 				</xsl:if>
 				<div class="content-overlay" id="content-overlay"></div>
+				<div class="main-load" id="main-load"></div>
 				<div class="layout">
 					<header class="layout_header">
 						<xsl:call-template name="main-header" />
@@ -215,6 +216,7 @@
 					<h1 class="wlc_reg-header">
 						<xsl:value-of select="//captions/reg/@caption" />
 					</h1>
+					<h2 class="reg-result-ok"></h2>
 					<form action="Provider" method="post" name="form-reg" class="reg_form">
 						<input type="hidden" name="type" value="page" />
 						<input type="hidden" name="id" value="reg-user" />

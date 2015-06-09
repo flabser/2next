@@ -2,86 +2,103 @@ nbApp.wlc = {};
 
 nbApp.wlc.init = function() {
 
-    var $regForm = $('form[name=form-reg]');
+	var $regForm = $('form[name=form-reg]');
 
-    $regForm.submit(function(e) {
-        e.preventDefault();
-        nbApp.wlc.reg(this);
-    });
+	$regForm.submit(function(e) {
+		e.preventDefault();
+		nbApp.wlc.reg(this);
+	});
 
-    $('input', $regForm).blur(function() {
-        if ($(this).attr('required')) {
-            if ($(this).val()) {
-                $(this).removeClass('invalid');
-            }
-        }
-    });
+	$('input', $regForm).blur(function() {
+		if ($(this).attr('required')) {
+			if ($(this).val()) {
+				$(this).removeClass('invalid');
+			}
+		}
 
-    $('input', $regForm).focus(function() {
-        $(this).removeClass('invalid');
-        $('.reg-email-invalid,.reg-email-exists,.reg-pwd-weak').css('height', '0px');
-    });
+		$('.reg-result-ok').html('').css({
+			'display': 'none'
+		});
+	});
+
+	$('input', $regForm).focus(function() {
+		$(this).removeClass('invalid');
+		$('.reg-email-invalid,.reg-email-exists,.reg-pwd-weak').css('height', '0px');
+	});
+
+	$('#main-load').hide();
+
+	window.onunload = window.onbeforeunload = null;
 };
 
 nbApp.wlc.setLang = function(lang) {
-    $.cookie('lang', lang, {
-        path: '/'
-    });
-    window.location.reload();
+	$.cookie('lang', lang, {
+		path: '/'
+	});
+	window.location.reload();
 };
 
 nbApp.wlc.reg = function(form) {
-    if ($(form).hasClass('process')) {
-        return false;
-    }
+	if ($(form).hasClass('process')) {
+		return false;
+	}
 
-    $('input', form).removeClass('invalid');
-    $('.reg-email-invalid,.reg-email-exists,.reg-pwd-weak', form).css('height', '0px');
-    $(form).addClass('process');
+	$('#main-load').show();
+	$('input', form).removeClass('invalid');
+	$('.reg-email-invalid,.reg-email-exists,.reg-pwd-weak', form).css('height', '0px');
+	$(form).addClass('process');
 
-    nb.ajax({
-        method: 'POST',
-        datatype: 'text',
-        url: 'Provider?client=' + screen.height + 'x' + screen.width,
-        data: $(form).serialize(),
-        success: function(result) {
-            var pr = result.split(',');
-            if (pr.indexOf('email') != -1) {
-                $('input[name=email]', form).addClass('invalid');
-                $('.reg-email-invalid').css('height', 'auto');
-            }
-            if (pr.indexOf('user-exists') != -1) {
-                $('.reg-email-exists', form).css('height', 'auto');
-            }
-            if (pr.indexOf('pwd-weak') != -1) {
-                $('input[name=pwd]', form).addClass('invalid');
-                $('.reg-pwd-weak', form).css('height', 'auto');
-            }
-            //
-            var isReg = false;
-            if (pr.indexOf('user-reg') != -1) {
-                console.log('user-reg');
-                isReg = true;
-                $('input[name=pwd]', form).val('');
-            }
-            if (pr.indexOf('ok') != -1) {
-                console.log('ok');
-            }
-            //
-            // $('input[name=pwd]').val('');
+	nb.ajax({
+		method: 'POST',
+		datatype: 'text',
+		url: 'Provider?client=' + screen.height + 'x' + screen.width,
+		data: $(form).serialize(),
+		success: function(result) {
+			var pr = result.split(',');
+			if (pr.indexOf('email') != -1) {
+				$('input[name=email]', form).addClass('invalid');
+				$('.reg-email-invalid').css('height', 'auto');
+			}
+			if (pr.indexOf('user-exists') != -1) {
+				$('.reg-email-exists', form).css('height', 'auto');
+			}
+			if (pr.indexOf('pwd-weak') != -1) {
+				$('input[name=pwd]', form).addClass('invalid');
+				$('.reg-pwd-weak', form).css('height', 'auto');
+			}
+			//
+			var isReg = false;
+			if (pr.indexOf('user-reg') != -1) {
+				console.log('user-reg');
+				isReg = true;
+				$('input[name=pwd]', form).val('');
+			}
+			if (pr.indexOf('ok') != -1) {
+				console.log('ok');
+			}
+			//
 
-            if (pr.indexOf('verify-email-send') != -1) {
-                nb.utils.notify({
-                    type: 'info',
-                    message: nb.getText('reg_confirm_mail', 'Для завершения регистрации подтвердите свой email')
-                }).show().remove(1000 * 60);
-            }
-        },
-        error: function(err) {
-            console.log(err);
-        },
-        complete: function() {
-            $(form).removeClass('process');
-        }
-    });
+			if (pr.indexOf('verify-email-send') != -1) {
+				var $msg = $('.reg-result-ok');
+				$msg.html(nb.getText('reg_confirm_mail', 'Для завершения регистрации подтвердите свой email'));
+				$msg.css({
+					'display': 'block'
+				});
+				form.reset();
+
+				setTimeout(function() {
+					$('.reg-result-ok').html('').css({
+						'display': 'none'
+					});
+				}, 1000 * 60);
+			}
+		},
+		error: function(err) {
+			console.log(err);
+		},
+		complete: function() {
+			$(form).removeClass('process');
+			$('#main-load').hide();
+		}
+	});
 };
