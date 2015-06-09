@@ -166,6 +166,10 @@ body.wlc {
     text-align: center;
 }
 
+.wlc_promo h1 div {
+	margin: 0 .3em;
+}
+
 @media ( max-width: 768px) {
     .wlc_promo h1 {
         font-size: 24px;
