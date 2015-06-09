@@ -6,7 +6,7 @@ import com.flabser.scriptprocessor.*
 import com.flabser.script.events.*
 import com.flabser.script.dbdata.*
 
-class Operations extends _DoScript {
+class Transactions extends _DoScript {
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
