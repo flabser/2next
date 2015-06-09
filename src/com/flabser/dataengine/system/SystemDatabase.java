@@ -444,14 +444,14 @@ public class SystemDatabase implements ISystemDatabase {
 		 */
 	}
 
-	public boolean deleteUser(int docID) {
+	public boolean deleteUser(int id) {
 		Connection conn = dbPool.getConnection();
 		try {
 			conn.setAutoCommit(false);
-			String delEnApp = "delete from APPS where DOCID = " + docID;
+			String delEnApp = "delete from USERAPPS where USERID = " + id;
 			PreparedStatement pst = conn.prepareStatement(delEnApp);
 			pst.executeUpdate();
-			String delUserTab = "delete from USERS where DOCID = " + docID;
+			String delUserTab = "delete from USERS where DOCID = " + id;
 			pst = conn.prepareStatement(delUserTab);
 			pst.executeUpdate();
 			conn.commit();
@@ -730,9 +730,27 @@ public class SystemDatabase implements ISystemDatabase {
 	}
 
 	@Override
-	public int update(ApplicationProfile applicationProfile) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int update(ApplicationProfile ap) {
+		Connection conn = dbPool.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			Statement stmt = conn.createStatement();
+			String sql = "update APPS set APPNAME='" + ap.appName + "', OWNER='" + ap.owner
+					+ "',DBHOST='" + ap.dbHost + "', DBNAME='" + ap.dbName + "', DBLOGIN = '"
+					+ ap.dbLogin + "',DBPWD='" + ap.dbPwd + "'";	
+
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.executeUpdate();			
+			conn.commit();
+			pst.close();
+			stmt.close();
+			return ap.id;
+		} catch (Throwable e) {
+			DatabaseUtil.debugErrorPrint(e);
+			return -1;
+		} finally {
+			dbPool.returnConnection(conn);
+		}
 	}
 
 	private void fillUserApp(Connection conn, User user) throws SQLException {

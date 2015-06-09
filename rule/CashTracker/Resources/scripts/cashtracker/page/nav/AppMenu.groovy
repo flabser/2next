@@ -14,7 +14,7 @@ class AppMenu extends _DoScript {
 		def list = []
 		def user = session.getUser()
 
-		def rootTag = new _Element("current")
+	/*	def rootTag = new _Element("current")
 		def entryTag = new _Element("entry", formData.getEncodedValueSilently("title"))
 //		entryTag.setAttr("entryid", formData.getValueSilently("entryid"))
 //		entryTag.setAttr("id", formData.getValueSilently("id"))
@@ -25,7 +25,7 @@ class AppMenu extends _DoScript {
 		}
 
 		rootTag.addElement(entryTag)
-	//	publishElement(new _WebDocument(rootTag))
+	//	publishElement(new _WebDocument(rootTag))*/
 
 		//
 		def operations = new _Outline(getLocalizedWord("Операции", lang),
@@ -87,10 +87,10 @@ class AppMenu extends _DoScript {
 						getLocalizedWord("Свойства бюджета", lang),
 						"budgets",
 						"Provider?type=edit&element=document&id=budget&docid=${budget.getID()}"))
-			}
+			}*/
 
 			outline.addOutline(properties)
-			list.add(properties)*/
+			list.add(properties)
 		}
 
 		publishElement("outline", outline)

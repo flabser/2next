@@ -1,6 +1,7 @@
 package com.flabser.scriptprocessor;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.flabser.env.Environment;
 import com.flabser.localization.Vocabulary;
@@ -26,7 +27,11 @@ public class ScriptEvent {
 	
 	public void publishElement(String entryName, ArrayList<String[]> elements){
 		toPublishElement.add(new  _Element(entryName, elements));
-	}	
+	}
+	
+	public void publishElement(String entryName, Map elements){
+		toPublishElement.add(new  _Element(entryName, elements));
+	}
 	
 	public void publishElement(String entryName, _IContent value){
 		toPublishElement.add(new _Element(entryName, value)); 

@@ -18,7 +18,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class UserSession implements ICache {
 	public User currentUser;
 	public HistoryEntryCollection history;
-	public String lang;
+	public String lang = "ENG";
 	public int pageSize;
 	public String host = "localhost";
 	private IDatabase dataBase;

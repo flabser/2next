@@ -37,12 +37,7 @@ class Calculate extends _DoScript {
 		saldoTag.put("plus", saldoValue[1].setScale(2, BigDecimal.ROUND_DOWN))
 		saldoTag.put("minus", saldoValue[2].setScale(2, BigDecimal.ROUND_DOWN))*/
 	
-		def element = new _Element() // for example
-		element.addElement("sum",0)
-		element.addElement("plus",0)
-		element.addElement("minus",0)
-		element.addElement("rrrr","gggj")
-		publishElement("calculate", element) 
+		publishElement("calculate", [sum:"0",plus:"0",minus:"0"]) 
 		
 		
 	}
