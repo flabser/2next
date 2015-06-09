@@ -7,7 +7,7 @@ import com.flabser.script.actions.*
 
 
 
-class Operations extends _DoScript {
+class Transactions extends _DoScript {
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
@@ -17,7 +17,7 @@ class Operations extends _DoScript {
 
 		if (user.hasRole(["ct_operations"])) {
 			def _new = new _Action(getLocalizedWord("New transaction", lang), getLocalizedWord("Compose new transaction", lang), "new_document")
-			_new.setURL("Provider?type=edit&id=operation&key=")
+			_new.setURL("Provider?id=transaction&action=open&key=")
 			actionBar.addAction(_new)
 			actionBar.addAction(new _Action(getLocalizedWord("Delete", lang), getLocalizedWord("Delete choiced transaction", lang), _ActionType.DELETE_DOCUMENT))
 		}
