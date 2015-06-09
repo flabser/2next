@@ -103,7 +103,7 @@
 								<i class="fa fa-caret-down"></i>
 							</a>
 							<div class="nav-dropdown-menu">
-								<a class="nav-item" href="?type=page&amp;id=operations">
+								<a class="nav-item" href="?type=page&amp;id=transactions">
 									<xsl:value-of select="//captions/operations/@caption" />
 								</a>
 								<a class="nav-item" href="?type=edit&amp;element=userprofile&amp;id=userprofile">
