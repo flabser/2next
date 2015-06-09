@@ -85,9 +85,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 	public void updateTransaction(Transaction t) {
 		String sql = """update transaction set
 							type = ${t.type},
-							'USER' = ${t.author},
 							date = ${t.date},
-							regdate = ${t.regDate},
 							category = ${t.category},
 							subcategory = ${t.parentCategory},
 							amount = ${t.amount},
