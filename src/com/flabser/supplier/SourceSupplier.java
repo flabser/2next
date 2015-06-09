@@ -126,7 +126,7 @@ public class SourceSupplier {
 	}
 
 	public String toString(){
-		return "context=" + contextType + ", currentuser=" + user.getUserID() +  ", scriptprocessor = " + scriptProcessor;
+		return "context=" + contextType + ", currentuser=" + user.getLogin() +  ", scriptprocessor = " + scriptProcessor;
 	}
 	
 }

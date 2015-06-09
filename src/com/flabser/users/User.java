@@ -44,10 +44,6 @@ public class User {
 		login = "anonymous";
 	}
 
-	public String getUserID() {
-		return login;
-	}
-
 	public void setLogin(String l) {
 		try {
 			this.login = l;
@@ -282,7 +278,7 @@ public class User {
 		return primaryRegDate;
 	}
 
-	public Date getRegDate() {		
+	public Date getRegDate() {	
 		return regDate;
 	}
 
@@ -295,6 +291,9 @@ public class User {
 	}
 
 	public void setStatus(UserStatusType status) {
+		if ((this.status == UserStatusType.NOT_VERIFIED || this.status == UserStatusType.WAITING_FOR_VERIFYCODE) && status == UserStatusType.REGISTERED) {
+			regDate = new Date();
+		}
 		this.status = status;
 	}
 }

@@ -48,6 +48,7 @@ class RegUser extends _DoScript {
 		user.setPasswordHash(regForm.pwd)
 		user.setEmail(regForm.email)
 		user.setStatus(UserStatusType.NOT_VERIFIED)
+		user.setRegDate(new Date())
 		user.setVerifyCode(_Helper.randomValue)
 		
 		/*def appName = session.getGlobalSettings().appName;

@@ -263,10 +263,12 @@ public class SystemDatabase implements ISystemDatabase {
 		User user = new User();
 		user.fill(rs);
 		Statement s = conn.createStatement();
-		String sql = "select * from APPS where DOCID = " + user.id;
+		String sql = "select * from USERAPPS where USERID = " + user.id;
 		ResultSet rs1 = s.executeQuery(sql);
 		if (rs1.next()) {
-			ApplicationProfile ap = new ApplicationProfile(rs1);
+			Statement s2 = conn.createStatement();
+			ResultSet rs2 = s2.executeQuery( "select * from APPS where ID = " + rs.getInt("APPID"));
+			ApplicationProfile ap = new ApplicationProfile(rs2);
 			user.enabledApps.put(ap.appName, ap);
 		}
 		return user;
@@ -342,7 +344,7 @@ public class SystemDatabase implements ISystemDatabase {
 				User user = new User();
 				user.fill(rs);
 				user.isValid = true;
-				users.put(user.getUserID(), user);
+				users.put(user.getLogin(), user);
 			}
 
 			rs.close();
@@ -376,7 +378,7 @@ public class SystemDatabase implements ISystemDatabase {
 				user = new User();
 				user.fill(rs);
 				if (user.isValid) {
-					String addSQL = "select * from APPS where APPS.DOCID=" + user.id;
+					String addSQL = "select * from APPS where APPS.USERID=" + user.id;
 					Statement statement = conn.createStatement();
 					ResultSet resultSet = statement.executeQuery(addSQL);
 					while (resultSet.next()) {
@@ -393,6 +395,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 		} catch (Throwable e) {
 			DatabaseUtil.debugErrorPrint(e);
+			user = null;
 		} finally {
 			dbPool.returnConnection(conn);
 		}
@@ -534,57 +537,21 @@ public class SystemDatabase implements ISystemDatabase {
 			conn.setAutoCommit(false);
 			int key = 0;
 			Statement stmt = conn.createStatement();
-
-			ResultSet rs = stmt.executeQuery("select max(docid) from users");
-
-			if (rs.next())
-				key = rs.getInt(1) + 1;
-
-			String insertUser = "insert into USERS(DOCID, USERNAME, USERID, EMAIL, PWD, ISSUPERVISOR, PRIMARYREGDATE, REGDATE, LOGINHASH, PWDHASH, "
-					+ "LASTDEFAULTURL, STATUS, VERIFYCODE)" + " values("
-					+ key
-					+ ", '"
-					+ user.getLogin()
-					+ "','"
-					+ user.getUserID()
-					+ "',"
-					+ "'"
-					+ user.getEmail()
-					+ "','"
-					+ user.getPassword()
-					+ "',"
-					+ user.getIsSupervisor()
-					+ ","
-					+ "'"
-					+ sqlDateTimeFormat.format(new java.util.Date())
-					+ "',"
-					+ "'"
-					+ sqlDateTimeFormat.format(user.getRegDate())
-					+ "',"
-					+ (user.getUserID() + user.getPassword()).hashCode()
-					+ ", '"
-					+ user.getPasswordHash()
-					+ "',"
-					+ "'"
-					+ user.lastURL + "'," + user.getStatus().getCode() + ",'" + user.getVerifyCode() + "')";
-
-			PreparedStatement pst = conn.prepareStatement(insertUser/*
-																	 * ,
-																	 * PreparedStatement
-																	 * .
-																	 * RETURN_GENERATED_KEYS
-																	 */);
+			String sql = "insert into USERS(USERNAME, LOGIN, EMAIL, PWD, ISSUPERVISOR, PRIMARYREGDATE, REGDATE, LOGINHASH, PWDHASH, "
+					+ "LASTDEFAULTURL, STATUS, VERIFYCODE)" + " values('" + user.getUserName() + "','" + user.getLogin() + "',"
+					+ "'" + user.getEmail()	+ "','"	+ user.getPassword() + "',"	+ user.getIsSupervisor() + ",'"	+ sqlDateTimeFormat.format(new java.util.Date())
+					+ "','"	+ sqlDateTimeFormat.format(user.getRegDate()) + "'," + (user.getLogin() + user.getPassword()).hashCode() + ", '"
+					+ user.getPasswordHash() + "','" + user.lastURL + "'," + user.getStatus().getCode() + ",'" + user.getVerifyCode() + "')";
+			PreparedStatement pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			pst.executeUpdate();
-			rs = pst.getGeneratedKeys();
-			while (rs.next()) {
+			ResultSet rs = pst.getGeneratedKeys();
+			if (rs.next()) {
 				key = rs.getInt(1);
 			}
 
 			for (ApplicationProfile app : user.enabledApps.values()) {
-				String insertURL = "insert into APPS(DOCID, APP, DBHOST, DBNAME, DBLOGIN, DBPWD)values(" + key + ", '"
-						+ app.appName + "','" + app.dbHost + "'," + "'" + app.getDbName() + "','" + app.dbLogin + "','"
-						+ app.dbPwd + "')";
-				pst = conn.prepareStatement(insertURL);
+				String insertURL = "insert into USERAPPS(USERID, APPIDD)values(" + user.id + ", " + app.id + ")";
+						pst = conn.prepareStatement(insertURL);
 				pst.executeUpdate();
 
 			}
@@ -613,24 +580,22 @@ public class SystemDatabase implements ISystemDatabase {
 			} else {
 				pwd = user.getPassword();
 			}
-			String userUpdateSQL = "update USERS set USERID='" + user.getUserID() + "', USERNAME='"
-					+ user.getLogin() + "'," + "EMAIL='" + user.getEmail() + "', PWD='" + pwd + "', ISSUPERVISOR = "
+			String userUpdateSQL = "update USERS set LOGIN='" + user.getLogin() + "', USERNAME='"
+					+ user.getUserName() + "'," + "EMAIL='" + user.getEmail() + "', PWD='" + pwd + "', ISSUPERVISOR = "
 					+ user.getIsSupervisor() + "," + "REGDATE='" + sqlDateTimeFormat.format(user.getRegDate()) + "',"
-					+ "LOGINHASH = " + (user.getUserID() + user.getPassword()).hashCode() + ", " + "PWDHASH = '"
+					+ "LOGINHASH = " + (user.getLogin() + user.getPassword()).hashCode() + ", " + "PWDHASH = '"
 					+ user.getPasswordHash() + "', " + "LASTDEFAULTURL = '" + user.lastURL + "'," + "STATUS = "
-					+ user.getStatus().getCode() + ", VERIFYCODE='" + user.getVerifyCode() + "'" + " where DOCID="
+					+ user.getStatus().getCode() + ", VERIFYCODE='" + user.getVerifyCode() + "'" + " where ID="
 					+ user.id;
 			PreparedStatement pst = conn.prepareStatement(userUpdateSQL);
 			pst.executeUpdate();
 			conn.commit();
-			String delSQL = "delete from APPS where DOCID = " + user.id;
+			String delSQL = "delete from USERAPPS where USERID = " + user.id;
 			pst = conn.prepareStatement(delSQL);
 			pst.executeUpdate();
 
 			for (ApplicationProfile app : user.enabledApps.values()) {
-				String insertURL = "insert into APPS(DOCID, APP, DBHOST, DBNAME, DBLOGIN, DBPWD)values(" + user.id
-						+ ", '" + app.appName + "','" + app.dbHost + "'," + "'" + app.getDbName() + "','" + app.dbLogin
-						+ "','" + app.dbPwd + "')";
+				String insertURL = "insert into USERAPPS(USERID, APPIDD)values(" + user.id + ", " + app.id + ")";
 				PreparedStatement pst0 = conn.prepareStatement(insertURL);
 				pst0.executeUpdate();
 

@@ -37,7 +37,7 @@ public class Logout extends HttpServlet {
 				userSession = (UserSession)jses.getAttribute("usersession");			
 				if (userSession != null){
 					User user = userSession.currentUser;
-						String userID = user.getUserID();
+						String userID = user.getLogin();
 					IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 					ua.postLogout(ServletUtil.getClientIpAddr(request), user);
 

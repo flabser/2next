@@ -35,8 +35,8 @@ public class UserServices {
 			ea += app.toXML();
 		}
 
-		if (user.getUserID() != null) {
-			xmlContent += "<userid>" + user.getUserID() + "</userid>" + "<docid>" + user.id + "</docid>"
+		if (user.getLogin() != null) {
+			xmlContent += "<login>" + user.getLogin() + "</login>" + "<docid>" + user.id + "</docid>"
 					+ "<fullname></fullname><email>" + user.getEmail() + "</email>" +
 
 					"<password>" + user.getPassword() + "</password>" + "<isadmin>" + user.isSupervisor()
@@ -69,7 +69,7 @@ public class UserServices {
 		Iterator<User> it = fl.iterator();
 		while (it.hasNext()) {
 			User user = it.next();
-			xmlFragment += "<entry docid=\"" + user.id + "\" ><userid>" + user.getUserID() + "</userid>"
+			xmlFragment += "<entry docid=\"" + user.id + "\" ><login>" + user.getLogin() + "</login>"
 					+ "<issupervisor>" + user.isSupervisor() + "</issupervisor><email>" + user.getEmail()
 					+ "</email><username>" + user.getUserName() + "</username>" + "</entry>";
 		}

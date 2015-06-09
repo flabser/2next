@@ -117,7 +117,7 @@ public class Login extends HttpServlet {
 				if (!user.isAuthorized)
 					throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
 
-				String userID = user.getUserID();
+				String userID = user.getLogin();
 				jses = request.getSession(true);
 
 				AppEnv.logger.normalLogEntry(userID + " has connected");
@@ -131,7 +131,7 @@ public class Login extends HttpServlet {
 						ApplicationProfile ap = new ApplicationProfile();
 						ap.appName = env.appType;
 						ap.owner = user.getLogin();						
-						ap.dbLogin = (user.getUserID().replace("@", "_").replace(".", "_")).replace("-", "_")
+						ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_")).replace("-", "_")
 								.toLowerCase();
 						ap.dbName = ap.appName.toLowerCase() + "_" + ap.owner;
 						ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
