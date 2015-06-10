@@ -282,4 +282,16 @@
         <entry lang="ENG" hint="Transactions">Transactions</entry>
         <entry lang="BG" hint="Сделки">Сделки</entry>
     </sentence>
+    <sentence mode="on" keyword="save_close">
+        <entry lang="RUS" hint="Сохранить и закрыть">Сохранить и закрыть</entry>
+        <entry lang="KAZ" hint="Сохранить и закрыть">Сохранить и закрыть</entry>
+        <entry lang="ENG" hint="Save &amp; close">Save &amp; close</entry>
+        <entry lang="BG" hint="Запиши и затвори">Запиши и затвори</entry>
+    </sentence>
+    <sentence mode="on" keyword="close">
+        <entry lang="RUS" hint="Закрыть">Закрыть</entry>
+        <entry lang="KAZ" hint="Закрыть">Закрыть</entry>
+        <entry lang="ENG" hint="Close">Close</entry>
+        <entry lang="BG" hint="Затвори">Затвори</entry>
+    </sentence>
 </vocabulary>

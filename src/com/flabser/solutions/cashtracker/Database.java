@@ -1,11 +1,16 @@
 package com.flabser.solutions.cashtracker;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
@@ -39,8 +44,9 @@ public class Database extends DatabaseCore implements IDatabase {
 	}
 
 	@Override
-	public ResultSet select(String condition, User user) {
+	public ArrayList select(String condition, User user) {
 		ResultSet rs = null;
+		ArrayList<Object[]> l = new ArrayList<Object[]>();
 		Connection conn = pool.getConnection();
 		try {
 			conn.setAutoCommit(false);
@@ -48,7 +54,26 @@ public class Database extends DatabaseCore implements IDatabase {
 
 			String sql = condition;
 			rs = s.executeQuery(sql);
+			ResultSetMetaData md = rs.getMetaData();
+			int cc = md.getColumnCount();
 
+			while (rs.next()) {
+				Object[] e = new Object[cc];
+				for (int i = 0; i < cc; i++) {
+					int columnIndex = i + 1;
+					int type = md.getColumnType(columnIndex);
+					if (type == Types.VARCHAR || type == Types.CHAR) {
+						e[i] = rs.getString(columnIndex);
+					} else if(type == Types.NUMERIC || type == Types.INTEGER || type == Types.SMALLINT) {
+						e[i] = rs.getLong(columnIndex);
+					} else if(type == Types.ARRAY ) {
+						e[i] = rs.getArray(i + 1).getArray();
+					} else {
+						e[i] = rs.getString(columnIndex);
+					}
+				}
+				l.add(e);
+			}
 			conn.commit();
 			s.close();
 			rs.close();
@@ -60,7 +85,7 @@ public class Database extends DatabaseCore implements IDatabase {
 		} finally {
 			pool.returnConnection(conn);
 		}
-		return rs;
+		return l;
 	}
 
 	@Override
@@ -100,7 +125,7 @@ public class Database extends DatabaseCore implements IDatabase {
 
 	@Override
 	public void shutdown() {
-		
+
 	}
 
 	@Override

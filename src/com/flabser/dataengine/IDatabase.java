@@ -1,6 +1,6 @@
 package com.flabser.dataengine;
 
-import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
@@ -16,7 +16,7 @@ public interface IDatabase {
 	IFTIndexEngine getFTSearchEngine();
 
 	
-	ResultSet select(String condition, User user);
+	ArrayList select(String condition, User user);
 	int insert(String condition, User user);
 	int update(String condition, User user);
 	int delete(String condition, User user);	

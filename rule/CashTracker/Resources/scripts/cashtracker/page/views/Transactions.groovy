@@ -15,7 +15,7 @@ class Transactions extends _DoScript {
 		def sql = "SELECT * FROM TRANSACTION"
 		def rs = db.select(sql, session.getUser())
 	
-		publishElement("view", new _DataBox(rs))
+		//publishElement("view", new _DataBox(rs))
 	}
 
 }

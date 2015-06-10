@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="transaction" mode="on" anonymous="off">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>forms/transaction.xsl</xsltfile>
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="file">cashtracker.form.Transaction</doscript>
+		</events>
+	</element>
+</rule>

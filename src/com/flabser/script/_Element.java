@@ -60,10 +60,12 @@ public class _Element implements _IContent {
 			output.append(((_IContent) value).toXML());
 		} else if (value instanceof ArrayList) {
 			ArrayList<String[]> list = (ArrayList) value;
-			for (String[] e : list) {
-				for (String strVal : e) {
-					output.append("<entry>" + strVal + "</entry>");
+			for (Object[] e : list) {
+				output.append("<value>");
+				for (Object strVal : e) {
+					output.append("<entry>" + strVal.toString() + "</entry>");
 				}
+				output.append("</value>");
 			}
 		} else if (value instanceof Map) {
 			Map map = (Map) value;
