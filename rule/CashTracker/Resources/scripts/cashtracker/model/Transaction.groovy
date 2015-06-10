@@ -1,11 +1,13 @@
 package cashtracker.model;
 
+import java.sql.ResultSet;
 import java.util.Date;
 
+import com.flabser.script._Exception;
 import com.flabser.users.User;
 
 
-public class Transaction {
+public class Transaction implements com.flabser.script._IObject, com.flabser.script._IContent {
 
 	private long id;
 
@@ -23,11 +25,11 @@ public class Transaction {
 
 	private long category;
 
-	private int account;
+	private long account;
 
 	private BigDecimal amount;
 
-	private CostCenter costCenter;
+	private long costCenter;
 
 	private boolean repeat;
 
@@ -53,7 +55,7 @@ public class Transaction {
 	}
 
 	public void setAuthor(User author) {
-		this.author = author.getLogin();
+		this.author = "" //author.getLogin();
 	}
 
 	public int getType() {
@@ -68,8 +70,8 @@ public class Transaction {
 		return category;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category.getId();
+	public void setCategory(long category) {
+		this.category = 1 //category.getId();
 	}
 
 	public long getParentCategory() {
@@ -80,11 +82,11 @@ public class Transaction {
 		this.parentCategory = parentCategory;
 	}
 
-	public int getAccount() {
+	public long getAccount() {
 		return account;
 	}
 
-	public void setAccount(int account) {
+	public void setAccount(long account) {
 		this.account = account;
 	}
 
@@ -120,11 +122,11 @@ public class Transaction {
 		this.amount = amount;
 	}
 
-	public CostCenter getCostCenter() {
+	public long getCostCenter() {
 		return costCenter;
 	}
 
-	public void setCostCenter(CostCenter costCenter) {
+	public void setCostCenter(long costCenter) {
 		this.costCenter = costCenter;
 	}
 
@@ -171,5 +173,52 @@ public class Transaction {
 	@Override
 	public String toString() {
 		return "Transaction[" + amount + ", " + category + ", " + costCenter + "]";
+	}
+
+	public void init(ResultSet rs){
+		Transaction t = new Transaction()
+
+		t.setId(rs.getInt("id"))
+		t.setAuthor(null)
+		t.setDate(rs.getDate("date"))
+		t.setRegDate(rs.getDate("regdate"))
+		//t.setCategory(rs.getLong("category"))
+		//t.setParentCategory(rs.getLong("parentCategory"))
+		t.setAmount(rs.getBigDecimal("amount"))
+		t.setAccount(rs.getLong("account"))
+		t.setCostCenter(rs.getLong("costcenter"))
+		t.setRepeat(rs.getBoolean("repeat"))
+		t.setEvery(rs.getInt("every"))
+		t.setRepeatStep(rs.getInt("repeatstep"))
+		t.setEndDate(rs.getDate("enddate"))
+		t.setBasis(rs.getString("basis"))
+		t.setComment(rs.getString("note"))
+
+		t
+	}
+
+	public StringBuffer toXML() throws _Exception {
+		StringBuffer sb = new StringBuffer()
+
+		sb.append("""
+			<transaction>
+				<id>$id</id>
+				<author>$author</author>
+				<date>$date</date>
+				<regdate>$regDate</regdate>
+				<category>$category</category>
+				<parentCategory>$parentCategory</parentCategory>
+				<amount>$amount</amount>
+				<account>$account</account>
+				<costcenter>$costCenter</costcenter>
+				<repeat>$repeat</repeat>
+				<every>$every</every>
+				<repeatstep>$repeatStep</repeatstep>
+				<enddate>$endDate</enddate>
+				<basis>$basis</basis>
+				<note>$comment</note>
+			</transaction>""")
+
+		return sb
 	}
 }
