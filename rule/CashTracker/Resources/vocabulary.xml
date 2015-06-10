@@ -318,4 +318,10 @@
         <entry lang="ENG" hint="Transaction type">Transaction type</entry>
         <entry lang="BG" hint="Тип на транзакция">Tип на транзакция</entry>
     </sentence>
+    <sentence mode="on" keyword="all">
+        <entry lang="RUS" hint="Все">Все</entry>
+        <entry lang="KAZ" hint="Все">Все</entry>
+        <entry lang="ENG" hint="All">All</entry>
+        <entry lang="BG" hint="Всички">Всички</entry>
+    </sentence>
 </vocabulary>

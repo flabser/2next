@@ -1,6 +1,5 @@
 package com.flabser.solutions.cashtracker;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +9,6 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
@@ -18,6 +16,7 @@ import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.script._IObject;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.User;
 
@@ -44,7 +43,7 @@ public class Database extends DatabaseCore implements IDatabase {
 	}
 
 	@Override
-	public ArrayList select(String condition, User user) {
+	public ArrayList<Object[]> select(String condition, User user) {
 		ResultSet rs = null;
 		ArrayList<Object[]> l = new ArrayList<Object[]>();
 		Connection conn = pool.getConnection();
@@ -64,9 +63,9 @@ public class Database extends DatabaseCore implements IDatabase {
 					int type = md.getColumnType(columnIndex);
 					if (type == Types.VARCHAR || type == Types.CHAR) {
 						e[i] = rs.getString(columnIndex);
-					} else if(type == Types.NUMERIC || type == Types.INTEGER || type == Types.SMALLINT) {
+					} else if (type == Types.NUMERIC || type == Types.INTEGER || type == Types.SMALLINT) {
 						e[i] = rs.getLong(columnIndex);
-					} else if(type == Types.ARRAY ) {
+					} else if (type == Types.ARRAY) {
 						e[i] = rs.getArray(i + 1).getArray();
 					} else {
 						e[i] = rs.getString(columnIndex);
@@ -86,6 +85,42 @@ public class Database extends DatabaseCore implements IDatabase {
 			pool.returnConnection(conn);
 		}
 		return l;
+	}
+
+	public ArrayList<_IObject> select(String condition, String objClass, User user) {
+		ArrayList<_IObject> o = new ArrayList<_IObject>();
+		Connection conn = pool.getConnection();
+		try {
+			ResultSet rs = null;
+			@SuppressWarnings("rawtypes")
+			Class cls = Class.forName(objClass);			
+			
+			conn.setAutoCommit(false);
+			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);			
+
+			String sql = condition;
+			rs = s.executeQuery(sql);
+
+			while (rs.next()) {
+				_IObject grObj = (_IObject) cls.newInstance();
+				grObj.init(rs);
+				o.add(grObj);
+			}
+			conn.commit();
+			s.close();
+			rs.close();
+
+		} catch (SQLException e) {
+			DatabaseUtil.errorPrint(dbURI, e);
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.returnConnection(conn);
+		}
+		return o;
+
 	}
 
 	@Override

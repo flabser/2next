@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.script._IObject;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.User;
 
@@ -16,7 +17,8 @@ public interface IDatabase {
 	IFTIndexEngine getFTSearchEngine();
 
 	
-	ArrayList select(String condition, User user);
+	ArrayList<Object[]> select(String condition, User user);
+	ArrayList<_IObject> select(String condition, String objClass, User user);
 	int insert(String condition, User user);
 	int update(String condition, User user);
 	int delete(String condition, User user);	
