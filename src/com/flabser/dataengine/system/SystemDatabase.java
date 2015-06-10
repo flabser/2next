@@ -444,7 +444,7 @@ public class SystemDatabase implements ISystemDatabase {
 		 */
 	}
 
-	public boolean deleteUser(int id) {
+	public int deleteUser(int id) {
 		Connection conn = dbPool.getConnection();
 		try {
 			conn.setAutoCommit(false);
@@ -456,10 +456,10 @@ public class SystemDatabase implements ISystemDatabase {
 			pst.executeUpdate();
 			conn.commit();
 			pst.close();
-			return true;
+			return 1;
 		} catch (Throwable e) {
 			DatabaseUtil.errorPrint(e);
-			return false;
+			return -1;
 		} finally {
 			dbPool.returnConnection(conn);
 		}
@@ -753,6 +753,12 @@ public class SystemDatabase implements ISystemDatabase {
 		}
 	}
 
+	@Override
+	public int deleteApplicationProfile(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 	private void fillUserApp(Connection conn, User user) throws SQLException {
 		Statement s = conn.createStatement();
 		ResultSet rs = s.executeQuery("select * from USERAPPS where USERID = " + user.id);
@@ -769,5 +775,6 @@ public class SystemDatabase implements ISystemDatabase {
 		rs.close();
 		s.close();
 	}
+
 	
 }
