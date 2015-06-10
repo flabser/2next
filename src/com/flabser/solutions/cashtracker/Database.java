@@ -87,13 +87,12 @@ public class Database extends DatabaseCore implements IDatabase {
 		return l;
 	}
 
-	public ArrayList<_IObject> select(String condition, String objClass, User user) {
+	@SuppressWarnings("rawtypes")
+	public ArrayList<_IObject> select(String condition, Class objClass, User user) {
 		ArrayList<_IObject> o = new ArrayList<_IObject>();
 		Connection conn = pool.getConnection();
 		try {
 			ResultSet rs = null;
-			@SuppressWarnings("rawtypes")
-			Class cls = Class.forName(objClass);			
 			
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);			
@@ -102,7 +101,7 @@ public class Database extends DatabaseCore implements IDatabase {
 			rs = s.executeQuery(sql);
 
 			while (rs.next()) {
-				_IObject grObj = (_IObject) cls.newInstance();
+				_IObject grObj = (_IObject) objClass.newInstance();
 				grObj.init(rs);
 				o.add(grObj);
 			}
@@ -112,8 +111,6 @@ public class Database extends DatabaseCore implements IDatabase {
 
 		} catch (SQLException e) {
 			DatabaseUtil.errorPrint(dbURI, e);
-		} catch (ClassNotFoundException e1) {
-			e1.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
