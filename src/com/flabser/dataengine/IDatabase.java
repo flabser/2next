@@ -22,8 +22,7 @@ public interface IDatabase {
 
 	ArrayList <Object[]> select(String condition, User user);
 
-	@SuppressWarnings("rawtypes")
-	ArrayList <_IObject> select(String condition, Class objClass, User user);
+	ArrayList <_IObject> select(String condition, Class<_IObject> objClass, User user);
 
 	int insert(String condition, User user);
 

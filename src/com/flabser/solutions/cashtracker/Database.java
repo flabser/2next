@@ -87,18 +87,15 @@ public class Database extends DatabaseCore implements IDatabase {
 		return l;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList<_IObject> select(String condition, Class objClass, User user) {
+	public ArrayList<_IObject> select(String condition, Class<_IObject> objClass, User user) {
 		ArrayList<_IObject> o = new ArrayList<_IObject>();
 		Connection conn = pool.getConnection();
 		try {
-			ResultSet rs = null;
-			
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);			
 
 			String sql = condition;
-			rs = s.executeQuery(sql);
+			ResultSet rs = s.executeQuery(sql);
 
 			while (rs.next()) {
 				_IObject grObj = (_IObject) objClass.newInstance();
@@ -145,20 +142,45 @@ public class Database extends DatabaseCore implements IDatabase {
 
 	@Override
 	public int update(String condition, User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = pool.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement pst;
+			String sql = condition;
+			pst = conn.prepareStatement(sql);
+			pst.executeUpdate();
+			return 1;
+		} catch (SQLException e) {
+			DatabaseUtil.errorPrint(dbURI, e);
+			return -1;
+		} finally {
+			pool.returnConnection(conn);
+		}
 	}
 
 	@Override
 	public int delete(String condition, User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = pool.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement pst;
+			String sql = condition;
+			pst = conn.prepareStatement(sql);
+			pst.executeUpdate();
+			return 1;
+		} catch (SQLException e) {
+			DatabaseUtil.errorPrint(dbURI, e);
+			return -1;
+		} finally {
+			pool.returnConnection(conn);
+		}
 	}
 
 	@Override
 	public void shutdown() {
-
+		pool.closeAll();
 	}
+
 
 	@Override
 	public IDeployer getDeployer() {
@@ -166,3 +188,4 @@ public class Database extends DatabaseCore implements IDatabase {
 	}
 
 }
+

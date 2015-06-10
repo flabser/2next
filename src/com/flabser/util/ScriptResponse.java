@@ -1,13 +1,15 @@
 package com.flabser.util;
 
 import java.util.ArrayList;
+
 import com.flabser.script._IContent;
+import com.flabser.script._URL;
 
 public class ScriptResponse {
 	public ResponseType type;
 	public boolean resultFlag;
-	private ArrayList<_IContent> elementsList = new ArrayList<_IContent>();
-	private String elapsed_time;
+	private ArrayList<_URL> redirects;
+	private ArrayList<_IContent> elementsList;
 	
 	public ScriptResponse(ResponseType type) {
 		this.type = type;
@@ -30,16 +32,19 @@ public class ScriptResponse {
 		resultFlag = responseStatus;		
 	}
 	
-	public ArrayList<_IContent> getElements(){
-		return elementsList;
+	public void setRedirects(ArrayList<_URL> r) {
+		redirects = r;
+	}
+	
+	public ArrayList<_URL> getRedirects() {
+		return redirects;
 	}
 	
 	public void setPublishResult(ArrayList<_IContent> pulishElement) {
 		this.elementsList = pulishElement;
 	}
-
-	public void setElapsedTime(String et) {
-		elapsed_time = "elapsed_time = \"" + et + "\"";
-	}
 	
+	public ArrayList<_IContent> getElements(){
+		return elementsList;
+	}
 }

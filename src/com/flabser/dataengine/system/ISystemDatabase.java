@@ -24,14 +24,14 @@ public interface ISystemDatabase {
 	int getUsersCount(String condition);
 	int getAllUsersCount(String condition);
 	HashMap<String, User> getAllAdministrators();
-	boolean deleteUser(int docID);
+	int deleteUser(int id);
 	ArrayList<User> getUsers(String keyWord);
 	ArrayList<User> getAllUsers(String condition, int calcStartEntry,	int pageSize);	
 	IApplicationDatabase getApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException;
 
 	int insert(ApplicationProfile applicationProfile);
 	int update(ApplicationProfile applicationProfile);
-	
+	int deleteApplicationProfile(int id);
 	
 	
 }

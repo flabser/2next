@@ -1,18 +1,14 @@
 package com.flabser.servlets.admin;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
-import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
-import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.localization.LocalizatorException;
 import com.flabser.runtimeobj.RuntimeObjUtil;
@@ -52,7 +48,7 @@ public class UserServices {
 		return xmlContent;
 	}
 
-	boolean deleteUser(String id) {
+	int deleteUser(String id) {
 		int docID = Integer.parseInt(id);
 		return sysDatabase.deleteUser(docID);
 	}
@@ -105,7 +101,7 @@ public class UserServices {
 		User user = sysDatabase.getUser(userID);
 		IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
 		for (ApplicationProfile appProfile : user.enabledApps.values()) {
-			int res = appDb.removeDatabase("localhost", appProfile.getDbName());
+			appDb.removeDatabase("localhost", appProfile.getDbName());
 			
 		}
 		return result;
