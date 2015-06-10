@@ -294,4 +294,28 @@
         <entry lang="ENG" hint="Close">Close</entry>
         <entry lang="BG" hint="Затвори">Затвори</entry>
     </sentence>
+      <sentence mode="on" keyword="members">
+        <entry lang="RUS" hint="Участники">Участники</entry>
+        <entry lang="KAZ" hint="Участники">Участники</entry>
+        <entry lang="ENG" hint="Members">Members</entry>
+        <entry lang="BG" hint="Потребители">Потребители</entry>
+    </sentence>
+    <sentence mode="on" keyword="settings">
+        <entry lang="RUS" hint="Настройки">Настройки</entry>
+        <entry lang="KAZ" hint="Настройки">Настройки</entry>
+        <entry lang="ENG" hint="Settings">Settings</entry>
+        <entry lang="BG" hint="Настройки">Настройки</entry>
+    </sentence>
+     <sentence mode="on" keyword="account">
+        <entry lang="RUS" hint="Счет">Счет</entry>
+        <entry lang="KAZ" hint="Счет">Счет</entry>
+        <entry lang="ENG" hint="Account">Account</entry>
+        <entry lang="BG" hint="Счет">Счет</entry>
+    </sentence>
+    <sentence mode="on" keyword="transaction_type">
+        <entry lang="RUS" hint="Тип операции">Тип операции</entry>
+        <entry lang="KAZ" hint="Тип операции">Тип операции</entry>
+        <entry lang="ENG" hint="Transaction type">Transaction type</entry>
+        <entry lang="BG" hint="Тип на транзакция">Tип на транзакция</entry>
+    </sentence>
 </vocabulary>
