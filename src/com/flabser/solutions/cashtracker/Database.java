@@ -145,20 +145,45 @@ public class Database extends DatabaseCore implements IDatabase {
 
 	@Override
 	public int update(String condition, User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = pool.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement pst;
+			String sql = condition;
+			pst = conn.prepareStatement(sql);
+			pst.executeUpdate();
+			return 1;
+		} catch (SQLException e) {
+			DatabaseUtil.errorPrint(dbURI, e);
+			return -1;
+		} finally {
+			pool.returnConnection(conn);
+		}
 	}
 
 	@Override
 	public int delete(String condition, User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = pool.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement pst;
+			String sql = condition;
+			pst = conn.prepareStatement(sql);
+			pst.executeUpdate();
+			return 1;
+		} catch (SQLException e) {
+			DatabaseUtil.errorPrint(dbURI, e);
+			return -1;
+		} finally {
+			pool.returnConnection(conn);
+		}
 	}
 
 	@Override
 	public void shutdown() {
-
+		pool.closeAll();
 	}
+
 
 	@Override
 	public IDeployer getDeployer() {
