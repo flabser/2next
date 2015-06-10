@@ -6,7 +6,9 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,6 +22,7 @@ import com.flabser.exception.RuleException;
 import com.flabser.rule.IRule;
 import com.flabser.rule.page.PageRule;
 import com.flabser.runtimeobj.page.Page;
+import com.flabser.script._IObject;
 import com.flabser.script._Page;
 import com.flabser.users.AuthFailedException;
 import com.flabser.users.AuthFailedExceptionType;
@@ -75,9 +78,9 @@ public class RestProvider {
 			Page page = new Page(env, userSession, pageRule);
 			_Page pojoPage = page.process(fields);
 			return pojoPage;
-			
+
 		} catch (RuleException e) {
-				e.printStackTrace();
+			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (UserException e) {
@@ -87,6 +90,16 @@ public class RestProvider {
 		}
 		return null;
 
+	}
+
+	@POST
+	@Path("save")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public _Page save(_IObject c) {
+
+		System.out.println(c);
+		return null;
 	}
 
 }

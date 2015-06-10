@@ -12,7 +12,7 @@ import com.flabser.script._URL;
 
 public class ScriptEvent {
 	protected Vocabulary vocabulary;
-	protected String redirectURL = "";
+	protected ArrayList<_URL> redirects = new ArrayList<_URL>();
 	protected ArrayList<_IContent> toPublishElement = new ArrayList<_IContent>();
 	protected _Session ses;
 	
@@ -37,6 +37,10 @@ public class ScriptEvent {
 		toPublishElement.add(new _Element(entryName, value)); 
 	}
 		
+	public void addRedirect(_URL url){
+		redirects.add(url);
+	}
+	
 	public  String getGroovyError(StackTraceElement stack[]){		
 		for (int i=0; i<stack.length; i++){
 			if (stack[i].getClassName().contains(this.getClass().getName())){
@@ -64,12 +68,5 @@ public class ScriptEvent {
 		return getWord(word, vocabulary, lang);
 	}
 
-	public void setRedirectURL(_URL url){
-		redirectURL = url.toString();
-	}
-
-	public static void log(Object logText){
-		ScriptProcessor.logger.normalLogEntry(logText.toString());
-	}
 	
 }

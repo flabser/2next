@@ -8,7 +8,6 @@ import com.flabser.script._WebFormData;
 import com.flabser.scriptprocessor.ScriptEvent;
 import com.flabser.scriptprocessor.ScriptProcessorUtil;
 import com.flabser.util.ResponseType;
-import com.flabser.util.Util;
 import com.flabser.util.ScriptResponse;
 
 public abstract class AbstractPageScript extends ScriptEvent implements IPageScript {
@@ -42,10 +41,9 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 	}
 
 	public ScriptResponse process(){
-
-		long start_time = System.currentTimeMillis();
 		try{					
 			doProcess(ses, formData, lang);
+			resp.setRedirects(redirects);
 			resp.setPublishResult(toPublishElement);
 			resp.setResponseStatus(true);		
 	
@@ -60,7 +58,6 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 			e.printStackTrace();
 		}
 
-		resp.setElapsedTime(Util.getTimeDiffInSec(start_time));
 		return resp;
 	}
 

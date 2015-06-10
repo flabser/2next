@@ -7,16 +7,15 @@ import java.util.Map;
 import com.flabser.appenv.AppEnv;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
-import com.flabser.localization.LocalizatorException;
 import com.flabser.localization.SentenceCaption;
 import com.flabser.rule.Caption;
 import com.flabser.rule.page.ElementRule;
 import com.flabser.rule.page.PageRule;
 import com.flabser.script._Page;
+import com.flabser.script._URL;
 import com.flabser.scriptprocessor.page.DoProcessor;
 import com.flabser.scriptprocessor.page.IQuerySaveTransaction;
 import com.flabser.supplier.SourceSupplier;
-import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.util.Util;
 import com.flabser.util.ScriptResponse;
@@ -24,8 +23,9 @@ import com.flabser.util.ScriptResponse;
 public class Page{
 	public boolean fileGenerated;
 	public String generatedFilePath;
-	public String generatedFileOriginalName;
-
+	public String generatedFileOriginalName;	
+	public ArrayList<_URL> redirects = new ArrayList<_URL>();
+	
 	protected AppEnv env;
 	protected PageRule rule;
 	protected Map<String, String[]> fields = new HashMap<String, String[]>();
@@ -37,32 +37,15 @@ public class Page{
 		this.rule = rule;
 	}
 
-	public String getSpravFieldSet(User user, String lang) throws RuleException, LocalizatorException {
-		StringBuffer glossariesAsText = new StringBuffer("<glossaries>");
-		/*
-		 * SourceSupplier ss = new SourceSupplier(user, env, lang); for
-		 * (GlossaryRule glos : rule.getGlossary()) {
-		 * glossariesAsText.append("<" + glos.name + ">" +
-		 * ss.getDataAsXML(glos.valueSource, glos.value, glos.macro, lang) +
-		 * "</" + glos.name + ">"); }
-		 */
-		return glossariesAsText.append("</glossaries>").toString();
-	}
-
 	public HashMap <String, String[]> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
-		//ArrayList<SentenceCaption> captionsList = new ArrayList<SentenceCaption>();
-		// ArrayList<String[]> captionsList = new ArrayList<String[]>();
-		
-		HashMap <String, String[]> captionsList = new HashMap <String,String[]>();
-		
+		HashMap <String, String[]> captionsList = new HashMap <String,String[]>();		
 		for (Caption cap : captions) {
 			SentenceCaption sc = captionTextSupplier.getValueAsCaption(cap.source, cap.captionID);
 			String c[] = new String[2];
 			c[0] = sc.word;
 			c[1] = sc.hint;
-			captionsList.put(cap.captionID, c);
-		}
-		return captionsList;// captionsText.append("</captions>").toString();
+			captionsList.put(cap.captionID, c);		}
+		return captionsList;
 	}
 
 	public _Page process(Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
@@ -111,7 +94,7 @@ public class Page{
 						toPostObects.post();
 					}
 					pp.addElements(scriptResp.getElements());
-					
+					redirects.addAll(scriptResp.getRedirects());
 
 					break;
 

@@ -87,18 +87,15 @@ public class Database extends DatabaseCore implements IDatabase {
 		return l;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public ArrayList<_IObject> select(String condition, Class objClass, User user) {
+	public ArrayList<_IObject> select(String condition, Class<_IObject> objClass, User user) {
 		ArrayList<_IObject> o = new ArrayList<_IObject>();
 		Connection conn = pool.getConnection();
 		try {
-			ResultSet rs = null;
-			
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);			
 
 			String sql = condition;
-			rs = s.executeQuery(sql);
+			ResultSet rs = s.executeQuery(sql);
 
 			while (rs.next()) {
 				_IObject grObj = (_IObject) objClass.newInstance();
