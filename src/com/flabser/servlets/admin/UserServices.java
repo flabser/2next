@@ -35,8 +35,8 @@ public class UserServices {
 			xmlContent += "<login>" + user.getLogin() + "</login>" + "<docid>" + user.id + "</docid>"
 					+ "<fullname></fullname><email>" + user.getEmail() + "</email>" +
 
-					"<password>" + user.getPassword() + "</password>" + "<isadmin>" + user.isSupervisor()
-					+ "</isadmin><hash>" + user.getHash() + "</hash>" + "<enabledapps>" + ea + "</enabledapps>";
+					"<password>" + user.getPassword() + "</password><isadmin>" + user.isSupervisor()
+					+ "</isadmin><hash>" + user.getHash() + "</hash><enabledapps>" + ea + "</enabledapps>";
 
 		}
 
@@ -65,9 +65,9 @@ public class UserServices {
 		Iterator<User> it = fl.iterator();
 		while (it.hasNext()) {
 			User user = it.next();
-			xmlFragment += "<entry docid=\"" + user.id + "\" ><login>" + user.getLogin() + "</login>"
+			xmlFragment += "<entry id=\"" + user.id + "\" ><login>" + user.getLogin() + "</login>"
 					+ "<issupervisor>" + user.isSupervisor() + "</issupervisor><email>" + user.getEmail()
-					+ "</email><username>" + user.getUserName() + "</username>" + "</entry>";
+					+ "</email><username>" + user.getUserName() + "</username></entry>";
 		}
 
 		return xmlFragment;
