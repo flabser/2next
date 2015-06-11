@@ -6,46 +6,46 @@ define('router', ['ember'], function(Ember) {
     });
 
     Router.map(function() {
-        this.resource('index', {
+        this.route('index', {
             path: '/'
         });
 
-        this.resource('profile');
+        this.route('profile');
 
-        this.resource('transactions');
+        this.route('transactions');
 
-        this.resource('transaction', function() {
+        this.route('transaction', function() {
             this.route('new');
             this.route('edit', {
                 path: '/:transaction_id'
             });
         });
 
-        this.resource('users');
+        this.route('users');
 
-        this.resource('accounts');
+        this.route('accounts');
 
-        this.resource('account', function() {
+        this.route('account', function() {
             this.route('new');
             this.route('edit', {
                 path: '/:account_id'
             });
         });
 
-        this.resource('categories');
+        this.route('categories');
 
-        this.resource('category', function() {
+        this.route('category', function() {
             this.route('new');
             this.route('edit', {
                 path: '/:category_id'
             });
         });
 
-        this.resource('cost_centers', {
+        this.route('cost_centers', {
             path: '/costcenters'
         });
 
-        this.resource('cost_center', {
+        this.route('cost_center', {
             path: '/costcenter'
         }, function() {
             this.route('new');
