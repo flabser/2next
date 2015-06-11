@@ -175,6 +175,8 @@ public class Transaction implements com.flabser.script._IObject, com.flabser.scr
 		return "Transaction[" + amount + ", " + category + ", " + costCenter + "]";
 	}
 
+	
+	
 	public void init(ResultSet rs){
 		Transaction t = new Transaction()
 

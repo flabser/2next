@@ -124,9 +124,7 @@ public class AdminProvider extends HttpServlet{
 
 				if (po.prepareXSLT(result.xslt)){
 					String outputContent = po.getStandartOutput();
-					//	long start_time = System.currentTimeMillis();  // for speed debuging
 					new SaxonTransformator().toTrans(response, po.xslFile, outputContent);
-					//	System.out.println(getClass().getSimpleName() + " transformation  >>> " +  Util.getTimeDiffInMilSec(start_time));  // for speed debuging
 				}else{
 					String outputContent = po.getStandartOutput();
 					response.setContentType("text/xml;charset=utf-8");		
@@ -136,20 +134,14 @@ public class AdminProvider extends HttpServlet{
 				}
 			}else if(result.publishAs == PublishAsType.XML){
 				if (result.disableClientCache){
-					//disableCash(response);
 				}
 				response.setContentType("text/xml;charset=utf-8");	
 
 				String outputContent = po.getStandartOutput();	
-				//System.out.println(outputContent);
 				PrintWriter out = response.getWriter();
 				out.println(outputContent);
 				out.close();
 			}else  if(result.publishAs == PublishAsType.TEXT){
-				if (result.disableClientCache){
-					//disableCash(response);
-				}
-
 				String outputContent = po.getPlainText();	
 				response.setContentType("text/text;charset=utf-8");		
 				response.getWriter().println(outputContent);
@@ -261,11 +253,7 @@ public class AdminProvider extends HttpServlet{
 			}else{
 				result.output.append(us.getUserAsXML(key));	
 			}
-		}else if(element.equalsIgnoreCase("schedule")){						
-			
-		}else if(element.equalsIgnoreCase("backup")){						
-		
-		}else if(element.equalsIgnoreCase("handler_rule")){
+		}else if(element.equalsIgnoreCase("schedule")){	
 		
 		}else if(element.equalsIgnoreCase("page_rule")){			
 		

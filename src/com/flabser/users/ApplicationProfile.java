@@ -34,7 +34,8 @@ public class ApplicationProfile {
 
 	public StringBuffer toXML() {
 		StringBuffer output = new StringBuffer(1000);
-		return output.append("<entry><appname>" + appName + "</appname>" + output + "</entry>");
+		return output.append("<entry><appname>" + appName + "</appname><owner>" + owner + "</owner>"
+				+ "<dbhost>" + dbHost + "</dbhost><dbname>" + dbName + "</dbname><dblogin>" + dbLogin + "</dblogin></entry>");
 	}
 
 	public String getImpl() {

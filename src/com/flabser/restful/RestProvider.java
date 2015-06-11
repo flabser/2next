@@ -29,7 +29,7 @@ import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
-@Path("/page")
+@Path("/get")
 public class RestProvider {
 
 	@Context
