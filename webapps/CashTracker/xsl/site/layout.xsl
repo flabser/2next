@@ -148,6 +148,7 @@
 							<xsl:value-of select="//captions/about/@caption" />
 						</a>
 					</li>
+					<li class="sep"></li>
 					<xsl:apply-templates select="//availablelangs" />
 					<li class="copy">
 						<copy>
