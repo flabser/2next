@@ -48,9 +48,9 @@ gulp.task('minify_css', function() {
 // --------------------------------
 
 // ember app
-var js_ember_files = ['./js/ember-app/**/*.js',
-    '!./js/ember-app/app.build.js',
-    '!./js/ember-app/app.min.js'
+var js_ember_files = ['./js/app/**/*.js',
+    '!./js/app/app.build.js',
+    '!./js/app/app.min.js'
 ];
 
 gulp.task('em_lint', function() {
@@ -63,27 +63,26 @@ gulp.task('em_minify_js', function() {
     gulp.src(js_ember_files)
         .pipe(concat('app.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./js/ember-app'));
+        .pipe(gulp.dest('./js/app'));
 });
 // --------------------------------
 
 // ember templates
 gulp.task('em_templates_trim', function() {
-    gulp.src('./js/ember-app/templates/*.html')
+    gulp.src('./js/app/templates/*.html')
         .pipe(replace(/(\n|\s{2,})/g, ''))
-        .pipe(gulp.dest('./js/ember-app/templates/compiled'));
+        .pipe(gulp.dest('./js/app/templates/compiled'));
 });
 
 gulp.task('em_templates', function() {
-    gulp.src('./js/ember-app/templates/compiled/*.html')
+    gulp.src('./js/app/templates/compiled/*.html')
         .pipe(emberTemplates({
-            type: 'amd',
-            compiler: require('./js/lib/ember-template-compiler'),
+            type: 'browser',
+            compiler: require('../SharedResources/vendor/ember/ember-template-compiler'),
             isHTMLBars: true
         }))
         .pipe(concat('templates.js'))
-        .pipe(replace(/(\n|\s{2,})/g, ''))
-        .pipe(gulp.dest('./js/ember-app/templates/compiled'));
+        .pipe(gulp.dest('./js/app/templates/compiled'));
 });
 // --------------------------------
 
@@ -91,12 +90,20 @@ gulp.task('em_templates', function() {
 gulp.task('default', function() {
     gulp.run('lint', 'em_lint', 'em_templates_trim', 'em_templates', 'em_minify_js', 'minify_js', 'minify_css');
 
-    gulp.watch(js_files, function(event) {
-        gulp.run('minify_js');
+    gulp.watch('./js/app/templates/*.html', function(event) {
+        gulp.run('em_templates_trim');
+    });
+
+    gulp.watch('./js/app/templates/compiled/*.html', function(event) {
+        gulp.run('em_templates');
     });
 
     gulp.watch(js_ember_files, function(event) {
         gulp.run('em_minify_js');
+    });
+
+    gulp.watch(js_files, function(event) {
+        gulp.run('minify_js');
     });
 
     gulp.watch(css_files, function(event) {

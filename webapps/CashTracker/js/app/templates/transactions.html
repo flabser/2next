@@ -1,0 +1,10 @@
+<h1>Transactions view/ {{title}}</h1>
+<a href="#/transaction/new">new</a>
+
+{{#each controller}}
+	<div>
+		{{#link-to 'transaction'}}
+			{{name}}
+		{{/link-to}}
+	</div>
+{{/each}}

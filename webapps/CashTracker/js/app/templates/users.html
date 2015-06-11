@@ -1,0 +1,9 @@
+<h1>users</h1>
+
+{{#each controller}}
+	<div>
+		{{#link-to 'user'}}
+			{{name}}
+		{{/link-to}}
+	</div>
+{{/each}}
