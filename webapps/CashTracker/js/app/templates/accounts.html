@@ -1,14 +1,18 @@
 <div class="view view_accounts">
-    <div class="view-header">
-        <!-- <xsl:call-template name="page-info" /> -->
+    <header class="view-header">
         <h1>accounts</h1>
-        <a href="#/account/new">new</a>
-    </div>
+    </header>
+    <section>
+        {{outlet}}
+    </section>
+    <nav>
+        <a href="#/accounts/new">new account</a>
+    </nav>
     <div class="view-content">
         <header class="entries-head">
             <div class="head-wrap">
                 <label class="entry-select">
-                    <input type="checkbox" data-toggle="docid" class="all" />
+                    <input type="checkbox" class="all" {{action "selectAll"}} />
                 </label>
                 <div class="entry-captions">
                     <span class="vaccount-name">
@@ -36,9 +40,9 @@
                 </div>
                 <div data-ddbid="{{id}}" class="entry document js-swipe-entry">
                     <label class="entry-select">
-                        <input type="checkbox" name="docid" value="{{id}}" />
+                        <input type="checkbox" name="id" value="{{id}}" {{action "selectOne"}} />
                     </label>
-                    {{#link-to 'account' this class="entry-link"}}
+                    {{#link-to "accounts.edit" this class="entry-link"}}
                         <div class="entry-fields">
                             <span class="entry-field vaccount-name">
 							{{name}}
@@ -56,6 +60,7 @@
 						</span>
                         </div>
                     {{/link-to}}
+                    
                 </div>
             </div>
             {{/each}}

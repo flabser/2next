@@ -1,11 +1,4 @@
 CT.CostCenter = DS.Model.extend({
+    type: DS.attr('number'),
     name: DS.attr('string')
 });
-
-CT.CostCenter.FIXTURES = [{
-    id: '1',
-    name: 'CostCenter 1'
-}, {
-    id: '2',
-    name: 'CostCenter 2'
-}];

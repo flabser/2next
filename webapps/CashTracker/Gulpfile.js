@@ -61,6 +61,8 @@ gulp.task('em_lint', function() {
 
 gulp.task('em_minify_js', function() {
     gulp.src(js_ember_files)
+        .pipe(concat('app.build.js'))
+        .pipe(gulp.dest('./js/app'))
         .pipe(concat('app.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./js/app'));
@@ -75,11 +77,11 @@ gulp.task('em_templates_trim', function() {
 });
 
 gulp.task('em_templates', function() {
-    gulp.src('./js/app/templates/compiled/*.html')
+    gulp.src('./js/app/templates/**/*.html')
         .pipe(emberTemplates({
             type: 'browser',
             compiler: require('../SharedResources/vendor/ember/ember-template-compiler'),
-            isHTMLBars: true
+            isHTMLBars: false
         }))
         .pipe(concat('templates.js'))
         .pipe(gulp.dest('./js/app/templates/compiled'));
@@ -88,13 +90,9 @@ gulp.task('em_templates', function() {
 
 // run
 gulp.task('default', function() {
-    gulp.run('lint', 'em_lint', 'em_templates_trim', 'em_templates', 'em_minify_js', 'minify_js', 'minify_css');
+    gulp.run('lint', 'em_lint', 'em_templates', 'em_minify_js', 'minify_js', 'minify_css');
 
     gulp.watch('./js/app/templates/*.html', function(event) {
-        gulp.run('em_templates_trim');
-    });
-
-    gulp.watch('./js/app/templates/compiled/*.html', function(event) {
         gulp.run('em_templates');
     });
 

@@ -1,3 +1,414 @@
+'use strict';
+
+var CT = Ember.Application.create({
+    LOG_TRANSITIONS: true,
+    LOG_TRANSITIONS_INTERNAL: true,
+    LOG_ACTIVE_GENERATION: true
+});
+
+/*CT.ApplicationAdapter = DS.RestAdapter.extend({
+    simulateRemoteResponse: true
+});*/
+
+/*DS.RESTAdapter.reopen({
+    namespace: 'CashTracker/RestProvider'
+});*/
+
+CT.ApplicationAdapter = DS.FirebaseAdapter.extend({
+    firebase: new Firebase('https://blinding-fire-6380.firebaseio.com/')
+});
+
+CT.Router = Ember.Router.extend({
+    // location: 'history'
+});
+
+CT.Router.map(function() {
+    this.route('index', {
+        path: '/'
+    });
+
+    this.route('userprofile');
+
+    this.route('transactions', function() {
+        this.route('new');
+        this.route('transaction', {
+            path: '/:transaction_id'
+        });
+    });
+
+    this.route('accounts', function() {
+        this.route('new');
+        this.route('edit', {
+            path: '/:account_id'
+        })
+    });
+
+    /*this.route('account', {
+        path: '/accounts/:account_id'
+    });*/
+
+    this.route('categories', function() {
+        this.route('new');
+        this.route('category', {
+            path: '/:category_id'
+        });
+    });
+
+    this.route('cost_centers', {
+        path: '/costcenters'
+    }, function() {
+        this.route('new');
+        this.route('cost_center', {
+            path: '/:costcenter_id'
+        });
+    });
+
+    this.route('users', function() {
+        this.route('new');
+        this.route('edit', {
+            path: '/:user_id'
+        });
+    });
+});
+
+Ember.Route.reopen({
+    redirect: function() {
+        if (this.routeName === 'index') {
+            this.transitionTo('transactions');
+        }
+    }
+});
+
+CT.AccountController = Ember.ObjectController.extend({
+    actions: {
+        save: function(account) {
+            account.save().then(function() {
+                this.transitionTo('accounts');
+            });
+        }
+    }
+});
+
+CT.AccountsController = Ember.ArrayController.extend();
+
+CT.AccountsNewController = Ember.ArrayController.extend({
+    actions: {
+        create: function() {
+            this.transitionTo('accounts.new');
+        },
+        save: function() {
+            var newAccount = this.store.createRecord('account', {
+                type: this.get('type'),
+                name: this.get('name'),
+                currency: this.get('currency'),
+                openingBalance: this.get('openingBalance'),
+                amountControl: this.get('amountControl'),
+                owner: this.get('owner'),
+                observers: this.get('observers')
+            });
+            newAccount.save();
+        },
+        cancel: function() {
+            this.transitionTo('accounts');
+        }
+    }
+});
+
+CT.ApplicationController = Ember.Controller.extend({
+    init: function() {
+        this.windowOnResize();
+        $(window).resize(this.windowOnResize);
+    },
+
+    windowOnResize: function() {
+        if (window.innerWidth <= 800) {
+            $('body').addClass('phone');
+        } else {
+            $('body').removeClass('phone');
+        }
+    },
+
+    actions: {
+        navAppMenuToggle: function() {
+            $('body').toggleClass('nav-app-open');
+        },
+        navUserMenuToggle: function() {
+            $('body').toggleClass('nav-ws-open');
+        },
+        hideOpenedNav: function() {
+            $('body').removeClass('nav-app-open nav-ws-open');
+        },
+        toggleSearchForm: function() {
+            $('body').toggleClass('search-open');
+        }
+    }
+});
+
+CT.CategoriesController = Ember.ArrayController.extend();
+
+CT.CategoryController = Ember.ObjectController.extend({
+    actions: {
+        save: function() {
+            alert('save category')
+        }
+    }
+});
+
+CT.CostCenterController = Ember.ObjectController.extend({
+    actions: {
+        save: function() {
+            alert('save cc')
+        }
+    }
+});
+
+CT.CostCentersController = Ember.ArrayController.extend();
+
+CT.TransactionController = Ember.ObjectController.extend({
+    actions: {
+        save: function(transaction) {
+            transaction.save();
+        }
+    }
+});
+
+CT.TransactionsController = Ember.ArrayController.extend({
+    actions: {
+        addTransaction: function() {
+            var newTransaction = this.store.createRecord('transaction', {
+                author: this.get('author'),
+                regDate: this.get('regDate'),
+                date: this.get('date'),
+                endDate: this.get('endDate'),
+                parentCategory: this.get('parentCategory'),
+                category: this.get('category'),
+                account: this.get('account'),
+                costCenter: this.get('costCenter'),
+                amount: this.get('amount'),
+                repeat: this.get('repeat'),
+                every: this.get('every'),
+                repeatStep: this.get('repeatStep'),
+                basis: this.get('basis'),
+                observers: this.get('observers'),
+                comment: this.get('comment')
+            });
+            newTransaction.save();
+        }
+    }
+});
+
+CT.UserController = Ember.ObjectController.extend({
+    actions: {
+        save: function(user) {
+            user.save();
+        }
+    }
+});
+
+CT.UsersController = Ember.ArrayController.extend();
+
+CT.UsersNewController = Ember.ArrayController.extend({
+    actions: {
+        create: function() {
+            this.transitionTo('users.new');
+        },
+        save: function() {
+            var newUser = this.store.createRecord('user', {
+                name: this.get('name')
+            });
+            newUser.save();
+        },
+        cancel: function() {
+            this.transitionTo('users');
+        }
+    }
+});
+
+CT.Account = DS.Model.extend({
+    type: DS.attr('number'),
+    name: DS.attr('string'),
+    currency: DS.attr('string'),
+    openingBalance: DS.attr('number'),
+    amountControl: DS.attr('number'),
+    owner: DS.attr('string'),
+    observers: DS.attr('string')
+});
+
+CT.Category = DS.Model.extend({
+    type: DS.attr('number'),
+    name: DS.attr('string'),
+    comment: DS.attr('string')
+});
+
+CT.CostCenter = DS.Model.extend({
+    type: DS.attr('number'),
+    name: DS.attr('string')
+});
+
+CT.Transaction = DS.Model.extend({
+    author: DS.attr('string'),
+    regDate: DS.attr('date'),
+    date: DS.attr('date'),
+    endDate: DS.attr('date'),
+    parentCategory: DS.attr('number'),
+    category: DS.attr('number'),
+    account: DS.attr('number'),
+    costCenter: DS.attr('number'),
+    amount: DS.attr('number'),
+    repeat: DS.attr('repeat'),
+    every: DS.attr('every'),
+    repeatStep: DS.attr('repeatStep'),
+    basis: DS.attr('string'),
+    comment: DS.attr('string')
+});
+
+CT.User = DS.Model.extend({
+    name: DS.attr('string')
+});
+
+CT.UserProfile = DS.Model.extend({
+    name: DS.attr('string')
+});
+
+CT.AccountRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('account', params.account_id);
+    }
+});
+
+CT.AccountsRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('account');
+    }
+});
+
+CT.ApplicationRoute = Ember.Route.extend({
+    actions: {
+        willTransition: function() {
+            $('body').removeClass('nav-app-open nav-ws-open');
+        }
+    }
+});
+
+CT.CategoriesRoute = Ember.Route.extend({
+    model: function() {
+        return this.store.find('category');
+    }
+});
+
+CT.CategoryRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('category', params.category_id);
+    }
+});
+
+CT.CostCenterRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('cost-center', params.costcenter_id);
+    }
+});
+
+CT.CostCentersRoute = Ember.Route.extend({
+    model: function() {
+        return this.store.find('cost-center');
+    }
+});
+
+CT.TransactionRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('transaction', params.transaction_id);
+    }
+});
+
+CT.TransactionsRoute = Ember.Route.extend({
+    model: function() {
+        return this.store.find('transaction');
+    }
+});
+
+CT.UserRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('user', params.user_id);
+    }
+});
+
+CT.UsersRoute = Ember.Route.extend({
+    model: function() {
+        return this.store.find('user');
+    }
+});
+
+CT.AccountView = Ember.View.extend({
+    templateName: 'account',
+});
+
+CT.AccountsView = Ember.View.extend({
+    templateName: 'accounts'
+});
+
+CT.AccountsNewView = Ember.View.extend({
+    templateName: 'account'
+});
+
+CT.AccountsEditView = Ember.View.extend({
+    templateName: 'account'
+});
+
+CT.ApplicationView = Ember.View.extend({
+    classNames: ['layout'],
+
+    templateName: 'application',
+
+    willInsertElement: function() {
+        $('.page-loading').hide();
+    }
+});
+
+CT.CategoriesView = Ember.View.extend({
+    templateName: 'categories',
+});
+
+CT.CategoryView = Ember.View.extend({
+    templateName: 'category',
+});
+
+CT.CostCenterView = Ember.View.extend({
+    templateName: 'costcenter',
+});
+
+CT.CostCentersView = Ember.View.extend({
+    templateName: 'costcenters',
+});
+
+CT.TransactionView = Ember.View.extend({
+    templateName: 'transaction',
+});
+
+CT.TransactionsView = Ember.View.extend({
+    templateName: 'transactions',
+});
+
+CT.TransactionsNewView = Ember.View.extend({
+    templateName: 'transaction'
+});
+
+CT.UserView = Ember.View.extend({
+    templateName: 'user',
+});
+
+CT.UsersView = Ember.View.extend({
+    templateName: 'users',
+});
+
+
+CT.UsersNewView = Ember.View.extend({
+    templateName: 'user'
+});
+
+CT.UsersEditView = Ember.View.extend({
+    templateName: 'user'
+});
+
 Ember.TEMPLATES["account"] = Ember.Handlebars.template((function() {
   return {
     isHTMLBars: true,

@@ -1,8 +1,16 @@
 <h1>users</h1>
 
+<section>
+	{{outlet}}
+</section>
+
+<nav>
+    <a href="#/users/new">new user</a>
+</nav>
+
 {{#each controller}}
 	<div>
-		{{#link-to 'user' this}}
+		{{#link-to 'users.edit' this}}
 			{{name}}
 		{{/link-to}}
 	</div>
