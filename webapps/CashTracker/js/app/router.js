@@ -9,52 +9,45 @@ CT.Router.map(function() {
 
     this.route('profile');
 
-    this.route('transactions');
-
-    this.route('transaction', function() {
+    this.route('transactions', function() {
         this.route('new');
-        this.route('edit', {
-            path: '/:transaction_id'
-        });
     });
 
-    this.route('users');
-
-    this.route('user', function() {
-        this.route('new');
-        this.route('edit', {
-            path: '/:user_id'
-        });
+    this.route('transaction', {
+        path: '/transaction/:transaction_id'
     });
 
-    this.route('accounts');
-
-    this.route('account', function() {
+    this.route('users', function() {
         this.route('new');
-        this.route('edit', {
-            path: '/:account_id'
-        });
     });
 
-    this.route('categories');
+    this.route('user', {
+        path: '/user/:user_id'
+    });
 
-    this.route('category', function() {
+    this.route('accounts', function() {
         this.route('new');
-        this.route('edit', {
-            path: '/:category_id'
-        });
+    });
+
+    this.route('account', {
+        path: '/account/:account_id'
+    });
+
+    this.route('categories', function() {
+        this.route('new');
+    });
+
+    this.route('category', {
+        path: '/category/:category_id'
     });
 
     this.route('cost_centers', {
         path: '/costcenters'
+    }, function() {
+        this.route('new');
     });
 
     this.route('cost_center', {
-        path: '/costcenter'
-    }, function() {
-        this.route('new');
-        this.route('edit', {
-            path: '/:costcenter_id'
-        });
+        path: '/costcenter/:costcenter_id'
     });
 });

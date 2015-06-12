@@ -211,7 +211,7 @@ Ember.TEMPLATES["accounts"] = Ember.HTMLBars.template((function() {
         attribute(env, attrMorph0, element1, "data-ddbid", concat(env, [get(env, context, "id")]));
         attribute(env, attrMorph1, element2, "data-ddbid", concat(env, [get(env, context, "id")]));
         attribute(env, attrMorph2, element3, "value", concat(env, [get(env, context, "id")]));
-        block(env, morph0, context, "link-to", ["account"], {"class": "entry-link"}, child0, null);
+        block(env, morph0, context, "link-to", ["account", get(env, context, "this")], {"class": "entry-link"}, child0, null);
         return fragment;
       }
     };
