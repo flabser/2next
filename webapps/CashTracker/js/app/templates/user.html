@@ -1,1 +1,19 @@
-user
+<header class="form-header">
+    <h1 class="header-title">{{name}}</h1> {{actionbar}}
+</header>
+<section class="form-content">
+    <form action="Provider" name="frm" method="post" enctype="application/x-www-form-urlencoded">
+        <fieldset class="fieldset" {{disabled}}>
+            <div class="fieldset-container">
+                <div class="control-group">
+                    <div class="control-label">
+                        captions.name
+                    </div>
+                    <div class="controls">
+                        <input type="text" value="{{name}}" name="name" class="span7" required="required" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</section>

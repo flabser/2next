@@ -818,7 +818,7 @@ Ember.TEMPLATES["categories"] = Ember.HTMLBars.template((function() {
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, block = hooks.block;
+        var hooks = env.hooks, get = hooks.get, block = hooks.block;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -837,7 +837,7 @@ Ember.TEMPLATES["categories"] = Ember.HTMLBars.template((function() {
           fragment = this.build(dom);
         }
         var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),0,0);
-        block(env, morph0, context, "link-to", ["category"], {}, child0, null);
+        block(env, morph0, context, "link-to", ["category", get(env, context, "this")], {}, child0, null);
         return fragment;
       }
     };
@@ -894,12 +894,55 @@ Ember.TEMPLATES["category"] = Ember.HTMLBars.template((function() {
     hasRendered: false,
     build: function build(dom) {
       var el0 = dom.createDocumentFragment();
-      var el1 = dom.createTextNode("cat");
+      var el1 = dom.createElement("header");
+      dom.setAttribute(el1,"class","form-header");
+      var el2 = dom.createElement("h1");
+      dom.setAttribute(el2,"class","header-title");
+      var el3 = dom.createComment("");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode(" ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createComment("");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      var el1 = dom.createElement("section");
+      dom.setAttribute(el1,"class","form-content");
+      var el2 = dom.createElement("form");
+      dom.setAttribute(el2,"action","Provider");
+      dom.setAttribute(el2,"name","frm");
+      dom.setAttribute(el2,"method","post");
+      dom.setAttribute(el2,"enctype","application/x-www-form-urlencoded");
+      var el3 = dom.createElement("fieldset");
+      dom.setAttribute(el3,"class","fieldset");
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","fieldset-container");
+      var el5 = dom.createElement("div");
+      dom.setAttribute(el5,"class","control-group");
+      var el6 = dom.createElement("div");
+      dom.setAttribute(el6,"class","control-label");
+      var el7 = dom.createTextNode("captions.name");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("div");
+      dom.setAttribute(el6,"class","controls");
+      var el7 = dom.createElement("input");
+      dom.setAttribute(el7,"type","text");
+      dom.setAttribute(el7,"name","name");
+      dom.setAttribute(el7,"class","span7");
+      dom.setAttribute(el7,"required","required");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
       dom.appendChild(el0, el1);
       return el0;
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
+      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, concat = hooks.concat, attribute = hooks.attribute;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -917,6 +960,16 @@ Ember.TEMPLATES["category"] = Ember.HTMLBars.template((function() {
       } else {
         fragment = this.build(dom);
       }
+      var element0 = dom.childAt(fragment, [0]);
+      var element1 = dom.childAt(fragment, [1, 0, 0]);
+      var element2 = dom.childAt(element1, [0, 0, 1, 0]);
+      var morph0 = dom.createMorphAt(dom.childAt(element0, [0]),0,0);
+      var morph1 = dom.createMorphAt(element0,2,2);
+      var attrMorph0 = dom.createAttrMorph(element2, 'value');
+      content(env, morph0, context, "name");
+      content(env, morph1, context, "actionbar");
+      element(env, element1, context, "disabled", [], {});
+      attribute(env, attrMorph0, element2, "value", concat(env, [get(env, context, "name")]));
       return fragment;
     }
   };
@@ -930,12 +983,55 @@ Ember.TEMPLATES["costcenter"] = Ember.HTMLBars.template((function() {
     hasRendered: false,
     build: function build(dom) {
       var el0 = dom.createDocumentFragment();
-      var el1 = dom.createTextNode("cost center");
+      var el1 = dom.createElement("header");
+      dom.setAttribute(el1,"class","form-header");
+      var el2 = dom.createElement("h1");
+      dom.setAttribute(el2,"class","header-title");
+      var el3 = dom.createComment("");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode(" ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createComment("");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      var el1 = dom.createElement("section");
+      dom.setAttribute(el1,"class","form-content");
+      var el2 = dom.createElement("form");
+      dom.setAttribute(el2,"action","Provider");
+      dom.setAttribute(el2,"name","frm");
+      dom.setAttribute(el2,"method","post");
+      dom.setAttribute(el2,"enctype","application/x-www-form-urlencoded");
+      var el3 = dom.createElement("fieldset");
+      dom.setAttribute(el3,"class","fieldset");
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","fieldset-container");
+      var el5 = dom.createElement("div");
+      dom.setAttribute(el5,"class","control-group");
+      var el6 = dom.createElement("div");
+      dom.setAttribute(el6,"class","control-label");
+      var el7 = dom.createTextNode("captions.name");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("div");
+      dom.setAttribute(el6,"class","controls");
+      var el7 = dom.createElement("input");
+      dom.setAttribute(el7,"type","text");
+      dom.setAttribute(el7,"name","name");
+      dom.setAttribute(el7,"class","span7");
+      dom.setAttribute(el7,"required","required");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
       dom.appendChild(el0, el1);
       return el0;
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
+      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, concat = hooks.concat, attribute = hooks.attribute;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -953,6 +1049,16 @@ Ember.TEMPLATES["costcenter"] = Ember.HTMLBars.template((function() {
       } else {
         fragment = this.build(dom);
       }
+      var element0 = dom.childAt(fragment, [0]);
+      var element1 = dom.childAt(fragment, [1, 0, 0]);
+      var element2 = dom.childAt(element1, [0, 0, 1, 0]);
+      var morph0 = dom.createMorphAt(dom.childAt(element0, [0]),0,0);
+      var morph1 = dom.createMorphAt(element0,2,2);
+      var attrMorph0 = dom.createAttrMorph(element2, 'value');
+      content(env, morph0, context, "name");
+      content(env, morph1, context, "actionbar");
+      element(env, element1, context, "disabled", [], {});
+      attribute(env, attrMorph0, element2, "value", concat(env, [get(env, context, "name")]));
       return fragment;
     }
   };
@@ -1016,7 +1122,7 @@ Ember.TEMPLATES["costcenters"] = Ember.HTMLBars.template((function() {
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, block = hooks.block;
+        var hooks = env.hooks, get = hooks.get, block = hooks.block;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -1035,7 +1141,7 @@ Ember.TEMPLATES["costcenters"] = Ember.HTMLBars.template((function() {
           fragment = this.build(dom);
         }
         var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),0,0);
-        block(env, morph0, context, "link-to", ["cost_center"], {}, child0, null);
+        block(env, morph0, context, "link-to", ["cost_center", get(env, context, "this")], {}, child0, null);
         return fragment;
       }
     };
@@ -1092,26 +1198,64 @@ Ember.TEMPLATES["transaction"] = Ember.HTMLBars.template((function() {
     hasRendered: false,
     build: function build(dom) {
       var el0 = dom.createDocumentFragment();
-      var el1 = dom.createElement("h1");
-      var el2 = dom.createTextNode("Transaction/ ");
+      var el1 = dom.createElement("header");
+      dom.setAttribute(el1,"class","form-header");
+      var el2 = dom.createElement("h1");
+      dom.setAttribute(el2,"class","header-title");
+      var el3 = dom.createTextNode("Transaction/ ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createComment("");
+      dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
-      var el2 = dom.createComment("");
+      var el2 = dom.createElement("nav");
+      var el3 = dom.createElement("button");
+      var el4 = dom.createTextNode("save");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("a");
+      dom.setAttribute(el3,"href","#/transactions");
+      var el4 = dom.createTextNode("cancel");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
       dom.appendChild(el0, el1);
-      var el1 = dom.createElement("button");
-      var el2 = dom.createTextNode("save");
-      dom.appendChild(el1, el2);
-      dom.appendChild(el0, el1);
-      var el1 = dom.createElement("a");
-      dom.setAttribute(el1,"href","#/transactions");
-      var el2 = dom.createTextNode("cancel");
+      var el1 = dom.createElement("section");
+      dom.setAttribute(el1,"class","form-content");
+      var el2 = dom.createElement("form");
+      dom.setAttribute(el2,"action","Provider");
+      dom.setAttribute(el2,"name","frm");
+      dom.setAttribute(el2,"method","post");
+      dom.setAttribute(el2,"enctype","application/x-www-form-urlencoded");
+      var el3 = dom.createElement("fieldset");
+      dom.setAttribute(el3,"class","fieldset");
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","fieldset-container");
+      var el5 = dom.createElement("div");
+      dom.setAttribute(el5,"class","control-group");
+      var el6 = dom.createElement("div");
+      dom.setAttribute(el6,"class","control-label");
+      var el7 = dom.createTextNode("captions.name");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("div");
+      dom.setAttribute(el6,"class","controls");
+      var el7 = dom.createElement("input");
+      dom.setAttribute(el7,"type","text");
+      dom.setAttribute(el7,"name","name");
+      dom.setAttribute(el7,"class","span7");
+      dom.setAttribute(el7,"required","required");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
       dom.appendChild(el0, el1);
       return el0;
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element;
+      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, concat = hooks.concat, attribute = hooks.attribute;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -1129,10 +1273,16 @@ Ember.TEMPLATES["transaction"] = Ember.HTMLBars.template((function() {
       } else {
         fragment = this.build(dom);
       }
-      var element0 = dom.childAt(fragment, [1]);
-      var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),1,1);
-      content(env, morph0, context, "title");
-      element(env, element0, context, "action", ["save"], {});
+      var element0 = dom.childAt(fragment, [0]);
+      var element1 = dom.childAt(element0, [1, 0]);
+      var element2 = dom.childAt(fragment, [1, 0, 0]);
+      var element3 = dom.childAt(element2, [0, 0, 1, 0]);
+      var morph0 = dom.createMorphAt(dom.childAt(element0, [0]),1,1);
+      var attrMorph0 = dom.createAttrMorph(element3, 'value');
+      content(env, morph0, context, "name");
+      element(env, element1, context, "action", ["save"], {});
+      element(env, element2, context, "disabled", [], {});
+      attribute(env, attrMorph0, element3, "value", concat(env, [get(env, context, "name")]));
       return fragment;
     }
   };
@@ -1196,7 +1346,7 @@ Ember.TEMPLATES["transactions"] = Ember.HTMLBars.template((function() {
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, block = hooks.block;
+        var hooks = env.hooks, get = hooks.get, block = hooks.block;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -1215,7 +1365,7 @@ Ember.TEMPLATES["transactions"] = Ember.HTMLBars.template((function() {
           fragment = this.build(dom);
         }
         var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),0,0);
-        block(env, morph0, context, "link-to", ["transaction"], {}, child0, null);
+        block(env, morph0, context, "link-to", ["transaction", get(env, context, "this")], {}, child0, null);
         return fragment;
       }
     };
@@ -1281,12 +1431,55 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
     hasRendered: false,
     build: function build(dom) {
       var el0 = dom.createDocumentFragment();
-      var el1 = dom.createTextNode("user");
+      var el1 = dom.createElement("header");
+      dom.setAttribute(el1,"class","form-header");
+      var el2 = dom.createElement("h1");
+      dom.setAttribute(el2,"class","header-title");
+      var el3 = dom.createComment("");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode(" ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createComment("");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      var el1 = dom.createElement("section");
+      dom.setAttribute(el1,"class","form-content");
+      var el2 = dom.createElement("form");
+      dom.setAttribute(el2,"action","Provider");
+      dom.setAttribute(el2,"name","frm");
+      dom.setAttribute(el2,"method","post");
+      dom.setAttribute(el2,"enctype","application/x-www-form-urlencoded");
+      var el3 = dom.createElement("fieldset");
+      dom.setAttribute(el3,"class","fieldset");
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","fieldset-container");
+      var el5 = dom.createElement("div");
+      dom.setAttribute(el5,"class","control-group");
+      var el6 = dom.createElement("div");
+      dom.setAttribute(el6,"class","control-label");
+      var el7 = dom.createTextNode("captions.name");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("div");
+      dom.setAttribute(el6,"class","controls");
+      var el7 = dom.createElement("input");
+      dom.setAttribute(el7,"type","text");
+      dom.setAttribute(el7,"name","name");
+      dom.setAttribute(el7,"class","span7");
+      dom.setAttribute(el7,"required","required");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
       dom.appendChild(el0, el1);
       return el0;
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
+      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, concat = hooks.concat, attribute = hooks.attribute;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -1304,6 +1497,16 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
       } else {
         fragment = this.build(dom);
       }
+      var element0 = dom.childAt(fragment, [0]);
+      var element1 = dom.childAt(fragment, [1, 0, 0]);
+      var element2 = dom.childAt(element1, [0, 0, 1, 0]);
+      var morph0 = dom.createMorphAt(dom.childAt(element0, [0]),0,0);
+      var morph1 = dom.createMorphAt(element0,2,2);
+      var attrMorph0 = dom.createAttrMorph(element2, 'value');
+      content(env, morph0, context, "name");
+      content(env, morph1, context, "actionbar");
+      element(env, element1, context, "disabled", [], {});
+      attribute(env, attrMorph0, element2, "value", concat(env, [get(env, context, "name")]));
       return fragment;
     }
   };
@@ -1367,7 +1570,7 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, block = hooks.block;
+        var hooks = env.hooks, get = hooks.get, block = hooks.block;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -1386,7 +1589,7 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
           fragment = this.build(dom);
         }
         var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),0,0);
-        block(env, morph0, context, "link-to", ["user"], {}, child0, null);
+        block(env, morph0, context, "link-to", ["user", get(env, context, "this")], {}, child0, null);
         return fragment;
       }
     };
