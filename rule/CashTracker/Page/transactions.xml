@@ -3,9 +3,6 @@
 	<description></description>
 	<caching>NO_CACHING</caching>
 	<xsltfile>pages/transactions.xsl</xsltfile>
-	<element mode="ON" type="INCLUDED_PAGE">
-		<value>outline</value>
-	</element>
 	<element mode="ON" type="SCRIPT">
 		<events>
 			<doscript source="file">cashtracker.page.saldo.Calculate</doscript>
@@ -24,10 +21,4 @@
 			<doscript source="file">cashtracker.page.views.Transactions</doscript>
 		</events>
 	</element>
-	<caption name="viewnamecaption" source="KEYWORD">Операции</caption>
-	<caption name="viewtext" source="KEYWORD">Описание</caption>
-	<caption name="viewnumber" source="KEYWORD">Сумма</caption>
-	<caption name="viewtext1">Касса</caption>
-	<caption name="viewtext2">Тип операции</caption>
-	<caption name="viewdate" source="KEYWORD">Дата</caption>
 </rule>
