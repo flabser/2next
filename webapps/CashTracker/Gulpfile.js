@@ -80,8 +80,12 @@ gulp.task('em_templates', function() {
     gulp.src('./js/app/templates/**/*.html')
         .pipe(emberTemplates({
             type: 'browser',
-            compiler: require('../SharedResources/vendor/ember/ember-template-compiler'),
-            isHTMLBars: false
+            compiler: require('../SharedResources/vendor/ember/ember-template-compiler.min'),
+            isHTMLBars: true,
+            name: {
+                replace: '\\',
+                with: '/'
+            }
         }))
         .pipe(concat('templates.js'))
         .pipe(gulp.dest('./js/app/templates/compiled'));

@@ -1,4 +1,10 @@
-CT.AccountsController = Ember.ArrayController.extend();
+CT.AccountsController = Ember.ArrayController.extend({
+    actions: {
+        selectAll: function() {
+            ;
+        }
+    }
+});
 
 CT.AccountsNewController = Ember.ArrayController.extend({
     actions: {

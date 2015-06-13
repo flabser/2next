@@ -11,16 +11,18 @@ CT.Router.map(function() {
 
     this.route('transactions', function() {
         this.route('new');
-        this.route('transaction', {
-            path: '/:transaction_id'
-        });
+    });
+
+    this.route('transaction', {
+        path: '/transactions/:transaction_id'
     });
 
     this.route('accounts', function() {
         this.route('new');
-        this.route('edit', {
-            path: '/:account_id'
-        })
+    });
+
+    this.route('account', {
+        path: '/accounts/:account_id'
     });
 
     /*this.route('account', {

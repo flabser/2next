@@ -1,3 +1,3 @@
 CT.AccountView = Ember.View.extend({
-    templateName: 'account',
+    templateName: 'account'
 });

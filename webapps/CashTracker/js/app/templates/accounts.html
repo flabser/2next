@@ -2,13 +2,13 @@
     <header class="view-header">
         <h1>accounts</h1>
     </header>
-    <section>
-        {{outlet}}
-    </section>
     <nav>
         <a href="#/accounts/new">new account</a>
     </nav>
-    <div class="view-content">
+    <section>
+        {{outlet}}
+    </section>
+    <section class="view-content">
         <header class="entries-head">
             <div class="head-wrap">
                 <label class="entry-select">
@@ -16,17 +16,17 @@
                 </label>
                 <div class="entry-captions">
                     <span class="vaccount-name">
-						captions/viewtext1
-					</span>
+                        captions/viewtext1
+                    </span>
                     <span class="vaccount-user">
-						captions/viewtext2
-					</span>
+                        captions/viewtext2
+                    </span>
                     <span class="vaccount-observers">
-						captions/viewtext3
-					</span>
+                        captions/viewtext3
+                    </span>
                     <span class="vaccount-amount-control">
-						captions/viewnumber
-					</span>
+                        captions/viewnumber
+                    </span>
                 </div>
             </div>
         </header>
@@ -42,28 +42,27 @@
                     <label class="entry-select">
                         <input type="checkbox" name="id" value="{{id}}" {{action "selectOne"}} />
                     </label>
-                    {{#link-to "accounts.edit" this class="entry-link"}}
-                        <div class="entry-fields">
-                            <span class="entry-field vaccount-name">
-							{{name}}
-						</span>
-                            <span class="entry-field vaccount-user">
-							
-						</span>
-                            <span class="entry-field vaccount-observers">
-							<span>
-								
-							</span>
+                    {{#link-to "account" this class="entry-link"}}
+                    <div class="entry-fields">
+                        <span class="entry-field vaccount-name">
+                            {{name}}
+                        </span>
+                        <span class="entry-field vaccount-user">
+                            
+                        </span>
+                        <span class="entry-field vaccount-observers">
+                            <span>
+                                
                             </span>
-                            <span class="entry-field vaccount-amount-control">
-							
-						</span>
-                        </div>
+                        </span>
+                        <span class="entry-field vaccount-amount-control">
+                            
+                        </span>
+                    </div>
                     {{/link-to}}
-                    
                 </div>
             </div>
             {{/each}}
         </div>
-    </div>
+    </section>
 </div>

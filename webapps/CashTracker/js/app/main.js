@@ -6,11 +6,9 @@ var CT = Ember.Application.create({
     LOG_ACTIVE_GENERATION: true
 });
 
-/*CT.ApplicationAdapter = DS.RestAdapter.extend({
-    simulateRemoteResponse: true
-});*/
+/*CT.ApplicationAdapter = DS.RestAdapter;
 
-/*DS.RESTAdapter.reopen({
+DS.RESTAdapter.reopen({
     namespace: 'CashTracker/RestProvider'
 });*/
 

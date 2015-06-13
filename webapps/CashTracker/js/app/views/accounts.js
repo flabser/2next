@@ -5,7 +5,3 @@ CT.AccountsView = Ember.View.extend({
 CT.AccountsNewView = Ember.View.extend({
     templateName: 'account'
 });
-
-CT.AccountsEditView = Ember.View.extend({
-    templateName: 'account'
-});
