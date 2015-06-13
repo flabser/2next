@@ -25,16 +25,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 	}
 
 	public List <Transaction> findAll() {
-
 		List <Transaction> result = db.select("SELECT * FROM transaction", Transaction.class, user)
-		
-		//ResultSet rs = db.select("SELECT * FROM transaction", user)
-		//List <Transaction> result = []
-
-		//if (rs.next()) {
-		//	result << getModelFromResultSet(rs)
-		//}
-
 		return result
 	}
 

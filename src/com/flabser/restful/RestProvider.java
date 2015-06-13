@@ -29,7 +29,8 @@ import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
-@Path("/get")
+
+@Path("/")
 public class RestProvider {
 
 	@Context
@@ -53,8 +54,8 @@ public class RestProvider {
 				if (!rule.isAnonymousAccessAllowed()) {
 					jses = request.getSession(true);
 					userSession = (UserSession) jses.getAttribute("usersession");
-					if (userSession == null)
-						throw new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, null);
+					if (userSession == null) throw new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION,
+							null);
 				} else {
 					jses = request.getSession(false);
 					if (jses == null) {
@@ -72,8 +73,8 @@ public class RestProvider {
 
 			}
 			PageRule pageRule = (PageRule) rule;
-			HashMap<String, String[]> fields = new HashMap<String, String[]>();
-			Map<String, String[]> parMap = request.getParameterMap();
+			HashMap <String, String[]> fields = new HashMap <String, String[]>();
+			Map <String, String[]> parMap = request.getParameterMap();
 			fields.putAll(parMap);
 			Page page = new Page(env, userSession, pageRule);
 			_Page pojoPage = page.process(fields);
@@ -93,7 +94,7 @@ public class RestProvider {
 	}
 
 	@POST
-	@Path("save")
+	@Path("{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public _Page save(_IObject c) {
@@ -101,5 +102,4 @@ public class RestProvider {
 		System.out.println(c);
 		return null;
 	}
-
 }

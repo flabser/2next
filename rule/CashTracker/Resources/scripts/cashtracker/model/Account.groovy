@@ -1,11 +1,13 @@
 package cashtracker.model;
 
-import java.math.BigDecimal;
+import java.sql.ResultSet;
 
+import com.flabser.script._Exception;
+import com.flabser.script._IObject;
 import com.flabser.users.User;
 
 
-public class Account {
+public class Account implements _IObject, com.flabser.script._IContent {
 
 	private long id;
 
@@ -91,5 +93,22 @@ public class Account {
 	@Override
 	public String toString() {
 		return "Account[" + name + ", " + type + ", " + currency + ", " + openingBalance + "]";
+	}
+
+	public void init(ResultSet rs) {
+		Account m = new Account()
+
+		m.setId(rs.getInt("id"))
+		m.setName(rs.getString("name"))
+		m.setAmountControl(rs.getBigDecimal("amountcontrol"))
+		m.setOpeningBalance(0)
+		m.setObservers(rs.getString("observers"))
+		m.setOwner(null)
+
+		m
+	}
+
+	public StringBuffer toXML() throws _Exception {
+		return new StringBuffer()
 	}
 }

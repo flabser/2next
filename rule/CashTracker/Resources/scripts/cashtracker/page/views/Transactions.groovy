@@ -1,13 +1,19 @@
 package cashtracker.page.views
 
+import java.util.List;
+
 import com.flabser.script.*
 import com.flabser.scriptprocessor.*
 import com.flabser.script.events.*
 import com.flabser.script.dbdata.*
+
 import cashtracker.dao.impl.TransactionDAOImpl
+import cashtracker.model.Transaction;
 
 
-class Transactions extends _DoScript {
+class Transactions extends _DoScript implements com.flabser.script._IContent {
+
+	List <Transaction> list
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
@@ -16,9 +22,13 @@ class Transactions extends _DoScript {
 
 		def transactions = dao.findAll()
 		if (transactions.size > 0) {
-			transactions.each {
-				publishElement("transactions", it)
-			}
+			def ts = new Transactions()
+			ts.list = transactions
+			publishElement("transactions", ts)
 		}
+	}
+
+	public StringBuffer toXML() throws _Exception {
+		return new StringBuffer()
 	}
 }
