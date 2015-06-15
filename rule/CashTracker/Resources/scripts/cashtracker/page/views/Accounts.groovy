@@ -6,7 +6,7 @@ import com.flabser.script._WebFormData
 import com.flabser.script.events._DoScript
 
 import cashtracker.model.Account
-import cashtracker.dao.impl.AccountDAOImpl
+import cashtracker.dao.AccountDAO;
 
 
 class Accounts extends _DoScript implements com.flabser.script._IContent {
@@ -16,7 +16,7 @@ class Accounts extends _DoScript implements com.flabser.script._IContent {
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
 
-		def dao = new AccountDAOImpl(session)
+		def dao = new AccountDAO(session)
 
 		def accounts = dao.findAll()
 		if (accounts.size > 0) {

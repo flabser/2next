@@ -7,7 +7,7 @@ import com.flabser.scriptprocessor.*
 import com.flabser.script.events.*
 import com.flabser.script.dbdata.*
 
-import cashtracker.dao.impl.TransactionDAOImpl
+import cashtracker.dao.TransactionDAO;
 import cashtracker.model.Transaction;
 
 
@@ -18,7 +18,7 @@ class Transactions extends _DoScript implements com.flabser.script._IContent {
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
 
-		def dao = new TransactionDAOImpl(session)
+		def dao = new TransactionDAO(session)
 
 		def transactions = dao.findAll()
 		if (transactions.size > 0) {
