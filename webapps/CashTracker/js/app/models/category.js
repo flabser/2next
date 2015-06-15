@@ -1,11 +1,5 @@
 CT.Category = DS.Model.extend({
-    name: DS.attr('string')
+    type: DS.attr('number'),
+    name: DS.attr('string'),
+    comment: DS.attr('string')
 });
-
-CT.Category.FIXTURES = [{
-    id: '1',
-    name: 'Category 1'
-}, {
-    id: '2',
-    name: 'Category 2'
-}];

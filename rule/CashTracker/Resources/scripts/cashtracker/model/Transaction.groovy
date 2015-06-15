@@ -7,7 +7,7 @@ import com.flabser.script._Exception;
 import com.flabser.users.User;
 
 
-public class Transaction implements com.flabser.script._IObject, com.flabser.script._IContent {
+public class Transaction implements com.flabser.script._IObject {
 
 	private long id;
 
@@ -175,52 +175,27 @@ public class Transaction implements com.flabser.script._IObject, com.flabser.scr
 		return "Transaction[" + amount + ", " + category + ", " + costCenter + "]";
 	}
 
-	
-	
-	public void init(ResultSet rs){
-		Transaction t = new Transaction()
 
-		t.setId(rs.getInt("id"))
-		t.setAuthor(null)
-		t.setDate(rs.getDate("date"))
-		t.setRegDate(rs.getDate("regdate"))
+
+	public void init(ResultSet rs){
+		// Transaction t = new Transaction()
+
+		setId(rs.getInt("id"))
+		setAuthor(null)
+		setDate(rs.getDate("date"))
+		setRegDate(rs.getDate("regdate"))
 		//t.setCategory(rs.getLong("category"))
 		//t.setParentCategory(rs.getLong("parentCategory"))
-		t.setAmount(rs.getBigDecimal("amount"))
-		t.setAccount(rs.getLong("account"))
-		t.setCostCenter(rs.getLong("costcenter"))
-		t.setRepeat(rs.getBoolean("repeat"))
-		t.setEvery(rs.getInt("every"))
-		t.setRepeatStep(rs.getInt("repeatstep"))
-		t.setEndDate(rs.getDate("enddate"))
-		t.setBasis(rs.getString("basis"))
-		t.setComment(rs.getString("note"))
+		setAmount(rs.getBigDecimal("amount"))
+		setAccount(rs.getLong("account"))
+		setCostCenter(rs.getLong("costcenter"))
+		setRepeat(rs.getBoolean("repeat"))
+		setEvery(rs.getInt("every"))
+		setRepeatStep(rs.getInt("repeatstep"))
+		setEndDate(rs.getDate("enddate"))
+		setBasis(rs.getString("basis"))
+		setComment(rs.getString("note"))
 
-		t
-	}
-
-	public StringBuffer toXML() throws _Exception {
-		StringBuffer sb = new StringBuffer()
-
-		sb.append("""
-			<transaction>
-				<id>$id</id>
-				<author>$author</author>
-				<date>$date</date>
-				<regdate>$regDate</regdate>
-				<category>$category</category>
-				<parentCategory>$parentCategory</parentCategory>
-				<amount>$amount</amount>
-				<account>$account</account>
-				<costcenter>$costCenter</costcenter>
-				<repeat>$repeat</repeat>
-				<every>$every</every>
-				<repeatstep>$repeatStep</repeatstep>
-				<enddate>$endDate</enddate>
-				<basis>$basis</basis>
-				<note>$comment</note>
-			</transaction>""")
-
-		return sb
+		// t
 	}
 }

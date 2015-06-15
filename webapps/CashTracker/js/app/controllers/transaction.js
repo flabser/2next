@@ -1,1 +1,7 @@
-CT.TransactionController = Ember.ObjectController.extend();
+CT.TransactionController = Ember.ObjectController.extend({
+    actions: {
+        save: function(transaction) {
+            transaction.save();
+        }
+    }
+});

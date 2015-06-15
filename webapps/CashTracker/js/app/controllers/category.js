@@ -1,1 +1,7 @@
-CT.CategoryController = Ember.ObjectController.extend();
+CT.CategoryController = Ember.ObjectController.extend({
+    actions: {
+        save: function() {
+            alert('save category')
+        }
+    }
+});

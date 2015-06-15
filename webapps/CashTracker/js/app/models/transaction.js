@@ -1,11 +1,16 @@
 CT.Transaction = DS.Model.extend({
-    name: DS.attr('string')
+    author: DS.attr('string'),
+    regDate: DS.attr('date'),
+    date: DS.attr('date'),
+    endDate: DS.attr('date'),
+    parentCategory: DS.attr('number'),
+    category: DS.attr('number'),
+    account: DS.attr('number'),
+    costCenter: DS.attr('number'),
+    amount: DS.attr('number'),
+    repeat: DS.attr('repeat'),
+    every: DS.attr('every'),
+    repeatStep: DS.attr('repeatStep'),
+    basis: DS.attr('string'),
+    comment: DS.attr('string')
 });
-
-CT.Transaction.FIXTURES = [{
-    id: '1',
-    name: 'Transaction 1'
-}, {
-    id: '2',
-    name: 'Transaction 2'
-}];

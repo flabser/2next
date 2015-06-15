@@ -34,12 +34,17 @@
     </div>
 </header>
 <aside class="layout_aside nav-app">
-    {{#link-to 'index'}}index{{/link-to}}
-    <br/> {{#link-to 'transactions'}}Transactions{{/link-to}}
-    <br/> {{#link-to 'accounts'}}accounts{{/link-to}}
-    <br/> {{#link-to 'users'}}users{{/link-to}}
-    <br/> {{#link-to 'categories'}}categories{{/link-to}}
-    <br/> {{#link-to 'cost_centers'}}costcenters{{/link-to}}
+    <div class="side">
+        <div class="side-container">
+            <div class="side-nav">
+                {{#link-to 'transactions'}}Transactions{{/link-to}}
+                <br/> {{#link-to 'accounts'}}accounts{{/link-to}}
+                <br/> {{#link-to 'users'}}users{{/link-to}}
+                <br/> {{#link-to 'categories'}}categories{{/link-to}}
+                <br/> {{#link-to 'cost_centers'}}costcenters{{/link-to}}
+            </div>
+        </div>
+    </div>
 </aside>
 <section class="layout_content" id="content">
     {{outlet}}

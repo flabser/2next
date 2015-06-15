@@ -1,5 +1,9 @@
 <header class="form-header">
-    <h1 class="header-title">{{name}}</h1> {{actionbar}}
+    <h1 class="header-title">{{name}}</h1>
+    <nav>
+        <button {{action 'save'}}>save</button>
+        <a href="#/accounts">cancel</a>
+    </nav>
 </header>
 <section class="form-content">
     <form action="Provider" name="frm" method="post" enctype="application/x-www-form-urlencoded">
@@ -10,7 +14,39 @@
                         captions.name
                     </div>
                     <div class="controls">
-                        <input type="text" value="{{name}}" name="name" class="span7" required="required" />
+                        {{input name="name" value=name required=true class="span7"}}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        captions.type
+                    </div>
+                    <div class="controls">
+                        {{input name="type" value=type required=true class="span7"}}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        captions.amountControl
+                    </div>
+                    <div class="controls">
+                        {{input name="amountControl" value=amountControl required=true class="span7"}}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        captions.owner
+                    </div>
+                    <div class="controls">
+                        {{input name="owner" value=owner required=true class="span7"}}
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        captions.observers
+                    </div>
+                    <div class="controls">
+                        {{input name="amountControl" value=amountControl required=true class="span7"}}
                     </div>
                 </div>
             </div>

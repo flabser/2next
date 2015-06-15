@@ -1,6 +1,13 @@
-<h1>Transactions view/ {{title}}</h1>
-<a href="#/transaction/new">new</a>
-
+<header>
+	<h1>Transactions view/ {{title}}</h1>
+</header>
+<section>
+    {{outlet}}
+</section>
+<nav>
+	<a href="#/transactions/new">new transaction</a>
+</nav>
+<section>
 {{#each controller}}
 	<div>
 		{{#link-to 'transaction' this}}
@@ -8,3 +15,4 @@
 		{{/link-to}}
 	</div>
 {{/each}}
+</section>

@@ -12,11 +12,6 @@ CT.ApplicationController = Ember.Controller.extend({
         }
     },
 
-    model: {
-        username: 'Medet',
-        logout: 'Logout'
-    },
-
     actions: {
         navAppMenuToggle: function() {
             $('body').toggleClass('nav-app-open');
