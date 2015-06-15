@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Administrator</title>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet"
+	href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.css">
+<script src="/SharedResources/vendor/jquery/jquery-1.11.3.min.js"></script>
+<script src="/SharedResources/vendor/ember/ember.min.js"></script>
+<script src="/SharedResources/vendor/ember/ember-data.js"></script>
+<script src="/SharedResources/vendor/ember/ember-template-compiler.js"></script>
+
+<script src="js/app.js"></script>
+</head>
+<body>
+
+	<script type="text/x-handlebars">
+    {{outlet}}
+  </script>
+
+	<script type="text/x-handlebars" data-template-name="welcome">
+    <ul>
+   <link rel="stylesheet" href="css/all.min.css" />
+  <link rel="stylesheet" href="css/welcome.css" />
+  <div class="container">
+        <section>
+            <div class="col-logo">
+                <img src="img/2next.png" />
+            </div>
+            <div class="col-form">
+                <div class="form-wrapper">
+                    <h1>Administrator</h1>
+                     <form {{action "loginUser" on="submit"}}>
+                         {{input type="text" value=login placeholder="Username or Email Address"}}
+                        {{input type="password" value=pwd placeholder="Password"}}
+                        <button type="submit" class="btn"><img src="img/key.gif" /> Log In</button>
+
+                    </form>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </section>
+        <footer>
+            version 1.5 Copyright &#169; The F team developers 2015
+        </footer>
+    </div>
+    </ul>
+  </script>
+
+	<script type="text/x-handlebars" data-template-name="index">
+    <ul>
+    {{#each model as |item|}}
+      <li>{{item}}</li>
+    {{/each}}
+    </ul>
+  </script>
+
+	<script type="text/x-handlebars" data-template-name="post">
+    <ul>
+    {{#each model as |item|}}
+      <li {{action "click"}}>{{item}}</li>
+    {{/each}}
+    </ul>
+  </script>
+
+</body>
+</html>

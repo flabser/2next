@@ -15,7 +15,7 @@ public interface ISystemDatabase {
 	User checkUser(String userID, String pwd, String hash, User user);
 	User checkUserHash(String userID, String pwd, String hash, User user);
 
-	User getUser(String userID);
+	User getUser(int id);
 	User getUserByVerifyCode(String userID);
 	
 

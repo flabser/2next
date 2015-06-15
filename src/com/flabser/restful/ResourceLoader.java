@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import com.flabser.restful.admin.RestAdminProvider;
+
 public class ResourceLoader extends Application {
 	  @Override
 	    public Set<Class<?>> getClasses() {
@@ -13,6 +15,8 @@ public class ResourceLoader extends Application {
 	        // register root resource
 	        classes.add(Hello.class);
 	        classes.add(RestProvider.class);
+	        classes.add(RestAdminProvider.class);
+	        classes.add(SignIn.class);
 	        return classes;
 	    }
 }

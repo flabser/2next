@@ -18,6 +18,8 @@ import javax.ws.rs.core.MediaType;
 import org.omg.CORBA.UserException;
 
 import com.flabser.appenv.AppEnv;
+import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.RuleException;
 import com.flabser.rule.IRule;
 import com.flabser.rule.page.PageRule;
@@ -29,7 +31,7 @@ import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
-@Path("/get")
+@Path("/get/page")
 public class RestProvider {
 
 	@Context
@@ -40,7 +42,7 @@ public class RestProvider {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public _Page produceJSON(@PathParam("id") String id) {
+	public _Page producePage(@PathParam("id") String id) {
 
 		HttpSession jses = null;
 		UserSession userSession = null;
@@ -91,15 +93,5 @@ public class RestProvider {
 		return null;
 
 	}
-
-	@POST
-	@Path("save")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public _Page save(_IObject c) {
-
-		System.out.println(c);
-		return null;
-	}
-
+	
 }

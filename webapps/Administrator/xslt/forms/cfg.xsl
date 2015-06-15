@@ -30,7 +30,7 @@
 			</a>
 		</span>
 		<table border="0" style="margin-top:5px; width:80%; font-size:15px">
-			<xsl:for-each select="query/document/*[not(name() ='applications')]">
+			<xsl:for-each select="view/document/*[not(name() ='applications')]">
 				<tr>
 					<td style="text-align:right;  font-weight:bold; width:150px">
 						<xsl:value-of select="name()" />
