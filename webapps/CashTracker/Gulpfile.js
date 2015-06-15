@@ -76,7 +76,7 @@ gulp.task('em_templates_trim', function() {
         .pipe(gulp.dest('./js/app/templates/compiled'));
 });
 
-gulp.task('em_templates', function() {
+gulp.task('em_templates_compile', function() {
     gulp.src('./js/app/templates/**/*.html')
         .pipe(emberTemplates({
             type: 'browser',
@@ -94,10 +94,10 @@ gulp.task('em_templates', function() {
 
 // run
 gulp.task('default', function() {
-    gulp.run('lint', 'em_lint', 'em_templates', 'em_minify_js', 'minify_js', 'minify_css');
+    gulp.run('lint', 'em_lint', 'em_templates_compile', 'em_minify_js', 'minify_js', 'minify_css');
 
     gulp.watch('./js/app/templates/*.html', function(event) {
-        gulp.run('em_templates');
+        gulp.run('em_templates_compile');
     });
 
     gulp.watch(js_ember_files, function(event) {

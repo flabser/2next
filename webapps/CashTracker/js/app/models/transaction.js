@@ -1,6 +1,6 @@
 CT.Transaction = DS.Model.extend({
     author: DS.attr('string'),
-    regDate: DS.attr('date'),
+    regDate: DS.belongsTo('user'),
     date: DS.attr('date'),
     endDate: DS.attr('date'),
     parentCategory: DS.attr('number'),
@@ -14,3 +14,37 @@ CT.Transaction = DS.Model.extend({
     basis: DS.attr('string'),
     comment: DS.attr('string')
 });
+
+CT.Transaction.FIXTURES = [{
+    id: 1,
+    author: 'mkalihan',
+    regDate: '11.11.2015',
+    date: '11.11.2015',
+    endDate: '15.11.2015',
+    parentCategory: 0,
+    category: 1,
+    account: 1,
+    costCenter: 1,
+    amount: 1000,
+    repeat: 0,
+    every: 0,
+    repeatStep: 0,
+    basis: 'test basis',
+    comment: 'test comment'
+}, {
+    id: 2,
+    author: 'dzhilian',
+    regDate: '12.11.2015',
+    date: '12.11.2015',
+    endDate: '25.11.2015',
+    parentCategory: 0,
+    category: 1,
+    account: 1,
+    costCenter: 1,
+    amount: 1000,
+    repeat: 0,
+    every: 0,
+    repeatStep: 0,
+    basis: 'test basis 2',
+    comment: 'test comment 2'
+}];

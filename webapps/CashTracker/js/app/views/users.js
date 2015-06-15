@@ -6,7 +6,3 @@ CT.UsersView = Ember.View.extend({
 CT.UsersNewView = Ember.View.extend({
     templateName: 'user'
 });
-
-CT.UsersEditView = Ember.View.extend({
-    templateName: 'user'
-});
