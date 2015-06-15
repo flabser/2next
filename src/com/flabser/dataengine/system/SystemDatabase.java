@@ -351,11 +351,6 @@ public class SystemDatabase implements ISystemDatabase {
 		}
 	}
 
-	public User getUser(String userID) {
-		User user = new User();
-		return reloadUserData(user, userID);
-	}
-
 	@Override
 	public User getUserByVerifyCode(String code) {
 		User user = null;
@@ -386,22 +381,23 @@ public class SystemDatabase implements ISystemDatabase {
 		return user;
 	}
 
-	public User reloadUserData(User user, String login) {
+	
 
+	public User getUser(int id) {
+		User user = null;
 		Connection conn = dbPool.getConnection();
 		try {
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement();
-			String sql = "select * from USERS where USERS.LOGIN='" + login + "'";
+			String sql = "select * from USERS where USERS.ID=" + id;
 			ResultSet rs = s.executeQuery(sql);
 
 			if (rs.next()) {
+				user = new User();
 				user.fill(rs);
 				if (user.isValid) {
 					fillUserApp(conn, user);
 				}
-			} else {
-				user.setLogin(login);
 			}
 			rs.close();
 			s.close();
@@ -409,39 +405,11 @@ public class SystemDatabase implements ISystemDatabase {
 
 		} catch (Throwable e) {
 			DatabaseUtil.debugErrorPrint(e);
+			user = null;
 		} finally {
 			dbPool.returnConnection(conn);
 		}
 		return user;
-	}
-
-	public User getUser(int docID) {
-		return null;
-		/*
-		 * User user = new User(); Connection conn = dbPool.getConnection();
-		 * try{ conn.setAutoCommit(false); Statement s = conn.createStatement();
-		 * String sql =
-		 * "select * from USERS, APPS where USERS.DOCID=APPS.DOCID and " +
-		 * "USERS.DOCID=" + docID; String sql =
-		 * "select * from USERS where USERS.DOCID=" + docID; ResultSet rs =
-		 * s.executeQuery(sql); if(rs.next()){ user.fill(rs); if (user.isValid){
-		 * String addSQL = "select * from APPS where APPS.DOCID=" + docID;
-		 * Statement statement = conn.createStatement(); ResultSet resultSet =
-		 * statement.executeQuery(addSQL); while(resultSet.next()){
-		 * UserApplicationProfile ap = new
-		 * UserApplicationProfile(resultSet.getString
-		 * ("APP"),resultSet.getInt("LOGINMODE")); String qaSQL =
-		 * "select * from QA where QA.DOCID=" + docID + " AND QA.APP='" +
-		 * ap.appName + "'"; Statement s1 = conn.createStatement(); ResultSet
-		 * rs1 = s1.executeQuery(qaSQL); while(rs1.next()){
-		 * ap.getQuestionAnswer().add(ap.new
-		 * QuestionAnswer(rs1.getString("QUESTION"),rs1.getString("ANSWER"))); }
-		 * user.enabledApps.put(ap.appName, ap); } resultSet.close();
-		 * statement.close(); } }else{ user.setNewDoc(true); } rs.close();
-		 * s.close(); conn.commit(); }catch(Throwable e){
-		 * DatabaseUtil.debugErrorPrint(e); }finally{
-		 * dbPool.returnConnection(conn); } return user;
-		 */
 	}
 
 	public int deleteUser(int id) {

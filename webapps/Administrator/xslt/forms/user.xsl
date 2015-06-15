@@ -47,7 +47,7 @@
 								User login
 							</div>
 							<div class="controls">
-								<input type="text" name="userid" value="{document/userid}" class="span6" required="required" />
+								<input type="text" name="login" value="{document/login}" class="span6" required="required" />
 							</div>
 						</div>
 						<div class="control-group">

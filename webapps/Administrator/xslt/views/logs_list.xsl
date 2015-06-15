@@ -43,7 +43,7 @@
 					<td width="15%">Size</td>
 				</tr>
 			</thead>
-			<xsl:for-each select="query/entry">
+			<xsl:for-each select="view/entry">
 				<tr>
 					<td class="col-select">
 						<input type="checkbox" name="id" value="{name}" />

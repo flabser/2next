@@ -66,7 +66,7 @@
 													<xsl:when test="query/@keyword !='null'">
 														<xsl:value-of select="query/@keyword" />
 													</xsl:when>
-													<xsl:otherwise>Введите userid для поиска...</xsl:otherwise>
+													<xsl:otherwise>Enter login to search...</xsl:otherwise>
 												</xsl:choose>
 											</xsl:attribute>
 								<xsl:attribute name="onkeyup">javascript:finduserid(this)</xsl:attribute>
@@ -75,9 +75,9 @@
 							</input>
 						</td>
 						<td width="35%">e-mail</td>
-						<td>JID</td>
+						<td>User name</td>
 					</tr>
-					<xsl:for-each select="query/entry">
+					<xsl:for-each select="view/entry">
 						<tr class="entrylist">
 							<xsl:variable name="num" select="position()" />
 							<td>
@@ -92,15 +92,15 @@
 							</td>
 							<td>
 								<a class="doclink" title="{shortname}">
-									<xsl:attribute name="href" select="concat('Provider?type=edit&amp;element=user&amp;key=', @docid)" />
-									<xsl:value-of select="userid" />
+									<xsl:attribute name="href" select="concat('Provider?type=edit&amp;element=user&amp;key=', @id)" />
+									<xsl:value-of select="login" />
 								</a>
 							</td>
 							<td>
 								<xsl:value-of select="email" />
 							</td>
 							<td>
-								<xsl:value-of select="jid" />
+								<xsl:value-of select="username" />
 							</td>
 						</tr>
 					</xsl:for-each>

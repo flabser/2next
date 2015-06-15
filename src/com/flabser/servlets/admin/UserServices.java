@@ -23,20 +23,19 @@ public class UserServices {
 		sysDatabase = DatabaseFactory.getSysDatabase();
 	}
 
-	public String getUserAsXML(String userID) throws RuleException, LocalizatorException {
+	public String getUserAsXML(String id) throws RuleException, LocalizatorException {
 		String xmlContent = "", ea = "";
-		User user = sysDatabase.getUser(userID);
+		User user = sysDatabase.getUser(Integer.parseInt(id));
 
 		for (ApplicationProfile app : user.enabledApps.values()) {
 			ea += app.toXML();
 		}
 
 		if (user.getLogin() != null) {
-			xmlContent += "<login>" + user.getLogin() + "</login>" + "<docid>" + user.id + "</docid>"
-					+ "<fullname></fullname><email>" + user.getEmail() + "</email>" +
-
-					"<password>" + user.getPassword() + "</password><isadmin>" + user.isSupervisor()
-					+ "</isadmin><hash>" + user.getHash() + "</hash><enabledapps>" + ea + "</enabledapps>";
+			xmlContent += "<login>" + user.getLogin() + "</login><id>" + user.id + "</id>"
+					+ "<username>" + user.getUserName() + "</username><email>" + user.getEmail() + "</email>" 
+					+ "<password>" + user.getPassword() + "</password><isadmin>" + user.isSupervisor() + "</isadmin>"
+							+ "<hash>" + user.getHash() + "</hash><enabledapps>" + ea + "</enabledapps>";
 
 		}
 
@@ -80,7 +79,7 @@ public class UserServices {
 	public String deploy(String userID) throws SQLException, InstantiationException, IllegalAccessException,
 			ClassNotFoundException, DatabasePoolException {
 		String result = "";
-		User user = sysDatabase.getUser(userID);
+		User user = sysDatabase.getUser(Integer.parseInt(userID));
 		IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
 		for (ApplicationProfile appProfile : user.enabledApps.values()) {
 			int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.owner, appProfile.dbPwd);
@@ -98,7 +97,7 @@ public class UserServices {
 	public String remove(String userID) throws SQLException, InstantiationException, IllegalAccessException,
 			ClassNotFoundException, DatabasePoolException {
 		String result = "";
-		User user = sysDatabase.getUser(userID);
+		User user = sysDatabase.getUser(Integer.parseInt(userID));
 		IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
 		for (ApplicationProfile appProfile : user.enabledApps.values()) {
 			appDb.removeDatabase("localhost", appProfile.getDbName());

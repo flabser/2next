@@ -4,7 +4,7 @@
 <xsl:template match="/request">
 	<html>
 		<head>
-			<title>Nextbase - Error</title>						
+			<title>2Next - Error</title>						
 			<link rel="stylesheet" href="classic/css/main.css"/>	
 			<link rel="stylesheet" href="classic/css/actionbar.css"/>			
 			<script>
@@ -181,7 +181,7 @@
 						</td>
 					</tr>
 				</table>
-				<div style="z-index:999; margin-top:-2%; margin-left:22.5%; font-family:arial; font-size:0.71em">&#xA0;<a href="http://www.flabs.kz" target="_blank">Lab of the Future</a>&#xA0; &#8226; &#xA0;<a href="http://www.smartdoc.kz" target="_blank">Feedback</a></div>
+				<div style="z-index:999; margin-top:-2%; margin-left:22.5%; font-family:arial; font-size:0.71em">&#xA0;<a href="http://www.flabs.kz" target="_blank">Lab of the Future</a>&#xA0; &#8226; &#xA0;<a href="http://www.flabser.com" target="_blank">Feedback</a></div>
 			</body>
 		</html>
 	</xsl:template>

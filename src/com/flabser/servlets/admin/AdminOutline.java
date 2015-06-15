@@ -1,7 +1,6 @@
 package com.flabser.servlets.admin;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.IDatabase;
 import com.flabser.env.Environment;
 import com.flabser.server.Server;
 
@@ -31,7 +30,7 @@ public class AdminOutline {
 	
 		XMLText += "<outline>";				
 		for(AppEnv appEnv: Environment.getApplications()){
-			String dbID = "";			
+
 			XMLText += "<application appid= \"" + appEnv.appType.replace("\"", "'") + "\" dbid= \"\">";				
 			XMLText += "</application>";		
 		}	
