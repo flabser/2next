@@ -4,11 +4,11 @@ CT.User = DS.Model.extend({
 });
 
 CT.User.FIXTURES = [{
-    id: 'medet',
+    id: '1',
     name: 'mkalihan',
     email: ''
 }, {
-    id: 'dzhilian',
+    id: '2',
     name: 'dzhilian',
     email: ''
 }];

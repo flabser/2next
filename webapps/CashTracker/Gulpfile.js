@@ -77,7 +77,7 @@ gulp.task('em_templates_trim', function() {
 });
 
 gulp.task('em_templates_compile', function() {
-    gulp.src('./js/app/templates/**/*.html')
+    gulp.src('./js/app/templates/compiled/*.html')
         .pipe(emberTemplates({
             type: 'browser',
             compiler: require('../SharedResources/vendor/ember/ember-template-compiler.min'),
@@ -94,9 +94,13 @@ gulp.task('em_templates_compile', function() {
 
 // run
 gulp.task('default', function() {
-    gulp.run('lint', 'em_lint', 'em_templates_compile', 'em_minify_js', 'minify_js', 'minify_css');
+    gulp.run('lint', 'em_lint', 'em_templates_trim', 'em_templates_compile', 'em_minify_js', 'minify_js', 'minify_css');
 
     gulp.watch('./js/app/templates/*.html', function(event) {
+        gulp.run('em_templates_trim');
+    });
+
+    gulp.watch('./js/app/templates/compiled/*.html', function(event) {
         gulp.run('em_templates_compile');
     });
 

@@ -26,4 +26,22 @@ CT.Account.FIXTURES = [{
     amountControl: 0,
     owner: 'dzhilian',
     observers: 'medet'
+}, {
+    id: 3,
+    type: 3,
+    name: 'flabser',
+    currency: 'KZT',
+    openingBalance: 0,
+    amountControl: 0,
+    owner: 'dzhilian',
+    observers: 'medet'
+}, {
+    id: 4,
+    type: 5,
+    name: 'flabser',
+    currency: 'KZT',
+    openingBalance: 0,
+    amountControl: 0,
+    owner: 'dzhilian',
+    observers: 'medet'
 }];
