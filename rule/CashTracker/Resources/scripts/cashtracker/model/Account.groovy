@@ -7,7 +7,7 @@ import com.flabser.script._IObject;
 import com.flabser.users.User;
 
 
-public class Account implements _IObject, com.flabser.script._IContent {
+public class Account implements _IObject {
 
 	private long id;
 
@@ -96,19 +96,15 @@ public class Account implements _IObject, com.flabser.script._IContent {
 	}
 
 	public void init(ResultSet rs) {
-		Account m = new Account()
+		// Account m = new Account()
 
-		m.setId(rs.getInt("id"))
-		m.setName(rs.getString("name"))
-		m.setAmountControl(rs.getBigDecimal("amountcontrol"))
-		m.setOpeningBalance(0)
-		m.setObservers(rs.getString("observers"))
-		m.setOwner(null)
+		setId(rs.getInt("id"))
+		setName(rs.getString("name"))
+		setAmountControl(rs.getBigDecimal("amountcontrol"))
+		setOpeningBalance(0)
+		setObservers(rs.getString("observers"))
+		setOwner(null)
 
-		m
-	}
-
-	public StringBuffer toXML() throws _Exception {
-		return new StringBuffer()
+		// m
 	}
 }
