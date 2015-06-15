@@ -69,7 +69,7 @@ public class Budget implements _IObject {
 	public void init(ResultSet rs) {
 		setId(rs.getInt("id"))
 		setName(rs.getString("name"))
-		setRegDate(rs.getDate(("regdate"))
+		setRegDate(rs.getDate("regdate"))
 		setOwner((User) null)
 		setStatus(BudgetStatusType.getType(rs.getInt("type")))
 	}
