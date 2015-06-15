@@ -175,11 +175,7 @@ public class Transaction implements com.flabser.script._IObject {
 		return "Transaction[" + amount + ", " + category + ", " + costCenter + "]";
 	}
 
-
-
 	public void init(ResultSet rs){
-		// Transaction t = new Transaction()
-
 		setId(rs.getInt("id"))
 		setAuthor(null)
 		setDate(rs.getDate("date"))
@@ -195,7 +191,5 @@ public class Transaction implements com.flabser.script._IObject {
 		setEndDate(rs.getDate("enddate"))
 		setBasis(rs.getString("basis"))
 		setComment(rs.getString("note"))
-
-		// t
 	}
 }

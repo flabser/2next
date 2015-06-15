@@ -1,6 +1,10 @@
 package cashtracker.model;
 
-public class CostCenter {
+import java.sql.ResultSet;
+
+import com.flabser.script._IObject;
+
+public class CostCenter implements _IObject {
 
 	private long id;
 
@@ -36,5 +40,11 @@ public class CostCenter {
 	@Override
 	public String toString() {
 		return "CostCenter[" + name + "]";
+	}
+
+	public void init(ResultSet rs) {
+		setId(rs.getInt("id"))
+		setName(rs.getString("name"))
+		setType(0)
 	}
 }

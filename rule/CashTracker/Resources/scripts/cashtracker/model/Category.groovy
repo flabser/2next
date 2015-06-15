@@ -1,6 +1,10 @@
 package cashtracker.model;
 
-public class Category {
+import java.sql.ResultSet;
+
+import com.flabser.script._IObject;
+
+public class Category implements _IObject {
 
 	public enum CategoryType {
 		INCOME, EXPENSE;
@@ -50,5 +54,12 @@ public class Category {
 	@Override
 	public String toString() {
 		return "Category[" + name + "]";
+	}
+
+	public void init(ResultSet rs) {
+		setId(rs.getInt("id"))
+		setName(rs.getString("name"))
+		setType(CategoryType.EXPENSE)
+		setComment(rs.getString("comment"))
 	}
 }
