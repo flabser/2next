@@ -1,7 +1,5 @@
 package cashtracker.page.controller
 
-import java.util.List;
-
 import cashtracker.dao.CategoryDAO;
 import cashtracker.model.Category;
 
@@ -16,11 +14,10 @@ class Categories extends _DoScript implements com.flabser.script._IContent {
 	List <Category> categories
 
 	@Override
-	public void doProcess(_Session session, _WebFormData formData, String lang) {
-
+	public void doGet(_Session session, _WebFormData formData, String lang) {
 		def dao = new CategoryDAO(session)
-
 		def categories = dao.findAll()
+
 		if (categories.size > 0) {
 			def m_list = new Categories()
 			m_list.categories = categories
@@ -28,18 +25,8 @@ class Categories extends _DoScript implements com.flabser.script._IContent {
 		}
 	}
 
-	public StringBuffer toXML() throws _Exception {
-		return new StringBuffer()
-	}
-
-	@Override
-	public void doGet(_Session session, _WebFormData formData, String lang) {
-		doProcess(session, formData, lang)
-	}
-
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
-		doProcess(session, formData, lang)
 	}
 
 	@Override
@@ -48,5 +35,9 @@ class Categories extends _DoScript implements com.flabser.script._IContent {
 
 	@Override
 	public void doDelete(_Session session, _WebFormData formData, String lang) {
+	}
+
+	public StringBuffer toXML() throws _Exception {
+		return new StringBuffer()
 	}
 }

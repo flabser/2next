@@ -1,8 +1,5 @@
 package cashtracker.page.controller
 
-import java.text.SimpleDateFormat
-import java.util.List;
-
 import cashtracker.dao.BudgetDAO;
 import cashtracker.model.Budget;
 
@@ -17,11 +14,10 @@ class Budgets extends _DoScript implements com.flabser.script._IContent {
 	List <Budget> budgets
 
 	@Override
-	public void doProcess(_Session session, _WebFormData formData, String lang) {
-
+	public void doGet(_Session session, _WebFormData formData, String lang) {
 		def dao = new BudgetDAO(session)
-
 		def budgets = dao.findAll()
+
 		if (budgets.size > 0) {
 			def m_list = new Budgets()
 			m_list.budgets = budgets
@@ -29,18 +25,8 @@ class Budgets extends _DoScript implements com.flabser.script._IContent {
 		}
 	}
 
-	public StringBuffer toXML() throws _Exception {
-		return new StringBuffer()
-	}
-
-	@Override
-	public void doGet(_Session session, _WebFormData formData, String lang) {
-		doProcess(session, formData, lang)
-	}
-
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
-		doProcess(session, formData, lang)
 	}
 
 	@Override
@@ -49,5 +35,9 @@ class Budgets extends _DoScript implements com.flabser.script._IContent {
 
 	@Override
 	public void doDelete(_Session session, _WebFormData formData, String lang) {
+	}
+
+	public StringBuffer toXML() throws _Exception {
+		return new StringBuffer()
 	}
 }

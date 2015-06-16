@@ -1,7 +1,5 @@
 package cashtracker.page.controller
 
-import java.util.List;
-
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
 
@@ -16,11 +14,10 @@ class CostCenters extends _DoScript implements com.flabser.script._IContent {
 	List <CostCenter> costcenters
 
 	@Override
-	public void doProcess(_Session session, _WebFormData formData, String lang) {
-
+	public void doGet(_Session session, _WebFormData formData, String lang) {
 		def dao = new CostCenterDAO(session)
-
 		def costCenters = dao.findAll()
+
 		if (costCenters.size > 0) {
 			def m_list = new CostCenters()
 			m_list.costcenters = costCenters
@@ -28,18 +25,8 @@ class CostCenters extends _DoScript implements com.flabser.script._IContent {
 		}
 	}
 
-	public StringBuffer toXML() throws _Exception {
-		return new StringBuffer()
-	}
-
-	@Override
-	public void doGet(_Session session, _WebFormData formData, String lang) {
-		doProcess(session, formData, lang)
-	}
-
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
-		doProcess(session, formData, lang)
 	}
 
 	@Override
@@ -48,5 +35,9 @@ class CostCenters extends _DoScript implements com.flabser.script._IContent {
 
 	@Override
 	public void doDelete(_Session session, _WebFormData formData, String lang) {
+	}
+
+	public StringBuffer toXML() throws _Exception {
+		return new StringBuffer()
 	}
 }

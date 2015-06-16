@@ -1,23 +1,23 @@
 package cashtracker.page.controller
 
+import cashtracker.model.Account
+import cashtracker.dao.AccountDAO;
+
 import com.flabser.script._Exception;
 import com.flabser.script._Session
 import com.flabser.script._WebFormData
 import com.flabser.script.events._DoScript
-
-import cashtracker.model.Account
-import cashtracker.dao.AccountDAO;
 
 
 class Accounts extends _DoScript implements com.flabser.script._IContent {
 
 	List <Account> accounts
 
-	public void doProcess(_Session session, _WebFormData formData, String lang) {
-
+	@Override
+	public void doGet(_Session session, _WebFormData formData, String lang) {
 		def dao = new AccountDAO(session)
-
 		def accounts = dao.findAll()
+
 		if (accounts.size > 0) {
 			def m_list = new Accounts()
 			m_list.accounts = accounts
@@ -25,18 +25,8 @@ class Accounts extends _DoScript implements com.flabser.script._IContent {
 		}
 	}
 
-	public StringBuffer toXML() throws _Exception {
-		return new StringBuffer()
-	}
-
-	@Override
-	public void doGet(_Session session, _WebFormData formData, String lang) {
-		doProcess(session, formData, lang)
-	}
-
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
-		doProcess(session, formData, lang)
 	}
 
 	@Override
@@ -45,5 +35,9 @@ class Accounts extends _DoScript implements com.flabser.script._IContent {
 
 	@Override
 	public void doDelete(_Session session, _WebFormData formData, String lang) {
+	}
+
+	public StringBuffer toXML() throws _Exception {
+		return new StringBuffer()
 	}
 }
