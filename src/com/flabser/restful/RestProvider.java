@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -18,8 +19,6 @@ import javax.ws.rs.core.MediaType;
 import org.omg.CORBA.UserException;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.DatabaseFactory;
-import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.RuleException;
 import com.flabser.rule.IRule;
 import com.flabser.rule.page.PageRule;
@@ -30,6 +29,7 @@ import com.flabser.users.AuthFailedException;
 import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
+
 
 @Path("/")
 public class RestProvider {
@@ -42,7 +42,22 @@ public class RestProvider {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public _Page producePage(@PathParam("id") String id) {
+	public _Page get(@PathParam("id") String id) {
+		return producePage(id, HttpMethod.GET);
+	}
+
+	@POST
+	@Path("{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public _Page save(_IObject c) {
+
+		System.out.println(c);
+
+		return null;
+	}
+
+	public _Page producePage(String id, String httpMethod) {
 
 		HttpSession jses = null;
 		UserSession userSession = null;
@@ -77,7 +92,7 @@ public class RestProvider {
 			HashMap <String, String[]> fields = new HashMap <String, String[]>();
 			Map <String, String[]> parMap = request.getParameterMap();
 			fields.putAll(parMap);
-			Page page = new Page(env, userSession, pageRule);
+			Page page = new Page(env, userSession, pageRule, httpMethod);
 			_Page pojoPage = page.process(fields);
 			return pojoPage;
 
@@ -91,17 +106,5 @@ public class RestProvider {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
-
-	@POST
-	@Path("{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public _Page save(_IObject c) {
-
-		System.out.println(c);
-		return null;
-	}
-
 }

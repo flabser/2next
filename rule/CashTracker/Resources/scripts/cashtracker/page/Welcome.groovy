@@ -8,7 +8,6 @@ import com.flabser.script.actions.*
 
 class Welcome extends _DoScript {
 
-	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
 
 		def ent = session.getAppEntourage()
@@ -17,5 +16,23 @@ class Welcome extends _DoScript {
 		publishElement("appname", ent.getAppName())
 		publishElement("availablelangs", ent.getAvailableLangs())
 		publishElement("availableapps", ent.getAvailableApps())
+	}
+
+	@Override
+	public void doGet(_Session session, _WebFormData formData, String lang) {
+		doProcess(session, formData, lang)
+	}
+
+	@Override
+	public void doPost(_Session session, _WebFormData formData, String lang) {
+		doProcess(session, formData, lang)
+	}
+
+	@Override
+	public void doPut(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doDelete(_Session session, _WebFormData formData, String lang) {
 	}
 }
