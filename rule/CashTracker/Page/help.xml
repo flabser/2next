@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rule type="page" id="help" mode="on" anonymous="on">
 	<description></description>
-	<caching>CACHING_IN_USER_SESSION_SCOPE</caching>
+	<caching>NO_CACHING</caching>
 	<xsltfile>site/help.xsl</xsltfile>
 
 	<element mode="ON" type="INCLUDED_PAGE">

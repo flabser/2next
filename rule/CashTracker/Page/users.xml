@@ -2,23 +2,10 @@
 <rule type="page" id="users" mode="on" history="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>pages/users.xsl</xsltfile>
-	<element mode="ON" type="INCLUDED_PAGE">
-		<name>outline</name>
-		<value>outline</value>
-	</element>
+
 	<element mode="ON" type="SCRIPT">
-		<name>action_bar</name>
 		<events>
-			<doscript source="file">cashtracker.page.actionbar.Users</doscript>
+			<doscript source="file">cashtracker.page.views.Users</doscript>
 		</events>
 	</element>
-	<element mode="ON" type="QUERY">
-		<name>structure</name>
-		<query source="macro">expanded_structure</query>
-		<doctype>STRUCTURE</doctype>
-	</element>
-	<caption name="viewnamecaption" source="KEYWORD">Пользователи</caption>
-	<caption name="viewtext1"></caption>
-	<caption name="viewtext2"></caption>
 </rule>

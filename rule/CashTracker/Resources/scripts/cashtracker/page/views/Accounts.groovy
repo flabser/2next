@@ -20,9 +20,9 @@ class Accounts extends _DoScript implements com.flabser.script._IContent {
 
 		def accounts = dao.findAll()
 		if (accounts.size > 0) {
-			def acs = new Accounts()
-			acs.list = accounts
-			publishElement("accounts", acs)
+			def m_list = new Accounts()
+			m_list.list = accounts
+			publishElement("accounts", m_list)
 		}
 	}
 

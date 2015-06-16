@@ -1,6 +1,5 @@
 package cashtracker.page
 
-
 import com.flabser.script.*
 import com.flabser.scriptprocessor.*
 import com.flabser.script.events.*
@@ -18,6 +17,5 @@ class Welcome extends _DoScript {
 		publishElement("appname", ent.getAppName())
 		publishElement("availablelangs", ent.getAvailableLangs())
 		publishElement("availableapps", ent.getAvailableApps())
-
 	}
 }

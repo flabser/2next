@@ -2,10 +2,10 @@
 <rule type="page" id="saldo" mode="on" history="off">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>xhr/saldo.xsl</xsltfile>
+
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.saldo.Calculate</doscript>
+			<doscript source="file">cashtracker.page.saldo.Saldo</doscript>
 		</events>
 	</element>
 </rule>

@@ -3,6 +3,7 @@
 	<description></description>
 	<caching>NO_CACHING</caching>
 	<xsltfile>xhr/send-invite.xsl</xsltfile>
+
 	<element mode="ON" type="SCRIPT">
 		<events>
 			<doscript source="file">cashtracker.page.app.SendInvite</doscript>
