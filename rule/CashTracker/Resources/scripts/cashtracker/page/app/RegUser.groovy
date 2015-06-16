@@ -11,7 +11,7 @@ import com.flabser.solutions.*
 class RegUser extends _DoScript {
 
 	@Override
-	public void doProcess(_Session session, _WebFormData formData, String lang) {
+	public void doPost(_Session session, _WebFormData formData, String lang) {
 
 		publishElement("process-action", "reg")
 
@@ -50,16 +50,15 @@ class RegUser extends _DoScript {
 		user.setStatus(UserStatusType.NOT_VERIFIED)
 		user.setRegDate(new Date())
 		user.setVerifyCode(_Helper.randomValue)
-		
+
 		/*def appName = session.getGlobalSettings().appName;
-		ApplicationProfile ap = new ApplicationProfile()
-		ap.appName = appName
-		ap.owner = (user.getUserID().replace("@","_").replace(".","_")).replace("-","_").toLowerCase()
-		ap.dbName = appName.toLowerCase() + "_" + ap.owner
-		ap.dbLogin = ap.owner
-		ap.dbPwd = regForm.pwd
-		
-		user.addApplication(ap)*/
+		 ApplicationProfile ap = new ApplicationProfile()
+		 ap.appName = appName
+		 ap.owner = (user.getUserID().replace("@","_").replace(".","_")).replace("-","_").toLowerCase()
+		 ap.dbName = appName.toLowerCase() + "_" + ap.owner
+		 ap.dbLogin = ap.owner
+		 ap.dbPwd = regForm.pwd
+		 user.addApplication(ap)*/
 
 		if (!user.save()) {
 			publishElement("error", "save-error")
@@ -74,13 +73,23 @@ class RegUser extends _DoScript {
 			if (user.save()) {
 				publishElement("process", "verify-email-send")
 			}else {
-				publishElement("error", "save-error")				
+				publishElement("error", "save-error")
 			}
 		} else {
 			publishElement("error", "verify-email-sending-error")
-		}		
-		
+		}
+
 	}
 
-	
+	@Override
+	public void doGet(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doPut(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doDelete(_Session session, _WebFormData formData, String lang) {
+	}
 }

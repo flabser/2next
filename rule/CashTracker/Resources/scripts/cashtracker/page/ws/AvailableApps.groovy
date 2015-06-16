@@ -8,18 +8,13 @@ import com.flabser.script.actions.*
 
 class AvailableApps extends _DoScript {
 
-	public void doProcess(_Session session, _WebFormData formData, String lang) {
+	@Override
+	public void doGet(_Session session, _WebFormData formData, String lang) {
 		publishElement("app_name", session.getAppEntourage().getAppName())
 	}
 
 	@Override
-	public void doGet(_Session session, _WebFormData formData, String lang) {
-		doProcess(session, formData, lang)
-	}
-
-	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
-		doProcess(session, formData, lang)
 	}
 
 	@Override

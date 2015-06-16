@@ -8,10 +8,11 @@ import com.flabser.users.*
 import com.flabser.solutions.*
 import com.flabser.dataengine.*
 
+
 class VerifyEMail extends _DoScript {
 
 	@Override
-	public void doProcess(_Session session, _WebFormData formData, String lang) {
+	public void doGet(_Session session, _WebFormData formData, String lang) {
 
 		String code = formData.getValueSilently("code")
 		User user = DatabaseFactory.getSysDatabase().getUserByVerifyCode(code)
@@ -21,16 +22,28 @@ class VerifyEMail extends _DoScript {
 				if (user.save()) {
 					publishElement("process", "verify-ok")
 					publishElement("email", user.email)
-				}else {
+				} else {
 					publishElement("error", "save-error")
 				}
-			}else{
+			} else {
 				publishElement("process", "already-registered")
 				publishElement("email", user.email)
 			}
-		}else {
+		} else {
 			publishElement("error", "user-not-found")
 			return
 		}
+	}
+
+	@Override
+	public void doPost(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doPut(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doDelete(_Session session, _WebFormData formData, String lang) {
 	}
 }
