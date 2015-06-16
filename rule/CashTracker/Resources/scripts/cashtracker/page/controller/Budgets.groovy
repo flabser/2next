@@ -1,30 +1,31 @@
-package cashtracker.page.views
+package cashtracker.page.controller
 
+import java.text.SimpleDateFormat
 import java.util.List;
 
-import com.flabser.script.*
-import com.flabser.scriptprocessor.*
-import com.flabser.script.events.*
-import com.flabser.script.dbdata.*
-import com.flabser.util.ScriptResponse;
+import cashtracker.dao.BudgetDAO;
+import cashtracker.model.Budget;
 
-import cashtracker.dao.TransactionDAO;
-import cashtracker.model.Transaction;
+import com.flabser.script._Exception;
+import com.flabser.script._Session
+import com.flabser.script._WebFormData
+import com.flabser.script.events._DoScript
 
 
-class Transactions extends _DoScript implements com.flabser.script._IContent {
+class Budgets extends _DoScript implements com.flabser.script._IContent {
 
-	List <Transaction> transactions
+	List <Budget> budgets
 
+	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
 
-		def dao = new TransactionDAO(session)
+		def dao = new BudgetDAO(session)
 
-		def transactions = dao.findAll()
-		if (transactions.size > 0) {
-			def m_list = new Transactions()
-			m_list.transactions = transactions
-			publishElement("transactions", m_list)
+		def budgets = dao.findAll()
+		if (budgets.size > 0) {
+			def m_list = new Budgets()
+			m_list.budgets = budgets
+			publishElement("budgets", m_list)
 		}
 	}
 

@@ -1,27 +1,30 @@
-package cashtracker.page.views
+package cashtracker.page.controller
+
+import java.util.List;
+
+import cashtracker.dao.CategoryDAO;
+import cashtracker.model.Category;
 
 import com.flabser.script._Exception;
 import com.flabser.script._Session
 import com.flabser.script._WebFormData
 import com.flabser.script.events._DoScript
 
-import cashtracker.model.Account
-import cashtracker.dao.AccountDAO;
 
+class Categories extends _DoScript implements com.flabser.script._IContent {
 
-class Accounts extends _DoScript implements com.flabser.script._IContent {
+	List <Category> categories
 
-	List <Account> accounts
-
+	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
 
-		def dao = new AccountDAO(session)
+		def dao = new CategoryDAO(session)
 
-		def accounts = dao.findAll()
-		if (accounts.size > 0) {
-			def m_list = new Accounts()
-			m_list.accounts = accounts
-			publishElement("accounts", m_list)
+		def categories = dao.findAll()
+		if (categories.size > 0) {
+			def m_list = new Categories()
+			m_list.categories = categories
+			publishElement("categories", m_list)
 		}
 	}
 

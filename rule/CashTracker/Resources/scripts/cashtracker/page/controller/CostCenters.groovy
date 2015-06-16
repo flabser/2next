@@ -1,10 +1,9 @@
-package cashtracker.page.views
+package cashtracker.page.controller
 
-import java.text.SimpleDateFormat
 import java.util.List;
 
-import cashtracker.dao.BudgetDAO;
-import cashtracker.model.Budget;
+import cashtracker.dao.CostCenterDAO;
+import cashtracker.model.CostCenter;
 
 import com.flabser.script._Exception;
 import com.flabser.script._Session
@@ -12,20 +11,20 @@ import com.flabser.script._WebFormData
 import com.flabser.script.events._DoScript
 
 
-class Budgets extends _DoScript implements com.flabser.script._IContent {
+class CostCenters extends _DoScript implements com.flabser.script._IContent {
 
-	List <Budget> budgets
+	List <CostCenter> costcenters
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
 
-		def dao = new BudgetDAO(session)
+		def dao = new CostCenterDAO(session)
 
-		def budgets = dao.findAll()
-		if (budgets.size > 0) {
-			def m_list = new Budgets()
-			m_list.budgets = budgets
-			publishElement("budgets", m_list)
+		def costCenters = dao.findAll()
+		if (costCenters.size > 0) {
+			def m_list = new CostCenters()
+			m_list.costcenters = costCenters
+			publishElement("costcenters", m_list)
 		}
 	}
 

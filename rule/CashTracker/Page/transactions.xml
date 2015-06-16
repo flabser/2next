@@ -5,7 +5,7 @@
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.views.Transactions</doscript>
+			<doscript source="file">cashtracker.page.controller.Transactions</doscript>
 		</events>
 	</element>
 </rule>

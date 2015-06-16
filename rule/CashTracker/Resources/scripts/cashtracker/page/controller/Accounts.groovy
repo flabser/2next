@@ -1,30 +1,27 @@
-package cashtracker.page.views
-
-import java.util.List;
-
-import cashtracker.dao.CostCenterDAO;
-import cashtracker.model.CostCenter;
+package cashtracker.page.controller
 
 import com.flabser.script._Exception;
 import com.flabser.script._Session
 import com.flabser.script._WebFormData
 import com.flabser.script.events._DoScript
 
+import cashtracker.model.Account
+import cashtracker.dao.AccountDAO;
 
-class CostCenters extends _DoScript implements com.flabser.script._IContent {
 
-	List <CostCenter> costcenters
+class Accounts extends _DoScript implements com.flabser.script._IContent {
 
-	@Override
+	List <Account> accounts
+
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
 
-		def dao = new CostCenterDAO(session)
+		def dao = new AccountDAO(session)
 
-		def costCenters = dao.findAll()
-		if (costCenters.size > 0) {
-			def m_list = new CostCenters()
-			m_list.costcenters = costCenters
-			publishElement("costcenters", m_list)
+		def accounts = dao.findAll()
+		if (accounts.size > 0) {
+			def m_list = new Accounts()
+			m_list.accounts = accounts
+			publishElement("accounts", m_list)
 		}
 	}
 

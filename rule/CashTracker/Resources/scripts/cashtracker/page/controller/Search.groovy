@@ -1,4 +1,4 @@
-package cashtracker.page.views
+package cashtracker.page.controller
 
 import com.flabser.script._Session
 import com.flabser.script._WebFormData
