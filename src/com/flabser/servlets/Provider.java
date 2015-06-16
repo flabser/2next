@@ -265,7 +265,7 @@ public class Provider extends HttpServlet{
 		HashMap<String, String[]> fields = new HashMap<String, String[]>();
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
-		Page page = new Page(env, userSession, pageRule);
+		Page page = new Page(env, userSession, pageRule, request.getMethod());
 		result.output.append(page.process(fields).toXML());
 		if (page.fileGenerated) {
 			result.publishAs = PublishAsType.OUTPUTSTREAM;
