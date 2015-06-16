@@ -22,23 +22,17 @@ public class CostCenterDAO {
 	}
 
 	public List <CostCenter> findAll() {
-		ResultSet rs = db.select("SELECT * FROM costcenter", user)
-		List <CostCenter> result = []
-
-		if (rs.next()) {
-			result << getModelFromResultSet(rs)
-		}
-
+		List <CostCenter> result = db.select("SELECT * FROM costcenter", CostCenter.class, user)
 		return result
 	}
 
 	public CostCenter findById(long id) {
-		String sql = "select * from costcenter where id = $id"
-		ResultSet rs = db.select(sql, user)
+		List <CostCenter> list = db.select("select * from costcenter where id = $id", CostCenter.class, user)
+
 		CostCenter result = null
 
-		if (rs.next()) {
-			result = getModelFromResultSet(rs)
+		if (list.size() > 0) {
+			result = list[0]
 		}
 
 		return result

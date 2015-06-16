@@ -21,18 +21,20 @@ public class CategoryDAO {
 	}
 
 	public List <Category> findAll() {
-		List <Category> result = null;
-		ResultSet rs = db.select("SELECT * FROM category", user);
-		// ...
+		List <Category> result = db.select("SELECT * FROM category", Category.class, user);
 		return result;
 	}
 
 	public Category findById(long id) {
-		String sql = "select * from category where id = " + id;
-		Category result = null;
-		ResultSet rs = db.select(sql, user);
-		// ...
-		return result;
+		List <Category> list = db.select("select * from category where id = $id", Category.class, user)
+
+		Category result = null
+
+		if (list.size() > 0) {
+			result = list[0]
+		}
+
+		return result
 	}
 
 	public int addCategory(Category c) {

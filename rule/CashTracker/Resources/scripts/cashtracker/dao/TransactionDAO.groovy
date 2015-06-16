@@ -29,12 +29,12 @@ public class TransactionDAO {
 	}
 
 	public Transaction findById(long id) {
-		String sql = "select * from transaction where id = $id"
-		ResultSet rs = db.select(sql, user)
+		List <Transaction> list = db.select("select * from transaction where id = $id", Transaction.class, user)
+
 		Transaction result = null
 
-		if (rs.next()) {
-			result = getModelFromResultSet(rs)
+		if (list.size() > 0) {
+			result = list[0]
 		}
 
 		return result
