@@ -13,7 +13,7 @@ import com.flabser.script.events._DoScript
 
 class Categories extends _DoScript implements com.flabser.script._IContent {
 
-	List <Category> list
+	List <Category> categories
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
@@ -23,12 +23,30 @@ class Categories extends _DoScript implements com.flabser.script._IContent {
 		def categories = dao.findAll()
 		if (categories.size > 0) {
 			def m_list = new Categories()
-			m_list.list = categories
+			m_list.categories = categories
 			publishElement("categories", m_list)
 		}
 	}
 
 	public StringBuffer toXML() throws _Exception {
 		return new StringBuffer()
+	}
+
+	@Override
+	public void doGet(_Session session, _WebFormData formData, String lang) {
+		doProcess(session, formData, lang)
+	}
+
+	@Override
+	public void doPost(_Session session, _WebFormData formData, String lang) {
+		doProcess(session, formData, lang)
+	}
+
+	@Override
+	public void doPut(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doDelete(_Session session, _WebFormData formData, String lang) {
 	}
 }

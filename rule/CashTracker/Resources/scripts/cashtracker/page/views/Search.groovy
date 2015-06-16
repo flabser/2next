@@ -8,6 +8,18 @@ import com.flabser.script.events._DoScript
 class Search extends _DoScript {
 
 	@Override
-	public void doProcess(_Session session, _WebFormData formData, String lang) {
+	public void doGet(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doPost(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doPut(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doDelete(_Session session, _WebFormData formData, String lang) {
 	}
 }

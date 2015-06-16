@@ -14,7 +14,7 @@ import com.flabser.script.events._DoScript
 
 class Budgets extends _DoScript implements com.flabser.script._IContent {
 
-	List <Budget> list
+	List <Budget> budgets
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
@@ -24,12 +24,30 @@ class Budgets extends _DoScript implements com.flabser.script._IContent {
 		def budgets = dao.findAll()
 		if (budgets.size > 0) {
 			def m_list = new Budgets()
-			m_list.list = budgets
+			m_list.budgets = budgets
 			publishElement("budgets", m_list)
 		}
 	}
 
 	public StringBuffer toXML() throws _Exception {
 		return new StringBuffer()
+	}
+
+	@Override
+	public void doGet(_Session session, _WebFormData formData, String lang) {
+		doProcess(session, formData, lang)
+	}
+
+	@Override
+	public void doPost(_Session session, _WebFormData formData, String lang) {
+		doProcess(session, formData, lang)
+	}
+
+	@Override
+	public void doPut(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doDelete(_Session session, _WebFormData formData, String lang) {
 	}
 }

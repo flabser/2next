@@ -13,7 +13,7 @@ import com.flabser.script.events._DoScript
 
 class CostCenters extends _DoScript implements com.flabser.script._IContent {
 
-	List <Category> list
+	List <CostCenter> costcenters
 
 	@Override
 	public void doProcess(_Session session, _WebFormData formData, String lang) {
@@ -23,12 +23,30 @@ class CostCenters extends _DoScript implements com.flabser.script._IContent {
 		def costCenters = dao.findAll()
 		if (costCenters.size > 0) {
 			def m_list = new CostCenters()
-			m_list.list = costCenters
+			m_list.costcenters = costCenters
 			publishElement("costcenters", m_list)
 		}
 	}
 
 	public StringBuffer toXML() throws _Exception {
 		return new StringBuffer()
+	}
+
+	@Override
+	public void doGet(_Session session, _WebFormData formData, String lang) {
+		doProcess(session, formData, lang)
+	}
+
+	@Override
+	public void doPost(_Session session, _WebFormData formData, String lang) {
+		doProcess(session, formData, lang)
+	}
+
+	@Override
+	public void doPut(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doDelete(_Session session, _WebFormData formData, String lang) {
 	}
 }
