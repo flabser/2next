@@ -15,36 +15,26 @@ CT.Transaction = DS.Model.extend({
     comment: DS.attr('string')
 });
 
-CT.Transaction.FIXTURES = [{
-    id: 1,
-    author: 'mkalihan',
-    regDate: '11.11.2015',
-    date: '11.11.2015',
-    endDate: '15.11.2015',
-    parentCategory: 0,
-    category: 1,
-    account: 1,
-    costCenter: 1,
-    amount: 1000,
-    repeat: 0,
-    every: 0,
-    repeatStep: 0,
-    basis: 'test basis',
-    comment: 'test comment'
-}, {
-    id: 2,
-    author: 'dzhilian',
-    regDate: '12.11.2015',
-    date: '12.11.2015',
-    endDate: '25.11.2015',
-    parentCategory: 0,
-    category: 1,
-    account: 1,
-    costCenter: 1,
-    amount: 1000,
-    repeat: 0,
-    every: 0,
-    repeatStep: 0,
-    basis: 'test basis 2',
-    comment: 'test comment 2'
-}];
+var _fixtures = [];
+
+for (var ii = 1; ii < 200; ii++) {
+    _fixtures.push({
+        id: ii,
+        author: 'mkalihan',
+        regDate: '11.11.2015',
+        date: '11.11.2015',
+        endDate: '15.11.2015',
+        parentCategory: ii,
+        category: ii,
+        account: ii,
+        costCenter: ii,
+        amount: 1000 + ii,
+        repeat: ii,
+        every: 0,
+        repeatStep: ii,
+        basis: 'test basis ' + ii,
+        comment: 'test comment ' + ii
+    });
+}
+
+CT.Transaction.FIXTURES = _fixtures;

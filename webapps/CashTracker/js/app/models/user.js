@@ -3,12 +3,14 @@ CT.User = DS.Model.extend({
     email: DS.attr('string')
 });
 
-CT.User.FIXTURES = [{
-    id: '1',
-    name: 'mkalihan',
-    email: ''
-}, {
-    id: '2',
-    name: 'dzhilian',
-    email: ''
-}];
+var _fixtures = [];
+
+for (var ii = 1; ii < 20; ii++) {
+    _fixtures.push({
+        id: ii,
+        name: 'mkalihan',
+        email: ''
+    });
+}
+
+CT.User.FIXTURES = _fixtures;

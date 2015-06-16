@@ -92,9 +92,10 @@ CT.AccountController = Ember.ObjectController.extend({
 });
 
 CT.AccountsController = Ember.ArrayController.extend({
+    queryParams: ['offset', 'limit', 'order_by'],
+
     actions: {
-        selectAll: function() {
-            ;
+        selectAll: function() {;
         }
     }
 });
@@ -152,7 +153,9 @@ CT.ApplicationController = Ember.Controller.extend({
     }
 });
 
-CT.CategoriesController = Ember.ArrayController.extend();
+CT.CategoriesController = Ember.ArrayController.extend({
+    queryParams: ['offset', 'limit', 'order_by']
+});
 
 CT.CategoryController = Ember.ObjectController.extend({
     actions: {
@@ -170,7 +173,9 @@ CT.CostCenterController = Ember.ObjectController.extend({
     }
 });
 
-CT.CostCentersController = Ember.ArrayController.extend();
+CT.CostCentersController = Ember.ArrayController.extend({
+    queryParams: ['offset', 'limit', 'order_by']
+});
 
 CT.TransactionController = Ember.ObjectController.extend({
     actions: {
@@ -181,6 +186,8 @@ CT.TransactionController = Ember.ObjectController.extend({
 });
 
 CT.TransactionsController = Ember.ArrayController.extend({
+    queryParams: ['offset', 'limit', 'order_by'],
+
     actions: {
         addTransaction: function() {
             var newTransaction = this.store.createRecord('transaction', {
@@ -214,7 +221,9 @@ CT.UserController = Ember.ObjectController.extend({
     }
 });
 
-CT.UsersController = Ember.ArrayController.extend();
+CT.UsersController = Ember.ArrayController.extend({
+    queryParams: ['offset', 'limit', 'order_by']
+});
 
 CT.UsersNewController = Ember.ArrayController.extend({
     actions: {
@@ -233,6 +242,242 @@ CT.UsersNewController = Ember.ArrayController.extend({
     }
 });
 
+CT.AccountRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('account', params.account_id);
+    }
+});
+
+CT.AccountsRoute = Ember.Route.extend({
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        },
+        order_by: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        return this.store.find('account');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'accounts.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
+                transition.queryParams.order_by = '';
+            }
+
+            this.transitionTo('accounts', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
+
+CT.ApplicationRoute = Ember.Route.extend({
+    actions: {
+        willTransition: function() {
+            $('body').removeClass('nav-app-open nav-ws-open');
+        }
+    }
+});
+
+CT.CategoriesRoute = Ember.Route.extend({
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        },
+        order_by: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        return this.store.find('category');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'categories.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
+                transition.queryParams.order_by = '';
+            }
+
+            this.transitionTo('categories', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
+
+CT.CategoryRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('category', params.category_id);
+    }
+});
+
+CT.CostCenterRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('cost-center', params.costcenter_id);
+    }
+});
+
+CT.CostCentersRoute = Ember.Route.extend({
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        },
+        order_by: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        return this.store.find('cost-center');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'costcenters.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
+                transition.queryParams.order_by = '';
+            }
+
+            this.transitionTo('costcenters', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
+
+CT.TransactionRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('transaction', params.transaction_id);
+    }
+});
+
+CT.TransactionsRoute = Ember.Route.extend({
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        },
+        order_by: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        /*return $.getJSON('/CashTracker/RestProvider/transactions').then(function(data) {
+            return data.elements[0].value.list;
+        });*/
+        return this.store.find('transaction');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'transactions.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
+                transition.queryParams.order_by = '';
+            }
+
+            this.transitionTo('transactions', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
+
+CT.UserRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('user', params.user_id);
+    }
+});
+
+CT.UsersRoute = Ember.Route.extend({
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        },
+        order_by: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        return this.store.find('user');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'users.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
+                transition.queryParams.order_by = '';
+            }
+
+            this.transitionTo('users', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
+
 CT.Account = DS.Model.extend({
     type: DS.attr('number'),
     name: DS.attr('string'),
@@ -243,43 +488,22 @@ CT.Account = DS.Model.extend({
     observers: DS.belongsTo('user')
 });
 
-CT.Account.FIXTURES = [{
-    id: 1,
-    type: 1,
-    name: 'mk',
-    currency: 'KZT',
-    openingBalance: 0,
-    amountControl: 0,
-    owner: 'medet',
-    observers: 'medet'
-}, {
-    id: 2,
-    type: 2,
-    name: 'flabser',
-    currency: 'KZT',
-    openingBalance: 0,
-    amountControl: 0,
-    owner: 'dzhilian',
-    observers: 'medet'
-}, {
-    id: 3,
-    type: 3,
-    name: 'flabser',
-    currency: 'KZT',
-    openingBalance: 0,
-    amountControl: 0,
-    owner: 'dzhilian',
-    observers: 'medet'
-}, {
-    id: 4,
-    type: 5,
-    name: 'flabser',
-    currency: 'KZT',
-    openingBalance: 0,
-    amountControl: 0,
-    owner: 'dzhilian',
-    observers: 'medet'
-}];
+var _fixtures = [];
+
+for (var ii = 1; ii < 50; ii++) {
+    _fixtures.push({
+        id: ii,
+        type: ii,
+        name: 'mk-' + ii,
+        currency: 'KZT',
+        openingBalance: ii,
+        amountControl: ii,
+        owner: 'medet',
+        observers: 'medet'
+    });
+}
+
+CT.Account.FIXTURES = _fixtures;
 
 CT.Category = DS.Model.extend({
     type: DS.attr('number'),
@@ -287,32 +511,35 @@ CT.Category = DS.Model.extend({
     comment: DS.attr('string')
 });
 
-CT.Category.FIXTURES = [{
-    id: 1,
-    type: 1,
-    name: 'car',
-    comment: 'car expense'
-}, {
-    id: 2,
-    type: 2,
-    name: 'food',
-    comment: 'nam nam'
-}];
+var _fixtures = [];
+
+for (var ii = 1; ii < 40; ii++) {
+    _fixtures.push({
+        id: ii,
+        type: ii,
+        name: 'car ' + ii,
+        comment: 'car expense ' + ii
+    });
+}
+
+CT.Category.FIXTURES = _fixtures;
 
 CT.CostCenter = DS.Model.extend({
     type: DS.attr('number'),
     name: DS.attr('string')
 });
 
-CT.CostCenter.FIXTURES = [{
-    id: 1,
-    type: 1,
-    name: 'ala'
-}, {
-    id: 2,
-    type: 2,
-    name: 'ast'
-}];
+var _fixtures = [];
+
+for (var ii = 1; ii < 30; ii++) {
+    _fixtures.push({
+        id: ii,
+        type: ii,
+        name: 'ala ' + ii
+    });
+}
+
+CT.CostCenter.FIXTURES = _fixtures;
 
 CT.Transaction = DS.Model.extend({
     author: DS.attr('string'),
@@ -331,54 +558,46 @@ CT.Transaction = DS.Model.extend({
     comment: DS.attr('string')
 });
 
-CT.Transaction.FIXTURES = [{
-    id: 1,
-    author: 'mkalihan',
-    regDate: '11.11.2015',
-    date: '11.11.2015',
-    endDate: '15.11.2015',
-    parentCategory: 0,
-    category: 1,
-    account: 1,
-    costCenter: 1,
-    amount: 1000,
-    repeat: 0,
-    every: 0,
-    repeatStep: 0,
-    basis: 'test basis',
-    comment: 'test comment'
-}, {
-    id: 2,
-    author: 'dzhilian',
-    regDate: '12.11.2015',
-    date: '12.11.2015',
-    endDate: '25.11.2015',
-    parentCategory: 0,
-    category: 1,
-    account: 1,
-    costCenter: 1,
-    amount: 1000,
-    repeat: 0,
-    every: 0,
-    repeatStep: 0,
-    basis: 'test basis 2',
-    comment: 'test comment 2'
-}];
+var _fixtures = [];
+
+for (var ii = 1; ii < 200; ii++) {
+    _fixtures.push({
+        id: ii,
+        author: 'mkalihan',
+        regDate: '11.11.2015',
+        date: '11.11.2015',
+        endDate: '15.11.2015',
+        parentCategory: ii,
+        category: ii,
+        account: ii,
+        costCenter: ii,
+        amount: 1000 + ii,
+        repeat: ii,
+        every: 0,
+        repeatStep: ii,
+        basis: 'test basis ' + ii,
+        comment: 'test comment ' + ii
+    });
+}
+
+CT.Transaction.FIXTURES = _fixtures;
 
 CT.User = DS.Model.extend({
     name: DS.attr('string'),
     email: DS.attr('string')
 });
 
-CT.User.FIXTURES = [{
-    id: '1',
-    name: 'mkalihan',
-    email: ''
-}, {
-    id: '2',
-    name: 'dzhilian',
-    email: ''
-}];
+var _fixtures = [];
+
+for (var ii = 1; ii < 20; ii++) {
+    _fixtures.push({
+        id: ii,
+        name: 'mkalihan',
+        email: ''
+    });
+}
+
+CT.User.FIXTURES = _fixtures;
 
 CT.UserProfile = DS.Model.extend({
     name: DS.attr('string')
@@ -388,77 +607,6 @@ CT.UserProfile.FIXTURES = [{
     id: 'mkalihan',
     name: 'mkalihan'
 }];
-
-CT.AccountRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.store.find('account', params.account_id);
-    }
-});
-
-CT.AccountsRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.store.find('account');
-    }
-});
-
-CT.ApplicationRoute = Ember.Route.extend({
-    actions: {
-        willTransition: function() {
-            $('body').removeClass('nav-app-open nav-ws-open');
-        }
-    }
-});
-
-CT.CategoriesRoute = Ember.Route.extend({
-    model: function() {
-        return this.store.find('category');
-    }
-});
-
-CT.CategoryRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.store.find('category', params.category_id);
-    }
-});
-
-CT.CostCenterRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.store.find('cost-center', params.costcenter_id);
-    }
-});
-
-CT.CostCentersRoute = Ember.Route.extend({
-    model: function() {
-        return this.store.find('cost-center');
-    }
-});
-
-CT.TransactionRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.store.find('transaction', params.transaction_id);
-    }
-});
-
-CT.TransactionsRoute = Ember.Route.extend({
-    model: function() {
-        /*return $.getJSON('/CashTracker/RestProvider/transactions').then(function(data) {
-            return data.elements[0].value.list;
-        });*/
-        return this.store.find('transaction');
-    }
-});
-
-CT.UserRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.store.find('user', params.user_id);
-    }
-});
-
-CT.UsersRoute = Ember.Route.extend({
-    model: function() {
-        return this.store.find('user');
-    }
-});
 
 CT.AccountView = Ember.View.extend({
     templateName: 'account'
@@ -491,7 +639,7 @@ CT.CategoriesNewView = Ember.View.extend({
 });
 
 CT.CategoryView = Ember.View.extend({
-    templateName: 'category',
+    templateName: 'category'
 });
 
 CT.CostCenterView = Ember.View.extend({
@@ -507,7 +655,7 @@ CT.CostCentersNewView = Ember.View.extend({
 });
 
 CT.TransactionView = Ember.View.extend({
-    templateName: 'transaction',
+    templateName: 'transaction'
 });
 
 CT.TransactionsView = Ember.View.extend({
@@ -519,11 +667,11 @@ CT.TransactionsNewView = Ember.View.extend({
 });
 
 CT.UserView = Ember.View.extend({
-    templateName: 'user',
+    templateName: 'user'
 });
 
 CT.UsersView = Ember.View.extend({
-    templateName: 'users',
+    templateName: 'users'
 });
 
 
@@ -1996,6 +2144,48 @@ Ember.TEMPLATES["costcenters"] = Ember.HTMLBars.template((function() {
       var morph1 = dom.createMorphAt(dom.childAt(element4, [2, 1]),0,0);
       content(env, morph0, context, "outlet");
       block(env, morph1, context, "each", [get(env, context, "controller")], {}, child0, null);
+      return fragment;
+    }
+  };
+}()));
+Ember.TEMPLATES["error"] = Ember.HTMLBars.template((function() {
+  return {
+    isHTMLBars: true,
+    revision: "Ember@1.12.1",
+    blockParams: 0,
+    cachedFragment: null,
+    hasRendered: false,
+    build: function build(dom) {
+      var el0 = dom.createDocumentFragment();
+      var el1 = dom.createElement("p");
+      dom.setAttribute(el1,"class","error");
+      var el2 = dom.createComment("");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      return el0;
+    },
+    render: function render(context, env, contextualElement) {
+      var dom = env.dom;
+      var hooks = env.hooks, content = hooks.content;
+      dom.detectNamespace(contextualElement);
+      var fragment;
+      if (env.useFragmentCache && dom.canClone) {
+        if (this.cachedFragment === null) {
+          fragment = this.build(dom);
+          if (this.hasRendered) {
+            this.cachedFragment = fragment;
+          } else {
+            this.hasRendered = true;
+          }
+        }
+        if (this.cachedFragment) {
+          fragment = dom.cloneNode(this.cachedFragment, true);
+        }
+      } else {
+        fragment = this.build(dom);
+      }
+      var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),0,0);
+      content(env, morph0, context, "model");
       return fragment;
     }
   };

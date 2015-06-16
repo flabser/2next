@@ -4,14 +4,15 @@ CT.Category = DS.Model.extend({
     comment: DS.attr('string')
 });
 
-CT.Category.FIXTURES = [{
-    id: 1,
-    type: 1,
-    name: 'car',
-    comment: 'car expense'
-}, {
-    id: 2,
-    type: 2,
-    name: 'food',
-    comment: 'nam nam'
-}];
+var _fixtures = [];
+
+for (var ii = 1; ii < 40; ii++) {
+    _fixtures.push({
+        id: ii,
+        type: ii,
+        name: 'car ' + ii,
+        comment: 'car expense ' + ii
+    });
+}
+
+CT.Category.FIXTURES = _fixtures;

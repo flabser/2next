@@ -22,9 +22,9 @@ class Transactions extends _DoScript implements com.flabser.script._IContent {
 
 		def transactions = dao.findAll()
 		if (transactions.size > 0) {
-			def ts = new Transactions()
-			ts.list = transactions
-			publishElement("transactions", ts)
+			def m_list = new Transactions()
+			m_list.list = transactions
+			publishElement("transactions", m_list)
 		}
 	}
 

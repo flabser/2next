@@ -3,12 +3,14 @@ CT.CostCenter = DS.Model.extend({
     name: DS.attr('string')
 });
 
-CT.CostCenter.FIXTURES = [{
-    id: 1,
-    type: 1,
-    name: 'ala'
-}, {
-    id: 2,
-    type: 2,
-    name: 'ast'
-}];
+var _fixtures = [];
+
+for (var ii = 1; ii < 30; ii++) {
+    _fixtures.push({
+        id: ii,
+        type: ii,
+        name: 'ala ' + ii
+    });
+}
+
+CT.CostCenter.FIXTURES = _fixtures;
