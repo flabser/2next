@@ -31,7 +31,9 @@ import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
 
+
 @Path("/")
+
 public class RestProvider {
 
 	@Context

@@ -12,6 +12,7 @@ import com.flabser.solutions.cashtracker.services.TransactionService;
 
 public class ResourceLoader extends Application {
 
+
 	@Override
 	public Set <Class <?>> getClasses() {
 		final Set <Class <?>> classes = new HashSet <Class <?>>();
@@ -30,4 +31,5 @@ public class ResourceLoader extends Application {
 
 		return classes;
 	}
+
 }
