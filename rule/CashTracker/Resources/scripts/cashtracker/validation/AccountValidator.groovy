@@ -11,7 +11,7 @@ public class AccountValidator {
 	}
 
 	public boolean validate(Account account) {
-		isValid = true
+		isValid = !account.getName().isEmpty()
 		isValid
 	}
 

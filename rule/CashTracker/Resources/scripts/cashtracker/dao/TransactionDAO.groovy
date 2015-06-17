@@ -55,7 +55,7 @@ public class TransactionDAO {
 	public int addTransaction(Transaction t) {
 		String sql = """insert into transaction
 							(type, 
-							'USER',
+							"USER",
 							date,
 							regdate,
 							category,
@@ -69,9 +69,9 @@ public class TransactionDAO {
 							enddate,
 							basis,
 							note)
-						values (${t.type}, '${t.author}', '${t.date}', '${t.regDate}', '${t.category}',
-								'${t.parentCategory}', '${t.amount}', '${t.account}', '${t.costCenter}',
-								${t.repeat}, ${t.every}, ${t.repeatStep}, ${t.endDate}, '${t.basis}', ${t.comment})"""
+						values (${t.type}, '${t.author}', '${t.date.timeString}', '${t.regDate}', ${t.category},
+								${t.parentCategory}, ${t.amount}, ${t.account}, ${t.costCenter},
+								${t.repeat}, ${t.every}, ${t.repeatStep}, '${t.endDate}', '${t.basis}', '${t.comment}')"""
 		return db.insert(sql, user)
 	}
 

@@ -15,11 +15,11 @@ public class Transaction implements com.flabser.script._IObject {
 
 	private String author;
 
-	private Date regDate;
+	private Date regDate = new Date();
 
-	private Date date;
+	private Date date = new Date();
 
-	private Date endDate;
+	private Date endDate = new Date();
 
 	private long parentCategory;
 
@@ -54,8 +54,8 @@ public class Transaction implements com.flabser.script._IObject {
 		return author;
 	}
 
-	public void setAuthor(User author) {
-		this.author = "" //author.getLogin();
+	public void setAuthor(String author) {
+		this.author = author //author.getLogin();
 	}
 
 	public int getType() {
@@ -172,7 +172,7 @@ public class Transaction implements com.flabser.script._IObject {
 
 	@Override
 	public String toString() {
-		return "Transaction[" + amount + ", " + category + ", " + costCenter + "]";
+		return "Transaction[$id, $author, $regDate, $date, $endDate, $parentCategory, $category, $account, $amount, $costCenter]";
 	}
 
 	public void init(ResultSet rs){

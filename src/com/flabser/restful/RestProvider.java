@@ -35,11 +35,15 @@ import com.flabser.users.UserSession;
 public class RestProvider {
 
 	@Context
-	ServletContext context;
+	public ServletContext context;
 	@Context
-	HttpServletRequest request;
+	public HttpServletRequest request;
 
-	@GET
+	public AppEnv getAppEnv(){
+		return (AppEnv) context.getAttribute("portalenv");
+	}
+	
+	/*@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public _Page get(@PathParam("id") String id) {
@@ -106,5 +110,5 @@ public class RestProvider {
 			e.printStackTrace();
 		}
 		return null;
-	}
+	}*/
 }
