@@ -23,12 +23,12 @@
 				<section>
 					<ul class="help-list">
 						<li>
-							<a href="?type=page&amp;id=retry-send-verify-email" rel="nofollow">
+							<a href="?id=retry-send-verify-email" rel="nofollow">
 								<xsl:value-of select="//captions/no_verify_mail/@caption" />
 							</a>
 						</li>
 						<li>
-							<a href="?type=page&amp;id=password-recovery" rel="nofollow">
+							<a href="?id=password-recovery" rel="nofollow">
 								<xsl:value-of select="//captions/lost_password/@caption" />
 							</a>
 						</li>
