@@ -31,7 +31,7 @@ import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
-@Path("/")
+@Path("/page")
 public class RestProvider {
 
 	@Context

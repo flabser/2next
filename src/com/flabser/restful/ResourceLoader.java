@@ -16,7 +16,7 @@ public class ResourceLoader extends Application {
 	        classes.add(Hello.class);
 	        classes.add(RestProvider.class);
 	        classes.add(RestAdminProvider.class);
-	        classes.add(SignIn.class);
+	        classes.add(SignffffIn.class);
 	        return classes;
 	    }
 }

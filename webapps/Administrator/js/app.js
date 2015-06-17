@@ -1,12 +1,14 @@
 App = Ember.Application.create();
 
-/*App = Ember.Application.create({  
-	  LOG_TRANSITIONS:          true,
-	  LOG_TRANSITIONS_INTERNAL: true
-	});*/
+var host = DS.RESTAdapter.extend({
+    host: 'http://localhost:38779',
+});
 
-App.ApplicationAdapter = DS.FixtureAdapter;
+/*App.UserAdapter = host.extend({
+    namespace: 'Administrator/rest/auth'
+});
+*/
 
-/*App.ApplicationAdapter = DS.FirebaseAdapter.extend({
-  firebase: new Firebase('https://flickering-heat-9887.firebaseio.com/')
-});*/
+App.ApplicationAdapter = host.extend({
+    namespace: 'Administrator/rest/admin'
+});
