@@ -3,12 +3,12 @@
 	<description></description>
 	<rununderuser source="STATIC" type="TEXT">[observer]</rununderuser>
 	<xsltfile>site/verify-email.xsl</xsltfile>
+
 	<element mode="ON" type="SCRIPT">
 		<events>
 			<doscript source="file">cashtracker.page.app.VerifyEMail</doscript>
 		</events>
 	</element>
-
 	<element mode="ON" type="INCLUDED_PAGE">
 		<name>welcome-site-inc</name>
 		<value>welcome-site-inc</value>

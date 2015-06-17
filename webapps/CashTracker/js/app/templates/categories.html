@@ -1,9 +1,55 @@
-<h1>cats</h1>
-
-{{#each controller}}
-	<div>
-		{{#link-to 'category' this}}
-			{{name}}
-		{{/link-to}}
-	</div>
-{{/each}}
+<div class="view">
+    <div class="view-header">
+        <h1 class="header-title">Categories</h1>
+        <nav class="nav-action-bar">
+            <div class="pull-right">
+                page-navigator
+            </div>
+            <div class="-on-desktop">
+                <div class="action-bar">
+                    <a class="btn" href="#/categories/new">new category</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <section>
+        {{outlet}}
+    </section>
+    <div class="view-content">
+        <header class="entries-head">
+            <div class="head-wrap">
+                <label class="entry-select">
+                    <input type="checkbox" data-toggle="id" class="all" />
+                </label>
+                <div class="entry-captions">
+                    <span>
+						name
+					</span>
+                </div>
+            </div>
+        </header>
+        <div class="entries">
+            {{#each controller}}
+            <div class="entry-wrap">
+                <div class="entry-actions">
+                    <a class="entry-action action-delete" data-ddbid="{{id}}" href="#">
+                        <i class="fa fa-trash" />
+                    </a>
+                </div>
+                <div data-ddbid="{{id}}" class="entry document js-swipe-entry">
+                    <label class="entry-select">
+                        <input type="checkbox" name="id" value="{{id}}" />
+                    </label>
+                    {{#link-to 'category' this class="entry-link"}}
+                    <div class="entry-fields">
+                        <span class="entry-field">
+							{{name}}
+						</span>
+                    </div>
+                    {{/link-to}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

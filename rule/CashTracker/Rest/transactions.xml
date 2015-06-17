@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="rest" id="transactions" mode="on" history="off" anonymous="off">
+	<endpoint>cashtracker.rest.Transactions</endpoint>
+</rule>

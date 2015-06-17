@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="page" id="app-captions" mode="on">
+	<description>app-captions</description>
+
+	<caption name="close" />
+	<caption name="cancel" />
+
+	<caption name="saved" />
+	<caption name="newdoc" />
+	<caption name="editing" />
+	<caption name="readonly" />
+	<caption name="modenotdefined" />
+	<caption name="author" />
+
+	<caption name="properties" />
+	<caption name="attachments" />
+	<caption name="additional" />
+
+	<caption name="info_status_doc" />
+	<caption name="info_permissions" />
+	<caption name="info_read" />
+	<caption name="info_readers" />
+	<caption name="info_read_time" />
+	<caption name="info_ds" />
+
+	<caption name="attach" />
+	<caption name="attach_delete" />
+	<caption name="attach_open" />
+	<caption name="attach_preview" />
+	<caption name="attach_add_comment" />
+
+	<caption name="account" />
+	<caption name="budget" />
+	<caption name="category" />
+	<caption name="costcenter" />
+	<caption name="user" />
+	<caption name="transaction" />
+
+	<caption name="name" />
+	<caption name="amount_control" />
+	<caption name="observers" />
+	<caption name="moderator" />
+	<caption name="category_refers_to" />
+	<caption name="typeoperation" />
+	<caption name="disable_selection" />
+	<caption name="require_document" />
+	<caption name="require_costcenter" />
+	<caption name="access_roles" />
+	<caption name="comment" />
+	<caption name="user_fullname" />
+	<caption name="email" />
+	<caption name="has_access_to_account" />
+	<caption name="reg_date" />
+	<caption name="date" />
+	<caption name="category" />
+	<caption name="parent_category" />
+	<caption name="targetcash" />
+	<caption name="summa" />
+	<caption name="month" />
+	<caption name="basis" />
+	<caption name="documented" />
+	<caption name="btn_send_invite" />
+</rule>

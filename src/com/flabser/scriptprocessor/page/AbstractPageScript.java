@@ -1,5 +1,7 @@
 package com.flabser.scriptprocessor.page;
 
+import javax.ws.rs.HttpMethod;
+
 import com.flabser.localization.Vocabulary;
 import com.flabser.script._Element;
 import com.flabser.script._Exception;
@@ -10,49 +12,72 @@ import com.flabser.scriptprocessor.ScriptProcessorUtil;
 import com.flabser.util.ResponseType;
 import com.flabser.util.ScriptResponse;
 
+
 public abstract class AbstractPageScript extends ScriptEvent implements IPageScript {
+
+	private String method;
 	private String lang;
 	private _WebFormData formData;
 	private ScriptResponse resp = new ScriptResponse(ResponseType.RESULT_OF_PAGE_SCRIPT);
 
-	public void setSession(_Session ses){			
+	public void setSession(_Session ses) {
 		this.ses = ses;
 	}
 
-	public void setFormData(_WebFormData formData){
+	public void setFormData(_WebFormData formData) {
 		this.formData = formData;
 	}
 
-	public void setCurrentLang(Vocabulary vocabulary, String lang){
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	public void setCurrentLang(Vocabulary vocabulary, String lang) {
 		this.lang = lang;
 		this.vocabulary = vocabulary;
-	}		
+	}
 
-	public void println(Exception e) throws _Exception{
+	public void println(Exception e) throws _Exception {
 		String errText = e.toString();
 		System.out.println(errText);
-		_Element element = new _Element("error",errText + "stack:" + ScriptProcessorUtil.getScriptError(e.getStackTrace()));	
-		publishElement("error",element);		
+		_Element element = new _Element("error", errText + "stack:"
+				+ ScriptProcessorUtil.getScriptError(e.getStackTrace()));
+		publishElement("error", element);
 	}
-	
 
-	public void println(String e){		
+	public void println(String e) {
 		System.out.println(e);
 	}
 
-	public ScriptResponse process(){
-		try{					
-			doProcess(ses, formData, lang);
+	public ScriptResponse process() {
+		try {
+			switch (method) {
+			case HttpMethod.GET:
+				doGet(ses, formData, lang);
+				break;
+
+			case HttpMethod.POST:
+				doPost(ses, formData, lang);
+				break;
+
+			case HttpMethod.PUT:
+				doPut(ses, formData, lang);
+				break;
+
+			case HttpMethod.DELETE:
+				doDelete(ses, formData, lang);
+				break;
+			}
+
 			resp.setRedirects(redirects);
 			resp.setPublishResult(toPublishElement);
-			resp.setResponseStatus(true);		
-	
+			resp.setResponseStatus(true);
 
-		}catch(Exception e){
-			resp.setResponseStatus(false);		
+		} catch (Exception e) {
+			resp.setResponseStatus(false);
 			try {
 				println(e);
-			} catch (_Exception e1) {			
+			} catch (_Exception e1) {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
@@ -61,5 +86,11 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 		return resp;
 	}
 
-	public abstract void doProcess(_Session session, _WebFormData formData, String lang);
+	public abstract void doGet(_Session session, _WebFormData formData, String lang);
+
+	public abstract void doPost(_Session session, _WebFormData formData, String lang);
+
+	public abstract void doPut(_Session session, _WebFormData formData, String lang);
+
+	public abstract void doDelete(_Session session, _WebFormData formData, String lang);
 }

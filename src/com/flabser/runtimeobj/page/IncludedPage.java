@@ -5,16 +5,13 @@ import com.flabser.rule.page.PageRule;
 import com.flabser.users.UserSession;
 
 
-public class IncludedPage extends Page{
-	
-	public IncludedPage(AppEnv env, UserSession userSession, PageRule rule){
-		super(env,userSession,rule);
+public class IncludedPage extends Page {
+
+	public IncludedPage(AppEnv env, UserSession userSession, PageRule rule, String httpMethod) {
+		super(env, userSession, rule, httpMethod);
 	}
-	
-	public String getID(){
+
+	public String getID() {
 		return "INCLUDED_PAGE_" + rule.id + "_" + userSession.lang;
-		
 	}
-	
-	
 }

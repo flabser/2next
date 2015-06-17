@@ -1,18 +1,18 @@
 package cashtracker.page.nav
 
-
 import com.flabser.script.*
 import com.flabser.scriptprocessor.*
 import com.flabser.script.events.*
 import com.flabser.script.outline.*
 
+
 class AppMenu extends _DoScript {
 
 	@Override
-	public void doProcess(_Session session, _WebFormData formData, String lang) {
+	public void doGet(_Session session, _WebFormData formData, String lang) {
 
 		def user = session.getUser()
-		
+
 		def map = [:]
 		map.put("title",formData.getEncodedValueSilently("title"))
 		map.put("entry",formData.getEncodedValueSilently("title"))
@@ -45,5 +45,17 @@ class AppMenu extends _DoScript {
 		}
 
 		publishElement("outline", outline)
+	}
+
+	@Override
+	public void doPost(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doPut(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doDelete(_Session session, _WebFormData formData, String lang) {
 	}
 }

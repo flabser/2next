@@ -20,7 +20,9 @@ import com.flabser.script._IObject;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.User;
 
+
 public class Database extends DatabaseCore implements IDatabase {
+
 	public static final SimpleDateFormat sqlDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final String driver = "org.postgresql.Driver";
 	private String dbURI;
@@ -43,9 +45,9 @@ public class Database extends DatabaseCore implements IDatabase {
 	}
 
 	@Override
-	public ArrayList<Object[]> select(String condition, User user) {
+	public ArrayList <Object[]> select(String condition, User user) {
 		ResultSet rs = null;
-		ArrayList<Object[]> l = new ArrayList<Object[]>();
+		ArrayList <Object[]> l = new ArrayList <Object[]>();
 		Connection conn = pool.getConnection();
 		try {
 			conn.setAutoCommit(false);
@@ -87,12 +89,12 @@ public class Database extends DatabaseCore implements IDatabase {
 		return l;
 	}
 
-	public ArrayList<_IObject> select(String condition, Class<_IObject> objClass, User user) {
-		ArrayList<_IObject> o = new ArrayList<_IObject>();
+	public ArrayList <_IObject> select(String condition, Class <_IObject> objClass, User user) {
+		ArrayList <_IObject> o = new ArrayList <_IObject>();
 		Connection conn = pool.getConnection();
 		try {
 			conn.setAutoCommit(false);
-			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);			
+			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
 			String sql = condition;
 			ResultSet rs = s.executeQuery(sql);
@@ -131,6 +133,8 @@ public class Database extends DatabaseCore implements IDatabase {
 			if (rs.next()) {
 				key = rs.getInt(1);
 			}
+			conn.commit();
+			rs.close();
 			return key;
 		} catch (SQLException e) {
 			DatabaseUtil.errorPrint(dbURI, e);
@@ -149,6 +153,7 @@ public class Database extends DatabaseCore implements IDatabase {
 			String sql = condition;
 			pst = conn.prepareStatement(sql);
 			pst.executeUpdate();
+			conn.commit();
 			return 1;
 		} catch (SQLException e) {
 			DatabaseUtil.errorPrint(dbURI, e);
@@ -167,6 +172,7 @@ public class Database extends DatabaseCore implements IDatabase {
 			String sql = condition;
 			pst = conn.prepareStatement(sql);
 			pst.executeUpdate();
+			conn.commit();
 			return 1;
 		} catch (SQLException e) {
 			DatabaseUtil.errorPrint(dbURI, e);
@@ -181,11 +187,8 @@ public class Database extends DatabaseCore implements IDatabase {
 		pool.closeAll();
 	}
 
-
 	@Override
 	public IDeployer getDeployer() {
 		return new Deployer();
 	}
-
 }
-

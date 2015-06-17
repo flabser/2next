@@ -1,10 +1,27 @@
 <div class="view view_accounts">
     <header class="view-header">
-        <h1>accounts</h1>
+        <h1 class="header-title">
+            <div class="pull-right">
+                saldo
+            </div>
+            Accounts
+            <sup class="entry-count">
+                <small>
+                    count
+                </small>
+            </sup>
+        </h1>
+        <nav class="nav-action-bar">
+            <div class="pull-right">
+                page-navigator
+            </div>
+            <div class="-on-desktop">
+                <div class="action-bar">
+                    <a class="btn" href="#/accounts/new">new account</a>
+                </div>
+            </div>
+        </nav>
     </header>
-    <nav>
-        <a href="#/accounts/new">new account</a>
-    </nav>
     <section>
         {{outlet}}
     </section>
@@ -16,16 +33,16 @@
                 </label>
                 <div class="entry-captions">
                     <span class="vaccount-name">
-                        captions/viewtext1
+                        {{viewtext1}}
                     </span>
                     <span class="vaccount-user">
-                        captions/viewtext2
+                        {{viewtext2}}
                     </span>
                     <span class="vaccount-observers">
-                        captions/viewtext3
+                        {{viewtext3}}
                     </span>
                     <span class="vaccount-amount-control">
-                        captions/viewnumber
+                        {{viewnumber}}
                     </span>
                 </div>
             </div>
@@ -48,15 +65,15 @@
                             {{name}}
                         </span>
                         <span class="entry-field vaccount-user">
-                            
+                            {{owner.name}}
                         </span>
                         <span class="entry-field vaccount-observers">
                             <span>
-                                
+                                {{observers.name}}
                             </span>
                         </span>
                         <span class="entry-field vaccount-amount-control">
-                            
+                            {{amountControl}}
                         </span>
                     </div>
                     {{/link-to}}

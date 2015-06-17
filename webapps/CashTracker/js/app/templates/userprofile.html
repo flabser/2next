@@ -1,0 +1,21 @@
+<header class="form-header">
+    <h1 class="header-title">UserProfile / {{name}}</h1>
+    <div class="action-bar">
+        <button class="btn btm-primary" {{action 'save'}}>save</button>
+        <a class="btn" href="#/users">cancel</a>
+    </div>
+</header>
+<section class="form-content">
+    <fieldset class="fieldset" {{disabled}}>
+        <div class="fieldset-container">
+            <div class="control-group">
+                <div class="control-label">
+                    name
+                </div>
+                <div class="controls">
+                    {{input name="name" value=name required=true class="span7"}}
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</section>

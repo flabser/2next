@@ -96,15 +96,11 @@ public class Account implements _IObject {
 	}
 
 	public void init(ResultSet rs) {
-		// Account m = new Account()
-
 		setId(rs.getInt("id"))
 		setName(rs.getString("name"))
 		setAmountControl(rs.getBigDecimal("amountcontrol"))
 		setOpeningBalance(0)
 		setObservers(rs.getString("observers"))
 		setOwner(null)
-
-		// m
 	}
 }

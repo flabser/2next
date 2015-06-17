@@ -4,6 +4,23 @@ CT.Account = DS.Model.extend({
     currency: DS.attr('string'),
     openingBalance: DS.attr('number'),
     amountControl: DS.attr('number'),
-    owner: DS.attr('string'),
-    observers: DS.attr('string')
+    owner: DS.belongsTo('user'),
+    observers: DS.belongsTo('user')
 });
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 50; ii++) {
+    _fixtures.push({
+        id: ii,
+        type: ii,
+        name: 'mk-' + ii,
+        currency: 'KZT',
+        openingBalance: ii,
+        amountControl: ii,
+        owner: 'medet',
+        observers: 'medet'
+    });
+}
+
+CT.Account.FIXTURES = _fixtures;

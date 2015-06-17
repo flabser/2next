@@ -22,23 +22,17 @@ public class BudgetDAO {
 	}
 
 	public List <Budget> findAll() {
-		ResultSet rs = db.select("SELECT * FROM budget", user)
-		List <Budget> result = []
-
-		while (rs.next()) {
-			result.add(getModelFromResultSet(rs))
-		}
-
+		List <Budget> result = db.select("SELECT * FROM budget", Budget.class, user)
 		return result
 	}
 
 	public Budget findById(long id) {
-		String sql = "select * from budget where id = $id"
-		ResultSet rs = db.select(sql, user)
+		List <Budget> list = db.select("select * from budget where id = $id", Budget.class, user)
+
 		Budget result = null
 
-		if (rs.next()) {
-			result = getModelFromResultSet(rs)
+		if (list.size() > 0) {
+			result = list[0]
 		}
 
 		return result

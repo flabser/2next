@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rule type="page" id="costcenter-json" mode="on" history="off">
+<rule type="page" id="costcenters" mode="on" history="off">
 	<description>Справочник / Место возникновения</description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>xhr/costcenter-json.xsl</xsltfile>
+
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.views.CostCenter</doscript>
+			<doscript source="file">cashtracker.page.controller.CostCenters</doscript>
 		</events>
 	</element>
 </rule>

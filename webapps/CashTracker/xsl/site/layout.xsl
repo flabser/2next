@@ -66,7 +66,7 @@
 		<div class="main-header">
 			<div class="container">
 				<nav class="header-nav pull-left">
-					<a class="nav-item brand" href="?type=page&amp;id=welcome">
+					<a class="nav-item brand" href="?id=welcome">
 						<img alt="logo" src="{$APP_LOGO_IMG_SRC}" class="brand-logo" />
 						<span class="brand-title">
 							<xsl:value-of select="$APP_NAME" />
@@ -75,19 +75,19 @@
 				</nav>
 				<nav class="header-nav pull-right">
 					<xsl:if test="@id != 'login'">
-						<a class="nav-item" href="?type=page&amp;id=about">
+						<a class="nav-item" href="?id=about">
 							<xsl:value-of select="//captions/about/@caption" />
 						</a>
 					</xsl:if>
 					<xsl:if test="@id = 'login' and (@userid = 'anonymous' or @userid = '')">
-						<a href="?type=page&amp;id=welcome" class="nav-item btn-login">
+						<a href="?id=welcome" class="nav-item btn-login">
 							<span>
 								<xsl:value-of select="//captions/reg/@caption" />
 							</span>
 						</a>
 					</xsl:if>
 					<xsl:if test="@id != 'login' and (@userid = 'anonymous' or @userid = '')">
-						<a href="?type=page&amp;id=login" class="nav-item btn-login">
+						<a href="?id=login" class="nav-item btn-login">
 							<span>
 								<xsl:value-of select="//captions/login/@caption" />
 							</span>
@@ -103,10 +103,10 @@
 								<i class="fa fa-caret-down"></i>
 							</a>
 							<div class="nav-dropdown-menu">
-								<a class="nav-item" href="?type=page&amp;id=transactions">
+								<a class="nav-item" href="?id=transactions">
 									<xsl:value-of select="//captions/operations/@caption" />
 								</a>
-								<a class="nav-item" href="?type=edit&amp;element=userprofile&amp;id=userprofile">
+								<a class="nav-item" href="?id=userprofile">
 									<xsl:value-of select="//captions/user_profile/@caption" />
 								</a>
 								<a class="nav-item btn-logout" href="Logout">
@@ -129,22 +129,22 @@
 			<div class="container">
 				<ul class="footer-nav container">
 					<li>
-						<a href="?type=page&amp;id=privacy">
+						<a href="?id=privacy">
 							<xsl:value-of select="//captions/privacy/@caption" />
 						</a>
 					</li>
 					<li>
-						<a href="?type=page&amp;id=terms">
+						<a href="?id=terms">
 							<xsl:value-of select="//captions/terms/@caption" />
 						</a>
 					</li>
 					<li>
-						<a href="?type=page&amp;id=help">
+						<a href="?id=help">
 							<xsl:value-of select="//captions/help/@caption" />
 						</a>
 					</li>
 					<li>
-						<a href="?type=page&amp;id=about">
+						<a href="?id=about">
 							<xsl:value-of select="//captions/about/@caption" />
 						</a>
 					</li>
@@ -260,7 +260,7 @@
 						</section>
 					</form>
 					<div class="terms">
-						<a href="?type=page&amp;id=terms">
+						<a href="?id=terms">
 							<xsl:value-of select="//captions/reg_terms/@caption" />
 						</a>
 					</div>

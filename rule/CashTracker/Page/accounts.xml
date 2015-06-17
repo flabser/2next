@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rule type="page" id="accounts" mode="on" history="on">
-	<description>Справочник Касса</description>
+	<description>Справочник / Касса</description>
 	<caching>NO_CACHING</caching>
+
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.views.Accounts</doscript>
+			<doscript source="file">cashtracker.page.controller.Accounts</doscript>
 		</events>
 	</element>
 </rule>

@@ -15,7 +15,7 @@ import cashtracker.model.Budget
 class RegBudget extends _DoScript {
 
 	@Override
-	public void doProcess(_Session session, _WebFormData formData, String lang) {
+	public void doPost(_Session session, _WebFormData formData, String lang) {
 
 		def dao = new BudgetDAO(session)
 		def budget = new Budget()
@@ -31,5 +31,17 @@ class RegBudget extends _DoScript {
 		} else {
 			publishElement("error"," saving-failed")
 		}
+	}
+
+	@Override
+	public void doGet(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doPut(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doDelete(_Session session, _WebFormData formData, String lang) {
 	}
 }

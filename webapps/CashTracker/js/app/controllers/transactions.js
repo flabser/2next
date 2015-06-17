@@ -1,4 +1,6 @@
 CT.TransactionsController = Ember.ArrayController.extend({
+    queryParams: ['offset', 'limit', 'order_by'],
+
     actions: {
         addTransaction: function() {
             var newTransaction = this.store.createRecord('transaction', {

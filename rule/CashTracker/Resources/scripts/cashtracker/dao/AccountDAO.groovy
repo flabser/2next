@@ -22,23 +22,17 @@ public class AccountDAO {
 	}
 
 	public List <Account> findAll() {
-		ResultSet rs = db.select("SELECT * FROM account", user)
-		List <Account> result = []
-
-		if (rs.next()) {
-			result << getModelFromResultSet(rs)
-		}
-
+		List <Account> result = db.select("SELECT * FROM account", Account.class, user)
 		return result
 	}
 
 	public Account findById(long id) {
-		String sql = "select * from account where id = $id"
-		ResultSet rs = db.select(sql, user)
+		List <Account> list = db.select("select * from account where id = $id", Account.class, user)
+
 		Account result = null
 
-		if (rs.next()) {
-			result = getModelFromResultSet(rs)
+		if (list.size() > 0) {
+			result = list[0]
 		}
 
 		return result

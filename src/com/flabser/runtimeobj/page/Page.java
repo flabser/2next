@@ -17,38 +17,43 @@ import com.flabser.scriptprocessor.page.DoProcessor;
 import com.flabser.scriptprocessor.page.IQuerySaveTransaction;
 import com.flabser.supplier.SourceSupplier;
 import com.flabser.users.UserSession;
-import com.flabser.util.Util;
 import com.flabser.util.ScriptResponse;
+import com.flabser.util.Util;
 
-public class Page{
+
+public class Page {
+
 	public boolean fileGenerated;
 	public String generatedFilePath;
-	public String generatedFileOriginalName;	
-	public ArrayList<_URL> redirects = new ArrayList<_URL>();
-	
+	public String generatedFileOriginalName;
+	private String httpMethod;
+	public ArrayList <_URL> redirects = new ArrayList <_URL>();
+
 	protected AppEnv env;
 	protected PageRule rule;
-	protected Map<String, String[]> fields = new HashMap<String, String[]>();
+	protected Map <String, String[]> fields = new HashMap <String, String[]>();
 	protected UserSession userSession;
 
-	public Page(AppEnv env, UserSession userSession, PageRule rule) {
+	public Page(AppEnv env, UserSession userSession, PageRule rule, String httpMethod) {
 		this.userSession = userSession;
 		this.env = env;
 		this.rule = rule;
+		this.httpMethod = httpMethod;
 	}
 
-	public HashMap <String, String[]> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
-		HashMap <String, String[]> captionsList = new HashMap <String,String[]>();		
+	public HashMap <String, String[]> getCaptions(SourceSupplier captionTextSupplier, ArrayList <Caption> captions) {
+		HashMap <String, String[]> captionsList = new HashMap <String, String[]>();
 		for (Caption cap : captions) {
 			SentenceCaption sc = captionTextSupplier.getValueAsCaption(cap.source, cap.captionID);
 			String c[] = new String[2];
 			c[0] = sc.word;
 			c[1] = sc.hint;
-			captionsList.put(cap.captionID, c);		}
+			captionsList.put(cap.captionID, c);
+		}
 		return captionsList;
 	}
 
-	public _Page process(Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page process(Map <String, String[]> formData) throws ClassNotFoundException, RuleException {
 		_Page pp = null;
 		long start_time = System.currentTimeMillis();
 		switch (rule.caching) {
@@ -79,16 +84,16 @@ public class Page{
 
 	}
 
-	public _Page getContent(Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page getContent(Map <String, String[]> formData) throws ClassNotFoundException, RuleException {
 		fields = formData;
 		_Page pp = new _Page();
 
 		if (rule.elements.size() > 0) {
 			loop: for (ElementRule elementRule : rule.elements) {
-				switch (elementRule.type) {			
+				switch (elementRule.type) {
 				case SCRIPT:
 					DoProcessor sProcessor = new DoProcessor(env, userSession, userSession.lang, fields);
-					ScriptResponse scriptResp = sProcessor.processScript(elementRule.doClassName);
+					ScriptResponse scriptResp = sProcessor.processScript(elementRule.doClassName, httpMethod);
 
 					for (IQuerySaveTransaction toPostObects : sProcessor.transactionToPost) {
 						toPostObects.post();
@@ -100,11 +105,11 @@ public class Page{
 
 				case INCLUDED_PAGE:
 					PageRule rule = (PageRule) env.ruleProvider.getRule(elementRule.value);
-					IncludedPage page = new IncludedPage(env, userSession, rule);
+					IncludedPage page = new IncludedPage(env, userSession, rule, httpMethod);
 					pp.addPage(page.process(fields));
 					break;
 				default:
-					break;				
+					break;
 				}
 			}
 		}
@@ -112,7 +117,5 @@ public class Page{
 		SourceSupplier captionTextSupplier = new SourceSupplier(env, userSession.lang);
 		pp.setCaptions(getCaptions(captionTextSupplier, rule.captions));
 		return pp;
-
 	}
-
 }
