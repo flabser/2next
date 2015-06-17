@@ -1,6 +1,8 @@
 package com.flabser.solutions.cashtracker.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
@@ -31,8 +33,10 @@ public class TransactionService extends RestProvider {
 
 		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
 		List <Transaction> transactions = dao.findAll();
+		Map <String, List <Transaction>> map = new HashMap <String, List <Transaction>>();
+		map.put("transactions", transactions);
 
-		return Response.ok(transactions).build();
+		return Response.ok(map).build();
 	}
 
 	@GET
@@ -59,13 +63,13 @@ public class TransactionService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addTransaction(Transaction transaction) {
 		System.out.println(transaction);
-		
+
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
 		transaction.setId(dao.addTransaction(transaction));
-		
+
 		Response response = Response.ok(transaction).build();
 
 		return response;
