@@ -1,9 +1,9 @@
 package cashtracker.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.ResultSet
+import java.sql.SQLException
 
-import com.flabser.script._IObject;
+import com.flabser.script._IObject
 
 
 public class Tag implements _IObject {
@@ -11,6 +11,8 @@ public class Tag implements _IObject {
 	private long id;
 
 	private String name;
+
+	private int color;
 
 	//
 	public long getId() {
@@ -29,6 +31,14 @@ public class Tag implements _IObject {
 		this.name = name;
 	}
 
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
+	}
+
 	@Override
 	public String toString() {
 		return "Tag[" + name + "]";
@@ -38,6 +48,7 @@ public class Tag implements _IObject {
 		try {
 			setId(rs.getInt("id"));
 			setName(rs.getString("name"));
+			setColor(rs.getInt("color"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

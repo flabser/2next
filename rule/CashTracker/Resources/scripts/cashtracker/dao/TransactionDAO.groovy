@@ -94,8 +94,8 @@ public class TransactionDAO {
 		db.update(sql, user)
 	}
 
-	public void deleteTransaction(Transaction t) {
-		String sql = "delete from transactions where id = ${t.id}"
+	public void deleteTransaction(Transaction m) {
+		String sql = "delete from transactions where id = ${m.id}"
 		db.delete(sql, user)
 	}
 }

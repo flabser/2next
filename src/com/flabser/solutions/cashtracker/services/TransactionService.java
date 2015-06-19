@@ -48,29 +48,29 @@ public class TransactionService extends RestProvider {
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		Transaction transaction = dao.findById(id);
+		Transaction m = dao.findById(id);
 
 		// Map <String, Object> result = new HashMap <String, Object>();
 		// result.put("transaction", transaction);
 		// result.put("userProfile", userSession.currentUser);
 
-		Response response = Response.ok(transaction).build();
+		Response response = Response.ok(m).build();
 
 		return response;
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addTransaction(Transaction transaction) {
-		System.out.println(transaction);
+	public Response addTransaction(Transaction m) {
+		System.out.println(m);
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		transaction.setId(dao.addTransaction(transaction));
+		m.setId(dao.addTransaction(m));
 
-		Response response = Response.ok(transaction).build();
+		Response response = Response.ok(m).build();
 
 		return response;
 	}

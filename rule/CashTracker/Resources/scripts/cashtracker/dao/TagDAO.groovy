@@ -29,12 +29,12 @@ public class TagDAO {
 	}
 
 	public int addTag(Tag m) {
-		String sql = "insert into tags (name) values ('${m.name}')"
+		String sql = "insert into tags (name, color) values ('${m.name}', ${m.color})"
 		return db.insert(sql, user)
 	}
 
 	public void updateTag(Tag m) {
-		String sql = "update tags set name = '${m.name}' where id = ${m.id}"
+		String sql = "update tags set name = '${m.name}', color = ${m.color} where id = ${m.id}"
 		db.update(sql, user)
 	}
 

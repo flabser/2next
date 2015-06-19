@@ -21,7 +21,7 @@ public class Account implements _IObject {
 
 	private BigDecimal amountControl;
 
-	private String owner;
+	private User owner;
 
 	private String observers;
 
@@ -85,7 +85,7 @@ public class Account implements _IObject {
 	}
 
 	public void setOwner(User user) {
-		this.owner = user.getLogin();
+		this.owner = user;
 	}
 
 	public String getObservers() {

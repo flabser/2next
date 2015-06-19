@@ -14,16 +14,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import cashtracker.dao.CostCenterDAO;
-import cashtracker.model.CostCenter;
+import cashtracker.dao.TagDAO;
+import cashtracker.model.Tag;
 
 import com.flabser.restful.RestProvider;
 import com.flabser.script._Session;
 import com.flabser.users.UserSession;
 
 
-@Path("/costcenters")
-public class CostCenterService extends RestProvider {
+@Path("/tags")
+public class TagService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -32,10 +32,10 @@ public class CostCenterService extends RestProvider {
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
-		List <CostCenter> result = dao.findAll();
-		Map <String, List <CostCenter>> map = new HashMap <String, List <CostCenter>>();
-		map.put("costcenters", result);
+		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		List <Tag> result = dao.findAll();
+		Map <String, List <Tag>> map = new HashMap <String, List <Tag>>();
+		map.put("tags", result);
 
 		return Response.ok(map).build();
 	}
@@ -48,8 +48,8 @@ public class CostCenterService extends RestProvider {
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
-		CostCenter m = dao.findById(id);
+		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		Tag m = dao.findById(id);
 
 		Response response = Response.ok(m).build();
 
@@ -58,13 +58,13 @@ public class CostCenterService extends RestProvider {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response create(CostCenter m) {
+	public Response create(Tag m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
-		m.setId(dao.addCostCenter(m));
+		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		m.setId(dao.addTag(m));
 
 		Response response = Response.ok(m).build();
 
@@ -74,13 +74,13 @@ public class CostCenterService extends RestProvider {
 	@PUT
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") int id, CostCenter m) {
+	public Response update(@PathParam("id") int id, Tag m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
-		dao.updateCostCenter(m);
+		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		dao.updateTag(m);
 
 		Response response = Response.ok(m).build();
 

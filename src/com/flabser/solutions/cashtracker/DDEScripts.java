@@ -69,6 +69,7 @@ public class DDEScripts {
 		sql.append("(");
 		sql.append("  ID SERIAL NOT NULL,\n");
 		sql.append("  NAME CHARACTER VARYING(64),\n");
+		sql.append("  COLOR SMALLINT,\n");
 		sql.append("  CONSTRAINT TAG_ID_PRIMARY_KEY PRIMARY KEY (ID)");
 		sql.append(")");
 		return sql.toString();

@@ -1,7 +1,5 @@
 package cashtracker.dao
 
-import java.sql.ResultSet
-
 import cashtracker.model.CostCenter
 
 import com.flabser.dataengine.IDatabase
@@ -30,18 +28,18 @@ public class CostCenterDAO {
 		return result
 	}
 
-	public int addCostCenter(CostCenter c) {
-		String sql = "insert into costcenters (name) values ('${c.name}')"
+	public int addCostCenter(CostCenter m) {
+		String sql = "insert into costcenters (name) values ('${m.name}')"
 		return db.insert(sql, user)
 	}
 
-	public void updateCostCenter(CostCenter c) {
-		String sql = "update costcenters set name = '${c.name}' where id = ${c.id}"
+	public void updateCostCenter(CostCenter m) {
+		String sql = "update costcenters set name = '${m.name}' where id = ${m.id}"
 		db.update(sql, user)
 	}
 
-	public void deleteCostCenter(CostCenter c) {
-		String sql = "delete from costcenters where id = ${c.id}"
+	public void deleteCostCenter(CostCenter m) {
+		String sql = "delete from costcenters where id = ${m.id}"
 		db.delete(sql, user)
 	}
 }
