@@ -1,9 +1,9 @@
 package cashtracker.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.ResultSet
+import java.sql.SQLException
 
-import com.flabser.script._IObject;
+import com.flabser.script._IObject
 
 
 public class CostCenter implements _IObject {

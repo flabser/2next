@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -43,7 +44,7 @@ public class CostCenterService extends RestProvider {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findById(@PathParam("id") int id) {
+	public Response findById(@PathParam("id") long id) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
@@ -58,6 +59,7 @@ public class CostCenterService extends RestProvider {
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(CostCenter m) {
 
 		HttpSession jses = request.getSession(true);
@@ -74,11 +76,13 @@ public class CostCenterService extends RestProvider {
 	@PUT
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") int id, CostCenter m) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response update(@PathParam("id") long id, CostCenter m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
+		m.setId(id);
 		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
 		dao.updateCostCenter(m);
 

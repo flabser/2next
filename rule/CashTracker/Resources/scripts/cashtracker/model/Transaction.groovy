@@ -221,11 +221,15 @@ public class Transaction implements _IObject {
 		try {
 			setId(rs.getInt("id"));
 			setUser(null);
+			setTransactionType(TransactionType.typeOf(rs.getInt("transaction_type")))
+			setTransactionState(TransactionState.stateOf(rs.getInt("transaction_state")))
 			setRegDate(rs.getDate("reg_date"));
-			// setCategory(rs.getLong("category"));
+			setAccountFrom(null);
 			setAmount(rs.getBigDecimal("amount"));
-			// setAccountFrom(rs.getLong("account"));
-			// setCostCenter(rs.getLong("costcenter"));
+			setExchangeRate(rs.getBigDecimal("exchange_rate"));
+			setCategory(null);
+			setCostCenter(null);
+			setTags(rs.getArray("tags"));
 			setRepeat(rs.getBoolean("repeat"));
 			setEvery(rs.getInt("every"));
 			setRepeatStep(rs.getInt("repeat_step"));
@@ -233,6 +237,7 @@ public class Transaction implements _IObject {
 			setEndDate(rs.getDate("end_date"));
 			setBasis(rs.getString("basis"));
 			setNote(rs.getString("note"));
+			setIncludeInReports(rs.getBoolean("include_in_reports"))
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -83,7 +83,7 @@ public class Category implements _IObject {
 		try {
 			setId(rs.getInt("id"));
 			setTransactionType(TransactionType.INCOME);
-			// setParentCategory(rs.getInt("parent_id"));
+			setParentCategory(null);
 			setName(rs.getString("name"));
 			setNote(rs.getString("note"));
 			setColor(rs.getInt("color"));

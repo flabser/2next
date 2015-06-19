@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -41,23 +42,26 @@ public class TagService extends RestProvider {
 	}
 
 	@GET
-	@Path("{id}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findById(@PathParam("id") int id) {
+	public Response findById(@PathParam("id") long id) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
 		Tag m = dao.findById(id);
+		Map <String, Tag> map = new HashMap <String, Tag>();
+		map.put("tag", m);
 
-		Response response = Response.ok(m).build();
+		Response response = Response.ok(map).build();
 
 		return response;
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Tag m) {
 
 		HttpSession jses = request.getSession(true);
@@ -72,13 +76,15 @@ public class TagService extends RestProvider {
 	}
 
 	@PUT
-	@Path("{id}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") int id, Tag m) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response update(@PathParam("id") long id, Tag m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
+		m.setId(id);
 		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
 		dao.updateTag(m);
 

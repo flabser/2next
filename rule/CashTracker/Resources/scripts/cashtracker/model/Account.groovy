@@ -129,10 +129,15 @@ public class Account implements _IObject {
 		try {
 			setId(rs.getInt("id"));
 			setName(rs.getString("name"));
+			setType(rs.getInt("type"));
+			setCurrencyCode(rs.getString("currency_code"));
+			setOpeningBalance(rs.getBigDecimal("opening_balance"));
 			setAmountControl(rs.getBigDecimal("amount_control"));
-			setOpeningBalance(new BigDecimal(0));
-			setObservers(rs.getString("observers"));
 			setOwner(null);
+			setObservers(rs.getString("observers"));
+			setIncludeInTotals(rs.getBoolean("include_in_totals"));
+			setNote(rs.getString("note"));
+			setSortOrder(rs.getInt("sort_order"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
