@@ -5,7 +5,7 @@ CT.Transaction = DS.Model.extend({
     amount: DS.attr('number'),
     regDate: DS.attr('date'),
     category: DS.belongsTo('category'),
-    costCenter: DS.belongsTo('costсenter'),
+    costCenter: DS.belongsTo('costCenter'),
     tags: DS.hasMany('tag'),
     transactionState: DS.attr('number'),
     transactionType: DS.attr('number'),
@@ -22,7 +22,7 @@ CT.Transaction = DS.Model.extend({
 
 var _fixtures = [];
 
-for (var ii = 1; ii < 0; ii++) {
+for (var ii = 1; ii < 20; ii++) {
     _fixtures.push({
         id: ii,
         author: 'mkalihan',

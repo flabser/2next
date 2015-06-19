@@ -8,8 +8,8 @@ var _fixtures = [];
 for (var ii = 1; ii < 10; ii++) {
     _fixtures.push({
         id: ii,
-        name: 'tag ' + ii,
-        color: 0
+        name: 'tag-' + ii,
+        color: ii
     });
 }
 

@@ -9,12 +9,15 @@ CT.Category = DS.Model.extend({
 
 var _fixtures = [];
 
-for (var ii = 1; ii < 0; ii++) {
+for (var ii = 1; ii < 10; ii++) {
     _fixtures.push({
         id: ii,
-        type: ii,
-        name: 'car ' + ii,
-        comment: 'car expense ' + ii
+        transactionType: 1,
+        parentId: ii - 1,
+        name: 'category-' + ii,
+        note: 'note-' + ii,
+        color: ii,
+        sortOrder: ii
     });
 }
 

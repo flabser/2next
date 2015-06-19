@@ -7,9 +7,9 @@ var CT = Ember.Application.create({
     LOG_ACTIVE_GENERATION: true
 });
 
-CT.ApplicationAdapter = DS.FixtureAdapter;
+// CT.ApplicationAdapter = DS.FixtureAdapter;
 
-/*CT.ApplicationAdapter = DS.RESTAdapter.extend({
+CT.ApplicationAdapter = DS.RESTAdapter.extend({
     pathForType: function(type) {
         console.log(type);
         switch (type) {
@@ -25,7 +25,7 @@ CT.ApplicationAdapter = DS.FixtureAdapter;
 
 DS.RESTAdapter.reopen({
     namespace: 'CashTracker/rest'
-});*/
+});
 
 /*CT.ApplicationAdapter = DS.FirebaseAdapter.extend({
     firebase: new Firebase('https://blinding-fire-6380.firebaseio.com/')

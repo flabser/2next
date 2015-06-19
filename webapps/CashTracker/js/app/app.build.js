@@ -7,9 +7,9 @@ var CT = Ember.Application.create({
     LOG_ACTIVE_GENERATION: true
 });
 
-CT.ApplicationAdapter = DS.FixtureAdapter;
+// CT.ApplicationAdapter = DS.FixtureAdapter;
 
-/*CT.ApplicationAdapter = DS.RESTAdapter.extend({
+CT.ApplicationAdapter = DS.RESTAdapter.extend({
     pathForType: function(type) {
         console.log(type);
         switch (type) {
@@ -25,7 +25,7 @@ CT.ApplicationAdapter = DS.FixtureAdapter;
 
 DS.RESTAdapter.reopen({
     namespace: 'CashTracker/rest'
-});*/
+});
 
 /*CT.ApplicationAdapter = DS.FirebaseAdapter.extend({
     firebase: new Firebase('https://blinding-fire-6380.firebaseio.com/')
@@ -75,6 +75,11 @@ CT.Router.map(function() {
         path: '/costcenters'
     }, function() {
         this.route('new');
+    });
+
+    this.route('tags', function() {
+        this.route('new');
+        this.route('tag');
     });
 
     this.route('user', {
@@ -267,171 +272,6 @@ CT.UsersNewController = Ember.ArrayController.extend({
     }
 });
 
-CT.Account = DS.Model.extend({
-    type: DS.attr('number'),
-    name: DS.attr('string'),
-    currencyCode: DS.attr('string'),
-    openingBalance: DS.attr('number'),
-    amountControl: DS.attr('number'),
-    owner: DS.belongsTo('user'),
-    observers: DS.hasMany('user'),
-    includeInTotals: DS.attr('boolean'),
-    note: DS.attr('string'),
-    color: DS.attr('number'),
-    sortOrder: DS.attr('number')
-});
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        type: ii,
-        name: 'mk-' + ii,
-        currency: 'KZT',
-        openingBalance: ii,
-        amountControl: ii,
-        owner: 'medet',
-        observers: ['medet']
-    });
-}
-
-CT.Account.FIXTURES = _fixtures;
-
-CT.Category = DS.Model.extend({
-    transactionType: DS.attr('number'),
-    parentId: DS.belongsTo('category'),
-    name: DS.attr('string'),
-    note: DS.attr('string'),
-    color: DS.attr('number'),
-    sortOrder: DS.attr('number')
-});
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 40; ii++) {
-    _fixtures.push({
-        id: ii,
-        type: ii,
-        name: 'car ' + ii,
-        comment: 'car expense ' + ii
-    });
-}
-
-CT.Category.FIXTURES = _fixtures;
-
-CT.CostCenter = DS.Model.extend({
-    name: DS.attr('string')
-});
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 30; ii++) {
-    _fixtures.push({
-        id: ii,
-        name: 'cc ' + ii
-    });
-}
-
-CT.CostCenter.FIXTURES = _fixtures;
-
-CT.Tag = DS.Model.extend({
-    name: DS.attr('string')
-});
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 30; ii++) {
-    _fixtures.push({
-        id: ii,
-        name: 'tag ' + ii
-    });
-}
-
-CT.Tag.FIXTURES = _fixtures;
-
-CT.Transaction = DS.Model.extend({
-    author: DS.attr('string'),
-    regDate: DS.belongsTo('user'),
-    date: DS.attr('date'),
-    endDate: DS.attr('date'),
-    parentCategory: DS.attr('number'),
-    category: DS.attr('number'),
-    account: DS.attr('number'),
-    costCenter: DS.attr('number'),
-    amount: DS.attr('number'),
-    repeat: DS.attr('repeat'),
-    every: DS.attr('every'),
-    repeatStep: DS.attr('repeatStep'),
-    basis: DS.attr('string'),
-    note: DS.attr('string')
-});
-
-
-private Account accountFrom;
-    private Account accountTo;
-    private Category category;
-    private List<Tag> tags;
-    private long date;
-    private long amount;
-    private double exchangeRate;
-    private String note;
-    private TransactionState transactionState;
-    private TransactionType transactionType;
-    private boolean includeInReports;
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 200; ii++) {
-    _fixtures.push({
-        id: ii,
-        author: 'mkalihan',
-        regDate: '11.11.2015',
-        date: '11.11.2015',
-        endDate: '15.11.2015',
-        parentCategory: ii,
-        category: ii,
-        account: ii,
-        costCenter: ii,
-        amount: 1000 + ii,
-        repeat: ii,
-        every: 0,
-        repeatStep: ii,
-        basis: 'test basis ' + ii,
-        comment: 'test comment ' + ii
-    });
-}
-
-CT.Transaction.FIXTURES = _fixtures;
-
-CT.User = DS.Model.extend({
-    name: DS.attr('string'),
-    email: DS.attr('string')
-});
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 20; ii++) {
-    _fixtures.push({
-        id: ii,
-        name: 'mkalihan',
-        email: ''
-    });
-}
-
-CT.User.FIXTURES = _fixtures;
-
-CT.UserProfile = DS.Model.extend({
-    name: DS.attr('string'),
-    roles: DS.attr('string')
-});
-
-CT.UserProfile.FIXTURES = [{
-    id: 'mkalihan',
-    name: 'mkalihan',
-    roles: 'transactions'
-}];
-
 CT.AccountRoute = Ember.Route.extend({
     model: function(params) {
         return this.store.find('account', params.account_id);
@@ -575,6 +415,48 @@ CT.CostCentersRoute = Ember.Route.extend({
     }
 });
 
+CT.TagRoute = Ember.Route.extend({
+    templateName: 'tag',
+
+    model: function(params) {
+        return this.store.find('tag', params.tag_id);
+    }
+});
+
+CT.TagsRoute = Ember.Route.extend({
+
+    templateName: 'tags',
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        return this.store.find('tag');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'tags.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            this.transitionTo('tags', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
+
 CT.TransactionRoute = Ember.Route.extend({
     model: function(params) {
         return this.store.find('transaction', params.transaction_id);
@@ -667,6 +549,161 @@ CT.UsersRoute = Ember.Route.extend({
         }
     }
 });
+
+CT.Account = DS.Model.extend({
+    type: DS.attr('number'),
+    name: DS.attr('string'),
+    currencyCode: DS.attr('string'),
+    openingBalance: DS.attr('number'),
+    amountControl: DS.attr('number'),
+    owner: DS.belongsTo('user'),
+    observers: DS.hasMany('user'),
+    includeInTotals: DS.attr('boolean'),
+    note: DS.attr('string'),
+    sortOrder: DS.attr('number')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 10; ii++) {
+    _fixtures.push({
+        id: ii,
+        type: ii,
+        name: 'account-' + ii,
+        currencyCode: 'KZT',
+        openingBalance: 1000 + ii,
+        amountControl: 2000 + ii,
+        owner: 'mkalihan',
+        observers: ['mkalihan'],
+        includeInTotals: true,
+        note: 'note-' + ii,
+        sortOrder: ii
+    });
+}
+
+CT.Account.FIXTURES = _fixtures;
+
+CT.Category = DS.Model.extend({
+    transactionType: DS.attr('number'),
+    parentId: DS.belongsTo('category'),
+    name: DS.attr('string'),
+    note: DS.attr('string'),
+    color: DS.attr('number'),
+    sortOrder: DS.attr('number')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 10; ii++) {
+    _fixtures.push({
+        id: ii,
+        transactionType: 1,
+        parentId: ii - 1,
+        name: 'category-' + ii,
+        note: 'note-' + ii,
+        color: ii,
+        sortOrder: ii
+    });
+}
+
+CT.Category.FIXTURES = _fixtures;
+
+CT.CostCenter = DS.Model.extend({
+    name: DS.attr('string')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 10; ii++) {
+    _fixtures.push({
+        id: ii,
+        name: 'cost_center-' + ii
+    });
+}
+
+CT.CostCenter.FIXTURES = _fixtures;
+
+CT.Tag = DS.Model.extend({
+    name: DS.attr('string'),
+    color: DS.attr('number')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 10; ii++) {
+    _fixtures.push({
+        id: ii,
+        name: 'tag-' + ii,
+        color: ii
+    });
+}
+
+CT.Tag.FIXTURES = _fixtures;
+
+CT.Transaction = DS.Model.extend({
+    user: DS.belongsTo('user'),
+    accountFrom: DS.belongsTo('account'),
+    accountTo: DS.belongsTo('account'),
+    amount: DS.attr('number'),
+    regDate: DS.attr('date'),
+    category: DS.belongsTo('category'),
+    costCenter: DS.belongsTo('costCenter'),
+    tags: DS.hasMany('tag'),
+    transactionState: DS.attr('number'),
+    transactionType: DS.attr('number'),
+    exchangeRate: DS.attr('number'),
+    repeat: DS.attr('repeat'),
+    every: DS.attr('every'),
+    repeatStep: DS.attr('repeatStep'),
+    startDate: DS.attr('date'),
+    endDate: DS.attr('date'),
+    basis: DS.attr('string'),
+    note: DS.attr('string'),
+    includeInReports: DS.attr('boolean')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 20; ii++) {
+    _fixtures.push({
+        id: ii,
+        author: 'mkalihan',
+        regDate: '11.11.2015',
+        date: '11.11.2015',
+        endDate: '15.11.2015',
+        parentCategory: ii,
+        category: ii,
+        account: ii,
+        costCenter: ii,
+        amount: 1000 + ii,
+        repeat: ii,
+        every: 0,
+        repeatStep: ii,
+        basis: 'test basis ' + ii,
+        comment: 'test comment ' + ii
+    });
+}
+
+CT.Transaction.FIXTURES = _fixtures;
+
+CT.User = DS.Model.extend({
+    name: DS.attr('string'),
+    email: DS.attr('string'),
+    role: DS.attr('string')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 10; ii++) {
+    _fixtures.push({
+        id: ii,
+        name: 'mkalihan',
+        email: '',
+        role: ''
+    });
+}
+
+CT.User.FIXTURES = _fixtures;
 
 CT.AccountView = Ember.View.extend({
     templateName: 'account'
@@ -1603,6 +1640,42 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       }
     };
   }());
+  var child5 = (function() {
+    return {
+      isHTMLBars: true,
+      revision: "Ember@1.12.1",
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createTextNode("tags");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        return fragment;
+      }
+    };
+  }());
   return {
     isHTMLBars: true,
     revision: "Ember@1.12.1",
@@ -1824,6 +1897,14 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el4, el5);
       var el5 = dom.createComment("");
       dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("br");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode(" ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createComment("");
+      dom.appendChild(el4, el5);
       var el5 = dom.createTextNode("\n            ");
       dom.appendChild(el4, el5);
       dom.appendChild(el3, el4);
@@ -1942,9 +2023,10 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       var morph2 = dom.createMorphAt(element6,9,9);
       var morph3 = dom.createMorphAt(element6,13,13);
       var morph4 = dom.createMorphAt(element6,17,17);
-      var morph5 = dom.createMorphAt(dom.childAt(fragment, [6]),1,1);
-      var morph6 = dom.createMorphAt(dom.childAt(element7, [1, 1, 3]),0,0);
-      var morph7 = dom.createMorphAt(dom.childAt(element7, [3, 1, 3]),0,0);
+      var morph5 = dom.createMorphAt(element6,21,21);
+      var morph6 = dom.createMorphAt(dom.childAt(fragment, [6]),1,1);
+      var morph7 = dom.createMorphAt(dom.childAt(element7, [1, 1, 3]),0,0);
+      var morph8 = dom.createMorphAt(dom.childAt(element7, [3, 1, 3]),0,0);
       element(env, element0, context, "action", ["hideOpenedNav"], {"on": "mouseDown"});
       element(env, element2, context, "action", ["navAppMenuToggle"], {});
       element(env, element3, context, "action", ["navUserMenuToggle"], {"on": "mouseDown"});
@@ -1955,9 +2037,10 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       block(env, morph2, context, "link-to", ["users"], {}, child2, null);
       block(env, morph3, context, "link-to", ["categories"], {}, child3, null);
       block(env, morph4, context, "link-to", ["cost_centers"], {}, child4, null);
-      content(env, morph5, context, "outlet");
-      content(env, morph6, context, "username");
-      content(env, morph7, context, "logout");
+      block(env, morph5, context, "link-to", ["tags"], {}, child5, null);
+      content(env, morph6, context, "outlet");
+      content(env, morph7, context, "username");
+      content(env, morph8, context, "logout");
       return fragment;
     }
   };

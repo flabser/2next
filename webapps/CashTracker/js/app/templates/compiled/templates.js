@@ -862,6 +862,42 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       }
     };
   }());
+  var child5 = (function() {
+    return {
+      isHTMLBars: true,
+      revision: "Ember@1.12.1",
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createTextNode("tags");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        return fragment;
+      }
+    };
+  }());
   return {
     isHTMLBars: true,
     revision: "Ember@1.12.1",
@@ -1083,6 +1119,14 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el4, el5);
       var el5 = dom.createComment("");
       dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("br");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode(" ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createComment("");
+      dom.appendChild(el4, el5);
       var el5 = dom.createTextNode("\n            ");
       dom.appendChild(el4, el5);
       dom.appendChild(el3, el4);
@@ -1201,9 +1245,10 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       var morph2 = dom.createMorphAt(element6,9,9);
       var morph3 = dom.createMorphAt(element6,13,13);
       var morph4 = dom.createMorphAt(element6,17,17);
-      var morph5 = dom.createMorphAt(dom.childAt(fragment, [6]),1,1);
-      var morph6 = dom.createMorphAt(dom.childAt(element7, [1, 1, 3]),0,0);
-      var morph7 = dom.createMorphAt(dom.childAt(element7, [3, 1, 3]),0,0);
+      var morph5 = dom.createMorphAt(element6,21,21);
+      var morph6 = dom.createMorphAt(dom.childAt(fragment, [6]),1,1);
+      var morph7 = dom.createMorphAt(dom.childAt(element7, [1, 1, 3]),0,0);
+      var morph8 = dom.createMorphAt(dom.childAt(element7, [3, 1, 3]),0,0);
       element(env, element0, context, "action", ["hideOpenedNav"], {"on": "mouseDown"});
       element(env, element2, context, "action", ["navAppMenuToggle"], {});
       element(env, element3, context, "action", ["navUserMenuToggle"], {"on": "mouseDown"});
@@ -1214,9 +1259,10 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       block(env, morph2, context, "link-to", ["users"], {}, child2, null);
       block(env, morph3, context, "link-to", ["categories"], {}, child3, null);
       block(env, morph4, context, "link-to", ["cost_centers"], {}, child4, null);
-      content(env, morph5, context, "outlet");
-      content(env, morph6, context, "username");
-      content(env, morph7, context, "logout");
+      block(env, morph5, context, "link-to", ["tags"], {}, child5, null);
+      content(env, morph6, context, "outlet");
+      content(env, morph7, context, "username");
+      content(env, morph8, context, "logout");
       return fragment;
     }
   };
