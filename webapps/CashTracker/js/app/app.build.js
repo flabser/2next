@@ -11,7 +11,6 @@ var CT = Ember.Application.create({
 
 CT.ApplicationAdapter = DS.RESTAdapter.extend({
     pathForType: function(type) {
-        console.log(type);
         switch (type) {
             case 'costCenter':
                 return 'costcenters';
@@ -192,8 +191,11 @@ CT.CategoriesController = Ember.ArrayController.extend({
 
 CT.CategoryController = Ember.ObjectController.extend({
     actions: {
-        save: function() {
-            alert('save category')
+        save: function(category) {
+        	console.log(category);
+            category.save().then(function() {
+                this.transitionTo('categories');
+            });
         }
     }
 });
@@ -392,20 +394,25 @@ var _fixtures = [];
 for (var ii = 1; ii < 20; ii++) {
     _fixtures.push({
         id: ii,
-        author: 'mkalihan',
+        user: 'mkalihan',
+        accountFrom: 1,
+        accountTo: 2,
+        amount: 1000,
         regDate: '11.11.2015',
-        date: '11.11.2015',
-        endDate: '15.11.2015',
-        parentCategory: ii,
-        category: ii,
-        account: ii,
-        costCenter: ii,
-        amount: 1000 + ii,
-        repeat: ii,
+        category: 1,
+        costCenter: 1,
+        tags: [],
+        transactionState: 1,
+        transactionType: 1,
+        exchangeRate: 1.1,
+        repeat: false,
         every: 0,
-        repeatStep: ii,
-        basis: 'test basis ' + ii,
-        comment: 'test comment ' + ii
+        repeatStep: 0,
+        startDate: null,
+        endDate: null,
+        basis: '',
+        note: '',
+        includeInReports: true
     });
 }
 
@@ -431,12 +438,15 @@ for (var ii = 1; ii < 10; ii++) {
 CT.User.FIXTURES = _fixtures;
 
 CT.AccountRoute = Ember.Route.extend({
+    templateName: 'account',
+
     model: function(params) {
         return this.store.find('account', params.account_id);
     }
 });
 
 CT.AccountsRoute = Ember.Route.extend({
+    templateName: 'accounts',
 
     queryParams: {
         offset: {
@@ -578,6 +588,14 @@ CT.TagRoute = Ember.Route.extend({
 
     model: function(params) {
         return this.store.find('tag', params.tag_id);
+    },
+
+    actions: {
+        save: function(tag) {
+            tag.save().then(function() {
+                this.transitionTo('tags');
+            });
+        }
     }
 });
 
@@ -980,7 +998,7 @@ Ember.TEMPLATES["account"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -1009,7 +1027,7 @@ Ember.TEMPLATES["account"] = Ember.HTMLBars.template((function() {
       var morph4 = dom.createMorphAt(dom.childAt(element3, [7, 3]),1,1);
       var morph5 = dom.createMorphAt(dom.childAt(element3, [9, 3]),1,1);
       content(env, morph0, context, "name");
-      element(env, element1, context, "action", ["save"], {});
+      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
       element(env, element2, context, "disabled", [], {});
       inline(env, morph1, context, "input", [], {"name": "name", "value": get(env, context, "name"), "required": true, "class": "span7"});
       inline(env, morph2, context, "input", [], {"name": "type", "value": get(env, context, "type"), "required": true, "class": "span7"});
@@ -2531,7 +2549,7 @@ Ember.TEMPLATES["category"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -2555,7 +2573,7 @@ Ember.TEMPLATES["category"] = Ember.HTMLBars.template((function() {
       var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
       var morph1 = dom.createMorphAt(dom.childAt(element2, [1, 1, 3]),1,1);
       content(env, morph0, context, "name");
-      element(env, element1, context, "action", ["save"], {});
+      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
       element(env, element2, context, "disabled", [], {});
       inline(env, morph1, context, "input", [], {"name": "name", "value": get(env, context, "name"), "required": true, "class": "span7"});
       return fragment;
@@ -2659,7 +2677,7 @@ Ember.TEMPLATES["costcenter"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -2683,7 +2701,7 @@ Ember.TEMPLATES["costcenter"] = Ember.HTMLBars.template((function() {
       var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
       var morph1 = dom.createMorphAt(dom.childAt(element2, [1, 1, 3]),1,1);
       content(env, morph0, context, "name");
-      element(env, element1, context, "action", ["save"], {});
+      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
       element(env, element2, context, "disabled", [], {});
       inline(env, morph1, context, "input", [], {"name": "name", "value": get(env, context, "name"), "required": true, "class": "span7"});
       return fragment;
@@ -3194,7 +3212,7 @@ Ember.TEMPLATES["tag"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -3218,7 +3236,7 @@ Ember.TEMPLATES["tag"] = Ember.HTMLBars.template((function() {
       var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
       var morph1 = dom.createMorphAt(dom.childAt(element2, [1, 1, 3]),1,1);
       content(env, morph0, context, "name");
-      element(env, element1, context, "action", ["save"], {});
+      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
       element(env, element2, context, "disabled", [], {});
       inline(env, morph1, context, "input", [], {"name": "name", "value": get(env, context, "name"), "required": true, "class": "span7"});
       return fragment;
@@ -3860,7 +3878,7 @@ Ember.TEMPLATES["transaction"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -3894,7 +3912,7 @@ Ember.TEMPLATES["transaction"] = Ember.HTMLBars.template((function() {
       content(env, morph0, context, "title");
       content(env, morph1, context, "vn");
       content(env, morph2, context, "date");
-      element(env, element2, context, "action", ["addTransaction"], {});
+      element(env, element2, context, "action", ["save", get(env, context, "this")], {});
       inline(env, morph3, context, "input", [], {"name": "date", "value": get(env, context, "date"), "required": true, "class": "span7"});
       content(env, morph4, context, "account");
       content(env, morph5, context, "category");

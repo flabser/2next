@@ -11,7 +11,6 @@ var CT = Ember.Application.create({
 
 CT.ApplicationAdapter = DS.RESTAdapter.extend({
     pathForType: function(type) {
-        console.log(type);
         switch (type) {
             case 'costCenter':
                 return 'costcenters';

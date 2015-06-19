@@ -1,4 +1,5 @@
 CT.AccountsRoute = Ember.Route.extend({
+    templateName: 'accounts',
 
     queryParams: {
         offset: {

@@ -1,7 +1,10 @@
 CT.CategoryController = Ember.ObjectController.extend({
     actions: {
-        save: function() {
-            alert('save category')
+        save: function(category) {
+        	console.log(category);
+            category.save().then(function() {
+                this.transitionTo('categories');
+            });
         }
     }
 });

@@ -25,20 +25,25 @@ var _fixtures = [];
 for (var ii = 1; ii < 20; ii++) {
     _fixtures.push({
         id: ii,
-        author: 'mkalihan',
+        user: 'mkalihan',
+        accountFrom: 1,
+        accountTo: 2,
+        amount: 1000,
         regDate: '11.11.2015',
-        date: '11.11.2015',
-        endDate: '15.11.2015',
-        parentCategory: ii,
-        category: ii,
-        account: ii,
-        costCenter: ii,
-        amount: 1000 + ii,
-        repeat: ii,
+        category: 1,
+        costCenter: 1,
+        tags: [],
+        transactionState: 1,
+        transactionType: 1,
+        exchangeRate: 1.1,
+        repeat: false,
         every: 0,
-        repeatStep: ii,
-        basis: 'test basis ' + ii,
-        comment: 'test comment ' + ii
+        repeatStep: 0,
+        startDate: null,
+        endDate: null,
+        basis: '',
+        note: '',
+        includeInReports: true
     });
 }
 

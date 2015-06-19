@@ -195,7 +195,7 @@ Ember.TEMPLATES["account"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -224,7 +224,7 @@ Ember.TEMPLATES["account"] = Ember.HTMLBars.template((function() {
       var morph4 = dom.createMorphAt(dom.childAt(element3, [7, 3]),1,1);
       var morph5 = dom.createMorphAt(dom.childAt(element3, [9, 3]),1,1);
       content(env, morph0, context, "name");
-      element(env, element1, context, "action", ["save"], {});
+      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
       element(env, element2, context, "disabled", [], {});
       inline(env, morph1, context, "input", [], {"name": "name", "value": get(env, context, "name"), "required": true, "class": "span7"});
       inline(env, morph2, context, "input", [], {"name": "type", "value": get(env, context, "type"), "required": true, "class": "span7"});
@@ -1746,7 +1746,7 @@ Ember.TEMPLATES["category"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -1770,7 +1770,7 @@ Ember.TEMPLATES["category"] = Ember.HTMLBars.template((function() {
       var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
       var morph1 = dom.createMorphAt(dom.childAt(element2, [1, 1, 3]),1,1);
       content(env, morph0, context, "name");
-      element(env, element1, context, "action", ["save"], {});
+      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
       element(env, element2, context, "disabled", [], {});
       inline(env, morph1, context, "input", [], {"name": "name", "value": get(env, context, "name"), "required": true, "class": "span7"});
       return fragment;
@@ -1874,7 +1874,7 @@ Ember.TEMPLATES["costcenter"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -1898,7 +1898,7 @@ Ember.TEMPLATES["costcenter"] = Ember.HTMLBars.template((function() {
       var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
       var morph1 = dom.createMorphAt(dom.childAt(element2, [1, 1, 3]),1,1);
       content(env, morph0, context, "name");
-      element(env, element1, context, "action", ["save"], {});
+      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
       element(env, element2, context, "disabled", [], {});
       inline(env, morph1, context, "input", [], {"name": "name", "value": get(env, context, "name"), "required": true, "class": "span7"});
       return fragment;
@@ -2409,7 +2409,7 @@ Ember.TEMPLATES["tag"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -2433,7 +2433,7 @@ Ember.TEMPLATES["tag"] = Ember.HTMLBars.template((function() {
       var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
       var morph1 = dom.createMorphAt(dom.childAt(element2, [1, 1, 3]),1,1);
       content(env, morph0, context, "name");
-      element(env, element1, context, "action", ["save"], {});
+      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
       element(env, element2, context, "disabled", [], {});
       inline(env, morph1, context, "input", [], {"name": "name", "value": get(env, context, "name"), "required": true, "class": "span7"});
       return fragment;
@@ -3075,7 +3075,7 @@ Ember.TEMPLATES["transaction"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -3109,7 +3109,7 @@ Ember.TEMPLATES["transaction"] = Ember.HTMLBars.template((function() {
       content(env, morph0, context, "title");
       content(env, morph1, context, "vn");
       content(env, morph2, context, "date");
-      element(env, element2, context, "action", ["addTransaction"], {});
+      element(env, element2, context, "action", ["save", get(env, context, "this")], {});
       inline(env, morph3, context, "input", [], {"name": "date", "value": get(env, context, "date"), "required": true, "class": "span7"});
       content(env, morph4, context, "account");
       content(env, morph5, context, "category");
