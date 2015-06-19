@@ -381,7 +381,34 @@ public class SystemDatabase implements ISystemDatabase {
 		return user;
 	}
 
-	
+	public User getUserByEmail(String email) {
+		User user = null;
+		Connection conn = dbPool.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			Statement s = conn.createStatement();
+			String sql = "select * from USERS where USERS.EMAIL='" + email + "'";
+			ResultSet rs = s.executeQuery(sql);
+
+			if (rs.next()) {
+				user = new User();
+				user.fill(rs);
+				if (user.isValid) {
+					fillUserApp(conn, user);
+				}
+			}
+			rs.close();
+			s.close();
+			conn.commit();
+
+		} catch (Throwable e) {
+			DatabaseUtil.debugErrorPrint(e);
+			user = null;
+		} finally {
+			dbPool.returnConnection(conn);
+		}
+		return user;
+	}
 
 	public User getUser(int id) {
 		User user = null;
