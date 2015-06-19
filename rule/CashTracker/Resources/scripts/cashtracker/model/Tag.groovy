@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import com.flabser.script._IObject;
 
 
-public class CostCenter implements _IObject {
+public class Tag implements _IObject {
 
 	private long id;
 
@@ -31,7 +31,7 @@ public class CostCenter implements _IObject {
 
 	@Override
 	public String toString() {
-		return "CostCenter[" + name + "]";
+		return "Tag[" + name + "]";
 	}
 
 	public void init(ResultSet rs) {

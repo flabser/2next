@@ -1,8 +1,5 @@
 package cashtracker.dao
 
-import java.sql.ResultSet
-import java.util.List
-
 import cashtracker.model.Account
 import cashtracker.model.Category
 import cashtracker.model.CostCenter
@@ -24,100 +21,81 @@ public class TransactionDAO {
 	}
 
 	public List <Transaction> findAll() {
-		List <Transaction> result = db.select("SELECT * FROM transaction", Transaction.class, user)
+		List <Transaction> result = db.select("select * from transactions", Transaction.class, user)
 		return result
 	}
 
 	public Transaction findById(long id) {
-		List <Transaction> list = db.select("select * from transaction where id = $id", Transaction.class, user)
-
-		Transaction result = null
-
-		if (list.size() > 0) {
-			result = list[0]
-		}
-
+		String sql = "select * from transactions where id = $id"
+		List <Transaction> list = db.select(sql, Transaction.class, user)
+		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
-	public List <Transaction> findAllByAccount(Account a) {
-		return null
+	public List <Transaction> findAllByAccount(Account m) {
+		String sql ="select * from transactions where account_id = ${m.id}"
+		List <Transaction> list = db.select(sql, Transaction.class, user)
+		Transaction result = list.size() ? list[0] : null
+		return result
 	}
 
-	public List <Transaction> findAllByCostCenter(CostCenter cc) {
-		return null
+	public List <Transaction> findAllByCostCenter(CostCenter m) {
+		String sql ="select * from transactions where cost_center_id = ${m.id}"
+		List <Transaction> list = db.select(sql, Transaction.class, user)
+		Transaction result = list.size() ? list[0] : null
+		return result
 	}
 
-	public List <Transaction> findAllByCategory(Category c) {
-		return null
+	public List <Transaction> findAllByCategory(Category m) {
+		String sql ="select * from transactions where category_id = ${m.id}"
+		List <Transaction> list = db.select(sql, Transaction.class, user)
+		Transaction result = list.size() ? list[0] : null
+		return result
 	}
 
-	public int addTransaction(Transaction t) {
-		String sql = """insert into transaction
-							(type, 
-							"USER",
-							date,
-							regdate,
-							category,
-							subcategory,
-							amount,
-							account,
-							costcenter,
-							repeat,
-							every,
-							repeatstep,
-							enddate,
-							basis,
-							note)
-						values (${t.type}, '${t.author}', '${t.date.timeString}', '${t.regDate}', ${t.category},
-								${t.parentCategory}, ${t.amount}, ${t.account}, ${t.costCenter},
-								${t.repeat}, ${t.every}, ${t.repeatStep}, '${t.endDate}', '${t.basis}', '${t.comment}')"""
+	public int addTransaction(Transaction m) {
+		String sql = """insert into transactions
+							("USER", transaction_type, transaction_state,
+							reg_date, account_from, account_to,
+							amount, exchange_rate, category, cost_center,
+							tags, repeat, every, repeat_step, start_date, end_date,
+							basis, note, include_in_reports)
+						values ('${m.user.login}', ${m.transactionType.code}, ${m.transactionState.code},
+								'${m.regDate}', ${m.accountFrom.id}, ${m.accountTo.id},
+								${m.amount}, ${m.exchangeRate}, ${m.category}, ${m.costCenter},
+								${m.tags}, ${m.repeat}, ${m.every}, ${m.repeatStep}, ${m.startDate}, ${m.endDate},
+								${m.basis}, ${m.note}, ${m.includeInReports})"""
 		return db.insert(sql, user)
 	}
 
-	public void updateTransaction(Transaction t) {
-		String sql = """update transaction set
-							type = ${t.type},
-							date = ${t.date},
-							category = ${t.category},
-							subcategory = ${t.parentCategory},
-							amount = ${t.amount},
-							account = ${t.account},
-							costcenter = ${t.costCenter},
-							repeat = ${t.repeat},
-							every = ${t.every},
-							repeatstep = ${t.repeatStep},
-							enddate = ${t.endDate},
-							basis = ${t.basis},
-							note = ${t.comment},
-						where id = ${t.id}"""
+	public void updateTransaction(Transaction m) {
+		String sql = """update transactions
+						set
+							"USER" = '${m.user.login}',
+							transaction_type = ${m.transactionType.code},
+							transaction_state = ${m.transactionState.code},
+							reg_date = '${m.regDate}',
+							account_from = ${m.accountFrom.id},
+							account_to = ${m.accountTo.id},
+							amount = ${m.amount},
+							exchange_rate = ${m.exchangeRate},
+							category = ${m.category},
+							cost_center = ${m.costCenter},
+							tags = ${m.tags},
+							repeat = ${m.repeat},
+							every = ${m.every},
+							repeat_step = ${m.repeatStep},
+							start_date = '${m.startDate}',
+							end_date = ${m.endDate},
+							basis = '${m.basis}',
+							note = '${m.note}',
+							include_in_reports = ${m.includeInReports}
+						where id = ${m.id}"""
 		db.update(sql, user)
 	}
 
 	public void deleteTransaction(Transaction t) {
-		String sql = "delete from transaction where id = ${t.id}"
+		String sql = "delete from transactions where id = ${t.id}"
 		db.delete(sql, user)
-	}
-
-	private Transaction getModelFromResultSet(ResultSet rs){
-		Transaction t = new Transaction()
-
-		t.setId(rs.getInt("id"))
-		t.setAuthor(null)
-		t.setDate(rs.getDate("date"))
-		t.setRegDate(rs.getDate("regdate"))
-		t.setCategory(rs.getInt("category"))
-		t.setParentCategory(rs.getInt("parentCategory"))
-		t.setAmount(rs.getBigDecimal("amount"))
-		t.setAccount(rs.getInt("account"))
-		t.setCostCenter(rs.getInt("costcenter"))
-		t.setRepeat(rs.getBoolean("repeat"))
-		t.setEvery(rs.getInt("every"))
-		t.setRepeatStep(rs.getInt("repeatstep"))
-		t.setEndDate(rs.getDate("enddate"))
-		t.setBasis(rs.getString("basis"))
-		t.setComment(rs.getString("note"))
-
-		t
 	}
 }

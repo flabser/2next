@@ -1,7 +1,7 @@
 package cashtracker.page.controller
 
-import cashtracker.model.Account
 import cashtracker.dao.AccountDAO;
+import cashtracker.model.Account;
 
 import com.flabser.script._Exception;
 import com.flabser.script._Session

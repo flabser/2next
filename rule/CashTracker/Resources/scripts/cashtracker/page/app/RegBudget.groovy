@@ -1,15 +1,13 @@
 package cashtracker.page.app
 
-import com.flabser.script._Session
-import com.flabser.script._WebFormData
-import com.flabser.script.events._DoScript
+import cashtracker.dao.BudgetDAO
+import cashtracker.model.Budget
+
 import com.flabser.script.*
-import com.flabser.users.*
+import com.flabser.script.events._DoScript
 import com.flabser.solutions.cashtracker.*
 import com.flabser.solutions.cashtracker.constants.*
-
-import cashtracker.dao.BudgetDAO;
-import cashtracker.model.Budget
+import com.flabser.users.*
 
 
 class RegBudget extends _DoScript {
@@ -23,7 +21,7 @@ class RegBudget extends _DoScript {
 		budget.setName(formData.getValueSilently("budgetname"))
 		budget.setRegDate(Database.sqlDateTimeFormat.format(new java.util.Date()))
 		budget.setOwner(session.getUser())
-		budget.setStatus(BudgetStatusType.ACTIVE)
+		budget.setStatus(BudgetState.ACTIVE)
 
 		def res = dao.addBudget(budget)
 		if (res > 0) {

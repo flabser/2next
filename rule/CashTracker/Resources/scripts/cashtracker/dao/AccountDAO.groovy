@@ -1,10 +1,6 @@
 package cashtracker.dao
 
-import java.sql.ResultSet
-import java.util.List
-
 import cashtracker.model.Account
-import cashtracker.model.Budget
 
 import com.flabser.dataengine.IDatabase
 import com.flabser.script._Session
@@ -22,54 +18,45 @@ public class AccountDAO {
 	}
 
 	public List <Account> findAll() {
-		List <Account> result = db.select("SELECT * FROM account", Account.class, user)
+		List <Account> result = db.select("SELECT * FROM accounts", Account.class, user)
 		return result
 	}
 
 	public Account findById(long id) {
-		List <Account> list = db.select("select * from account where id = $id", Account.class, user)
-
-		Account result = null
-
-		if (list.size() > 0) {
-			result = list[0]
-		}
-
+		List <Account> list = db.select("select * from accounts where id = $id", Account.class, user)
+		Account result = list.size() ? list[0] : null
 		return result
 	}
 
 	public int addAccount(Account a) {
-		String sql = """insert into account (name, type, amountcontrol, owner, observers)
-							values ('${a.name}', ${a.type}, ${a.amountControl}, '${a.owner}', '${a.observers}')"""
+		String sql = """insert into accounts
+							(name, type, currency_code, opening_balance, amount_control,
+							owner, observers, include_in_totals, note, sort_order)
+						values
+							('${a.name}', ${a.type}, '${a.currencyCode}', ${a.openingBalance}, ${a.amountControl},
+							'${a.owner}', '${a.observers}', ${a.includeInTotals}, '${a.note}', ${a.sortOrder})"""
 		return db.insert(sql, user)
 	}
 
 	public void updateAccount(Account a) {
-		String sql = """update account
-							set name = '${a.name}',
-								type = ${a.type},
-								amountcontrol = '${a.amountControl}',
-								owner = '${a.owner}',
-								observers = '${a.observers}'
-							where id = ${a.id}"""
+		String sql = """update accounts
+						set
+							name = '${a.name}',
+							type = ${a.type},
+							currency_code = '${a.currencyCode}',
+							opening_balance = ${a.openingBalance},
+							amount_control = ${a.amountControl},
+							owner = '${a.owner}',
+							observers = '${a.observers}',
+							include_in_totals = ${a.includeInTotals},
+							note = '${a.note}',
+							sort_order = ${a.sortOrder}
+						where id = ${a.id}"""
 		db.update(sql, user)
 	}
 
 	public void deleteAccount(Account a) {
-		String sql = "delete from account where id = ${a.id}"
+		String sql = "delete from accounts where id = ${a.id}"
 		db.delete(sql, user)
-	}
-
-	private Budget getModelFromResultSet(ResultSet rs){
-		Account a = new Account()
-
-		a.setId(rs.getInt("id"))
-		a.setName(rs.getString("name"))
-		a.setAmountControl(rs.getBigDecimal("amountcontrol"))
-		a.setOwner(null) // TODO
-		a.setType(rs.getInt("type"))
-		a.setObservers(rs.getString("observers"))
-
-		return a
 	}
 }
