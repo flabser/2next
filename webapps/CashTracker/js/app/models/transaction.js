@@ -1,23 +1,28 @@
 CT.Transaction = DS.Model.extend({
-    author: DS.attr('string'),
-    regDate: DS.belongsTo('user'),
-    date: DS.attr('date'),
-    endDate: DS.attr('date'),
-    parentCategory: DS.attr('number'),
-    category: DS.attr('number'),
-    account: DS.attr('number'),
-    costCenter: DS.attr('number'),
+    user: DS.belongsTo('user'),
+    accountFrom: DS.belongsTo('account'),
+    accountTo: DS.belongsTo('account'),
     amount: DS.attr('number'),
+    regDate: DS.attr('date'),
+    category: DS.belongsTo('category'),
+    costCenter: DS.belongsTo('costсenter'),
+    tags: DS.hasMany('tag'),
+    transactionState: DS.attr('number'),
+    transactionType: DS.attr('number'),
+    exchangeRate: DS.attr('number'),
     repeat: DS.attr('repeat'),
     every: DS.attr('every'),
     repeatStep: DS.attr('repeatStep'),
+    startDate: DS.attr('date'),
+    endDate: DS.attr('date'),
     basis: DS.attr('string'),
-    comment: DS.attr('string')
+    note: DS.attr('string'),
+    includeInReports: DS.attr('boolean')
 });
 
 var _fixtures = [];
 
-for (var ii = 1; ii < 200; ii++) {
+for (var ii = 1; ii < 0; ii++) {
     _fixtures.push({
         id: ii,
         author: 'mkalihan',
