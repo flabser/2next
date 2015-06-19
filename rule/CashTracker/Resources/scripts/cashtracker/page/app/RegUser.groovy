@@ -1,11 +1,11 @@
 package cashtracker.page.app
 
 import com.flabser.script.*
-import com.flabser.scriptprocessor.*
-import com.flabser.script.events.*
 import com.flabser.script.actions.*
-import com.flabser.users.*
+import com.flabser.script.events.*
+import com.flabser.scriptprocessor.*
 import com.flabser.solutions.*
+import com.flabser.users.*
 
 
 class RegUser extends _DoScript {
@@ -34,8 +34,8 @@ class RegUser extends _DoScript {
 
 		def sdb = com.flabser.dataengine.DatabaseFactory.getSysDatabase()
 
-		boolean userExists = sdb.getUser(regForm.email).isValid
-		if (userExists) {
+		User userEmail = sdb.getUserByEmail(regForm.email)
+		if (userEmail) {
 			publishElement("error", "user-exists")
 			return
 		}

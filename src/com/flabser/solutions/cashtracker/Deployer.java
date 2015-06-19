@@ -2,6 +2,7 @@ package com.flabser.solutions.cashtracker;
 
 import java.sql.Connection;
 import java.sql.Statement;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
@@ -9,25 +10,30 @@ import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.users.ApplicationProfile;
 
+
 public class Deployer extends DatabaseCore implements IDeployer {
+
 	ApplicationProfile appProfile;
 
 	@Override
-	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException, DatabasePoolException {
 		this.appProfile = appProfile;
-		pool = getPool(Database.driver, appProfile);	
+		pool = getPool(Database.driver, appProfile);
 	}
 
 	@Override
 	public int deploy() {
 		Connection conn = pool.getConnection();
-		try {			
+		try {
 			conn = pool.getConnection();
 			conn.setAutoCommit(false);
-			createTable(DDEScripts.getBudgetDDE(), "BUDGET");
-			createTable(DDEScripts.getAccountDDE(), "ACCOUNT");
-			createTable(DDEScripts.getTransactionDDE(), "TRANSACTION");
-			createTable(DDEScripts.getCostCenterDDE(), "COSTCENTER");
+			createTable(DDEScripts.getBudgetDDE(), "BUDGETS");
+			createTable(DDEScripts.getAccountDDE(), "ACCOUNTS");
+			createTable(DDEScripts.getCategoryDDE(), "CATEGORIES");
+			createTable(DDEScripts.getTransactionDDE(), "TRANSACTIONS");
+			createTable(DDEScripts.getCostCenterDDE(), "COSTCENTERS");
+			createTable(DDEScripts.getTagDDE(), "TAGS");
 			conn.commit();
 		} catch (Throwable e) {
 			AppEnv.logger.errorLogEntry(e);
@@ -85,5 +91,4 @@ public class Deployer extends DatabaseCore implements IDeployer {
 			pool.returnConnection(conn);
 		}
 	}
-	
 }
