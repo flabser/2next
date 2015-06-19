@@ -1,8 +1,7 @@
 package com.flabser.solutions.cashtracker.services;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -13,71 +12,61 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
 import com.flabser.script._Session;
 import com.flabser.users.UserSession;
 
 
-@Path("/costcenters")
+@Path("costcenters")
 public class CostCenterService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response find() {
+	public CostCentersResponse get() {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
-		List <CostCenter> result = dao.findAll();
-		Map <String, List <CostCenter>> map = new HashMap <String, List <CostCenter>>();
-		map.put("costCenters", result);
-
-		return Response.ok(map).build();
+		return new CostCentersResponse(dao.findAll());
 	}
 
 	@GET
-	@Path("{id}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findById(@PathParam("id") long id) {
+	public CostCenter get(@PathParam("id") long id) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
 		CostCenter m = dao.findById(id);
-
-		Response response = Response.ok(m).build();
-
-		return response;
+		return m;
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(CostCenter m) {
+	public CostCenter create(CostCenter m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
 		m.setId(dao.addCostCenter(m));
-
-		Response response = Response.ok(m).build();
-
-		return response;
+		return m;
 	}
 
 	@PUT
-	@Path("{id}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") long id, CostCenter m) {
+	public CostCenter update(@PathParam("id") long id, CostCenter m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
@@ -85,9 +74,16 @@ public class CostCenterService extends RestProvider {
 		m.setId(id);
 		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
 		dao.updateCostCenter(m);
+		return m;
+	}
 
-		Response response = Response.ok(m).build();
+	@JsonRootName("costCenters")
+	class CostCentersResponse extends ArrayList <CostCenter> {
 
-		return response;
+		private static final long serialVersionUID = 1L;
+
+		public CostCentersResponse(Collection <? extends CostCenter> m) {
+			addAll(m);
+		}
 	}
 }

@@ -3,10 +3,12 @@ package cashtracker.model;
 import java.sql.ResultSet
 import java.sql.SQLException
 
+import com.fasterxml.jackson.annotation.JsonRootName
 import com.flabser.script._IObject
 import com.flabser.users.User
 
 
+@JsonRootName("account")
 public class Account implements _IObject {
 
 	private long id;

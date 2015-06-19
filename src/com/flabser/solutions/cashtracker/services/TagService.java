@@ -1,8 +1,7 @@
 package com.flabser.solutions.cashtracker.services;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -13,73 +12,61 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import cashtracker.dao.TagDAO;
 import cashtracker.model.Tag;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
 import com.flabser.script._Session;
 import com.flabser.users.UserSession;
 
 
-@Path("/tags")
+@Path("tags")
 public class TagService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response find() {
+	public TagsResponse get() {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
-		List <Tag> result = dao.findAll();
-		Map <String, List <Tag>> map = new HashMap <String, List <Tag>>();
-		map.put("tags", result);
-
-		return Response.ok(map).build();
+		return new TagsResponse(dao.findAll());
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response findById(@PathParam("id") long id) {
+	public Tag get(@PathParam("id") long id) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
 		Tag m = dao.findById(id);
-		Map <String, Tag> map = new HashMap <String, Tag>();
-		map.put("tag", m);
-
-		Response response = Response.ok(map).build();
-
-		return response;
+		return m;
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(Tag m) {
+	public Tag create(Tag m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
 		m.setId(dao.addTag(m));
-
-		Response response = Response.ok(m).build();
-
-		return response;
+		return m;
 	}
 
 	@PUT
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") long id, Tag m) {
+	public Tag update(@PathParam("id") long id, Tag m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
@@ -87,9 +74,16 @@ public class TagService extends RestProvider {
 		m.setId(id);
 		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
 		dao.updateTag(m);
+		return m;
+	}
 
-		Response response = Response.ok(m).build();
+	@JsonRootName("tags")
+	class TagsResponse extends ArrayList <Tag> {
 
-		return response;
+		private static final long serialVersionUID = 1L;
+
+		public TagsResponse(Collection <? extends Tag> m) {
+			addAll(m);
+		}
 	}
 }

@@ -3,12 +3,14 @@ package cashtracker.model;
 import java.sql.ResultSet
 import java.sql.SQLException
 
+import com.fasterxml.jackson.annotation.JsonRootName
 import com.flabser.script._IObject
 import com.flabser.solutions.cashtracker.constants.TransactionState
 import com.flabser.solutions.cashtracker.constants.TransactionType
 import com.flabser.users.User
 
 
+@JsonRootName("transaction")
 public class Transaction implements _IObject {
 
 	private long id;

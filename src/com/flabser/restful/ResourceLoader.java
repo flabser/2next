@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.ws.rs.core.Application;
 
 import com.flabser.restful.admin.RestAdminProvider;
+import com.flabser.restful.provider.ObjectMapperProvider;
 import com.flabser.solutions.cashtracker.services.AccountService;
 import com.flabser.solutions.cashtracker.services.CategoryService;
 import com.flabser.solutions.cashtracker.services.CostCenterService;
@@ -21,6 +22,7 @@ public class ResourceLoader extends Application {
 
 		// for in enabled_apps {
 		// classes < rest_endpoint
+		classes.add(ObjectMapperProvider.class);
 		classes.add(TransactionService.class);
 		classes.add(AccountService.class);
 		classes.add(CategoryService.class);
