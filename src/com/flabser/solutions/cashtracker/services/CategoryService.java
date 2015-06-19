@@ -35,7 +35,7 @@ public class CategoryService extends RestProvider {
 		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
 		List <Category> result = dao.findAll();
 		Map <String, List <Category>> map = new HashMap <String, List <Category>>();
-		map.put("accounts", result);
+		map.put("categories", result);
 
 		return Response.ok(map).build();
 	}

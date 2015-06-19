@@ -35,7 +35,7 @@ public class CostCenterService extends RestProvider {
 		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
 		List <CostCenter> result = dao.findAll();
 		Map <String, List <CostCenter>> map = new HashMap <String, List <CostCenter>>();
-		map.put("costcenters", result);
+		map.put("costCenters", result);
 
 		return Response.ok(map).build();
 	}
