@@ -43,9 +43,12 @@ CT.Router.map(function() {
         this.route('new');
     });
 
+    this.route('tag', {
+        path: '/tags/:tag_id'
+    });
+
     this.route('tags', function() {
         this.route('new');
-        this.route('tag');
     });
 
     this.route('user', {

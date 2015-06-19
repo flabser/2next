@@ -77,9 +77,12 @@ CT.Router.map(function() {
         this.route('new');
     });
 
+    this.route('tag', {
+        path: '/tags/:tag_id'
+    });
+
     this.route('tags', function() {
         this.route('new');
-        this.route('tag');
     });
 
     this.route('user', {
@@ -272,284 +275,6 @@ CT.UsersNewController = Ember.ArrayController.extend({
     }
 });
 
-CT.AccountRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.store.find('account', params.account_id);
-    }
-});
-
-CT.AccountsRoute = Ember.Route.extend({
-
-    queryParams: {
-        offset: {
-            refreshModel: true
-        },
-        limit: {
-            refreshModel: true
-        },
-        order_by: {
-            refreshModel: true
-        }
-    },
-
-    model: function(params) {
-        return this.store.find('account');
-    },
-
-    beforeModel: function(transition) {
-        if (transition.targetName === 'accounts.index') {
-            if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
-            }
-
-            if (!parseInt(transition.queryParams.offset, 0)) {
-                transition.queryParams.offset = 0;
-            }
-
-            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
-                transition.queryParams.order_by = '';
-            }
-
-            this.transitionTo('accounts', {
-                queryParams: transition.queryParams
-            });
-        }
-    }
-});
-
-CT.ApplicationRoute = Ember.Route.extend({
-    actions: {
-        willTransition: function() {
-            $('body').removeClass('nav-app-open nav-ws-open');
-        }
-    }
-});
-
-CT.CategoriesRoute = Ember.Route.extend({
-
-    queryParams: {
-        offset: {
-            refreshModel: true
-        },
-        limit: {
-            refreshModel: true
-        },
-        order_by: {
-            refreshModel: true
-        }
-    },
-
-    model: function(params) {
-        return this.store.find('category');
-    },
-
-    beforeModel: function(transition) {
-        if (transition.targetName === 'categories.index') {
-            if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
-            }
-
-            if (!parseInt(transition.queryParams.offset, 0)) {
-                transition.queryParams.offset = 0;
-            }
-
-            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
-                transition.queryParams.order_by = '';
-            }
-
-            this.transitionTo('categories', {
-                queryParams: transition.queryParams
-            });
-        }
-    }
-});
-
-CT.CategoryRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.store.find('category', params.category_id);
-    }
-});
-
-CT.CostCenterRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.store.find('cost-center', params.costcenter_id);
-    }
-});
-
-CT.CostCentersRoute = Ember.Route.extend({
-
-    queryParams: {
-        offset: {
-            refreshModel: true
-        },
-        limit: {
-            refreshModel: true
-        },
-        order_by: {
-            refreshModel: true
-        }
-    },
-
-    model: function(params) {
-        return this.store.find('cost-center');
-    },
-
-    beforeModel: function(transition) {
-        if (transition.targetName === 'costcenters.index') {
-            if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
-            }
-
-            if (!parseInt(transition.queryParams.offset, 0)) {
-                transition.queryParams.offset = 0;
-            }
-
-            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
-                transition.queryParams.order_by = '';
-            }
-
-            this.transitionTo('costcenters', {
-                queryParams: transition.queryParams
-            });
-        }
-    }
-});
-
-CT.TagRoute = Ember.Route.extend({
-    templateName: 'tag',
-
-    model: function(params) {
-        return this.store.find('tag', params.tag_id);
-    }
-});
-
-CT.TagsRoute = Ember.Route.extend({
-
-    templateName: 'tags',
-
-    queryParams: {
-        offset: {
-            refreshModel: true
-        },
-        limit: {
-            refreshModel: true
-        }
-    },
-
-    model: function(params) {
-        return this.store.find('tag');
-    },
-
-    beforeModel: function(transition) {
-        if (transition.targetName === 'tags.index') {
-            if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
-            }
-
-            if (!parseInt(transition.queryParams.offset, 0)) {
-                transition.queryParams.offset = 0;
-            }
-
-            this.transitionTo('tags', {
-                queryParams: transition.queryParams
-            });
-        }
-    }
-});
-
-CT.TransactionRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.store.find('transaction', params.transaction_id);
-    }
-});
-
-CT.TransactionsRoute = Ember.Route.extend({
-
-    queryParams: {
-        offset: {
-            refreshModel: true
-        },
-        limit: {
-            refreshModel: true
-        },
-        order_by: {
-            refreshModel: true
-        }
-    },
-
-    model: function(params) {
-        /*return $.getJSON('/CashTracker/RestProvider/transactions').then(function(data) {
-            return data.elements[0].value.list;
-        });*/
-        return this.store.find('transaction');
-    },
-
-    beforeModel: function(transition) {
-        if (transition.targetName === 'transactions.index') {
-            if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
-            }
-
-            if (!parseInt(transition.queryParams.offset, 0)) {
-                transition.queryParams.offset = 0;
-            }
-
-            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
-                transition.queryParams.order_by = '';
-            }
-
-            this.transitionTo('transactions', {
-                queryParams: transition.queryParams
-            });
-        }
-    }
-});
-
-CT.UserRoute = Ember.Route.extend({
-    model: function(params) {
-        return this.store.find('user', params.user_id);
-    }
-});
-
-CT.UsersRoute = Ember.Route.extend({
-
-    queryParams: {
-        offset: {
-            refreshModel: true
-        },
-        limit: {
-            refreshModel: true
-        },
-        order_by: {
-            refreshModel: true
-        }
-    },
-
-    model: function(params) {
-        return this.store.find('user');
-    },
-
-    beforeModel: function(transition) {
-        if (transition.targetName === 'users.index') {
-            if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
-            }
-
-            if (!parseInt(transition.queryParams.offset, 0)) {
-                transition.queryParams.offset = 0;
-            }
-
-            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
-                transition.queryParams.order_by = '';
-            }
-
-            this.transitionTo('users', {
-                queryParams: transition.queryParams
-            });
-        }
-    }
-});
-
 CT.Account = DS.Model.extend({
     type: DS.attr('number'),
     name: DS.attr('string'),
@@ -704,6 +429,288 @@ for (var ii = 1; ii < 10; ii++) {
 }
 
 CT.User.FIXTURES = _fixtures;
+
+CT.AccountRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('account', params.account_id);
+    }
+});
+
+CT.AccountsRoute = Ember.Route.extend({
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        },
+        order_by: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        return this.store.find('account');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'accounts.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
+                transition.queryParams.order_by = '';
+            }
+
+            this.transitionTo('accounts', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
+
+CT.ApplicationRoute = Ember.Route.extend({
+    actions: {
+        willTransition: function() {
+            $('body').removeClass('nav-app-open nav-ws-open');
+        }
+    }
+});
+
+CT.CategoriesRoute = Ember.Route.extend({
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        },
+        order_by: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        return this.store.find('category');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'categories.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
+                transition.queryParams.order_by = '';
+            }
+
+            this.transitionTo('categories', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
+
+CT.CategoryRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('category', params.category_id);
+    }
+});
+
+CT.CostCenterRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('cost-center', params.costcenter_id);
+    }
+});
+
+CT.CostCentersRoute = Ember.Route.extend({
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        },
+        order_by: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        return this.store.find('cost-center');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'costcenters.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
+                transition.queryParams.order_by = '';
+            }
+
+            this.transitionTo('costcenters', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
+
+CT.TagRoute = Ember.Route.extend({
+    templateName: 'tag',
+
+    model: function(params) {
+        return this.store.find('tag', params.tag_id);
+    }
+});
+
+CT.TagsNewRoute = Ember.Route.extend({
+    templateName: 'tag'
+});
+
+CT.TagsRoute = Ember.Route.extend({
+
+    templateName: 'tags',
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        return this.store.find('tag');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'tags.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            this.transitionTo('tags', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
+
+CT.TransactionRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('transaction', params.transaction_id);
+    }
+});
+
+CT.TransactionsRoute = Ember.Route.extend({
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        },
+        order_by: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        /*return $.getJSON('/CashTracker/RestProvider/transactions').then(function(data) {
+            return data.elements[0].value.list;
+        });*/
+        return this.store.find('transaction');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'transactions.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
+                transition.queryParams.order_by = '';
+            }
+
+            this.transitionTo('transactions', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
+
+CT.UserRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('user', params.user_id);
+    }
+});
+
+CT.UsersRoute = Ember.Route.extend({
+
+    queryParams: {
+        offset: {
+            refreshModel: true
+        },
+        limit: {
+            refreshModel: true
+        },
+        order_by: {
+            refreshModel: true
+        }
+    },
+
+    model: function(params) {
+        return this.store.find('user');
+    },
+
+    beforeModel: function(transition) {
+        if (transition.targetName === 'users.index') {
+            if (!parseInt(transition.queryParams.limit, 0)) {
+                transition.queryParams.limit = 10;
+            }
+
+            if (!parseInt(transition.queryParams.offset, 0)) {
+                transition.queryParams.offset = 0;
+            }
+
+            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
+                transition.queryParams.order_by = '';
+            }
+
+            this.transitionTo('users', {
+                queryParams: transition.queryParams
+            });
+        }
+    }
+});
 
 CT.AccountView = Ember.View.extend({
     templateName: 'account'
@@ -1469,7 +1476,12 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       hasRendered: false,
       build: function build(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createTextNode("Transactions");
+        var el1 = dom.createTextNode("                            ");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("i");
+        dom.setAttribute(el1,"class","fa fa-file-o");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("Transactions\n");
         dom.appendChild(el0, el1);
         return el0;
       },
@@ -1505,7 +1517,12 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       hasRendered: false,
       build: function build(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createTextNode("accounts");
+        var el1 = dom.createTextNode("                            ");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("i");
+        dom.setAttribute(el1,"class","fa fa-file-o");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("Accounts\n");
         dom.appendChild(el0, el1);
         return el0;
       },
@@ -1541,7 +1558,12 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       hasRendered: false,
       build: function build(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createTextNode("users");
+        var el1 = dom.createTextNode("                            ");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("i");
+        dom.setAttribute(el1,"class","fa fa-file-o");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("Categories\n");
         dom.appendChild(el0, el1);
         return el0;
       },
@@ -1577,7 +1599,12 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       hasRendered: false,
       build: function build(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createTextNode("categories");
+        var el1 = dom.createTextNode("                            ");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("i");
+        dom.setAttribute(el1,"class","fa fa-file-o");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("Cost centers\n");
         dom.appendChild(el0, el1);
         return el0;
       },
@@ -1613,7 +1640,12 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       hasRendered: false,
       build: function build(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createTextNode("costcenters");
+        var el1 = dom.createTextNode("                            ");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("i");
+        dom.setAttribute(el1,"class","fa fa-file-o");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("Tags\n");
         dom.appendChild(el0, el1);
         return el0;
       },
@@ -1649,7 +1681,12 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       hasRendered: false,
       build: function build(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createTextNode("tags");
+        var el1 = dom.createTextNode("                            ");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("i");
+        dom.setAttribute(el1,"class","fa fa-users");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("Users\n");
         dom.appendChild(el0, el1);
         return el0;
       },
@@ -1863,47 +1900,76 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       dom.setAttribute(el4,"class","side-nav");
       var el5 = dom.createTextNode("\n                ");
       dom.appendChild(el4, el5);
-      var el5 = dom.createComment("");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("br");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode(" ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createComment("");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("br");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode(" ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createComment("");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("br");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode(" ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createComment("");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("br");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode(" ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createComment("");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("br");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode(" ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createComment("");
+      var el5 = dom.createElement("ul");
+      dom.setAttribute(el5,"class","side-tree");
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("li");
+      dom.setAttribute(el6,"class","side-tree-item");
+      var el7 = dom.createTextNode("\n");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createComment("");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createTextNode("                    ");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("li");
+      dom.setAttribute(el6,"class","side-tree-item");
+      var el7 = dom.createTextNode("\n");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createComment("");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createTextNode("                    ");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("li");
+      dom.setAttribute(el6,"class","side-tree-item");
+      var el7 = dom.createTextNode("\n");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createComment("");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createTextNode("                    ");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("li");
+      dom.setAttribute(el6,"class","side-tree-item");
+      var el7 = dom.createTextNode("\n");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createComment("");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createTextNode("                    ");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("li");
+      dom.setAttribute(el6,"class","side-tree-item");
+      var el7 = dom.createTextNode("\n");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createComment("");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createTextNode("                    ");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("li");
+      dom.setAttribute(el6,"class","side-tree-item");
+      var el7 = dom.createTextNode("\n");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createComment("");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createTextNode("                    ");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n                ");
+      dom.appendChild(el5, el6);
       dom.appendChild(el4, el5);
       var el5 = dom.createTextNode("\n            ");
       dom.appendChild(el4, el5);
@@ -2016,14 +2082,14 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       var element3 = dom.childAt(element1, [5, 1]);
       var element4 = dom.childAt(element1, [7]);
       var element5 = dom.childAt(element1, [9, 1]);
-      var element6 = dom.childAt(fragment, [4, 1, 1, 1]);
+      var element6 = dom.childAt(fragment, [4, 1, 1, 1, 1]);
       var element7 = dom.childAt(fragment, [8]);
-      var morph0 = dom.createMorphAt(element6,1,1);
-      var morph1 = dom.createMorphAt(element6,5,5);
-      var morph2 = dom.createMorphAt(element6,9,9);
-      var morph3 = dom.createMorphAt(element6,13,13);
-      var morph4 = dom.createMorphAt(element6,17,17);
-      var morph5 = dom.createMorphAt(element6,21,21);
+      var morph0 = dom.createMorphAt(dom.childAt(element6, [1]),1,1);
+      var morph1 = dom.createMorphAt(dom.childAt(element6, [3]),1,1);
+      var morph2 = dom.createMorphAt(dom.childAt(element6, [5]),1,1);
+      var morph3 = dom.createMorphAt(dom.childAt(element6, [7]),1,1);
+      var morph4 = dom.createMorphAt(dom.childAt(element6, [9]),1,1);
+      var morph5 = dom.createMorphAt(dom.childAt(element6, [11]),1,1);
       var morph6 = dom.createMorphAt(dom.childAt(fragment, [6]),1,1);
       var morph7 = dom.createMorphAt(dom.childAt(element7, [1, 1, 3]),0,0);
       var morph8 = dom.createMorphAt(dom.childAt(element7, [3, 1, 3]),0,0);
@@ -2034,10 +2100,10 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       element(env, element5, context, "action", ["toggleSearchForm"], {"on": "mouseDown"});
       block(env, morph0, context, "link-to", ["transactions"], {}, child0, null);
       block(env, morph1, context, "link-to", ["accounts"], {}, child1, null);
-      block(env, morph2, context, "link-to", ["users"], {}, child2, null);
-      block(env, morph3, context, "link-to", ["categories"], {}, child3, null);
-      block(env, morph4, context, "link-to", ["cost_centers"], {}, child4, null);
-      block(env, morph5, context, "link-to", ["tags"], {}, child5, null);
+      block(env, morph2, context, "link-to", ["categories"], {}, child2, null);
+      block(env, morph3, context, "link-to", ["cost_centers"], {}, child3, null);
+      block(env, morph4, context, "link-to", ["tags"], {}, child4, null);
+      block(env, morph5, context, "link-to", ["users"], {}, child5, null);
       content(env, morph6, context, "outlet");
       content(env, morph7, context, "username");
       content(env, morph8, context, "logout");
@@ -2827,7 +2893,7 @@ Ember.TEMPLATES["costcenters"] = Ember.HTMLBars.template((function() {
       var el6 = dom.createElement("a");
       dom.setAttribute(el6,"class","btn");
       dom.setAttribute(el6,"href","#/costcenters/new");
-      var el7 = dom.createTextNode("new user");
+      var el7 = dom.createTextNode("new cost center");
       dom.appendChild(el6, el7);
       dom.appendChild(el5, el6);
       var el6 = dom.createTextNode("\n                ");
@@ -3027,6 +3093,457 @@ Ember.TEMPLATES["loading"] = Ember.HTMLBars.template((function() {
       } else {
         fragment = this.build(dom);
       }
+      return fragment;
+    }
+  };
+}()));
+Ember.TEMPLATES["tag"] = Ember.HTMLBars.template((function() {
+  return {
+    isHTMLBars: true,
+    revision: "Ember@1.12.1",
+    blockParams: 0,
+    cachedFragment: null,
+    hasRendered: false,
+    build: function build(dom) {
+      var el0 = dom.createDocumentFragment();
+      var el1 = dom.createElement("header");
+      dom.setAttribute(el1,"class","form-header");
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("h1");
+      dom.setAttribute(el2,"class","header-title");
+      var el3 = dom.createTextNode("Tag / ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createComment("");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","action-bar");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("button");
+      dom.setAttribute(el3,"class","btn btn-primary");
+      var el4 = dom.createTextNode("Save");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("a");
+      dom.setAttribute(el3,"class","btn");
+      dom.setAttribute(el3,"href","#/tags");
+      var el4 = dom.createTextNode("Cancel");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      var el1 = dom.createTextNode("\n");
+      dom.appendChild(el0, el1);
+      var el1 = dom.createElement("section");
+      dom.setAttribute(el1,"class","form-content");
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("fieldset");
+      dom.setAttribute(el2,"class","fieldset");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","fieldset-container");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","control-group");
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("div");
+      dom.setAttribute(el5,"class","control-label");
+      var el6 = dom.createTextNode("\n                    name\n                ");
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("div");
+      dom.setAttribute(el5,"class","controls");
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createComment("");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n                ");
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n            ");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      var el1 = dom.createTextNode("\n");
+      dom.appendChild(el0, el1);
+      return el0;
+    },
+    render: function render(context, env, contextualElement) {
+      var dom = env.dom;
+      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      dom.detectNamespace(contextualElement);
+      var fragment;
+      if (env.useFragmentCache && dom.canClone) {
+        if (this.cachedFragment === null) {
+          fragment = this.build(dom);
+          if (this.hasRendered) {
+            this.cachedFragment = fragment;
+          } else {
+            this.hasRendered = true;
+          }
+        }
+        if (this.cachedFragment) {
+          fragment = dom.cloneNode(this.cachedFragment, true);
+        }
+      } else {
+        fragment = this.build(dom);
+      }
+      var element0 = dom.childAt(fragment, [0]);
+      var element1 = dom.childAt(element0, [3, 1]);
+      var element2 = dom.childAt(fragment, [2, 1]);
+      var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
+      var morph1 = dom.createMorphAt(dom.childAt(element2, [1, 1, 3]),1,1);
+      content(env, morph0, context, "name");
+      element(env, element1, context, "action", ["save"], {});
+      element(env, element2, context, "disabled", [], {});
+      inline(env, morph1, context, "input", [], {"name": "name", "value": get(env, context, "name"), "required": true, "class": "span7"});
+      return fragment;
+    }
+  };
+}()));
+Ember.TEMPLATES["tags"] = Ember.HTMLBars.template((function() {
+  var child0 = (function() {
+    var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.12.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("                    ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1,"class","entry-fields");
+          var el2 = dom.createTextNode("\n                        ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("span");
+          dom.setAttribute(el2,"class","entry-field");
+          var el3 = dom.createTextNode("\n							");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n						");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n                    ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          var hooks = env.hooks, content = hooks.content;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          var morph0 = dom.createMorphAt(dom.childAt(fragment, [1, 1]),1,1);
+          content(env, morph0, context, "name");
+          return fragment;
+        }
+      };
+    }());
+    return {
+      isHTMLBars: true,
+      revision: "Ember@1.12.1",
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createTextNode("            ");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1,"class","entry-wrap");
+        var el2 = dom.createTextNode("\n                ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2,"class","entry-actions");
+        var el3 = dom.createTextNode("\n                    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("a");
+        dom.setAttribute(el3,"class","entry-action action-delete");
+        dom.setAttribute(el3,"href","#");
+        var el4 = dom.createTextNode("\n                        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("i");
+        dom.setAttribute(el4,"class","fa fa-trash");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n                    ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n                ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n                ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2,"class","entry document js-swipe-entry");
+        var el3 = dom.createTextNode("\n                    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("label");
+        dom.setAttribute(el3,"class","entry-select");
+        var el4 = dom.createTextNode("\n                        ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("input");
+        dom.setAttribute(el4,"type","checkbox");
+        dom.setAttribute(el4,"name","id");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n                    ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("                ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n            ");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        var hooks = env.hooks, get = hooks.get, concat = hooks.concat, attribute = hooks.attribute, block = hooks.block;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        var element0 = dom.childAt(fragment, [1]);
+        var element1 = dom.childAt(element0, [1, 1]);
+        var element2 = dom.childAt(element0, [3]);
+        var element3 = dom.childAt(element2, [1, 1]);
+        var attrMorph0 = dom.createAttrMorph(element1, 'data-ddbid');
+        var attrMorph1 = dom.createAttrMorph(element2, 'data-ddbid');
+        var attrMorph2 = dom.createAttrMorph(element3, 'value');
+        var morph0 = dom.createMorphAt(element2,3,3);
+        attribute(env, attrMorph0, element1, "data-ddbid", concat(env, [get(env, context, "id")]));
+        attribute(env, attrMorph1, element2, "data-ddbid", concat(env, [get(env, context, "id")]));
+        attribute(env, attrMorph2, element3, "value", concat(env, [get(env, context, "id")]));
+        block(env, morph0, context, "link-to", ["tag", get(env, context, "this")], {"class": "entry-link"}, child0, null);
+        return fragment;
+      }
+    };
+  }());
+  return {
+    isHTMLBars: true,
+    revision: "Ember@1.12.1",
+    blockParams: 0,
+    cachedFragment: null,
+    hasRendered: false,
+    build: function build(dom) {
+      var el0 = dom.createDocumentFragment();
+      var el1 = dom.createElement("div");
+      dom.setAttribute(el1,"class","view");
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","view-header");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("h1");
+      dom.setAttribute(el3,"class","header-title");
+      var el4 = dom.createTextNode("Tags");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("nav");
+      dom.setAttribute(el3,"class","nav-action-bar");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","pull-right");
+      var el5 = dom.createTextNode("\n                page-navigator\n            ");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","-on-desktop");
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("div");
+      dom.setAttribute(el5,"class","action-bar");
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("a");
+      dom.setAttribute(el6,"class","btn");
+      dom.setAttribute(el6,"href","#/tags/new");
+      var el7 = dom.createTextNode("new tag");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n                ");
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n            ");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("section");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createComment("");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","view-content");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("header");
+      dom.setAttribute(el3,"class","entries-head");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","head-wrap");
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("label");
+      dom.setAttribute(el5,"class","entry-select");
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("input");
+      dom.setAttribute(el6,"type","checkbox");
+      dom.setAttribute(el6,"data-toggle","id");
+      dom.setAttribute(el6,"class","all");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n                ");
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("div");
+      dom.setAttribute(el5,"class","entry-captions");
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("span");
+      var el7 = dom.createTextNode("\n						name\n					");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n                ");
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n            ");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","entries");
+      var el4 = dom.createTextNode("\n");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createComment("");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      var el1 = dom.createTextNode("\n");
+      dom.appendChild(el0, el1);
+      return el0;
+    },
+    render: function render(context, env, contextualElement) {
+      var dom = env.dom;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, block = hooks.block;
+      dom.detectNamespace(contextualElement);
+      var fragment;
+      if (env.useFragmentCache && dom.canClone) {
+        if (this.cachedFragment === null) {
+          fragment = this.build(dom);
+          if (this.hasRendered) {
+            this.cachedFragment = fragment;
+          } else {
+            this.hasRendered = true;
+          }
+        }
+        if (this.cachedFragment) {
+          fragment = dom.cloneNode(this.cachedFragment, true);
+        }
+      } else {
+        fragment = this.build(dom);
+      }
+      var element4 = dom.childAt(fragment, [0]);
+      var morph0 = dom.createMorphAt(dom.childAt(element4, [3]),1,1);
+      var morph1 = dom.createMorphAt(dom.childAt(element4, [5, 3]),1,1);
+      content(env, morph0, context, "outlet");
+      block(env, morph1, context, "each", [get(env, context, "controller")], {}, child0, null);
       return fragment;
     }
   };
