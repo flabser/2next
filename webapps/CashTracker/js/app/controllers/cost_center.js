@@ -1,7 +1,9 @@
 CT.CostCenterController = Ember.ObjectController.extend({
     actions: {
-        save: function() {
-            alert('save cc')
+        save: function(costCenter) {
+            costCenter.save().then(function() {
+                this.transitionTo('cost_centers');
+            });
         }
     }
 });
