@@ -31,3 +31,22 @@ CT.TagsRoute = Ember.Route.extend({
         }
     }
 });
+
+
+CT.TagsNewController = Ember.ArrayController.extend({
+    actions: {
+        create: function() {
+            this.transitionTo('tags.new');
+        },
+        save: function() {
+            var newAccount = this.store.createRecord('tag', {
+                name: this.get('name'),
+                color: this.get('color')
+            });
+            newAccount.save();
+        },
+        cancel: function() {
+            this.transitionTo('tags');
+        }
+    }
+});

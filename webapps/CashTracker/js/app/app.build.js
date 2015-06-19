@@ -214,6 +214,24 @@ CT.CostCentersController = Ember.ArrayController.extend({
     queryParams: ['offset', 'limit', 'order_by']
 });
 
+
+CT.CostCentersNewController = Ember.ArrayController.extend({
+    actions: {
+        create: function() {
+            this.transitionTo('cost_centers.new');
+        },
+        save: function() {
+            var newAccount = this.store.createRecord('costCenter', {
+                name: this.get('name')
+            });
+            newAccount.save();
+        },
+        cancel: function() {
+            this.transitionTo('cost_centers');
+        }
+    }
+});
+
 CT.TransactionController = Ember.ObjectController.extend({
     actions: {
         save: function(transaction) {
@@ -278,6 +296,166 @@ CT.UsersNewController = Ember.ArrayController.extend({
         }
     }
 });
+
+CT.Account = DS.Model.extend({
+    type: DS.attr('number'),
+    name: DS.attr('string'),
+    currencyCode: DS.attr('string'),
+    openingBalance: DS.attr('number'),
+    amountControl: DS.attr('number'),
+    owner: DS.belongsTo('user'),
+    observers: DS.hasMany('user'),
+    includeInTotals: DS.attr('boolean'),
+    note: DS.attr('string'),
+    sortOrder: DS.attr('number')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 10; ii++) {
+    _fixtures.push({
+        id: ii,
+        type: ii,
+        name: 'account-' + ii,
+        currencyCode: 'KZT',
+        openingBalance: 1000 + ii,
+        amountControl: 2000 + ii,
+        owner: 'mkalihan',
+        observers: ['mkalihan'],
+        includeInTotals: true,
+        note: 'note-' + ii,
+        sortOrder: ii
+    });
+}
+
+CT.Account.FIXTURES = _fixtures;
+
+CT.Category = DS.Model.extend({
+    transactionType: DS.attr('number'),
+    parentId: DS.belongsTo('category'),
+    name: DS.attr('string'),
+    note: DS.attr('string'),
+    color: DS.attr('number'),
+    sortOrder: DS.attr('number')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 10; ii++) {
+    _fixtures.push({
+        id: ii,
+        transactionType: 1,
+        parentId: ii - 1,
+        name: 'category-' + ii,
+        note: 'note-' + ii,
+        color: ii,
+        sortOrder: ii
+    });
+}
+
+CT.Category.FIXTURES = _fixtures;
+
+CT.CostCenter = DS.Model.extend({
+    name: DS.attr('string')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 10; ii++) {
+    _fixtures.push({
+        id: ii,
+        name: 'cost_center-' + ii
+    });
+}
+
+CT.CostCenter.FIXTURES = _fixtures;
+
+CT.Tag = DS.Model.extend({
+    name: DS.attr('string'),
+    color: DS.attr('number')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 10; ii++) {
+    _fixtures.push({
+        id: ii,
+        name: 'tag-' + ii,
+        color: ii
+    });
+}
+
+CT.Tag.FIXTURES = _fixtures;
+
+CT.Transaction = DS.Model.extend({
+    user: DS.belongsTo('user'),
+    accountFrom: DS.belongsTo('account'),
+    accountTo: DS.belongsTo('account'),
+    amount: DS.attr('number'),
+    regDate: DS.attr('date'),
+    category: DS.belongsTo('category'),
+    costCenter: DS.belongsTo('costCenter'),
+    tags: DS.hasMany('tag'),
+    transactionState: DS.attr('number'),
+    transactionType: DS.attr('number'),
+    exchangeRate: DS.attr('number'),
+    repeat: DS.attr('repeat'),
+    every: DS.attr('every'),
+    repeatStep: DS.attr('repeatStep'),
+    startDate: DS.attr('date'),
+    endDate: DS.attr('date'),
+    basis: DS.attr('string'),
+    note: DS.attr('string'),
+    includeInReports: DS.attr('boolean')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 20; ii++) {
+    _fixtures.push({
+        id: ii,
+        user: 'mkalihan',
+        accountFrom: 1,
+        accountTo: 2,
+        amount: 1000,
+        regDate: '11.11.2015',
+        category: 1,
+        costCenter: 1,
+        tags: [],
+        transactionState: 1,
+        transactionType: 1,
+        exchangeRate: 1.1,
+        repeat: false,
+        every: 0,
+        repeatStep: 0,
+        startDate: null,
+        endDate: null,
+        basis: '',
+        note: '',
+        includeInReports: true
+    });
+}
+
+CT.Transaction.FIXTURES = _fixtures;
+
+CT.User = DS.Model.extend({
+    name: DS.attr('string'),
+    email: DS.attr('string'),
+    role: DS.attr('string')
+});
+
+var _fixtures = [];
+
+for (var ii = 1; ii < 10; ii++) {
+    _fixtures.push({
+        id: ii,
+        name: 'mkalihan',
+        email: '',
+        role: ''
+    });
+}
+
+CT.User.FIXTURES = _fixtures;
 
 CT.AccountRoute = Ember.Route.extend({
     templateName: 'account',
@@ -479,6 +657,25 @@ CT.TagsRoute = Ember.Route.extend({
     }
 });
 
+
+CT.TagsNewController = Ember.ArrayController.extend({
+    actions: {
+        create: function() {
+            this.transitionTo('tags.new');
+        },
+        save: function() {
+            var newAccount = this.store.createRecord('tag', {
+                name: this.get('name'),
+                color: this.get('color')
+            });
+            newAccount.save();
+        },
+        cancel: function() {
+            this.transitionTo('tags');
+        }
+    }
+});
+
 CT.TransactionRoute = Ember.Route.extend({
     model: function(params) {
         return this.store.find('transaction', params.transaction_id);
@@ -571,166 +768,6 @@ CT.UsersRoute = Ember.Route.extend({
         }
     }
 });
-
-CT.Account = DS.Model.extend({
-    type: DS.attr('number'),
-    name: DS.attr('string'),
-    currencyCode: DS.attr('string'),
-    openingBalance: DS.attr('number'),
-    amountControl: DS.attr('number'),
-    owner: DS.belongsTo('user'),
-    observers: DS.hasMany('user'),
-    includeInTotals: DS.attr('boolean'),
-    note: DS.attr('string'),
-    sortOrder: DS.attr('number')
-});
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        type: ii,
-        name: 'account-' + ii,
-        currencyCode: 'KZT',
-        openingBalance: 1000 + ii,
-        amountControl: 2000 + ii,
-        owner: 'mkalihan',
-        observers: ['mkalihan'],
-        includeInTotals: true,
-        note: 'note-' + ii,
-        sortOrder: ii
-    });
-}
-
-CT.Account.FIXTURES = _fixtures;
-
-CT.Category = DS.Model.extend({
-    transactionType: DS.attr('number'),
-    parentId: DS.belongsTo('category'),
-    name: DS.attr('string'),
-    note: DS.attr('string'),
-    color: DS.attr('number'),
-    sortOrder: DS.attr('number')
-});
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        transactionType: 1,
-        parentId: ii - 1,
-        name: 'category-' + ii,
-        note: 'note-' + ii,
-        color: ii,
-        sortOrder: ii
-    });
-}
-
-CT.Category.FIXTURES = _fixtures;
-
-CT.CostCenter = DS.Model.extend({
-    name: DS.attr('string')
-});
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        name: 'cost_center-' + ii
-    });
-}
-
-CT.CostCenter.FIXTURES = _fixtures;
-
-CT.Tag = DS.Model.extend({
-    name: DS.attr('string'),
-    color: DS.attr('number')
-});
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        name: 'tag-' + ii,
-        color: ii
-    });
-}
-
-CT.Tag.FIXTURES = _fixtures;
-
-CT.Transaction = DS.Model.extend({
-    user: DS.belongsTo('user'),
-    accountFrom: DS.belongsTo('account'),
-    accountTo: DS.belongsTo('account'),
-    amount: DS.attr('number'),
-    regDate: DS.attr('date'),
-    category: DS.belongsTo('category'),
-    costCenter: DS.belongsTo('costCenter'),
-    tags: DS.hasMany('tag'),
-    transactionState: DS.attr('number'),
-    transactionType: DS.attr('number'),
-    exchangeRate: DS.attr('number'),
-    repeat: DS.attr('repeat'),
-    every: DS.attr('every'),
-    repeatStep: DS.attr('repeatStep'),
-    startDate: DS.attr('date'),
-    endDate: DS.attr('date'),
-    basis: DS.attr('string'),
-    note: DS.attr('string'),
-    includeInReports: DS.attr('boolean')
-});
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 20; ii++) {
-    _fixtures.push({
-        id: ii,
-        user: 'mkalihan',
-        accountFrom: 1,
-        accountTo: 2,
-        amount: 1000,
-        regDate: '11.11.2015',
-        category: 1,
-        costCenter: 1,
-        tags: [],
-        transactionState: 1,
-        transactionType: 1,
-        exchangeRate: 1.1,
-        repeat: false,
-        every: 0,
-        repeatStep: 0,
-        startDate: null,
-        endDate: null,
-        basis: '',
-        note: '',
-        includeInReports: true
-    });
-}
-
-CT.Transaction.FIXTURES = _fixtures;
-
-CT.User = DS.Model.extend({
-    name: DS.attr('string'),
-    email: DS.attr('string'),
-    role: DS.attr('string')
-});
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        name: 'mkalihan',
-        email: '',
-        role: ''
-    });
-}
-
-CT.User.FIXTURES = _fixtures;
 
 CT.AccountView = Ember.View.extend({
     templateName: 'account'
