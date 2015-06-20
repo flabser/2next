@@ -1,7 +1,7 @@
 'use strict';
 
 var CT = Ember.Application.create({
-    modulePrefix: 'CashTracker',
+    modulePrefix: 'CT',
     LOG_TRANSITIONS: true,
     LOG_TRANSITIONS_INTERNAL: true,
     LOG_ACTIVE_GENERATION: true
@@ -116,19 +116,15 @@ CT.AccComponent = Ember.Component.extend({
 CT.AccountController = Ember.ObjectController.extend({
     actions: {
         save: function(account) {
-            account.save().then(function() {
-                this.transitionTo('accounts');
-            });
+            account.save();
+            this.transitionTo('accounts');
         }
     }
 });
 
 CT.AccountsController = Ember.ArrayController.extend({
-    queryParams: ['offset', 'limit', 'order_by'],
-
     actions: {
-        selectAll: function() {;
-        }
+        selectAll: function() {}
     }
 });
 
@@ -186,16 +182,16 @@ CT.ApplicationController = Ember.Controller.extend({
 });
 
 CT.CategoriesController = Ember.ArrayController.extend({
-    queryParams: ['offset', 'limit', 'order_by']
+    actions: {
+        selectAll: function() {}
+    }
 });
 
 CT.CategoryController = Ember.ObjectController.extend({
     actions: {
         save: function(category) {
-        	console.log(category);
-            category.save().then(function() {
-                this.transitionTo('categories');
-            });
+            category.save();
+            this.transitionTo('categories');
         }
     }
 });
@@ -203,17 +199,17 @@ CT.CategoryController = Ember.ObjectController.extend({
 CT.CostCenterController = Ember.ObjectController.extend({
     actions: {
         save: function(costCenter) {
-            costCenter.save().then(function() {
-                this.transitionTo('cost_centers');
-            });
+            costCenter.save();
+            this.transitionTo('cost_centers');
         }
     }
 });
 
 CT.CostCentersController = Ember.ArrayController.extend({
-    queryParams: ['offset', 'limit', 'order_by']
+    actions: {
+        selectAll: function() {}
+    }
 });
-
 
 CT.CostCentersNewController = Ember.ArrayController.extend({
     actions: {
@@ -221,13 +217,46 @@ CT.CostCentersNewController = Ember.ArrayController.extend({
             this.transitionTo('cost_centers.new');
         },
         save: function() {
-            var newAccount = this.store.createRecord('costCenter', {
+            var newCostCenter = this.store.createRecord('costCenter', {
                 name: this.get('name')
             });
-            newAccount.save();
+            newCostCenter.save();
         },
         cancel: function() {
             this.transitionTo('cost_centers');
+        }
+    }
+});
+
+CT.TagController = Ember.ObjectController.extend({
+    actions: {
+        save: function(tag) {
+            tag.save();
+            this.transitionTo('tags');
+        }
+    }
+});
+
+CT.TagsController = Ember.ArrayController.extend({
+    actions: {
+        selectAll: function() {}
+    }
+});
+
+CT.TagsNewController = Ember.ArrayController.extend({
+    actions: {
+        create: function() {
+            this.transitionTo('tags.new');
+        },
+        save: function() {
+            var newTag = this.store.createRecord('tag', {
+                name: this.get('name'),
+                color: this.get('color')
+            });
+            newTag.save();
+        },
+        cancel: function() {
+            this.transitionTo('tags');
         }
     }
 });
@@ -236,6 +265,7 @@ CT.TransactionController = Ember.ObjectController.extend({
     actions: {
         save: function(transaction) {
             transaction.save();
+            this.transitionTo('transactions');
         }
     }
 });
@@ -277,7 +307,9 @@ CT.UserController = Ember.ObjectController.extend({
 });
 
 CT.UsersController = Ember.ArrayController.extend({
-    queryParams: ['offset', 'limit', 'order_by']
+    actions: {
+        selectAll: function() {}
+    }
 });
 
 CT.UsersNewController = Ember.ArrayController.extend({
@@ -310,26 +342,6 @@ CT.Account = DS.Model.extend({
     sortOrder: DS.attr('number')
 });
 
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        type: ii,
-        name: 'account-' + ii,
-        currencyCode: 'KZT',
-        openingBalance: 1000 + ii,
-        amountControl: 2000 + ii,
-        owner: 'mkalihan',
-        observers: ['mkalihan'],
-        includeInTotals: true,
-        note: 'note-' + ii,
-        sortOrder: ii
-    });
-}
-
-CT.Account.FIXTURES = _fixtures;
-
 CT.Category = DS.Model.extend({
     transactionType: DS.attr('number'),
     parentId: DS.belongsTo('category'),
@@ -339,53 +351,14 @@ CT.Category = DS.Model.extend({
     sortOrder: DS.attr('number')
 });
 
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        transactionType: 1,
-        parentId: ii - 1,
-        name: 'category-' + ii,
-        note: 'note-' + ii,
-        color: ii,
-        sortOrder: ii
-    });
-}
-
-CT.Category.FIXTURES = _fixtures;
-
 CT.CostCenter = DS.Model.extend({
     name: DS.attr('string')
 });
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        name: 'cost_center-' + ii
-    });
-}
-
-CT.CostCenter.FIXTURES = _fixtures;
 
 CT.Tag = DS.Model.extend({
     name: DS.attr('string'),
     color: DS.attr('number')
 });
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        name: 'tag-' + ii,
-        color: ii
-    });
-}
-
-CT.Tag.FIXTURES = _fixtures;
 
 CT.Transaction = DS.Model.extend({
     user: DS.belongsTo('user'),
@@ -409,100 +382,26 @@ CT.Transaction = DS.Model.extend({
     includeInReports: DS.attr('boolean')
 });
 
-var _fixtures = [];
-
-for (var ii = 1; ii < 20; ii++) {
-    _fixtures.push({
-        id: ii,
-        user: 'mkalihan',
-        accountFrom: 1,
-        accountTo: 2,
-        amount: 1000,
-        regDate: '11.11.2015',
-        category: 1,
-        costCenter: 1,
-        tags: [],
-        transactionState: 1,
-        transactionType: 1,
-        exchangeRate: 1.1,
-        repeat: false,
-        every: 0,
-        repeatStep: 0,
-        startDate: null,
-        endDate: null,
-        basis: '',
-        note: '',
-        includeInReports: true
-    });
-}
-
-CT.Transaction.FIXTURES = _fixtures;
-
 CT.User = DS.Model.extend({
     name: DS.attr('string'),
     email: DS.attr('string'),
     role: DS.attr('string')
 });
 
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        name: 'mkalihan',
-        email: '',
-        role: ''
-    });
-}
-
-CT.User.FIXTURES = _fixtures;
-
 CT.AccountRoute = Ember.Route.extend({
-    templateName: 'account',
-
     model: function(params) {
         return this.store.find('account', params.account_id);
     }
 });
 
 CT.AccountsRoute = Ember.Route.extend({
-    templateName: 'accounts',
-
-    queryParams: {
-        offset: {
-            refreshModel: true
-        },
-        limit: {
-            refreshModel: true
-        },
-        order_by: {
-            refreshModel: true
-        }
-    },
-
     model: function(params) {
         return this.store.find('account');
-    },
-
-    beforeModel: function(transition) {
-        if (transition.targetName === 'accounts.index') {
-            if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
-            }
-
-            if (!parseInt(transition.queryParams.offset, 0)) {
-                transition.queryParams.offset = 0;
-            }
-
-            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
-                transition.queryParams.order_by = '';
-            }
-
-            this.transitionTo('accounts', {
-                queryParams: transition.queryParams
-            });
-        }
     }
+});
+
+CT.AccountsNewRoute = Ember.Route.extend({
+    templateName: 'account'
 });
 
 CT.ApplicationRoute = Ember.Route.extend({
@@ -514,42 +413,13 @@ CT.ApplicationRoute = Ember.Route.extend({
 });
 
 CT.CategoriesRoute = Ember.Route.extend({
-
-    queryParams: {
-        offset: {
-            refreshModel: true
-        },
-        limit: {
-            refreshModel: true
-        },
-        order_by: {
-            refreshModel: true
-        }
-    },
-
     model: function(params) {
         return this.store.find('category');
-    },
-
-    beforeModel: function(transition) {
-        if (transition.targetName === 'categories.index') {
-            if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
-            }
-
-            if (!parseInt(transition.queryParams.offset, 0)) {
-                transition.queryParams.offset = 0;
-            }
-
-            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
-                transition.queryParams.order_by = '';
-            }
-
-            this.transitionTo('categories', {
-                queryParams: transition.queryParams
-            });
-        }
     }
+});
+
+CT.CategoriesNewRoute = Ember.Route.extend({
+    templateName: 'category'
 });
 
 CT.CategoryRoute = Ember.Route.extend({
@@ -565,115 +435,29 @@ CT.CostCenterRoute = Ember.Route.extend({
 });
 
 CT.CostCentersRoute = Ember.Route.extend({
-
-    queryParams: {
-        offset: {
-            refreshModel: true
-        },
-        limit: {
-            refreshModel: true
-        },
-        order_by: {
-            refreshModel: true
-        }
-    },
-
     model: function(params) {
         return this.store.find('cost-center');
-    },
-
-    beforeModel: function(transition) {
-        if (transition.targetName === 'costcenters.index') {
-            if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
-            }
-
-            if (!parseInt(transition.queryParams.offset, 0)) {
-                transition.queryParams.offset = 0;
-            }
-
-            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
-                transition.queryParams.order_by = '';
-            }
-
-            this.transitionTo('costcenters', {
-                queryParams: transition.queryParams
-            });
-        }
     }
 });
 
-CT.TagRoute = Ember.Route.extend({
-    templateName: 'tag',
+CT.CostCentersNewRoute = Ember.Route.extend({
+    templateName: 'cost_center'
+});
 
+CT.TagRoute = Ember.Route.extend({
     model: function(params) {
         return this.store.find('tag', params.tag_id);
-    },
+    }
+});
 
-    actions: {
-        save: function(tag) {
-            tag.save().then(function() {
-                this.transitionTo('tags');
-            });
-        }
+CT.TagsRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('tag');
     }
 });
 
 CT.TagsNewRoute = Ember.Route.extend({
     templateName: 'tag'
-});
-
-CT.TagsRoute = Ember.Route.extend({
-
-    templateName: 'tags',
-
-    queryParams: {
-        offset: {
-            refreshModel: true
-        },
-        limit: {
-            refreshModel: true
-        }
-    },
-
-    model: function(params) {
-        return this.store.find('tag');
-    },
-
-    beforeModel: function(transition) {
-        if (transition.targetName === 'tags.index') {
-            if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
-            }
-
-            if (!parseInt(transition.queryParams.offset, 0)) {
-                transition.queryParams.offset = 0;
-            }
-
-            this.transitionTo('tags', {
-                queryParams: transition.queryParams
-            });
-        }
-    }
-});
-
-
-CT.TagsNewController = Ember.ArrayController.extend({
-    actions: {
-        create: function() {
-            this.transitionTo('tags.new');
-        },
-        save: function() {
-            var newAccount = this.store.createRecord('tag', {
-                name: this.get('name'),
-                color: this.get('color')
-            });
-            newAccount.save();
-        },
-        cancel: function() {
-            this.transitionTo('tags');
-        }
-    }
 });
 
 CT.TransactionRoute = Ember.Route.extend({
@@ -683,7 +467,6 @@ CT.TransactionRoute = Ember.Route.extend({
 });
 
 CT.TransactionsRoute = Ember.Route.extend({
-
     queryParams: {
         offset: {
             refreshModel: true
@@ -724,6 +507,10 @@ CT.TransactionsRoute = Ember.Route.extend({
     }
 });
 
+CT.TransactionsNewRoute = Ember.Route.extend({
+    templateName: 'transaction'
+});
+
 CT.UserRoute = Ember.Route.extend({
     model: function(params) {
         return this.store.find('user', params.user_id);
@@ -731,54 +518,13 @@ CT.UserRoute = Ember.Route.extend({
 });
 
 CT.UsersRoute = Ember.Route.extend({
-
-    queryParams: {
-        offset: {
-            refreshModel: true
-        },
-        limit: {
-            refreshModel: true
-        },
-        order_by: {
-            refreshModel: true
-        }
-    },
-
     model: function(params) {
         return this.store.find('user');
-    },
-
-    beforeModel: function(transition) {
-        if (transition.targetName === 'users.index') {
-            if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
-            }
-
-            if (!parseInt(transition.queryParams.offset, 0)) {
-                transition.queryParams.offset = 0;
-            }
-
-            if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
-                transition.queryParams.order_by = '';
-            }
-
-            this.transitionTo('users', {
-                queryParams: transition.queryParams
-            });
-        }
     }
 });
 
-CT.AccountView = Ember.View.extend({
-    templateName: 'account'
-});
-
-CT.AccountsView = Ember.View.extend({
-    templateName: 'accounts'
-});
-
-CT.AccountsNewView = Ember.View.extend({
-    templateName: 'account'
+CT.UsersNewRoute = Ember.Route.extend({
+    templateName: 'user'
 });
 
 CT.ApplicationView = Ember.View.extend({
@@ -789,55 +535,6 @@ CT.ApplicationView = Ember.View.extend({
     willInsertElement: function() {
         $('.page-loading').hide();
     }
-});
-
-CT.CategoriesView = Ember.View.extend({
-    templateName: 'categories'
-});
-
-CT.CategoriesNewView = Ember.View.extend({
-    templateName: 'category'
-});
-
-CT.CategoryView = Ember.View.extend({
-    templateName: 'category'
-});
-
-CT.CostCenterView = Ember.View.extend({
-    templateName: 'costcenter'
-});
-
-CT.CostCentersView = Ember.View.extend({
-    templateName: 'costcenters'
-});
-
-CT.CostCentersNewView = Ember.View.extend({
-    templateName: 'costcenter'
-});
-
-CT.TransactionView = Ember.View.extend({
-    templateName: 'transaction'
-});
-
-CT.TransactionsView = Ember.View.extend({
-    templateName: 'transactions'
-});
-
-CT.TransactionsNewView = Ember.View.extend({
-    templateName: 'transaction'
-});
-
-CT.UserView = Ember.View.extend({
-    templateName: 'user'
-});
-
-CT.UsersView = Ember.View.extend({
-    templateName: 'users'
-});
-
-
-CT.UsersNewView = Ember.View.extend({
-    templateName: 'user'
 });
 
 Ember.TEMPLATES["account"] = Ember.HTMLBars.template((function() {
@@ -2619,7 +2316,7 @@ Ember.TEMPLATES["category"] = Ember.HTMLBars.template((function() {
     }
   };
 }()));
-Ember.TEMPLATES["costcenter"] = Ember.HTMLBars.template((function() {
+Ember.TEMPLATES["cost_center"] = Ember.HTMLBars.template((function() {
   return {
     isHTMLBars: true,
     revision: "Ember@1.12.1",
@@ -2747,7 +2444,7 @@ Ember.TEMPLATES["costcenter"] = Ember.HTMLBars.template((function() {
     }
   };
 }()));
-Ember.TEMPLATES["costcenters"] = Ember.HTMLBars.template((function() {
+Ember.TEMPLATES["cost_centers"] = Ember.HTMLBars.template((function() {
   var child0 = (function() {
     var child0 = (function() {
       return {
@@ -3468,13 +3165,6 @@ Ember.TEMPLATES["tags"] = Ember.HTMLBars.template((function() {
       var el4 = dom.createTextNode("\n            ");
       dom.appendChild(el3, el4);
       var el4 = dom.createElement("div");
-      dom.setAttribute(el4,"class","pull-right");
-      var el5 = dom.createTextNode("\n                page-navigator\n            ");
-      dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("div");
       dom.setAttribute(el4,"class","-on-desktop");
       var el5 = dom.createTextNode("\n                ");
       dom.appendChild(el4, el5);
@@ -3540,14 +3230,6 @@ Ember.TEMPLATES["tags"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el4, el5);
       var el5 = dom.createElement("div");
       dom.setAttribute(el5,"class","entry-captions");
-      var el6 = dom.createTextNode("\n                    ");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createElement("span");
-      var el7 = dom.createTextNode("\n						name\n					");
-      dom.appendChild(el6, el7);
-      dom.appendChild(el5, el6);
-      var el6 = dom.createTextNode("\n                ");
-      dom.appendChild(el5, el6);
       dom.appendChild(el4, el5);
       var el5 = dom.createTextNode("\n            ");
       dom.appendChild(el4, el5);

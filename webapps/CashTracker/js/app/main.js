@@ -1,7 +1,7 @@
 'use strict';
 
 var CT = Ember.Application.create({
-    modulePrefix: 'CashTracker',
+    modulePrefix: 'CT',
     LOG_TRANSITIONS: true,
     LOG_TRANSITIONS_INTERNAL: true,
     LOG_ACTIVE_GENERATION: true

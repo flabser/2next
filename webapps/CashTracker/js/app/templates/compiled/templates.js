@@ -1777,7 +1777,7 @@ Ember.TEMPLATES["category"] = Ember.HTMLBars.template((function() {
     }
   };
 }()));
-Ember.TEMPLATES["costcenter"] = Ember.HTMLBars.template((function() {
+Ember.TEMPLATES["cost_center"] = Ember.HTMLBars.template((function() {
   return {
     isHTMLBars: true,
     revision: "Ember@1.12.1",
@@ -1905,7 +1905,7 @@ Ember.TEMPLATES["costcenter"] = Ember.HTMLBars.template((function() {
     }
   };
 }()));
-Ember.TEMPLATES["costcenters"] = Ember.HTMLBars.template((function() {
+Ember.TEMPLATES["cost_centers"] = Ember.HTMLBars.template((function() {
   var child0 = (function() {
     var child0 = (function() {
       return {
@@ -2626,13 +2626,6 @@ Ember.TEMPLATES["tags"] = Ember.HTMLBars.template((function() {
       var el4 = dom.createTextNode("\n            ");
       dom.appendChild(el3, el4);
       var el4 = dom.createElement("div");
-      dom.setAttribute(el4,"class","pull-right");
-      var el5 = dom.createTextNode("\n                page-navigator\n            ");
-      dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("div");
       dom.setAttribute(el4,"class","-on-desktop");
       var el5 = dom.createTextNode("\n                ");
       dom.appendChild(el4, el5);
@@ -2698,14 +2691,6 @@ Ember.TEMPLATES["tags"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el4, el5);
       var el5 = dom.createElement("div");
       dom.setAttribute(el5,"class","entry-captions");
-      var el6 = dom.createTextNode("\n                    ");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createElement("span");
-      var el7 = dom.createTextNode("\n						name\n					");
-      dom.appendChild(el6, el7);
-      dom.appendChild(el5, el6);
-      var el6 = dom.createTextNode("\n                ");
-      dom.appendChild(el5, el6);
       dom.appendChild(el4, el5);
       var el5 = dom.createTextNode("\n            ");
       dom.appendChild(el4, el5);

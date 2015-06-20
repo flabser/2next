@@ -1,7 +1,8 @@
 CT.CostCentersController = Ember.ArrayController.extend({
-    queryParams: ['offset', 'limit', 'order_by']
+    actions: {
+        selectAll: function() {}
+    }
 });
-
 
 CT.CostCentersNewController = Ember.ArrayController.extend({
     actions: {
@@ -9,10 +10,10 @@ CT.CostCentersNewController = Ember.ArrayController.extend({
             this.transitionTo('cost_centers.new');
         },
         save: function() {
-            var newAccount = this.store.createRecord('costCenter', {
+            var newCostCenter = this.store.createRecord('costCenter', {
                 name: this.get('name')
             });
-            newAccount.save();
+            newCostCenter.save();
         },
         cancel: function() {
             this.transitionTo('cost_centers');

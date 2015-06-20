@@ -1,5 +1,4 @@
 CT.TransactionsRoute = Ember.Route.extend({
-
     queryParams: {
         offset: {
             refreshModel: true
@@ -38,4 +37,8 @@ CT.TransactionsRoute = Ember.Route.extend({
             });
         }
     }
+});
+
+CT.TransactionsNewRoute = Ember.Route.extend({
+    templateName: 'transaction'
 });

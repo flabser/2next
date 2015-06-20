@@ -10,23 +10,3 @@ CT.Account = DS.Model.extend({
     note: DS.attr('string'),
     sortOrder: DS.attr('number')
 });
-
-var _fixtures = [];
-
-for (var ii = 1; ii < 10; ii++) {
-    _fixtures.push({
-        id: ii,
-        type: ii,
-        name: 'account-' + ii,
-        currencyCode: 'KZT',
-        openingBalance: 1000 + ii,
-        amountControl: 2000 + ii,
-        owner: 'mkalihan',
-        observers: ['mkalihan'],
-        includeInTotals: true,
-        note: 'note-' + ii,
-        sortOrder: ii
-    });
-}
-
-CT.Account.FIXTURES = _fixtures;
