@@ -1,5 +1,6 @@
 package com.flabser.restful.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -17,8 +18,12 @@ import javax.ws.rs.core.MediaType;
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.restful.Container;
+import com.flabser.restful.JavaToJSON;
+import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.script._IObject;
 import com.flabser.script._Page;
+import com.flabser.servlets.admin.UserServices;
 import com.flabser.users.User;
 
 @Path("/admin")
@@ -51,19 +56,31 @@ public class RestAdminProvider {
 	}
 	
 	@GET
-	@Path("/users")
+	@Path("/{data_type}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public _Page produceGet(@PathParam("id") String id) {
+	public Object produceGet(@PathParam("data_type") String type) {
 		String model = ";";
-		System.out.println(request.getRequestedSessionId() + " " + model );
-		
-		AppEnv env = (AppEnv) context.getAttribute("portalenv");
-		
-		_Page pojoPage = new _Page();
-		pojoPage.setId("no_id");
-
+		System.out.println(request.getRequestedSessionId() + " " + type );
+		ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
+		UserServices us = new UserServices();				
+		ArrayList<SimpleUser> su = new ArrayList<SimpleUser>();
 	
-		return pojoPage;
+		int count = sysDatabase.getAllUsersCount("");
+		int pageSize = 100;
+		ArrayList<User> fl = sysDatabase.getAllUsers("", RuntimeObjUtil.calcStartEntry(1, pageSize), pageSize);
+		for (User user : fl) {
+			SimpleUser u = new SimpleUser();
+			u.setId(user.id);
+			u.setLogin(user.getLogin());
+			u.setUserName(user.getUserName());
+			su.add(u);
+	
+		}
+				
+		Container c = new Container(su);
+		
+		new JavaToJSON(c);
+		return c;
 
 	}
 	

@@ -118,8 +118,8 @@ public class AppEnv implements ICache{
 	}
 
 
-	public static String getName() {
-		return "appType";
+	public  String getName() {
+		return appType;
 	}
 
 	

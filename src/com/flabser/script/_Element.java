@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class _Element implements _IContent {
+	@JsonProperty
 	private String name;
+	@JsonProperty
 	private Object value;
 
 	public _Element(String name, String value) {

@@ -10,7 +10,7 @@ public class ProviderResult{
 	public String originalAttachName;
 	public boolean addHistory;
 
-	ProviderResult(PublishAsType publishAs, String xslt){
+	public ProviderResult(PublishAsType publishAs, String xslt){
 		this.publishAs = publishAs;
 		this.xslt = xslt;
 	}

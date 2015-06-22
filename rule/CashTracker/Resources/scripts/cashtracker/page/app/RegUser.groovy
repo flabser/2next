@@ -34,7 +34,7 @@ class RegUser extends _DoScript {
 
 		def sdb = com.flabser.dataengine.DatabaseFactory.getSysDatabase()
 
-		boolean userExists = sdb.getUser(regForm.email).isValid
+		def userExists = sdb.getUser(regForm.email)
 		if (userExists) {
 			publishElement("error", "user-exists")
 			return

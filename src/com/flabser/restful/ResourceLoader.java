@@ -19,8 +19,8 @@ public class ResourceLoader extends Application {
 
 		// for in enabled_apps {
 		// classes < rest_endpoint
-		classes.add(TransactionService.class);
-		classes.add(CostCenterService.class);
+		//classes.add(TransactionService.class);
+		//classes.add(CostCenterService.class);
 		// }
 
 		// register root resource
