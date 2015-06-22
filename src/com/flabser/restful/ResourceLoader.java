@@ -5,13 +5,13 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
-import com.flabser.restful.admin.RestAdminProvider;
+import cashtracker.rest.AccountService;
+import cashtracker.rest.CategoryService;
+import cashtracker.rest.CostCenterService;
+import cashtracker.rest.TagService;
+import cashtracker.rest.TransactionService;
+
 import com.flabser.restful.provider.ObjectMapperProvider;
-import com.flabser.solutions.cashtracker.services.AccountService;
-import com.flabser.solutions.cashtracker.services.CategoryService;
-import com.flabser.solutions.cashtracker.services.CostCenterService;
-import com.flabser.solutions.cashtracker.services.TagService;
-import com.flabser.solutions.cashtracker.services.TransactionService;
 
 
 public class ResourceLoader extends Application {
@@ -29,7 +29,6 @@ public class ResourceLoader extends Application {
 		classes.add(CategoryService.class);
 		classes.add(CostCenterService.class);
 		classes.add(TagService.class);
-
 
 		return classes;
 	}

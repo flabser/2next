@@ -65,7 +65,7 @@ public class RestProvider {
 	}
 	
 	@GET
-	@Path("/{model_type}")
+	@Path("___conflictuet___/{model_type}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object produce(@PathParam("model_type") String type) throws RuleException, AuthFailedException, UserException, ClassNotFoundException, InstantiationException, IllegalAccessException, DatabasePoolException {
 		System.out.println(getClass().getName() + " " + request.getRequestedSessionId() + "  " + type + " id=");
