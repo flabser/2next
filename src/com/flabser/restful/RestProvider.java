@@ -60,12 +60,17 @@ public class RestProvider {
 	@Context
 	public HttpServletResponse response;
 	
-	public AppEnv getAppEnv(){
+	public AppEnv getAppEnv(){ 
 		return (AppEnv) context.getAttribute("portalenv");
 	}
 	
+
 /*	@GET
 	@Path("/{model_type}")
+=======
+	@GET
+	@Path("___conflictuet___/{model_type}")
+>>>>>>> refs/remotes/origin/master
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object produce(@PathParam("model_type") String type) throws RuleException, AuthFailedException, UserException, ClassNotFoundException, InstantiationException, IllegalAccessException, DatabasePoolException {
 		System.out.println(getClass().getName() + " " + request.getRequestedSessionId() + "  " + type + " id=");

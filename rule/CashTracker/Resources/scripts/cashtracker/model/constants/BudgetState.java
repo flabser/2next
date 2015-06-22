@@ -1,4 +1,4 @@
-package com.flabser.solutions.cashtracker.constants;
+package cashtracker.model.constants;
 
 public enum BudgetState {
 	UNKNOWN(0), ACTIVE(653), DELETED(457);

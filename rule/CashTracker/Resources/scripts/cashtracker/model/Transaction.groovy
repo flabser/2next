@@ -5,8 +5,8 @@ import java.sql.SQLException
 
 import com.fasterxml.jackson.annotation.JsonRootName
 import com.flabser.script._IObject
-import com.flabser.solutions.cashtracker.constants.TransactionState
-import com.flabser.solutions.cashtracker.constants.TransactionType
+import cashtracker.model.constants.TransactionState
+import cashtracker.model.constants.TransactionType
 import com.flabser.users.User
 
 

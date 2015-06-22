@@ -1,4 +1,4 @@
-package com.flabser.solutions.cashtracker.constants;
+package cashtracker.model.constants;
 
 public enum TransactionType {
 	UNKNOWN(0), EXPENSE(1), INCOME(2), TRANSFER(3);

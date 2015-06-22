@@ -1,4 +1,4 @@
-package com.flabser.solutions.cashtracker.services;
+package cashtracker.rest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,8 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import cashtracker.dao.AccountDAO;
-import cashtracker.model.Account;
+import cashtracker.dao.CategoryDAO;
+import cashtracker.model.Category;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -22,43 +22,43 @@ import com.flabser.script._Session;
 import com.flabser.users.UserSession;
 
 
-@Path("accounts")
-public class AccountService extends RestProvider {
+@Path("categories")
+public class CategoryService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public AccountsResponse get() {
+	public CategoriesResponse get() {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
-		return new AccountsResponse(dao.findAll());
+		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		return new CategoriesResponse(dao.findAll());
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Account get(@PathParam("id") int id) {
+	public Category get(@PathParam("id") long id) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
-		Account m = dao.findById(id);
+		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		Category m = dao.findById(id);
 		return m;
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Account create(Account m) {
+	public Category create(Category m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
-		m.setId(dao.addAccount(m));
+		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		m.setId(dao.addCategory(m));
 		return m;
 	}
 
@@ -66,23 +66,23 @@ public class AccountService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Account update(@PathParam("id") int id, Account m) {
+	public Category update(@PathParam("id") long id, Category m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		m.setId(id);
-		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
-		dao.updateAccount(m);
+		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		dao.updateCategory(m);
 		return m;
 	}
 
-	@JsonRootName("accounts")
-	class AccountsResponse extends ArrayList <Account> {
+	@JsonRootName("categories")
+	class CategoriesResponse extends ArrayList <Category> {
 
 		private static final long serialVersionUID = 1L;
 
-		public AccountsResponse(Collection <? extends Account> m) {
+		public CategoriesResponse(Collection <? extends Category> m) {
 			addAll(m);
 		}
 	}

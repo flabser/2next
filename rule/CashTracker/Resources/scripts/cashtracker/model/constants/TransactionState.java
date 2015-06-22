@@ -1,4 +1,4 @@
-package com.flabser.solutions.cashtracker.constants;
+package cashtracker.model.constants;
 
 public enum TransactionState {
 	UNKNOWN(0), CONFIRMED(1), PENDING(2);

@@ -1,4 +1,4 @@
-package com.flabser.solutions.cashtracker.services;
+package cashtracker.rest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,8 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import cashtracker.dao.CategoryDAO;
-import cashtracker.model.Category;
+import cashtracker.dao.CostCenterDAO;
+import cashtracker.model.CostCenter;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -22,43 +22,43 @@ import com.flabser.script._Session;
 import com.flabser.users.UserSession;
 
 
-@Path("categories")
-public class CategoryService extends RestProvider {
+@Path("costcenters")
+public class CostCenterService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public CategoriesResponse get() {
+	public CostCentersResponse get() {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
-		return new CategoriesResponse(dao.findAll());
+		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
+		return new CostCentersResponse(dao.findAll());
 	}
 
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Category get(@PathParam("id") int id) {
+	public CostCenter get(@PathParam("id") long id) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
-		Category m = dao.findById(id);
+		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
+		CostCenter m = dao.findById(id);
 		return m;
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Category create(Category m) {
+	public CostCenter create(CostCenter m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
-		m.setId(dao.addCategory(m));
+		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
+		m.setId(dao.addCostCenter(m));
 		return m;
 	}
 
@@ -66,23 +66,23 @@ public class CategoryService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Category update(@PathParam("id") int id, Category m) {
+	public CostCenter update(@PathParam("id") long id, CostCenter m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		m.setId(id);
-		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
-		dao.updateCategory(m);
+		CostCenterDAO dao = new CostCenterDAO(new _Session(getAppEnv(), userSession));
+		dao.updateCostCenter(m);
 		return m;
 	}
 
-	@JsonRootName("categories")
-	class CategoriesResponse extends ArrayList <Category> {
+	@JsonRootName("costCenters")
+	class CostCentersResponse extends ArrayList <CostCenter> {
 
 		private static final long serialVersionUID = 1L;
 
-		public CategoriesResponse(Collection <? extends Category> m) {
+		public CostCentersResponse(Collection <? extends CostCenter> m) {
 			addAll(m);
 		}
 	}

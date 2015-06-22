@@ -1,4 +1,4 @@
-package com.flabser.solutions.cashtracker.services;
+package cashtracker.rest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,7 +37,7 @@ public class TagService extends RestProvider {
 	}
 
 	@GET
-	@Path("/{id}")
+	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Tag get(@PathParam("id") long id) {
 
