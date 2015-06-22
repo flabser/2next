@@ -13,8 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import cashtracker.dao.TransactionDAO;
-import cashtracker.model.Transaction;
+import cashtracker.dao.TagDAO;
+import cashtracker.model.Tag;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -22,43 +22,43 @@ import com.flabser.script._Session;
 import com.flabser.users.UserSession;
 
 
-@Path("transactions")
-public class TransactionService extends RestProvider {
+@Path("tags")
+public class TagService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public TransactionsResponse get() {
+	public TagsResponse get() {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		return new TransactionsResponse(dao.findAll());
+		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		return new TagsResponse(dao.findAll());
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Transaction get(@PathParam("id") int id) {
+	public Tag get(@PathParam("id") long id) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		Transaction m = dao.findById(id);
+		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		Tag m = dao.findById(id);
 		return m;
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Transaction create(Transaction m) {
+	public Tag create(Tag m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		m.setId(dao.addTransaction(m));
+		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		m.setId(dao.addTag(m));
 		return m;
 	}
 
@@ -66,23 +66,23 @@ public class TransactionService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Transaction update(@PathParam("id") long id, Transaction m) {
+	public Tag update(@PathParam("id") long id, Tag m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		m.setId(id);
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		dao.updateTransaction(m);
+		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		dao.updateTag(m);
 		return m;
 	}
 
-	@JsonRootName("transactions")
-	class TransactionsResponse extends ArrayList <Transaction> {
+	@JsonRootName("tags")
+	class TagsResponse extends ArrayList <Tag> {
 
 		private static final long serialVersionUID = 1L;
 
-		public TransactionsResponse(Collection <? extends Transaction> m) {
+		public TagsResponse(Collection <? extends Tag> m) {
 			addAll(m);
 		}
 	}

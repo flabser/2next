@@ -1,13 +1,10 @@
 package cashtracker.dao;
 
-import java.sql.ResultSet;
-import java.util.List;
+import cashtracker.model.Category
 
-import cashtracker.model.Category;
-
-import com.flabser.dataengine.IDatabase;
+import com.flabser.dataengine.IDatabase
 import com.flabser.script._Session
-import com.flabser.users.User;
+import com.flabser.users.User
 
 
 public class CategoryDAO {
@@ -21,34 +18,41 @@ public class CategoryDAO {
 	}
 
 	public List <Category> findAll() {
-		List <Category> result = db.select("SELECT * FROM category", Category.class, user);
+		List <Category> result = db.select("SELECT * FROM categories", Category.class, user);
 		return result;
 	}
 
 	public Category findById(long id) {
-		List <Category> list = db.select("select * from category where id = $id", Category.class, user)
-
-		Category result = null
-
-		if (list.size() > 0) {
-			result = list[0]
-		}
-
+		List <Category> list = db.select("select * from categories where id = $id", Category.class, user)
+		Category result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int addCategory(Category c) {
-		String sql = "insert into category (...) values (...)";
+	public int addCategory(Category m) {
+		String sql = """insert into categories
+							(transaction_type, parent_id,
+							name, note, color, sort_order)
+						values
+							(${m.transactionType}, ${m.parentCategory.id},
+							'${m.name}', '${m.note}', ${m.color}, ${m.sortOrder})""";
 		return db.insert(sql, user);
 	}
 
-	public void updateCategory(Category c) {
-		String sql = "update category set ... where id=";
+	public void updateCategory(Category m) {
+		String sql = """update categories
+						set
+							transaction_type = ${m.transactionType},
+							parent_id = ${m.parentCategory.id},
+							name = '${m.name}',
+							note = '${m.note}',
+							color = ${m.color},
+							sort_order = ${m.sortOrder}
+						where id = ${m.id}"""
 		db.update(sql, user);
 	}
 
-	public void deleteCategory(Category c) {
-		String sql = "delete from category where id = " + c.getId();
-		db.delete(sql, user);
+	public void deleteCategory(Category m) {
+		String sql = "delete from categories where id = ${m.id}"
+		db.delete(sql, user)
 	}
 }

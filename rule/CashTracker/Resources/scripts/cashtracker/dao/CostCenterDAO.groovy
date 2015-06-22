@@ -1,9 +1,5 @@
 package cashtracker.dao
 
-import java.sql.ResultSet
-import java.util.List
-
-import cashtracker.model.Budget
 import cashtracker.model.CostCenter
 
 import com.flabser.dataengine.IDatabase
@@ -22,43 +18,28 @@ public class CostCenterDAO {
 	}
 
 	public List <CostCenter> findAll() {
-		List <CostCenter> result = db.select("SELECT * FROM costcenter", CostCenter.class, user)
+		List <CostCenter> result = db.select("SELECT * FROM costcenters", CostCenter.class, user)
 		return result
 	}
 
 	public CostCenter findById(long id) {
-		List <CostCenter> list = db.select("select * from costcenter where id = $id", CostCenter.class, user)
-
-		CostCenter result = null
-
-		if (list.size() > 0) {
-			result = list[0]
-		}
-
+		List <CostCenter> list = db.select("select * from costcenters where id = $id", CostCenter.class, user)
+		CostCenter result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int addCostCenter(CostCenter c) {
-		String sql = "insert into costcenter (type, name) values (${c.type}, '${c.name}')"
+	public int addCostCenter(CostCenter m) {
+		String sql = "insert into costcenters (name) values ('${m.name}')"
 		return db.insert(sql, user)
 	}
 
-	public void updateCostCenter(CostCenter c) {
-		String sql = "update costcenter set type = ${c.type}, name = '${c.name}' where id = ${c.id}"
+	public void updateCostCenter(CostCenter m) {
+		String sql = "update costcenters set name = '${m.name}' where id = ${m.id}"
 		db.update(sql, user)
 	}
 
-	public void deleteCostCenter(CostCenter c) {
-		String sql = "delete from costcenter where id = ${c.id}"
+	public void deleteCostCenter(CostCenter m) {
+		String sql = "delete from costcenters where id = ${m.id}"
 		db.delete(sql, user)
-	}
-
-	private CostCenter getModelFromResultSet(ResultSet rs){
-		CostCenter c = new CostCenter()
-
-		c.setType(rs.getInt("type"))
-		c.setName(rs.getString("name"))
-
-		return c
 	}
 }

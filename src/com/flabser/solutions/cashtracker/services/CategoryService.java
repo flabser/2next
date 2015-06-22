@@ -13,8 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import cashtracker.dao.TransactionDAO;
-import cashtracker.model.Transaction;
+import cashtracker.dao.CategoryDAO;
+import cashtracker.model.Category;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -22,43 +22,43 @@ import com.flabser.script._Session;
 import com.flabser.users.UserSession;
 
 
-@Path("transactions")
-public class TransactionService extends RestProvider {
+@Path("categories")
+public class CategoryService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public TransactionsResponse get() {
+	public CategoriesResponse get() {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		return new TransactionsResponse(dao.findAll());
+		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		return new CategoriesResponse(dao.findAll());
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Transaction get(@PathParam("id") int id) {
+	public Category get(@PathParam("id") int id) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		Transaction m = dao.findById(id);
+		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		Category m = dao.findById(id);
 		return m;
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Transaction create(Transaction m) {
+	public Category create(Category m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		m.setId(dao.addTransaction(m));
+		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		m.setId(dao.addCategory(m));
 		return m;
 	}
 
@@ -66,23 +66,23 @@ public class TransactionService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Transaction update(@PathParam("id") long id, Transaction m) {
+	public Category update(@PathParam("id") int id, Category m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		m.setId(id);
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		dao.updateTransaction(m);
+		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		dao.updateCategory(m);
 		return m;
 	}
 
-	@JsonRootName("transactions")
-	class TransactionsResponse extends ArrayList <Transaction> {
+	@JsonRootName("categories")
+	class CategoriesResponse extends ArrayList <Category> {
 
 		private static final long serialVersionUID = 1L;
 
-		public TransactionsResponse(Collection <? extends Transaction> m) {
+		public CategoriesResponse(Collection <? extends Category> m) {
 			addAll(m);
 		}
 	}

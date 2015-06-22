@@ -1,22 +1,23 @@
 package cashtracker.model;
 
-import java.sql.ResultSet;
+import java.sql.ResultSet
+import java.sql.SQLException
 
-import com.flabser.script._IObject;
+import com.fasterxml.jackson.annotation.JsonRootName
+import com.flabser.script._IObject
+import com.flabser.solutions.cashtracker.constants.TransactionType
 
+
+@JsonRootName("category")
 public class Category implements _IObject {
 
-	public enum CategoryType {
-		INCOME, EXPENSE;
-	}
-
 	private long id;
-
+	private TransactionType transactionType;
+	private Category parentCategory;
 	private String name;
-
-	private CategoryType type;
-
-	private String comment;
+	private String note;
+	private int color;
+	private int sortOrder;
 
 	//
 	public long getId() {
@@ -27,6 +28,22 @@ public class Category implements _IObject {
 		this.id = id;
 	}
 
+	public TransactionType getTransactionType() {
+		return transactionType;
+	}
+
+	public void setTransactionType(TransactionType transactionType) {
+		this.transactionType = transactionType;
+	}
+
+	public Category getParentCategory() {
+		return parentCategory;
+	}
+
+	public void setParentCategory(Category parentCategory) {
+		this.parentCategory = parentCategory;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -35,20 +52,28 @@ public class Category implements _IObject {
 		this.name = name;
 	}
 
-	public CategoryType getType() {
-		return type;
+	public String getNote() {
+		return note;
 	}
 
-	public void setType(CategoryType type) {
-		this.type = type;
+	public void setNote(String note) {
+		this.note = note;
 	}
 
-	public String getComment() {
-		return comment;
+	public int getColor() {
+		return color;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setColor(int color) {
+		this.color = color;
+	}
+
+	public int getSortOrder() {
+		return sortOrder;
+	}
+
+	public void setSortOrder(int sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 
 	@Override
@@ -57,9 +82,17 @@ public class Category implements _IObject {
 	}
 
 	public void init(ResultSet rs) {
-		setId(rs.getInt("id"))
-		setName(rs.getString("name"))
-		setType(CategoryType.EXPENSE)
-		setComment(rs.getString("comment"))
+		try {
+			setId(rs.getInt("id"));
+			setTransactionType(TransactionType.INCOME);
+			setParentCategory(null);
+			setName(rs.getString("name"));
+			setNote(rs.getString("note"));
+			setColor(rs.getInt("color"));
+			setSortOrder(rs.getInt("sort_order"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

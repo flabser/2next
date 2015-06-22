@@ -1,5 +1,7 @@
 CT.UsersController = Ember.ArrayController.extend({
-    queryParams: ['offset', 'limit', 'order_by']
+    actions: {
+        selectAll: function() {}
+    }
 });
 
 CT.UsersNewController = Ember.ArrayController.extend({

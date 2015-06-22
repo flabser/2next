@@ -1,6 +1,6 @@
 package cashtracker.validation
 
-import cashtracker.model.Account
+import cashtracker.model.Account;
 
 
 public class AccountValidator {

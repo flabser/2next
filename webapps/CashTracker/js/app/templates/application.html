@@ -37,11 +37,38 @@
     <div class="side">
         <div class="side-container">
             <div class="side-nav">
-                {{#link-to 'transactions'}}Transactions{{/link-to}}
-                <br/> {{#link-to 'accounts'}}accounts{{/link-to}}
-                <br/> {{#link-to 'users'}}users{{/link-to}}
-                <br/> {{#link-to 'categories'}}categories{{/link-to}}
-                <br/> {{#link-to 'cost_centers'}}costcenters{{/link-to}}
+                <ul class="side-tree">
+                    <li class="side-tree-item">
+                        {{#link-to 'transactions'}}
+                            <i class="fa fa-file-o"></i>Transactions
+                        {{/link-to}}
+                    </li>
+                    <li class="side-tree-item">
+                        {{#link-to 'accounts'}}
+                            <i class="fa fa-file-o"></i>Accounts
+                        {{/link-to}}
+                    </li>
+                    <li class="side-tree-item">
+                        {{#link-to 'categories'}}
+                            <i class="fa fa-file-o"></i>Categories
+                        {{/link-to}}
+                    </li>
+                    <li class="side-tree-item">
+                        {{#link-to 'cost_centers'}}
+                            <i class="fa fa-file-o"></i>Cost centers
+                        {{/link-to}}
+                    </li>
+                    <li class="side-tree-item">
+                        {{#link-to 'tags'}}
+                            <i class="fa fa-file-o"></i>Tags
+                        {{/link-to}}
+                    </li>
+                    <li class="side-tree-item">
+                        {{#link-to 'users'}}
+                            <i class="fa fa-users"></i>Users
+                        {{/link-to}}
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

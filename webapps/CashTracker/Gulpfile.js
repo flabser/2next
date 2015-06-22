@@ -6,6 +6,7 @@ var uglify = require('gulp-uglify');
 var csso = require('gulp-csso');
 var emberTemplates = require('gulp-ember-templates');
 var replace = require('gulp-replace');
+var babel = require('ember-cli-babel');
 
 
 // js lib
@@ -67,17 +68,32 @@ gulp.task('em_minify_js', function() {
         .pipe(uglify())
         .pipe(gulp.dest('./js/app'));
 });
+
+gulp.task('em_minify_js_babel', function() {
+    gulp.src(js_ember_files)
+        .pipe(concat('app.build.js'))
+        .pipe(babel())
+        .pipe(gulp.dest('./js/dist'))
+        .pipe(concat('app.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./js/dist'));
+});
 // --------------------------------
+
+var em_templates = ['./js/app/templates/**/*.html',
+    '!./js/app/templates/compiled/**/*.html'
+];
+var em_templates_compile = ['./js/app/templates/compiled/**/*.html'];
 
 // ember templates
 gulp.task('em_templates_trim', function() {
-    gulp.src('./js/app/templates/*.html')
+    gulp.src(em_templates)
         .pipe(replace(/(\n|\s{2,})/g, ''))
         .pipe(gulp.dest('./js/app/templates/compiled'));
 });
 
 gulp.task('em_templates_compile', function() {
-    gulp.src('./js/app/templates/compiled/*.html')
+    gulp.src(em_templates)
         .pipe(emberTemplates({
             type: 'browser',
             compiler: require('../SharedResources/vendor/ember/ember-template-compiler.min'),
@@ -94,13 +110,13 @@ gulp.task('em_templates_compile', function() {
 
 // run
 gulp.task('default', function() {
-    gulp.run('lint', 'em_lint', 'em_templates_trim', 'em_templates_compile', 'em_minify_js', 'minify_js', 'minify_css');
+    gulp.run('lint', 'em_lint', 'em_templates_compile', 'em_minify_js', 'minify_js', 'minify_css');
 
-    gulp.watch('./js/app/templates/*.html', function(event) {
-        gulp.run('em_templates_trim');
-    });
+    // gulp.watch(em_templates, function(event) {
+    //    gulp.run('em_templates_trim');
+    //});
 
-    gulp.watch('./js/app/templates/compiled/*.html', function(event) {
+    gulp.watch(em_templates, function(event) {
         gulp.run('em_templates_compile');
     });
 

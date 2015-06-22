@@ -1,29 +1,37 @@
 package cashtracker.model;
 
-import java.sql.ResultSet;
+import java.sql.ResultSet
+import java.sql.SQLException
 
-import com.flabser.script._Exception;
-import com.flabser.script._IObject;
-import com.flabser.users.User;
+import com.fasterxml.jackson.annotation.JsonRootName
+import com.flabser.script._IObject
+import com.flabser.users.User
 
 
+@JsonRootName("account")
 public class Account implements _IObject {
 
 	private long id;
 
-	private String name;
-
 	private int type;
 
-	private String currency;
+	private String name;
+
+	private String currencyCode;
 
 	private BigDecimal openingBalance;
 
 	private BigDecimal amountControl;
 
-	private String owner;
+	private User owner;
 
 	private String observers;
+
+	private boolean includeInTotals;
+
+	private String note;
+
+	private int sortOrder;
 
 	//
 	public long getId() {
@@ -50,12 +58,12 @@ public class Account implements _IObject {
 		this.type = type;
 	}
 
-	public String getCurrency() {
-		return currency;
+	public String getCurrencyCode() {
+		return currencyCode;
 	}
 
-	public void setCurrency(String currency) {
-		this.currency = currency;
+	public void setCurrencyCode(String currencyCode) {
+		this.currencyCode = currencyCode;
 	}
 
 	public BigDecimal getOpeningBalance() {
@@ -79,7 +87,7 @@ public class Account implements _IObject {
 	}
 
 	public void setOwner(User user) {
-		this.owner = user.getLogin()
+		this.owner = user;
 	}
 
 	public String getObservers() {
@@ -90,17 +98,51 @@ public class Account implements _IObject {
 		this.observers = observers;
 	}
 
+	public boolean isIncludeInTotals() {
+		return includeInTotals;
+	}
+
+	public void setIncludeInTotals(boolean includeInTotals) {
+		this.includeInTotals = includeInTotals;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public int getSortOrder() {
+		return sortOrder;
+	}
+
+	public void setSortOrder(int sortOrder) {
+		this.sortOrder = sortOrder;
+	}
+
 	@Override
 	public String toString() {
-		return "Account[" + name + ", " + type + ", " + currency + ", " + openingBalance + "]";
+		return "Account[" + name + ", " + type + ", " + currencyCode + ", " + openingBalance + "]";
 	}
 
 	public void init(ResultSet rs) {
-		setId(rs.getInt("id"))
-		setName(rs.getString("name"))
-		setAmountControl(rs.getBigDecimal("amountcontrol"))
-		setOpeningBalance(0)
-		setObservers(rs.getString("observers"))
-		setOwner(null)
+		try {
+			setId(rs.getInt("id"));
+			setName(rs.getString("name"));
+			setType(rs.getInt("type"));
+			setCurrencyCode(rs.getString("currency_code"));
+			setOpeningBalance(rs.getBigDecimal("opening_balance"));
+			setAmountControl(rs.getBigDecimal("amount_control"));
+			setOwner(null);
+			setObservers(rs.getString("observers"));
+			setIncludeInTotals(rs.getBoolean("include_in_totals"));
+			setNote(rs.getString("note"));
+			setSortOrder(rs.getInt("sort_order"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

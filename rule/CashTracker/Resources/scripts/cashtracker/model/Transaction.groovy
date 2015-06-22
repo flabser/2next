@@ -1,35 +1,41 @@
 package cashtracker.model;
 
-import java.sql.ResultSet;
-import java.util.Date;
+import java.sql.ResultSet
+import java.sql.SQLException
 
-import com.flabser.script._Exception;
-import com.flabser.users.User;
+import com.fasterxml.jackson.annotation.JsonRootName
+import com.flabser.script._IObject
+import com.flabser.solutions.cashtracker.constants.TransactionState
+import com.flabser.solutions.cashtracker.constants.TransactionType
+import com.flabser.users.User
 
 
-public class Transaction implements com.flabser.script._IObject {
+@JsonRootName("transaction")
+public class Transaction implements _IObject {
 
 	private long id;
 
-	private int type;
+	private User user;
 
-	private String author;
+	private TransactionType transactionType;
+
+	private TransactionState transactionState;
 
 	private Date regDate = new Date();
 
-	private Date date = new Date();
+	private Account accountFrom;
 
-	private Date endDate = new Date();
-
-	private long parentCategory;
-
-	private long category;
-
-	private long account;
+	private Account accountTo;
 
 	private BigDecimal amount;
 
-	private long costCenter;
+	private float exchangeRate;
+
+	private Category category;
+
+	private CostCenter costCenter;
+
+	private List <Tag> tags;
 
 	private boolean repeat;
 
@@ -37,9 +43,15 @@ public class Transaction implements com.flabser.script._IObject {
 
 	private int repeatStep;
 
+	private Date startDate = new Date();
+
+	private Date endDate = new Date();
+
 	private String basis;
 
-	private String comment;
+	private String note;
+
+	private boolean includeInReports;
 
 	//
 	public long getId() {
@@ -50,44 +62,28 @@ public class Transaction implements com.flabser.script._IObject {
 		this.id = id;
 	}
 
-	public String getAuthor() {
-		return author;
+	public User getUser() {
+		return user;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author //author.getLogin();
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public int getType() {
-		return type;
+	public TransactionType getTransactionType() {
+		return transactionType;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public void setTransactionType(TransactionType transactionType) {
+		this.transactionType = transactionType;
 	}
 
-	public long getCategory() {
-		return category;
+	public TransactionState getTransactionState() {
+		return transactionState;
 	}
 
-	public void setCategory(long category) {
-		this.category = 1 //category.getId();
-	}
-
-	public long getParentCategory() {
-		return parentCategory;
-	}
-
-	public void setParentCategory(long parentCategory) {
-		this.parentCategory = parentCategory;
-	}
-
-	public long getAccount() {
-		return account;
-	}
-
-	public void setAccount(long account) {
-		this.account = account;
+	public void setTransactionState(TransactionState transactionState) {
+		this.transactionState = transactionState;
 	}
 
 	public Date getRegDate() {
@@ -98,20 +94,44 @@ public class Transaction implements com.flabser.script._IObject {
 		this.regDate = regDate;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Account getAccountFrom() {
+		return accountFrom;
+	}
+
+	public void setAccountFrom(Account account) {
+		this.accountFrom = account;
+	}
+
+	public Account getAccountTo() {
+		return accountTo;
+	}
+
+	public void setAccountTo(Account account) {
+		this.accountTo = account;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date date) {
+		this.startDate = date;
+	}
+
 	public Date getEndDate() {
 		return endDate;
 	}
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public BigDecimal getAmount() {
@@ -122,20 +142,36 @@ public class Transaction implements com.flabser.script._IObject {
 		this.amount = amount;
 	}
 
-	public long getCostCenter() {
+	public float getExchangeRate() {
+		return exchangeRate;
+	}
+
+	public void setExchangeRate(float exchangeRate) {
+		this.exchangeRate = exchangeRate;
+	}
+
+	public CostCenter getCostCenter() {
 		return costCenter;
 	}
 
-	public void setCostCenter(long costCenter) {
+	public void setCostCenter(CostCenter costCenter) {
 		this.costCenter = costCenter;
 	}
 
-	public String getComment() {
-		return comment;
+	public List <Tag> getTags() {
+		return tags;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setTags(List <Tag> tags) {
+		this.tags = tags;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public String getBasis() {
@@ -170,26 +206,43 @@ public class Transaction implements com.flabser.script._IObject {
 		this.repeatStep = repeatStep;
 	}
 
-	@Override
-	public String toString() {
-		return "Transaction[$id, $author, $regDate, $date, $endDate, $parentCategory, $category, $account, $amount, $costCenter]";
+	public boolean isIncludeInReports() {
+		return includeInReports;
 	}
 
-	public void init(ResultSet rs){
-		setId(rs.getInt("id"))
-		setAuthor(null)
-		setDate(rs.getDate("date"))
-		setRegDate(rs.getDate("regdate"))
-		//t.setCategory(rs.getLong("category"))
-		//t.setParentCategory(rs.getLong("parentCategory"))
-		setAmount(rs.getBigDecimal("amount"))
-		setAccount(rs.getLong("account"))
-		setCostCenter(rs.getLong("costcenter"))
-		setRepeat(rs.getBoolean("repeat"))
-		setEvery(rs.getInt("every"))
-		setRepeatStep(rs.getInt("repeatstep"))
-		setEndDate(rs.getDate("enddate"))
-		setBasis(rs.getString("basis"))
-		setComment(rs.getString("note"))
+	public void setIncludeInReports(boolean includeInReports) {
+		this.includeInReports = includeInReports;
+	}
+
+	@Override
+	public String toString() {
+		return "Transaction[$id, $user, $regDate, $startDate, $endDate, $category, $accountFrom, $amount, $costCenter]";
+	}
+
+	public void init(ResultSet rs) {
+		try {
+			setId(rs.getInt("id"));
+			setUser(null);
+			setTransactionType(TransactionType.typeOf(rs.getInt("transaction_type")))
+			setTransactionState(TransactionState.stateOf(rs.getInt("transaction_state")))
+			setRegDate(rs.getDate("reg_date"));
+			setAccountFrom(null);
+			setAmount(rs.getBigDecimal("amount"));
+			setExchangeRate(rs.getBigDecimal("exchange_rate"));
+			setCategory(null);
+			setCostCenter(null);
+			setTags(rs.getArray("tags"));
+			setRepeat(rs.getBoolean("repeat"));
+			setEvery(rs.getInt("every"));
+			setRepeatStep(rs.getInt("repeat_step"));
+			setStartDate(rs.getDate("start_date"));
+			setEndDate(rs.getDate("end_date"));
+			setBasis(rs.getString("basis"));
+			setNote(rs.getString("note"));
+			setIncludeInReports(rs.getBoolean("include_in_reports"))
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

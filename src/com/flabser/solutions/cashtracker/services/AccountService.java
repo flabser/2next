@@ -13,8 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import cashtracker.dao.TransactionDAO;
-import cashtracker.model.Transaction;
+import cashtracker.dao.AccountDAO;
+import cashtracker.model.Account;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -22,43 +22,43 @@ import com.flabser.script._Session;
 import com.flabser.users.UserSession;
 
 
-@Path("transactions")
-public class TransactionService extends RestProvider {
+@Path("accounts")
+public class AccountService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public TransactionsResponse get() {
+	public AccountsResponse get() {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		return new TransactionsResponse(dao.findAll());
+		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
+		return new AccountsResponse(dao.findAll());
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Transaction get(@PathParam("id") int id) {
+	public Account get(@PathParam("id") int id) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		Transaction m = dao.findById(id);
+		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
+		Account m = dao.findById(id);
 		return m;
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Transaction create(Transaction m) {
+	public Account create(Account m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		m.setId(dao.addTransaction(m));
+		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
+		m.setId(dao.addAccount(m));
 		return m;
 	}
 
@@ -66,23 +66,23 @@ public class TransactionService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Transaction update(@PathParam("id") long id, Transaction m) {
+	public Account update(@PathParam("id") int id, Account m) {
 
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute("usersession");
 
 		m.setId(id);
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
-		dao.updateTransaction(m);
+		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
+		dao.updateAccount(m);
 		return m;
 	}
 
-	@JsonRootName("transactions")
-	class TransactionsResponse extends ArrayList <Transaction> {
+	@JsonRootName("accounts")
+	class AccountsResponse extends ArrayList <Account> {
 
 		private static final long serialVersionUID = 1L;
 
-		public TransactionsResponse(Collection <? extends Transaction> m) {
+		public AccountsResponse(Collection <? extends Account> m) {
 			addAll(m);
 		}
 	}
