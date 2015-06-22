@@ -22,7 +22,7 @@ public class ResourceLoader extends Application {
 
 		// for in enabled_apps {
 		// classes < rest_endpoint
-
+		classes.add(RestAdminProvider.class);
 		classes.add(ObjectMapperProvider.class);
 		classes.add(TransactionService.class);
 		classes.add(AccountService.class);

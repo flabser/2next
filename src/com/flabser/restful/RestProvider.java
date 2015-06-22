@@ -64,7 +64,7 @@ public class RestProvider {
 		return (AppEnv) context.getAttribute("portalenv");
 	}
 	
-	@GET
+/*	@GET
 	@Path("/{model_type}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Object produce(@PathParam("model_type") String type) throws RuleException, AuthFailedException, UserException, ClassNotFoundException, InstantiationException, IllegalAccessException, DatabasePoolException {
@@ -79,10 +79,10 @@ public class RestProvider {
 
 		if (rule != null) {
 			if (!rule.isAnonymousAccessAllowed()) {
-			/*	jses = request.getSession(true);
+				jses = request.getSession(true);
 				userSession = (UserSession) jses.getAttribute("usersession");
 				if (userSession == null)
-					throw new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, null);*/
+					throw new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, null);
 			} else {
 				jses = request.getSession(false);
 				if (jses == null) {
@@ -153,8 +153,8 @@ public class RestProvider {
 	//	_Page pojoPage = page.process(fields);
 	//	return pojoPage;
 
-	/*	 Response json = //convert entity to json
-		  return Response.ok(json, MediaType.APPLICATION_JSON).build();*/
+		 Response json = //convert entity to json
+		  return Response.ok(json, MediaType.APPLICATION_JSON).build();
 	//	return Response.status(200).entity(object.getClass().getName()).build();
 	//	return result;
 		HashMap<String, Object> f = new HashMap<String,Object>();
@@ -176,12 +176,12 @@ public class RestProvider {
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
 		Page page = new Page(env, userSession, pageRule, request.getMethod());
-		/*result.output.append(page.process(fields).toXML());
+		result.output.append(page.process(fields).toXML());
 		if (page.fileGenerated) {
 			result.publishAs = PublishAsType.OUTPUTSTREAM;
 			result.filePath = page.generatedFilePath;
 			result.originalAttachName = page.generatedFileOriginalName;
-		}*/
+		}
 		return page.process(fields).getElements();
-	}
+	}*/
 }
