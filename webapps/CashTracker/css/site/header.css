@@ -1,0 +1,97 @@
+.wlc .main-header {
+    background: #FFF;
+    height: 70px;
+}
+/* header-nav */
+
+.wlc .header-nav {
+    background: #FFF;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    white-space: nowrap;
+}
+
+.wlc .header-nav .nav-item.brand {
+    color: #494949;
+}
+
+.wlc .header-nav .nav-item {
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #000;
+    display: inline-block;
+    font-weight: normal;
+    height: 69px;
+    line-height: 70px;
+    padding: 0 1em;
+    text-align: center;
+    text-decoration: none;
+    transition: border-color .20s;
+    vertical-align: top;
+    white-space: nowrap;
+    width: auto;
+}
+
+.wlc .header-nav .nav-item:hover {
+    border-bottom-color: #F1C40F;
+}
+
+.wlc .header-nav .nav-dropdown {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+}
+
+.wlc .header-nav .nav-title {
+    color: #000;
+    display: block;
+    height: 69px;
+    line-height: 70px;
+    padding: 0 1em;
+    text-decoration: none;
+}
+
+.wlc .header-nav .nav-dropdown-menu {
+    background: #FFF;
+    box-shadow: 0 3px 3px rgba(26, 30, 34, 0.600);
+    display: none;
+    margin: 0 5px;
+    position: absolute;
+    top: 69px;
+    right: 0;
+    z-index: 999;
+}
+
+.wlc .header-nav .nav-dropdown:hover .nav-dropdown-menu {
+    display: block;
+}
+
+.wlc .header-nav .nav-dropdown-menu .nav-item {
+    display: block;
+}
+
+.wlc .header-nav .btn-login span {
+    background: #6EA131;
+    border-radius: 3px;
+    color: white;
+    padding: 4px;
+}
+
+.wlc .header-nav .btn-logout span {
+    background: #f44336;
+    border-radius: 3px;
+    color: white;
+    padding: 4px;
+}
+
+.user-menu .fa {
+    font-size: 14px;
+    margin: 0 3px;
+}
+
+@media ( max-width: 567px) {
+    .user-menu .username span {
+        display: none;
+    }
+}

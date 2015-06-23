@@ -36,7 +36,7 @@ gulp.task('minify_js', function() {
 
 // css
 var css_files = ['../SharedResources/css/normalize.css',
-    './css/*.css',
+    './css/**/*.css',
     '!./css/all.min.css'
 ];
 

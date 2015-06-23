@@ -388,6 +388,16 @@ CT.User = DS.Model.extend({
     role: DS.attr('string')
 });
 
+CT.ApplicationView = Ember.View.extend({
+    classNames: ['layout'],
+
+    templateName: 'application',
+
+    willInsertElement: function() {
+        $('.page-loading').hide();
+    }
+});
+
 CT.AccountRoute = Ember.Route.extend({
     model: function(params) {
         return this.store.find('account', params.account_id);
@@ -525,16 +535,6 @@ CT.UsersRoute = Ember.Route.extend({
 
 CT.UsersNewRoute = Ember.Route.extend({
     templateName: 'user'
-});
-
-CT.ApplicationView = Ember.View.extend({
-    classNames: ['layout'],
-
-    templateName: 'application',
-
-    willInsertElement: function() {
-        $('.page-loading').hide();
-    }
 });
 
 Ember.TEMPLATES["account"] = Ember.HTMLBars.template((function() {

@@ -22,18 +22,26 @@
 				</h1>
 				<section>
 					<div class="error">
-						<xsl:if test="//retry-verify-email//error">
-							<xsl:value-of select="//retry-verify-email//error" />
-						</xsl:if>
-						<xsl:if test="//retry-verify-email//process">
-							<xsl:value-of select="//retry-verify-email//process" />
+						<xsl:choose>
+							<xsl:when test="//error = 'no-user'">
+								<xsl:value-of select="//error" />
+							</xsl:when>
+							<xsl:when test="//error = 'user-verified'">
+								<xsl:value-of select="//error" />
+							</xsl:when>
+							<xsl:when test="//error = 'verify-email'">
+								<xsl:value-of select="//error" />
+							</xsl:when>
+						</xsl:choose>
+						<xsl:if test="//process = 'verify-email-send'">
+							<xsl:value-of select="//process" />
 						</xsl:if>
 					</div>
-					<form class="reg_form" action="" method="POST">
+					<form class="reg_form" method="POST">
 						<input type="hidden" name="type" value="page" />
 						<input type="hidden" name="id" value="retry-send-verify-email" />
-						<div class="reg_form-inp">
-							<input class="input span4" type="email" name="email" value="{//email}" placeholder="email" required="required" />
+						<div class="reg_form-inp span5">
+							<input class="input span5" type="email" name="email" value="{//email}" placeholder="email" required="required" />
 						</div>
 						<div class="reg_form-inp-btn">
 							<button class="btn-submit" type="submit" name="sendVerify" value="send">

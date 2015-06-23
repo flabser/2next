@@ -2,6 +2,7 @@ package cashtracker.page.app
 
 import cashtracker.dao.BudgetDAO
 import cashtracker.model.Budget
+import cashtracker.model.constants.BudgetState
 
 import com.flabser.script.*
 import com.flabser.script.events._DoScript

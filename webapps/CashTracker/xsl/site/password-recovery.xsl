@@ -40,7 +40,7 @@
 							<xsl:value-of select="//password-recovery//process" />
 						</xsl:if>
 					</div>
-					<form class="reg_form" action="" method="POST">
+					<form class="reg_form" method="POST">
 						<input type="hidden" name="type" value="page" />
 						<input type="hidden" name="id" value="password-recovery" />
 						<div class="reg_form-inp">
@@ -75,7 +75,7 @@
 							<xsl:value-of select="//password-recovery//process" />
 						</xsl:if>
 					</div>
-					<form class="reg_form" action="" method="POST">
+					<form class="reg_form" method="POST">
 						<input type="hidden" name="type" value="page" />
 						<input type="hidden" name="id" value="password-recovery" />
 						<input type="hidden" name="code" value="{//recovery-code}" />

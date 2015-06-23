@@ -1,0 +1,32 @@
+/* login */
+
+.login {
+    border-radius: 3px;
+    margin: 0 auto;
+    max-width: 100%;
+    width: 320px;
+}
+
+.login-form {
+    margin-bottom: 10px;
+}
+
+.login-form input.input {
+    margin-bottom: 10px !important;
+}
+
+.login-form-bottom {
+    text-align: right;
+    padding-top: .5em;
+    vertical-align: middle;
+}
+
+.login-form .noauth {
+    float: left;
+    line-height: 28px;
+    margin: 0 .5em;
+}
+
+.login-form .noauth input {
+    margin: 0 .3em;
+}

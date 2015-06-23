@@ -1,0 +1,192 @@
+/* wlc_reg */
+
+.wlc_reg {
+    overflow: hidden;
+    text-align: center;
+}
+
+.wlc_reg-inner {
+    padding: 50px 1em;
+    margin: 0 auto;
+    max-width: 980px;
+}
+
+.wlc_reg-header {
+    display: none;
+    font-size: 26px;
+    font-weight: normal;
+    margin: .3em;
+}
+
+.reg_form {
+    position: relative;
+}
+
+.reg-result-ok {
+    background-color: #DFF0D8;
+    border-radius: 4px;
+    color: #3C763D;
+    display: none;
+    font-size: 22px;
+    font-weight: normal;
+    margin: 0 0 22px;
+    padding: .5em;
+}
+
+.reg_form section {
+    position: relative;
+}
+
+.reg_form footer {
+    margin-top: 1em;
+}
+
+.reg_form-inp,
+.reg_form-inp-btn {
+    display: inline-block;
+    max-width: 300px;
+    min-width: 240px;
+    padding: 3px;
+    text-align: left;
+    vertical-align: top;
+    width: 26%;
+}
+
+.reg_form-inp-btn {
+    text-align: left;
+    width: 23%;
+}
+
+.reg_form-inp-btn .btn-submit {
+    min-width: 240px;
+}
+
+.wlc input.input {
+    background: #FFF;
+    box-shadow: none;
+    border: 2px solid #CCC;
+    border-radius: 6px;
+    font-size: 1.3em;
+    margin: 0;
+    outline: 0;
+    padding: .5em;
+    transition: border-color .30s;
+    vertical-align: top;
+    width: 100%;
+}
+
+.wlc .input:focus {
+    border-color: #7986cb;
+}
+
+.wlc .input.invalid {
+    border-color: #ff5252;
+}
+/* reg_form-inp-inf */
+
+.reg_form-inp-inf {
+    color: #333;
+    font-size: 15px;
+    height: 0px;
+    left: 0;
+    overflow: hidden;
+    padding: 2px;
+    position: absolute;
+    text-align: center;
+    top: -30px;
+    transition: height .20s;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.reg_form .input:focus+.reg_form-inp-inf {
+    height: 26px;
+}
+/* reg_form-invalid */
+
+.reg_form-invalid {
+    color: red;
+    font-size: 13px;
+    height: 0px;
+    overflow: hidden;
+    padding: 0 2px;
+    position: absolute;
+    text-align: left;
+    top: 45px;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.wlc .btn-submit {
+    background: #66AC54;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    color: #FFF;
+    font-size: 1.3em;
+    line-height: 23px;
+    outline: 0;
+    padding: .4em .8em;
+    margin: 0;
+}
+
+.wlc .btn-submit:active {
+    background: #388e3c;
+}
+
+.reg_form.process input,
+.reg_form.process button {
+    cursor: not-allowed;
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+.wlc .terms {
+    margin: 6px;
+    outline: 0;
+    padding: 2em .5em .5em;
+}
+
+.wlc .or {
+    color: #666;
+}
+
+.wlc .or:before,
+.wlc .or:after {
+    border-bottom: 1px solid #BDC7D8;
+    content: '';
+    display: inline-block;
+    margin: .3em;
+    vertical-align: middle;
+    width: 30%;
+}
+
+@media ( max-width: 768px) {
+    .wlc_reg-header {
+        display: block;
+    }
+    .reg_form-inp-inf {
+        display: block;
+        height: 100%;
+        position: static;
+        white-space: normal;
+        width: 100%;
+    }
+    .reg_form .input:focus+.reg_form-inp-inf {
+        height: 100%;
+    }
+    .reg_form-invalid {
+        position: relative;
+        text-align: center;
+        top: auto;
+    }
+    .reg_form-inp-btn {
+        text-align: center;
+        width: 100%;
+    }
+    .reg_form .reg_form-inp,
+    .reg_form .reg_form-inp-btn {
+        text-align: center;
+        max-width: 100%;
+        width: 100%;
+    }
+}
