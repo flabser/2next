@@ -25,7 +25,7 @@ public class Error extends HttpServlet{
 			request.setCharacterEncoding("utf-8");
 			String outputContent = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 
-			if(type.equals("ws_auth_error")){
+			if(type.equals("auth_error")){
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				xslt = "xsl" + File.separator + "authfailed.xsl";
 				outputContent = outputContent + "<request><error type=\"authfailed\">" +
