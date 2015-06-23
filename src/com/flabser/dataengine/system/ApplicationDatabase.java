@@ -2,15 +2,18 @@ package com.flabser.dataengine.system;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+
+import org.postgresql.util.PSQLException;
+
 import com.flabser.dataengine.DatabaseUtil;
+import com.flabser.server.Server;
 
 public class ApplicationDatabase implements IApplicationDatabase {
-	private Properties props = new Properties(); 
+	private Properties props = new Properties();
 	private String dbURL;
 
 	ApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -24,10 +27,14 @@ public class ApplicationDatabase implements IApplicationDatabase {
 	public int createDatabase(String host, String name, String dbUser, String dbPwd) throws SQLException {
 		if (!hasDatabase(name)) {
 			Connection conn = DriverManager.getConnection(dbURL, props);
-			try {				
-				Statement st  = conn.createStatement();
-				st.executeUpdate("CREATE USER  " + dbUser + " WITH password '" + dbPwd + "'");
-				st.executeUpdate("CREATE DATABASE " + name + " WITH OWNER = " + dbUser + " ENCODING = 'UTF8'" );
+			try {
+				Statement st = conn.createStatement();
+				try {
+					st.executeUpdate("CREATE USER  " + dbUser + " WITH password '" + dbPwd + "'");
+				} catch (PSQLException sqle) {
+					Server.logger.warningLogEntry(sqle.getMessage());
+				}
+				st.executeUpdate("CREATE DATABASE " + name + " WITH OWNER = " + dbUser + " ENCODING = 'UTF8'");
 				st.executeUpdate("GRANT ALL privileges ON DATABASE " + name + " TO " + dbUser);
 				st.close();
 				return 0;

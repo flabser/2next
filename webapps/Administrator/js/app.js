@@ -7,5 +7,5 @@ var host = DS.RESTAdapter.extend({
 });
 
 App.ApplicationAdapter = host.extend({
-    namespace: 'Administrator/rest/admin'
+    namespace: 'Administrator/rest'
 });

@@ -698,9 +698,9 @@ public class SystemDatabase implements ISystemDatabase {
 			while (rs.next()) {
 				User user = new User();
 				user.fill(rs);
-				if (user.isValid) {
+				/*if (user.isValid) {
 					fillUserApp(conn, user);
-				}
+				}*/
 				user.isValid = true;
 				users.add(user);
 			}

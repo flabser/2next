@@ -36,6 +36,9 @@ public class AuthFailedException extends Exception{
 		super(text);	
 	}
 
+	public String getMessage() {
+		return errorText;
+	}
 	
 	private static void message(String text, HttpServletResponse response, boolean doTransform){
 		PrintWriter out;

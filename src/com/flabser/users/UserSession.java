@@ -27,19 +27,22 @@ public class UserSession implements ICache {
 
 	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
 			InstantiationException, IllegalAccessException, DatabasePoolException {
-		currentUser = user;		
-		initHistory();		
-		Class cls = Class.forName(implemantion);
-		dataBase = (IDatabase) cls.newInstance();
-		ApplicationProfile app = user.enabledApps.get(appID);
-		if (app != null) dataBase.init(app);
+		currentUser = user;
+		initHistory();
+		if (implemantion != null) {
+			Class cls = Class.forName(implemantion);
+			dataBase = (IDatabase) cls.newInstance();
+			ApplicationProfile app = user.enabledApps.get(appID);
+			if (app != null)
+				dataBase.init(app);
+		}
 	}
 
 	public UserSession(User user) throws UserException {
-		currentUser = user;		
+		currentUser = user;
 		initHistory();
 	}
-	
+
 	public void setObject(String name, _Page obj) {
 		HashMap<String, _Page> cache = null;
 		if (jses != null) {
@@ -129,7 +132,9 @@ public class UserSession implements ICache {
 			try {
 				return history.getLast();
 			} catch (Exception e) {
-				//return new HistoryEntry("view", currentUser.getAppEnv().globalSetting.defaultRedirectURL, "");
+				// return new HistoryEntry("view",
+				// currentUser.getAppEnv().globalSetting.defaultRedirectURL,
+				// "");
 			}
 			return null;
 		}

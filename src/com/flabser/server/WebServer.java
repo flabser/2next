@@ -107,8 +107,8 @@ public class WebServer implements IWebServer {
 		context.addFilterDef(filterAccessGuard);
 		context.addFilterMap(filterAccessGuardMapping);
 
-		Tomcat.addServlet(context, "Login", "com.flabser.servlets.Login");
-		context.addServletMapping("/Login", "Login");
+//		Tomcat.addServlet(context, "Login", "com.flabser.servlets.Login");
+//		context.addServletMapping("/Login", "Login");
 
 		Tomcat.addServlet(context, "Logout", "com.flabser.servlets.Logout");
 		context.addServletMapping("/Logout", "Logout");

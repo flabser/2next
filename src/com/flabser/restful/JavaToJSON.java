@@ -11,7 +11,6 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.flabser.restful.admin.SimpleUser;
 import com.flabser.script._Helper;
 
 public class JavaToJSON {
@@ -44,17 +43,9 @@ public class JavaToJSON {
 		// Employee employee = new Employee(1, "Lokesh", "Gupta", new
 		// Date(1981,8,18));
 
-		ArrayList<SimpleUser> l = new ArrayList();
 		
-		for (int i = 0; i < 10; i++) {
-			SimpleUser u = new SimpleUser();
-			u.setId(i);
-			u.setLogin(_Helper.getRandomValue());
-			u.setUserName(_Helper.getRandomValue());
-			l.add(u);
-		}
 
-		Container c = new Container(l);
+		Container c = new Container(employee);
 		
 
 		new JavaToJSON(c);

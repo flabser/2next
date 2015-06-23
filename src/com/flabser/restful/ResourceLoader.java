@@ -11,7 +11,7 @@ import cashtracker.rest.CostCenterService;
 import cashtracker.rest.TagService;
 import cashtracker.rest.TransactionService;
 
-import com.flabser.restful.admin.RestAdminProvider;
+import com.flabser.restful.admin.UserService;
 import com.flabser.restful.provider.ObjectMapperProvider;
 
 
@@ -22,7 +22,8 @@ public class ResourceLoader extends Application {
 		final Set <Class <?>> classes = new HashSet <Class <?>>();
 
 
-		classes.add(RestAdminProvider.class);
+		classes.add(UserService.class);
+		classes.add(Login.class);
 
 
 		classes.add(ObjectMapperProvider.class);
