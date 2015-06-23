@@ -2,6 +2,7 @@ package com.flabser.users;
 
 import org.apache.catalina.realm.RealmBase;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
@@ -17,6 +18,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+
+@JsonRootName("user")
 public class User {
 	public int id;
 	public boolean isValid = false;
