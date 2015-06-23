@@ -12,6 +12,7 @@ import cashtracker.rest.TagService;
 import cashtracker.rest.TransactionService;
 
 import com.flabser.restful.admin.UserService;
+import com.flabser.restful.provider.ObjectMapperProvider;
 
 
 public class ResourceLoader extends Application {
@@ -19,7 +20,7 @@ public class ResourceLoader extends Application {
 	@Override
 	public Set <Class <?>> getClasses() {
 		final Set <Class <?>> classes = new HashSet <Class <?>>();
-
+		classes.add(ObjectMapperProvider.class);
 
 		classes.add(UserService.class);
 		classes.add(Login.class);

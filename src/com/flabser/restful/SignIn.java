@@ -1,9 +1,5 @@
 package com.flabser.restful;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.users.AuthFailedExceptionType;
 
@@ -13,16 +9,10 @@ public class SignIn {
 	private String pwd;
 	private AuthFailedExceptionType status;
 	private String error;
-	
-	@JsonProperty
-	public ArrayList<HashMap> signin = new ArrayList<HashMap>();	
-	
+
+
 	public SignIn() {	}
 
-
-	public SignIn(HashMap<String,Object> fields) {
-		signin.add(fields);
-	}
 
 
 	public String getLogin() {
