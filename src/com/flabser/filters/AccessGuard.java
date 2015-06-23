@@ -1,11 +1,20 @@
 package com.flabser.filters;
 
+import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.flabser.appenv.AppEnv;
+import com.flabser.users.UserSession;
 
 public class AccessGuard implements Filter {
 
@@ -15,33 +24,37 @@ public class AccessGuard implements Filter {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain) {
-		/*	try {
+		try {
 			HttpServletRequest http = (HttpServletRequest) request;
-			AppEnv.logger.errorLogEntry(" Filter '" + http.getQueryString() + "' method=" + http.getMethod());
-			HttpServletResponse httpResponse = (HttpServletResponse) resp;
-			context = http.getServletContext();
-			env = (AppEnv) context.getAttribute("portalenv");
-
-			HttpSession jses = http.getSession(true);
-			UserSession us = (UserSession) jses.getAttribute("usersession");
-			if (us != null) {
+			AppEnv.logger.errorLogEntry(" Filter '" + http.getQueryString() + "' method=" + http.getMethod() + " "
+					+ http.getRequestURI());
+			if (http.getRequestURI().contains("signins") || http.getRequestURI().contains("page")) {
 				chain.doFilter(request, resp);
-			}else {
-				httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				AppEnv.logger.errorLogEntry(" Application '" + env.appType + "' access denied");
-			}
+			} else {
+				HttpServletResponse httpResponse = (HttpServletResponse) resp;
+				ServletContext context = http.getServletContext();
+				AppEnv env = (AppEnv) context.getAttribute("portalenv");
 
+				HttpSession jses = http.getSession(true);
+				UserSession us = (UserSession) jses.getAttribute("usersession");
+				if (us != null) {
+					chain.doFilter(request, resp);
+				} else {
+					httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+					AppEnv.logger.errorLogEntry(" Application '" + env.appType + "' access denied");
+				}
+
+			}
 		} catch (ServletException e) {
 			e.printStackTrace();
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		}*/
+		}
 	}
 
 	@Override
 	public void destroy() {
 
 	}
-
 
 }

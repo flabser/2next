@@ -1,5 +1,8 @@
 package com.flabser.server;
 
+import java.io.File;
+import java.net.MalformedURLException;
+
 import org.apache.catalina.Context;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
@@ -16,9 +19,6 @@ import org.glassfish.jersey.servlet.ServletContainer;
 
 import com.flabser.env.Environment;
 import com.flabser.restful.ResourceLoader;
-
-import java.io.File;
-import java.net.MalformedURLException;
 
 public class WebServer implements IWebServer {
 	private static Tomcat tomcat;
@@ -57,11 +57,11 @@ public class WebServer implements IWebServer {
 	}
 
 	private ServletContainer resourceConfig() {
-        return new ServletContainer(new ResourceConfig(new ResourceLoader().getClasses()));
-    }
-	
+		return new ServletContainer(new ResourceConfig(new ResourceLoader().getClasses()));
+	}
+
 	public Host addApplication(String siteName, String URLPath, String docBase) throws LifecycleException,
-			MalformedURLException {
+	MalformedURLException {
 		Context context = null;
 
 		if (docBase.equalsIgnoreCase("Administrator")) {
@@ -107,8 +107,8 @@ public class WebServer implements IWebServer {
 		context.addFilterDef(filterAccessGuard);
 		context.addFilterMap(filterAccessGuardMapping);
 
-//		Tomcat.addServlet(context, "Login", "com.flabser.servlets.Login");
-//		context.addServletMapping("/Login", "Login");
+		//		Tomcat.addServlet(context, "Login", "com.flabser.servlets.Login");
+		//		context.addServletMapping("/Login", "Login");
 
 		Tomcat.addServlet(context, "Logout", "com.flabser.servlets.Logout");
 		context.addServletMapping("/Logout", "Logout");
@@ -134,7 +134,8 @@ public class WebServer implements IWebServer {
 		//context.addServletMapping("/RestAdminProvider/*", "Jersey REST Service");
 		//context.addServletMapping("/SignIn/*", "Jersey REST Service");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
-		
+		filterAccessGuardMapping.addServletName("Jersey REST Service");
+
 		return null;
 	}
 
