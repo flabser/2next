@@ -26,20 +26,19 @@ public class AccessGuard implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain) {
 		try {
 			HttpServletRequest http = (HttpServletRequest) request;
-			AppEnv.logger.errorLogEntry(" Filter '" + http.getQueryString() + "' method=" + http.getMethod() + " "
+			AppEnv.logger.errorLogEntry(" Filter method=" + http.getMethod() + " "
 					+ http.getRequestURI());
 			if (http.getRequestURI().contains("signins") || http.getRequestURI().contains("page")) {
 				chain.doFilter(request, resp);
 			} else {
-				HttpServletResponse httpResponse = (HttpServletResponse) resp;
-				ServletContext context = http.getServletContext();
-				AppEnv env = (AppEnv) context.getAttribute("portalenv");
-
 				HttpSession jses = http.getSession(true);
 				UserSession us = (UserSession) jses.getAttribute("usersession");
 				if (us != null) {
 					chain.doFilter(request, resp);
 				} else {
+					HttpServletResponse httpResponse = (HttpServletResponse) resp;
+					ServletContext context = http.getServletContext();
+					AppEnv env = (AppEnv) context.getAttribute("portalenv");
 					httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 					AppEnv.logger.errorLogEntry(" Application '" + env.appType + "' access denied");
 				}
