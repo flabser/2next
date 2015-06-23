@@ -3,7 +3,6 @@ package com.flabser.restful;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -11,15 +10,13 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.flabser.script._Helper;
-
 public class JavaToJSON {
 	public static final SimpleDateFormat timeFormat = new SimpleDateFormat("HHmmss");
 
 	public JavaToJSON(Object o) {
 		ObjectMapper mapper = new ObjectMapper();
-	
-		
+
+
 		try {
 			String fileName = o.getClass().getSimpleName() + "_" + timeFormat.format(new Date()) + ".json";
 			mapper.defaultPrettyPrintingWriter().writeValue(new File("c://tmp/" + fileName), o);
@@ -43,12 +40,9 @@ public class JavaToJSON {
 		// Employee employee = new Employee(1, "Lokesh", "Gupta", new
 		// Date(1981,8,18));
 
-		
 
-		Container c = new Container(employee);
-		
 
-		new JavaToJSON(c);
+		new JavaToJSON(employee);
 	}
 
 }

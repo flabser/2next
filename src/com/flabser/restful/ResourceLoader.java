@@ -12,7 +12,6 @@ import cashtracker.rest.TagService;
 import cashtracker.rest.TransactionService;
 
 import com.flabser.restful.admin.UserService;
-import com.flabser.restful.provider.ObjectMapperProvider;
 
 
 public class ResourceLoader extends Application {
@@ -26,8 +25,6 @@ public class ResourceLoader extends Application {
 		classes.add(Login.class);
 		classes.add(RestProvider.class);
 
-
-		classes.add(ObjectMapperProvider.class);
 		classes.add(TransactionService.class);
 		classes.add(AccountService.class);
 		classes.add(CategoryService.class);
