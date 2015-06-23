@@ -1,9 +1,17 @@
 package com.flabser.users;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.concurrent.LinkedBlockingDeque;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.omg.CORBA.UserException;
+
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.exception.RuleException;
@@ -12,8 +20,6 @@ import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
 import com.flabser.script.concurrency._AJAXHandler;
 import com.flabser.scriptprocessor.page.IAsyncScript;
-import java.util.*;
-import java.util.concurrent.LinkedBlockingDeque;
 
 public class UserSession implements ICache {
 	public User currentUser;
@@ -26,19 +32,20 @@ public class UserSession implements ICache {
 	private HttpSession jses;
 
 	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
-			InstantiationException, IllegalAccessException, DatabasePoolException {
+	InstantiationException, IllegalAccessException, DatabasePoolException {
 		currentUser = user;
 		initHistory();
 		if (implemantion != null) {
 			Class cls = Class.forName(implemantion);
 			dataBase = (IDatabase) cls.newInstance();
 			ApplicationProfile app = user.enabledApps.get(appID);
-			if (app != null)
+			if (app != null) {
 				dataBase.init(app);
+			}
 		}
 	}
 
-	public UserSession(User user) throws UserException {
+	public UserSession(User user){
 		currentUser = user;
 		initHistory();
 	}
@@ -52,8 +59,9 @@ public class UserSession implements ICache {
 			cache = new HashMap<>();
 		}
 		cache.put(name, obj);
-		if (jses != null)
+		if (jses != null) {
 			jses.setAttribute("cache", cache);
+		}
 
 	}
 
@@ -101,8 +109,9 @@ public class UserSession implements ICache {
 		public void add(HistoryEntry entry) throws UserException {
 			if (history.size() == 0 || (!history.getLast().equals(entry))) {
 				history.add(entry);
-				if (entry.isPageURL)
+				if (entry.isPageURL) {
 					pageHistory.add(entry);
+				}
 			}
 
 			if (history.size() > 10) {
@@ -174,7 +183,7 @@ public class UserSession implements ICache {
 		}
 	}
 
-	private void initHistory() throws UserException {
+	private void initHistory() {
 		history = new HistoryEntryCollection();
 	}
 
@@ -207,8 +216,9 @@ public class UserSession implements ICache {
 	@Override
 	public void flush() {
 		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
-		if (cache != null)
+		if (cache != null) {
 			cache.clear();
+		}
 	}
 
 	public void addDynmaicClass(String id, _AJAXHandler instance) {

@@ -25,7 +25,6 @@ public class DoProcessor {
 
 	public DoProcessor(AppEnv env, UserSession u, String currentLang, Map <String, String[]> formData) {
 		ses = new _Session(env, u);
-		// ses.getCurrentDatabase().setTransConveyor(transactionToPost);
 		vocabulary = env.vocabulary;
 		lang = currentLang;
 		webFormData = new _WebFormData(formData);

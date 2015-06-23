@@ -12,6 +12,6 @@ public class IncludedPage extends Page {
 	}
 
 	public String getID() {
-		return "INCLUDED_PAGE_" + rule.id + "_" + userSession.lang;
+		return "INCLUDED_PAGE_" + rule.id;
 	}
 }

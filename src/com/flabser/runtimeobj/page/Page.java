@@ -20,18 +20,17 @@ import com.flabser.users.UserSession;
 import com.flabser.util.ScriptResponse;
 import com.flabser.util.Util;
 
-
 public class Page {
 
 	public boolean fileGenerated;
 	public String generatedFilePath;
 	public String generatedFileOriginalName;
 	private String httpMethod;
-	public ArrayList <_URL> redirects = new ArrayList <_URL>();
+	public ArrayList<_URL> redirects = new ArrayList<_URL>();
 
 	protected AppEnv env;
 	protected PageRule rule;
-	protected Map <String, String[]> fields = new HashMap <String, String[]>();
+	protected Map<String, String[]> fields = new HashMap<String, String[]>();
 	protected UserSession userSession;
 
 	public Page(AppEnv env, UserSession userSession, PageRule rule, String httpMethod) {
@@ -41,8 +40,8 @@ public class Page {
 		this.httpMethod = httpMethod;
 	}
 
-	public HashMap <String, String[]> getCaptions(SourceSupplier captionTextSupplier, ArrayList <Caption> captions) {
-		HashMap <String, String[]> captionsList = new HashMap <String, String[]>();
+	public HashMap<String, String[]> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
+		HashMap<String, String[]> captionsList = new HashMap<String, String[]>();
 		for (Caption cap : captions) {
 			SentenceCaption sc = captionTextSupplier.getValueAsCaption(cap.source, cap.captionID);
 			String c[] = new String[2];
@@ -53,7 +52,7 @@ public class Page {
 		return captionsList;
 	}
 
-	public _Page process(Map <String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page process(Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
 		_Page pp = null;
 		long start_time = System.currentTimeMillis();
 		switch (rule.caching) {
@@ -84,7 +83,7 @@ public class Page {
 
 	}
 
-	public _Page getContent(Map <String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page getContent(Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
 		fields = formData;
 		_Page pp = new _Page();
 
