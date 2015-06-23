@@ -23,6 +23,7 @@ public class ResourceLoader extends Application {
 
 
 		classes.add(RestAdminProvider.class);
+		classes.add(Login.class);
 
 
 		classes.add(ObjectMapperProvider.class);

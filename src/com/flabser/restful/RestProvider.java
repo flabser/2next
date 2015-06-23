@@ -36,6 +36,7 @@ import com.flabser.script._Exception;
 import com.flabser.script._IContent;
 import com.flabser.script._IObject;
 import com.flabser.script._Page;
+import com.flabser.script._Session;
 import com.flabser.servlets.Cookies;
 import com.flabser.servlets.ProviderResult;
 import com.flabser.servlets.PublishAsType;
@@ -50,19 +51,27 @@ import com.flabser.util.Util;
 
 
 @Path("/")
-
 public class RestProvider {
-	private AppEnv env;
 	@Context
 	public ServletContext context;
 	@Context
 	public HttpServletRequest request;
 	@Context
 	public HttpServletResponse response;
+	@Context
+	public _Session ses;
+	
+	protected AppEnv env = (AppEnv) context.getAttribute("portalenv");
+	//public _Session ses = new _Session(env,user);
+	
+	
 	
 	public AppEnv getAppEnv(){ 
 		return (AppEnv) context.getAttribute("portalenv");
+		
 	}
+	
+	//ses = new _Session(env, u);
 	
 
 /*	@GET
