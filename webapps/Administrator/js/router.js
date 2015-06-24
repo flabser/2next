@@ -1,5 +1,5 @@
 
-App.Router.map(function(){
+MyApp.Router.map(function(){
 	this.route('signup');
 	this.route('login', {path:'/'});
 /*	 this.resource('user', function() {

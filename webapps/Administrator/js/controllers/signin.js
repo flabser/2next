@@ -1,4 +1,4 @@
-App.SigninController = Ember.ObjectController.extend({
+MyApp.SigninController = Ember.ObjectController.extend({
 	model: {},
 
 	  actions: {

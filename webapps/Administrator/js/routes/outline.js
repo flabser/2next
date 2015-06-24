@@ -1,3 +1,3 @@
-App.OutlineRoute = Ember.Route.extend({
+MyApp.OutlineRoute = Ember.Route.extend({
   
 });
