@@ -23,12 +23,10 @@ import com.flabser.exception.ServerException;
 import com.flabser.exception.ServerExceptionType;
 import com.flabser.exception.TransformatorException;
 import com.flabser.exception.XSLTFileNotFoundException;
-import com.flabser.localization.LocalizatorException;
 import com.flabser.rule.IRule;
 import com.flabser.rule.page.PageRule;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Exception;
-import com.flabser.scriptprocessor.page.DoAsyncProcessor;
 import com.flabser.server.Server;
 import com.flabser.servlets.sitefiles.AttachmentHandler;
 import com.flabser.servlets.sitefiles.AttachmentHandlerException;
@@ -86,24 +84,11 @@ public class Provider extends HttpServlet {
 							if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
 								attachHandler = new AttachmentHandler(request, response, true);
 							}
-							// return;
-						} else if (type.equals("json")) {
-							result = json(userSession, id);
 						} else if (type.equalsIgnoreCase("search")) {
 							result = search(request, userSession);
-						} else if (type.equalsIgnoreCase("edit")) {
-							result = edit(request, rule, userSession, key);
-
-						} else if (type.equalsIgnoreCase("save")) {
-							result = save(request, response, rule, userSession, key);
 						} else if (type.equalsIgnoreCase("getattach")) {
 							result = getAttach(request, userSession, key);
 							attachHandler = new AttachmentHandler(request, response, true);
-						} else if (type.equals("delete")) {
-							result = delete(request, userSession);
-						} else if (type.equals("undelete")) {
-							result = undelete(request, userSession);
-
 						} else {
 							String reqEnc = request.getCharacterEncoding();
 							type = new String(((String) type).getBytes("ISO-8859-1"), reqEnc);
@@ -117,12 +102,7 @@ public class Provider extends HttpServlet {
 							result.addHistory = false;
 						}
 
-						if (result.publishAs == PublishAsType.JSON) {
-							response.setContentType("application/json;charset=utf-8");
-							PrintWriter out = response.getWriter();
-							out.println(result.output);
-							out.close();
-						} else if (result.publishAs == PublishAsType.HTML) {
+						if (result.publishAs == PublishAsType.HTML) {
 							if (result.disableClientCache) {
 								disableCash(response);
 							}
@@ -160,15 +140,6 @@ public class Provider extends HttpServlet {
 							PrintWriter out = response.getWriter();
 							out.println(outputContent);
 							out.close();
-						} else if (result.publishAs == PublishAsType.TEXT) {
-							if (result.disableClientCache) {
-								disableCash(response);
-							}
-							ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses,
-									result.addHistory);
-							String outputContent = po.getPlainText();
-							response.setContentType("text/text;charset=utf-8");
-							response.getWriter().println(outputContent);
 						} else if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
 							if (request.getParameter("disposition") != null) {
 								disposition = request.getParameter("disposition");
@@ -218,15 +189,6 @@ public class Provider extends HttpServlet {
 		}
 	}
 
-	private ProviderResult json(UserSession userSession, String id) throws RuleException, LocalizatorException,
-	ClassNotFoundException {
-		ProviderResult result = new ProviderResult();
-		result.publishAs = PublishAsType.JSON;
-		DoAsyncProcessor dap = new DoAsyncProcessor(userSession);
-		result.output.append(dap.processScript(id).toString());
-		return result;
-	}
-
 	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule,
 			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,
 			_Exception {
@@ -266,60 +228,6 @@ public class Provider extends HttpServlet {
 		return result;
 	}
 
-	private ProviderResult edit(HttpServletRequest request, IRule rule, UserSession userSession, String key)
-			throws RuleException, LocalizatorException, ClassNotFoundException {
-		return null;
-
-	}
-
-	private ProviderResult save(HttpServletRequest request, HttpServletResponse response, IRule rule,
-			UserSession userSession, String key) throws UnsupportedEncodingException, RuleException,
-			ClassNotFoundException {
-		ProviderResult result = new ProviderResult();
-
-		/*
-		 * String element = request.getParameter("element"); HashMap<String,
-		 * String[]> fields = new HashMap<String, String[]>(); HashMap<String,
-		 * String[]> parMap = (HashMap<String, String[]>)
-		 * request.getParameterMap(); //Map<String, String[]> parMap =
-		 * ServletUtil.showParametersMap(request); fields.putAll(parMap);
-		 *
-		 * if (element != null && element.equalsIgnoreCase("user_profile")){
-		 * XMLResponse xmlResult = new XMLResponse(ResponseType.SAVE_FORM);
-		 * Employer emp = userSession.currentUser.getAppUser(); HashSet<Filter>
-		 * currentFilters = new HashSet<Filter>(emp.getFilters());
-		 * userSession.history.remove(currentFilters);
-		 * userSession.setLang(fields.get("lang")[0], response);
-		 * userSession.setPageSize(fields.get("pagesize")[0], response);
-		 * userSession.flush(); emp.getUser().fillFieldsToSaveLight(fields);
-		 * emp.setFilters(FilterParser.parse(fields, env)); int docID =
-		 * emp.save(userSession.currentUser);
-		 *
-		 * HashSet<Filter> updatedFilters = new
-		 * HashSet<Filter>(emp.getFilters());
-		 * currentFilters.removeAll(updatedFilters);
-		 *
-		 * if (docID > -1){ xmlResult.setResponseStatus(true);
-		 * xmlResult.addSignal(SignalType.RELOAD_PAGE); }else{
-		 * xmlResult.setResponseStatus(false);
-		 * xmlResult.setMessage("User has not saved"); }
-		 *
-		 * result.output.append(xmlResult.toXML()); }else{ FormRule formRule =
-		 * (FormRule) rule; if (formRule.advancedQSEnable){ fields = new
-		 * HashMap<String, String[]>(); parMap = (HashMap<String, String[]>)
-		 * request.getParameterMap(); fields.putAll(parMap); DocumentForm form =
-		 * new DocumentForm(fields, env, formRule, userSession); int
-		 * parentDocProp[] = getParentDocProp(request);
-		 * result.output.append(form.save(key, fields,parentDocProp[0],
-		 * parentDocProp[1], userSession.pageSize, userSession.lang).toXML());
-		 * }else{ Form form = new Form(env, formRule, userSession); int
-		 * parentDocProp[] = getParentDocProp(request);
-		 * result.output.append(form.save(key, fields,parentDocProp[0],
-		 * parentDocProp[1], userSession.pageSize, userSession.lang).toXML()); }
-		 * }
-		 */
-		return result;
-	}
 
 	private ProviderResult getAttach(HttpServletRequest request, UserSession userSession, String key)
 			throws UnsupportedEncodingException {
@@ -352,34 +260,6 @@ public class Provider extends HttpServlet {
 		 * Integer.parseInt(docTypeAsText),
 		 * userSession.currentUser.getAllUserGroups(), fieldName,
 		 * result.originalAttachName); }
-		 */
-		return result;
-	}
-
-	private ProviderResult delete(HttpServletRequest request, UserSession userSession) {
-		ProviderResult result = new ProviderResult();
-		/*
-		 * String ck = request.getParameter("ck"); List<DocID> keys =
-		 * ComplexKeyParser.parse(ck); String completely =
-		 * request.getParameter("typedel"); boolean completeRemove; if
-		 * (completely != null && completely.equalsIgnoreCase("1")) {
-		 * completeRemove = true; } else { completeRemove = false; } IDatabase
-		 * dataBase = env.getDataBase(); User currentUser =
-		 * userSession.currentUser; XMLResponse xmlResp =
-		 * dataBase.deleteDocuments(keys, completeRemove, currentUser);
-		 * result.output.append(xmlResp.toXML());
-		 */
-		return result;
-	}
-
-	private ProviderResult undelete(HttpServletRequest request, UserSession userSession) {
-		ProviderResult result = new ProviderResult();
-		/*
-		 * String ck = request.getParameter("ck"); List<DocID> keys =
-		 * ComplexKeyParser.parse(ck); IDatabase dataBase = env.getDataBase();
-		 * User currentUser = userSession.currentUser; XMLResponse xmlResp =
-		 * dataBase.unDeleteDocuments(keys, currentUser);
-		 * result.output.append(xmlResp.toXML());
 		 */
 		return result;
 	}
