@@ -1,11 +1,20 @@
 package com.flabser.servlets;
 
-import net.sf.saxon.s9api.SaxonApiException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.sf.saxon.s9api.SaxonApiException;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.exception.PortalException;
@@ -23,18 +32,10 @@ import com.flabser.scriptprocessor.page.DoAsyncProcessor;
 import com.flabser.server.Server;
 import com.flabser.servlets.sitefiles.AttachmentHandler;
 import com.flabser.servlets.sitefiles.AttachmentHandlerException;
-import com.flabser.users.AuthFailedException;
-import com.flabser.users.AuthFailedExceptionType;
-import com.flabser.users.User;
 import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.*;
-
-public class Provider extends HttpServlet{
+public class Provider extends HttpServlet {
 	private static final long serialVersionUID = 2352885167311108325L;
 	private AppEnv env;
 	private ServletContext context;
@@ -72,156 +73,125 @@ public class Provider extends HttpServlet{
 					IRule rule = env.ruleProvider.getRule(id);
 
 					if (rule != null) {
-						if (!rule.isAnonymousAccessAllowed()) {
-							jses = request.getSession(true);
-							userSession = (UserSession) jses.getAttribute("usersession");
-							if (userSession == null)
-								throw new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, null);
-						} else {
-							jses = request.getSession(false);
-							if (jses == null) {
-								jses = request.getSession(true);
-								userSession = new UserSession(new User());
-								jses.setAttribute("usersession", userSession);
-							} else {
-								userSession = (UserSession) jses.getAttribute("usersession");
-								if (userSession == null) {
-									userSession = new UserSession(new User());
-									jses.setAttribute("usersession", userSession);
-								}
-							
-							}
+						jses = request.getSession(true);
+						userSession = (UserSession) jses.getAttribute("usersession");
+						if (userSession == null) {
+							userSession = new UserSession(new com.flabser.users.User());
 						}
 						Cookies cook = new Cookies(request);
 						userSession.lang = cook.currentLang;
-					}
 
-					
-					if (type == null || type.equalsIgnoreCase("page")) {
-						result = page(response, request, rule, userSession);
-						if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
+						if (type == null || type.equalsIgnoreCase("page")) {
+							result = page(response, request, rule, userSession);
+							if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
+								attachHandler = new AttachmentHandler(request, response, true);
+							}
+							// return;
+						} else if (type.equals("json")) {
+							result = json(userSession, id);
+						} else if (type.equalsIgnoreCase("search")) {
+							result = search(request, userSession);
+						} else if (type.equalsIgnoreCase("edit")) {
+							result = edit(request, rule, userSession, key);
+
+						} else if (type.equalsIgnoreCase("save")) {
+							result = save(request, response, rule, userSession, key);
+						} else if (type.equalsIgnoreCase("getattach")) {
+							result = getAttach(request, userSession, key);
 							attachHandler = new AttachmentHandler(request, response, true);
-						}
-						// return;
-					}else if (type.equals("json")) {
-						result = json(userSession, id);
-					} else if (type.equalsIgnoreCase("search")) {
-						result = search(request, userSession);
-					} else if (type.equalsIgnoreCase("edit")) {
-						result = edit(request, rule, userSession, key);
+						} else if (type.equals("delete")) {
+							result = delete(request, userSession);
+						} else if (type.equals("undelete")) {
+							result = undelete(request, userSession);
 
-					} else if (type.equalsIgnoreCase("save")) {
-						result = save(request, response, rule, userSession, key);
-					} else if (type.equalsIgnoreCase("getattach")) {
-						result = getAttach(request, userSession, key);
-						attachHandler = new AttachmentHandler(request, response, true);
-					} else if (type.equals("delete")) {
-						result = delete(request, userSession);
-					} else if (type.equals("undelete")) {
-						result = undelete(request, userSession);
-
-					} else {
-						String reqEnc = request.getCharacterEncoding();
-						type = new String(((String) type).getBytes("ISO-8859-1"), reqEnc);
-						new PortalException("Request has been undefined, type=" + type + ", id=" + id + ", key=" + key,
-								env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML);
-						return;
-					}
-
-					if ( result.publishAs == PublishAsType.XML|| onlyXML != null) {
-						result.publishAs = PublishAsType.XML;
-						result.addHistory = false;
-					}
-
-					if (result.publishAs == PublishAsType.JSON) {
-						response.setContentType("application/json;charset=utf-8");
-						PrintWriter out = response.getWriter();
-						out.println(result.output);
-						out.close();
-					} else if (result.publishAs == PublishAsType.HTML) {
-						if (result.disableClientCache) {
-							disableCash(response);
-						}
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession,
-								jses, result.addHistory);
-						response.setContentType("text/html");
-						
-						if (po.prepareXSLT(env, result.xslt)) {
-							String outputContent = po.getStandartOutput();
-							// long start_time = System.currentTimeMillis(); //
-							// for speed debuging
-							new SaxonTransformator().toTrans(response, po.xslFile, outputContent);
-							// System.out.println(getClass().getSimpleName() +
-							// " transformation  >>> " +
-							// Util.getTimeDiffInMilSec(start_time)); // for
-							// speed debuging
 						} else {
-							String outputContent = po.getStandartOutput();
+							String reqEnc = request.getCharacterEncoding();
+							type = new String(((String) type).getBytes("ISO-8859-1"), reqEnc);
+							new PortalException("Request has been undefined, type=" + type + ", id=" + id + ", key="
+									+ key, env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML);
+							return;
+						}
+
+						if (result.publishAs == PublishAsType.XML || onlyXML != null) {
+							result.publishAs = PublishAsType.XML;
+							result.addHistory = false;
+						}
+
+						if (result.publishAs == PublishAsType.JSON) {
+							response.setContentType("application/json;charset=utf-8");
+							PrintWriter out = response.getWriter();
+							out.println(result.output);
+							out.close();
+						} else if (result.publishAs == PublishAsType.HTML) {
+							if (result.disableClientCache) {
+								disableCash(response);
+							}
+							ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses,
+									result.addHistory);
+							response.setContentType("text/html");
+
+							if (po.prepareXSLT(env, result.xslt)) {
+								String outputContent = po.getStandartOutput();
+								// long start_time = System.currentTimeMillis();
+								// //
+								// for speed debuging
+								new SaxonTransformator().toTrans(response, po.xslFile, outputContent);
+								// System.out.println(getClass().getSimpleName()
+								// +
+								// " transformation  >>> " +
+								// Util.getTimeDiffInMilSec(start_time)); // for
+								// speed debuging
+							} else {
+								String outputContent = po.getStandartOutput();
+								response.setContentType("text/xml;charset=utf-8");
+								PrintWriter out = response.getWriter();
+								out.println(outputContent);
+								out.close();
+							}
+						} else if (result.publishAs == PublishAsType.XML) {
+							if (result.disableClientCache) {
+								disableCash(response);
+							}
 							response.setContentType("text/xml;charset=utf-8");
+							ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses,
+									result.addHistory);
+							String outputContent = po.getStandartOutput();
+							// System.out.println(outputContent);
 							PrintWriter out = response.getWriter();
 							out.println(outputContent);
 							out.close();
+						} else if (result.publishAs == PublishAsType.TEXT) {
+							if (result.disableClientCache) {
+								disableCash(response);
+							}
+							ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses,
+									result.addHistory);
+							String outputContent = po.getPlainText();
+							response.setContentType("text/text;charset=utf-8");
+							response.getWriter().println(outputContent);
+						} else if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
+							if (request.getParameter("disposition") != null) {
+								disposition = request.getParameter("disposition");
+							} else {
+								disposition = "attachment";
+							}
+							attachHandler.publish(result.filePath, result.originalAttachName, disposition);
+						} else if (result.publishAs == PublishAsType.FORWARD) {
+							response.sendRedirect(result.forwardTo);
+							return;
 						}
-					} else if (result.publishAs == PublishAsType.XML) {
-						if (result.disableClientCache) {
-							disableCash(response);
-						}
-						response.setContentType("text/xml;charset=utf-8");
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession,
-								jses,  result.addHistory);
-						String outputContent = po.getStandartOutput();
-						// System.out.println(outputContent);
-						PrintWriter out = response.getWriter();
-						out.println(outputContent);
-						out.close();
-					} else if (result.publishAs == PublishAsType.TEXT) {
-						if (result.disableClientCache) {
-							disableCash(response);
-						}
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession,
-								jses,  result.addHistory);
-						String outputContent = po.getPlainText();
-						response.setContentType("text/text;charset=utf-8");
-						response.getWriter().println(outputContent);
-					} else if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
-						if (request.getParameter("disposition") != null) {
-							disposition = request.getParameter("disposition");
-						} else {
-							disposition = "attachment";
-						}
-						attachHandler.publish(result.filePath, result.originalAttachName, disposition);
-					} else if (result.publishAs == PublishAsType.FORWARD) {
-						response.sendRedirect(result.forwardTo);
+						// System.out.println(type + " " +
+						// Util.getTimeDiffInMilSec(start_time));
+					} else {
+						// response.sendRedirect(env.globalSetting.defaultRedirectURL);
 						return;
 					}
-					// System.out.println(type + " " +
-					// Util.getTimeDiffInMilSec(start_time));
 				} else {
-					// response.sendRedirect(env.globalSetting.defaultRedirectURL);
-					return;
+					throw new RuleException("Not found");
 				}
 			} else {
 				throw new ServerException(ServerExceptionType.APPENV_HAS_NOT_INITIALIZED, "context="
 						+ context.getServletContextName());
-			}
-		} catch (AuthFailedException e) {
-			String referer = request.getRequestURI() + "?" + request.getQueryString();
-			if (jses == null)
-				jses = request.getSession(true);
-			jses.setAttribute("callingPage", referer);
-
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			try {
-				if (e.type == AuthFailedExceptionType.NO_USER_SESSION) {
-					response.sendRedirect("Logout");
-				} else {
-					request.getRequestDispatcher("/Error?type=ws_auth_error").forward(request, response);
-				}
-
-			} catch (IOException e1) {
-				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
-			} catch (ServletException e2) {
-				new PortalException(e2, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 			}
 		} catch (RuleException rnf) {
 			new PortalException(rnf, env, response, ProviderExceptionType.RULENOTFOUND);
@@ -249,7 +219,7 @@ public class Provider extends HttpServlet{
 	}
 
 	private ProviderResult json(UserSession userSession, String id) throws RuleException, LocalizatorException,
-			ClassNotFoundException {
+	ClassNotFoundException {
 		ProviderResult result = new ProviderResult();
 		result.publishAs = PublishAsType.JSON;
 		DoAsyncProcessor dap = new DoAsyncProcessor(userSession);
@@ -258,7 +228,8 @@ public class Provider extends HttpServlet{
 	}
 
 	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule,
-			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException, _Exception {
+			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,
+			_Exception {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		result.addHistory = pageRule.addToHistory;
@@ -276,7 +247,7 @@ public class Provider extends HttpServlet{
 	}
 
 	private ProviderResult search(HttpServletRequest request, UserSession userSession) throws RuleException,
-			UnsupportedEncodingException {
+	UnsupportedEncodingException {
 		ProviderResult result = new ProviderResult(PublishAsType.HTML, "searchres.xsl");
 		int page = 0;
 		try {
@@ -312,7 +283,7 @@ public class Provider extends HttpServlet{
 		 * String[]> parMap = (HashMap<String, String[]>)
 		 * request.getParameterMap(); //Map<String, String[]> parMap =
 		 * ServletUtil.showParametersMap(request); fields.putAll(parMap);
-		 * 
+		 *
 		 * if (element != null && element.equalsIgnoreCase("user_profile")){
 		 * XMLResponse xmlResult = new XMLResponse(ResponseType.SAVE_FORM);
 		 * Employer emp = userSession.currentUser.getAppUser(); HashSet<Filter>
@@ -323,16 +294,16 @@ public class Provider extends HttpServlet{
 		 * userSession.flush(); emp.getUser().fillFieldsToSaveLight(fields);
 		 * emp.setFilters(FilterParser.parse(fields, env)); int docID =
 		 * emp.save(userSession.currentUser);
-		 * 
+		 *
 		 * HashSet<Filter> updatedFilters = new
 		 * HashSet<Filter>(emp.getFilters());
 		 * currentFilters.removeAll(updatedFilters);
-		 * 
+		 *
 		 * if (docID > -1){ xmlResult.setResponseStatus(true);
 		 * xmlResult.addSignal(SignalType.RELOAD_PAGE); }else{
 		 * xmlResult.setResponseStatus(false);
 		 * xmlResult.setMessage("User has not saved"); }
-		 * 
+		 *
 		 * result.output.append(xmlResult.toXML()); }else{ FormRule formRule =
 		 * (FormRule) rule; if (formRule.advancedQSEnable){ fields = new
 		 * HashMap<String, String[]>(); parMap = (HashMap<String, String[]>)
@@ -356,11 +327,11 @@ public class Provider extends HttpServlet{
 		/*
 		 * String fieldName = request.getParameter("field"); String attachName =
 		 * request.getParameter("file");
-		 * 
+		 *
 		 * String reqEnc = request.getCharacterEncoding();
 		 * result.originalAttachName = new
 		 * String(((String)attachName).getBytes("ISO-8859-1"),reqEnc);
-		 * 
+		 *
 		 * String formSesID = request.getParameter("formsesid"); if (formSesID
 		 * != null){ File file = Util.getExistFile(result.originalAttachName,
 		 * Environment.tmpDir + File.separator + formSesID + File.separator +
@@ -417,5 +388,5 @@ public class Provider extends HttpServlet{
 		response.setHeader("Cache-Control", "no-cache, must-revalidate, private, no-store, s-maxage=0, max-age=0");
 		response.setHeader("Pragma", "no-cache");
 		response.setDateHeader("Expires", 0);
-	}	
+	}
 }

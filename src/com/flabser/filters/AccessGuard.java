@@ -28,7 +28,7 @@ public class AccessGuard implements Filter {
 			HttpServletRequest http = (HttpServletRequest) request;
 			AppEnv.logger.errorLogEntry(" Filter method=" + http.getMethod() + " "
 					+ http.getRequestURI());
-			if (http.getRequestURI().contains("signins") || http.getRequestURI().contains("page")) {
+			if (http.getRequestURI().contains("signins") || http.getRequestURI().contains("page") || http.getRequestURI().contains("Provider")) {
 				chain.doFilter(request, resp);
 			} else {
 				HttpSession jses = http.getSession(true);

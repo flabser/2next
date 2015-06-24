@@ -10,12 +10,22 @@
   "license": "LOF",
   "devDependencies": {
     "connect": "^3.4.0",
+    "ember-cli-babel": "^5.0.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
+    "gulp-concat": "^2.6.0",
     "gulp-cssmin": "^0.1.7",
+    "gulp-ember-templates": "^0.7.0",
     "gulp-livereload": "^3.8.0",
+    "gulp-uglify": "^1.2.0",
     "gulp-uncss": "^1.0.1",
     "gulp.spritesmith": "^3.8.2",
     "serve-static": "^1.10.0"
+  },
+  "dependencies": {
+    "gulp-csso": "^1.0.0",
+    "gulp-jshint": "^1.11.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.3"
   }
 }
