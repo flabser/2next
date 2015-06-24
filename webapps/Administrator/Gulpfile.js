@@ -24,7 +24,7 @@ gulp.task('minify_css', function() {
 
 // ember app
 var js_ember_files = ['./js/**/*.js',
-    './templates/compiled/*.js',
+    './js/templates/compiled/*.js',
     '!./js/libs/**/*.js',
     '!./js/app.build.js',
     '!./js/app.min.js'
@@ -40,10 +40,10 @@ gulp.task('em_minify_js', function() {
 });
 // --------------------------------
 
-var em_templates = ['./templates/**/*.hbs',
-    '!./templates/compiled/**/*.hbs'
+var em_templates = ['./js/templates/**/*.hbs',
+    '!./js/templates/compiled/**/*.hbs'
 ];
-var em_templates_compile = ['./templates/compiled/**/*.hbs'];
+var em_templates_compile = ['./js/templates/compiled/**/*.hbs'];
 
 // ember templates
 // задача для удаления переводов строк и лишних пробелов
@@ -51,7 +51,7 @@ var em_templates_compile = ['./templates/compiled/**/*.hbs'];
 gulp.task('em_templates_trim', function() {
     gulp.src(em_templates)
         .pipe(replace(/(\n|\s{2,})/g, ''))
-        .pipe(gulp.dest('./templates/compiled'));
+        .pipe(gulp.dest('./js/templates/compiled'));
 });
 
 gulp.task('em_templates_compile', function() {
@@ -66,7 +66,7 @@ gulp.task('em_templates_compile', function() {
             }
         }))
         .pipe(concat('templates.js'))
-        .pipe(gulp.dest('./templates/compiled'));
+        .pipe(gulp.dest('./js/templates/compiled'));
 });
 // --------------------------------
 
