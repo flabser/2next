@@ -30,3 +30,8 @@ DS.RESTAdapter.reopen({
     firebase: new Firebase('https://blinding-fire-6380.firebaseio.com/')
 });
 */
+
+CT.register('service:session', Ember.Object);
+
+CT.inject('route', 'session', 'service:session');
+CT.inject('controller', 'session', 'service:session');

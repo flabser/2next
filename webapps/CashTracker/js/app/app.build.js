@@ -31,6 +31,11 @@ DS.RESTAdapter.reopen({
 });
 */
 
+CT.register('service:session', Ember.Object);
+
+CT.inject('route', 'session', 'service:session');
+CT.inject('controller', 'session', 'service:session');
+
 CT.Router = Ember.Router.extend({
     // location: 'history'
 });
@@ -91,11 +96,20 @@ CT.Router.map(function() {
     this.route('users', function() {
         this.route('new');
     });
+
+    this.route('login');
 });
 
 Ember.Route.reopen({
     redirect: function() {
-        if (this.routeName === 'index') {
+        console.log(this.modelFor('application'), '---------------------');
+        if (this.routeName === 'login') {
+            if (this.modelFor('application').get('user')) {
+                this.transitionTo('index');
+            }
+        } else if (false && !this.modelFor('application').get('user')) {
+            this.transitionTo('login');
+        } else if (this.routeName === 'index') {
             this.transitionTo('transactions');
         }
     }
@@ -226,6 +240,12 @@ CT.CostCentersNewController = Ember.ArrayController.extend({
             this.transitionTo('cost_centers');
         }
     }
+});
+
+CT.LoginController = Ember.Controller.extend();
+
+CT.SessionController = Ember.Controller.extend({
+
 });
 
 CT.TagController = Ember.ObjectController.extend({
@@ -384,18 +404,9 @@ CT.Transaction = DS.Model.extend({
 
 CT.User = DS.Model.extend({
     name: DS.attr('string'),
+    password: DS.attr('string'),
     email: DS.attr('string'),
     role: DS.attr('string')
-});
-
-CT.ApplicationView = Ember.View.extend({
-    classNames: ['layout'],
-
-    templateName: 'application',
-
-    willInsertElement: function() {
-        $('.page-loading').hide();
-    }
 });
 
 CT.AccountRoute = Ember.Route.extend({
@@ -415,7 +426,37 @@ CT.AccountsNewRoute = Ember.Route.extend({
 });
 
 CT.ApplicationRoute = Ember.Route.extend({
+
     actions: {
+        logout: function() {
+            var route = this;
+
+            //API.logout().then(function() {
+                route.session.set('user', null);
+                route.transitionTo('index');
+            //});
+        },
+
+        expireSession: function() {
+            //API.token = 'expired';
+        },
+
+        error: function(error, transition) {
+            if (error.status === 'Unauthorized') {
+                var loginController = this.controllerFor('login');
+
+                loginController.setProperties({
+                    message: error.message,
+                    transition: transition
+                });
+
+                this.transitionTo('login');
+            } else {
+                // Allow other error to bubble
+                return true;
+            }
+        },
+
         willTransition: function() {
             $('body').removeClass('nav-app-open nav-ws-open');
         }
@@ -452,6 +493,55 @@ CT.CostCentersRoute = Ember.Route.extend({
 
 CT.CostCentersNewRoute = Ember.Route.extend({
     templateName: 'cost_center'
+});
+
+CT.LoginRoute = Ember.Route.extend({
+    actions: {
+        submit: function() {
+            var route = this,
+                controller = this.get('controller');
+
+            var username = controller.get('username'),
+                password = controller.get('password');
+
+            controller.set('message', null);
+
+            //API.login(username, password).then(
+            //    function(user) {
+                    var transition = controller.get('transition');
+
+                    route.session.set('user', user);
+
+                    if (transition) {
+                        transition.retry();
+                    } else {
+                        route.transitionTo('index');
+                    }
+            //    },
+            //    function(error) {
+            //        controller.set('message', error.message);
+            //    }
+            //);
+        },
+
+        cancel: function() {
+            this.transitionTo('index');
+        }
+    },
+
+    beforeModel: function() {
+        //API.token = null;
+        this.session.set('user', null);
+    },
+
+    resetController: function(controller) {
+        controller.setProperties({
+            username: null,
+            password: null,
+            message: null,
+            transition: null
+        });
+    }
 });
 
 CT.TagRoute = Ember.Route.extend({
@@ -535,6 +625,16 @@ CT.UsersRoute = Ember.Route.extend({
 
 CT.UsersNewRoute = Ember.Route.extend({
     templateName: 'user'
+});
+
+CT.ApplicationView = Ember.View.extend({
+    classNames: ['layout'],
+
+    templateName: 'application',
+
+    willInsertElement: function() {
+        $('.page-loading').hide();
+    }
 });
 
 Ember.TEMPLATES["account"] = Ember.HTMLBars.template((function() {
@@ -2847,6 +2947,191 @@ Ember.TEMPLATES["loading"] = Ember.HTMLBars.template((function() {
       } else {
         fragment = this.build(dom);
       }
+      return fragment;
+    }
+  };
+}()));
+Ember.TEMPLATES["login"] = Ember.HTMLBars.template((function() {
+  return {
+    isHTMLBars: true,
+    revision: "Ember@1.12.1",
+    blockParams: 0,
+    cachedFragment: null,
+    hasRendered: false,
+    build: function build(dom) {
+      var el0 = dom.createDocumentFragment();
+      var el1 = dom.createElement("div");
+      dom.setAttribute(el1,"class","login");
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("h1");
+      dom.setAttribute(el2,"class","login-title");
+      var el3 = dom.createTextNode("Login");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","login-form");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createComment("");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createComment("");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","login-form-bottom");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("label");
+      dom.setAttribute(el4,"class","noauth");
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("input");
+      dom.setAttribute(el5,"type","checkbox");
+      dom.setAttribute(el5,"name","noauth");
+      dom.setAttribute(el5,"value","1");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode(" alien_device\n            ");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("button");
+      dom.setAttribute(el4,"type","submit");
+      dom.setAttribute(el4,"class","btn");
+      var el5 = dom.createTextNode("\n                sign in\n            ");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","social");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("a");
+      dom.setAttribute(el3,"href","#vk");
+      dom.setAttribute(el3,"rel","nofollow");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("i");
+      dom.setAttribute(el4,"class","social-icon-vk");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("a");
+      dom.setAttribute(el3,"href","#fb");
+      dom.setAttribute(el3,"rel","nofollow");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("i");
+      dom.setAttribute(el4,"class","social-icon-fb");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("a");
+      dom.setAttribute(el3,"href","#twitter");
+      dom.setAttribute(el3,"rel","nofollow");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("i");
+      dom.setAttribute(el4,"class","social-icon-twitter");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("footer");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("ul");
+      dom.setAttribute(el3,"class","help-list");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("li");
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("a");
+      dom.setAttribute(el5,"href","?id=password-recovery");
+      dom.setAttribute(el5,"rel","nofollow");
+      var el6 = dom.createTextNode("\n                    lost_password\n                ");
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n            ");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("li");
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("a");
+      dom.setAttribute(el5,"href","?id=retry-send-verify-email");
+      dom.setAttribute(el5,"rel","nofollow");
+      var el6 = dom.createTextNode("\n                    no_verify_mail\n                ");
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n            ");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      var el1 = dom.createTextNode("\n");
+      dom.appendChild(el0, el1);
+      return el0;
+    },
+    render: function render(context, env, contextualElement) {
+      var dom = env.dom;
+      var hooks = env.hooks, get = hooks.get, inline = hooks.inline;
+      dom.detectNamespace(contextualElement);
+      var fragment;
+      if (env.useFragmentCache && dom.canClone) {
+        if (this.cachedFragment === null) {
+          fragment = this.build(dom);
+          if (this.hasRendered) {
+            this.cachedFragment = fragment;
+          } else {
+            this.hasRendered = true;
+          }
+        }
+        if (this.cachedFragment) {
+          fragment = dom.cloneNode(this.cachedFragment, true);
+        }
+      } else {
+        fragment = this.build(dom);
+      }
+      var element0 = dom.childAt(fragment, [0, 3]);
+      var morph0 = dom.createMorphAt(element0,1,1);
+      var morph1 = dom.createMorphAt(element0,3,3);
+      inline(env, morph0, context, "input", [], {"name": "username", "value": get(env, context, "username"), "required": true, "placeholder": "username"});
+      inline(env, morph1, context, "input", [], {"type": "password", "name": "password", "value": get(env, context, "password"), "placeholder": "password"});
       return fragment;
     }
   };

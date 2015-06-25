@@ -1,0 +1,40 @@
+<div class="login">
+    <h1 class="login-title">Login</h1>
+    <div class="login-form">
+        {{input name="username" value=username required=true placeholder="username"}}
+        {{input type="password" name="password" value=password placeholder="password"}}
+        <div class="login-form-bottom">
+            <label class="noauth">
+                <input type="checkbox" name="noauth" value="1" /> alien_device
+            </label>
+            <button type="submit" class="btn">
+                sign in
+            </button>
+        </div>
+    </div>
+    <div class="social">
+        <a href="#vk" rel="nofollow">
+            <i class="social-icon-vk" />
+        </a>
+        <a href="#fb" rel="nofollow">
+            <i class="social-icon-fb" />
+        </a>
+        <a href="#twitter" rel="nofollow">
+            <i class="social-icon-twitter" />
+        </a>
+    </div>
+    <footer>
+        <ul class="help-list">
+            <li>
+                <a href="?id=password-recovery" rel="nofollow">
+                    lost_password
+                </a>
+            </li>
+            <li>
+                <a href="?id=retry-send-verify-email" rel="nofollow">
+                    no_verify_mail
+                </a>
+            </li>
+        </ul>
+    </footer>
+</div>

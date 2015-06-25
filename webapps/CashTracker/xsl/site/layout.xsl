@@ -87,7 +87,7 @@
 						</a>
 					</xsl:if>
 					<xsl:if test="@id != 'login' and (@userid = 'anonymous' or @userid = '')">
-						<a href="?id=login" class="nav-item btn-login">
+						<a href="index.html" class="nav-item btn-login">
 							<span>
 								<xsl:value-of select="//captions/login/@caption" />
 							</span>
