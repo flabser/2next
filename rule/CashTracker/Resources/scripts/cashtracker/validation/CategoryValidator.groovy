@@ -1,16 +1,16 @@
 package cashtracker.validation
 
-import cashtracker.model.Account
+import cashtracker.model.Category
 
 
-public class AccountValidator {
+public class CategoryValidator {
 
 	private boolean isValid
 
-	public AccountValidator() {
+	public CategoryValidator() {
 	}
 
-	public boolean validate(Account m) {
+	public boolean validate(Category m) {
 		isValid = !m.getName().isEmpty()
 		isValid
 	}

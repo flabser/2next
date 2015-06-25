@@ -3,7 +3,6 @@ package cashtracker.rest;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -18,8 +17,6 @@ import cashtracker.model.Tag;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
-import com.flabser.script._Session;
-import com.flabser.users.UserSession;
 
 
 @Path("tags")
@@ -28,11 +25,7 @@ public class TagService extends RestProvider {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public TagsResponse get() {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		TagDAO dao = new TagDAO(getSession());
 		return new TagsResponse(dao.findAll());
 	}
 
@@ -40,11 +33,7 @@ public class TagService extends RestProvider {
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Tag get(@PathParam("id") long id) {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		TagDAO dao = new TagDAO(getSession());
 		Tag m = dao.findById(id);
 		return m;
 	}
@@ -53,11 +42,7 @@ public class TagService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Tag create(Tag m) {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		TagDAO dao = new TagDAO(getSession());
 		m.setId(dao.addTag(m));
 		return m;
 	}
@@ -68,11 +53,8 @@ public class TagService extends RestProvider {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Tag update(@PathParam("id") long id, Tag m) {
 
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
 		m.setId(id);
-		TagDAO dao = new TagDAO(new _Session(getAppEnv(), userSession));
+		TagDAO dao = new TagDAO(getSession());
 		dao.updateTag(m);
 		return m;
 	}

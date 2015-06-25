@@ -3,7 +3,6 @@ package cashtracker.rest;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -18,8 +17,6 @@ import cashtracker.model.Transaction;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
-import com.flabser.script._Session;
-import com.flabser.users.UserSession;
 
 
 @Path("transactions")
@@ -28,11 +25,7 @@ public class TransactionService extends RestProvider {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public TransactionsResponse get() {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
+		TransactionDAO dao = new TransactionDAO(getSession());
 		return new TransactionsResponse(dao.findAll());
 	}
 
@@ -40,11 +33,7 @@ public class TransactionService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Transaction get(@PathParam("id") long id) {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
+		TransactionDAO dao = new TransactionDAO(getSession());
 		Transaction m = dao.findById(id);
 		return m;
 	}
@@ -53,11 +42,7 @@ public class TransactionService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Transaction create(Transaction m) {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
+		TransactionDAO dao = new TransactionDAO(getSession());
 		m.setId(dao.addTransaction(m));
 		return m;
 	}
@@ -68,11 +53,8 @@ public class TransactionService extends RestProvider {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Transaction update(@PathParam("id") long id, Transaction m) {
 
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
 		m.setId(id);
-		TransactionDAO dao = new TransactionDAO(new _Session(getAppEnv(), userSession));
+		TransactionDAO dao = new TransactionDAO(getSession());
 		dao.updateTransaction(m);
 		return m;
 	}

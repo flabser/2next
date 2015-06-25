@@ -3,7 +3,6 @@ package cashtracker.rest;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -18,8 +17,6 @@ import cashtracker.model.Category;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
-import com.flabser.script._Session;
-import com.flabser.users.UserSession;
 
 
 @Path("categories")
@@ -28,11 +25,7 @@ public class CategoryService extends RestProvider {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public CategoriesResponse get() {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		CategoryDAO dao = new CategoryDAO(getSession());
 		return new CategoriesResponse(dao.findAll());
 	}
 
@@ -40,11 +33,7 @@ public class CategoryService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Category get(@PathParam("id") long id) {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		CategoryDAO dao = new CategoryDAO(getSession());
 		Category m = dao.findById(id);
 		return m;
 	}
@@ -53,11 +42,7 @@ public class CategoryService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Category create(Category m) {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		CategoryDAO dao = new CategoryDAO(getSession());
 		m.setId(dao.addCategory(m));
 		return m;
 	}
@@ -68,11 +53,8 @@ public class CategoryService extends RestProvider {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Category update(@PathParam("id") long id, Category m) {
 
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
 		m.setId(id);
-		CategoryDAO dao = new CategoryDAO(new _Session(getAppEnv(), userSession));
+		CategoryDAO dao = new CategoryDAO(getSession());
 		dao.updateCategory(m);
 		return m;
 	}

@@ -3,7 +3,6 @@ package cashtracker.rest;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -18,8 +17,6 @@ import cashtracker.model.Account;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
-import com.flabser.script._Session;
-import com.flabser.users.UserSession;
 
 
 @Path("accounts")
@@ -28,11 +25,7 @@ public class AccountService extends RestProvider {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public AccountsResponse get() {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
+		AccountDAO dao = new AccountDAO(getSession());
 		return new AccountsResponse(dao.findAll());
 	}
 
@@ -40,11 +33,7 @@ public class AccountService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Account get(@PathParam("id") long id) {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
+		AccountDAO dao = new AccountDAO(getSession());
 		Account m = dao.findById(id);
 		return m;
 	}
@@ -53,11 +42,7 @@ public class AccountService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Account create(Account m) {
-
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
-		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
+		AccountDAO dao = new AccountDAO(getSession());
 		m.setId(dao.addAccount(m));
 		return m;
 	}
@@ -68,11 +53,8 @@ public class AccountService extends RestProvider {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Account update(@PathParam("id") long id, Account m) {
 
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
-
 		m.setId(id);
-		AccountDAO dao = new AccountDAO(new _Session(getAppEnv(), userSession));
+		AccountDAO dao = new AccountDAO(getSession());
 		dao.updateAccount(m);
 		return m;
 	}
