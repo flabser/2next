@@ -1,16 +1,21 @@
 package com.flabser.restful;
 
 import java.sql.SQLException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+
 import org.omg.CORBA.UserException;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
@@ -26,19 +31,34 @@ import com.flabser.users.UserSession;
 import com.flabser.users.UserStatusType;
 import com.flabser.util.Util;
 
-@Path("/")
-public class Login {
+
+@Path("/session")
+public class Session {
 
 	@Context
 	ServletContext context;
 	@Context
-	HttpServletRequest request;	
+	HttpServletRequest request;
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public SignIn getSession() {
+		HttpSession jses = request.getSession(true);
+
+		SignIn user = new SignIn();
+		UserSession userSession = (UserSession) jses.getAttribute("usersession");
+		if (userSession == null) {
+			return user;
+		}
+
+		user.setLogin(userSession.currentUser.getLogin());
+		return user;
+	}
 
 	@POST
-	@Path("/signins")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public com.flabser.restful.SignIn producePost(com.flabser.restful.SignIn signUser) {
+	public com.flabser.restful.SignIn createSession(SignIn signUser) {
 		UserSession userSession = null;
 		try {
 			System.out.println(request.getRequestedSessionId() + "  " + signUser.getClass().getName());
@@ -50,8 +70,8 @@ public class Login {
 			Cookies appCookies = new Cookies(request);
 			user = systemDatabase.checkUserHash(signUser.getLogin(), signUser.getPwd(), appCookies.authHash, user);
 
-			if (!user.isAuthorized)
-				throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, signUser.getLogin());
+			if (!user.isAuthorized) throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT,
+					signUser.getLogin());
 
 			String userID = user.getLogin();
 			jses = request.getSession(true);
@@ -79,7 +99,7 @@ public class Login {
 				throw new AuthFailedException(AuthFailedExceptionType.DELETED, signUser.getLogin());
 			}
 
-            userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
+			userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
 			jses.setAttribute("usersession", userSession);
 
 		} catch (AuthFailedException ae) {
@@ -92,23 +112,32 @@ public class Login {
 				// new PortalException(e, response,
 				// ProviderExceptionType.INTERNAL,
 				// PublishAsType.HTML);
-			}	
+			}
 
-		} catch (ClassNotFoundException e) {		
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (InstantiationException e) {			
+		} catch (InstantiationException e) {
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {			
+		} catch (IllegalAccessException e) {
 			e.printStackTrace();
-		} catch (UserException e) {			
+		} catch (UserException e) {
 			e.printStackTrace();
-		} catch (DatabasePoolException e) {			
+		} catch (DatabasePoolException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {			
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return signUser;
+	}
 
+	@DELETE
+	public void destroySession() {
+		HttpSession jses = request.getSession(true);
+
+		if (jses.getAttribute("usersession") != null) {
+			jses.removeAttribute("usersession");
+			jses.invalidate();
+		}
 	}
 }

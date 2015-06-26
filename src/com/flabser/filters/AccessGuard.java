@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import com.flabser.appenv.AppEnv;
 import com.flabser.users.UserSession;
 
+
 public class AccessGuard implements Filter {
 
 	@Override
@@ -26,9 +27,9 @@ public class AccessGuard implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain) {
 		try {
 			HttpServletRequest http = (HttpServletRequest) request;
-			AppEnv.logger.errorLogEntry(" Filter method=" + http.getMethod() + " "
-					+ http.getRequestURI());
-			if (http.getRequestURI().contains("signins") || http.getRequestURI().contains("page") || http.getRequestURI().contains("Provider")) {
+			AppEnv.logger.errorLogEntry(" Filter method=" + http.getMethod() + " " + http.getRequestURI());
+			if (http.getRequestURI().contains("session") || http.getRequestURI().contains("page")
+					|| http.getRequestURI().contains("Provider")) {
 				chain.doFilter(request, resp);
 			} else {
 				HttpSession jses = http.getSession(true);
@@ -55,5 +56,4 @@ public class AccessGuard implements Filter {
 	public void destroy() {
 
 	}
-
 }
