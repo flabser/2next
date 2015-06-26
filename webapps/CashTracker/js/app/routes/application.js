@@ -1,31 +1,35 @@
 CT.ApplicationRoute = Ember.Route.extend({
 
+    model: function() {
+        var route = this;
+        var authUser = this.store.find('auth_user');
+        authUser.then(function(user) {
+            route.session.set('auth_user', user);
+        });
+        return authUser;
+    },
+
     actions: {
         logout: function() {
             var route = this;
+            var authUser = this.session.get('auth_user');
 
-            //API.logout().then(function() {
-                route.session.set('user', null);
+            authUser.deleteRecord();
+            authUser.save().then(function() {
+                route.session.set('auth_user', null);
                 route.transitionTo('index');
-            //});
-        },
-
-        expireSession: function() {
-            //API.token = 'expired';
+            });
         },
 
         error: function(error, transition) {
-            if (error.status === 'Unauthorized') {
-                var loginController = this.controllerFor('login');
+            if (error.status === 401) {
 
-                loginController.setProperties({
-                    message: error.message,
+                this.controllerFor('login').setProperties({
                     transition: transition
                 });
 
                 this.transitionTo('login');
             } else {
-                // Allow other error to bubble
                 return true;
             }
         },

@@ -12,9 +12,6 @@ CT.TransactionsRoute = Ember.Route.extend({
     },
 
     model: function(params) {
-        /*return $.getJSON('/CashTracker/RestProvider/transactions').then(function(data) {
-            return data.elements[0].value.list;
-        });*/
         return this.store.find('transaction');
     },
 
@@ -36,6 +33,8 @@ CT.TransactionsRoute = Ember.Route.extend({
                 queryParams: transition.queryParams
             });
         }
+
+        this._super(transition);
     }
 });
 

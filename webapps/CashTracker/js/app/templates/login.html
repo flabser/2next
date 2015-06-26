@@ -1,16 +1,18 @@
 <div class="login">
     <h1 class="login-title">Login</h1>
     <div class="login-form">
-        {{input name="username" value=username required=true placeholder="username"}}
-        {{input type="password" name="password" value=password placeholder="password"}}
-        <div class="login-form-bottom">
-            <label class="noauth">
-                <input type="checkbox" name="noauth" value="1" /> alien_device
-            </label>
-            <button type="submit" class="btn">
-                sign in
-            </button>
-        </div>
+        <form>
+            {{input name="username" value=username required=true placeholder="username"}}
+            {{input type="password" value=password required=true placeholder="password"}}
+            <div class="login-form-bottom">
+                <label class="noauth">
+                    <input type="checkbox" name="noauth" value="1" /> alien_device
+                </label>
+                <button type="submit" class="btn" {{action "login"}}>
+                    sign in
+                </button>
+            </div>
+        </form>
     </div>
     <div class="social">
         <a href="#vk" rel="nofollow">

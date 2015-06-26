@@ -7,11 +7,11 @@ var CT = Ember.Application.create({
     LOG_ACTIVE_GENERATION: true
 });
 
-// CT.ApplicationAdapter = DS.FixtureAdapter;
-
 CT.ApplicationAdapter = DS.RESTAdapter.extend({
     pathForType: function(type) {
         switch (type) {
+            case 'authUser':
+                return 'session';
             case 'costCenter':
                 return 'costcenters';
             case 'category':
@@ -25,16 +25,6 @@ CT.ApplicationAdapter = DS.RESTAdapter.extend({
 DS.RESTAdapter.reopen({
     namespace: 'CashTracker/rest'
 });
-
-/*CT.ApplicationAdapter = DS.FirebaseAdapter.extend({
-    firebase: new Firebase('https://blinding-fire-6380.firebaseio.com/')
-});
-*/
-
-CT.register('service:session', Ember.Object);
-
-CT.inject('route', 'session', 'service:session');
-CT.inject('controller', 'session', 'service:session');
 
 CT.Router = Ember.Router.extend({
     // location: 'history'
@@ -101,31 +91,17 @@ CT.Router.map(function() {
 });
 
 Ember.Route.reopen({
-    redirect: function() {
-        console.log(this.modelFor('application'), '---------------------');
-        if (this.routeName === 'login') {
-            if (this.modelFor('application').get('user')) {
-                this.transitionTo('index');
-            }
-        } else if (false && !this.modelFor('application').get('user')) {
+    beforeModel: function() {
+        if (!this.session.get('auth_user') && this.routeName !== 'login') {
             this.transitionTo('login');
-        } else if (this.routeName === 'index') {
+        }
+    },
+    redirect: function() {
+        if (this.routeName === 'index') {
             this.transitionTo('transactions');
         }
     }
 });
-
-CT.AccComponent = Ember.Component.extend({
-    templateName: 'components/accounts',
-
-    queryParams: ['offset', 'limit', 'order_by'],
-
-    actions: {
-        selectAll: function() {}
-    }
-});
-
-//Ember.Handlebars.helper('acc', CT.AccComponent);
 
 CT.AccountController = Ember.ObjectController.extend({
     actions: {
@@ -244,10 +220,6 @@ CT.CostCentersNewController = Ember.ArrayController.extend({
 
 CT.LoginController = Ember.Controller.extend();
 
-CT.SessionController = Ember.Controller.extend({
-
-});
-
 CT.TagController = Ember.ObjectController.extend({
     actions: {
         save: function(tag) {
@@ -349,6 +321,23 @@ CT.UsersNewController = Ember.ArrayController.extend({
     }
 });
 
+CT.AccComponent = Ember.Component.extend({
+    templateName: 'components/accounts',
+
+    queryParams: ['offset', 'limit', 'order_by'],
+
+    actions: {
+        selectAll: function() {}
+    }
+});
+
+//Ember.Handlebars.helper('acc', CT.AccComponent);
+
+CT.register('service:session', Ember.Object);
+
+CT.inject('route', 'session', 'service:session');
+CT.inject('controller', 'session', 'service:session');
+
 CT.Account = DS.Model.extend({
     type: DS.attr('number'),
     name: DS.attr('string'),
@@ -360,6 +349,12 @@ CT.Account = DS.Model.extend({
     includeInTotals: DS.attr('boolean'),
     note: DS.attr('string'),
     sortOrder: DS.attr('number')
+});
+
+CT.AuthUser = DS.Model.extend({
+    login: DS.attr('string'),
+    pwd: DS.attr('string'),
+    roles: []
 });
 
 CT.Category = DS.Model.extend({
@@ -403,8 +398,8 @@ CT.Transaction = DS.Model.extend({
 });
 
 CT.User = DS.Model.extend({
-    name: DS.attr('string'),
-    password: DS.attr('string'),
+    login: DS.attr('string'),
+    pwd: DS.attr('string'),
     email: DS.attr('string'),
     role: DS.attr('string')
 });
@@ -427,32 +422,36 @@ CT.AccountsNewRoute = Ember.Route.extend({
 
 CT.ApplicationRoute = Ember.Route.extend({
 
+    model: function() {
+        var route = this;
+        var authUser = this.store.find('auth_user');
+        authUser.then(function(user) {
+            route.session.set('auth_user', user);
+        });
+        return authUser;
+    },
+
     actions: {
         logout: function() {
             var route = this;
+            var authUser = this.session.get('auth_user');
 
-            //API.logout().then(function() {
-                route.session.set('user', null);
+            authUser.deleteRecord();
+            authUser.save().then(function() {
+                route.session.set('auth_user', null);
                 route.transitionTo('index');
-            //});
-        },
-
-        expireSession: function() {
-            //API.token = 'expired';
+            });
         },
 
         error: function(error, transition) {
-            if (error.status === 'Unauthorized') {
-                var loginController = this.controllerFor('login');
+            if (error.status === 401) {
 
-                loginController.setProperties({
-                    message: error.message,
+                this.controllerFor('login').setProperties({
                     transition: transition
                 });
 
                 this.transitionTo('login');
             } else {
-                // Allow other error to bubble
                 return true;
             }
         },
@@ -481,13 +480,13 @@ CT.CategoryRoute = Ember.Route.extend({
 
 CT.CostCenterRoute = Ember.Route.extend({
     model: function(params) {
-        return this.store.find('cost-center', params.costcenter_id);
+        return this.store.find('cost_center', params.costcenter_id);
     }
 });
 
 CT.CostCentersRoute = Ember.Route.extend({
     model: function(params) {
-        return this.store.find('cost-center');
+        return this.store.find('cost_center');
     }
 });
 
@@ -497,31 +496,28 @@ CT.CostCentersNewRoute = Ember.Route.extend({
 
 CT.LoginRoute = Ember.Route.extend({
     actions: {
-        submit: function() {
+        login: function() {
             var route = this,
                 controller = this.get('controller');
 
-            var username = controller.get('username'),
-                password = controller.get('password');
+            var authUser = this.store.createRecord('auth_user', {
+                login: controller.get('username'),
+                pwd: controller.get('password')
+            });
 
-            controller.set('message', null);
+            authUser.save().then(function(user) {
+                var transition = controller.get('transition');
 
-            //API.login(username, password).then(
-            //    function(user) {
-                    var transition = controller.get('transition');
+                route.session.set('auth_user', user);
 
-                    route.session.set('user', user);
-
-                    if (transition) {
-                        transition.retry();
-                    } else {
-                        route.transitionTo('index');
-                    }
-            //    },
-            //    function(error) {
-            //        controller.set('message', error.message);
-            //    }
-            //);
+                if (transition) {
+                    transition.retry();
+                } else {
+                    route.transitionTo('index');
+                }
+            }, function() {
+                console.log('-----------er', this);
+            });
         },
 
         cancel: function() {
@@ -530,15 +526,13 @@ CT.LoginRoute = Ember.Route.extend({
     },
 
     beforeModel: function() {
-        //API.token = null;
-        this.session.set('user', null);
+        this.session.set('auth_user', null);
     },
 
     resetController: function(controller) {
         controller.setProperties({
             username: null,
             password: null,
-            message: null,
             transition: null
         });
     }
@@ -580,9 +574,6 @@ CT.TransactionsRoute = Ember.Route.extend({
     },
 
     model: function(params) {
-        /*return $.getJSON('/CashTracker/RestProvider/transactions').then(function(data) {
-            return data.elements[0].value.list;
-        });*/
         return this.store.find('transaction');
     },
 
@@ -604,6 +595,8 @@ CT.TransactionsRoute = Ember.Route.extend({
                 queryParams: transition.queryParams
             });
         }
+
+        this._super(transition);
     }
 });
 
@@ -1884,7 +1877,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       var el3 = dom.createTextNode("\n        ");
       dom.appendChild(el2, el3);
       var el3 = dom.createElement("a");
-      dom.setAttribute(el3,"href","Logout");
+      dom.setAttribute(el3,"href","#index");
       dom.setAttribute(el3,"class","ws-exit");
       var el4 = dom.createTextNode("\n            ");
       dom.appendChild(el3, el4);
@@ -1938,6 +1931,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       var element5 = dom.childAt(element1, [9, 1]);
       var element6 = dom.childAt(fragment, [4, 1, 1, 1, 1]);
       var element7 = dom.childAt(fragment, [8]);
+      var element8 = dom.childAt(element7, [3, 1]);
       var morph0 = dom.createMorphAt(dom.childAt(element6, [1]),1,1);
       var morph1 = dom.createMorphAt(dom.childAt(element6, [3]),1,1);
       var morph2 = dom.createMorphAt(dom.childAt(element6, [5]),1,1);
@@ -1946,7 +1940,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       var morph5 = dom.createMorphAt(dom.childAt(element6, [11]),1,1);
       var morph6 = dom.createMorphAt(dom.childAt(fragment, [6]),1,1);
       var morph7 = dom.createMorphAt(dom.childAt(element7, [1, 1, 3]),0,0);
-      var morph8 = dom.createMorphAt(dom.childAt(element7, [3, 1, 3]),0,0);
+      var morph8 = dom.createMorphAt(dom.childAt(element8, [3]),0,0);
       element(env, element0, context, "action", ["hideOpenedNav"], {"on": "mouseDown"});
       element(env, element2, context, "action", ["navAppMenuToggle"], {});
       element(env, element3, context, "action", ["navUserMenuToggle"], {"on": "mouseDown"});
@@ -1960,6 +1954,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       block(env, morph5, context, "link-to", ["users"], {}, child5, null);
       content(env, morph6, context, "outlet");
       content(env, morph7, context, "username");
+      element(env, element8, context, "action", ["logout"], {});
       content(env, morph8, context, "logout");
       return fragment;
     }
@@ -2975,36 +2970,42 @@ Ember.TEMPLATES["login"] = Ember.HTMLBars.template((function() {
       dom.setAttribute(el2,"class","login-form");
       var el3 = dom.createTextNode("\n        ");
       dom.appendChild(el2, el3);
-      var el3 = dom.createComment("");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createComment("");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","login-form-bottom");
+      var el3 = dom.createElement("form");
       var el4 = dom.createTextNode("\n            ");
       dom.appendChild(el3, el4);
-      var el4 = dom.createElement("label");
-      dom.setAttribute(el4,"class","noauth");
+      var el4 = dom.createComment("");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createComment("");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","login-form-bottom");
       var el5 = dom.createTextNode("\n                ");
       dom.appendChild(el4, el5);
-      var el5 = dom.createElement("input");
-      dom.setAttribute(el5,"type","checkbox");
-      dom.setAttribute(el5,"name","noauth");
-      dom.setAttribute(el5,"value","1");
+      var el5 = dom.createElement("label");
+      dom.setAttribute(el5,"class","noauth");
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("input");
+      dom.setAttribute(el6,"type","checkbox");
+      dom.setAttribute(el6,"name","noauth");
+      dom.setAttribute(el6,"value","1");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode(" alien_device\n                ");
+      dom.appendChild(el5, el6);
       dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode(" alien_device\n            ");
+      var el5 = dom.createTextNode("\n                ");
       dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("button");
-      dom.setAttribute(el4,"type","submit");
-      dom.setAttribute(el4,"class","btn");
-      var el5 = dom.createTextNode("\n                sign in\n            ");
+      var el5 = dom.createElement("button");
+      dom.setAttribute(el5,"type","submit");
+      dom.setAttribute(el5,"class","btn");
+      var el6 = dom.createTextNode("\n                    sign in\n                ");
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n            ");
       dom.appendChild(el4, el5);
       dom.appendChild(el3, el4);
       var el4 = dom.createTextNode("\n        ");
@@ -3109,7 +3110,7 @@ Ember.TEMPLATES["login"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, get = hooks.get, inline = hooks.inline, element = hooks.element;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -3127,11 +3128,13 @@ Ember.TEMPLATES["login"] = Ember.HTMLBars.template((function() {
       } else {
         fragment = this.build(dom);
       }
-      var element0 = dom.childAt(fragment, [0, 3]);
+      var element0 = dom.childAt(fragment, [0, 3, 1]);
+      var element1 = dom.childAt(element0, [5, 3]);
       var morph0 = dom.createMorphAt(element0,1,1);
       var morph1 = dom.createMorphAt(element0,3,3);
       inline(env, morph0, context, "input", [], {"name": "username", "value": get(env, context, "username"), "required": true, "placeholder": "username"});
-      inline(env, morph1, context, "input", [], {"type": "password", "name": "password", "value": get(env, context, "password"), "placeholder": "password"});
+      inline(env, morph1, context, "input", [], {"type": "password", "value": get(env, context, "password"), "required": true, "placeholder": "password"});
+      element(env, element1, context, "action", ["login"], {});
       return fragment;
     }
   };

@@ -63,15 +63,13 @@ CT.Router.map(function() {
 });
 
 Ember.Route.reopen({
-    redirect: function() {
-        console.log(this.modelFor('application'), '---------------------');
-        if (this.routeName === 'login') {
-            if (this.modelFor('application').get('user')) {
-                this.transitionTo('index');
-            }
-        } else if (false && !this.modelFor('application').get('user')) {
+    beforeModel: function() {
+        if (!this.session.get('auth_user') && this.routeName !== 'login') {
             this.transitionTo('login');
-        } else if (this.routeName === 'index') {
+        }
+    },
+    redirect: function() {
+        if (this.routeName === 'index') {
             this.transitionTo('transactions');
         }
     }
