@@ -79,7 +79,7 @@ public class AdminProvider extends HttpServlet{
 			HttpSession jses = request.getSession(true);
 			jses.setAttribute("lang","EN");
 			jses.setAttribute("skin","");		
-			UserSession userSession = (UserSession) jses.getAttribute("usersession");	
+			UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);	
 			
 			
 

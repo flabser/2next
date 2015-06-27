@@ -29,15 +29,16 @@ import com.flabser.users.AuthFailedException;
 import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
 
+
 @Path("/")
 public class RestProvider {
+
 	@Context
 	private ServletContext context;
 	@Context
 	public HttpServletRequest request;
 	@Context
 	private HttpServletResponse response;
-
 
 	public AppEnv getAppEnv() {
 		return (AppEnv) context.getAttribute("portalenv");
@@ -46,7 +47,7 @@ public class RestProvider {
 
 	public UserSession getUserSession() {
 		HttpSession jses = request.getSession(true);
-		UserSession us = (UserSession) jses.getAttribute("usersession");
+		UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 		if (us == null) {
 			us = new UserSession(new com.flabser.users.User());
 		}
@@ -68,8 +69,8 @@ public class RestProvider {
 	@GET
 	@Path("/page/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public _Page producePage(@PathParam("id") String id) throws RuleException, AuthFailedException,
-	UserException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public _Page producePage(@PathParam("id") String id) throws RuleException, AuthFailedException, UserException,
+			ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
 
 		AppEnv env = getAppEnv();
@@ -96,8 +97,8 @@ public class RestProvider {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		result.addHistory = pageRule.addToHistory;
-		HashMap<String, String[]> fields = new HashMap<String, String[]>();
-		Map<String, String[]> parMap = request.getParameterMap();
+		HashMap <String, String[]> fields = new HashMap <String, String[]>();
+		Map <String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
 		return new Page(env, userSession, pageRule, request.getMethod()).process(fields);
 	}

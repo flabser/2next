@@ -46,7 +46,7 @@ public class Session {
 		HttpSession jses = request.getSession(true);
 
 		SignIn user = new SignIn();
-		UserSession userSession = (UserSession) jses.getAttribute("usersession");
+		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 		if (userSession == null) {
 			return user;
 		}
@@ -100,7 +100,7 @@ public class Session {
 			}
 
 			userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
-			jses.setAttribute("usersession", userSession);
+			jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 
 		} catch (AuthFailedException ae) {
 			try {
@@ -135,8 +135,8 @@ public class Session {
 	public void destroySession() {
 		HttpSession jses = request.getSession(true);
 
-		if (jses.getAttribute("usersession") != null) {
-			jses.removeAttribute("usersession");
+		if (jses.getAttribute(UserSession.SESSION_ATTR) != null) {
+			jses.removeAttribute(UserSession.SESSION_ATTR);
 			jses.invalidate();
 		}
 	}

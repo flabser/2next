@@ -72,7 +72,7 @@ public class Provider extends HttpServlet {
 
 					if (rule != null) {
 						jses = request.getSession(true);
-						userSession = (UserSession) jses.getAttribute("usersession");
+						userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 						if (userSession == null) {
 							userSession = new UserSession(new com.flabser.users.User());
 						}

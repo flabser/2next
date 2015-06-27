@@ -98,7 +98,7 @@ public class Login extends HttpServlet {
 						jses = request.getSession(true);
 						jses.setAttribute("adminLoggedIn", true);
 						userSession = new UserSession(new User());
-						jses.setAttribute("usersession", userSession);
+						jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 						response.sendRedirect("Provider?type=view&element=users");
 					} else {
 						AppEnv.logger.warningLogEntry("Authorization failed, special login or password is incorrect");
@@ -146,7 +146,7 @@ public class Login extends HttpServlet {
 				}
 				
 				userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
-				jses.setAttribute("usersession", userSession);
+				jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 
 				response.sendRedirect(redirect);
 

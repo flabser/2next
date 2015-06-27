@@ -27,13 +27,13 @@ public class AccessGuard implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain) {
 		try {
 			HttpServletRequest http = (HttpServletRequest) request;
-			AppEnv.logger.errorLogEntry(" Filter method=" + http.getMethod() + " " + http.getRequestURI());
+			AppEnv.logger.errorLogEntry(" Filter " + http.getMethod() + " " + http.getRequestURI());
 			if (http.getRequestURI().contains("session") || http.getRequestURI().contains("page")
 					|| http.getRequestURI().contains("Provider")) {
 				chain.doFilter(request, resp);
 			} else {
 				HttpSession jses = http.getSession(true);
-				UserSession us = (UserSession) jses.getAttribute("usersession");
+				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 				if (us != null) {
 					chain.doFilter(request, resp);
 				} else {

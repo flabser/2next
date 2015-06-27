@@ -21,7 +21,11 @@ import com.flabser.script._Page;
 import com.flabser.script.concurrency._AJAXHandler;
 import com.flabser.scriptprocessor.page.IAsyncScript;
 
+
 public class UserSession implements ICache {
+
+	public final static String SESSION_ATTR = "usersession";
+
 	public User currentUser;
 	public HistoryEntryCollection history;
 	public String lang = "ENG";
@@ -32,11 +36,11 @@ public class UserSession implements ICache {
 	private HttpSession jses;
 
 	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
-	InstantiationException, IllegalAccessException, DatabasePoolException {
+			InstantiationException, IllegalAccessException, DatabasePoolException {
 		currentUser = user;
 		initHistory();
 		if (implemantion != null) {
-			Class cls = Class.forName(implemantion);
+			Class <?> cls = Class.forName(implemantion);
 			dataBase = (IDatabase) cls.newInstance();
 			ApplicationProfile app = user.enabledApps.get(appID);
 			if (app != null) {
@@ -45,18 +49,18 @@ public class UserSession implements ICache {
 		}
 	}
 
-	public UserSession(User user){
+	public UserSession(User user) {
 		currentUser = user;
 		initHistory();
 	}
 
 	public void setObject(String name, _Page obj) {
-		HashMap<String, _Page> cache = null;
+		HashMap <String, _Page> cache = null;
 		if (jses != null) {
-			cache = (HashMap<String, _Page>) jses.getAttribute("cache");
+			cache = (HashMap <String, _Page>) jses.getAttribute("cache");
 		}
 		if (cache == null) {
-			cache = new HashMap<>();
+			cache = new HashMap <>();
 		}
 		cache.put(name, obj);
 		if (jses != null) {
@@ -67,7 +71,7 @@ public class UserSession implements ICache {
 
 	public Object getObject(String name) {
 		try {
-			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
+			HashMap <String, StringBuffer> cache = (HashMap <String, StringBuffer>) jses.getAttribute("cache");
 			return cache.get(name);
 		} catch (Exception e) {
 			return null;
@@ -101,10 +105,11 @@ public class UserSession implements ICache {
 	}
 
 	public class HistoryEntryCollection {
+
 		// type of collection has been changed from linked list to
 		// LinkedBlockingDeque for better thread safe
-		private LinkedBlockingDeque<HistoryEntry> history = new LinkedBlockingDeque<HistoryEntry>();
-		private LinkedBlockingDeque<HistoryEntry> pageHistory = new LinkedBlockingDeque<HistoryEntry>();
+		private LinkedBlockingDeque <HistoryEntry> history = new LinkedBlockingDeque <HistoryEntry>();
+		private LinkedBlockingDeque <HistoryEntry> pageHistory = new LinkedBlockingDeque <HistoryEntry>();
 
 		public void add(HistoryEntry entry) throws UserException {
 			if (history.size() == 0 || (!history.getLast().equals(entry))) {
@@ -151,6 +156,7 @@ public class UserSession implements ICache {
 	}
 
 	public class HistoryEntry {
+
 		public String URL;
 		public String URLforXML;
 		public String type;
@@ -188,7 +194,7 @@ public class UserSession implements ICache {
 	}
 
 	@Override
-	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page getPage(Page page, Map <String, String[]> formData) throws ClassNotFoundException, RuleException {
 		String cid = page.getID() + "_";
 		Object obj = getObject(cid);
 		String c[] = formData.get("cache");
@@ -215,7 +221,7 @@ public class UserSession implements ICache {
 
 	@Override
 	public void flush() {
-		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
+		HashMap <String, StringBuffer> cache = (HashMap <String, StringBuffer>) jses.getAttribute("cache");
 		if (cache != null) {
 			cache.clear();
 		}

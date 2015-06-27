@@ -34,7 +34,7 @@ public class Logout extends HttpServlet {
 		try{
 			HttpSession jses = request.getSession(false);	
 			if (jses != null){
-				userSession = (UserSession)jses.getAttribute("usersession");			
+				userSession = (UserSession)jses.getAttribute(UserSession.SESSION_ATTR);			
 				if (userSession != null){
 					User user = userSession.currentUser;
 						String userID = user.getLogin();
