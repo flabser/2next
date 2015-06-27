@@ -87,7 +87,7 @@
 						</a>
 					</xsl:if>
 					<xsl:if test="@id != 'login' and (@userid = 'anonymous' or @userid = '')">
-						<a href="index.html" class="nav-item btn-login">
+						<a href="?id=login" class="nav-item btn-login">
 							<span>
 								<xsl:value-of select="//captions/login/@caption" />
 							</span>
@@ -106,10 +106,10 @@
 								<a class="nav-item" href="index.html">
 									<xsl:value-of select="//captions/operations/@caption" />
 								</a>
-								<a class="nav-item" href="?id=userprofile">
+								<a class="nav-item" href="index.html#/userprofile">
 									<xsl:value-of select="//captions/user_profile/@caption" />
 								</a>
-								<a class="nav-item btn-logout" href="Logout">
+								<a class="nav-item btn-logout" href="#logout" onclick="nbApp.wlc.logout()">
 									<span>
 										<xsl:value-of select="//captions/logout/@caption" />
 									</span>

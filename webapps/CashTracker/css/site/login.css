@@ -30,3 +30,12 @@
 .login-form .noauth input {
     margin: 0 .3em;
 }
+
+.login-error {
+    background: #FFEFEF;
+    border: 1px solid #FFD8D8;
+    border-radius: 6px;
+    color: #FF0000;
+    margin-bottom: 10px;
+    padding: 1em;
+}

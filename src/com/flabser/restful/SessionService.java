@@ -33,7 +33,7 @@ import com.flabser.util.Util;
 
 
 @Path("/session")
-public class Session {
+public class SessionService {
 
 	@Context
 	ServletContext context;

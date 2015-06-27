@@ -103,6 +103,18 @@ Ember.Route.reopen({
     }
 });
 
+CT.AccComponent = Ember.Component.extend({
+    templateName: 'components/accounts',
+
+    queryParams: ['offset', 'limit', 'order_by'],
+
+    actions: {
+        selectAll: function() {}
+    }
+});
+
+//Ember.Handlebars.helper('acc', CT.AccComponent);
+
 CT.AccountController = Ember.ObjectController.extend({
     actions: {
         save: function(account) {
@@ -321,18 +333,6 @@ CT.UsersNewController = Ember.ArrayController.extend({
     }
 });
 
-CT.AccComponent = Ember.Component.extend({
-    templateName: 'components/accounts',
-
-    queryParams: ['offset', 'limit', 'order_by'],
-
-    actions: {
-        selectAll: function() {}
-    }
-});
-
-//Ember.Handlebars.helper('acc', CT.AccComponent);
-
 CT.register('service:session', Ember.Object);
 
 CT.inject('route', 'session', 'service:session');
@@ -354,7 +354,7 @@ CT.Account = DS.Model.extend({
 CT.AuthUser = DS.Model.extend({
     login: DS.attr('string'),
     pwd: DS.attr('string'),
-    roles: []
+    roles: DS.attr('string')
 });
 
 CT.Category = DS.Model.extend({
@@ -423,12 +423,11 @@ CT.AccountsNewRoute = Ember.Route.extend({
 CT.ApplicationRoute = Ember.Route.extend({
 
     model: function() {
-        var route = this;
-        var authUser = this.store.find('auth_user');
-        authUser.then(function(user) {
-            route.session.set('auth_user', user);
-        });
-        return authUser;
+        return this.store.find('auth_user');
+    },
+
+    afterModel: function(user) {
+        this.session.get('auth_user', user);
     },
 
     actions: {
@@ -436,11 +435,15 @@ CT.ApplicationRoute = Ember.Route.extend({
             var route = this;
             var authUser = this.session.get('auth_user');
 
-            authUser.deleteRecord();
-            authUser.save().then(function() {
-                route.session.set('auth_user', null);
+            if (authUser) {
+                authUser.deleteRecord();
+                authUser.save().then(function() {
+                    route.session.set('auth_user', null);
+                    route.transitionTo('index');
+                });
+            } else {
                 route.transitionTo('index');
-            });
+            }
         },
 
         error: function(error, transition) {
@@ -495,6 +498,7 @@ CT.CostCentersNewRoute = Ember.Route.extend({
 });
 
 CT.LoginRoute = Ember.Route.extend({
+
     actions: {
         login: function() {
             var route = this,
@@ -506,17 +510,14 @@ CT.LoginRoute = Ember.Route.extend({
             });
 
             authUser.save().then(function(user) {
+                route.session.set('auth_user', authUser);
+
                 var transition = controller.get('transition');
-
-                route.session.set('auth_user', user);
-
                 if (transition) {
                     transition.retry();
                 } else {
                     route.transitionTo('index');
                 }
-            }, function() {
-                console.log('-----------er', this);
             });
         },
 
@@ -2971,6 +2972,7 @@ Ember.TEMPLATES["login"] = Ember.HTMLBars.template((function() {
       var el3 = dom.createTextNode("\n        ");
       dom.appendChild(el2, el3);
       var el3 = dom.createElement("form");
+      dom.setAttribute(el3,"method","post");
       var el4 = dom.createTextNode("\n            ");
       dom.appendChild(el3, el4);
       var el4 = dom.createComment("");
@@ -3073,7 +3075,7 @@ Ember.TEMPLATES["login"] = Ember.HTMLBars.template((function() {
       var el5 = dom.createTextNode("\n                ");
       dom.appendChild(el4, el5);
       var el5 = dom.createElement("a");
-      dom.setAttribute(el5,"href","?id=password-recovery");
+      dom.setAttribute(el5,"href","Provider?id=password-recovery");
       dom.setAttribute(el5,"rel","nofollow");
       var el6 = dom.createTextNode("\n                    lost_password\n                ");
       dom.appendChild(el5, el6);
@@ -3087,7 +3089,7 @@ Ember.TEMPLATES["login"] = Ember.HTMLBars.template((function() {
       var el5 = dom.createTextNode("\n                ");
       dom.appendChild(el4, el5);
       var el5 = dom.createElement("a");
-      dom.setAttribute(el5,"href","?id=retry-send-verify-email");
+      dom.setAttribute(el5,"href","Provider?id=retry-send-verify-email");
       dom.setAttribute(el5,"rel","nofollow");
       var el6 = dom.createTextNode("\n                    no_verify_mail\n                ");
       dom.appendChild(el5, el6);

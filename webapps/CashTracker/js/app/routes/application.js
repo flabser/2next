@@ -1,12 +1,11 @@
 CT.ApplicationRoute = Ember.Route.extend({
 
     model: function() {
-        var route = this;
-        var authUser = this.store.find('auth_user');
-        authUser.then(function(user) {
-            route.session.set('auth_user', user);
-        });
-        return authUser;
+        return this.store.find('auth_user');
+    },
+
+    afterModel: function(user) {
+        this.session.get('auth_user', user);
     },
 
     actions: {
@@ -14,11 +13,15 @@ CT.ApplicationRoute = Ember.Route.extend({
             var route = this;
             var authUser = this.session.get('auth_user');
 
-            authUser.deleteRecord();
-            authUser.save().then(function() {
-                route.session.set('auth_user', null);
+            if (authUser) {
+                authUser.deleteRecord();
+                authUser.save().then(function() {
+                    route.session.set('auth_user', null);
+                    route.transitionTo('index');
+                });
+            } else {
                 route.transitionTo('index');
-            });
+            }
         },
 
         error: function(error, transition) {

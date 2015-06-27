@@ -23,7 +23,7 @@ public class ResourceLoader extends Application {
 		classes.add(ObjectMapperProvider.class);
 
 		classes.add(UserService.class);
-		classes.add(Session.class);
+		classes.add(SessionService.class);
 		classes.add(RestProvider.class);
 
 		classes.add(TransactionService.class);

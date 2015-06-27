@@ -1,4 +1,5 @@
 CT.LoginRoute = Ember.Route.extend({
+
     actions: {
         login: function() {
             var route = this,
@@ -10,17 +11,14 @@ CT.LoginRoute = Ember.Route.extend({
             });
 
             authUser.save().then(function(user) {
+                route.session.set('auth_user', authUser);
+
                 var transition = controller.get('transition');
-
-                route.session.set('auth_user', user);
-
                 if (transition) {
                     transition.retry();
                 } else {
                     route.transitionTo('index');
                 }
-            }, function() {
-                console.log('-----------er', this);
             });
         },
 

@@ -10,4 +10,5 @@
 	</element>
 
 	<caption name="login_title" />
+	<caption name="login_data_incorrect" />
 </rule>

@@ -22,8 +22,10 @@
 				</h1>
 				<section>
 					<div class="login">
-						<form action="Login" method="post" name="login-form" class="login-form">
-							<input type="hidden" name="type" value="login" />
+						<div class="login-error" id="login-error">
+							<xsl:value-of select="//captions/login_data_incorrect/@caption" />
+						</div>
+						<form method="post" name="login-form" class="login-form">
 							<input class="input" type="text" name="login" value="" required="required" placeholder="{//captions/login_login/@caption}" />
 							<input class="input" type="password" name="pwd" value="" required="required" placeholder="{//captions/login_pwd/@caption}" />
 							<div class="login-form-bottom">

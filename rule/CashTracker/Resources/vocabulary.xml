@@ -123,6 +123,12 @@
 		<entry lang="ENG" hint="Log In">Log In</entry>
 		<entry lang="BG" hint="Влизане">Влизане</entry>
 	</sentence>
+	<sentence mode="on" keyword="login_data_incorrect">
+		<entry lang="RUS" hint="Не верное имя пользователя или пароль">Не верное имя пользователя или пароль</entry>
+		<entry lang="KAZ" hint="Не верное имя пользователя или пароль">Не верное имя пользователя или пароль</entry>
+		<entry lang="ENG" hint="Password or login is incorrect">Password or login is incorrect</entry>
+		<entry lang="BG" hint="Не верное имя пользователя или пароль">Не верное имя пользователя или пароль</entry>
+	</sentence>
 
 	<!-- reg -->
 	<sentence mode="on" keyword="reg">
