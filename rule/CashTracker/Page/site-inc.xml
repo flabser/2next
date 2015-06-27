@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rule type="page" id="welcome-site-inc" mode="on" anonymous="on">
+<rule type="page" id="site-inc" mode="on" anonymous="on">
 	<description></description>
-	<caching>CACHING_IN_APPLICATION_SCOPE</caching>
+	<caching>CACHING_IN_USER_SESSION_SCOPE</caching>
 
 	<element mode="ON" type="SCRIPT">
 		<events>

@@ -3,8 +3,15 @@
 	<description>SmartFinance</description>
 	<appname>CashTracker</appname>
 	<impl>com.flabser.solutions.cashtracker.Database</impl>
-	<entrypoint>Provider?id=login</entrypoint>
+	<entrypoint>Provider?id=welcome</entrypoint>
 	<defaultredirecturl>index.html</defaultredirecturl>
+	<services>
+		<class>cashtracker.rest.TransactionService</class>
+		<class>cashtracker.rest.AccountService</class>
+		<class>cashtracker.rest.CategoryService</class>
+		<class>cashtracker.rest.CostCenterService</class>
+		<class>cashtracker.rest.TagService</class>
+	</services>
 	<langs>
 		<entry id="ENG">English</entry>
 		<entry id="RUS">Русский</entry>

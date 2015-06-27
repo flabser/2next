@@ -5,8 +5,8 @@
 	<xsltfile>site/login.xsl</xsltfile>
 
 	<element mode="ON" type="INCLUDED_PAGE">
-		<name>welcome-site-inc</name>
-		<value>welcome-site-inc</value>
+		<name>site-inc</name>
+		<value>site-inc</value>
 	</element>
 
 	<caption name="login_title" />
