@@ -132,7 +132,7 @@ public class WebServer implements IWebServer {
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		//context.addServletMapping("/RestProvider/*", "Jersey REST Service");
 		//context.addServletMapping("/RestAdminProvider/*", "Jersey REST Service");
-		//context.addServletMapping("/SignIn/*", "Jersey REST Service");
+		//context.addServletMapping("/AuthUser/*", "Jersey REST Service");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
 		filterAccessGuardMapping.addServletName("Jersey REST Service");
 

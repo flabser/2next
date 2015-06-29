@@ -104,6 +104,10 @@ public class UserSession implements ICache {
 		history.add(entry);
 	}
 
+	public boolean isAppAllowed(String appType) {
+		return true;
+	}
+
 	public class HistoryEntryCollection {
 
 		// type of collection has been changed from linked list to
