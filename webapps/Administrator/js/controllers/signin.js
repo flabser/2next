@@ -2,17 +2,17 @@ MyApp.SigninController = Ember.ObjectController.extend({
 	model: {},
 
 	  actions: {
-		  login: function(){ 
+		  login: function(){
 		  console.log(this);
 		  var c = this;
 			  console.log(this.get('username'));
 	  		console.log(this.get('password'));
-	     var signin = this.store.createRecord('signin', {	    	
+	     var signin = this.store.createRecord('auth_user', {
 			        login: this.get('username'),	    	  	
 			        pwd: this.get('password')
 	      })
 	      
-	     signin.save().then(function() {
+	     signin.save().then(function(user) {
 	    	  console.log("Post saved.");
 	    	  console.log(c);
 	    	 // c.get('outline').send('actionopen', event);
@@ -24,20 +24,6 @@ MyApp.SigninController = Ember.ObjectController.extend({
 	    }	 
 	  }	
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // export default loginController;
 
 

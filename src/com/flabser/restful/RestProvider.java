@@ -41,7 +41,7 @@ public class RestProvider {
 	private HttpServletResponse response;
 
 	public AppEnv getAppEnv() {
-		return (AppEnv) context.getAttribute("portalenv");
+		return (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
 
 	}
 

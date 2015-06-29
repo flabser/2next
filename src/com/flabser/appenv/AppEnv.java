@@ -26,6 +26,7 @@ public class AppEnv implements ICache{
 	public static com.flabser.log.ILogger logger;	
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
+	public final static String APP_ATTR = "usersession";
 
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 

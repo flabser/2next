@@ -43,7 +43,7 @@ public class PortalInit extends HttpServlet{
 			isValid = true;
 		}
 
-		if(isValid)	context.setAttribute("portalenv", env);
+		if(isValid)	context.setAttribute(AppEnv.APP_ATTR, env);
 
 	}
 }

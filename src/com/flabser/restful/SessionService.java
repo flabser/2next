@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import com.flabser.env.SessionPool;
 import org.omg.CORBA.UserException;
 
 import com.flabser.appenv.AppEnv;
@@ -42,10 +43,10 @@ public class SessionService {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public SignIn getSession() {
+	public AuthUser getSession() {
 		HttpSession jses = request.getSession(true);
 
-		SignIn user = new SignIn();
+		AuthUser user = new AuthUser();
 		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 		if (userSession == null) {
 			return user;
@@ -58,7 +59,7 @@ public class SessionService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public com.flabser.restful.SignIn createSession(SignIn signUser) {
+	public AuthUser createSession(AuthUser signUser) {
 		UserSession userSession = null;
 		try {
 			System.out.println(request.getRequestedSessionId() + "  " + signUser.getClass().getName());
@@ -100,6 +101,7 @@ public class SessionService {
 			}
 
 			userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
+			SessionPool.put(userSession);
 			jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 
 		} catch (AuthFailedException ae) {

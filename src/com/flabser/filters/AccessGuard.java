@@ -32,18 +32,29 @@ public class AccessGuard implements Filter {
 					|| http.getRequestURI().contains("Provider")) {
 				chain.doFilter(request, resp);
 			} else {
-				HttpSession jses = http.getSession(true);
-				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
-				if (us != null) {
-					chain.doFilter(request, resp);
-				} else {
-					AppEnv.logger.warningLogEntry("Unauthorized but anyway ...");
-
-				/*	HttpServletResponse httpResponse = (HttpServletResponse) resp;
-					ServletContext context = http.getServletContext();
-					AppEnv env = (AppEnv) context.getAttribute("portalenv");
+				HttpSession jses = http.getSession(false);
+				if (jses != null) {
+					UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
+					if (us != null) {
+						ServletContext context = http.getServletContext();
+						AppEnv env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
+						if (us.isAppAllowed(env.appType)) {
+							AppEnv.logger.warningLogEntry("Authorized !");
+							chain.doFilter(request, resp);
+						}else{
+							HttpServletResponse httpResponse = (HttpServletResponse) resp;
+							httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+							AppEnv.logger.warningLogEntry("Access to application '" + env.appType + "' restricted");
+						}
+					} else {
+							HttpServletResponse httpResponse = (HttpServletResponse) resp;
+						httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+						AppEnv.logger.warningLogEntry("User session was expired");
+					}
+				}else{
+					HttpServletResponse httpResponse = (HttpServletResponse) resp;
 					httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-					AppEnv.logger.errorLogEntry(" Application '" + env.appType + "' access denied");*/
+					AppEnv.logger.warningLogEntry("User session was expired");
 				}
 
 			}
@@ -53,6 +64,8 @@ public class AccessGuard implements Filter {
 			e1.printStackTrace();
 		}
 	}
+
+
 
 	@Override
 	public void destroy() {

@@ -35,7 +35,7 @@ public class JavaToJSON {
 		HashMap<String, Object> f = new HashMap<String, Object>();
 		f.put("login", "it is login");
 		f.put("pwd", "taht is password");
-		//SignIn employee = new SignIn(f);
+		//AuthUser employee = new AuthUser(f);
 		// User employee = new User("Lokesh", "Gupta");
 		// Employee employee = new Employee(1, "Lokesh", "Gupta", new
 		// Date(1981,8,18));
