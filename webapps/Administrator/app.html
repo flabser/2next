@@ -50,7 +50,7 @@
 
 	<script type="text/x-handlebars" data-template-name="index">
     <ul>
-    {{#each model as |item|}}
+    {{#each model as item}}
       <li>{{item}}</li>
     {{/each}}
     </ul>
@@ -58,7 +58,7 @@
 
 	<script type="text/x-handlebars" data-template-name="post">
     <ul>
-    {{#each model as |item|}}
+    {{#each model as item}}
       <li {{action "click"}}>{{item}}</li>
     {{/each}}
     </ul>
