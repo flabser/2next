@@ -65,7 +65,7 @@ public class SessionService {
 			System.out.println(request.getRequestedSessionId() + "  " + signUser.getClass().getName());
 			HttpSession jses;
 
-			AppEnv env = (AppEnv) context.getAttribute("portalenv");
+			AppEnv env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
 			ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 			User user = new User();
 			Cookies appCookies = new Cookies(request);
