@@ -5,7 +5,6 @@ import com.flabser.script.*
 class RegWebForm {
 
 	String userName
-	String budgetName
 	String email
 	String pwd
 	String client
@@ -14,7 +13,6 @@ class RegWebForm {
 
 	public RegWebForm(_WebFormData formData) {
 		userName = formData.getValueSilently("username")
-		budgetName = formData.getValueSilently("budget_name")
 		email = formData.getValueSilently("email")
 		pwd = formData.getValueSilently("pwd")
 		client = formData.getValueSilently("client")
