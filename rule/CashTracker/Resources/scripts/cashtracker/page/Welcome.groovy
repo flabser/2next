@@ -1,9 +1,9 @@
 package cashtracker.page
 
 import com.flabser.script.*
-import com.flabser.scriptprocessor.*
-import com.flabser.script.events.*
 import com.flabser.script.actions.*
+import com.flabser.script.events.*
+import com.flabser.scriptprocessor.*
 
 
 class Welcome extends _DoScript {
