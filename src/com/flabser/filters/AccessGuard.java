@@ -37,11 +37,13 @@ public class AccessGuard implements Filter {
 				if (us != null) {
 					chain.doFilter(request, resp);
 				} else {
-					HttpServletResponse httpResponse = (HttpServletResponse) resp;
+					AppEnv.logger.warningLogEntry("Unauthorized but anyway ...");
+
+				/*	HttpServletResponse httpResponse = (HttpServletResponse) resp;
 					ServletContext context = http.getServletContext();
 					AppEnv env = (AppEnv) context.getAttribute("portalenv");
 					httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-					AppEnv.logger.errorLogEntry(" Application '" + env.appType + "' access denied");
+					AppEnv.logger.errorLogEntry(" Application '" + env.appType + "' access denied");*/
 				}
 
 			}
