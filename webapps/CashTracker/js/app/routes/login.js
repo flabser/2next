@@ -3,15 +3,14 @@ CT.LoginRoute = Ember.Route.extend({
     actions: {
         login: function() {
             var route = this,
+                sessionController = this.controllerFor('session'),
                 controller = this.get('controller');
 
-            var authUser = this.store.createRecord('auth_user', {
-                login: controller.get('username'),
-                pwd: controller.get('password')
-            });
+            var userName = controller.get('username'),
+                password = controller.get('password');
 
-            authUser.save().then(function(user) {
-                route.session.set('auth_user', authUser);
+            sessionController.login(userName, password).then(function(user) {
+                route.session.set('auth_user', user);
 
                 var transition = controller.get('transition');
                 if (transition) {

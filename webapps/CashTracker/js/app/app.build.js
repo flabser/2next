@@ -91,11 +91,6 @@ CT.Router.map(function() {
 });
 
 Ember.Route.reopen({
-    beforeModel: function() {
-        if (!this.session.get('auth_user') && this.routeName !== 'login') {
-            this.transitionTo('login');
-        }
-    },
     redirect: function() {
         if (this.routeName === 'index') {
             this.transitionTo('transactions');
@@ -232,6 +227,38 @@ CT.CostCentersNewController = Ember.ArrayController.extend({
 
 CT.LoginController = Ember.Controller.extend();
 
+CT.SessionController = Ember.Controller.extend({
+
+    getSession: function() {
+        return $.getJSON('rest/session');
+    },
+
+    login: function(userName, password) {
+        return $.ajax({
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: 'rest/session',
+            data: JSON.stringify({
+                authUser: {
+                    login: userName,
+                    pwd: password
+                }
+            }),
+            success: function(result) {
+                return result;
+            }
+        });
+    },
+
+    logout: function() {
+        return $.ajax({
+            method: 'DELETE',
+            url: 'rest/session'
+        });
+    }
+});
+
 CT.TagController = Ember.ObjectController.extend({
     actions: {
         save: function(tag) {
@@ -333,11 +360,6 @@ CT.UsersNewController = Ember.ArrayController.extend({
     }
 });
 
-CT.register('service:session', Ember.Object);
-
-CT.inject('route', 'session', 'service:session');
-CT.inject('controller', 'session', 'service:session');
-
 CT.Account = DS.Model.extend({
     type: DS.attr('number'),
     name: DS.attr('string'),
@@ -404,6 +426,11 @@ CT.User = DS.Model.extend({
     role: DS.attr('string')
 });
 
+CT.register('service:session', Ember.Object);
+
+CT.inject('route', 'session', 'service:session');
+CT.inject('controller', 'session', 'service:session');
+
 CT.AccountRoute = Ember.Route.extend({
     model: function(params) {
         return this.store.find('account', params.account_id);
@@ -423,27 +450,30 @@ CT.AccountsNewRoute = Ember.Route.extend({
 CT.ApplicationRoute = Ember.Route.extend({
 
     model: function() {
-        return this.store.find('auth_user');
-    },
+        var route = this,
+            controller = this.get('controller'),
+            sessionController = this.controllerFor('session'),
+            loginController = this.controllerFor('login');
 
-    afterModel: function(user) {
-        this.session.get('auth_user', user);
+        var req = sessionController.getSession();
+
+        req.then(function(user) {
+            if (user.authUser.login) {
+                route.session.set('auth_user', user.authUser);
+                return user;
+            }
+        });
+        return req;
     },
 
     actions: {
         logout: function() {
             var route = this;
-            var authUser = this.session.get('auth_user');
-
-            if (authUser) {
-                authUser.deleteRecord();
-                authUser.save().then(function() {
-                    route.session.set('auth_user', null);
-                    route.transitionTo('index');
-                });
-            } else {
+            this.controllerFor('session').logout().then(function() {
+                route.session.set('auth_user', null);
                 route.transitionTo('index');
-            }
+            });
+
         },
 
         error: function(error, transition) {
@@ -455,6 +485,9 @@ CT.ApplicationRoute = Ember.Route.extend({
 
                 this.transitionTo('login');
             } else {
+                if (!this.session.get('auth_user') && this.routeName !== 'login') {
+                    this.transitionTo('login');
+                }
                 return true;
             }
         },
@@ -502,15 +535,14 @@ CT.LoginRoute = Ember.Route.extend({
     actions: {
         login: function() {
             var route = this,
+                sessionController = this.controllerFor('session'),
                 controller = this.get('controller');
 
-            var authUser = this.store.createRecord('auth_user', {
-                login: controller.get('username'),
-                pwd: controller.get('password')
-            });
+            var userName = controller.get('username'),
+                password = controller.get('password');
 
-            authUser.save().then(function(user) {
-                route.session.set('auth_user', authUser);
+            sessionController.login(userName, password).then(function(user) {
+                route.session.set('auth_user', user);
 
                 var transition = controller.get('transition');
                 if (transition) {
