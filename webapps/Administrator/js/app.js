@@ -1,23 +1,17 @@
-MyApp = Ember.Application.create();
-
-//App.ApplicationAdapter = DS.FixtureAdapter;
-//
-var host = DS.RESTAdapter.extend({
-    host: 'http://localhost:38779',
+var MyApp = Ember.Application.create({
+    modulePrefix: 'Administrator',
+    LOG_TRANSITIONS: true,
+    LOG_TRANSITIONS_INTERNAL: true,
+    LOG_ACTIVE_GENERATION: true
 });
 
-var baseURL = host.extend({
+MyApp.ApplicationAdapter = DS.RESTAdapter.extend({
+    pathForType: function(type) {
+          return type + 's';       
+    }
+});
+
+DS.RESTAdapter.reopen({
     namespace: 'Administrator/rest'
 });
 
-MyApp.ApplicationAdapter = baseURL.extend({
-    pathForType: function(type) {
-        	  console.log("type=" + type);
-        switch (type) {
-            case 'authUser':
-                return 'session';
-            default:
-                return type + 's';
-        }
-    }
-});

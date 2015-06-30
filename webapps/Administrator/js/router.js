@@ -1,8 +1,6 @@
-
 MyApp.Router.map(function(){
-//	this.route('signin', {path:'/'});
-	this.route('users');
-	this.route('outline');
-		
+	this.route('main_window',{path: '/'});
+	this.route('logs');
+	this.route('users');		
 });
 

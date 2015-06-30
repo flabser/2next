@@ -39,7 +39,7 @@ public class AccessGuard implements Filter {
 						ServletContext context = http.getServletContext();
 						AppEnv env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
 						if (us.isAppAllowed(env.appType)) {
-							AppEnv.logger.warningLogEntry("Authorized !");
+							AppEnv.logger.warningLogEntry("Session alive ...");
 							chain.doFilter(request, resp);
 						}else{
 							HttpServletResponse httpResponse = (HttpServletResponse) resp;
@@ -47,7 +47,7 @@ public class AccessGuard implements Filter {
 							AppEnv.logger.warningLogEntry("Access to application '" + env.appType + "' restricted");
 						}
 					} else {
-							HttpServletResponse httpResponse = (HttpServletResponse) resp;
+						HttpServletResponse httpResponse = (HttpServletResponse) resp;
 						httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 						AppEnv.logger.warningLogEntry("User session was expired");
 					}
