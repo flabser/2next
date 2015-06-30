@@ -1,12 +1,12 @@
 package cashtracker.model;
 
 import java.sql.ResultSet
-import java.sql.SQLException
+
+import cashtracker.model.constants.TransactionState
+import cashtracker.model.constants.TransactionType
 
 import com.fasterxml.jackson.annotation.JsonRootName
 import com.flabser.script._IObject
-import cashtracker.model.constants.TransactionState
-import cashtracker.model.constants.TransactionType
 import com.flabser.users.User
 
 
@@ -220,29 +220,25 @@ public class Transaction implements _IObject {
 	}
 
 	public void init(ResultSet rs) {
-		try {
-			setId(rs.getInt("id"));
-			setUser(null);
-			setTransactionType(TransactionType.typeOf(rs.getInt("transaction_type")))
-			setTransactionState(TransactionState.stateOf(rs.getInt("transaction_state")))
-			setRegDate(rs.getDate("reg_date"));
-			setAccountFrom(null);
-			setAmount(rs.getBigDecimal("amount"));
-			setExchangeRate(rs.getBigDecimal("exchange_rate"));
-			setCategory(null);
-			setCostCenter(null);
-			setTags(rs.getArray("tags"));
-			setRepeat(rs.getBoolean("repeat"));
-			setEvery(rs.getInt("every"));
-			setRepeatStep(rs.getInt("repeat_step"));
-			setStartDate(rs.getDate("start_date"));
-			setEndDate(rs.getDate("end_date"));
-			setBasis(rs.getString("basis"));
-			setNote(rs.getString("note"));
-			setIncludeInReports(rs.getBoolean("include_in_reports"))
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		setId(rs.getInt("id"));
+		setUser(null);
+		setTransactionType(TransactionType.typeOf(rs.getInt("transaction_type")))
+		setTransactionState(TransactionState.stateOf(rs.getInt("transaction_state")))
+		setRegDate(rs.getDate("reg_date"));
+		setAccountFrom(null);
+		setAccountTo(null);
+		setAmount(rs.getBigDecimal("amount"));
+		setExchangeRate(rs.getBigDecimal("exchange_rate"));
+		setCategory(null);
+		setCostCenter(null);
+		setTags(rs.getArray("tags"));
+		setRepeat(rs.getBoolean("repeat"));
+		setEvery(rs.getInt("every"));
+		setRepeatStep(rs.getInt("repeat_step"));
+		setStartDate(rs.getDate("start_date"));
+		setEndDate(rs.getDate("end_date"));
+		setBasis(rs.getString("basis"));
+		setNote(rs.getString("note"));
+		setIncludeInReports(rs.getBoolean("include_in_reports"))
 	}
 }

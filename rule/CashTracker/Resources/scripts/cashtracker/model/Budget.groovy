@@ -1,11 +1,11 @@
 package cashtracker.model;
 
 import java.sql.ResultSet
-import java.sql.SQLException
+
+import cashtracker.model.constants.BudgetState
 
 import com.fasterxml.jackson.annotation.JsonRootName
 import com.flabser.script._IObject
-import cashtracker.model.constants.BudgetState
 import com.flabser.users.User
 
 
@@ -69,15 +69,10 @@ public class Budget implements _IObject {
 	}
 
 	public void init(ResultSet rs) {
-		try {
-			setId(rs.getInt("id"));
-			setName(rs.getString("name"));
-			setRegDate(rs.getDate("regdate"));
-			setOwner((User) null);
-			setStatus(BudgetState.stateOf(rs.getInt("type")));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		setId(rs.getInt("id"));
+		setName(rs.getString("name"));
+		setRegDate(rs.getDate("regdate"));
+		setOwner((User) null);
+		setStatus(BudgetState.stateOf(rs.getInt("type")));
 	}
 }

@@ -1,7 +1,6 @@
 package cashtracker.model;
 
 import java.sql.ResultSet
-import java.sql.SQLException
 
 import com.fasterxml.jackson.annotation.JsonRootName
 import com.flabser.script._IObject
@@ -47,13 +46,8 @@ public class Tag implements _IObject {
 	}
 
 	public void init(ResultSet rs) {
-		try {
-			setId(rs.getInt("id"));
-			setName(rs.getString("name"));
-			setColor(rs.getInt("color"));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		setId(rs.getInt("id"));
+		setName(rs.getString("name"));
+		setColor(rs.getInt("color"));
 	}
 }

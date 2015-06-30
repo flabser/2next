@@ -2,16 +2,15 @@ CT.ApplicationRoute = Ember.Route.extend({
 
     model: function() {
         var route = this,
-            controller = this.get('controller'),
-            sessionController = this.controllerFor('session'),
-            loginController = this.controllerFor('login');
+            sessionController = this.controllerFor('session');
 
+        CT.i18n.getTranslations();
         var req = sessionController.getSession();
 
-        req.then(function(user) {
-            if (user.authUser.login) {
-                route.session.set('auth_user', user.authUser);
-                return user;
+        req.then(function(result) {
+            if (result.authUser.login) {
+                route.session.set('auth_user', result.authUser);
+                return result.authUser;
             }
         });
         return req;
@@ -28,7 +27,7 @@ CT.ApplicationRoute = Ember.Route.extend({
         },
 
         error: function(error, transition) {
-            if (error.status === 401) {
+            if (error.status === 401 || (!this.session.get('auth_user') && this.routeName !== 'login')) {
 
                 this.controllerFor('login').setProperties({
                     transition: transition
@@ -36,9 +35,6 @@ CT.ApplicationRoute = Ember.Route.extend({
 
                 this.transitionTo('login');
             } else {
-                if (!this.session.get('auth_user') && this.routeName !== 'login') {
-                    this.transitionTo('login');
-                }
                 return true;
             }
         },
