@@ -12,6 +12,7 @@ var baseURL = host.extend({
 
 MyApp.ApplicationAdapter = baseURL.extend({
     pathForType: function(type) {
+        	  console.log("type=" + type);
         switch (type) {
             case 'authUser':
                 return 'session';

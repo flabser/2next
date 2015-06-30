@@ -1,6 +1,9 @@
 package com.flabser.users;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Response;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 
@@ -9,14 +12,16 @@ import com.flabser.server.Server;
 
 import java.io.*;
 
-public class AuthFailedException extends Exception{
+public class AuthFailedException extends WebApplicationException {
 	public AuthFailedExceptionType type;
 	
 	private static final long serialVersionUID = 3214292820186296427L;
 	private String errorText;
-	
+
+
+
 	public AuthFailedException(AuthFailedExceptionType type, String user){
-		super();
+		super(Response.status(Response.Status.UNAUTHORIZED).header(HttpHeaders.WWW_AUTHENTICATE, type.toString()).entity(user).build());
 		this.type = type;
 		switch(type){ 
 		case NO_USER_SESSION:		

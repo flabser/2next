@@ -12,6 +12,7 @@ var baseURL = host.extend({
 
 MyApp.ApplicationAdapter = baseURL.extend({
     pathForType: function(type) {
+        	  console.log("type=" + type);
         switch (type) {
             case 'authUser':
                 return 'session';
@@ -23,7 +24,7 @@ MyApp.ApplicationAdapter = baseURL.extend({
 
 
 MyApp.Router.map(function(){
-	this.route('signin', {path:'/'});
+//	this.route('signin', {path:'/'});
 	this.route('users');
 	this.route('outline');
 		
@@ -48,7 +49,8 @@ MyApp.SigninController = Ember.ObjectController.extend({
 	    	  console.log("Post saved.");
 	    	  console.log(c);
 	    	 // c.get('outline').send('actionopen', event);
-	    	  c.transitionToRoute('outline');
+	    	 // c.transitionToRoute('outline');
+	    	 location.href = 'application.html'
 	    	}, function(response) {
 	    	  console.error("Post not saved!" );
 	    	});
@@ -79,6 +81,15 @@ users.then(function loggedIn(){
 	  }
 }.bind(this));
 }*/
+MyApp.UsersController = Ember.ObjectController.extend({
+    	model: function(params) {
+    	  console.log("get users");
+    	  return this.store.find('user');
+      }
+
+
+});
+
 MyApp.AuthUser = DS.Model.extend({
     login: DS.attr('string'),
     pwd: DS.attr('string'),
@@ -102,10 +113,25 @@ MyApp.User = DS.Model.extend({
 
 
 MyApp.UsersRoute = Ember.Route.extend({
-	model: function(params) {
-	  console.log("get users");
-	  return this.store.find('user');
-  }
+/*
+	 renderTemplate: function() {
+        var controller = this.controllerFor('users');
+
+        // Render the `favoritePost` template into
+        // the outlet `posts`, and use the `favoritePost`
+        // controller.
+        this.render('users_list', {
+          outlet: 'viewOutlet',
+          controller: controller
+        });
+      }
+*/
+
+      model: function(params) {
+          	  console.log("router >get users");
+          	  return this.store.find('user');
+            }
+
 });
 
 MyApp.ApplicationView = Ember.View.extend({
@@ -181,7 +207,6 @@ Ember.TEMPLATES["outline"] = Ember.HTMLBars.template((function() {
         var el1 = dom.createTextNode("                            ");
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("i");
-        dom.setAttribute(el1,"class","fa fa-file-o");
         dom.appendChild(el0, el1);
         var el1 = dom.createTextNode("Users\n");
         dom.appendChild(el0, el1);
@@ -218,213 +243,59 @@ Ember.TEMPLATES["outline"] = Ember.HTMLBars.template((function() {
     hasRendered: false,
     build: function build(dom) {
       var el0 = dom.createDocumentFragment();
-      var el1 = dom.createElement("div");
-      dom.setAttribute(el1,"class","content-overlay");
-      dom.setAttribute(el1,"id","content-overlay");
+      var el1 = dom.createComment("<div class=\"content-overlay\" id=\"content-overlay\" {{action 'hideOpenedNav' on='mouseDown' }}></div>");
       dom.appendChild(el0, el1);
       var el1 = dom.createTextNode("\n");
       dom.appendChild(el0, el1);
-      var el1 = dom.createElement("header");
-      dom.setAttribute(el1,"class","layout_header");
-      var el2 = dom.createTextNode("\n    ");
-      dom.appendChild(el1, el2);
-      var el2 = dom.createElement("div");
-      dom.setAttribute(el2,"class","main-header");
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","head-item head-nav-app-toggle");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("div");
-      dom.setAttribute(el4,"class","nav-app-toggle");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","head-item brand");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("img");
-      dom.setAttribute(el4,"alt","logo");
-      dom.setAttribute(el4,"src","img/2next.png");
-      dom.setAttribute(el4,"class","brand-logo");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("span");
-      dom.setAttribute(el4,"class","brand-title");
-      var el5 = dom.createTextNode("2Next-Administrator");
-      dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","head-item head-nav-ws-toggle");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("div");
-      dom.setAttribute(el4,"class","nav-ws-toggle");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","head-item nav-search-toggle");
-      dom.setAttribute(el3,"id","toggle-head-search");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("i");
-      dom.setAttribute(el4,"class","fa fa-search");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","head-item nav-search");
-      dom.setAttribute(el3,"id","search-block");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("div");
-      dom.setAttribute(el4,"class","search-toggle-back");
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("i");
-      dom.setAttribute(el5,"class","fa fa-chevron-left");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n            ");
-      dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("form");
-      dom.setAttribute(el4,"action","Provider");
-      dom.setAttribute(el4,"method","GET");
-      dom.setAttribute(el4,"name","search");
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("input");
-      dom.setAttribute(el5,"type","hidden");
-      dom.setAttribute(el5,"name","type");
-      dom.setAttribute(el5,"value","page");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("input");
-      dom.setAttribute(el5,"type","hidden");
-      dom.setAttribute(el5,"name","id");
-      dom.setAttribute(el5,"value","search");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("input");
-      dom.setAttribute(el5,"type","search");
-      dom.setAttribute(el5,"name","keyword");
-      dom.setAttribute(el5,"value","");
-      dom.setAttribute(el5,"class","search-keyword");
-      dom.setAttribute(el5,"required","required");
-      dom.setAttribute(el5,"placeholder","Поиск");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("button");
-      dom.setAttribute(el5,"type","submit");
-      dom.setAttribute(el5,"class","search-btn");
-      var el6 = dom.createTextNode("\n                    ");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createElement("i");
-      dom.setAttribute(el6,"class","fa fa-search");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createTextNode("\n                ");
-      dom.appendChild(el5, el6);
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n            ");
-      dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("a");
-      dom.setAttribute(el3,"class","no-desktop head-item nav-action");
-      dom.setAttribute(el3,"href","#");
-      dom.setAttribute(el3,"data-action","add_new");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("i");
-      dom.setAttribute(el4,"class","fa fa-plus");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("span");
-      dom.setAttribute(el4,"class","action-label");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n    ");
-      dom.appendChild(el2, el3);
-      dom.appendChild(el1, el2);
-      var el2 = dom.createTextNode("\n");
-      dom.appendChild(el1, el2);
+      var el1 = dom.createComment("<header class=\"layout_header\">\n    <div class=\"main-header\">\n        <div class=\"head-item head-nav-app-toggle\" {{action 'navAppMenuToggle'}}>\n            <div class=\"nav-app-toggle\"></div>\n        </div>\n        <div class=\"head-item brand\">\n            <img alt=\"logo\" src=\"img/2next.png\" class=\"brand-logo\" />\n            <span class=\"brand-title\">2Next-Administrator</span>\n        </div>\n        <div class=\"head-item head-nav-ws-toggle\">\n            <div class=\"nav-ws-toggle\" {{action 'navUserMenuToggle' on='mouseDown' }}></div>\n        </div>\n        <div class=\"head-item nav-search-toggle\" id=\"toggle-head-search\" {{action 'toggleSearchForm' on='mouseDown' }}>\n            <i class=\"fa fa-search\"></i>\n        </div>\n        <div class=\"head-item nav-search\" id=\"search-block\">\n            <div class=\"search-toggle-back\" {{action 'toggleSearchForm' on='mouseDown' }}>\n                <i class=\"fa fa-chevron-left\"></i>\n            </div>\n            <form action=\"Provider\" method=\"GET\" name=\"search\">\n                <input type=\"hidden\" name=\"type\" value=\"page\" />\n                <input type=\"hidden\" name=\"id\" value=\"search\" />\n                <input type=\"search\" name=\"keyword\" value=\"\" class=\"search-keyword\" required=\"required\" placeholder=\"Поиск\" />\n                <button type=\"submit\" class=\"search-btn\">\n                    <i class=\"fa fa-search\"></i>\n                </button>\n            </form>\n        </div>\n        <a class=\"no-desktop head-item nav-action\" href=\"#\" data-action=\"add_new\">\n            <i class=\"fa fa-plus\"></i>\n            <span class=\"action-label\"></span>\n        </a>\n    </div>\n</header>");
       dom.appendChild(el0, el1);
       var el1 = dom.createTextNode("\n");
       dom.appendChild(el0, el1);
       var el1 = dom.createElement("aside");
-      dom.setAttribute(el1,"class","layout_aside nav-app");
-      var el2 = dom.createTextNode("\n    ");
+      dom.setAttribute(el1,"class","nav");
+      var el2 = dom.createTextNode("\n");
       dom.appendChild(el1, el2);
-      var el2 = dom.createElement("div");
-      dom.setAttribute(el2,"class","side");
-      var el3 = dom.createTextNode("\n        ");
+      var el2 = dom.createComment("    <div class=\"side\">");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n   ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createComment("     <div class=\"side-container\">");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createComment("            <div class=\"side-nav\">");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n                ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("ul");
+      var el3 = dom.createTextNode("\n                    ");
       dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","side-container");
-      var el4 = dom.createTextNode("\n            ");
+      var el3 = dom.createElement("li");
+      var el4 = dom.createTextNode("\n");
       dom.appendChild(el3, el4);
-      var el4 = dom.createElement("div");
-      dom.setAttribute(el4,"class","side-nav");
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("ul");
-      dom.setAttribute(el5,"class","side-tree");
-      var el6 = dom.createTextNode("\n                    ");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createElement("li");
-      dom.setAttribute(el6,"class","side-tree-item");
-      var el7 = dom.createTextNode("\n");
-      dom.appendChild(el6, el7);
-      var el7 = dom.createComment("");
-      dom.appendChild(el6, el7);
-      var el7 = dom.createTextNode("                    ");
-      dom.appendChild(el6, el7);
-      dom.appendChild(el5, el6);
-      var el6 = dom.createTextNode("\n                    ");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createComment("   <li class=\"side-tree-item\">\n{{#link-to 'accounts'}}\n                            <i class=\"fa fa-file-o\"></i>Accounts\n                        {{/link-to}}                    </li>\n                    <li class=\"side-tree-item\">\n{{#link-to 'categories'}}\n                            <i class=\"fa fa-file-o\"></i>Categories\n                        {{/link-to}}                    </li>\n                    <li class=\"side-tree-item\">\n{{#link-to 'cost_centers'}}\n                            <i class=\"fa fa-file-o\"></i>Cost centers\n                        {{/link-to}}                    </li>\n                    <li class=\"side-tree-item\">\n{{#link-to 'tags'}}\n                            <i class=\"fa fa-file-o\"></i>Tags\n                        {{/link-to}}                    </li>\n                    <li class=\"side-tree-item\">\n{{#link-to 'users'}}\n                            <i class=\"fa fa-users\"></i>Users\n                        {{/link-to}}");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createTextNode("\n                ");
-      dom.appendChild(el5, el6);
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n            ");
-      dom.appendChild(el4, el5);
+      var el4 = dom.createComment("");
       dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
+      var el4 = dom.createTextNode("                    ");
       dom.appendChild(el3, el4);
       dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n    ");
+      var el3 = dom.createTextNode("\n                    ");
       dom.appendChild(el2, el3);
+      var el3 = dom.createComment("   <li class=\"side-tree-item\">\n{{#link-to 'accounts'}}\n                            <i class=\"fa fa-file-o\"></i>Accounts\n                        {{/link-to}}                    </li>\n                    <li class=\"side-tree-item\">\n{{#link-to 'categories'}}\n                            <i class=\"fa fa-file-o\"></i>Categories\n                        {{/link-to}}                    </li>\n                    <li class=\"side-tree-item\">\n{{#link-to 'cost_centers'}}\n                            <i class=\"fa fa-file-o\"></i>Cost centers\n                        {{/link-to}}                    </li>\n                    <li class=\"side-tree-item\">\n{{#link-to 'tags'}}\n                            <i class=\"fa fa-file-o\"></i>Tags\n                        {{/link-to}}                    </li>\n                    <li class=\"side-tree-item\">\n{{#link-to 'users'}}\n                            <i class=\"fa fa-users\"></i>Users\n                        {{/link-to}}");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n                ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createComment("            </div>");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n  ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createComment("      </div>");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createComment("    </div>");
       dom.appendChild(el1, el2);
       var el2 = dom.createTextNode("\n");
       dom.appendChild(el1, el2);
@@ -432,59 +303,17 @@ Ember.TEMPLATES["outline"] = Ember.HTMLBars.template((function() {
       var el1 = dom.createTextNode("\n\n");
       dom.appendChild(el0, el1);
       var el1 = dom.createElement("aside");
-      dom.setAttribute(el1,"class","layout_aside nav-ws");
-      var el2 = dom.createTextNode("\n    ");
+      dom.setAttribute(el1,"class","body");
+      var el2 = dom.createTextNode("\n    View\n    ");
       dom.appendChild(el1, el2);
-      var el2 = dom.createElement("header");
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("a");
-      dom.setAttribute(el3,"href","#/userprofile");
-      dom.setAttribute(el3,"class","user");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("i");
-      dom.setAttribute(el4,"class","fa fa-user");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("span");
-      var el5 = dom.createComment("");
-      dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n    ");
-      dom.appendChild(el2, el3);
-      dom.appendChild(el1, el2);
-      var el2 = dom.createTextNode("\n    ");
-      dom.appendChild(el1, el2);
-      var el2 = dom.createElement("footer");
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("a");
-      dom.setAttribute(el3,"href","Logout");
-      dom.setAttribute(el3,"class","ws-exit");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("i");
-      dom.setAttribute(el4,"class","fa fa-sign-out");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("span");
-      var el5 = dom.createComment("");
-      dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n    ");
-      dom.appendChild(el2, el3);
+      var el2 = dom.createComment("");
       dom.appendChild(el1, el2);
       var el2 = dom.createTextNode("\n");
       dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      var el1 = dom.createTextNode("\n\n");
+      dom.appendChild(el0, el1);
+      var el1 = dom.createComment("\n<aside class=\"layout_aside nav-ws\">\n    <header>\n        <a href=\"#/userprofile\" class=\"user\">\n            <i class=\"fa fa-user\"></i>\n            <span>{{username}}</span>\n        </a>\n    </header>\n    <footer>\n        <a href=\"Logout\" class=\"ws-exit\">\n            <i class=\"fa fa-sign-out\"></i>\n            <span>{{logout}}</span>\n        </a>\n    </footer>\n</aside>\n");
       dom.appendChild(el0, el1);
       var el1 = dom.createTextNode("\n\n");
       dom.appendChild(el0, el1);
@@ -492,7 +321,7 @@ Ember.TEMPLATES["outline"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, element = hooks.element, block = hooks.block, content = hooks.content;
+      var hooks = env.hooks, block = hooks.block, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -510,24 +339,10 @@ Ember.TEMPLATES["outline"] = Ember.HTMLBars.template((function() {
       } else {
         fragment = this.build(dom);
       }
-      var element0 = dom.childAt(fragment, [0]);
-      var element1 = dom.childAt(fragment, [2, 1]);
-      var element2 = dom.childAt(element1, [1]);
-      var element3 = dom.childAt(element1, [5, 1]);
-      var element4 = dom.childAt(element1, [7]);
-      var element5 = dom.childAt(element1, [9, 1]);
-      var element6 = dom.childAt(fragment, [6]);
-      var morph0 = dom.createMorphAt(dom.childAt(fragment, [4, 1, 1, 1, 1, 1]),1,1);
-      var morph1 = dom.createMorphAt(dom.childAt(element6, [1, 1, 3]),0,0);
-      var morph2 = dom.createMorphAt(dom.childAt(element6, [3, 1, 3]),0,0);
-      element(env, element0, context, "action", ["hideOpenedNav"], {"on": "mouseDown"});
-      element(env, element2, context, "action", ["navAppMenuToggle"], {});
-      element(env, element3, context, "action", ["navUserMenuToggle"], {"on": "mouseDown"});
-      element(env, element4, context, "action", ["toggleSearchForm"], {"on": "mouseDown"});
-      element(env, element5, context, "action", ["toggleSearchForm"], {"on": "mouseDown"});
+      var morph0 = dom.createMorphAt(dom.childAt(fragment, [4, 7, 1]),1,1);
+      var morph1 = dom.createMorphAt(dom.childAt(fragment, [6]),1,1);
       block(env, morph0, context, "link-to", ["users"], {}, child0, null);
-      content(env, morph1, context, "username");
-      content(env, morph2, context, "logout");
+      inline(env, morph1, context, "outlet", ["viewOutlet"], {});
       return fragment;
     }
   };
@@ -656,6 +471,109 @@ Ember.TEMPLATES["signin"] = Ember.HTMLBars.template((function() {
       inline(env, morph0, context, "input", [], {"type": "text", "value": get(env, context, "username")});
       inline(env, morph1, context, "input", [], {"type": "password", "value": get(env, context, "password")});
       element(env, element1, context, "action", ["login"], {});
+      return fragment;
+    }
+  };
+}()));
+Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
+  var child0 = (function() {
+    return {
+      isHTMLBars: true,
+      revision: "Ember@1.12.1",
+      blockParams: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      build: function build(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createTextNode("    ");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("div");
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      render: function render(context, env, contextualElement) {
+        var dom = env.dom;
+        var hooks = env.hooks, content = hooks.content;
+        dom.detectNamespace(contextualElement);
+        var fragment;
+        if (env.useFragmentCache && dom.canClone) {
+          if (this.cachedFragment === null) {
+            fragment = this.build(dom);
+            if (this.hasRendered) {
+              this.cachedFragment = fragment;
+            } else {
+              this.hasRendered = true;
+            }
+          }
+          if (this.cachedFragment) {
+            fragment = dom.cloneNode(this.cachedFragment, true);
+          }
+        } else {
+          fragment = this.build(dom);
+        }
+        var element0 = dom.childAt(fragment, [1]);
+        var morph0 = dom.createMorphAt(element0,0,0);
+        var morph1 = dom.createMorphAt(element0,2,2);
+        content(env, morph0, context, "login");
+        content(env, morph1, context, "userName");
+        return fragment;
+      }
+    };
+  }());
+  return {
+    isHTMLBars: true,
+    revision: "Ember@1.12.1",
+    blockParams: 0,
+    cachedFragment: null,
+    hasRendered: false,
+    build: function build(dom) {
+      var el0 = dom.createDocumentFragment();
+      var el1 = dom.createElement("div");
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("h2");
+      var el3 = dom.createTextNode("Users List");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createComment("");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      return el0;
+    },
+    render: function render(context, env, contextualElement) {
+      var dom = env.dom;
+      var hooks = env.hooks, get = hooks.get, block = hooks.block;
+      dom.detectNamespace(contextualElement);
+      var fragment;
+      if (env.useFragmentCache && dom.canClone) {
+        if (this.cachedFragment === null) {
+          fragment = this.build(dom);
+          if (this.hasRendered) {
+            this.cachedFragment = fragment;
+          } else {
+            this.hasRendered = true;
+          }
+        }
+        if (this.cachedFragment) {
+          fragment = dom.cloneNode(this.cachedFragment, true);
+        }
+      } else {
+        fragment = this.build(dom);
+      }
+      var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),3,3);
+      block(env, morph0, context, "each", [get(env, context, "controller")], {}, child0, null);
       return fragment;
     }
   };

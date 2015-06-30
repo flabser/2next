@@ -28,7 +28,7 @@ public class UserService extends RestProvider {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public UsersList get() {
-
+		System.out.println("get users");
 		_Session ses = getSession();
 		if (ses != null) {
 			ArrayList users = sysDatabase.getAllUsers("", RuntimeObjUtil.calcStartEntry(1, pageSize), pageSize);

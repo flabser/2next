@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -12,7 +13,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.flabser.env.SessionPool;
 import org.omg.CORBA.UserException;
@@ -40,6 +43,8 @@ public class SessionService {
 	ServletContext context;
 	@Context
 	HttpServletRequest request;
+	@Context
+	HttpServletResponse response;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -59,9 +64,9 @@ public class SessionService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public AuthUser createSession(AuthUser signUser) {
+	public AuthUser createSession(AuthUser signUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException, UserException, IllegalAccessException, SQLException {
 		UserSession userSession = null;
-		try {
+
 			System.out.println(request.getRequestedSessionId() + "  " + signUser.getClass().getName());
 			HttpSession jses;
 
@@ -104,10 +109,11 @@ public class SessionService {
 			SessionPool.put(userSession);
 			jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 
-		} catch (AuthFailedException ae) {
+	/*	} catch (AuthFailedException ae) {
 			try {
 				signUser.setStatus(ae.type);
 				signUser.setError(ae.getMessage());
+				//response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			} catch (IllegalStateException ise) {
 				// new PortalException(ise, env, response, PublishAsType.HTML);
 			} catch (Exception e) {
@@ -115,20 +121,8 @@ public class SessionService {
 				// ProviderExceptionType.INTERNAL,
 				// PublishAsType.HTML);
 			}
+*/
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (UserException e) {
-			e.printStackTrace();
-		} catch (DatabasePoolException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 
 		return signUser;
 	}
