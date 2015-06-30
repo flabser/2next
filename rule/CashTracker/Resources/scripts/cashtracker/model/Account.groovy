@@ -1,7 +1,6 @@
 package cashtracker.model;
 
 import java.sql.ResultSet
-import java.sql.SQLException
 
 import com.fasterxml.jackson.annotation.JsonRootName
 import com.flabser.script._IObject
@@ -25,7 +24,7 @@ public class Account implements _IObject {
 
 	private User owner;
 
-	private String observers;
+	private List <User> observers;
 
 	private boolean includeInTotals;
 
@@ -90,11 +89,11 @@ public class Account implements _IObject {
 		this.owner = user;
 	}
 
-	public String getObservers() {
+	public List <User> getObservers() {
 		return observers;
 	}
 
-	public void setObservers(String observers) {
+	public void setObservers(List <User> observers) {
 		this.observers = observers;
 	}
 
@@ -128,21 +127,16 @@ public class Account implements _IObject {
 	}
 
 	public void init(ResultSet rs) {
-		try {
-			setId(rs.getInt("id"));
-			setName(rs.getString("name"));
-			setType(rs.getInt("type"));
-			setCurrencyCode(rs.getString("currency_code"));
-			setOpeningBalance(rs.getBigDecimal("opening_balance"));
-			setAmountControl(rs.getBigDecimal("amount_control"));
-			setOwner(null);
-			setObservers(rs.getString("observers"));
-			setIncludeInTotals(rs.getBoolean("include_in_totals"));
-			setNote(rs.getString("note"));
-			setSortOrder(rs.getInt("sort_order"));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		setId(rs.getInt("id"));
+		setName(rs.getString("name"));
+		setType(rs.getInt("type"));
+		setCurrencyCode(rs.getString("currency_code"));
+		setOpeningBalance(rs.getBigDecimal("opening_balance"));
+		setAmountControl(rs.getBigDecimal("amount_control"));
+		setOwner(null);
+		// setObservers(rs.getString("observers"));
+		setIncludeInTotals(rs.getBoolean("include_in_totals"));
+		setNote(rs.getString("note"));
+		setSortOrder(rs.getInt("sort_order"));
 	}
 }

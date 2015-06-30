@@ -4,8 +4,8 @@
         {{title}} № {{vn}} {{date}}
     </h1>
     <div class="action-bar">
-        <button class="btn btn-default" {{action 'save' this}}>Save</button>
-        <a class="btn" href="#/transactions">Cancel</a>
+        <button class="btn btn-default" {{action 'save' this}}>{{t 'save'}}</button>
+        <a class="btn" href="#/transactions">{{t 'cancel'}}</a>
     </div>
 </header>
 <section class="form-content">
@@ -14,7 +14,7 @@
             <!-- Дата операции -->
             <div class="control-group">
                 <div class="control-label">
-                    Date
+                    {{t 'date'}}
                 </div>
                 <div class="controls">
                     {{input name="date" value=date required=true class="span7"}}
@@ -23,7 +23,7 @@
             <!-- Касса -->
             <div class="control-group">
                 <div class="control-label">
-                    Account
+                    {{t 'account'}}
                 </div>
                 <div class="controls">
                     {{account}}
@@ -32,7 +32,7 @@
             <!-- category -->
             <div class="control-group">
                 <div class="control-label">
-                    Category
+                    {{t 'category'}}
                 </div>
                 <div class="controls">
                     {{category}}
@@ -42,7 +42,7 @@
             <!-- Сумма -->
             <div class="control-group">
                 <div class="control-label">
-                    Amount
+                    {{t 'amount'}}
                 </div>
                 <div class="controls">
                     {{input type="number" name="amount" value=amount required=true class="span7"}}
@@ -51,7 +51,7 @@
             <!-- Место возникновения -->
             <div class="control-group">
                 <div class="control-label">
-                    Cost center
+                    {{t 'cost_center'}}
                 </div>
                 <div class="controls">
                     {{costcenter}}
@@ -60,7 +60,7 @@
             <!-- Основание -->
             <div class="control-group">
                 <div class="control-label">
-                    Basis
+                    {{t 'basis'}}
                 </div>
                 <div class="controls">
                     {{textarea name="basis" value=basis required=true class="span7"}}

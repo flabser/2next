@@ -1,8 +1,8 @@
 <header class="form-header">
     <h1 class="header-title">Account / {{name}}</h1>
     <div class="action-bar">
-        <button class="btn btn-primary" {{action 'save' this}}>Save</button>
-        <a class="btn" href="#/accounts">Cancel</a>
+        <button class="btn btn-primary" {{action 'save' this}}>{{t 'save'}}</button>
+        <a class="btn" href="#/accounts">{{t 'cancel'}}</a>
     </div>
 </header>
 <section class="form-content">
@@ -10,7 +10,7 @@
         <div class="fieldset-container">
             <div class="control-group">
                 <div class="control-label">
-                    name
+                    {{t 'name'}}
                 </div>
                 <div class="controls">
                     {{input name="name" value=name required=true class="span7"}}
@@ -18,7 +18,7 @@
             </div>
             <div class="control-group">
                 <div class="control-label">
-                    type
+                    {{t 'type'}}
                 </div>
                 <div class="controls">
                     {{input name="type" value=type required=true class="span7"}}
@@ -26,7 +26,7 @@
             </div>
             <div class="control-group">
                 <div class="control-label">
-                    amountControl
+                    {{t 'amountControl'}}
                 </div>
                 <div class="controls">
                     {{input name="amountControl" value=amountControl required=true class="span7"}}
@@ -34,7 +34,7 @@
             </div>
             <div class="control-group">
                 <div class="control-label">
-                    owner
+                    {{t 'owner'}}
                 </div>
                 <div class="controls">
                     {{input name="owner" value=owner.id required=true class="span7"}}
@@ -42,7 +42,7 @@
             </div>
             <div class="control-group">
                 <div class="control-label">
-                    observers
+                    {{t 'observers'}}
                 </div>
                 <div class="controls">
                     {{input name="amountControl" value=amountControl required=true class="span7"}}

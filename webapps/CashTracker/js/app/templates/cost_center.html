@@ -1,8 +1,8 @@
 <header class="form-header">
     <h1 class="header-title">Cost center / {{name}}</h1>
     <div class="action-bar">
-        <button class="btn btn-primary" {{action 'save' this}}>Save</button>
-        <a class="btn" href="#/costcenters">Cancel</a>
+        <button class="btn btn-primary" {{action 'save' this}}>{{t 'save'}}</button>
+        <a class="btn" href="#/costcenters">{{t 'cancel'}}</a>
     </div>
 </header>
 <section class="form-content">
@@ -10,7 +10,7 @@
         <div class="fieldset-container">
             <div class="control-group">
                 <div class="control-label">
-                    name
+                    {{t 'name'}}
                 </div>
                 <div class="controls">
                     {{input name="name" value=name required=true class="span7"}}

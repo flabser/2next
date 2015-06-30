@@ -10,8 +10,6 @@ var CT = Ember.Application.create({
 CT.ApplicationAdapter = DS.RESTAdapter.extend({
     pathForType: function(type) {
         switch (type) {
-            case 'authUser':
-                return 'session';
             case 'costCenter':
                 return 'costcenters';
             case 'category':
