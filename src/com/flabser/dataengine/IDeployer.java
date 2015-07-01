@@ -5,6 +5,6 @@ import com.flabser.users.ApplicationProfile;
 
 public interface IDeployer {
 	void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException;	
-	int deploy();
+	int deploy(IAppDatabaseInit dbInit);
 	int remove();
 }

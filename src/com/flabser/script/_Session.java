@@ -4,10 +4,13 @@ import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.env.Environment;
 import com.flabser.rule.GlobalSetting;
+import com.flabser.rule.Role;
 import com.flabser.script.actions._ActionBar;
 import com.flabser.script.mail._MailAgent;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
+
+import java.util.ArrayList;
 
 
 public class _Session {
@@ -28,17 +31,14 @@ public class _Session {
 	public IDatabase getDatabase() {
 		return dataBase;
 	}
-	
-	public GlobalSetting getGlobalSettings() {
-		return env.globalSetting;
+
+	public ArrayList<Role> getRolesList(){
+		ArrayList <Role> rolesList = (ArrayList<Role>) env.globalSetting.roleCollection.getRolesList().clone();
+		return rolesList;
 	}
 		
 	public String getFullAppURI() {
 		return Environment.getFullHostName() + "/" + env.appType;
-	}
-	
-	public String getCurrentUserID() {
-		return user.getLogin();
 	}
 	
 	public _ActionBar createActionBar() {
@@ -47,11 +47,6 @@ public class _Session {
 	
 	public _MailAgent getMailAgent() {
 		return new _MailAgent(this);
-	}
-
-	public _URL getURLOfLastPage() throws _Exception {
-		return null;
-		//return new _URL(user.getSession().history.getLastPageEntry().URL);
 	}
 
 	public User getUser() {

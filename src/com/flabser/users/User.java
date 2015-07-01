@@ -41,18 +41,15 @@ public class User {
 	private int hash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
+	private final static String ANONYMOUS_USER = "anonymous";
 
 	public User() {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
-		login = "anonymous";
+		login = ANONYMOUS_USER;
 	}
 
 	public void setLogin(String l) {
-		try {
 			this.login = l;
-		} catch (Exception e) {
-
-		}
 	}
 
 	public HashSet<String> getAllUserGroups() {
@@ -159,6 +156,9 @@ public class User {
 		return true;
 	}
 
+	public void addRole(UserRole role){
+		roles.add(role);
+	}
 	
 	public void addApplication(ApplicationProfile ap) {
 		enabledApps.put(ap.appName, ap);

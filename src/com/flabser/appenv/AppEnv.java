@@ -71,20 +71,6 @@ public class AppEnv implements ICache{
 		}
 	}
 
-		public ArrayList<Role> getRolesList(){
-		ArrayList <Role> rolesList = (ArrayList<Role>) globalSetting.roleCollection.getRolesList().clone();
-		
-		return rolesList;
-	}
-	
-
-	
-	public HashMap<String, Role> getRolesMap(){
-		HashMap<String, Role> rolesMap = (HashMap<String, Role>) globalSetting.roleCollection.getRolesMap().clone();
-		
-		return rolesMap;
-	}
-
 	public String toString(){
 		return appType + "(" + globalSetting.implementation + ")";
 	}
@@ -117,12 +103,5 @@ public class AppEnv implements ICache{
 	public void flush() {
 		cache.clear();
 	}
-
-
-	public  String getName() {
-		return appType;
-	}
-
-	
 
 }

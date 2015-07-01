@@ -14,20 +14,7 @@ public class Role {
 	public RunMode isOn = RunMode.ON; 
 	public boolean isValid;
 	public boolean active = false;
-	private UserRoleType roleProvider = UserRoleType.PROVIDED_BY_SELF;
-	
-	@Deprecated
-	public Role(String name, String description){
-		appID = "System";
-		this.name = name;
-		this.description = description;
-	}
-	
-	public Role(String name, String appID, String description){
-		this.appID = appID;
-		this.name = name;
-		this.description = description;
-	}
+
 
 	Role(Node node, String appID){
 		try{
@@ -50,12 +37,4 @@ public class Role {
 		}
 	}
 
-	public void setRuleProvider(UserRoleType roleProvider){
-		this.roleProvider = roleProvider;
-	}
-	
-	public String toXML(){
-		return "<ison>" + isOn + "</ison><name>" + name + "</name><app>" + appID + "</app>" +
-					"<description>" + description + "</description><ruleprovider>" + roleProvider + "</ruleprovider>";
-	}
 }
