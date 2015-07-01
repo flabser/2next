@@ -68,7 +68,7 @@ public class ServiceHandler{
 
 		xmlFragment.append("<roles>");
 		for(Role role: env.globalSetting.roleCollection.getRolesMap().values()){
-			xmlFragment.append("<entry>" + role.toXML() + "</entry>");		
+			//xmlFragment.append("<entry>" + role.toXML() + "</entry>");
 		}
 		xmlFragment.append("</roles>");
 
