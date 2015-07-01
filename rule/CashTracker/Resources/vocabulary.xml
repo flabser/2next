@@ -11,14 +11,14 @@
 	<sentence mode="on" keyword="promo_line1">
 		<entry lang="RUS" hint="Сервис для учета и планирования">Сервис для учета и планирования</entry>
 		<entry lang="KAZ" hint="Сервис для учета и планирования">Сервис для учета и планирования</entry>
-		<entry lang="ENG" hint="Сервис для учета и планирования">Сервис для учета и планирования</entry>
-		<entry lang="BG" hint="Сервис для учета и планирования">Сервис для учета и планирования</entry>
+		<entry lang="ENG" hint="Service for accounting and planning ">Service for accounting and planning </entry>
+		<entry lang="BG" hint="Услугата за счетоводство и планиране">Услугата за счетоводство и планиране</entry>
 	</sentence>
 	<sentence mode="on" keyword="promo_line2">
 		<entry lang="RUS" hint="корпоративных и семейных финансов">корпоративных и семейных финансов</entry>
 		<entry lang="KAZ" hint="корпоративных и семейных финансов">корпоративных и семейных финансов</entry>
-		<entry lang="ENG" hint="корпоративных и семейных финансов">корпоративных и семейных финансов</entry>
-		<entry lang="BG" hint="корпоративных и семейных финансов">корпоративных и семейных финансов</entry>
+		<entry lang="ENG" hint="corporate and family finances">corporate and family finances</entry>
+		<entry lang="BG" hint="фирмени и семейни финанси">фирмени и семейни финанси</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="operations">
