@@ -86,18 +86,23 @@ public class SessionService {
 		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
 		if (user.getStatus() == UserStatusType.REGISTERED) {
-			ApplicationProfile app = user.enabledApps.get(env.appType);
-			if (app == null) {
-				ApplicationProfile ap = new ApplicationProfile();
-				ap.appName = env.appType;
-				ap.owner = user.getLogin();
-				ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
-				ap.dbName = ap.appName.toLowerCase() + "_" + ap.dbLogin;
-				ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
-				ap.save();
-				user.addApplication(ap);
-				user.save();
+			if (!env.appType.equalsIgnoreCase("administrator")) {
+				ApplicationProfile app = user.enabledApps.get(env.appType);
+				if (app == null) {
+					ApplicationProfile ap = new ApplicationProfile();
+					ap.appName = env.appType;
+					ap.owner = user.getLogin();
+					ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
+					ap.dbName = ap.appName.toLowerCase() + "_" + ap.dbLogin;
+					ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
+					ap.save();
+					user.addApplication(ap);
+					user.save();
+					// TODO add feature for redirect the user to a general setup of the application
+				}
 			}
+		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
+			// TODO add feature for redirect the user to his userprfile to change a password
 		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED
 				|| user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
 			throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED, signUser.getLogin());

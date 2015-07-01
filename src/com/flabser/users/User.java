@@ -172,45 +172,8 @@ public class User {
 		return hash;
 	}
 
-	public void fillFieldsToSaveLight(HashMap<String, String[]> fields) throws WebFormValueException {
-		/*
-		 * setUserID(getWebFormValue("userid", fields, userID)[0]);
-		 * setEmail(getWebFormValue("email", fields, email)[0]);
-		 * setInstMsgAddress(getWebFormValue("instmsgaddress", fields,
-		 * instMsgAddress)[0]); setPassword(getWebFormValue("pwd", fields,
-		 * password)[0]); setPasswordHash(getWebFormValue("pwd", fields,
-		 * password)[0]); String p_eds = getWebFormValue("p_eds", fields,
-		 * "")[0]; for (String key : fields.keySet()) { String formSesID =
-		 * getWebFormValue("formsesid", fields, "")[0]; if
-		 * (!"".equalsIgnoreCase(formSesID)) { HashMap<String, BlobFile>
-		 * uploadedFiles = new RuntimeObjUtil().getUploadedFiles(fields); if
-		 * (uploadedFiles.size() > 0) { for (Map.Entry<String, BlobFile>
-		 * file_entry : uploadedFiles.entrySet()) { try { FileInputStream ksfis
-		 * = new FileInputStream(new File(file_entry.getValue().path)); final
-		 * InputStream ksbufin = new BufferedInputStream(ksfis);
-		 * Security.addProvider(new IolaProvider()); final KeyStore ks =
-		 * KeyStore.getInstance("PKCS12", IolaProvider.PROVIDER_NAME); //final
-		 * KeyStore ks = KeyStore.getInstance("PKCS12"); ks.load(ksbufin,
-		 * p_eds.toCharArray()); KeyStore.ProtectionParameter protParam = new
-		 * KeyStore.PasswordProtection(p_eds.toCharArray()); Enumeration<String>
-		 * aliases = ks.aliases(); String alias = ""; while
-		 * (aliases.hasMoreElements()) { alias = aliases.nextElement(); } if
-		 * (!"".equalsIgnoreCase(alias)) { //KeyStore.PrivateKeyEntry entry =
-		 * (KeyStore.PrivateKeyEntry)ks.getEntry(alias, protParam);
-		 * //Certificate cert = entry.getCertificate(); Certificate cert =
-		 * ks.getCertificate(alias); publicKey =
-		 * Base64.encodeBase64String(cert.getEncoded());
-		 * setPublicKey(publicKey); } } catch (IOException e) {
-		 * e.printStackTrace(); } catch (NoSuchAlgorithmException e) {
-		 * e.printStackTrace(); } catch (KeyStoreException e) {
-		 * e.printStackTrace(); } catch (CertificateEncodingException e) {
-		 * e.printStackTrace(); } catch (CertificateException e) {
-		 * e.printStackTrace(); } catch (NoSuchProviderException e) {
-		 * e.printStackTrace(); } } } }
-		 * 
-		 * 
-		 * } this.appUser.setReplacers(fields);
-		 */
+	public ApplicationProfile getApplicationProfile(String appName){
+		return enabledApps.get(appName);
 	}
 
 	public boolean save() throws InstantiationException, IllegalAccessException, ClassNotFoundException,

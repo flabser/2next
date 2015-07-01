@@ -231,16 +231,6 @@ public class UserSession implements ICache {
 		}
 	}
 
-	public void addDynmaicClass(String id, _AJAXHandler instance) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public IAsyncScript getDynmaicClass(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public IDatabase getDataBase() {
 		return dataBase;
 	}
