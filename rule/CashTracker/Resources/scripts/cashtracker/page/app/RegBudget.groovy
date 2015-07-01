@@ -6,8 +6,7 @@ import cashtracker.model.constants.BudgetState
 
 import com.flabser.script.*
 import com.flabser.script.events._DoScript
-import com.flabser.solutions.cashtracker.*
-import com.flabser.solutions.cashtracker.constants.*
+import com.flabser.solutions.postgresql.Database
 import com.flabser.users.*
 
 
