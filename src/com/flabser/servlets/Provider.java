@@ -41,7 +41,7 @@ public class Provider extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		try {
 			context = config.getServletContext();
-			env = (AppEnv) context.getAttribute("portalenv");
+			env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
 		} catch (Exception e) {
 			Server.logger.errorLogEntry(e);
 		}
