@@ -56,10 +56,6 @@ public class WebServer implements IWebServer {
 		return sharedResContext;
 	}
 
-	private ServletContainer resourceConfig() {
-		return new ServletContainer(new ResourceConfig(new ResourceLoader().getClasses()));
-	}
-
 	public Host addApplication(String siteName, String URLPath, String docBase) throws LifecycleException,
 	MalformedURLException {
 		Context context = null;
@@ -73,6 +69,7 @@ public class WebServer implements IWebServer {
 			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
 			context.setDisplayName("Administrator");
 		} else {
+			Server.logger.normalLogEntry("Load \"" + docBase + "\" application...");
 			if (siteName == null || siteName.equalsIgnoreCase("")) {
 				String db = new File("webapps/" + docBase).getAbsolutePath();
 				context = tomcat.addContext(URLPath, db);
@@ -127,12 +124,9 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",  resourceConfig());
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
-		//context.addServletMapping("/RestProvider/*", "Jersey REST Service");
-		//context.addServletMapping("/RestAdminProvider/*", "Jersey REST Service");
-		//context.addServletMapping("/AuthUser/*", "Jersey REST Service");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
 		filterAccessGuardMapping.addServletName("Jersey REST Service");
 

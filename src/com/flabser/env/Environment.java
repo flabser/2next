@@ -45,14 +45,12 @@ public class Environment implements ICache {
 	public static ISystemDatabase systemBase;
 	public static String defaultSender = "";
 	public static HashMap <String, String> mimeHash = new HashMap <String, String>();
-	public static boolean adminConsoleEnable;
 	public static String primaryAppDir;
 	public static HashMap <String, Site> webAppToStart = new HashMap <String, Site>();
 	public static String tmpDir;
 	public static String libsDir;
 	public static ArrayList <String> fileToDelete = new ArrayList <String>();
 	public static ILogger logger;
-	public static int delaySchedulerStart;
 
 	public static Boolean isSSLEnable = false;
 	public static int secureHttpPort;
@@ -74,7 +72,6 @@ public class Environment implements ICache {
 	private static HashMap <String, AppEnv> applications = new HashMap <String, AppEnv>();
 	private static HashMap <String, Object> cache = new HashMap <String, Object>();
 	private static ArrayList <IDatabase> delayedStart = new ArrayList <IDatabase>();
-	public static String backupDir;
 
 	public static void init() {
 		logger = Server.logger;
@@ -117,21 +114,7 @@ public class Environment implements ICache {
 				noWSAuth = false;
 			}
 
-			try {
-				if (XMLUtil.getTextContent(xmlDocument, "/tn/adminapp/@mode").equalsIgnoreCase("on")) {
-					adminConsoleEnable = true;
-				}
-			} catch (Exception nfe) {
-				adminConsoleEnable = false;
-			}
 
-			try {
-				delaySchedulerStart = Integer.parseInt(XMLUtil.getTextContent(xmlDocument,
-						"/tn/scheduler/startdelaymin"));
-			} catch (Exception nfe) {
-				delaySchedulerStart = 1;
-			}
-			
 			primaryAppDir = XMLUtil.getTextContent(xmlDocument, "/tn/primaryappdir");
 			if (!primaryAppDir.equalsIgnoreCase("")) primaryAppDir = primaryAppDir + File.separator;
 						
@@ -223,38 +206,8 @@ public class Environment implements ICache {
 
 			libsDir = libs.getAbsolutePath();
 
-			File backup = new File("backup");
-			if (!backup.exists()) {
-				backup.mkdir();
-			}
-
-			backupDir = backup.getAbsolutePath();
-
-			
-
 			if (XMLUtil.getTextContent(xmlDocument, "/tn/debug/@mode").equalsIgnoreCase("on")) {
 				debugMode = RunMode.ON;
-			}
-
-			
-
-			
-
-			{
-				// BackupServiceRule bsr = new BackupServiceRule();
-				// bsr.init(new Environment());
-				// try{
-				// Class c = Class.forName(bsr.getClassName());
-				// IDaemon daemon = (IDaemon)c.newInstance();
-				// daemon.init(bsr);
-				// scheduler.addProcess(bsr, daemon);
-				// }catch (InstantiationException e) {
-				// logger.errorLogEntry(e);
-				// } catch (IllegalAccessException e) {
-				// logger.errorLogEntry(e);
-				// } catch (ClassNotFoundException e) {
-				// logger.errorLogEntry(e);
-				// }
 			}
 		} catch (SAXException se) {
 			logger.errorLogEntry(se);

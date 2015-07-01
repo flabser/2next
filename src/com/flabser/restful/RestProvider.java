@@ -8,12 +8,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.exception.RuleException;
@@ -23,6 +22,7 @@ import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Exception;
 import com.flabser.script._Page;
 import com.flabser.script._Session;
+import com.flabser.server.Server;
 import com.flabser.servlets.Cookies;
 import com.flabser.servlets.ProviderResult;
 import com.flabser.users.AuthFailedException;
@@ -90,6 +90,16 @@ public class RestProvider {
 		}
 		return null;
 	}
+
+	@GET
+	@Path("/{model}")
+	public _Page produceEmptyPage(@PathParam("model") String model) throws RuleException, AuthFailedException, UserException,
+			ClassNotFoundException, InstantiationException, IllegalAccessException {
+		String msg = "The request \"" + request.getRequestURI() + "\" has not processed by some application handler";
+		Server.logger.errorLogEntry(msg);
+		throw new WebApplicationException(msg, HttpServletResponse.SC_NOT_FOUND);
+	}
+
 
 	private _Page page(AppEnv env, HttpServletResponse response, HttpServletRequest request, IRule rule,
 			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,

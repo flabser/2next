@@ -26,34 +26,22 @@ public class Server{
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 		
 		logger.normalLogEntry("Copyright(c) the F developers team 2015. All Right Reserved");
-		logger.normalLogEntry("Operating system: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "(" + System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));	
+		logger.normalLogEntry("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "(" + System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
 
 		Environment.init();
 		logger.verboseLogEntry("Build " + compilationTime);
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
 		webServerInst.init(Environment.hostName);
 		
-		if(Environment.adminConsoleEnable){				
-			Host host = webServerInst.addApplication("Administrator", "/Administrator", "Administrator");
+
+		Host host = webServerInst.addApplication("Administrator", "/Administrator", "Administrator");
 			
-			HashSet<Host> hosts = new HashSet<Host>();
-			hosts.add(host);			
-		}
-		
-			
-		//Host host = webServerInst.addApplication("JaxREST", "/JaxREST", "JaxREST");
-		//webServerInst.addJaxRestHandler() ;
-		
 		HashSet<Host> hosts = new HashSet<Host>();
-		//	hosts.add(host);			
-		
-		
-		Server.logger.normalLogEntry("Applications are starting...");
-				
-		//HashSet<Host> hosts = new HashSet<Host>();
-		for(Site webApp: Environment.webAppToStart.values()){			
+		hosts.add(host);
+
+		for(Site webApp: Environment.webAppToStart.values()) {
 			hosts.add(webServerInst.addApplication(webApp.name, "/" + webApp.appBase, webApp.appBase));
-			Server.logger.verboseLogEntry(webApp.name + " " + webApp.appBase);
+			//Server.logger.verboseLogEntry(webApp.name + " " + webApp.appBase);
 			
 		}
 
@@ -62,10 +50,8 @@ public class Server{
 		String info = webServerInst.initConnectors();
 		Server.logger.verboseLogEntry("Webserver start ("  + info + ")");
 		webServerInst.startContainer();
-		  		
 	}
 
-	
 	public static void main(String[] arg){
 		try {
 			Server.start();
@@ -80,7 +66,6 @@ public class Server{
 
 	public static void shutdown(){
 		logger.normalLogEntry("Server is stopping ... ");
-		
 		Environment.shutdown();	
 		//webServerInst.stopContainer();
 		System.exit(0);
