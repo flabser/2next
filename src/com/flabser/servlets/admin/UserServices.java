@@ -88,7 +88,7 @@ public class UserServices {
 					IDatabase dataBase = (IDatabase) cls.newInstance();
 					IDeployer ad = dataBase.getDeployer();
 					ad.init(appProfile);
-					ad.deploy();				
+					ad.deploy(null);
 			}
 		}
 		return result;
