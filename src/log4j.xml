@@ -10,8 +10,12 @@
 			<param name="ConversionPattern" value="%d{kk:mm:ss} %p %c: %m%n" />
 		</layout>
 	</appender>
-		
-	
+
+	<logger name="org.quartz" >
+		<level value="INFO" />
+		<appender-ref ref="console" />
+
+	</logger>
 	
 	
 	<appender name="file" class="com.flabser.log.DailyRollingFileAppender">

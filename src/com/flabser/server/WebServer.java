@@ -179,7 +179,7 @@ public class WebServer implements IWebServer {
 	public void startContainer() {
 		try {
 			tomcat.start();
-			tomcat.getServer().await();
+		//	tomcat.getServer().await();
 		} catch (LifecycleException e) {
 			Server.logger.errorLogEntry(e);
 		}

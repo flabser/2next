@@ -15,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import com.flabser.scheduler.PeriodicalServices;
 import com.flabser.users.UserSession;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -51,6 +52,7 @@ public class Environment implements ICache {
 	public static String libsDir;
 	public static ArrayList <String> fileToDelete = new ArrayList <String>();
 	public static ILogger logger;
+	public static PeriodicalServices periodicalServices;
 
 	public static Boolean isSSLEnable = false;
 	public static int secureHttpPort;
@@ -72,6 +74,7 @@ public class Environment implements ICache {
 	private static HashMap <String, AppEnv> applications = new HashMap <String, AppEnv>();
 	private static HashMap <String, Object> cache = new HashMap <String, Object>();
 	private static ArrayList <IDatabase> delayedStart = new ArrayList <IDatabase>();
+
 
 	public static void init() {
 		logger = Server.logger;
@@ -309,7 +312,7 @@ public class Environment implements ICache {
 	}
 
 	public static void shutdown() {
-		
+		periodicalServices.stop();
 	}
 
 

@@ -30,6 +30,26 @@ AdminApp.Router.map(function(){
 });
 
 
+AdminApp.LogsController = Ember.ArrayController.extend({
+    actions: {
+        selectAll: function() {}
+    }
+});
+
+
+AdminApp.UsersController = Ember.ArrayController.extend({
+    actions: {
+        selectAll: function() {}
+    }
+});
+
+
+
+AdminApp.Log = DS.Model.extend({
+    filename: DS.attr('string'),
+    created: DS.attr('string'),
+});
+
 AdminApp.User = DS.Model.extend({
     login: DS.attr('string'),
     pwd: DS.attr('string'),
@@ -259,6 +279,44 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       var morph1 = dom.createMorphAt(dom.childAt(element0, [5]),1,1);
       block(env, morph0, context, "each", [get(env, context, "controller")], {}, child0, null);
       content(env, morph1, context, "outlet");
+      return fragment;
+    }
+  };
+}()));
+Ember.TEMPLATES["logs"] = Ember.HTMLBars.template((function() {
+  return {
+    isHTMLBars: true,
+    revision: "Ember@1.12.1",
+    blockParams: 0,
+    cachedFragment: null,
+    hasRendered: false,
+    build: function build(dom) {
+      var el0 = dom.createDocumentFragment();
+      var el1 = dom.createElement("div");
+      var el2 = dom.createTextNode("\nLogs\n\n");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      return el0;
+    },
+    render: function render(context, env, contextualElement) {
+      var dom = env.dom;
+      dom.detectNamespace(contextualElement);
+      var fragment;
+      if (env.useFragmentCache && dom.canClone) {
+        if (this.cachedFragment === null) {
+          fragment = this.build(dom);
+          if (this.hasRendered) {
+            this.cachedFragment = fragment;
+          } else {
+            this.hasRendered = true;
+          }
+        }
+        if (this.cachedFragment) {
+          fragment = dom.cloneNode(this.cachedFragment, true);
+        }
+      } else {
+        fragment = this.build(dom);
+      }
       return fragment;
     }
   };

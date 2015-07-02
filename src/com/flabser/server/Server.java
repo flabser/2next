@@ -1,5 +1,6 @@
 package com.flabser.server;
 
+import com.flabser.scheduler.PeriodicalServices;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
 import com.flabser.dataengine.IDatabase;
@@ -41,15 +42,13 @@ public class Server{
 
 		for(Site webApp: Environment.webAppToStart.values()) {
 			hosts.add(webServerInst.addApplication(webApp.name, "/" + webApp.appBase, webApp.appBase));
-			//Server.logger.verboseLogEntry(webApp.name + " " + webApp.appBase);
-			
 		}
 
-		//hosts.add(webServerInst.addApplication("", "/Jax", "Jax"));
-		
 		String info = webServerInst.initConnectors();
 		Server.logger.verboseLogEntry("Webserver start ("  + info + ")");
 		webServerInst.startContainer();
+
+        Environment.periodicalServices = new PeriodicalServices();
 	}
 
 	public static void main(String[] arg){
