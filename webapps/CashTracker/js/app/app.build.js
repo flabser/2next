@@ -358,38 +358,6 @@ CT.UsersNewController = Ember.ArrayController.extend({
     }
 });
 
-// CT.register('service:i18n', Ember.Object);
-
-// CT.inject('model', 'i18n', 'service:i18n');
-
-CT.i18n = {
-    translations: [],
-
-    getTranslations: function() {
-        return $.getJSON('rest/page/app-captions').then(function(data) {
-            CT.i18n.translations = data._Page.captions;
-            return data._Page.captions;
-        });
-    },
-
-    translate: function(key) {
-        if (CT.i18n.translations.hasOwnProperty(key)) {
-            return CT.i18n.translations[key][0];
-        } else {
-            return key;
-        }
-    }
-};
-
-CT.register('service:i18n', CT.i18n);
-
-Ember.HTMLBars._registerHelper('t', CT.i18n.translate);
-
-CT.register('service:session', Ember.Object);
-
-CT.inject('route', 'session', 'service:session');
-CT.inject('controller', 'session', 'service:session');
-
 CT.Account = DS.Model.extend({
     type: DS.attr('number'),
     name: DS.attr('string'),
@@ -450,6 +418,38 @@ CT.User = DS.Model.extend({
     role: DS.attr('string')
 });
 
+// CT.register('service:i18n', Ember.Object);
+
+// CT.inject('model', 'i18n', 'service:i18n');
+
+CT.i18n = {
+    translations: [],
+
+    getTranslations: function() {
+        return $.getJSON('rest/page/app-captions').then(function(data) {
+            CT.i18n.translations = data._Page.captions;
+            return data._Page.captions;
+        });
+    },
+
+    translate: function(key) {
+        if (CT.i18n.translations.hasOwnProperty(key)) {
+            return CT.i18n.translations[key][0];
+        } else {
+            return key;
+        }
+    }
+};
+
+CT.register('service:i18n', CT.i18n);
+
+Ember.HTMLBars._registerHelper('t', CT.i18n.translate);
+
+CT.register('service:session', Ember.Object);
+
+CT.inject('route', 'session', 'service:session');
+CT.inject('controller', 'session', 'service:session');
+
 CT.AccountRoute = Ember.Route.extend({
     model: function(params) {
         return this.store.find('account', params.account_id);
@@ -489,7 +489,8 @@ CT.ApplicationRoute = Ember.Route.extend({
             var route = this;
             this.controllerFor('session').logout().then(function() {
                 route.session.set('auth_user', null);
-                route.transitionTo('index');
+                // route.transitionTo('index');
+                window.location.href = 'Provider?id=welcome';
             });
 
         },
@@ -497,11 +498,12 @@ CT.ApplicationRoute = Ember.Route.extend({
         error: function(error, transition) {
             if (error.status === 401 || (!this.session.get('auth_user') && this.routeName !== 'login')) {
 
-                this.controllerFor('login').setProperties({
+                /*this.controllerFor('login').setProperties({
                     transition: transition
-                });
+                });*/
 
-                this.transitionTo('login');
+                // this.transitionTo('login');
+                window.location.href = 'Provider?id=login' + location.hash;
             } else {
                 return true;
             }
@@ -670,8 +672,6 @@ CT.UsersNewRoute = Ember.Route.extend({
 
 CT.ApplicationView = Ember.View.extend({
     classNames: ['layout'],
-
-    templateName: 'application',
 
     willInsertElement: function() {
         $('.page-loading').hide();
