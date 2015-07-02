@@ -21,7 +21,6 @@ AdminApp.ApplicationAdapter = baseURL.extend({
 
 AdminApp.Router.map(function(){
 	//this.route('users');
-	this.route('main_window',{path: '/'});
 	this.route('logs');
 
 //	this.route('user');
@@ -31,26 +30,6 @@ AdminApp.Router.map(function(){
 });
 
 
-AdminApp.LogsController = Ember.ArrayController.extend({
-    actions: {
-        selectAll: function() {}
-    }
-});
-
-
-AdminApp.UsersController = Ember.ArrayController.extend({
-    actions: {
-        selectAll: function() {}
-    }
-});
-
-
-
-AdminApp.Log = DS.Model.extend({
-    filename: DS.attr('string'),
-    created: DS.attr('string'),
-});
-
 AdminApp.User = DS.Model.extend({
     login: DS.attr('string'),
     pwd: DS.attr('string'),
@@ -58,44 +37,35 @@ AdminApp.User = DS.Model.extend({
     role: DS.attr('string')
 });
 
-
-
-
-
-
-
-AdminApp.User.FIXTURES = [
-  {
+AdminApp.User.FIXTURES = [{
     id: "3",
     login: " bug",
     pwd: "123",
     email: "dddd",
     role: "role"
-  },
-  {
+}, {
     id: "4",
-     login: " player",
-        pwd: "123",
-        email: "dddd",
-        role: "role"
-  },
-  {
+    login: " player",
+    pwd: "123",
+    email: "dddd",
+    role: "role"
+}, {
     id: "5",
-     login: "Fix",
-        pwd: "123",
-        email: "dddd",
-        role: "role22"
-  }
-];
-AdminApp.MainWindowRoute = Ember.Route.extend({
+    login: "Fix",
+    pwd: "123",
+    email: "dddd",
+    role: "role22"
+}];
+
+AdminApp.ApplicationRoute = Ember.Route.extend({
     model: function() {
-    	  return [{
-    	      title: "Logs",
-    	      viewdata: "logs"
-    	    }, {
-    	      title: "Users",
-    	   	   viewdata: "users"
-    	    }];
+        return [{
+            title: "Logs",
+            viewdata: "logs"
+        }, {
+            title: "Users",
+            viewdata: "users"
+        }];
     }
 });
 
@@ -109,45 +79,7 @@ AdminApp.UsersNewRoute = Ember.Route.extend({
     templateName: 'user'
 });
 
-Ember.TEMPLATES["logs"] = Ember.HTMLBars.template((function() {
-  return {
-    isHTMLBars: true,
-    revision: "Ember@1.12.1",
-    blockParams: 0,
-    cachedFragment: null,
-    hasRendered: false,
-    build: function build(dom) {
-      var el0 = dom.createDocumentFragment();
-      var el1 = dom.createElement("div");
-      var el2 = dom.createTextNode("\nLogs\n\n");
-      dom.appendChild(el1, el2);
-      dom.appendChild(el0, el1);
-      return el0;
-    },
-    render: function render(context, env, contextualElement) {
-      var dom = env.dom;
-      dom.detectNamespace(contextualElement);
-      var fragment;
-      if (env.useFragmentCache && dom.canClone) {
-        if (this.cachedFragment === null) {
-          fragment = this.build(dom);
-          if (this.hasRendered) {
-            this.cachedFragment = fragment;
-          } else {
-            this.hasRendered = true;
-          }
-        }
-        if (this.cachedFragment) {
-          fragment = dom.cloneNode(this.cachedFragment, true);
-        }
-      } else {
-        fragment = this.build(dom);
-      }
-      return fragment;
-    }
-  };
-}()));
-Ember.TEMPLATES["main_window"] = Ember.HTMLBars.template((function() {
+Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
   var child0 = (function() {
     var child0 = (function() {
       return {
@@ -162,7 +94,7 @@ Ember.TEMPLATES["main_window"] = Ember.HTMLBars.template((function() {
           dom.appendChild(el0, el1);
           var el1 = dom.createComment("");
           dom.appendChild(el0, el1);
-          var el1 = dom.createTextNode("\n");
+          var el1 = dom.createTextNode(" ");
           dom.appendChild(el0, el1);
           return el0;
         },
@@ -200,17 +132,17 @@ Ember.TEMPLATES["main_window"] = Ember.HTMLBars.template((function() {
       hasRendered: false,
       build: function build(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createTextNode(" ");
+        var el1 = dom.createTextNode("                ");
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("li");
-        var el2 = dom.createTextNode("\n");
+        var el2 = dom.createTextNode("\n                    ");
         dom.appendChild(el1, el2);
         var el2 = dom.createComment("");
         dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("   ");
+        var el2 = dom.createTextNode("\n                ");
         dom.appendChild(el1, el2);
         dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode(" \n");
+        var el1 = dom.createTextNode("\n");
         dom.appendChild(el0, el1);
         return el0;
       },
@@ -249,56 +181,56 @@ Ember.TEMPLATES["main_window"] = Ember.HTMLBars.template((function() {
     build: function build(dom) {
       var el0 = dom.createDocumentFragment();
       var el1 = dom.createElement("div");
-      var el2 = dom.createTextNode("\n");
+      var el2 = dom.createTextNode("\n    ");
       dom.appendChild(el1, el2);
       var el2 = dom.createElement("header");
-      var el3 = dom.createTextNode("\nHeader\n");
+      var el3 = dom.createTextNode("\n        Header\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
-      var el2 = dom.createTextNode("\n");
+      var el2 = dom.createTextNode("\n    ");
       dom.appendChild(el1, el2);
       var el2 = dom.createElement("aside");
-      var el3 = dom.createTextNode("\n");
+      var el3 = dom.createTextNode("\n        ");
       dom.appendChild(el2, el3);
       var el3 = dom.createElement("div");
       dom.setAttribute(el3,"class","nav");
-      var el4 = dom.createTextNode("\nNavigator\n");
+      var el4 = dom.createTextNode("\n            Navigator\n            ");
       dom.appendChild(el3, el4);
       var el4 = dom.createElement("ul");
       var el5 = dom.createTextNode("\n");
       dom.appendChild(el4, el5);
       var el5 = dom.createComment("");
       dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode(" ");
+      var el5 = dom.createTextNode("            ");
       dom.appendChild(el4, el5);
       dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n\n");
+      var el4 = dom.createTextNode("\n        ");
       dom.appendChild(el3, el4);
       dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n");
+      var el3 = dom.createTextNode("\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
-      var el2 = dom.createTextNode("\n");
+      var el2 = dom.createTextNode("\n    ");
       dom.appendChild(el1, el2);
       var el2 = dom.createElement("aside");
       dom.setAttribute(el2,"class","view");
-      var el3 = dom.createTextNode("\n    View\n	");
+      var el3 = dom.createTextNode("\n        View ");
       dom.appendChild(el2, el3);
       var el3 = dom.createComment("");
       dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n");
+      var el3 = dom.createTextNode("\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
-      var el2 = dom.createTextNode("\n\n\n");
+      var el2 = dom.createTextNode("\n    ");
       dom.appendChild(el1, el2);
       var el2 = dom.createElement("footer");
-      var el3 = dom.createTextNode("\nFooter\n");
+      var el3 = dom.createTextNode("\n        Footer\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
       var el2 = dom.createTextNode("\n");
       dom.appendChild(el1, el2);
       dom.appendChild(el0, el1);
-      var el1 = dom.createTextNode("\n\n");
+      var el1 = dom.createTextNode("\n");
       dom.appendChild(el0, el1);
       return el0;
     },

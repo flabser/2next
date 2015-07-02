@@ -5,32 +5,22 @@ AdminApp.User = DS.Model.extend({
     role: DS.attr('string')
 });
 
-
-
-
-
-
-
-AdminApp.User.FIXTURES = [
-  {
+AdminApp.User.FIXTURES = [{
     id: "3",
     login: " bug",
     pwd: "123",
     email: "dddd",
     role: "role"
-  },
-  {
+}, {
     id: "4",
-     login: " player",
-        pwd: "123",
-        email: "dddd",
-        role: "role"
-  },
-  {
+    login: " player",
+    pwd: "123",
+    email: "dddd",
+    role: "role"
+}, {
     id: "5",
-     login: "Fix",
-        pwd: "123",
-        email: "dddd",
-        role: "role22"
-  }
-];
+    login: "Fix",
+    pwd: "123",
+    email: "dddd",
+    role: "role22"
+}];

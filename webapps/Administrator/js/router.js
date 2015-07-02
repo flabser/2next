@@ -1,6 +1,5 @@
 AdminApp.Router.map(function(){
 	//this.route('users');
-	this.route('main_window',{path: '/'});
 	this.route('logs');
 
 //	this.route('user');
