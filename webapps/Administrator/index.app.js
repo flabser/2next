@@ -1,4 +1,4 @@
-MyApp = Ember.Application.create();
+App = Ember.Application.create();
 
 var host = DS.RESTAdapter.extend({
     host: 'http://localhost:38779',
@@ -8,22 +8,21 @@ var baseURL = host.extend({
     namespace: 'Administrator/rest'
 });
 
-MyApp.ApplicationAdapter = baseURL.extend({
+App.ApplicationAdapter = baseURL.extend({
     pathForType: function(type) {
-        	console.log("type=" + type);
             return 'session';
 
     }
 });
 
 
-MyApp.Router.map(function(){
+App.Router.map(function(){
 	this.route('login',{path: '/'});
 	this.route('login_failed');
 
 });
 
-MyApp.LoginController = Ember.ObjectController.extend({
+App.LoginController = Ember.ObjectController.extend({
 	model: {},
 
 	  actions: {
@@ -37,7 +36,7 @@ MyApp.LoginController = Ember.ObjectController.extend({
 	      })
 
 	     signin.save().then(function(user) {
-	    	 location.href = 'application.html'
+	    	 location.href = 'page.html'
 	    	}, function(response) {
 	    	    c.transitionToRoute('login_failed');
 	    	});
@@ -47,7 +46,7 @@ MyApp.LoginController = Ember.ObjectController.extend({
 });
 
 
-MyApp.AuthUser = DS.Model.extend({
+App.AuthUser = DS.Model.extend({
     login: DS.attr('string'),
     pwd: DS.attr('string'),
     roles: DS.attr('string'),

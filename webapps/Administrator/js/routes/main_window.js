@@ -1,12 +1,11 @@
-MyApp.MainWindowRoute = Ember.Route.extend({
-
+AdminApp.MainWindowRoute = Ember.Route.extend({
     model: function() {
     	  return [{
     	      title: "Logs",
-    	         	  route: "logs"
+    	      viewdata: "logs"
     	    }, {
     	      title: "Users",
-    	     	    		  route: "users"
+    	   	   viewdata: "users"
     	    }];
     }
 });

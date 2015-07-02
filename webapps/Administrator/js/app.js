@@ -1,17 +1,20 @@
-var MyApp = Ember.Application.create({
-    modulePrefix: 'Administrator',
-    LOG_TRANSITIONS: true,
-    LOG_TRANSITIONS_INTERNAL: true,
-    LOG_ACTIVE_GENERATION: true
-});
+AdminApp = Ember.Application.create();
+/*
 
-MyApp.ApplicationAdapter = DS.RESTAdapter.extend({
-    pathForType: function(type) {
-          return type + 's';       
-    }
+var host = DS.RESTAdapter.extend({
+    host: 'http://localhost:38779',
 });
+*/
+//AdminApp.ApplicationAdapter = DS.FixtureAdapter;
 
-DS.RESTAdapter.reopen({
+var baseURL =  DS.RESTAdapter.extend({
     namespace: 'Administrator/rest'
 });
 
+AdminApp.ApplicationAdapter = baseURL.extend({
+    pathForType: function(type) {
+        	console.log("type=" + type);
+           return type + 's';
+
+    }
+});

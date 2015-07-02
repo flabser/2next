@@ -1,7 +1,9 @@
-MyApp.UsersRoute = Ember.Route.extend({
-      model: function() {
-          	  console.log("router >get users");
-          	  return this.store.find('user');
-            }
+AdminApp.UsersRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('user');
+    }
+});
 
+AdminApp.UsersNewRoute = Ember.Route.extend({
+    templateName: 'user'
 });

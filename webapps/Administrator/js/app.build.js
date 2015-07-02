@@ -1,55 +1,152 @@
-var MyApp = Ember.Application.create({
-    modulePrefix: 'Administrator',
-    LOG_TRANSITIONS: true,
-    LOG_TRANSITIONS_INTERNAL: true,
-    LOG_ACTIVE_GENERATION: true
-});
+AdminApp = Ember.Application.create();
+/*
 
-MyApp.ApplicationAdapter = DS.RESTAdapter.extend({
-    pathForType: function(type) {
-          return type + 's';       
-    }
+var host = DS.RESTAdapter.extend({
+    host: 'http://localhost:38779',
 });
+*/
+//AdminApp.ApplicationAdapter = DS.FixtureAdapter;
 
-DS.RESTAdapter.reopen({
+var baseURL =  DS.RESTAdapter.extend({
     namespace: 'Administrator/rest'
 });
 
+AdminApp.ApplicationAdapter = baseURL.extend({
+    pathForType: function(type) {
+        	console.log("type=" + type);
+           return type + 's';
 
-MyApp.Router.map(function(){
+    }
+});
+
+AdminApp.Router.map(function(){
+	//this.route('users');
 	this.route('main_window',{path: '/'});
 	this.route('logs');
-	this.route('users');		
+
+//	this.route('user');
+
+//	this.route('user', {path: '/users/:user_id'});
+	this.route('users', function() {this.route('new'); });
 });
 
 
-MyApp.User = DS.Model.extend({
-	login:DS.attr('string'),
-	userName:DS.attr('string')
+AdminApp.LogsController = Ember.ArrayController.extend({
+    actions: {
+        selectAll: function() {}
+    }
 });
 
 
-MyApp.MainWindowRoute = Ember.Route.extend({
+AdminApp.UsersController = Ember.ArrayController.extend({
+    actions: {
+        selectAll: function() {}
+    }
+});
 
+
+
+AdminApp.Log = DS.Model.extend({
+    filename: DS.attr('string'),
+    created: DS.attr('string'),
+});
+
+AdminApp.User = DS.Model.extend({
+    login: DS.attr('string'),
+    pwd: DS.attr('string'),
+    email: DS.attr('string'),
+    role: DS.attr('string')
+});
+
+
+
+
+
+
+
+AdminApp.User.FIXTURES = [
+  {
+    id: "3",
+    login: " bug",
+    pwd: "123",
+    email: "dddd",
+    role: "role"
+  },
+  {
+    id: "4",
+     login: " player",
+        pwd: "123",
+        email: "dddd",
+        role: "role"
+  },
+  {
+    id: "5",
+     login: "Fix",
+        pwd: "123",
+        email: "dddd",
+        role: "role22"
+  }
+];
+AdminApp.MainWindowRoute = Ember.Route.extend({
     model: function() {
     	  return [{
     	      title: "Logs",
-    	         	  route: "logs"
+    	      viewdata: "logs"
     	    }, {
     	      title: "Users",
-    	     	    		  route: "users"
+    	   	   viewdata: "users"
     	    }];
     }
 });
 
-MyApp.UsersRoute = Ember.Route.extend({
-      model: function() {
-          	  console.log("router >get users");
-          	  return this.store.find('user');
-            }
-
+AdminApp.UsersRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('user');
+    }
 });
 
+AdminApp.UsersNewRoute = Ember.Route.extend({
+    templateName: 'user'
+});
+
+Ember.TEMPLATES["logs"] = Ember.HTMLBars.template((function() {
+  return {
+    isHTMLBars: true,
+    revision: "Ember@1.12.1",
+    blockParams: 0,
+    cachedFragment: null,
+    hasRendered: false,
+    build: function build(dom) {
+      var el0 = dom.createDocumentFragment();
+      var el1 = dom.createElement("div");
+      var el2 = dom.createTextNode("\nLogs\n\n");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      return el0;
+    },
+    render: function render(context, env, contextualElement) {
+      var dom = env.dom;
+      dom.detectNamespace(contextualElement);
+      var fragment;
+      if (env.useFragmentCache && dom.canClone) {
+        if (this.cachedFragment === null) {
+          fragment = this.build(dom);
+          if (this.hasRendered) {
+            this.cachedFragment = fragment;
+          } else {
+            this.hasRendered = true;
+          }
+        }
+        if (this.cachedFragment) {
+          fragment = dom.cloneNode(this.cachedFragment, true);
+        }
+      } else {
+        fragment = this.build(dom);
+      }
+      return fragment;
+    }
+  };
+}()));
 Ember.TEMPLATES["main_window"] = Ember.HTMLBars.template((function() {
   var child0 = (function() {
     var child0 = (function() {
@@ -138,7 +235,7 @@ Ember.TEMPLATES["main_window"] = Ember.HTMLBars.template((function() {
           fragment = this.build(dom);
         }
         var morph0 = dom.createMorphAt(dom.childAt(fragment, [1]),1,1);
-        block(env, morph0, context, "link-to", [get(env, context, "route")], {}, child0, null);
+        block(env, morph0, context, "link-to", [get(env, context, "viewdata")], {}, child0, null);
         return fragment;
       }
     };
