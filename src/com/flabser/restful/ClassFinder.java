@@ -11,6 +11,7 @@ public class ClassFinder {
     private static final char DOT = '.';
     private static final char SLASH = '/';
     private static final String CLASS_SUFFIX = ".class";
+    private static final String INNER_CLASS_SPLITTER = "$";
     private static final String BAD_PACKAGE_ERROR = "Unable to get classes from path \"%s\"";
 
     public static List<Class<?>> find(String scannedPackage) {
@@ -35,7 +36,7 @@ public class ClassFinder {
             for (File child : file.listFiles()) {
                 classes.addAll(find(child, resource));
             }
-        } else if (resource.endsWith(CLASS_SUFFIX)) {
+        } else if (resource.endsWith(CLASS_SUFFIX) && resource.indexOf(INNER_CLASS_SPLITTER) == -1) {
             int endIndex = resource.length() - CLASS_SUFFIX.length();
             String className = resource.substring(0, endIndex);
             try {
