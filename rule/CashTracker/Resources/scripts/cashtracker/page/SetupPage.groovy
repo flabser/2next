@@ -1,13 +1,11 @@
-package cashtracker.page.app
+package cashtracker.page
 
-import com.flabser.script._Session;
-import com.flabser.script._WebFormData;
-import com.flabser.script.events._DoScript;
 import com.flabser.script.*
+import com.flabser.script.events._DoScript
 import com.flabser.users.*
 
 
-class Setup extends _DoScript {
+class SetupPage extends _DoScript {
 
 	@Override
 	public void doGet(_Session session, _WebFormData formData, String lang) {

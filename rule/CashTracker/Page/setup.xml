@@ -6,7 +6,7 @@
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.app.Setup</doscript>
+			<doscript source="file">cashtracker.page.SetupPage</doscript>
 		</events>
 	</element>
 

@@ -1,4 +1,4 @@
-package cashtracker.page.app
+package cashtracker.page
 
 import cashtracker.dao.BudgetDAO
 import cashtracker.model.Budget
@@ -10,7 +10,7 @@ import com.flabser.solutions.postgresql.Database
 import com.flabser.users.*
 
 
-class RegBudget extends _DoScript {
+class RegBudgetPage extends _DoScript {
 
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {

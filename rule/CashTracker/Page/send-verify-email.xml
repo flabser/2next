@@ -7,7 +7,7 @@
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.app.SendVerifyEMail</doscript>
+			<doscript source="file">cashtracker.page.SendVerifyEMailPage</doscript>
 		</events>
 	</element>
 </rule>

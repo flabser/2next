@@ -1,4 +1,7 @@
-package cashtracker.page.app
+package cashtracker.page
+
+import cashtracker.page.app.RegWebForm
+import cashtracker.page.app.VerifyEMail
 
 import com.flabser.script._Session
 import com.flabser.script._WebFormData
@@ -6,7 +9,7 @@ import com.flabser.script.events._DoScript
 import com.flabser.users.User
 
 
-class RetrySendVerifyEMail extends _DoScript {
+class RetrySendVerifyEMailPage extends _DoScript {
 
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
@@ -32,8 +35,8 @@ class RetrySendVerifyEMail extends _DoScript {
 		}
 
 		//
-		SendVerifyEMail sve = new SendVerifyEMail(session, user)
-		if (sve.sendResult) {
+		VerifyEMail sve = new VerifyEMail(session, user)
+		if (sve.send()) {
 			publishElement("process", "verify-email-send")
 		} else {
 			publishElement("error", "verify-email")

@@ -2,6 +2,7 @@ package cashtracker.page.app
 
 import com.flabser.script.*
 
+
 class RegWebForm {
 
 	String userName

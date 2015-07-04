@@ -5,13 +5,6 @@
 	<impl>com.flabser.solutions.postgresql.Database</impl>
 	<entrypoint>Provider?id=welcome</entrypoint>
 	<defaultredirecturl>index.html</defaultredirecturl>
-	<services>
-		<class>cashtracker.rest.TransactionService</class>
-		<class>cashtracker.rest.AccountService</class>
-		<class>cashtracker.rest.CategoryService</class>
-		<class>cashtracker.rest.CostCenterService</class>
-		<class>cashtracker.rest.TagService</class>
-	</services>
 	<langs>
 		<entry id="ENG">English</entry>
 		<entry id="RUS">Русский</entry>
@@ -24,13 +17,4 @@
 		<entry id="dailymailing">a receiver of notifying about a day transaction</entry>
 		<entry id="administrator">administrator</entry>
 	</roles>
-	<oauth>
-		<provider id="vk" mode="ON">
-			<auth_uri />
-			<response_type />
-			<scope />
-			<redirect_uri />
-			<icon />
-		</provider>
-	</oauth>
 </rule>

@@ -6,7 +6,7 @@
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.app.VerifyEMail</doscript>
+			<doscript source="file">cashtracker.page.VerifyEMailPage</doscript>
 		</events>
 	</element>
 	<element mode="ON" type="INCLUDED_PAGE">

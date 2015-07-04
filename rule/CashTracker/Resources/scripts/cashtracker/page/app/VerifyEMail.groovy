@@ -1,49 +1,34 @@
 package cashtracker.page.app
 
+import com.flabser.env.*
 import com.flabser.script.*
-import com.flabser.scriptprocessor.*
-import com.flabser.script.events.*
-import com.flabser.script.actions.*
 import com.flabser.users.*
-import com.flabser.solutions.*
-import com.flabser.dataengine.*
 
 
-class VerifyEMail extends _DoScript {
+class VerifyEMail {
 
-	@Override
-	public void doGet(_Session session, _WebFormData formData, String lang) {
+	private def session
+	private def recipients = []
+	private def subj
+	private def msg
 
-		String code = formData.getValueSilently("code")
-		User user = DatabaseFactory.getSysDatabase().getUserByVerifyCode(code)
-		if (user != null) {
-			if (user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
-				user.setStatus(UserStatusType.REGISTERED)
-				if (user.save()) {
-					publishElement("process", "verify-ok")
-					publishElement("email", user.email)
-				} else {
-					publishElement("error", "save-error")
-				}
-			} else {
-				publishElement("process", "already-registered")
-				publishElement("email", user.email)
-			}
-		} else {
-			publishElement("error", "user-not-found")
-			return
-		}
+	public VerifyEMail(_Session session, User user) {
+		def code = user.getVerifyCode()
+		def url = session.getFullAppURI()
+		subj = "Confirmation of the E-mail your account in CashTracker site"
+		msg = """<h4>Confirmation of the E-mail</h4>
+					<p>Ignore this letter, if you have not registered on the site
+						<a href="${url}"><b>${url}</b></a>
+					</p>
+					<div>
+					<b>Click on the link to confirmation your address</b><br/>
+					<a href="${url}/Provider?id=verify-email&code=${code}">
+						${url}/Provider?id=verify-email&code=${code}
+					</a></div>"""
+		recipients << user.getEmail()
 	}
 
-	@Override
-	public void doPost(_Session session, _WebFormData formData, String lang) {
-	}
-
-	@Override
-	public void doPut(_Session session, _WebFormData formData, String lang) {
-	}
-
-	@Override
-	public void doDelete(_Session session, _WebFormData formData, String lang) {
+	public boolean send() {
+		return session.getMailAgent().sendMail(recipients, subj, msg, false)
 	}
 }

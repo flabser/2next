@@ -1,4 +1,7 @@
-package cashtracker.page.app
+package cashtracker.page
+
+import cashtracker.page.app.RegWebForm;
+import cashtracker.page.app.VerifyEMail;
 
 import com.flabser.script.*
 import com.flabser.script.actions.*
@@ -8,7 +11,7 @@ import com.flabser.solutions.*
 import com.flabser.users.*
 
 
-class RegUser extends _DoScript {
+class RegUserPage extends _DoScript {
 
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
@@ -31,10 +34,7 @@ class RegUser extends _DoScript {
 			return
 		}
 
-
 		def sdb = com.flabser.dataengine.DatabaseFactory.getSysDatabase()
-
-
 		def userExists = sdb.getUser(regForm.email)
 		if (userExists) {
 
@@ -69,8 +69,8 @@ class RegUser extends _DoScript {
 
 		publishElement("process", "user-reg")
 
-		SendVerifyEMail sve = new SendVerifyEMail(session, user)
-		if (sve.sendResult) {
+		VerifyEMail sve = new VerifyEMail(session, user)
+		if (sve.send()) {
 			user.setStatus(UserStatusType.WAITING_FOR_VERIFYCODE)
 			if (user.save()) {
 				publishElement("process", "verify-email-send")

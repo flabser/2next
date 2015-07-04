@@ -12,7 +12,7 @@
 	<element mode="ON" type="SCRIPT">
 		<name>retry-verify-email</name>
 		<events>
-			<doscript source="file">cashtracker.page.app.RetrySendVerifyEMail</doscript>
+			<doscript source="file">cashtracker.page.RetrySendVerifyEMailPage</doscript>
 		</events>
 	</element>
 

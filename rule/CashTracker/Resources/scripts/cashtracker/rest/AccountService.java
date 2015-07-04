@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -11,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import cashtracker.dao.AccountDAO;
 import cashtracker.model.Account;
@@ -57,6 +59,18 @@ public class AccountService extends RestProvider {
 		AccountDAO dao = new AccountDAO(getSession());
 		dao.updateAccount(m);
 		return m;
+	}
+
+	@DELETE
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response delete(@PathParam("id") long id) {
+		AccountDAO dao = new AccountDAO(getSession());
+		Account m = dao.findById(id);
+		if (m != null) {
+			dao.deleteAccount(m);
+		}
+		return Response.ok().build();
 	}
 
 	@JsonRootName("accounts")
