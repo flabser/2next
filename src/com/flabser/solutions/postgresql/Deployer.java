@@ -3,6 +3,8 @@ package com.flabser.solutions.postgresql;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import cashtracker.init.DDEScripts;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
