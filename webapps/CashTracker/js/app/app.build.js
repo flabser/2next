@@ -2041,7 +2041,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       block(env, morph4, context, "link-to", ["tags"], {}, child4, null);
       block(env, morph5, context, "link-to", ["users"], {}, child5, null);
       content(env, morph6, context, "outlet");
-      content(env, morph7, context, "username");
+      content(env, morph7, context, "session.auth_user.login");
       element(env, element8, context, "action", ["logout"], {});
       inline(env, morph8, context, "t", ["logout"], {});
       return fragment;

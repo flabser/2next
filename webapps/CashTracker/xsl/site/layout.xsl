@@ -49,7 +49,7 @@
 
 			<xsl:call-template name="STYLE_FIX_FIELDSET" />
 
-			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-1.11.3.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-2.1.4.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.cookie.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/js/mobile-detect.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/vendor/jso/build/jso.js"></script>
