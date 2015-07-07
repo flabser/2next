@@ -1,4 +1,8 @@
-CT.register('service:session', Ember.Object);
+Ember.Application.initializer({
+    name: 'session',
 
-CT.inject('route', 'session', 'service:session');
-CT.inject('controller', 'session', 'service:session');
+    initialize: function(container, application) {
+        application.register('service:session', Ember.Object);
+        application.inject('route', 'session', 'service:session');
+    }
+});

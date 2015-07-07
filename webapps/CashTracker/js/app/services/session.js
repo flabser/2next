@@ -1,4 +1,4 @@
-CT.SessionController = Ember.Controller.extend({
+CT.SessionService = Ember.Service.extend({
 
     getSession: function() {
         return $.getJSON('rest/session');

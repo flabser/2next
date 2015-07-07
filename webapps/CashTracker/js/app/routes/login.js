@@ -3,14 +3,13 @@ CT.LoginRoute = Ember.Route.extend({
     actions: {
         login: function() {
             var route = this,
-                sessionController = this.controllerFor('session'),
                 controller = this.get('controller');
 
             var userName = controller.get('username'),
                 password = controller.get('password');
 
-            sessionController.login(userName, password).then(function(user) {
-                route.session.set('auth_user', user);
+            this.session.login(userName, password).then(function(user) {
+                route.session.set('user', user);
 
                 var transition = controller.get('transition');
                 if (transition) {
@@ -27,7 +26,7 @@ CT.LoginRoute = Ember.Route.extend({
     },
 
     beforeModel: function() {
-        this.session.set('auth_user', null);
+        this.session.set('user', null);
     },
 
     resetController: function(controller) {

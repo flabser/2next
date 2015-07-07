@@ -1,15 +1,26 @@
 CT.ApplicationRoute = Ember.Route.extend({
 
+    init: function() {
+        this.windowOnResize();
+        $(window).resize(this.windowOnResize);
+    },
+
+    windowOnResize: function() {
+        if (window.innerWidth <= 800) {
+            $('body').addClass('phone');
+        } else {
+            $('body').removeClass('phone');
+        }
+    },
+
     model: function() {
         var route = this,
-            sessionController = this.controllerFor('session');
+            sessionService = this.get('session');
 
-        CT.i18n.getTranslations();
-        var req = sessionController.getSession();
-
+        var req = sessionService.getSession();
         req.then(function(result) {
             if (result.authUser.login) {
-                route.session.set('auth_user', result.authUser);
+                route.session.set('user', result.authUser);
                 return result.authUser;
             }
         });
@@ -19,23 +30,41 @@ CT.ApplicationRoute = Ember.Route.extend({
     actions: {
         logout: function() {
             var route = this;
-            this.controllerFor('session').logout().then(function() {
-                route.session.set('auth_user', null);
+            this.get('session').logout().then(function() {
+                route.session.set('user', null);
                 // route.transitionTo('index');
                 window.location.href = 'Provider?id=welcome';
             });
 
         },
 
+        navAppMenuToggle: function() {
+            $('body').toggleClass('nav-app-open');
+        },
+
+        navUserMenuToggle: function() {
+            $('body').toggleClass('nav-ws-open');
+        },
+
+        hideOpenedNav: function() {
+            $('body').removeClass('nav-app-open nav-ws-open');
+        },
+
+        toggleSearchForm: function() {
+            $('body').toggleClass('search-open');
+        },
+
         error: function(error, transition) {
-            if (error.status === 401 || (!this.session.get('auth_user') && this.routeName !== 'login')) {
+            console.log('app error', error);
+
+            if (error.status === 401 || (!this.session.get('user') && this.routeName !== 'login')) {
 
                 /*this.controllerFor('login').setProperties({
                     transition: transition
                 });*/
 
                 // this.transitionTo('login');
-                window.location.href = 'Provider?id=login' + location.hash;
+                // window.location.href = 'Provider?id=login' + location.hash;
             } else {
                 return true;
             }
