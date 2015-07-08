@@ -5,18 +5,16 @@ import cashtracker.model.Category
 
 public class CategoryValidator {
 
-	private boolean isValid
-
 	public CategoryValidator() {
 	}
 
-	public boolean validate(Category m) {
-		isValid = !m.getName().isEmpty()
-		isValid
-	}
+	public ValidationError validate(Category m) {
+		ValidationError ve = new ValidationError()
 
-	@Override
-	public String toString() {
-		return "$isValid";
+		if (m.getName() == null || m.getName().isEmpty()) {
+			ve.addError("name", "required", "name_required")
+		}
+
+		ve
 	}
 }

@@ -5,18 +5,16 @@ import cashtracker.model.CostCenter
 
 public class CostCenterValidator {
 
-	private boolean isValid
-
 	public CostCenterValidator() {
 	}
 
-	public boolean validate(CostCenter m) {
-		isValid = !m.getName().isEmpty()
-		isValid
-	}
+	public ValidationError validate(CostCenter m) {
+		ValidationError ve = new ValidationError()
 
-	@Override
-	public String toString() {
-		return "$isValid";
+		if (m.getName() == null || m.getName().isEmpty()) {
+			ve.addError("name", "required", "name_required")
+		}
+
+		ve
 	}
 }

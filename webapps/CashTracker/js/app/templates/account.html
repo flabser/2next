@@ -6,47 +6,45 @@
     </div>
 </header>
 <section class="form-content">
-    <fieldset class="fieldset" {{disabled}}>
-        <div class="fieldset-container">
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'name'}}
-                </div>
-                <div class="controls">
-                    {{input name="name" value=name required=true class="span7"}}
-                </div>
+    <fieldset class="fieldset">
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'name'}}
             </div>
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'type'}}
-                </div>
-                <div class="controls">
-                    {{input name="type" value=type required=true class="span7"}}
-                </div>
+            <div class="controls">
+                {{input name="name" value=name required=true class="span7"}}
             </div>
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'amountControl'}}
-                </div>
-                <div class="controls">
-                    {{input name="amountControl" value=amountControl required=true class="span7"}}
-                </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'type'}}
             </div>
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'owner'}}
-                </div>
-                <div class="controls">
-                    {{input name="owner" value=owner.id required=true class="span7"}}
-                </div>
+            <div class="controls">
+                {{input name="type" value=type required=true class="span7"}}
             </div>
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'observers'}}
-                </div>
-                <div class="controls">
-                    {{input name="amountControl" value=amountControl required=true class="span7"}}
-                </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'amountControl'}}
+            </div>
+            <div class="controls">
+                {{input name="amountControl" value=amountControl required=true class="span7"}}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'owner'}}
+            </div>
+            <div class="controls">
+                {{input name="owner" value=owner.id required=true class="span7"}}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'observers'}}
+            </div>
+            <div class="controls">
+                {{input name="amountControl" value=amountControl required=true class="span7"}}
             </div>
         </div>
     </fieldset>

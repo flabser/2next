@@ -5,18 +5,16 @@ import cashtracker.model.Budget
 
 public class BudgetValidator {
 
-	private boolean isValid
-
 	public BudgetValidator() {
 	}
 
-	public boolean validate(Budget m) {
-		isValid = !m.getName().isEmpty()
-		isValid
-	}
+	public ValidationError validate(Budget m) {
+		ValidationError ve = new ValidationError()
 
-	@Override
-	public String toString() {
-		return "$isValid";
+		if (m.getName() == null || m.getName().isEmpty()) {
+			ve.addError("name", "required", "name_required")
+		}
+
+		ve
 	}
 }

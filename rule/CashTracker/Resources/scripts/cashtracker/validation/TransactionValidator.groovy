@@ -5,18 +5,16 @@ import cashtracker.model.Transaction
 
 public class TransactionValidator {
 
-	private boolean isValid
-
 	public TransactionValidator() {
 	}
 
-	public boolean validate(Transaction m) {
-		isValid = m.getAccountFrom() != null
-		isValid
-	}
+	public ValidationError validate(Transaction m) {
+		ValidationError ve = new ValidationError()
 
-	@Override
-	public String toString() {
-		return "$isValid";
+		if (m.amount == null || m.amount == 0) {
+			ve.addError("amount", "required", "amount_required")
+		}
+
+		ve
 	}
 }

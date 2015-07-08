@@ -5,18 +5,16 @@ import cashtracker.model.Tag
 
 public class TagValidator {
 
-	private boolean isValid
-
 	public TagValidator() {
 	}
 
-	public boolean validate(Tag m) {
-		isValid = !m.getName().isEmpty()
-		isValid
-	}
+	public ValidationError validate(Tag m) {
+		ValidationError ve = new ValidationError()
 
-	@Override
-	public String toString() {
-		return "$isValid";
+		if (m.getName() == null || m.getName().isEmpty()) {
+			ve.addError("name", "required", "name_required")
+		}
+
+		ve
 	}
 }

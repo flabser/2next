@@ -16,6 +16,8 @@ import javax.ws.rs.core.Response;
 
 import cashtracker.dao.TagDAO;
 import cashtracker.model.Tag;
+import cashtracker.validation.TagValidator;
+import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -24,41 +26,46 @@ import com.flabser.restful.RestProvider;
 @Path("tags")
 public class TagService extends RestProvider {
 
+	private TagValidator validator = new TagValidator();
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public TagsResponse get() {
+	public Response get() {
 		TagDAO dao = new TagDAO(getSession());
-		return new TagsResponse(dao.findAll());
+		return Response.ok(new Tags(dao.findAll())).build();
 	}
 
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Tag get(@PathParam("id") long id) {
+	public Response get(@PathParam("id") long id) {
 		TagDAO dao = new TagDAO(getSession());
 		Tag m = dao.findById(id);
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Tag create(Tag m) {
+	public Response create(Tag m) {
+		ValidationError ve = validator.validate(m);
+		if (ve.hasError()) {
+			return Response.ok(ve).build();
+		}
 		TagDAO dao = new TagDAO(getSession());
 		m.setId(dao.addTag(m));
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@PUT
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Tag update(@PathParam("id") long id, Tag m) {
-
+	public Response update(@PathParam("id") long id, Tag m) {
 		m.setId(id);
 		TagDAO dao = new TagDAO(getSession());
 		dao.updateTag(m);
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@DELETE
@@ -74,11 +81,11 @@ public class TagService extends RestProvider {
 	}
 
 	@JsonRootName("tags")
-	class TagsResponse extends ArrayList <Tag> {
+	class Tags extends ArrayList <Tag> {
 
 		private static final long serialVersionUID = 1L;
 
-		public TagsResponse(Collection <? extends Tag> m) {
+		public Tags(Collection <? extends Tag> m) {
 			addAll(m);
 		}
 	}

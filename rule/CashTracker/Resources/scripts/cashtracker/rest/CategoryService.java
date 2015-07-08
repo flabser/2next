@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import cashtracker.dao.CategoryDAO;
 import cashtracker.model.Category;
+import cashtracker.validation.CategoryValidator;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -24,41 +25,42 @@ import com.flabser.restful.RestProvider;
 @Path("categories")
 public class CategoryService extends RestProvider {
 
+	private CategoryValidator validator = new CategoryValidator();
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public CategoriesResponse get() {
+	public Response get() {
 		CategoryDAO dao = new CategoryDAO(getSession());
-		return new CategoriesResponse(dao.findAll());
+		return Response.ok(new Categories(dao.findAll())).build();
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Category get(@PathParam("id") long id) {
+	public Response get(@PathParam("id") long id) {
 		CategoryDAO dao = new CategoryDAO(getSession());
 		Category m = dao.findById(id);
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Category create(Category m) {
+	public Response create(Category m) {
 		CategoryDAO dao = new CategoryDAO(getSession());
 		m.setId(dao.addCategory(m));
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@PUT
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Category update(@PathParam("id") long id, Category m) {
-
+	public Response update(@PathParam("id") long id, Category m) {
 		m.setId(id);
 		CategoryDAO dao = new CategoryDAO(getSession());
 		dao.updateCategory(m);
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@DELETE
@@ -74,11 +76,11 @@ public class CategoryService extends RestProvider {
 	}
 
 	@JsonRootName("categories")
-	class CategoriesResponse extends ArrayList <Category> {
+	class Categories extends ArrayList <Category> {
 
 		private static final long serialVersionUID = 1L;
 
-		public CategoriesResponse(Collection <? extends Category> m) {
+		public Categories(Collection <? extends Category> m) {
 			addAll(m);
 		}
 	}

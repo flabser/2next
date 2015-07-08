@@ -5,18 +5,16 @@ import cashtracker.model.Account
 
 public class AccountValidator {
 
-	private boolean isValid
-
 	public AccountValidator() {
 	}
 
-	public boolean validate(Account m) {
-		isValid = !m.getName().isEmpty()
-		isValid
-	}
+	public ValidationError validate(Account m) {
+		ValidationError ve = new ValidationError()
 
-	@Override
-	public String toString() {
-		return "$isValid";
+		if (m.getName() == null || m.getName().isEmpty()) {
+			ve.addError("name", "required", "name_required")
+		}
+
+		ve
 	}
 }

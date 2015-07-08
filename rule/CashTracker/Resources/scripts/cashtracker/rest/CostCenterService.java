@@ -16,49 +16,51 @@ import javax.ws.rs.core.Response;
 
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
+import cashtracker.validation.CostCenterValidator;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
 
 
-@Path("costcenters")
+@Path("cost-centers")
 public class CostCenterService extends RestProvider {
+
+	private CostCenterValidator validator = new CostCenterValidator();
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public CostCentersResponse get() {
+	public Response get() {
 		CostCenterDAO dao = new CostCenterDAO(getSession());
-		return new CostCentersResponse(dao.findAll());
+		return Response.ok(new CostCenters(dao.findAll())).build();
 	}
 
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public CostCenter get(@PathParam("id") long id) {
+	public Response get(@PathParam("id") long id) {
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		CostCenter m = dao.findById(id);
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public CostCenter create(CostCenter m) {
+	public Response create(CostCenter m) {
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		m.setId(dao.addCostCenter(m));
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@PUT
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public CostCenter update(@PathParam("id") long id, CostCenter m) {
-
+	public Response update(@PathParam("id") long id, CostCenter m) {
 		m.setId(id);
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		dao.updateCostCenter(m);
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@DELETE
@@ -73,12 +75,12 @@ public class CostCenterService extends RestProvider {
 		return Response.ok().build();
 	}
 
-	@JsonRootName("costCenters")
-	class CostCentersResponse extends ArrayList <CostCenter> {
+	@JsonRootName("cost-centers")
+	class CostCenters extends ArrayList <CostCenter> {
 
 		private static final long serialVersionUID = 1L;
 
-		public CostCentersResponse(Collection <? extends CostCenter> m) {
+		public CostCenters(Collection <? extends CostCenter> m) {
 			addAll(m);
 		}
 	}

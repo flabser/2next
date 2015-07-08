@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import cashtracker.dao.TransactionDAO;
 import cashtracker.model.Transaction;
+import cashtracker.validation.TransactionValidator;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -24,41 +25,42 @@ import com.flabser.restful.RestProvider;
 @Path("transactions")
 public class TransactionService extends RestProvider {
 
+	private TransactionValidator validator = new TransactionValidator();
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public TransactionsResponse get() {
+	public Response get() {
 		TransactionDAO dao = new TransactionDAO(getSession());
-		return new TransactionsResponse(dao.findAll());
+		return Response.ok(new Transactions(dao.findAll())).build();
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Transaction get(@PathParam("id") long id) {
+	public Response get(@PathParam("id") long id) {
 		TransactionDAO dao = new TransactionDAO(getSession());
 		Transaction m = dao.findById(id);
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Transaction create(Transaction m) {
+	public Response create(Transaction m) {
 		TransactionDAO dao = new TransactionDAO(getSession());
 		m.setId(dao.addTransaction(m));
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@PUT
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Transaction update(@PathParam("id") long id, Transaction m) {
-
+	public Response update(@PathParam("id") long id, Transaction m) {
 		m.setId(id);
 		TransactionDAO dao = new TransactionDAO(getSession());
 		dao.updateTransaction(m);
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@DELETE
@@ -74,11 +76,11 @@ public class TransactionService extends RestProvider {
 	}
 
 	@JsonRootName("transactions")
-	class TransactionsResponse extends ArrayList <Transaction> {
+	class Transactions extends ArrayList <Transaction> {
 
 		private static final long serialVersionUID = 1L;
 
-		public TransactionsResponse(Collection <? extends Transaction> m) {
+		public Transactions(Collection <? extends Transaction> m) {
 			addAll(m);
 		}
 	}

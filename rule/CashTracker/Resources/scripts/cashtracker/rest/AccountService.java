@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import cashtracker.dao.AccountDAO;
 import cashtracker.model.Account;
+import cashtracker.validation.AccountValidator;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -24,41 +25,42 @@ import com.flabser.restful.RestProvider;
 @Path("accounts")
 public class AccountService extends RestProvider {
 
+	private AccountValidator validator = new AccountValidator();
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public AccountsResponse get() {
+	public Response get() {
 		AccountDAO dao = new AccountDAO(getSession());
-		return new AccountsResponse(dao.findAll());
+		return Response.ok(new Accounts(dao.findAll())).build();
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Account get(@PathParam("id") long id) {
+	public Response get(@PathParam("id") long id) {
 		AccountDAO dao = new AccountDAO(getSession());
 		Account m = dao.findById(id);
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Account create(Account m) {
+	public Response create(Account m) {
 		AccountDAO dao = new AccountDAO(getSession());
 		m.setId(dao.addAccount(m));
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@PUT
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Account update(@PathParam("id") long id, Account m) {
-
+	public Response update(@PathParam("id") long id, Account m) {
 		m.setId(id);
 		AccountDAO dao = new AccountDAO(getSession());
 		dao.updateAccount(m);
-		return m;
+		return Response.ok(m).build();
 	}
 
 	@DELETE
@@ -74,11 +76,11 @@ public class AccountService extends RestProvider {
 	}
 
 	@JsonRootName("accounts")
-	class AccountsResponse extends ArrayList <Account> {
+	class Accounts extends ArrayList <Account> {
 
 		private static final long serialVersionUID = 1L;
 
-		public AccountsResponse(Collection <? extends Account> m) {
+		public Accounts(Collection <? extends Account> m) {
 			addAll(m);
 		}
 	}
