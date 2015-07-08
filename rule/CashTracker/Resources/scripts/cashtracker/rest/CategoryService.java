@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import cashtracker.dao.CategoryDAO;
 import cashtracker.model.Category;
 import cashtracker.validation.CategoryValidator;
+import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -47,6 +48,10 @@ public class CategoryService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Category m) {
+		ValidationError ve = validator.validate(m);
+		if (ve.hasError()) {
+			return Response.ok(ve).build();
+		}
 		CategoryDAO dao = new CategoryDAO(getSession());
 		m.setId(dao.addCategory(m));
 		return Response.ok(m).build();

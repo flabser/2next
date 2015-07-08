@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
 import cashtracker.validation.CostCenterValidator;
+import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -47,6 +48,10 @@ public class CostCenterService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(CostCenter m) {
+		ValidationError ve = validator.validate(m);
+		if (ve.hasError()) {
+			return Response.ok(ve).build();
+		}
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		m.setId(dao.addCostCenter(m));
 		return Response.ok(m).build();

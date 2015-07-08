@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import cashtracker.dao.TransactionDAO;
 import cashtracker.model.Transaction;
 import cashtracker.validation.TransactionValidator;
+import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
@@ -47,6 +48,10 @@ public class TransactionService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Transaction m) {
+		ValidationError ve = validator.validate(m);
+		if (ve.hasError()) {
+			return Response.ok(ve).build();
+		}
 		TransactionDAO dao = new TransactionDAO(getSession());
 		m.setId(dao.addTransaction(m));
 		return Response.ok(m).build();
