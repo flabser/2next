@@ -37,6 +37,24 @@ AdminApp.LogsController = Ember.ArrayController.extend({
 });
 
 
+AdminApp.NewUserController = Ember.ObjectController.extend({
+    actions: {
+        save: function(user) {
+            user.save();
+            this.transitionTo('users');
+        }
+    }
+});
+
+AdminApp.UserController = Ember.ObjectController.extend({
+    actions: {
+        save: function(user) {
+            user.save();
+            this.transitionTo('users');
+        }
+    }
+});
+
 AdminApp.UsersController = Ember.ArrayController.extend({
     actions: {
         selectAll: function() {}
@@ -50,6 +68,11 @@ AdminApp.Log = DS.Model.extend({
     created: DS.attr('string'),
 });
 
+AdminApp.Role = DS.Model.extend({
+  name: DS.attr('string'),
+  description: DS.attr('string'),
+  user: DS.belongsTo('role')
+})
 AdminApp.User = DS.Model.extend({
     login: DS.attr('string'),
     pwd: DS.attr('string'),
@@ -86,6 +109,16 @@ AdminApp.ApplicationRoute = Ember.Route.extend({
             title: "Users",
             viewdata: "users"
         }];
+    }
+});
+
+AdminApp.NewUserRoute = Ember.Route.extend({
+     templateName: 'user'
+});
+
+AdminApp.UserRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('user', params.user_id);
     }
 });
 
@@ -317,6 +350,161 @@ Ember.TEMPLATES["logs"] = Ember.HTMLBars.template((function() {
       } else {
         fragment = this.build(dom);
       }
+      return fragment;
+    }
+  };
+}()));
+Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
+  return {
+    isHTMLBars: true,
+    revision: "Ember@1.12.1",
+    blockParams: 0,
+    cachedFragment: null,
+    hasRendered: false,
+    build: function build(dom) {
+      var el0 = dom.createDocumentFragment();
+      var el1 = dom.createElement("div");
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("h1");
+      var el3 = dom.createTextNode("User ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createComment("");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","action-bar");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("button");
+      dom.setAttribute(el3,"class","btn btn-primary");
+      var el4 = dom.createTextNode("Save & Close");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("a");
+      dom.setAttribute(el3,"class","btn");
+      dom.setAttribute(el3,"href","#/users");
+      var el4 = dom.createTextNode("Cancel");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","control-group");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","control-label");
+      var el4 = dom.createTextNode("\n         Login:\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","controls");
+      var el4 = dom.createTextNode("\n         ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createComment("");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","control-group");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","control-label");
+      var el4 = dom.createTextNode("\n            Password:\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","controls");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createComment("");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","control-group");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","control-label");
+      var el4 = dom.createTextNode("\n         E-mail:\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","controls");
+      var el4 = dom.createTextNode("\n         ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createComment("");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n\n");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      return el0;
+    },
+    render: function render(context, env, contextualElement) {
+      var dom = env.dom;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
+      dom.detectNamespace(contextualElement);
+      var fragment;
+      if (env.useFragmentCache && dom.canClone) {
+        if (this.cachedFragment === null) {
+          fragment = this.build(dom);
+          if (this.hasRendered) {
+            this.cachedFragment = fragment;
+          } else {
+            this.hasRendered = true;
+          }
+        }
+        if (this.cachedFragment) {
+          fragment = dom.cloneNode(this.cachedFragment, true);
+        }
+      } else {
+        fragment = this.build(dom);
+      }
+      var element0 = dom.childAt(fragment, [0]);
+      var element1 = dom.childAt(element0, [3, 1]);
+      var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
+      var morph1 = dom.createMorphAt(dom.childAt(element0, [5, 3]),1,1);
+      var morph2 = dom.createMorphAt(dom.childAt(element0, [7, 3]),1,1);
+      var morph3 = dom.createMorphAt(dom.childAt(element0, [9, 3]),1,1);
+      content(env, morph0, context, "username");
+      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
+      inline(env, morph1, context, "input", [], {"name": "login", "value": get(env, context, "login"), "required": true, "class": "span7"});
+      inline(env, morph2, context, "input", [], {"name": "pwd", "value": get(env, context, "pwd"), "required": true, "class": "span7"});
+      inline(env, morph3, context, "input", [], {"name": "email", "value": get(env, context, "email"), "required": true, "class": "span7"});
       return fragment;
     }
   };

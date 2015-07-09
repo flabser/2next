@@ -9,6 +9,7 @@ import java.util.concurrent.RunnableFuture;
 import com.flabser.mail.Memo;
 import com.flabser.script._Session;
 import com.flabser.env.*;
+import com.flabser.server.Server;
 
 public class _MailAgent {
 
@@ -19,23 +20,28 @@ public class _MailAgent {
 	}
 
 	public boolean sendMail(ArrayList<String> recipients, String subj, String body, boolean async) {
-		Memo memo = new Memo(Environment.defaultSender, recipients, subj, body);
-		if (async) {
-			RunnableFuture<Boolean> f = new FutureTask<>(new Callable<Boolean>() {
-				public Boolean call() throws Exception {
-					return memo.send();
-				}
-			});
-			new Thread(f).start();
-			try {
-				return f.get();
-			} catch (InterruptedException | ExecutionException e) {
-				Environment.logger.errorLogEntry(e);
-				return false;
-			}
-		} else {
-			return memo.send();
-		}
+        try {
+            Memo memo = new Memo(Environment.defaultSender, recipients, subj, body);
+            if (async) {
+                RunnableFuture<Boolean> f = new FutureTask<>(new Callable<Boolean>() {
+                    public Boolean call() throws Exception {
+                        return memo.send();
+                    }
+                });
+                new Thread(f).start();
+                try {
+                    return f.get();
+                } catch (InterruptedException | ExecutionException e) {
+                    Environment.logger.errorLogEntry(e);
+                    return false;
+                }
+            } else {
+                return memo.send();
+            }
+        } catch (Exception e) {
+            Server.logger.errorLogEntry(e);
+            return false;
+        }
 	}
 
 }

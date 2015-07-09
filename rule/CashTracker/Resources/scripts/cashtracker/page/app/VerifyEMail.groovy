@@ -13,6 +13,7 @@ class VerifyEMail {
 	private def msg
 
 	public VerifyEMail(_Session session, User user) {
+        this.session = session
 		def code = user.getVerifyCode()
 		def url = session.getFullAppURI()
 		subj = "Confirmation of the E-mail your account in CashTracker site"
@@ -29,6 +30,7 @@ class VerifyEMail {
 	}
 
 	public boolean send() {
-		return session.getMailAgent().sendMail(recipients, subj, msg, false)
+        def ma = session.getMailAgent()
+		return ma.sendMail(recipients, subj, msg, false)
 	}
 }
