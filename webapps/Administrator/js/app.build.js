@@ -30,7 +30,8 @@ AdminApp.LogsController = Ember.ArrayController.extend({
 
 AdminApp.NewUserController = Ember.ObjectController.extend({
     actions: {
-        save: function() {
+        save: function(user) {
+            console.log("save new user" + user);
             user.save();
             this.transitionTo('users');
         }
@@ -39,7 +40,8 @@ AdminApp.NewUserController = Ember.ObjectController.extend({
 
 AdminApp.UserController = Ember.ObjectController.extend({
     actions: {
-        save: function(user) {
+        save: function(user) {      	console.log("upda5te user");
+
             user.save();
             this.transitionTo('users');
         }
@@ -475,7 +477,7 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -500,7 +502,7 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
       var morph2 = dom.createMorphAt(dom.childAt(element0, [7, 3]),1,1);
       var morph3 = dom.createMorphAt(dom.childAt(element0, [9, 3]),1,1);
       content(env, morph0, context, "username");
-      element(env, element1, context, "action", ["save"], {});
+      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
       inline(env, morph1, context, "input", [], {"name": "login", "value": get(env, context, "login"), "required": true, "class": "span7"});
       inline(env, morph2, context, "input", [], {"name": "pwd", "value": get(env, context, "pwd"), "required": true, "class": "span7"});
       inline(env, morph3, context, "input", [], {"name": "email", "value": get(env, context, "email"), "required": true, "class": "span7"});
