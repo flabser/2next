@@ -23,22 +23,23 @@ import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.restful.RestProvider;
 import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.script._Session;
+import com.flabser.users.ApplicationProfile;
 import com.flabser.users.User;
 import com.flabser.users.UserStatusType;
 
-@Path("/users")
-public class UserService extends RestProvider {
+@Path("/apps")
+public class AppService extends RestProvider {
 	private int pageSize = 30;
 	private ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public UsersList get() {
+	public AppsList get() {
 		//	System.out.println("get users");
 		_Session ses = getSession();
 		if (ses != null) {
-			ArrayList<User> users = sysDatabase.getAllUsers("", RuntimeObjUtil.calcStartEntry(1, pageSize), pageSize);
-			return new UsersList(users);
+			ArrayList<ApplicationProfile> apps = sysDatabase.getAllApps("", RuntimeObjUtil.calcStartEntry(1, pageSize), pageSize);
+			return new AppsList(apps);
 		} else {
 			return null;
 		}
@@ -87,10 +88,9 @@ public class UserService extends RestProvider {
 		return Response.ok().build();
 	}
 
-	@JsonRootName("users")
-	class UsersList extends ArrayList<User> {
-		private static final long serialVersionUID = -9012621540375574267L;
-		public UsersList(Collection<? extends User> m) {
+	@JsonRootName("apps")
+	class AppsList extends ArrayList<ApplicationProfile> {
+		public AppsList(Collection<? extends ApplicationProfile> m) {
 			addAll(m);
 		}
 	}

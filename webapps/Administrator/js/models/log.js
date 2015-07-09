@@ -1,4 +1,6 @@
 AdminApp.Log = DS.Model.extend({
-    filename: DS.attr('string'),
-    created: DS.attr('string'),
+    name: DS.attr('string'),
+    length: DS.attr('number'),
+    lastModified: DS.attr('date')
+    
 });

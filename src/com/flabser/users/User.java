@@ -1,5 +1,11 @@
 package com.flabser.users;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import org.apache.catalina.realm.RealmBase;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -14,10 +20,6 @@ import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
 import com.flabser.util.Util;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
-
 
 @JsonRootName("user")
 public class User {
@@ -29,18 +31,18 @@ public class User {
 	public LanguageType preferredLang = LanguageType.ENG;
 
 
-    private HashSet<UserRole> roles = new HashSet<UserRole>();
+	private HashSet<UserRole> roles = new HashSet<UserRole>();
 	private transient ISystemDatabase sysDatabase;
 	private String login;
 	private String userName;
-	
+
 	private Date primaryRegDate;
 	private Date regDate;
 	private String password;
 	private String passwordHash = "";
 	private String email = "";
 
-    private int isSupervisor;
+	private int isSupervisor;
 	private int hash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
@@ -71,12 +73,12 @@ public class User {
 		}
 	}
 
-    public String getPasswordHash() {
-        return passwordHash;
-    }
+	public String getPasswordHash() {
+		return passwordHash;
+	}
 
 
-    public void setPasswordHash(String password) throws WebFormValueException {
+	public void setPasswordHash(String password) throws WebFormValueException {
 		if (!("".equalsIgnoreCase(password))) {
 			if (Util.pwdIsCorrect(password)) {
 				this.passwordHash = password.hashCode() + "";
@@ -105,14 +107,14 @@ public class User {
 	}
 
 
-    public HashSet<UserRole> getRoles() {
-        return roles;
-    }
+	public HashSet<UserRole> getRoles() {
+		return roles;
+	}
 
-    public void setRoles(HashSet<UserRole> roles) {
-        this.roles = roles;
-    }
-	
+	public void setRoles(HashSet<UserRole> roles) {
+		this.roles = roles;
+	}
+
 	public void addApplication(ApplicationProfile ap) {
 		enabledApps.put(ap.appName, ap);
 	}
@@ -130,7 +132,7 @@ public class User {
 	}
 
 	public boolean save() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException, SQLException {
+	DatabasePoolException, SQLException {
 		if (id == 0) {
 			id = sysDatabase.insert(this);
 		} else {
@@ -172,50 +174,50 @@ public class User {
 
 	}
 
-    public void setLogin(String l) {
-        this.login = l;
-    }
+	public void setLogin(String l) {
+		this.login = l;
+	}
 
-    public String getLogin() {
+	public String getLogin() {
 		return login;
 	}
 
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) throws WebFormValueException {
-        if (email != null) {
-            if (email.equalsIgnoreCase("")) {
-                this.email = "";
-            } else if (Util.addrIsCorrect(email)) {
-                this.email = email;
-            } else {
-                throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "email");
-            }
-        }
-    }
+	public void setEmail(String email) throws WebFormValueException {
+		if (email != null) {
+			if (email.equalsIgnoreCase("")) {
+				this.email = "";
+			} else if (Util.addrIsCorrect(email)) {
+				this.email = email;
+			} else {
+				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "email");
+			}
+		}
+	}
 
-    public String getPwd() {
-        return password;
-    }
+	public String getPwd() {
+		return password;
+	}
 
 
-    public void setPwd(String password) throws WebFormValueException {
-        if (!("".equalsIgnoreCase(password))) {
-            if (Util.pwdIsCorrect(password)) {
-                this.password = password;
-            } else {
-                throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
-            }
-        }
-    }
+	public void setPwd(String password) throws WebFormValueException {
+		if (!("".equalsIgnoreCase(password))) {
+			if (Util.pwdIsCorrect(password)) {
+				this.password = password;
+			} else {
+				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
+			}
+		}
+	}
 
-    public String getUserName() {
+	public String getUserName() {
 		return userName;
 	}
-	
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
@@ -232,7 +234,7 @@ public class User {
 		return primaryRegDate;
 	}
 
-	public Date getRegDate() {	
+	public Date getRegDate() {
 		return regDate;
 	}
 
@@ -251,12 +253,27 @@ public class User {
 		this.status = status;
 	}
 
-    public void setIsSupervisor(int isSupervisor) {
-        this.isSupervisor = isSupervisor;
-    }
+	public void setIsSupervisor(int isSupervisor) {
+		this.isSupervisor = isSupervisor;
+	}
 
-    public int getIsSupervisor() {
-        return isSupervisor;
-    }
+	public int getIsSupervisor() {
+		return isSupervisor;
+	}
+
+	public void refresh(User u) {
+		login = u.getLogin();
+		userName = u.getUserName();
+		password = u.getPwd();
+		email = u.getEmail();
+		isSupervisor = u.isSupervisor;
+
+	}
+
+	public boolean delete() {
+		return false;
+
+
+	}
 
 }

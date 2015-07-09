@@ -12,7 +12,6 @@ public class ApplicationProfile {
 	public int id;
 	public String appName;
 	public String owner;
-	public String defaultURL;
 	public String dbHost = "localhost";
 	public String dbLogin;
 	public String dbPwd;
@@ -65,6 +64,11 @@ public class ApplicationProfile {
 		} else {
 			return true;
 		}
+	}
+
+	public void fill(ResultSet rs) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -1,19 +1,24 @@
 package com.flabser.dataengine.system;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.apache.catalina.realm.RealmBase;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.DatabaseUtil;
-import com.flabser.dataengine.activity.*;
+import com.flabser.dataengine.activity.Activity;
+import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.pool.IDBConnectionPool;
-import com.flabser.users.User;
 import com.flabser.users.ApplicationProfile;
-
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.flabser.users.User;
 
 public class SystemDatabase implements ISystemDatabase {
 	public static final String jdbcDriver = "org.postgresql.Driver";
@@ -24,7 +29,7 @@ public class SystemDatabase implements ISystemDatabase {
 	static String dbUserPwd = "3287";
 
 	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException,
-			ClassNotFoundException {
+	ClassNotFoundException {
 		dbPool = new com.flabser.dataengine.pool.DBConnectionPool();
 		dbPool.initConnectionPool(jdbcDriver, connectionURL, dbUser, dbUserPwd);
 		Connection conn = dbPool.getConnection();
@@ -262,7 +267,9 @@ public class SystemDatabase implements ISystemDatabase {
 	private User initUser(Connection conn, ResultSet rs, String login) throws SQLException {
 		User user = new User();
 		user.fill(rs);
-		if (user.isValid) fillUserApp(conn, user);
+		if (user.isValid) {
+			fillUserApp(conn, user);
+		}
 		return user;
 
 	}
@@ -274,8 +281,9 @@ public class SystemDatabase implements ISystemDatabase {
 		Connection conn = dbPool.getConnection();
 		try {
 			conn.setAutoCommit(false);
-			if (!condition.equals(""))
+			if (!condition.equals("")) {
 				wherePiece = "WHERE " + condition;
+			}
 			Statement s = conn.createStatement();
 			String sql = "select count(*) from USERS " + wherePiece;
 			ResultSet rs = s.executeQuery(sql);
@@ -301,8 +309,9 @@ public class SystemDatabase implements ISystemDatabase {
 		Connection conn = dbPool.getConnection();
 		try {
 			conn.setAutoCommit(false);
-			if (!condition.equals(""))
+			if (!condition.equals("")) {
 				wherePiece = "WHERE " + condition;
+			}
 			Statement s = conn.createStatement();
 			String sql = "select count(*) from USERS " + wherePiece;
 			ResultSet rs = s.executeQuery(sql);
@@ -467,7 +476,7 @@ public class SystemDatabase implements ISystemDatabase {
 		}
 		return user;
 	}
-	
+
 	public int deleteUser(int id) {
 		Connection conn = dbPool.getConnection();
 		try {
@@ -689,8 +698,9 @@ public class SystemDatabase implements ISystemDatabase {
 		Connection conn = dbPool.getConnection();
 		try {
 			conn.setAutoCommit(false);
-			if (!condition.equals(""))
+			if (!condition.equals("")) {
 				wherePiece = "WHERE " + condition;
+			}
 			Statement s = conn.createStatement();
 			String sql = "select * from USERS " + wherePiece + " LIMIT " + pageSize + " OFFSET " + calcStartEntry;
 			ResultSet rs = s.executeQuery(sql);
@@ -719,7 +729,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 	@Override
 	public IApplicationDatabase getApplicationDatabase() throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException {
+	ClassNotFoundException {
 		return new ApplicationDatabase();
 	}
 
@@ -761,10 +771,10 @@ public class SystemDatabase implements ISystemDatabase {
 			Statement stmt = conn.createStatement();
 			String sql = "update APPS set APPNAME='" + ap.appName + "', OWNER='" + ap.owner
 					+ "',DBHOST='" + ap.dbHost + "', DBNAME='" + ap.dbName + "', DBLOGIN = '"
-					+ ap.dbLogin + "',DBPWD='" + ap.dbPwd + "'";	
+					+ ap.dbLogin + "',DBPWD='" + ap.dbPwd + "'";
 
 			PreparedStatement pst = conn.prepareStatement(sql);
-			pst.executeUpdate();			
+			pst.executeUpdate();
 			conn.commit();
 			pst.close();
 			stmt.close();
@@ -782,7 +792,7 @@ public class SystemDatabase implements ISystemDatabase {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	private void fillUserApp(Connection conn, User user) throws SQLException {
 		Statement s = conn.createStatement();
 		ResultSet rs = s.executeQuery("select * from USERAPPS where USERID = " + user.id);
@@ -800,5 +810,36 @@ public class SystemDatabase implements ISystemDatabase {
 		s.close();
 	}
 
-	
+	@Override
+	public ArrayList<ApplicationProfile> getAllApps(String condition, int calcStartEntry, int pageSize) {
+		ArrayList<ApplicationProfile> apps = new ArrayList<ApplicationProfile>();
+		String wherePiece = "";
+		Connection conn = dbPool.getConnection();
+		try {
+			conn.setAutoCommit(false);
+			if (!condition.equals("")) {
+				wherePiece = "WHERE " + condition;
+			}
+			Statement s = conn.createStatement();
+			String sql = "select * from APPS " + wherePiece + " LIMIT " + pageSize + " OFFSET " + calcStartEntry;
+			ResultSet rs = s.executeQuery(sql);
+
+			while (rs.next()) {
+				ApplicationProfile app = new ApplicationProfile(rs);
+				apps.add(app);
+			}
+
+			rs.close();
+			s.close();
+			conn.commit();
+			return apps;
+		} catch (Throwable e) {
+			DatabaseUtil.debugErrorPrint(e);
+			return null;
+		} finally {
+			dbPool.returnConnection(conn);
+		}
+	}
+
+
 }

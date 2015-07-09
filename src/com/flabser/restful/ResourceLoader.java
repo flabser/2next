@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import com.flabser.restful.admin.AppService;
+import com.flabser.restful.admin.LogService;
 import com.flabser.restful.admin.UserService;
 import com.flabser.restful.provider.ObjectMapperProvider;
 
@@ -24,7 +26,9 @@ public class ResourceLoader extends Application {
 
 		classes.add(ObjectMapperProvider.class);
 
+		classes.add(LogService.class);
 		classes.add(UserService.class);
+		classes.add(AppService.class);
 		classes.add(SessionService.class);
 		classes.add(RestProvider.class);
 
