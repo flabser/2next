@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.AccountDAO;
 import cashtracker.model.Account;
@@ -50,8 +51,9 @@ public class AccountService extends RestProvider {
 	public Response create(Account m) {
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
-			return Response.ok(ve).build();
+			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
+
 		AccountDAO dao = new AccountDAO(getSession());
 		m.setId(dao.addAccount(m));
 		return Response.ok(m).build();
@@ -62,6 +64,11 @@ public class AccountService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, Account m) {
+		ValidationError ve = validator.validate(m);
+		if (ve.hasError()) {
+			return Response.status(Status.BAD_REQUEST).entity(ve).build();
+		}
+
 		m.setId(id);
 		AccountDAO dao = new AccountDAO(getSession());
 		dao.updateAccount(m);

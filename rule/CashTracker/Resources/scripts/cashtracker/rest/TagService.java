@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.TagDAO;
 import cashtracker.model.Tag;
@@ -50,8 +51,9 @@ public class TagService extends RestProvider {
 	public Response create(Tag m) {
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
-			return Response.ok(ve).build();
+			return Response.ok(ve).status(Status.BAD_REQUEST).build();
 		}
+
 		TagDAO dao = new TagDAO(getSession());
 		m.setId(dao.addTag(m));
 		return Response.ok(m).build();
@@ -62,6 +64,11 @@ public class TagService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, Tag m) {
+		ValidationError ve = validator.validate(m);
+		if (ve.hasError()) {
+			return Response.ok(ve).status(Status.BAD_REQUEST).build();
+		}
+
 		m.setId(id);
 		TagDAO dao = new TagDAO(getSession());
 		dao.updateTag(m);
