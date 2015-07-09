@@ -8,7 +8,7 @@
         <label class="entry-select">
             <input type="checkbox" name="docid" value="{@docid}" />
         </label>
-        {{#link-to 'log' id}} {{name}}  {{length}} {{/link-to}}</div>
+        {{#link-to 'log' id}} name: {{name}}, last modified{{lastModified}} , length {{length}} mB {{/link-to}}</div>
 {{/each}}
 
 </div>

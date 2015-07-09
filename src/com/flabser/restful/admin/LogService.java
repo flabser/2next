@@ -1,10 +1,10 @@
 package com.flabser.restful.admin;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,7 +20,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.restful.RestProvider;
-import com.flabser.users.User;
+import com.flabser.servlets.sitefiles.AttachmentHandler;
+import com.flabser.servlets.sitefiles.AttachmentHandlerException;
 
 @Path("/logs")
 public class LogService extends RestProvider {
@@ -32,23 +33,28 @@ public class LogService extends RestProvider {
 	public LogsList get() {
 		ArrayList<LogFile> fileList = new ArrayList<LogFile>();
 		File logDir = new File("." + File.separator + "logs");
-		if(logDir.isDirectory()){
+		if (logDir.isDirectory()) {
 			File[] list = logDir.listFiles();
 			Arrays.sort(list, LastModifiedFileComparator.LASTMODIFIED_COMPARATOR);
-			for(int i = list.length; --i>=0;){
+			for (int i = list.length; --i >= 0;) {
 				fileList.add(new LogFile(list[i]));
 			}
 		}
-		return  new LogsList(fileList);
+		return new LogsList(fileList);
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@PathParam("id") int id) {
+	public Response get(@PathParam("id") int id) throws AttachmentHandlerException {
 		System.out.println("GET " + id);
-		User user = sysDatabase.getUser(id);
-		return Response.ok(user).build();
+		String disposition = "attachment";
+		AttachmentHandler attachHandler = new AttachmentHandler(request, response, true);
+		File logDir = new File("." + File.separator + "logs");
+		String filePath = logDir + File.separator + id;
+		String originalAttachName = "";
+		attachHandler.publish(filePath, originalAttachName, disposition);
+		return Response.ok().build();
 
 	}
 
@@ -56,14 +62,19 @@ public class LogService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") int id) {
-		User user = sysDatabase.getUser(id);
-		user.delete();
+		File logDir = new File("." + File.separator + "logs");
+		if (logDir.isDirectory()) {
+			String filePath = logDir + File.separator + id;
+			File file = new File(filePath);
+			file.delete();
+		}
 		return Response.ok().build();
 	}
 
 	@JsonRootName("logs")
 	class LogsList extends ArrayList<LogFile> {
 		private static final long serialVersionUID = -7008854834343193674L;
+
 		public LogsList(Collection<? extends LogFile> m) {
 			addAll(m);
 		}
@@ -72,13 +83,13 @@ public class LogService extends RestProvider {
 	class LogFile {
 		String name;
 		long length;
-		Date lastModified;
+		String lastModified;
 
 		public LogFile(File file) {
 			this.name = file.getName();
 			length = file.length();
-			lastModified = new Date();
-
+			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+			lastModified = sdf.format(file.lastModified());
 		}
 
 		public String getName() {
@@ -86,10 +97,10 @@ public class LogService extends RestProvider {
 		}
 
 		public long getLength() {
-			return length;
+			return length / 1024 / 1024;
 		}
 
-		public Date getLastModified() {
+		public String getLastModified() {
 			return lastModified;
 		}
 	}

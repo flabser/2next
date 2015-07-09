@@ -8,11 +8,13 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.exception.RuleException;
@@ -38,7 +40,7 @@ public class RestProvider {
 	@Context
 	public HttpServletRequest request;
 	@Context
-	private HttpServletResponse response;
+	protected HttpServletResponse response;
 
 	public AppEnv getAppEnv() {
 		return (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
@@ -70,7 +72,7 @@ public class RestProvider {
 	@Path("/page/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public _Page producePage(@PathParam("id") String id) throws RuleException, AuthFailedException, UserException,
-			ClassNotFoundException, InstantiationException, IllegalAccessException {
+	ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
 
 		AppEnv env = getAppEnv();
@@ -94,7 +96,7 @@ public class RestProvider {
 	@GET
 	@Path("/{model}")
 	public _Page produceEmptyPage(@PathParam("model") String model) throws RuleException, AuthFailedException, UserException,
-			ClassNotFoundException, InstantiationException, IllegalAccessException {
+	ClassNotFoundException, InstantiationException, IllegalAccessException {
 		String msg = "The request \"" + request.getRequestURI() + "\" has not processed by some application handler";
 		Server.logger.errorLogEntry(msg);
 		throw new WebApplicationException(msg, HttpServletResponse.SC_NOT_FOUND);

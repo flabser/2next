@@ -1,6 +1,6 @@
 AdminApp.Log = DS.Model.extend({
     name: DS.attr('string'),
     length: DS.attr('number'),
-    lastModified: DS.attr('date')
+    lastModified: DS.attr('string')
     
 });

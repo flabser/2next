@@ -78,7 +78,7 @@ AdminApp.App = DS.Model.extend({
 AdminApp.Log = DS.Model.extend({
     name: DS.attr('string'),
     length: DS.attr('number'),
-    lastModified: DS.attr('date')
+    lastModified: DS.attr('string')
     
 });
 
@@ -785,15 +785,19 @@ Ember.TEMPLATES["logs"] = Ember.HTMLBars.template((function() {
         hasRendered: false,
         build: function build(dom) {
           var el0 = dom.createDocumentFragment();
-          var el1 = dom.createTextNode(" ");
+          var el1 = dom.createTextNode(" name: ");
           dom.appendChild(el0, el1);
           var el1 = dom.createComment("");
           dom.appendChild(el0, el1);
-          var el1 = dom.createTextNode("  ");
+          var el1 = dom.createTextNode(", last modified");
           dom.appendChild(el0, el1);
           var el1 = dom.createComment("");
           dom.appendChild(el0, el1);
-          var el1 = dom.createTextNode(" ");
+          var el1 = dom.createTextNode(" , length ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode(" mB ");
           dom.appendChild(el0, el1);
           return el0;
         },
@@ -819,8 +823,10 @@ Ember.TEMPLATES["logs"] = Ember.HTMLBars.template((function() {
           }
           var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
           var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
+          var morph2 = dom.createMorphAt(fragment,5,5,contextualElement);
           content(env, morph0, context, "name");
-          content(env, morph1, context, "length");
+          content(env, morph1, context, "lastModified");
+          content(env, morph2, context, "length");
           return fragment;
         }
       };
