@@ -34,9 +34,9 @@ public class Deployer extends DatabaseCore implements IDeployer {
 			createTable(DDEScripts.getBudgetDDE(), "BUDGETS");
 			createTable(DDEScripts.getAccountDDE(), "ACCOUNTS");
 			createTable(DDEScripts.getCategoryDDE(), "CATEGORIES");
-			createTable(DDEScripts.getTransactionDDE(), "TRANSACTIONS");
 			createTable(DDEScripts.getCostCenterDDE(), "COSTCENTERS");
 			createTable(DDEScripts.getTagDDE(), "TAGS");
+			createTable(DDEScripts.getTransactionDDE(), "TRANSACTIONS");
 			conn.commit();
 		} catch (Throwable e) {
 			AppEnv.logger.errorLogEntry(e);
