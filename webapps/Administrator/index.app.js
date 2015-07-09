@@ -36,7 +36,7 @@ App.LoginController = Ember.ObjectController.extend({
 	      })
 
 	     signin.save().then(function(user) {
-	    	 location.href = 'page.html'
+	    	 location.href = 'page.html#/users'
 	    	}, function(response) {
 	    	    c.transitionToRoute('login_failed');
 	    	});

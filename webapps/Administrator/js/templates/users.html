@@ -1,7 +1,14 @@
 <div>
-<h2>Users List</h2>
+<h3>Users</h3>
+    <div class="action-bar">
+        <a class="btn" href="#/users/new">new user</a>
+    </div>
 {{#each controller}}
-    <div>{{login}}  {{userName}}</div>
+    <div>
+        <label class="entry-select">
+            <input type="checkbox" name="docid" value="{@docid}" />
+        </label>
+        {{#link-to 'user' id}} {{login}}  {{userName}} {{/link-to}}</div>
 {{/each}}
 
 </div>

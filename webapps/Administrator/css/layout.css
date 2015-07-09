@@ -2,19 +2,23 @@
   position: relative;
 }
 
-nav {
-	border: 3px solid green;
+
+.header {
+  height: 70px;
+
+  width: 100%;
+      margin:0px auto;
+}
+
+.nav {
+
   position: absolute;
   left: 0px;
-  width: 50px;
+  width: 250px;
 }
 
-section {
-  /* position is static by default */
-  margin-left: 200px;
-}
 
-footer {
+.footer {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -23,7 +27,9 @@ footer {
   width: 100%;
 }
 
-view {
+.view {
+ margin-left: 250px;
 	border: 1px solid #FFCE00;
   margin-bottom: 120px;
+
 }

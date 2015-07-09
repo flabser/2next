@@ -1,11 +1,4 @@
 AdminApp = Ember.Application.create();
-/*
-
-var host = DS.RESTAdapter.extend({
-    host: 'http://localhost:38779',
-});
-*/
-//AdminApp.ApplicationAdapter = DS.FixtureAdapter;
 
 var baseURL =  DS.RESTAdapter.extend({
     namespace: 'Administrator/rest'

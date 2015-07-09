@@ -1,11 +1,4 @@
 AdminApp = Ember.Application.create();
-/*
-
-var host = DS.RESTAdapter.extend({
-    host: 'http://localhost:38779',
-});
-*/
-//AdminApp.ApplicationAdapter = DS.FixtureAdapter;
 
 var baseURL =  DS.RESTAdapter.extend({
     namespace: 'Administrator/rest'
@@ -20,13 +13,11 @@ AdminApp.ApplicationAdapter = baseURL.extend({
 });
 
 AdminApp.Router.map(function(){
-	//this.route('users');
 	this.route('logs');
-
-//	this.route('user');
-
-//	this.route('user', {path: '/users/:user_id'});
-	this.route('users', function() {this.route('new'); });
+	this.route('apps');
+	this.route('user', {path: '/users/:user_id'});
+	this.route('users');
+	this.route('newUser', {path: '/users/new'});
 });
 
 
@@ -39,7 +30,7 @@ AdminApp.LogsController = Ember.ArrayController.extend({
 
 AdminApp.NewUserController = Ember.ObjectController.extend({
     actions: {
-        save: function(user) {
+        save: function() {
             user.save();
             this.transitionTo('users');
         }
@@ -77,7 +68,9 @@ AdminApp.User = DS.Model.extend({
     login: DS.attr('string'),
     pwd: DS.attr('string'),
     email: DS.attr('string'),
-    role: DS.attr('string')
+    roles: DS.hasMany('role', {
+        async: true
+      })
 });
 
 AdminApp.User.FIXTURES = [{
@@ -108,7 +101,10 @@ AdminApp.ApplicationRoute = Ember.Route.extend({
         }, {
             title: "Users",
             viewdata: "users"
-        }];
+        }, {
+                     title: "Applications",
+                     viewdata: "apps"
+            }];
     }
 });
 
@@ -234,10 +230,12 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
     build: function build(dom) {
       var el0 = dom.createDocumentFragment();
       var el1 = dom.createElement("div");
+      dom.setAttribute(el1,"class","container");
       var el2 = dom.createTextNode("\n    ");
       dom.appendChild(el1, el2);
-      var el2 = dom.createElement("header");
-      var el3 = dom.createTextNode("\n        Header\n    ");
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","header");
+      var el3 = dom.createTextNode("\n        Administrator\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
       var el2 = dom.createTextNode("\n    ");
@@ -247,7 +245,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el2, el3);
       var el3 = dom.createElement("div");
       dom.setAttribute(el3,"class","nav");
-      var el4 = dom.createTextNode("\n            Navigator\n            ");
+      var el4 = dom.createTextNode("\n            ");
       dom.appendChild(el3, el4);
       var el4 = dom.createElement("ul");
       var el5 = dom.createTextNode("\n");
@@ -267,7 +265,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el1, el2);
       var el2 = dom.createElement("aside");
       dom.setAttribute(el2,"class","view");
-      var el3 = dom.createTextNode("\n        View ");
+      var el3 = dom.createTextNode("\n        ");
       dom.appendChild(el2, el3);
       var el3 = dom.createComment("");
       dom.appendChild(el2, el3);
@@ -276,8 +274,9 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el1, el2);
       var el2 = dom.createTextNode("\n    ");
       dom.appendChild(el1, el2);
-      var el2 = dom.createElement("footer");
-      var el3 = dom.createTextNode("\n        Footer\n    ");
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","footer");
+      var el3 = dom.createTextNode("\n       2Next\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
       var el2 = dom.createTextNode("\n");
@@ -476,7 +475,7 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
     },
     render: function render(context, env, contextualElement) {
       var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
+      var hooks = env.hooks, content = hooks.content, element = hooks.element, get = hooks.get, inline = hooks.inline;
       dom.detectNamespace(contextualElement);
       var fragment;
       if (env.useFragmentCache && dom.canClone) {
@@ -501,7 +500,7 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
       var morph2 = dom.createMorphAt(dom.childAt(element0, [7, 3]),1,1);
       var morph3 = dom.createMorphAt(dom.childAt(element0, [9, 3]),1,1);
       content(env, morph0, context, "username");
-      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
+      element(env, element1, context, "action", ["save"], {});
       inline(env, morph1, context, "input", [], {"name": "login", "value": get(env, context, "login"), "required": true, "class": "span7"});
       inline(env, morph2, context, "input", [], {"name": "pwd", "value": get(env, context, "pwd"), "required": true, "class": "span7"});
       inline(env, morph3, context, "input", [], {"name": "email", "value": get(env, context, "email"), "required": true, "class": "span7"});
@@ -511,6 +510,55 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
 }()));
 Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
   var child0 = (function() {
+    var child0 = (function() {
+      return {
+        isHTMLBars: true,
+        revision: "Ember@1.12.1",
+        blockParams: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        build: function build(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode(" ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("  ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode(" ");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        render: function render(context, env, contextualElement) {
+          var dom = env.dom;
+          var hooks = env.hooks, content = hooks.content;
+          dom.detectNamespace(contextualElement);
+          var fragment;
+          if (env.useFragmentCache && dom.canClone) {
+            if (this.cachedFragment === null) {
+              fragment = this.build(dom);
+              if (this.hasRendered) {
+                this.cachedFragment = fragment;
+              } else {
+                this.hasRendered = true;
+              }
+            }
+            if (this.cachedFragment) {
+              fragment = dom.cloneNode(this.cachedFragment, true);
+            }
+          } else {
+            fragment = this.build(dom);
+          }
+          var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
+          var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
+          content(env, morph0, context, "login");
+          content(env, morph1, context, "userName");
+          return fragment;
+        }
+      };
+    }());
     return {
       isHTMLBars: true,
       revision: "Ember@1.12.1",
@@ -522,9 +570,21 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
         var el1 = dom.createTextNode("    ");
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("div");
-        var el2 = dom.createComment("");
+        var el2 = dom.createTextNode("\n        ");
         dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("  ");
+        var el2 = dom.createElement("label");
+        dom.setAttribute(el2,"class","entry-select");
+        var el3 = dom.createTextNode("\n            ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("input");
+        dom.setAttribute(el3,"type","checkbox");
+        dom.setAttribute(el3,"name","docid");
+        dom.setAttribute(el3,"value","{@docid}");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n        ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n        ");
         dom.appendChild(el1, el2);
         var el2 = dom.createComment("");
         dom.appendChild(el1, el2);
@@ -535,7 +595,7 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
       },
       render: function render(context, env, contextualElement) {
         var dom = env.dom;
-        var hooks = env.hooks, content = hooks.content;
+        var hooks = env.hooks, get = hooks.get, block = hooks.block;
         dom.detectNamespace(contextualElement);
         var fragment;
         if (env.useFragmentCache && dom.canClone) {
@@ -553,11 +613,8 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
         } else {
           fragment = this.build(dom);
         }
-        var element0 = dom.childAt(fragment, [1]);
-        var morph0 = dom.createMorphAt(element0,0,0);
-        var morph1 = dom.createMorphAt(element0,2,2);
-        content(env, morph0, context, "login");
-        content(env, morph1, context, "userName");
+        var morph0 = dom.createMorphAt(dom.childAt(fragment, [1]),3,3);
+        block(env, morph0, context, "link-to", ["user", get(env, context, "id")], {}, child0, null);
         return fragment;
       }
     };
@@ -573,8 +630,23 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
       var el1 = dom.createElement("div");
       var el2 = dom.createTextNode("\n");
       dom.appendChild(el1, el2);
-      var el2 = dom.createElement("h2");
-      var el3 = dom.createTextNode("Users List");
+      var el2 = dom.createElement("h3");
+      var el3 = dom.createTextNode("Users");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","action-bar");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("a");
+      dom.setAttribute(el3,"class","btn");
+      dom.setAttribute(el3,"href","#/users/new");
+      var el4 = dom.createTextNode("new user");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
       var el2 = dom.createTextNode("\n");
@@ -606,7 +678,7 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
       } else {
         fragment = this.build(dom);
       }
-      var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),3,3);
+      var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),5,5);
       block(env, morph0, context, "each", [get(env, context, "controller")], {}, child0, null);
       return fragment;
     }

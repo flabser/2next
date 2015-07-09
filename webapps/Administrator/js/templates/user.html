@@ -1,0 +1,32 @@
+<div>
+<h1>User {{username}}</h1>
+    <div class="action-bar">
+        <button class="btn btn-primary" {{action 'save' this}}>Save & Close</button>
+        <a class="btn" href="#/users">Cancel</a>
+    </div>
+    <div class="control-group">
+        <div class="control-label">
+         Login:
+        </div>
+        <div class="controls">
+         {{input name="login" value=login required=true class="span7"}}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="control-label">
+            Password:
+        </div>
+        <div class="controls">
+            {{input name="pwd" value=pwd required=true class="span7"}}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="control-label">
+         E-mail:
+        </div>
+        <div class="controls">
+         {{input name="email" value=email required=true class="span7"}}
+        </div>
+    </div>
+
+</div>
