@@ -27,7 +27,9 @@ public class User {
 	public boolean isAuthorized;
 	public String lastURL;
 	public LanguageType preferredLang = LanguageType.ENG;
-	private HashSet<UserRole> roles = new HashSet<UserRole>();
+
+
+    private HashSet<UserRole> roles = new HashSet<UserRole>();
 	private transient ISystemDatabase sysDatabase;
 	private String login;
 	private String userName;
@@ -86,7 +88,7 @@ public class User {
 		}
 	}
 
-	public String getPassword() {
+	public String getPwd() {
 		return password;
 	}
 
@@ -94,7 +96,7 @@ public class User {
 		return passwordHash;
 	}
 
-	public void setPassword(String password) throws WebFormValueException {
+	public void setPwd(String password) throws WebFormValueException {
 		if (!("".equalsIgnoreCase(password))) {
 			if (Util.pwdIsCorrect(password)) {
 				this.password = password;
@@ -159,6 +161,15 @@ public class User {
 	public void addRole(UserRole role){
 		roles.add(role);
 	}
+
+
+    public HashSet<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(HashSet<UserRole> roles) {
+        this.roles = roles;
+    }
 	
 	public void addApplication(ApplicationProfile ap) {
 		enabledApps.put(ap.appName, ap);
