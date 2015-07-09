@@ -546,7 +546,7 @@ public class SystemDatabase implements ISystemDatabase {
 					+ "'"
 					+ user.getEmail()
 					+ "','"
-					+ user.getPassword()
+					+ user.getPwd()
 					+ "',"
 					+ user.getIsSupervisor()
 					+ ",'"
@@ -554,7 +554,7 @@ public class SystemDatabase implements ISystemDatabase {
 					+ "','"
 					+ sqlDateTimeFormat.format(user.getRegDate())
 					+ "',"
-					+ (user.getLogin() + user.getPassword()).hashCode()
+					+ (user.getLogin() + user.getPwd()).hashCode()
 					+ ", '"
 					+ user.getPasswordHash()
 					+ "','"
@@ -595,12 +595,12 @@ public class SystemDatabase implements ISystemDatabase {
 			if (user.getPasswordHash() != null && !user.getPasswordHash().trim().equals("")) {
 				pwdHsh = user.getPasswordHash();
 			} else {
-				pwd = user.getPassword();
+				pwd = user.getPwd();
 			}
 			String userUpdateSQL = "update USERS set LOGIN='" + user.getLogin() + "', USERNAME='" + user.getUserName()
 					+ "'," + "EMAIL='" + user.getEmail() + "', PWD='" + pwd + "', ISSUPERVISOR = "
 					+ user.getIsSupervisor() + "," + "REGDATE='" + sqlDateTimeFormat.format(user.getRegDate()) + "',"
-					+ "LOGINHASH = " + (user.getLogin() + user.getPassword()).hashCode() + ", " + "PWDHASH = '"
+					+ "LOGINHASH = " + (user.getLogin() + user.getPwd()).hashCode() + ", " + "PWDHASH = '"
 					+ user.getPasswordHash() + "', " + "LASTDEFAULTURL = '" + user.lastURL + "'," + "STATUS = "
 					+ user.getStatus().getCode() + ", VERIFYCODE='" + user.getVerifyCode() + "'" + " where ID="
 					+ user.id;

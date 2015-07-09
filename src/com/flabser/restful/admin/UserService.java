@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
@@ -50,10 +51,10 @@ public class UserService extends RestProvider {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public User create(User m) {
+	public Response create(User m) {
+        System.out.println("POST " + m);
 
-
-		return m;
+        return Response.ok(m).build();
 	}
 
 	@PUT
@@ -61,7 +62,7 @@ public class UserService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public User update(@PathParam("id") long id, User m) {
-
+        System.out.println("PUT " + m);
 
 		return m;
 	}

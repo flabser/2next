@@ -34,7 +34,7 @@ public class UserServices {
 		if (user.getLogin() != null) {
 			xmlContent += "<login>" + user.getLogin() + "</login><id>" + user.id + "</id>"
 					+ "<username>" + user.getUserName() + "</username><email>" + user.getEmail() + "</email>" 
-					+ "<password>" + user.getPassword() + "</password><isadmin>" + user.isSupervisor() + "</isadmin>"
+					+ "<password>" + user.getPwd() + "</password><isadmin>" + user.isSupervisor() + "</isadmin>"
 							+ "<hash>" + user.getHash() + "</hash><enabledapps>" + ea + "</enabledapps>";
 
 		}

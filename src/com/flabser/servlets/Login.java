@@ -68,7 +68,7 @@ public class Login extends HttpServlet {
 									throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
 								}
 							} else {
-								if (admin.getPassword().equals(pwd)) {
+								if (admin.getPwd().equals(pwd)) {
 									jses = request.getSession(true);
 									jses.setAttribute("adminLoggedIn", true);
 									response.sendRedirect("Provider?type=view&element=users");
@@ -80,7 +80,7 @@ public class Login extends HttpServlet {
 							}
 
 						} else {
-							if (admin.getPassword().equals(pwd)) {
+							if (admin.getPwd().equals(pwd)) {
 								jses = request.getSession(true);
 								jses.setAttribute("adminLoggedIn", true);
 								response.sendRedirect("Provider?type=view&element=users");
