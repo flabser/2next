@@ -49,7 +49,7 @@ public class DDEScripts {
 	                " USERID int NOT NULL," +
 	                " APPID int," +
 	                " NAME varchar(32)," +	          
-	                " UNIQUE (USERID, APPID))";
+	                " UNIQUE (USERID, APPID, NAME))";
 	        return dde;
 	    }	
 

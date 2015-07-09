@@ -39,7 +39,8 @@ public class User {
 	private String password;
 	private String passwordHash = "";
 	private String email = "";
-	private int isSupervisor;
+
+    private int isSupervisor;
 	private int hash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
@@ -48,24 +49,6 @@ public class User {
 	public User() {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
 		login = ANONYMOUS_USER;
-	}
-
-	public void setLogin(String l) {
-			this.login = l;
-	}
-
-	public HashSet<String> getAllUserGroups() {
-		HashSet<String> userGroups = new HashSet<String>();
-		/*if (userID.equals(sysUser)) {
-			userGroups = supervisorGroupAsSet;
-			//userGroups.addAll(observerGroupAsList);
-		}
-		try {
-			// userGroups.addAll(appUser.getAllUserGroups());
-		} catch (Exception e) {
-			userGroups.add(userID);
-		}*/
-		return userGroups;
 	}
 
 	public void fill(ResultSet rs) throws SQLException {
@@ -88,25 +71,12 @@ public class User {
 		}
 	}
 
-	public String getPwd() {
-		return password;
-	}
+    public String getPasswordHash() {
+        return passwordHash;
+    }
 
-	public String getPasswordHash() {
-		return passwordHash;
-	}
 
-	public void setPwd(String password) throws WebFormValueException {
-		if (!("".equalsIgnoreCase(password))) {
-			if (Util.pwdIsCorrect(password)) {
-				this.password = password;
-			} else {
-				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
-			}
-		}
-	}
-
-	public void setPasswordHash(String password) throws WebFormValueException {
+    public void setPasswordHash(String password) throws WebFormValueException {
 		if (!("".equalsIgnoreCase(password))) {
 			if (Util.pwdIsCorrect(password)) {
 				this.passwordHash = password.hashCode() + "";
@@ -117,40 +87,12 @@ public class User {
 			}
 		}
 	}
-	
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) throws WebFormValueException {
-		if (email != null) {
-			if (email.equalsIgnoreCase("")) {
-				this.email = "";
-			} else if (Util.addrIsCorrect(email)) {
-				this.email = email;
-			} else {
-				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "email");
-			}
-		}
-	}
 
 	public boolean isSupervisor() {
 		if (isSupervisor == 1) {
 			return true;
 		} else {
 			return false;
-		}
-	}
-
-	public int getIsSupervisor() {
-		return isSupervisor;
-	}
-
-	public void setSupervisor(boolean s) {
-		if (s) {
-			this.isSupervisor = 1;
-		} else {
-			isSupervisor = 0;
 		}
 	}
 
@@ -228,16 +170,51 @@ public class User {
 	public String usersByKeytoXML() {
 		return "<login>" + login + "</login><key>" + id + "</key><email>" + email + "</email>";
 
-	}	
+	}
 
-	public String getLogin() {
+    public void setLogin(String l) {
+        this.login = l;
+    }
+
+    public String getLogin() {
 		return login;
 	}
 
-	public String getUserName() {
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) throws WebFormValueException {
+        if (email != null) {
+            if (email.equalsIgnoreCase("")) {
+                this.email = "";
+            } else if (Util.addrIsCorrect(email)) {
+                this.email = email;
+            } else {
+                throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "email");
+            }
+        }
+    }
+
+    public String getPwd() {
+        return password;
+    }
+
+
+    public void setPwd(String password) throws WebFormValueException {
+        if (!("".equalsIgnoreCase(password))) {
+            if (Util.pwdIsCorrect(password)) {
+                this.password = password;
+            } else {
+                throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
+            }
+        }
+    }
+
+    public String getUserName() {
 		return userName;
 	}
-
 	
 	public void setUserName(String userName) {
 		this.userName = userName;
@@ -273,4 +250,13 @@ public class User {
 		}
 		this.status = status;
 	}
+
+    public void setIsSupervisor(int isSupervisor) {
+        this.isSupervisor = isSupervisor;
+    }
+
+    public int getIsSupervisor() {
+        return isSupervisor;
+    }
+
 }

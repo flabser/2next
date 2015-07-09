@@ -1,7 +1,9 @@
 package com.flabser.restful.admin;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,11 +17,13 @@ import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.restful.RestProvider;
 import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.script._Session;
 import com.flabser.users.User;
+import com.flabser.users.UserStatusType;
 
 @Path("/users")
 public class UserService extends RestProvider {
@@ -42,29 +46,34 @@ public class UserService extends RestProvider {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public User get(@PathParam("id") long id) {
-		return null;
-
+	public Response get(@PathParam("id") int id) {
+        System.out.println("GET " + id);
+        User user = sysDatabase.getUser(id);
+        return Response.ok(user).build();
 
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(User m) {
-        System.out.println("POST " + m);
-
-        return Response.ok(m).build();
+	public Response create(User user) throws ClassNotFoundException, SQLException, InstantiationException, DatabasePoolException, IllegalAccessException {
+        System.out.println("POST " + user);
+        user.setRegDate(new Date());
+        user.lastURL = "";
+        user.setStatus(UserStatusType.REGISTERED);
+        user.setVerifyCode("");
+        user.save();
+        return Response.ok(user).build();
 	}
 
 	@PUT
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public User update(@PathParam("id") long id, User m) {
+	public Response update(@PathParam("id") int id, User m) {
         System.out.println("PUT " + m);
-
-		return m;
+        User user = sysDatabase.getUser(id);
+        return Response.ok(m).build();
 	}
 
 	@JsonRootName("users")

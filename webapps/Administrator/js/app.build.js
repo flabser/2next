@@ -47,7 +47,8 @@ AdminApp.NewUserController = Ember.ObjectController.extend({
 
 AdminApp.UserController = Ember.ObjectController.extend({
     actions: {
-        save: function(user) {      	console.log("upda5te user");
+        save: function(user) {
+        	console.log("upda5te user");
 
             user.save();
             this.transitionTo('users');
@@ -70,13 +71,20 @@ AdminApp.Log = DS.Model.extend({
 
 AdminApp.Role = DS.Model.extend({
   name: DS.attr('string'),
-  description: DS.attr('string'),
   user: DS.belongsTo('role')
 })
 AdminApp.User = DS.Model.extend({
+    userName: DS.attr('string'),
     login: DS.attr('string'),
     pwd: DS.attr('string'),
     email: DS.attr('string'),
+    verifyCode: DS.attr('string'),
+    primaryRegDate: DS.attr('date'),
+    regDate: DS.attr('string'),
+    status: DS.attr('string'),
+    email: DS.attr('string'),
+    isSupervisor: DS.attr('number'),
+
     roles: DS.hasMany('role', {
         async: true
       })
@@ -410,6 +418,31 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el2, el3);
       var el3 = dom.createElement("div");
       dom.setAttribute(el3,"class","control-label");
+      var el4 = dom.createTextNode("\n            User name:\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","controls");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createComment("");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","control-group");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","control-label");
       var el4 = dom.createTextNode("\n         Login:\n        ");
       dom.appendChild(el3, el4);
       dom.appendChild(el2, el3);
@@ -477,7 +510,82 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
       var el3 = dom.createTextNode("\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
-      var el2 = dom.createTextNode("\n\n");
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","control-group");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","control-label");
+      var el4 = dom.createTextNode("\n            Status:\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","controls");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createComment("");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","control-group");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","control-label");
+      var el4 = dom.createTextNode("\n            RegDate:\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","controls");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createComment("");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","control-group");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","control-label");
+      var el4 = dom.createTextNode("\n            IsSupervisor:\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","controls");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createComment("");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n");
       dom.appendChild(el1, el2);
       dom.appendChild(el0, el1);
       return el0;
@@ -508,11 +616,19 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
       var morph1 = dom.createMorphAt(dom.childAt(element0, [5, 3]),1,1);
       var morph2 = dom.createMorphAt(dom.childAt(element0, [7, 3]),1,1);
       var morph3 = dom.createMorphAt(dom.childAt(element0, [9, 3]),1,1);
-      content(env, morph0, context, "username");
+      var morph4 = dom.createMorphAt(dom.childAt(element0, [11, 3]),1,1);
+      var morph5 = dom.createMorphAt(dom.childAt(element0, [13, 3]),1,1);
+      var morph6 = dom.createMorphAt(dom.childAt(element0, [15, 3]),1,1);
+      var morph7 = dom.createMorphAt(dom.childAt(element0, [17, 3]),1,1);
+      content(env, morph0, context, "login");
       element(env, element1, context, "action", ["save", get(env, context, "this")], {});
-      inline(env, morph1, context, "input", [], {"name": "login", "value": get(env, context, "login"), "required": true, "class": "span7"});
-      inline(env, morph2, context, "input", [], {"name": "pwd", "value": get(env, context, "pwd"), "required": true, "class": "span7"});
-      inline(env, morph3, context, "input", [], {"name": "email", "value": get(env, context, "email"), "required": true, "class": "span7"});
+      inline(env, morph1, context, "input", [], {"name": "userName", "value": get(env, context, "userName"), "required": true});
+      inline(env, morph2, context, "input", [], {"name": "login", "value": get(env, context, "login"), "required": true});
+      inline(env, morph3, context, "input", [], {"name": "pwd", "value": get(env, context, "pwd"), "required": true});
+      inline(env, morph4, context, "input", [], {"name": "email", "value": get(env, context, "email"), "required": true});
+      inline(env, morph5, context, "input", [], {"name": "status", "value": get(env, context, "status"), "required": true});
+      inline(env, morph6, context, "input", [], {"name": "regDate", "value": get(env, context, "regDate"), "required": true});
+      inline(env, morph7, context, "input", [], {"name": "isSupervisor", "value": get(env, context, "isSupervisor"), "required": true});
       return fragment;
     }
   };

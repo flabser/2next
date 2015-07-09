@@ -1,15 +1,23 @@
 <div>
-<h1>User {{username}}</h1>
+<h1>User {{login}}</h1>
     <div class="action-bar">
         <button class="btn btn-primary" {{action 'save' this}}>Save & Close</button>
         <a class="btn" href="#/users">Cancel</a>
     </div>
     <div class="control-group">
         <div class="control-label">
+            User name:
+        </div>
+        <div class="controls">
+            {{input name="userName" value=userName required=true}}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="control-label">
          Login:
         </div>
         <div class="controls">
-         {{input name="login" value=login required=true class="span7"}}
+         {{input name="login" value=login required=true }}
         </div>
     </div>
     <div class="control-group">
@@ -17,7 +25,7 @@
             Password:
         </div>
         <div class="controls">
-            {{input name="pwd" value=pwd required=true class="span7"}}
+            {{input name="pwd" value=pwd required=true }}
         </div>
     </div>
     <div class="control-group">
@@ -25,8 +33,31 @@
          E-mail:
         </div>
         <div class="controls">
-         {{input name="email" value=email required=true class="span7"}}
+         {{input name="email" value=email required=true }}
         </div>
     </div>
-
+    <div class="control-group">
+        <div class="control-label">
+            Status:
+        </div>
+        <div class="controls">
+            {{input name="status" value=status required=true }}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="control-label">
+            RegDate:
+        </div>
+        <div class="controls">
+            {{input name="regDate" value=regDate required=true }}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="control-label">
+            IsSupervisor:
+        </div>
+        <div class="controls">
+            {{input name="isSupervisor" value=isSupervisor required=true}}
+        </div>
+    </div>
 </div>
