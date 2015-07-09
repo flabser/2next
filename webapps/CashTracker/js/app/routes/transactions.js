@@ -39,22 +39,23 @@ CT.TransactionsRoute = Ember.Route.extend({
 
     actions: {
         addTransaction: function() {
+            var controller = this.controller;
             var newTransaction = this.store.createRecord('transaction', {
-                author: this.get('author'),
-                regDate: this.get('regDate'),
-                date: this.get('date'),
-                endDate: this.get('endDate'),
-                parentCategory: this.get('parentCategory'),
-                category: this.get('category'),
-                account: this.get('account'),
-                costCenter: this.get('costCenter'),
-                amount: this.get('amount'),
-                repeat: this.get('repeat'),
-                every: this.get('every'),
-                repeatStep: this.get('repeatStep'),
-                basis: this.get('basis'),
-                observers: this.get('observers'),
-                comment: this.get('comment')
+                author: controller.get('author'),
+                regDate: controller.get('regDate'),
+                date: controller.get('date'),
+                endDate: controller.get('endDate'),
+                parentCategory: controller.get('parentCategory'),
+                category: controller.get('category'),
+                account: controller.get('account'),
+                costCenter: controller.get('costCenter'),
+                amount: controller.get('amount'),
+                repeat: controller.get('repeat'),
+                every: controller.get('every'),
+                repeatStep: controller.get('repeatStep'),
+                basis: controller.get('basis'),
+                observers: controller.get('observers'),
+                comment: controller.get('comment')
             });
             newTransaction.save();
         }

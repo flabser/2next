@@ -15,10 +15,11 @@ CT.TagsNewRoute = Ember.Route.extend({
         create: function() {
             this.transitionTo('tags.new');
         },
-        save: function() {
+        save: function(tag) {
+            var controller = this.controller;
             var newTag = this.store.createRecord('tag', {
-                name: this.get('name'),
-                color: this.get('color')
+                name: controller.get('name'),
+                color: controller.get('color')
             });
             newTag.save();
         },
