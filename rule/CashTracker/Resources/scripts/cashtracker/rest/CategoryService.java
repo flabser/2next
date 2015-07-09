@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.CategoryDAO;
 import cashtracker.model.Category;
@@ -50,8 +51,9 @@ public class CategoryService extends RestProvider {
 	public Response create(Category m) {
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
-			return Response.ok(ve).build();
+			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
+
 		CategoryDAO dao = new CategoryDAO(getSession());
 		m.setId(dao.addCategory(m));
 		return Response.ok(m).build();
@@ -62,6 +64,11 @@ public class CategoryService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, Category m) {
+		ValidationError ve = validator.validate(m);
+		if (ve.hasError()) {
+			return Response.status(Status.BAD_REQUEST).entity(ve).build();
+		}
+
 		m.setId(id);
 		CategoryDAO dao = new CategoryDAO(getSession());
 		dao.updateCategory(m);

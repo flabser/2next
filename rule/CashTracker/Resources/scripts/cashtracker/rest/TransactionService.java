@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.TransactionDAO;
 import cashtracker.model.Transaction;
@@ -50,8 +51,9 @@ public class TransactionService extends RestProvider {
 	public Response create(Transaction m) {
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
-			return Response.ok(ve).build();
+			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
+
 		TransactionDAO dao = new TransactionDAO(getSession());
 		m.setId(dao.addTransaction(m));
 		return Response.ok(m).build();
@@ -62,6 +64,11 @@ public class TransactionService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, Transaction m) {
+		ValidationError ve = validator.validate(m);
+		if (ve.hasError()) {
+			return Response.status(Status.BAD_REQUEST).entity(ve).build();
+		}
+
 		m.setId(id);
 		TransactionDAO dao = new TransactionDAO(getSession());
 		dao.updateTransaction(m);
