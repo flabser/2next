@@ -16,8 +16,9 @@ CT.UsersNewRoute = Ember.Route.extend({
             this.transitionTo('users.new');
         },
         save: function() {
+            var controller = this.controller;
             var newUser = this.store.createRecord('user', {
-                name: this.get('name')
+                name: controller.get('name')
             });
             newUser.save();
         },

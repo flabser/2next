@@ -16,14 +16,15 @@ CT.AccountsNewRoute = Ember.Route.extend({
             this.transitionTo('accounts.new');
         },
         save: function() {
+            var controller = this.controller;
             var newAccount = this.store.createRecord('account', {
-                type: this.get('type'),
-                name: this.get('name'),
-                currency: this.get('currency'),
-                openingBalance: this.get('openingBalance'),
-                amountControl: this.get('amountControl'),
-                owner: this.get('owner'),
-                observers: this.get('observers')
+                type: controller.get('type'),
+                name: controller.get('name'),
+                currency: controller.get('currency'),
+                openingBalance: controller.get('openingBalance'),
+                amountControl: controller.get('amountControl'),
+                owner: controller.get('owner'),
+                observers: controller.get('observers')
             });
             newAccount.save();
         },

@@ -16,8 +16,9 @@ CT.CostCentersNewRoute = Ember.Route.extend({
             this.transitionTo('cost_centers.new');
         },
         save: function() {
+            var controller = this.controller;
             var newCostCenter = this.store.createRecord('costCenter', {
-                name: this.get('name')
+                name: controller.get('name')
             });
             newCostCenter.save();
         },
