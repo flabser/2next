@@ -1,7 +1,6 @@
 package com.flabser.restful;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -15,6 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriInfo;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.exception.RuleException;
@@ -71,16 +72,16 @@ public class RestProvider {
 	@GET
 	@Path("/page/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public _Page producePage(@PathParam("id") String id) throws RuleException, AuthFailedException, UserException,
+	public _Page producePage(@PathParam("id") String id, @Context UriInfo uriInfo) throws RuleException, AuthFailedException, UserException,
 	ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
-
+        MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
 		AppEnv env = getAppEnv();
 		IRule rule = env.ruleProvider.getRule(id);
 
 		if (rule != null) {
 			try {
-				return page(env, response, request, rule, getUserSession());
+				return page(env, (Map)queryParams, request, rule, getUserSession());
 			} catch (final UnsupportedEncodingException e) {
 				e.printStackTrace();
 			} catch (final ClassNotFoundException e) {
@@ -103,15 +104,15 @@ public class RestProvider {
 	}
 
 
-	private _Page page(AppEnv env, HttpServletResponse response, HttpServletRequest request, IRule rule,
+	private _Page page(AppEnv env, Map <String, String[]> parMap, HttpServletRequest request, IRule rule,
 			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,
 			_Exception {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		result.addHistory = pageRule.addToHistory;
-		HashMap <String, String[]> fields = new HashMap <String, String[]>();
-		Map <String, String[]> parMap = request.getParameterMap();
-		fields.putAll(parMap);
-		return new Page(env, userSession, pageRule, request.getMethod()).process(fields);
+		//HashMap <String, String[]> fields = new HashMap <String, String[]>();
+		//Map <String, String[]> parMap = request.getParameterMap();
+		//fields.putAll(parMap);
+		return new Page(env, userSession, pageRule, request.getMethod()).process(parMap);
 	}
 }
