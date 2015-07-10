@@ -18,8 +18,6 @@ import com.flabser.exception.RuleException;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
-import com.flabser.script.concurrency._AJAXHandler;
-import com.flabser.scriptprocessor.page.IAsyncScript;
 
 
 public class UserSession implements ICache {
@@ -36,7 +34,7 @@ public class UserSession implements ICache {
 	private HttpSession jses;
 
 	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
-			InstantiationException, IllegalAccessException, DatabasePoolException {
+	InstantiationException, IllegalAccessException, DatabasePoolException {
 		currentUser = user;
 		initHistory();
 		if (implemantion != null) {
@@ -54,6 +52,7 @@ public class UserSession implements ICache {
 		initHistory();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setObject(String name, _Page obj) {
 		HashMap <String, _Page> cache = null;
 		if (jses != null) {
@@ -71,6 +70,7 @@ public class UserSession implements ICache {
 
 	public Object getObject(String name) {
 		try {
+			@SuppressWarnings("unchecked")
 			HashMap <String, StringBuffer> cache = (HashMap <String, StringBuffer>) jses.getAttribute("cache");
 			return cache.get(name);
 		} catch (Exception e) {
@@ -225,6 +225,7 @@ public class UserSession implements ICache {
 
 	@Override
 	public void flush() {
+		@SuppressWarnings("unchecked")
 		HashMap <String, StringBuffer> cache = (HashMap <String, StringBuffer>) jses.getAttribute("cache");
 		if (cache != null) {
 			cache.clear();

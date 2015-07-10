@@ -10,8 +10,9 @@ import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.env.Environment;
 import com.flabser.log.Log4jLogger;
 import com.flabser.rule.GlobalSetting;
+import com.flabser.server.Server;
 
-public class PortalInit extends HttpServlet{ 
+public class PortalInit extends HttpServlet{
 
 	private static final long serialVersionUID = -8913620140247217298L;
 	private boolean isValid;
@@ -19,7 +20,7 @@ public class PortalInit extends HttpServlet{
 	public void init (ServletConfig config)throws ServletException{
 		ServletContext context = config.getServletContext();
 		String app = context.getServletContextName();
-		AppEnv.logger = new Log4jLogger(app);
+		Server.logger = new Log4jLogger(app);
 		AppEnv env = null;
 
 
@@ -27,23 +28,25 @@ public class PortalInit extends HttpServlet{
 			try{
 				env = new AppEnv(app);
 				env.globalSetting = new GlobalSetting();
-				env.globalSetting.entryPoint = "";	
-				Environment.systemBase = new com.flabser.dataengine.system.SystemDatabase();	
+				env.globalSetting.entryPoint = "";
+				Environment.systemBase = new com.flabser.dataengine.system.SystemDatabase();
 				isValid = true;
 			}catch(DatabasePoolException e) {
-                AppEnv.logger.errorLogEntry(e);
-				AppEnv.logger.fatalLogEntry("Server has not connected to system database");
+				Server.logger.errorLogEntry(e);
+				Server.logger.fatalLogEntry("Server has not connected to system database");
 			}catch(Exception e){
-				AppEnv.logger.errorLogEntry(e);
-			}			
+				Server.logger.errorLogEntry(e);
+			}
 		}else{
 			String global = Environment.webAppToStart.get(app).global;
-			env = new AppEnv(app, global);		
+			env = new AppEnv(app, global);
 			Environment.addApplication(env);
 			isValid = true;
 		}
 
-		if(isValid)	context.setAttribute(AppEnv.APP_ATTR, env);
+		if(isValid) {
+			context.setAttribute(AppEnv.APP_ATTR, env);
+		}
 
 	}
 }

@@ -5,10 +5,13 @@ import groovy.lang.GroovyObject;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.ws.rs.core.MultivaluedMap;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.localization.Vocabulary;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
+import com.flabser.script._WebFormDataRest;
 import com.flabser.users.UserSession;
 import com.flabser.util.ScriptResponse;
 
@@ -27,7 +30,11 @@ public class DoProcessor {
 		ses = new _Session(env, u);
 		vocabulary = env.vocabulary;
 		lang = currentLang;
-		webFormData = new _WebFormData(formData);
+		if (formData instanceof MultivaluedMap) {
+			webFormData = new _WebFormDataRest((MultivaluedMap)formData);
+		}else {
+			webFormData = new _WebFormData(formData);
+		}
 	}
 
 	public ScriptResponse processScript(String className, String method) throws ClassNotFoundException {

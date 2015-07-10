@@ -1,36 +1,40 @@
 package com.flabser.servlets.sitefiles;
 
-import org.apache.commons.io.FilenameUtils;
-
-import com.flabser.appenv.AppEnv;
-import com.flabser.env.Environment;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.*;
-import java.net.URLEncoder;
+import org.apache.commons.io.FilenameUtils;
+
+import com.flabser.env.Environment;
+import com.flabser.server.Server;
 
 public class AttachmentHandler{
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private boolean deleteOnPublish;
-	
+
 	public AttachmentHandler(HttpServletRequest request, HttpServletResponse response,boolean deleteOnPublish){
 		this.request = request;
 		this.response = response;
 		this.deleteOnPublish = deleteOnPublish;
 	}
-	
+
 	public  void publish(String filePath, String fileName, String disposition) throws AttachmentHandlerException{
 		ServletOutputStream outStream = null;
 		BufferedInputStream buf = null;
 		File file = null;
 
 		try{
-			file = new File(filePath);			
-			String fileType = FilenameUtils.getExtension(fileName);			
+			file = new File(filePath);
+			String fileType = FilenameUtils.getExtension(fileName);
 
 			String userAgent = request.getHeader("USER-AGENT").toLowerCase();
 			fileName = URLEncoder.encode(fileName, "UTF8");
@@ -60,16 +64,18 @@ public class AttachmentHandler{
 			try{
 				if (outStream != null) {
 					outStream.flush();
-					outStream.close();					
+					outStream.close();
 				}
 				if (buf != null) {
 					buf.close();
 				}
 				//if (file != null)file.delete();
 			}catch(Exception e){
-				AppEnv.logger.errorLogEntry(e);
+				Server.logger.errorLogEntry(e);
 			}
-			if (deleteOnPublish)Environment.fileToDelete.add(filePath);
+			if (deleteOnPublish) {
+				Environment.fileToDelete.add(filePath);
+			}
 		}
 	}
 

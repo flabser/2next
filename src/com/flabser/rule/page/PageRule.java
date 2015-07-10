@@ -2,9 +2,10 @@ package com.flabser.rule.page;
 
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
 
-import org.w3c.dom.*;
+import org.w3c.dom.NodeList;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.exception.RuleException;
@@ -12,31 +13,32 @@ import com.flabser.exception.WebFormValueException;
 import com.flabser.rule.Rule;
 import com.flabser.rule.constants.RuleType;
 import com.flabser.rule.constants.RunMode;
+import com.flabser.server.Server;
 import com.flabser.util.XMLUtil;
 
 public class PageRule extends Rule implements IElement{
 	public boolean isValid;
-	public ArrayList<ElementRule> elements = new ArrayList<ElementRule>();		
+	public ArrayList<ElementRule> elements = new ArrayList<ElementRule>();
 	public CachingStrategyType caching = CachingStrategyType.NO_CACHING;
 	public final RuleType type = RuleType.PAGE;
-	
+
 	public PageRule(AppEnv env, File ruleFile) throws RuleException{
 		super(env, ruleFile);
 		try{
 			String cachingValue = XMLUtil.getTextContent(doc,"/rule/caching", false);
 			if (!cachingValue.equalsIgnoreCase("")){
 				caching = CachingStrategyType.valueOf(cachingValue);
-			}			
-			NodeList fields =  XMLUtil.getNodeList(doc,"/rule/element");   
+			}
+			NodeList fields =  XMLUtil.getNodeList(doc,"/rule/element");
 			for(int i = 0; i < fields.getLength(); i++){
-				ElementRule element = new ElementRule(fields.item(i), this);						
-				if (element.isOn != RunMode.OFF && element.isValid){					
+				ElementRule element = new ElementRule(fields.item(i), this);
+				if (element.isOn != RunMode.OFF && element.isValid){
 					elements.add(element);
 				}
 			}
-			isValid = true;	
-		} catch(Exception e) {                
-			AppEnv.logger.errorLogEntry(e);
+			isValid = true;
+		} catch(Exception e) {
+			Server.logger.errorLogEntry(e);
 		}
 	}
 
@@ -46,17 +48,17 @@ public class PageRule extends Rule implements IElement{
 
 	@Override
 	public void update(Map<String, String[]> fields)throws WebFormValueException {
-		
-		
+
+
 	}
 
 
 
 	@Override
-	public boolean save() {		
+	public boolean save() {
 		return false;
 	}
 
-	
-	
+
+
 }

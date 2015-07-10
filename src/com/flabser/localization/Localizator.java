@@ -1,25 +1,30 @@
 package com.flabser.localization;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import com.flabser.appenv.AppEnv;
+
 import com.flabser.rule.GlobalSetting;
+import com.flabser.server.Server;
 
 
 public class Localizator{
 	private GlobalSetting globalSetting;
-	
+
 	public Localizator(GlobalSetting globalSetting) {
 		try {
-			this.globalSetting = globalSetting;		
+			this.globalSetting = globalSetting;
 		} catch (Exception ne) {
-			AppEnv.logger.errorLogEntry(ne);
+			Server.logger.errorLogEntry(ne);
 		}
-	}	
+	}
 
 
 	public Vocabulary populate(String vocabular) throws LocalizatorException{
@@ -31,17 +36,17 @@ public class Localizator{
 			db = dbf.newDocumentBuilder();
 			Document queryDoc = db.parse(docFile.toString());
 			if (queryDoc == null) {
-				throw new LocalizatorException(LocalizatorExceptionType.VOCABULAR_NOT_FOUND);				
+				throw new LocalizatorException(LocalizatorExceptionType.VOCABULAR_NOT_FOUND);
 			}
-			return new Vocabulary(queryDoc, vocabular, globalSetting);				
+			return new Vocabulary(queryDoc, vocabular, globalSetting);
 		} catch (FileNotFoundException e){
-			AppEnv.logger.errorLogEntry("File not found, filepath=" + vocabuarFilePath + ", the vocabulary file has not loaded");
-		} catch (ParserConfigurationException e) {		
-			AppEnv.logger.errorLogEntry(e);
-		} catch (IOException e) {		
-			AppEnv.logger.errorLogEntry(e);
-		} catch (SAXException e) {		
-			AppEnv.logger.errorLogEntry(e);
+			Server.logger.errorLogEntry("File not found, filepath=" + vocabuarFilePath + ", the vocabulary file has not loaded");
+		} catch (ParserConfigurationException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (IOException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (SAXException e) {
+			Server.logger.errorLogEntry(e);
 		}
 		return null;
 	}

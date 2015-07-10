@@ -23,6 +23,7 @@ import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.SessionPool;
+import com.flabser.server.Server;
 import com.flabser.servlets.Cookies;
 import com.flabser.servlets.ServletUtil;
 import com.flabser.users.ApplicationProfile;
@@ -82,7 +83,7 @@ public class SessionService {
 		String userID = user.getLogin();
 		jses = request.getSession(true);
 
-		AppEnv.logger.normalLogEntry(userID + " has connected");
+		Server.logger.normalLogEntry(userID + " has connected");
 		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
 		if (user.getStatus() == UserStatusType.REGISTERED) {

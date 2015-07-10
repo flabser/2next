@@ -11,12 +11,12 @@ import java.util.HashMap;
 
 import org.apache.catalina.realm.RealmBase;
 
-import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.activity.Activity;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.pool.IDBConnectionPool;
+import com.flabser.server.Server;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.User;
 
@@ -43,7 +43,7 @@ public class SystemDatabase implements ISystemDatabase {
 			createUserTable(DDEScripts.getHolidaysDDE(), "HOLIDAYS");
 			conn.commit();
 		} catch (Throwable e) {
-			AppEnv.logger.errorLogEntry(e);
+			Server.logger.errorLogEntry(e);
 			e.printStackTrace();
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
@@ -76,8 +76,7 @@ public class SystemDatabase implements ISystemDatabase {
 							pwdHash = pwd.hashCode() + "";
 						} else {
 							// pwdHash = getMD5Hash(pwd);
-							RealmBase rb = null;
-							pwdHash = rb.Digest(pwd, "MD5", "UTF-8");
+							pwdHash = RealmBase.Digest(pwd, "MD5", "UTF-8");
 
 						}
 
@@ -252,8 +251,7 @@ public class SystemDatabase implements ISystemDatabase {
 		conn.setAutoCommit(false);
 		// String pwdHsh = pwd.hashCode()+"";
 		// String pwdHsh = getMD5Hash(pwd);
-		RealmBase rb = null;
-		String pwdHsh = rb.Digest(pwd, "MD5", "UTF-8");
+		String pwdHsh = RealmBase.Digest(pwd, "MD5", "UTF-8");
 
 		String userUpdateSQL = "update USERS set PWD='', PWDHASH='" + pwdHsh + "'" + " where DOCID=" + user.id;
 		PreparedStatement pst = conn.prepareStatement(userUpdateSQL);
@@ -524,7 +522,7 @@ public class SystemDatabase implements ISystemDatabase {
 			Statement s = conn.createStatement();
 			if (!hasUserTable(tableName)) {
 				if (s.execute(createTableScript)) {
-					AppEnv.logger.errorLogEntry("Unable to create table \"" + tableName + "\"");
+					Server.logger.errorLogEntry("Unable to create table \"" + tableName + "\"");
 				}
 			}
 

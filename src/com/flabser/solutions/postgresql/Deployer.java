@@ -5,12 +5,12 @@ import java.sql.Statement;
 
 import cashtracker.init.DDEScripts;
 
-import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.server.Server;
 import com.flabser.users.ApplicationProfile;
 
 
@@ -20,7 +20,7 @@ public class Deployer extends DatabaseCore implements IDeployer {
 
 	@Override
 	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException, DatabasePoolException {
+	ClassNotFoundException, DatabasePoolException {
 		this.appProfile = appProfile;
 		pool = getPool(Database.driver, appProfile);
 	}
@@ -39,7 +39,7 @@ public class Deployer extends DatabaseCore implements IDeployer {
 			createTable(DDEScripts.getTransactionDDE(), "TRANSACTIONS");
 			conn.commit();
 		} catch (Throwable e) {
-			AppEnv.logger.errorLogEntry(e);
+			Server.logger.errorLogEntry(e);
 			e.printStackTrace();
 			DatabaseUtil.debugErrorPrint(e);
 
@@ -62,7 +62,7 @@ public class Deployer extends DatabaseCore implements IDeployer {
 			Statement s = conn.createStatement();
 			if (!hasTable(tableName)) {
 				if (s.execute(createTableScript)) {
-					AppEnv.logger.errorLogEntry("Unable to create table \"" + tableName + "\"");
+					Server.logger.errorLogEntry("Unable to create table \"" + tableName + "\"");
 				}
 			}
 

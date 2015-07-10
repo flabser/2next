@@ -1,11 +1,12 @@
 package com.flabser.rule;
 
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -15,6 +16,7 @@ import com.flabser.appenv.AppEnv;
 import com.flabser.exception.RuleException;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.rule.page.PageRule;
+import com.flabser.server.Server;
 
 public class RuleProvider {
 	public GlobalSetting global;
@@ -27,7 +29,7 @@ public class RuleProvider {
 		try {
 			this.env = env;
 		} catch (Exception ne) {
-			AppEnv.logger.errorLogEntry(ne);
+			Server.logger.errorLogEntry(ne);
 		}
 	}
 
@@ -45,8 +47,9 @@ public class RuleProvider {
 			rule = pageRuleMap.get(ruleID);
 		} else {
 			docFile = new File(global.rulePath + File.separator + "Page" + File.separator + ruleID + ".xml");
-			if (!docFile.exists())
+			if (!docFile.exists()) {
 				docFile = new File(global.primaryRulePath + File.separator + "Page" + File.separator + ruleID + ".xml");
+			}
 			PageRule pageRule = new PageRule(env, docFile);
 			pageRuleMap.put(ruleID.toLowerCase(), pageRule);
 			rule = pageRule;
@@ -55,7 +58,7 @@ public class RuleProvider {
 		rule.plusHit();
 		return rule;
 
-	}	
+	}
 
 	public Collection<PageRule> getPageRules(boolean reload) throws RuleException {
 		if (reload) {
@@ -72,11 +75,11 @@ public class RuleProvider {
 	}
 
 	public boolean resetRules() {
-		AppEnv.logger.normalLogEntry("Reload application rules ...");
+		Server.logger.normalLogEntry("Reload application rules ...");
 
 		pageRuleMap.clear();
 
-		AppEnv.logger.normalLogEntry("Application rules have been reloaded");
+		Server.logger.normalLogEntry("Application rules have been reloaded");
 		return true;
 	}
 
@@ -103,7 +106,7 @@ public class RuleProvider {
 					try {
 						doc = db.parse(file.toString());
 					} catch (SAXParseException e) {
-						AppEnv.logger.errorLogEntry("xml file structure error  file=" + file.getAbsolutePath()
+						Server.logger.errorLogEntry("xml file structure error  file=" + file.getAbsolutePath()
 								+ ", rule has not loaded");
 					}
 					root = doc.getDocumentElement();
@@ -111,22 +114,22 @@ public class RuleProvider {
 					if (attr.equalsIgnoreCase("page")) {
 						PageRule ruleObj = new PageRule(env, file);
 						if (ruleObj.isOn != RunMode.ON) {
-							AppEnv.logger.verboseLogEntry("rule " + ruleObj.id + " turn off ");
+							Server.logger.verboseLogEntry("rule " + ruleObj.id + " turn off ");
 						}
 
 						pageRuleMap.put(ruleObj.id.toLowerCase(), ruleObj);
 					}
 				} catch (SAXParseException spe) {
-					AppEnv.logger.errorLogEntry("xml file structure error  file=" + file.getAbsolutePath()
+					Server.logger.errorLogEntry("xml file structure error  file=" + file.getAbsolutePath()
 							+ ", rule has not loaded");
-					AppEnv.logger.errorLogEntry(spe);
+					Server.logger.errorLogEntry(spe);
 				} finally {
 					n++;
 				}
 
 			}
 		} catch (Exception e) {
-			AppEnv.logger.errorLogEntry(e);
+			Server.logger.errorLogEntry(e);
 		}
 	}
 

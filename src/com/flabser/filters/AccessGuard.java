@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.flabser.appenv.AppEnv;
+import com.flabser.server.Server;
 import com.flabser.users.UserSession;
 
 
@@ -27,7 +28,7 @@ public class AccessGuard implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain) {
 		try {
 			HttpServletRequest http = (HttpServletRequest) request;
-			AppEnv.logger.normalLogEntry(" Filter " + http.getMethod() + " " + http.getRequestURI());
+			Server.logger.normalLogEntry(" Filter " + http.getMethod() + " " + http.getRequestURI());
 			if (http.getRequestURI().contains("session") || http.getRequestURI().contains("page")
 					|| http.getRequestURI().contains("Provider")) {
 				chain.doFilter(request, resp);
@@ -39,22 +40,22 @@ public class AccessGuard implements Filter {
 						ServletContext context = http.getServletContext();
 						AppEnv env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
 						if (us.isAppAllowed(env.appType)) {
-							AppEnv.logger.warningLogEntry("Session alive ...");
+							Server.logger.warningLogEntry("Session alive ...");
 							chain.doFilter(request, resp);
 						}else{
 							HttpServletResponse httpResponse = (HttpServletResponse) resp;
 							httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-							AppEnv.logger.warningLogEntry("Access to application '" + env.appType + "' restricted");
+							Server.logger.warningLogEntry("Access to application '" + env.appType + "' restricted");
 						}
 					} else {
 						HttpServletResponse httpResponse = (HttpServletResponse) resp;
 						httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-						AppEnv.logger.warningLogEntry("User session was expired");
+						Server.logger.warningLogEntry("User session was expired");
 					}
 				}else{
 					HttpServletResponse httpResponse = (HttpServletResponse) resp;
 					httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-					AppEnv.logger.warningLogEntry("User session was expired");
+					Server.logger.warningLogEntry("User session was expired");
 				}
 
 			}

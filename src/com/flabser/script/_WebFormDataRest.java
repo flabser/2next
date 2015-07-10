@@ -1,41 +1,37 @@
 package com.flabser.script;
 
-import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 
-public class _WebFormData {
-	private Map<String, String[]> formData;
+import javax.ws.rs.core.MultivaluedMap;
 
-	public _WebFormData(Map<String, String[]> formData){
+public class _WebFormDataRest extends _WebFormData {
+	private MultivaluedMap<String, String> formData;
+
+	public _WebFormDataRest(MultivaluedMap<String, String> formData){
 		this.formData = formData;
 	}
 
-
-	public _WebFormData() {
-
-	}
-
-	public String[] getListOfValuesSilently(String fn){
-		String value[] = formData.get(fn);
+	/*public String[] getListOfValuesSilently(String fn){
+		List<String> value = formData.get(fn);
 		if (value != null){
-			return value;
+			return value.toArray(String[]);
 		}else{
 			String val[] = {""};
 			return val;
 		}
 
-	}
+	}*/
 
 	public String getValueSilently(String fn){
 		try{
-			String value[] = formData.get(fn);
-			return value[0].trim();
+			List<String> value = formData.get(fn);
+			return value.get(0).trim();
 		}catch(Exception e){
 			return "";
 		}
 	}
 
-	public String getEncodedValueSilently(String fn){
+	/*	public String getEncodedValueSilently(String fn){
 		try{
 			return new String(((String)getValueSilently(fn)).getBytes("ISO-8859-1"),"UTF-8");
 		}catch(Exception e){
@@ -116,7 +112,7 @@ public class _WebFormData {
 		result += "----------------- end of list-----------------------";
 		return result;
 
-	}
+	}*/
 
 
 
