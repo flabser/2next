@@ -182,6 +182,64 @@ CT.User = DS.Model.extend({
     role: DS.attr('string')
 });
 
+CT.I18nService = Ember.Service.extend({
+
+    translations: [],
+
+    init: function() {
+        Ember.HTMLBars._registerHelper('t', this.t);
+        this.fetchTranslations().then(function(translations) {
+            CT.I18nService.translations = translations;
+        });
+    },
+
+    fetchTranslations: function() {
+        return $.getJSON('rest/page/app-captions').then(function(data) {
+            return data._Page.captions;
+        });
+    },
+
+    t: function(key) {
+        if (CT.I18nService.translations.hasOwnProperty(key)) {
+            return CT.I18nService.translations[key][0];
+        } else {
+            return key;
+        }
+    }
+});
+
+CT.SessionService = Ember.Service.extend({
+
+    getSession: function() {
+        return $.getJSON('rest/session');
+    },
+
+    login: function(userName, password) {
+        return $.ajax({
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: 'rest/session',
+            data: JSON.stringify({
+                authUser: {
+                    login: userName,
+                    pwd: password
+                }
+            }),
+            success: function(result) {
+                return result;
+            }
+        });
+    },
+
+    logout: function() {
+        return $.ajax({
+            method: 'DELETE',
+            url: 'rest/session'
+        });
+    }
+});
+
 CT.AccountsAccountRoute = Ember.Route.extend({
     templateName: 'account',
 
@@ -599,64 +657,6 @@ CT.UsersNewRoute = Ember.Route.extend({
     }
 });
 
-CT.I18nService = Ember.Service.extend({
-
-    translations: [],
-
-    init: function() {
-        Ember.HTMLBars._registerHelper('t', this.t);
-        this.fetchTranslations().then(function(translations) {
-            CT.I18nService.translations = translations;
-        });
-    },
-
-    fetchTranslations: function() {
-        return $.getJSON('rest/page/app-captions').then(function(data) {
-            return data._Page.captions;
-        });
-    },
-
-    t: function(key) {
-        if (CT.I18nService.translations.hasOwnProperty(key)) {
-            return CT.I18nService.translations[key][0];
-        } else {
-            return key;
-        }
-    }
-});
-
-CT.SessionService = Ember.Service.extend({
-
-    getSession: function() {
-        return $.getJSON('rest/session');
-    },
-
-    login: function(userName, password) {
-        return $.ajax({
-            method: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            url: 'rest/session',
-            data: JSON.stringify({
-                authUser: {
-                    login: userName,
-                    pwd: password
-                }
-            }),
-            success: function(result) {
-                return result;
-            }
-        });
-    },
-
-    logout: function() {
-        return $.ajax({
-            method: 'DELETE',
-            url: 'rest/session'
-        });
-    }
-});
-
 CT.ApplicationView = Ember.View.extend({
     classNames: ['layout'],
 
@@ -948,11 +948,11 @@ Ember.TEMPLATES["accounts"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 21,
+            "line": 18,
             "column": 24
           },
           "end": {
-            "line": 21,
+            "line": 18,
             "column": 94
           }
         }
@@ -976,7 +976,7 @@ Ember.TEMPLATES["accounts"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["inline","t",["account.new.btn_label"],[],["loc",[null,[21,64],[21,93]]]]
+        ["inline","t",["account.new.btn_label"],[],["loc",[null,[18,64],[18,93]]]]
       ],
       locals: [],
       templates: []
@@ -990,11 +990,11 @@ Ember.TEMPLATES["accounts"] = Ember.HTMLBars.template((function() {
           "loc": {
             "source": null,
             "start": {
-              "line": 60,
+              "line": 57,
               "column": 24
             },
             "end": {
-              "line": 77,
+              "line": 74,
               "column": 24
             }
           }
@@ -1075,10 +1075,10 @@ Ember.TEMPLATES["accounts"] = Ember.HTMLBars.template((function() {
           return morphs;
         },
         statements: [
-          ["content","name",["loc",[null,[63,28],[63,36]]]],
-          ["content","owner.name",["loc",[null,[66,28],[66,42]]]],
-          ["content","observers.name",["loc",[null,[70,32],[70,50]]]],
-          ["content","amountControl",["loc",[null,[74,28],[74,45]]]]
+          ["content","name",["loc",[null,[60,28],[60,36]]]],
+          ["content","owner.name",["loc",[null,[63,28],[63,42]]]],
+          ["content","observers.name",["loc",[null,[67,32],[67,50]]]],
+          ["content","amountControl",["loc",[null,[71,28],[71,45]]]]
         ],
         locals: [],
         templates: []
@@ -1090,11 +1090,11 @@ Ember.TEMPLATES["accounts"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 49,
+            "line": 46,
             "column": 16
           },
           "end": {
-            "line": 80,
+            "line": 77,
             "column": 16
           }
         }
@@ -1173,11 +1173,11 @@ Ember.TEMPLATES["accounts"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[52,76],[52,78]]]]]]],
-        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[56,39],[56,41]]]]]]],
-        ["attribute","value",["concat",[["get","id",["loc",[null,[58,70],[58,72]]]]]]],
-        ["element","action",["selectOne"],[],["loc",[null,[58,76],[58,98]]]],
-        ["block","link-to",["accounts.account",["get","this",["loc",[null,[60,54],[60,58]]]]],["class","entry-link"],0,null,["loc",[null,[60,24],[77,36]]]]
+        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[49,76],[49,78]]]]]]],
+        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[53,39],[53,41]]]]]]],
+        ["attribute","value",["concat",[["get","id",["loc",[null,[55,70],[55,72]]]]]]],
+        ["element","action",["selectOne"],[],["loc",[null,[55,76],[55,98]]]],
+        ["block","link-to",["accounts.account",["get","this",["loc",[null,[57,54],[57,58]]]]],["class","entry-link"],0,null,["loc",[null,[57,24],[74,36]]]]
       ],
       locals: [],
       templates: [child0]
@@ -1193,7 +1193,7 @@ Ember.TEMPLATES["accounts"] = Ember.HTMLBars.template((function() {
           "column": 0
         },
         "end": {
-          "line": 86,
+          "line": 83,
           "column": 0
         }
       }
@@ -1244,13 +1244,6 @@ Ember.TEMPLATES["accounts"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el3, el4);
       var el4 = dom.createElement("nav");
       dom.setAttribute(el4,"class","nav-action-bar");
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("div");
-      dom.setAttribute(el5,"class","pull-right");
-      var el6 = dom.createTextNode("\n                    page-navigator\n                ");
-      dom.appendChild(el5, el6);
-      dom.appendChild(el4, el5);
       var el5 = dom.createTextNode("\n                ");
       dom.appendChild(el4, el5);
       var el5 = dom.createElement("div");
@@ -1393,7 +1386,7 @@ Ember.TEMPLATES["accounts"] = Ember.HTMLBars.template((function() {
       var element9 = dom.childAt(element8, [1, 1]);
       var element10 = dom.childAt(element8, [3]);
       var morphs = new Array(8);
-      morphs[0] = dom.createMorphAt(dom.childAt(element6, [1, 3, 3, 1]),1,1);
+      morphs[0] = dom.createMorphAt(dom.childAt(element6, [1, 3, 1, 1]),1,1);
       morphs[1] = dom.createElementMorph(element9);
       morphs[2] = dom.createMorphAt(dom.childAt(element10, [1]),1,1);
       morphs[3] = dom.createMorphAt(dom.childAt(element10, [3]),1,1);
@@ -1404,14 +1397,14 @@ Ember.TEMPLATES["accounts"] = Ember.HTMLBars.template((function() {
       return morphs;
     },
     statements: [
-      ["block","link-to",["accounts.new"],["class","btn"],0,null,["loc",[null,[21,24],[21,106]]]],
-      ["element","action",["selectAll"],[],["loc",[null,[30,59],[30,81]]]],
-      ["content","viewtext1",["loc",[null,[34,24],[34,37]]]],
-      ["content","viewtext2",["loc",[null,[37,24],[37,37]]]],
-      ["content","viewtext3",["loc",[null,[40,24],[40,37]]]],
-      ["content","viewnumber",["loc",[null,[43,24],[43,38]]]],
-      ["block","each",[["get","controller",["loc",[null,[49,24],[49,34]]]]],[],1,null,["loc",[null,[49,16],[80,25]]]],
-      ["content","outlet",["loc",[null,[84,4],[84,14]]]]
+      ["block","link-to",["accounts.new"],["class","btn"],0,null,["loc",[null,[18,24],[18,106]]]],
+      ["element","action",["selectAll"],[],["loc",[null,[27,59],[27,81]]]],
+      ["content","viewtext1",["loc",[null,[31,24],[31,37]]]],
+      ["content","viewtext2",["loc",[null,[34,24],[34,37]]]],
+      ["content","viewtext3",["loc",[null,[37,24],[37,37]]]],
+      ["content","viewnumber",["loc",[null,[40,24],[40,38]]]],
+      ["block","each",[["get","controller",["loc",[null,[46,24],[46,34]]]]],[],1,null,["loc",[null,[46,16],[77,25]]]],
+      ["content","outlet",["loc",[null,[81,4],[81,14]]]]
     ],
     locals: [],
     templates: [child0, child1]
@@ -2149,11 +2142,11 @@ Ember.TEMPLATES["categories"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 11,
+            "line": 8,
             "column": 24
           },
           "end": {
-            "line": 11,
+            "line": 8,
             "column": 99
           }
         }
@@ -2177,7 +2170,7 @@ Ember.TEMPLATES["categories"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["inline","t",["categories.new.btn_label"],[],["loc",[null,[11,66],[11,98]]]]
+        ["inline","t",["categories.new.btn_label"],[],["loc",[null,[8,66],[8,98]]]]
       ],
       locals: [],
       templates: []
@@ -2191,11 +2184,11 @@ Ember.TEMPLATES["categories"] = Ember.HTMLBars.template((function() {
           "loc": {
             "source": null,
             "start": {
-              "line": 41,
+              "line": 38,
               "column": 24
             },
             "end": {
-              "line": 47,
+              "line": 44,
               "column": 24
             }
           }
@@ -2233,7 +2226,7 @@ Ember.TEMPLATES["categories"] = Ember.HTMLBars.template((function() {
           return morphs;
         },
         statements: [
-          ["content","name",["loc",[null,[44,28],[44,36]]]]
+          ["content","name",["loc",[null,[41,28],[41,36]]]]
         ],
         locals: [],
         templates: []
@@ -2245,11 +2238,11 @@ Ember.TEMPLATES["categories"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 30,
+            "line": 27,
             "column": 16
           },
           "end": {
-            "line": 50,
+            "line": 47,
             "column": 16
           }
         }
@@ -2327,10 +2320,10 @@ Ember.TEMPLATES["categories"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[33,76],[33,78]]]]]]],
-        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[37,39],[37,41]]]]]]],
-        ["attribute","value",["concat",[["get","id",["loc",[null,[39,70],[39,72]]]]]]],
-        ["block","link-to",["categories.category",["get","this",["loc",[null,[41,57],[41,61]]]]],["class","entry-link"],0,null,["loc",[null,[41,24],[47,36]]]]
+        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[30,76],[30,78]]]]]]],
+        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[34,39],[34,41]]]]]]],
+        ["attribute","value",["concat",[["get","id",["loc",[null,[36,70],[36,72]]]]]]],
+        ["block","link-to",["categories.category",["get","this",["loc",[null,[38,57],[38,61]]]]],["class","entry-link"],0,null,["loc",[null,[38,24],[44,36]]]]
       ],
       locals: [],
       templates: [child0]
@@ -2346,7 +2339,7 @@ Ember.TEMPLATES["categories"] = Ember.HTMLBars.template((function() {
           "column": 0
         },
         "end": {
-          "line": 56,
+          "line": 53,
           "column": 0
         }
       }
@@ -2377,13 +2370,6 @@ Ember.TEMPLATES["categories"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el3, el4);
       var el4 = dom.createElement("nav");
       dom.setAttribute(el4,"class","nav-action-bar");
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("div");
-      dom.setAttribute(el5,"class","pull-right");
-      var el6 = dom.createTextNode("\n                    page-navigator\n                ");
-      dom.appendChild(el5, el6);
-      dom.appendChild(el4, el5);
       var el5 = dom.createTextNode("\n                ");
       dom.appendChild(el4, el5);
       var el5 = dom.createElement("div");
@@ -2485,15 +2471,15 @@ Ember.TEMPLATES["categories"] = Ember.HTMLBars.template((function() {
       var element4 = dom.childAt(fragment, [0]);
       var element5 = dom.childAt(element4, [1]);
       var morphs = new Array(3);
-      morphs[0] = dom.createMorphAt(dom.childAt(element5, [1, 3, 3, 1]),1,1);
+      morphs[0] = dom.createMorphAt(dom.childAt(element5, [1, 3, 1, 1]),1,1);
       morphs[1] = dom.createMorphAt(dom.childAt(element5, [3, 3]),1,1);
       morphs[2] = dom.createMorphAt(element4,3,3);
       return morphs;
     },
     statements: [
-      ["block","link-to",["categories.new"],["class","btn"],0,null,["loc",[null,[11,24],[11,111]]]],
-      ["block","each",[["get","controller",["loc",[null,[30,24],[30,34]]]]],[],1,null,["loc",[null,[30,16],[50,25]]]],
-      ["content","outlet",["loc",[null,[54,4],[54,14]]]]
+      ["block","link-to",["categories.new"],["class","btn"],0,null,["loc",[null,[8,24],[8,111]]]],
+      ["block","each",[["get","controller",["loc",[null,[27,24],[27,34]]]]],[],1,null,["loc",[null,[27,16],[47,25]]]],
+      ["content","outlet",["loc",[null,[51,4],[51,14]]]]
     ],
     locals: [],
     templates: [child0, child1]
@@ -2783,11 +2769,11 @@ Ember.TEMPLATES["cost_centers"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 11,
+            "line": 8,
             "column": 24
           },
           "end": {
-            "line": 11,
+            "line": 8,
             "column": 102
           }
         }
@@ -2811,7 +2797,7 @@ Ember.TEMPLATES["cost_centers"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["inline","t",["costcenters.new.btn_label"],[],["loc",[null,[11,68],[11,101]]]]
+        ["inline","t",["costcenters.new.btn_label"],[],["loc",[null,[8,68],[8,101]]]]
       ],
       locals: [],
       templates: []
@@ -2825,11 +2811,11 @@ Ember.TEMPLATES["cost_centers"] = Ember.HTMLBars.template((function() {
           "loc": {
             "source": null,
             "start": {
-              "line": 41,
+              "line": 38,
               "column": 24
             },
             "end": {
-              "line": 47,
+              "line": 44,
               "column": 24
             }
           }
@@ -2867,7 +2853,7 @@ Ember.TEMPLATES["cost_centers"] = Ember.HTMLBars.template((function() {
           return morphs;
         },
         statements: [
-          ["content","name",["loc",[null,[44,28],[44,36]]]]
+          ["content","name",["loc",[null,[41,28],[41,36]]]]
         ],
         locals: [],
         templates: []
@@ -2879,11 +2865,11 @@ Ember.TEMPLATES["cost_centers"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 30,
+            "line": 27,
             "column": 16
           },
           "end": {
-            "line": 50,
+            "line": 47,
             "column": 16
           }
         }
@@ -2961,10 +2947,10 @@ Ember.TEMPLATES["cost_centers"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[33,76],[33,78]]]]]]],
-        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[37,39],[37,41]]]]]]],
-        ["attribute","value",["concat",[["get","id",["loc",[null,[39,70],[39,72]]]]]]],
-        ["block","link-to",["cost_centers.cost_center",["get","this",["loc",[null,[41,62],[41,66]]]]],["class","entry-link"],0,null,["loc",[null,[41,24],[47,36]]]]
+        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[30,76],[30,78]]]]]]],
+        ["attribute","data-ddbid",["concat",[["get","id",["loc",[null,[34,39],[34,41]]]]]]],
+        ["attribute","value",["concat",[["get","id",["loc",[null,[36,70],[36,72]]]]]]],
+        ["block","link-to",["cost_centers.cost_center",["get","this",["loc",[null,[38,62],[38,66]]]]],["class","entry-link"],0,null,["loc",[null,[38,24],[44,36]]]]
       ],
       locals: [],
       templates: [child0]
@@ -2980,7 +2966,7 @@ Ember.TEMPLATES["cost_centers"] = Ember.HTMLBars.template((function() {
           "column": 0
         },
         "end": {
-          "line": 56,
+          "line": 53,
           "column": 0
         }
       }
@@ -3011,13 +2997,6 @@ Ember.TEMPLATES["cost_centers"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el3, el4);
       var el4 = dom.createElement("nav");
       dom.setAttribute(el4,"class","nav-action-bar");
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("div");
-      dom.setAttribute(el5,"class","pull-right");
-      var el6 = dom.createTextNode("\n                    page-navigator\n                ");
-      dom.appendChild(el5, el6);
-      dom.appendChild(el4, el5);
       var el5 = dom.createTextNode("\n                ");
       dom.appendChild(el4, el5);
       var el5 = dom.createElement("div");
@@ -3119,15 +3098,15 @@ Ember.TEMPLATES["cost_centers"] = Ember.HTMLBars.template((function() {
       var element4 = dom.childAt(fragment, [0]);
       var element5 = dom.childAt(element4, [1]);
       var morphs = new Array(3);
-      morphs[0] = dom.createMorphAt(dom.childAt(element5, [1, 3, 3, 1]),1,1);
+      morphs[0] = dom.createMorphAt(dom.childAt(element5, [1, 3, 1, 1]),1,1);
       morphs[1] = dom.createMorphAt(dom.childAt(element5, [3, 3]),1,1);
       morphs[2] = dom.createMorphAt(element4,3,3);
       return morphs;
     },
     statements: [
-      ["block","link-to",["cost_centers.new"],["class","btn"],0,null,["loc",[null,[11,24],[11,114]]]],
-      ["block","each",[["get","controller",["loc",[null,[30,24],[30,34]]]]],[],1,null,["loc",[null,[30,16],[50,25]]]],
-      ["content","outlet",["loc",[null,[54,4],[54,14]]]]
+      ["block","link-to",["cost_centers.new"],["class","btn"],0,null,["loc",[null,[8,24],[8,114]]]],
+      ["block","each",[["get","controller",["loc",[null,[27,24],[27,34]]]]],[],1,null,["loc",[null,[27,16],[47,25]]]],
+      ["content","outlet",["loc",[null,[51,4],[51,14]]]]
     ],
     locals: [],
     templates: [child0, child1]
@@ -5103,11 +5082,11 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 11,
+            "line": 8,
             "column": 24
           },
           "end": {
-            "line": 11,
+            "line": 8,
             "column": 89
           }
         }
@@ -5131,7 +5110,7 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["inline","t",["users.new.btn_label"],[],["loc",[null,[11,61],[11,88]]]]
+        ["inline","t",["users.new.btn_label"],[],["loc",[null,[8,61],[8,88]]]]
       ],
       locals: [],
       templates: []
@@ -5145,11 +5124,11 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
           "loc": {
             "source": null,
             "start": {
-              "line": 29,
+              "line": 26,
               "column": 24
             },
             "end": {
-              "line": 35,
+              "line": 32,
               "column": 24
             }
           }
@@ -5187,7 +5166,7 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
           return morphs;
         },
         statements: [
-          ["content","id",["loc",[null,[32,28],[32,34]]]]
+          ["content","id",["loc",[null,[29,28],[29,34]]]]
         ],
         locals: [],
         templates: []
@@ -5199,11 +5178,11 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 18,
+            "line": 15,
             "column": 16
           },
           "end": {
-            "line": 38,
+            "line": 35,
             "column": 16
           }
         }
@@ -5277,7 +5256,7 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["block","link-to",["users.user",["get","this",["loc",[null,[29,48],[29,52]]]]],["class","entry-link"],0,null,["loc",[null,[29,24],[35,36]]]]
+        ["block","link-to",["users.user",["get","this",["loc",[null,[26,48],[26,52]]]]],["class","entry-link"],0,null,["loc",[null,[26,24],[32,36]]]]
       ],
       locals: [],
       templates: [child0]
@@ -5293,7 +5272,7 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
           "column": 0
         },
         "end": {
-          "line": 44,
+          "line": 41,
           "column": 0
         }
       }
@@ -5324,13 +5303,6 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el3, el4);
       var el4 = dom.createElement("nav");
       dom.setAttribute(el4,"class","nav-action-bar");
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("div");
-      dom.setAttribute(el5,"class","pull-right");
-      var el6 = dom.createTextNode("\n                    page-navigator\n                ");
-      dom.appendChild(el5, el6);
-      dom.appendChild(el4, el5);
       var el5 = dom.createTextNode("\n                ");
       dom.appendChild(el4, el5);
       var el5 = dom.createElement("div");
@@ -5391,15 +5363,15 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
       var element0 = dom.childAt(fragment, [0]);
       var element1 = dom.childAt(element0, [1]);
       var morphs = new Array(3);
-      morphs[0] = dom.createMorphAt(dom.childAt(element1, [1, 3, 3, 1]),1,1);
+      morphs[0] = dom.createMorphAt(dom.childAt(element1, [1, 3, 1, 1]),1,1);
       morphs[1] = dom.createMorphAt(dom.childAt(element1, [3, 1]),1,1);
       morphs[2] = dom.createMorphAt(element0,3,3);
       return morphs;
     },
     statements: [
-      ["block","link-to",["users.new"],["class","btn"],0,null,["loc",[null,[11,24],[11,101]]]],
-      ["block","each",[["get","controller",["loc",[null,[18,24],[18,34]]]]],[],1,null,["loc",[null,[18,16],[38,25]]]],
-      ["content","outlet",["loc",[null,[42,4],[42,14]]]]
+      ["block","link-to",["users.new"],["class","btn"],0,null,["loc",[null,[8,24],[8,101]]]],
+      ["block","each",[["get","controller",["loc",[null,[15,24],[15,34]]]]],[],1,null,["loc",[null,[15,16],[35,25]]]],
+      ["content","outlet",["loc",[null,[39,4],[39,14]]]]
     ],
     locals: [],
     templates: [child0, child1]
