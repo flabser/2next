@@ -1,43 +1,43 @@
-<div class="view">
-    <div class="view-header">
-        <h1 class="header-title">User</h1>
-        <nav class="nav-action-bar">
-            <div class="pull-right">
-                page-navigator
-            </div>
-            <div class="-on-desktop">
-                <div class="action-bar">
-                    <a class="btn" href="#/users/new">new user</a>
+<section style="display:flex;">
+    <div class="view">
+        <div class="view-header">
+            <h1 class="header-title">User</h1>
+            <nav class="nav-action-bar">
+                <div class="pull-right">
+                    page-navigator
                 </div>
-            </div>
-        </nav>
-    </div>
-    <section>
-        {{outlet}}
-    </section>
-    <div class="view-content">
-        <div class="entries">
-            {{#each controller}}
-            <div class="entry-wrap">
-                <div class="entry-actions">
-                    <a class="entry-action action-delete" data-ddbid="{@id}" href="#">
-                        <i class="fa fa-trash" />
-                    </a>
-                </div>
-                <div data-ddbid="{@id}" class="entry document js-swipe-entry">
-                    <label class="entry-select">
-                        <input type="checkbox" name="docid" value="{@docid}" />
-                    </label>
-                    {{#link-to 'user' this class="entry-link"}}
-                    <div class="entry-fields">
-                        <span class="entry-field">
-							{{id}}
-						</span>
+                <div class="-on-desktop">
+                    <div class="action-bar">
+                        {{#link-to 'users.new' class="btn"}} {{t 'users.new.btn_label'}} {{/link-to}}
                     </div>
-                    {{/link-to}}
                 </div>
+            </nav>
+        </div>
+        <div class="view-content">
+            <div class="entries">
+                {{#each controller}}
+                <div class="entry-wrap">
+                    <div class="entry-actions">
+                        <a class="entry-action action-delete" data-ddbid="{@id}" href="#">
+                            <i class="fa fa-trash" />
+                        </a>
+                    </div>
+                    <div data-ddbid="{@id}" class="entry document js-swipe-entry">
+                        <label class="entry-select">
+                            <input type="checkbox" name="docid" value="{@docid}" />
+                        </label>
+                        {{#link-to 'users.user' this class="entry-link"}}
+                        <div class="entry-fields">
+                            <span class="entry-field">
+                            {{id}}
+                        </span>
+                        </div>
+                        {{/link-to}}
+                    </div>
+                </div>
+                {{/each}}
             </div>
-            {{/each}}
         </div>
     </div>
-</div>
+    {{outlet}}
+</section>

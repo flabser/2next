@@ -1,4 +1,6 @@
-CT.TagRoute = Ember.Route.extend({
+CT.TagsTagRoute = Ember.Route.extend({
+    templateName: 'tag',
+
     model: function(params) {
         return this.store.find('tag', params.tag_id);
     },

@@ -1,48 +1,48 @@
-<div class="view">
-    <div class="view-header">
-        <h1 class="header-title">Tags</h1>
-        <nav class="nav-action-bar">
-            <div class="-on-desktop">
-                <div class="action-bar">
-                    <a class="btn" href="#/tags/new">new tag</a>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <section>
-        {{outlet}}
-    </section>
-    <div class="view-content">
-        <header class="entries-head">
-            <div class="head-wrap">
-                <label class="entry-select">
-                    <input type="checkbox" data-toggle="id" class="all" />
-                </label>
-                <div class="entry-captions"></div>
-            </div>
-        </header>
-        <div class="entries">
-            {{#each controller}}
-            <div class="entry-wrap">
-                <div class="entry-actions">
-                    <a class="entry-action action-delete" data-ddbid="{{id}}" href="#">
-                        <i class="fa fa-trash" />
-                    </a>
-                </div>
-                <div data-ddbid="{{id}}" class="entry document js-swipe-entry">
-                    <label class="entry-select">
-                        <input type="checkbox" name="id" value="{{id}}" />
-                    </label>
-                    {{#link-to 'tag' this class="entry-link"}}
-                    <div class="entry-fields">
-                        <span class="entry-field">
-							{{name}}
-						</span>
+<section style="display:flex;">
+    <div class="view">
+        <div class="view-header">
+            <h1 class="header-title">Tags</h1>
+            <nav class="nav-action-bar">
+                <div class="-on-desktop">
+                    <div class="action-bar">
+                        {{#link-to 'tags.new' class="btn"}} {{t 'tag.new.btn_label'}} {{/link-to}}
                     </div>
-                    {{/link-to}}
                 </div>
+            </nav>
+        </div>
+        <div class="view-content">
+            <header class="entries-head">
+                <div class="head-wrap">
+                    <label class="entry-select">
+                        <input type="checkbox" data-toggle="id" class="all" />
+                    </label>
+                    <div class="entry-captions"></div>
+                </div>
+            </header>
+            <div class="entries">
+                {{#each controller}}
+                <div class="entry-wrap">
+                    <div class="entry-actions">
+                        <a class="entry-action action-delete" href="#/tags/{{id}}/delete" {{action "delete"}}>
+                            <i class="fa fa-trash" />
+                        </a>
+                    </div>
+                    <div data-ddbid="{{id}}" class="entry document js-swipe-entry">
+                        <label class="entry-select">
+                            <input type="checkbox" name="id" value="{{id}}" checked={{selectAll}} />
+                        </label>
+                        {{#link-to 'tags.tag' this class="entry-link"}}
+                        <div class="entry-fields">
+                            <span class="entry-field">
+                                {{name}}
+                            </span>
+                        </div>
+                        {{/link-to}}
+                    </div>
+                </div>
+                {{/each}}
             </div>
-            {{/each}}
         </div>
     </div>
-</div>
+    {{outlet}}
+</section>

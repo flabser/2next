@@ -4,7 +4,10 @@ CT.AccountsRoute = Ember.Route.extend({
     },
 
     actions: {
-        selectAll: function() {}
+        selectAll: function() {},
+        openNewForm: function() {
+            this.transitionTo('accounts.new');
+        }
     }
 });
 
@@ -12,11 +15,9 @@ CT.AccountsNewRoute = Ember.Route.extend({
     templateName: 'account',
 
     actions: {
-        create: function() {
-            this.transitionTo('accounts.new');
-        },
         save: function() {
             var controller = this.controller;
+            // TODO validate
             var newAccount = this.store.createRecord('account', {
                 type: controller.get('type'),
                 name: controller.get('name'),

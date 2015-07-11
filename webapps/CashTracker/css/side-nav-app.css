@@ -76,7 +76,8 @@ body.nav-app-open {
 	padding: 0;
 }
 
-.side-tree-item .side-tree-item-active {
+.side-tree-item .side-tree-item-active,
+.side-tree-item > a.active {
 	background-color: #F5F5F5;
 	font-weight: bold;
 }

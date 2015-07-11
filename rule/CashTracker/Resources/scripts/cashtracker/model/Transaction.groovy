@@ -228,7 +228,7 @@ public class Transaction implements _IObject {
 		setAccountFrom(null);
 		setAccountTo(null);
 		setAmount(rs.getBigDecimal("amount"));
-		setExchangeRate(rs.getBigDecimal("exchange_rate"));
+		setExchangeRate(rs.getFloat("exchange_rate"));
 		setCategory(null);
 		setCostCenter(null);
 		setTags(rs.getArray("tags"));

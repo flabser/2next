@@ -1,81 +1,83 @@
-<header class="form-header">
-    <h1 class="header-title">
+<div class="form-wrapper">
+    <header class="form-header">
+        <h1 class="header-title">
         <small id="saldo" class="pull-right" title="Сальдо"></small>
         {{title}} № {{vn}} {{date}}
     </h1>
-    <div class="action-bar">
-        <button class="btn btn-default" {{action 'save' this}}>{{t 'save'}}</button>
-        <a class="btn" href="#/transactions">{{t 'cancel'}}</a>
-    </div>
-</header>
-<section class="form-content">
-    <fieldset class="fieldset">
-        <!-- Дата операции -->
-        <div class="control-group">
-            <div class="control-label">
-                {{t 'date'}}
-            </div>
-            <div class="controls">
-                {{input name="date" value=date required=true class="span7"}}
-            </div>
+        <div class="action-bar">
+            <button class="btn btn-default" {{action 'save' this}}>{{t 'save'}}</button>
+            <a class="btn" href="#/transactions">{{t 'cancel'}}</a>
         </div>
-        <!-- Касса -->
-        <div class="control-group">
-            <div class="control-label">
-                {{t 'account'}}
+    </header>
+    <section class="form-content">
+        <fieldset class="fieldset">
+            <!-- Дата операции -->
+            <div class="control-group">
+                <div class="control-label">
+                    {{t 'date'}}
+                </div>
+                <div class="controls">
+                    {{input name="date" value=date required=true class="span7"}}
+                </div>
             </div>
-            <div class="controls">
-                {{account}}
+            <!-- Касса -->
+            <div class="control-group">
+                <div class="control-label">
+                    {{t 'account'}}
+                </div>
+                <div class="controls">
+                    {{account}}
+                </div>
             </div>
+            <!-- category -->
+            <div class="control-group">
+                <div class="control-label">
+                    {{t 'category'}}
+                </div>
+                <div class="controls">
+                    {{category}}
+                </div>
+            </div>
+            <!-- Целевая касса -->
+            <!-- Сумма -->
+            <div class="control-group">
+                <div class="control-label">
+                    {{t 'amount'}}
+                </div>
+                <div class="controls">
+                    {{input type="number" name="amount" value=amount required=true class="span7"}}
+                </div>
+            </div>
+            <!-- Место возникновения -->
+            <div class="control-group">
+                <div class="control-label">
+                    {{t 'cost_center'}}
+                </div>
+                <div class="controls">
+                    {{costcenter}}
+                </div>
+            </div>
+            <!-- Основание -->
+            <div class="control-group">
+                <div class="control-label">
+                    {{t 'basis'}}
+                </div>
+                <div class="controls">
+                    {{textarea name="basis" value=basis required=true class="span7"}}
+                </div>
+            </div>
+            <!-- documented -->
+        </fieldset>
+        <div id="tabs-2">
+            <form action="Uploader" name="upload" id="upload" method="post" enctype="multipart/form-data">
+                <!-- Секция "Вложения" -->
+                <div display="block" id="att">
+                    <br /> attach
+                </div>
+            </form>
         </div>
-        <!-- category -->
-        <div class="control-group">
-            <div class="control-label">
-                {{t 'category'}}
-            </div>
-            <div class="controls">
-                {{category}}
-            </div>
+        <div id="tabs-3">
+            doc info
         </div>
-        <!-- Целевая касса -->
-        <!-- Сумма -->
-        <div class="control-group">
-            <div class="control-label">
-                {{t 'amount'}}
-            </div>
-            <div class="controls">
-                {{input type="number" name="amount" value=amount required=true class="span7"}}
-            </div>
-        </div>
-        <!-- Место возникновения -->
-        <div class="control-group">
-            <div class="control-label">
-                {{t 'cost_center'}}
-            </div>
-            <div class="controls">
-                {{costcenter}}
-            </div>
-        </div>
-        <!-- Основание -->
-        <div class="control-group">
-            <div class="control-label">
-                {{t 'basis'}}
-            </div>
-            <div class="controls">
-                {{textarea name="basis" value=basis required=true class="span7"}}
-            </div>
-        </div>
-        <!-- documented -->
-    </fieldset>
-    <div id="tabs-2">
-        <form action="Uploader" name="upload" id="upload" method="post" enctype="multipart/form-data">
-            <!-- Секция "Вложения" -->
-            <div display="block" id="att">
-                <br /> attach
-            </div>
-        </form>
-    </div>
-    <div id="tabs-3">
-        doc info
-    </div>
-</section>
+    </section>
+</div>

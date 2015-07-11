@@ -9,14 +9,14 @@ class SwitchLang  extends _DoScript {
 
 	@Override
 	public void doGet(_Session session, _WebFormData formData, String lang) {
+
 		def toLang = formData.getValueSilently("lang")
 		try {
 			session.switchLang(LanguageType.valueOf(toLang.toUpperCase()))
 			publishElement("process", "lang-switched")
-		}catch(IllegalArgumentException e) {
+		} catch(IllegalArgumentException e) {
 			publishElement("error", "the " + toLang + " language is not available")
 		}
-
 	}
 
 	@Override

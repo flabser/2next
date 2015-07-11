@@ -1,4 +1,6 @@
-CT.TransactionRoute = Ember.Route.extend({
+CT.TransactionsTransactionRoute = Ember.Route.extend({
+    templateName: 'transaction',
+
     model: function(params) {
         return this.store.find('transaction', params.transaction_id);
     },

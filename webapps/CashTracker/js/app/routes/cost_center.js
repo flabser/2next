@@ -1,4 +1,6 @@
-CT.CostCenterRoute = Ember.Route.extend({
+CT.CostCentersCostCenterRoute = Ember.Route.extend({
+    templateName: 'cost_center',
+
     model: function(params) {
         return this.store.find('cost_center', params.costcenter_id);
     },

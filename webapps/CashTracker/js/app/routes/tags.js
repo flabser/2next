@@ -4,7 +4,10 @@ CT.TagsRoute = Ember.Route.extend({
     },
 
     actions: {
-        selectAll: function() {}
+        selectAll: function() {},
+        openNewForm: function() {
+            this.transitionTo('tags.new');
+        }
     }
 });
 
@@ -12,14 +15,10 @@ CT.TagsNewRoute = Ember.Route.extend({
     templateName: 'tag',
 
     actions: {
-        create: function() {
-            this.transitionTo('tags.new');
-        },
         save: function(tag) {
-            var controller = this.controller;
             var newTag = this.store.createRecord('tag', {
-                name: controller.get('name'),
-                color: controller.get('color')
+                name: this.controller.get('name'),
+                color: this.controller.get('color')
             });
             newTag.save();
         },

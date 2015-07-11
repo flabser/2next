@@ -1,4 +1,3 @@
-<div class="content-overlay" id="content-overlay" {{action 'hideOpenedNav' on='mouseDown' }}></div>
 <header class="layout_header">
     <div class="main-header">
         <div class="head-item head-nav-app-toggle" {{action 'navAppMenuToggle'}}>
@@ -33,54 +32,62 @@
         </a>
     </div>
 </header>
-<aside class="layout_aside nav-app">
-    <div class="side">
-        <div class="side-container">
-            <div class="side-nav">
-                <ul class="side-tree">
-                    <li class="side-tree-item">
-                        {{#link-to 'transactions'}}
-                        <i class="fa fa-file-o"></i>Transactions {{/link-to}}
-                    </li>
-                    <li class="side-tree-item">
-                        {{#link-to 'accounts'}}
-                        <i class="fa fa-file-o"></i>Accounts {{/link-to}}
-                    </li>
-                    <li class="side-tree-item">
-                        {{#link-to 'categories'}}
-                        <i class="fa fa-file-o"></i>Categories {{/link-to}}
-                    </li>
-                    <li class="side-tree-item">
-                        {{#link-to 'cost_centers'}}
-                        <i class="fa fa-file-o"></i>Cost centers {{/link-to}}
-                    </li>
-                    <li class="side-tree-item">
-                        {{#link-to 'tags'}}
-                        <i class="fa fa-file-o"></i>Tags {{/link-to}}
-                    </li>
-                    <li class="side-tree-item">
-                        {{#link-to 'users'}}
-                        <i class="fa fa-users"></i>Users {{/link-to}}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</aside>
-<section class="layout_content" id="content">
-    {{outlet}}
+<section class="flex">
+    <aside class="layout_aside nav-app" id="nav">
+        <nav class="side-nav">
+            <ul class="side-tree">
+                <li class="side-tree-item">
+                    {{#link-to 'transactions'}}
+                    <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
+                    <span class="nav-item-text">{{t 'transactions'}}</span> {{/link-to}}
+                </li>
+                <li class="side-tree-item">
+                    {{#link-to 'accounts'}}
+                    <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
+                    <span class="nav-item-text">{{t 'accounts'}}</span> {{/link-to}}
+                </li>
+                <li class="side-tree-item">
+                    {{#link-to 'categories'}}
+                    <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
+                    <span class="nav-item-text">{{t 'categories'}}</span> {{/link-to}}
+                </li>
+                <li class="side-tree-item">
+                    {{#link-to 'cost_centers'}}
+                    <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
+                    <span class="nav-item-text">{{t 'cost_centers'}}</span> {{/link-to}}
+                </li>
+                <li class="side-tree-item">
+                    {{#link-to 'tags'}}
+                    <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
+                    <span class="nav-item-text">{{t 'tags'}}</span> {{/link-to}}
+                </li>
+                <li class="side-tree-item">
+                    {{#link-to 'users'}}
+                    <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
+                    <span class="nav-item-text">{{t 'users'}}</span> {{/link-to}}
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <div class="content-overlay" id="content-overlay" {{action 'hideOpenedNav' on='mouseDown' }}></div>
+    <section class="layout_content">
+        {{outlet}}
+    </section>
+    <aside class="side-form">
+        {{outlet "sideForm"}}
+    </aside>
+    <aside class="layout_aside nav-ws">
+        <header>
+            <a href="#/userprofile" class="user">
+                <i class="fa fa-user"></i>
+                <span>{{session.user.login}}</span>
+            </a>
+        </header>
+        <footer>
+            <a href="#index" class="ws-exit" {{action "logout"}}>
+                <i class="fa fa-sign-out"></i>
+                <span>{{t 'logout'}}</span>
+            </a>
+        </footer>
+    </aside>
 </section>
-<aside class="layout_aside nav-ws">
-    <header>
-        <a href="#/userprofile" class="user">
-            <i class="fa fa-user"></i>
-            <span>{{session.user.login}}</span>
-        </a>
-    </header>
-    <footer>
-        <a href="#index" class="ws-exit" {{action "logout"}}>
-            <i class="fa fa-sign-out"></i>
-            <span>{{t 'logout'}}</span>
-        </a>
-    </footer>
-</aside>

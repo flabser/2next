@@ -1,5 +1,6 @@
 .view {
 	background: #FFF;
+	min-width: 320px;
 	position: relative;
 }
 

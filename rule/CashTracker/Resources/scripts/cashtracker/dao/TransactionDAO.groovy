@@ -12,6 +12,19 @@ import com.flabser.users.User
 
 public class TransactionDAO {
 
+	private final static String selectAll = """
+		select
+		   t.*,
+		   a_from.*,
+		   a_to.*,
+		   c.*,
+		   cc.*
+		 from transactions as t
+		   left join accounts as a_from on a_from.id = t.account_from
+		   left join accounts as a_to on a_to.id = t.account_to
+		   left join categories as c on c.id = t.category
+		   left join costcenters as cc on cc.id = t.cost_center"""
+
 	private IDatabase db
 	private User user
 
