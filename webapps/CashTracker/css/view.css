@@ -166,6 +166,10 @@
 	width: 100%;
 }
 
+.entry-link.active {
+	background-color: #F5F5F5;
+}
+
 .entry-fields {
 	position: relative;
 }
