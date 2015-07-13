@@ -6,6 +6,16 @@
 	<xsl:template match="/request">
 		<xsl:call-template name="layout">
 			<xsl:with-param name="body_class" select="'wlc wlc-child-page'" />
+			<xsl:with-param name="include">
+				<style>
+					.v_process {
+						background:#D9EDF7;border:1px solid #BCE8F1;color:#31708F;display:inline-block;padding:.5em;border-radius:6px;margin:.2em;
+					}
+					.v_error {
+						background:#F2DEDE;border:1px solid #EBCCD1;color:#A94442;display:inline-block;padding:.5em;border-radius:6px;margin:.2em;
+					}
+				</style>
+			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
 
@@ -21,37 +31,8 @@
 					<xsl:value-of select="//captions/retry_send_verify_email_title/@caption" />
 				</h1>
 				<section>
-					<xsl:if test="//error or //process">
-						<h3>
-							<xsl:if test="//process">
-								<xsl:attribute name="style">
-									background:#D9EDF7;border:1px solid #BCE8F1;color:#31708F;display:inline-block;padding:.5em;border-radius:6px;margin:.2em;
-								</xsl:attribute>
-							</xsl:if>
-							<xsl:if test="//error">
-								<xsl:attribute name="style">
-									background:#F2DEDE;border:1px solid #EBCCD1;color:#A94442;display:inline-block;padding:.5em;border-radius:6px;margin:.2em;
-								</xsl:attribute>
-							</xsl:if>
-							<xsl:choose>
-								<xsl:when test="//error = 'invalid-email'">
-									<xsl:value-of select="//invalid_email/@caption" />
-								</xsl:when>
-								<xsl:when test="//error = 'no-user'">
-									<xsl:value-of select="//no_user/@caption" />
-								</xsl:when>
-								<xsl:when test="//process = 'user-verified'">
-									<xsl:value-of select="//user_already_verified/@caption" />
-								</xsl:when>
-								<xsl:when test="//error = 'verify-email'">
-									<xsl:value-of select="//error_verify_email/@caption" />
-								</xsl:when>
-							</xsl:choose>
-							<xsl:if test="//process = 'verify-email-send'">
-								<xsl:value-of select="//retry_send_verify_email_send_ok/@caption" />
-							</xsl:if>
-						</h3>
-					</xsl:if>
+					<xsl:apply-templates select="//error" mode="verify-result" />
+					<xsl:apply-templates select="//process" mode="verify-result" />
 					<div>
 						<form class="reg_form" method="POST">
 							<input type="hidden" name="type" value="page" />
@@ -69,6 +50,36 @@
 				</section>
 			</div>
 		</div>
+	</xsl:template>
+
+	<xsl:template match="error[text() = 'invalid-email']" mode="verify-result">
+		<p class="v_error">
+			<xsl:value-of select="//invalid_email/@caption" />
+		</p>
+	</xsl:template>
+
+	<xsl:template match="error[text() = 'no-user']" mode="verify-result">
+		<p class="v_error">
+			<xsl:value-of select="//no_user/@caption" />
+		</p>
+	</xsl:template>
+
+	<xsl:template match="process[text() = 'user-verified']" mode="verify-result">
+		<p class="v_process">
+			<xsl:value-of select="//user_already_verified/@caption" />
+		</p>
+	</xsl:template>
+
+	<xsl:template match="error[text() = 'verify-email']" mode="verify-result">
+		<p class="v_error">
+			<xsl:value-of select="//error_verify_email/@caption" />
+		</p>
+	</xsl:template>
+
+	<xsl:template match="process[text() = 'verify-email-send']" mode="verify-result">
+		<p class="v_process">
+			<xsl:value-of select="//retry_send_verify_email_send_ok/@caption" />
+		</p>
 	</xsl:template>
 
 </xsl:stylesheet>
