@@ -282,6 +282,37 @@
 		<entry lang="ENG" hint="Отправить">Отправить</entry>
 		<entry lang="BG" hint=""></entry>
 	</sentence>
+	<sentence mode="on" keyword="retry_send_verify_email_send_ok">
+		<entry lang="RUS" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
+		<entry lang="KAZ" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
+		<entry lang="ENG" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
+		<entry lang="BG" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
+	</sentence>
+	<sentence mode="on" keyword="no_user">
+		<entry lang="RUS" hint="Пользователь не найден">Пользователь не найден</entry>
+		<entry lang="KAZ" hint="Пользователь не найден">Пользователь не найден</entry>
+		<entry lang="ENG" hint="Пользователь не найден">Пользователь не найден</entry>
+		<entry lang="BG" hint="Пользователь не найден">Пользователь не найден</entry>
+	</sentence>
+	<sentence mode="on" keyword="invalid_email">
+		<entry lang="RUS" hint="Не корректный e-mail">Не корректный e-mail</entry>
+		<entry lang="KAZ" hint="Не корректный e-mail">Не корректный e-mail</entry>
+		<entry lang="ENG" hint="Не корректный e-mail">Не корректный e-mail</entry>
+		<entry lang="BG" hint="Не корректный e-mail">Не корректный e-mail</entry>
+	</sentence>
+	<sentence mode="on" keyword="user_already_verified">
+		<entry lang="RUS" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
+		<entry lang="KAZ" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
+		<entry lang="ENG" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
+		<entry lang="BG" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
+	</sentence>
+	<sentence mode="on" keyword="error_verify_email">
+		<entry lang="RUS" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
+		<entry lang="KAZ" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
+		<entry lang="ENG" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
+		<entry lang="BG" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
+	</sentence>
+
 	<sentence mode="on" keyword="transactions">
 		<entry lang="RUS" hint="Операции">Операции</entry>
 		<entry lang="KAZ" hint="Операции">Операции</entry>
