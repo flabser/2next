@@ -3,7 +3,7 @@
         <h1 class="header-title">Cost center / {{name}}</h1>
         <div class="action-bar">
             <button class="btn btn-primary" {{action 'save' this}}>{{t 'save'}}</button>
-            <a class="btn" href="#/costcenters">{{t 'cancel'}}</a>
+            <button class="btn" {{action 'goBack'}}>{{t 'cancel'}}</button>
         </div>
     </header>
     <section class="form-content">

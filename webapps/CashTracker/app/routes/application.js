@@ -1,16 +1,21 @@
 import Ember from 'ember';
+const {
+    Route, inject
+} = Ember;
 
-export default Ember.Route.extend({
+export default Route.extend({
+
+    session: inject.service(),
+
+    translationsFetcher: inject.service(),
 
     init: function() {
         this.windowOnResize();
         Ember.$(window).resize(this.windowOnResize);
     },
 
-    fetchTranslations: function() {
-        return Ember.$.getJSON('rest/page/app-captions').then(function(data) {
-            return data._Page.captions;
-        });
+    activate: function() {
+        Ember.$('.page-loading').hide();
     },
 
     windowOnResize: function() {
@@ -22,24 +27,18 @@ export default Ember.Route.extend({
     },
 
     beforeModel: function() {
-        var i18n = this.get('i18n');
-        this.fetchTranslations().then(function(translations) {
-            i18n.set('translations', translations);
-        });
+        return this.get('translationsFetcher').fetch();
+    },
+
+    afterModel: function(user) {
+        // this.set('i18n.locale', user.get('locale'));
     },
 
     model: function() {
-        var route = this,
-            sessionService = this.get('session');
-
-        var req = sessionService.getSession();
-        req.then(function(result) {
-            if (result.authUser.login) {
-                route.session.set('user', result.authUser);
-                return result.authUser;
-            }
+        var sessionService = this.get('session');
+        return sessionService.getSession().then(function() {
+            return sessionService.get('user');
         });
-        return req;
     },
 
     actions: {
@@ -53,7 +52,7 @@ export default Ember.Route.extend({
 
         },
 
-        historyBack: function() {
+        goBack: function() {
             history.back(-1);
         },
 
@@ -74,8 +73,9 @@ export default Ember.Route.extend({
         },
 
         error: function(error, transition) {
-            if (error.status === 401 || (!this.session.get('user') && this.routeName !== 'login')) {
-                window.location.href = 'Provider?id=login';
+            if (error.status === 401 || (!this.get('session').isAuthenticated() && this.routeName !== 'login')) {
+                // window.location.href = 'Provider?id=login';
+
                 /*this.controllerFor('login').setProperties({
                     transition: transition
                 });*/
