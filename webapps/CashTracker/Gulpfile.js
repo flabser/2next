@@ -121,9 +121,9 @@ gulp.task('dist_ct', function() {
 
 // run
 gulp.task('default', function() {
-    gulp.run('em_minify_js_babel');
+    // gulp.run('em_minify_js_babel');
 
-    // gulp.run('lint', 'em_minify_js_babel', 'em_lint', 'em_templates_compile', 'em_minify_js', 'minify_js', 'minify_css');
+    gulp.run('lint', 'em_lint', 'em_templates_compile', 'em_minify_js', 'minify_js', 'minify_css');
 
     // gulp.watch(em_templates, function(event) {
     //    gulp.run('em_templates_trim');
