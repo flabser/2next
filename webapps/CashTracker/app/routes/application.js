@@ -1,16 +1,31 @@
-CT.ApplicationRoute = Ember.Route.extend({
+import Ember from 'ember';
+
+export default Ember.Route.extend({
 
     init: function() {
         this.windowOnResize();
-        $(window).resize(this.windowOnResize);
+        Ember.$(window).resize(this.windowOnResize);
+    },
+
+    fetchTranslations: function() {
+        return Ember.$.getJSON('rest/page/app-captions').then(function(data) {
+            return data._Page.captions;
+        });
     },
 
     windowOnResize: function() {
         if (window.innerWidth <= 800) {
-            $('body').addClass('phone');
+            Ember.$('body').addClass('phone');
         } else {
-            $('body').removeClass('phone');
+            Ember.$('body').removeClass('phone');
         }
+    },
+
+    beforeModel: function() {
+        var i18n = this.get('i18n');
+        this.fetchTranslations().then(function(translations) {
+            i18n.translations = translations;
+        });
     },
 
     model: function() {
@@ -43,19 +58,19 @@ CT.ApplicationRoute = Ember.Route.extend({
         },
 
         navAppMenuToggle: function() {
-            $('body').toggleClass('nav-app-open');
+            Ember.$('body').toggleClass('nav-app-open');
         },
 
         navUserMenuToggle: function() {
-            $('body').toggleClass('nav-ws-open');
+            Ember.$('body').toggleClass('nav-ws-open');
         },
 
         hideOpenedNav: function() {
-            $('body').removeClass('nav-app-open nav-ws-open');
+            Ember.$('body').removeClass('nav-app-open nav-ws-open');
         },
 
         toggleSearchForm: function() {
-            $('body').toggleClass('search-open');
+            Ember.$('body').toggleClass('search-open');
         },
 
         error: function(error, transition) {
@@ -73,7 +88,7 @@ CT.ApplicationRoute = Ember.Route.extend({
         },
 
         willTransition: function() {
-            $('body').removeClass('nav-app-open nav-ws-open');
+            Ember.$('body').removeClass('nav-app-open nav-ws-open');
         }
     }
 });

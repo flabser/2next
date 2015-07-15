@@ -104,24 +104,6 @@ CT.TransactionsController = Ember.ArrayController.extend({
     queryParams: ['offset', 'limit', 'order_by']
 });
 
-Ember.Application.initializer({
-    name: 'i18n',
-
-    initialize: function(container, application) {
-        application.register('service:i18n', Ember.Object);
-        application.inject('route', 'i18n', 'service:i18n');
-    }
-});
-
-Ember.Application.initializer({
-    name: 'session',
-
-    initialize: function(container, application) {
-        application.register('service:session', Ember.Object);
-        application.inject('route', 'session', 'service:session');
-    }
-});
-
 CT.Account = DS.Model.extend({
     type: DS.attr('number'),
     name: DS.attr('string'),
@@ -180,64 +162,6 @@ CT.User = DS.Model.extend({
     pwd: DS.attr('string'),
     email: DS.attr('string'),
     role: DS.attr('string')
-});
-
-CT.I18nService = Ember.Service.extend({
-
-    translations: [],
-
-    init: function() {
-        Ember.HTMLBars._registerHelper('t', this.t);
-        this.fetchTranslations().then(function(translations) {
-            CT.I18nService.translations = translations;
-        });
-    },
-
-    fetchTranslations: function() {
-        return $.getJSON('rest/page/app-captions').then(function(data) {
-            return data._Page.captions;
-        });
-    },
-
-    t: function(key) {
-        if (CT.I18nService.translations.hasOwnProperty(key)) {
-            return CT.I18nService.translations[key][0];
-        } else {
-            return key;
-        }
-    }
-});
-
-CT.SessionService = Ember.Service.extend({
-
-    getSession: function() {
-        return $.getJSON('rest/session');
-    },
-
-    login: function(userName, password) {
-        return $.ajax({
-            method: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            url: 'rest/session',
-            data: JSON.stringify({
-                authUser: {
-                    login: userName,
-                    pwd: password
-                }
-            }),
-            success: function(result) {
-                return result;
-            }
-        });
-    },
-
-    logout: function() {
-        return $.ajax({
-            method: 'DELETE',
-            url: 'rest/session'
-        });
-    }
 });
 
 CT.AccountsAccountRoute = Ember.Route.extend({
@@ -332,6 +256,10 @@ CT.ApplicationRoute = Ember.Route.extend({
 
         },
 
+        historyBack: function() {
+            history.back(-1);
+        },
+
         navAppMenuToggle: function() {
             $('body').toggleClass('nav-app-open');
         },
@@ -349,10 +277,8 @@ CT.ApplicationRoute = Ember.Route.extend({
         },
 
         error: function(error, transition) {
-            console.log('app error', error);
-
             if (error.status === 401 || (!this.session.get('user') && this.routeName !== 'login')) {
-
+                window.location.href = 'Provider?id=login';
                 /*this.controllerFor('login').setProperties({
                     transition: transition
                 });*/
@@ -657,6 +583,82 @@ CT.UsersNewRoute = Ember.Route.extend({
     }
 });
 
+Ember.Application.initializer({
+    name: 'i18n',
+
+    initialize: function(container, application) {
+        application.register('service:i18n', Ember.Object);
+        application.inject('route', 'i18n', 'service:i18n');
+    }
+});
+
+Ember.Application.initializer({
+    name: 'session',
+
+    initialize: function(container, application) {
+        application.register('service:session', Ember.Object);
+        application.inject('route', 'session', 'service:session');
+    }
+});
+
+CT.I18nService = Ember.Service.extend({
+
+    translations: [],
+
+    init: function() {
+        Ember.HTMLBars._registerHelper('t', this.t);
+        this.fetchTranslations().then(function(translations) {
+            CT.I18nService.translations = translations;
+        });
+    },
+
+    fetchTranslations: function() {
+        return $.getJSON('rest/page/app-captions').then(function(data) {
+            return data._Page.captions;
+        });
+    },
+
+    t: function(key) {
+        if (CT.I18nService.translations.hasOwnProperty(key)) {
+            return CT.I18nService.translations[key][0];
+        } else {
+            return key;
+        }
+    }
+});
+
+CT.SessionService = Ember.Service.extend({
+
+    getSession: function() {
+        return $.getJSON('rest/session');
+    },
+
+    login: function(userName, password) {
+        return $.ajax({
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: 'rest/session',
+            data: JSON.stringify({
+                authUser: {
+                    login: userName,
+                    pwd: password
+                }
+            }),
+            success: function(result) {
+                return result;
+            }
+        });
+    },
+
+    logout: function() {
+        return $.ajax({
+            method: 'DELETE',
+            url: 'rest/session'
+        });
+    }
+});
+
 CT.ApplicationView = Ember.View.extend({
     classNames: ['layout'],
 
@@ -676,7 +678,7 @@ Ember.TEMPLATES["account"] = Ember.HTMLBars.template((function() {
           "column": 0
         },
         "end": {
-          "line": 54,
+          "line": 46,
           "column": 0
         }
       }
@@ -714,9 +716,8 @@ Ember.TEMPLATES["account"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el3, el4);
       var el4 = dom.createTextNode("\n            ");
       dom.appendChild(el3, el4);
-      var el4 = dom.createElement("a");
+      var el4 = dom.createElement("button");
       dom.setAttribute(el4,"class","btn");
-      dom.setAttribute(el4,"href","#/accounts");
       var el5 = dom.createComment("");
       dom.appendChild(el4, el5);
       dom.appendChild(el3, el4);
@@ -734,35 +735,6 @@ Ember.TEMPLATES["account"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el2, el3);
       var el3 = dom.createElement("div");
       dom.setAttribute(el3,"class","fieldset");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("div");
-      dom.setAttribute(el4,"class","control-group");
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("div");
-      dom.setAttribute(el5,"class","control-label");
-      var el6 = dom.createTextNode("\n                    ");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createComment("");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createTextNode("\n                ");
-      dom.appendChild(el5, el6);
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("div");
-      dom.setAttribute(el5,"class","controls");
-      var el6 = dom.createTextNode("\n                    ");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createComment("");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createTextNode("\n                ");
-      dom.appendChild(el5, el6);
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n            ");
-      dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
       var el4 = dom.createTextNode("\n            ");
       dom.appendChild(el3, el4);
       var el4 = dom.createElement("div");
@@ -897,44 +869,42 @@ Ember.TEMPLATES["account"] = Ember.HTMLBars.template((function() {
       var element1 = dom.childAt(element0, [1]);
       var element2 = dom.childAt(element1, [3]);
       var element3 = dom.childAt(element2, [1]);
-      var element4 = dom.childAt(element0, [3, 1]);
-      var element5 = dom.childAt(element4, [1]);
-      var element6 = dom.childAt(element4, [3]);
-      var element7 = dom.childAt(element4, [5]);
-      var element8 = dom.childAt(element4, [7]);
-      var element9 = dom.childAt(element4, [9]);
-      var morphs = new Array(14);
+      var element4 = dom.childAt(element2, [3]);
+      var element5 = dom.childAt(element0, [3, 1]);
+      var element6 = dom.childAt(element5, [1]);
+      var element7 = dom.childAt(element5, [3]);
+      var element8 = dom.childAt(element5, [5]);
+      var element9 = dom.childAt(element5, [7]);
+      var morphs = new Array(13);
       morphs[0] = dom.createMorphAt(dom.childAt(element1, [1]),1,1);
       morphs[1] = dom.createElementMorph(element3);
       morphs[2] = dom.createMorphAt(element3,0,0);
-      morphs[3] = dom.createMorphAt(dom.childAt(element2, [3]),0,0);
-      morphs[4] = dom.createMorphAt(dom.childAt(element5, [1]),1,1);
-      morphs[5] = dom.createMorphAt(dom.childAt(element5, [3]),1,1);
-      morphs[6] = dom.createMorphAt(dom.childAt(element6, [1]),1,1);
-      morphs[7] = dom.createMorphAt(dom.childAt(element6, [3]),1,1);
-      morphs[8] = dom.createMorphAt(dom.childAt(element7, [1]),1,1);
-      morphs[9] = dom.createMorphAt(dom.childAt(element7, [3]),1,1);
-      morphs[10] = dom.createMorphAt(dom.childAt(element8, [1]),1,1);
-      morphs[11] = dom.createMorphAt(dom.childAt(element8, [3]),1,1);
-      morphs[12] = dom.createMorphAt(dom.childAt(element9, [1]),1,1);
-      morphs[13] = dom.createMorphAt(dom.childAt(element9, [3]),1,1);
+      morphs[3] = dom.createElementMorph(element4);
+      morphs[4] = dom.createMorphAt(element4,0,0);
+      morphs[5] = dom.createMorphAt(dom.childAt(element6, [1]),1,1);
+      morphs[6] = dom.createMorphAt(dom.childAt(element6, [3]),1,1);
+      morphs[7] = dom.createMorphAt(dom.childAt(element7, [1]),1,1);
+      morphs[8] = dom.createMorphAt(dom.childAt(element7, [3]),1,1);
+      morphs[9] = dom.createMorphAt(dom.childAt(element8, [1]),1,1);
+      morphs[10] = dom.createMorphAt(dom.childAt(element8, [3]),1,1);
+      morphs[11] = dom.createMorphAt(dom.childAt(element9, [1]),1,1);
+      morphs[12] = dom.createMorphAt(dom.childAt(element9, [3]),1,1);
       return morphs;
     },
     statements: [
       ["content","name",["loc",[null,[3,43],[3,51]]]],
       ["element","action",["save",["get","this",["loc",[null,[5,60],[5,64]]]]],[],["loc",[null,[5,44],[5,66]]]],
       ["inline","t",["save"],[],["loc",[null,[5,67],[5,79]]]],
-      ["inline","t",["cancel"],[],["loc",[null,[6,45],[6,59]]]],
+      ["element","action",["historyBack"],[],["loc",[null,[6,32],[6,56]]]],
+      ["inline","t",["cancel"],[],["loc",[null,[6,57],[6,71]]]],
       ["inline","t",["name"],[],["loc",[null,[13,20],[13,32]]]],
       ["inline","input",[],["name","name","value",["subexpr","@mut",[["get","name",["loc",[null,[16,46],[16,50]]]]],[],[]],"required",true,"class","span7"],["loc",[null,[16,20],[16,80]]]],
-      ["inline","t",["type"],[],["loc",[null,[21,20],[21,32]]]],
-      ["inline","input",[],["name","type","value",["subexpr","@mut",[["get","type",["loc",[null,[24,46],[24,50]]]]],[],[]],"required",true,"class","span7"],["loc",[null,[24,20],[24,80]]]],
-      ["inline","t",["amountControl"],[],["loc",[null,[29,20],[29,41]]]],
-      ["inline","input",[],["name","amountControl","value",["subexpr","@mut",[["get","amountControl",["loc",[null,[32,55],[32,68]]]]],[],[]],"required",true,"class","span7"],["loc",[null,[32,20],[32,98]]]],
-      ["inline","t",["owner"],[],["loc",[null,[37,20],[37,33]]]],
-      ["inline","input",[],["name","owner","value",["subexpr","@mut",[["get","owner.id",["loc",[null,[40,47],[40,55]]]]],[],[]],"required",true,"class","span7"],["loc",[null,[40,20],[40,85]]]],
-      ["inline","t",["observers"],[],["loc",[null,[45,20],[45,37]]]],
-      ["inline","input",[],["name","amountControl","value",["subexpr","@mut",[["get","amountControl",["loc",[null,[48,55],[48,68]]]]],[],[]],"required",true,"class","span7"],["loc",[null,[48,20],[48,98]]]]
+      ["inline","t",["amountControl"],[],["loc",[null,[21,20],[21,41]]]],
+      ["inline","input",[],["type","number","name","amountControl","value",["subexpr","@mut",[["get","amountControl",["loc",[null,[24,69],[24,82]]]]],[],[]],"required",true,"class","span7"],["loc",[null,[24,20],[24,112]]]],
+      ["inline","t",["owner"],[],["loc",[null,[29,20],[29,33]]]],
+      ["inline","input",[],["name","owner","value",["subexpr","@mut",[["get","owner",["loc",[null,[32,47],[32,52]]]]],[],[]],"required",true,"class","span7"],["loc",[null,[32,20],[32,82]]]],
+      ["inline","t",["observers"],[],["loc",[null,[37,20],[37,37]]]],
+      ["inline","input",[],["name","observers","value",["subexpr","@mut",[["get","observers",["loc",[null,[40,51],[40,60]]]]],[],[]],"required",true,"class","span7"],["loc",[null,[40,20],[40,90]]]]
     ],
     locals: [],
     templates: []
@@ -1418,11 +1388,11 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 40,
+            "line": 7,
             "column": 20
           },
           "end": {
-            "line": 42,
+            "line": 9,
             "column": 76
           }
         }
@@ -1457,7 +1427,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["inline","t",["transactions"],[],["loc",[null,[42,48],[42,68]]]]
+        ["inline","t",["transactions"],[],["loc",[null,[9,48],[9,68]]]]
       ],
       locals: [],
       templates: []
@@ -1470,11 +1440,11 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 45,
+            "line": 12,
             "column": 20
           },
           "end": {
-            "line": 47,
+            "line": 14,
             "column": 72
           }
         }
@@ -1509,7 +1479,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["inline","t",["accounts"],[],["loc",[null,[47,48],[47,64]]]]
+        ["inline","t",["accounts"],[],["loc",[null,[14,48],[14,64]]]]
       ],
       locals: [],
       templates: []
@@ -1522,11 +1492,11 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 50,
+            "line": 17,
             "column": 20
           },
           "end": {
-            "line": 52,
+            "line": 19,
             "column": 74
           }
         }
@@ -1561,7 +1531,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["inline","t",["categories"],[],["loc",[null,[52,48],[52,66]]]]
+        ["inline","t",["categories"],[],["loc",[null,[19,48],[19,66]]]]
       ],
       locals: [],
       templates: []
@@ -1574,11 +1544,11 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 55,
+            "line": 22,
             "column": 20
           },
           "end": {
-            "line": 57,
+            "line": 24,
             "column": 76
           }
         }
@@ -1613,7 +1583,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["inline","t",["cost_centers"],[],["loc",[null,[57,48],[57,68]]]]
+        ["inline","t",["cost_centers"],[],["loc",[null,[24,48],[24,68]]]]
       ],
       locals: [],
       templates: []
@@ -1626,11 +1596,11 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 60,
+            "line": 27,
             "column": 20
           },
           "end": {
-            "line": 62,
+            "line": 29,
             "column": 68
           }
         }
@@ -1665,7 +1635,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["inline","t",["tags"],[],["loc",[null,[62,48],[62,60]]]]
+        ["inline","t",["tags"],[],["loc",[null,[29,48],[29,60]]]]
       ],
       locals: [],
       templates: []
@@ -1678,11 +1648,11 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 65,
+            "line": 32,
             "column": 20
           },
           "end": {
-            "line": 67,
+            "line": 34,
             "column": 69
           }
         }
@@ -1717,7 +1687,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["inline","t",["users"],[],["loc",[null,[67,48],[67,61]]]]
+        ["inline","t",["users"],[],["loc",[null,[34,48],[34,61]]]]
       ],
       locals: [],
       templates: []
@@ -1733,7 +1703,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
           "column": 0
         },
         "end": {
-          "line": 94,
+          "line": 61,
           "column": 0
         }
       }
@@ -1743,160 +1713,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
     hasRendered: false,
     buildFragment: function buildFragment(dom) {
       var el0 = dom.createDocumentFragment();
-      var el1 = dom.createElement("header");
-      dom.setAttribute(el1,"class","layout_header");
-      var el2 = dom.createTextNode("\n    ");
-      dom.appendChild(el1, el2);
-      var el2 = dom.createElement("div");
-      dom.setAttribute(el2,"class","main-header");
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","head-item head-nav-app-toggle");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("div");
-      dom.setAttribute(el4,"class","nav-app-toggle");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","head-item brand");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("img");
-      dom.setAttribute(el4,"alt","logo");
-      dom.setAttribute(el4,"src","/SharedResources/logos/cashtracker_small.png");
-      dom.setAttribute(el4,"class","brand-logo");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("span");
-      dom.setAttribute(el4,"class","brand-title");
-      var el5 = dom.createTextNode("CashTracker");
-      dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","head-item head-nav-ws-toggle");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("div");
-      dom.setAttribute(el4,"class","nav-ws-toggle");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","head-item nav-search-toggle");
-      dom.setAttribute(el3,"id","toggle-head-search");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("i");
-      dom.setAttribute(el4,"class","fa fa-search");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","head-item nav-search");
-      dom.setAttribute(el3,"id","search-block");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("div");
-      dom.setAttribute(el4,"class","search-toggle-back");
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("i");
-      dom.setAttribute(el5,"class","fa fa-chevron-left");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n            ");
-      dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("form");
-      dom.setAttribute(el4,"action","Provider");
-      dom.setAttribute(el4,"method","GET");
-      dom.setAttribute(el4,"name","search");
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("input");
-      dom.setAttribute(el5,"type","hidden");
-      dom.setAttribute(el5,"name","type");
-      dom.setAttribute(el5,"value","page");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("input");
-      dom.setAttribute(el5,"type","hidden");
-      dom.setAttribute(el5,"name","id");
-      dom.setAttribute(el5,"value","search");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("input");
-      dom.setAttribute(el5,"type","search");
-      dom.setAttribute(el5,"name","keyword");
-      dom.setAttribute(el5,"value","");
-      dom.setAttribute(el5,"class","search-keyword");
-      dom.setAttribute(el5,"required","required");
-      dom.setAttribute(el5,"placeholder","Поиск");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n                ");
-      dom.appendChild(el4, el5);
-      var el5 = dom.createElement("button");
-      dom.setAttribute(el5,"type","submit");
-      dom.setAttribute(el5,"class","search-btn");
-      var el6 = dom.createTextNode("\n                    ");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createElement("i");
-      dom.setAttribute(el6,"class","fa fa-search");
-      dom.appendChild(el5, el6);
-      var el6 = dom.createTextNode("\n                ");
-      dom.appendChild(el5, el6);
-      dom.appendChild(el4, el5);
-      var el5 = dom.createTextNode("\n            ");
-      dom.appendChild(el4, el5);
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("a");
-      dom.setAttribute(el3,"class","no-desktop head-item nav-action");
-      dom.setAttribute(el3,"href","#");
-      dom.setAttribute(el3,"data-action","add_new");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("i");
-      dom.setAttribute(el4,"class","fa fa-plus");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createElement("span");
-      dom.setAttribute(el4,"class","action-label");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n    ");
-      dom.appendChild(el2, el3);
-      dom.appendChild(el1, el2);
-      var el2 = dom.createTextNode("\n");
-      dom.appendChild(el1, el2);
+      var el1 = dom.createComment("");
       dom.appendChild(el0, el1);
       var el1 = dom.createTextNode("\n");
       dom.appendChild(el0, el1);
@@ -2083,52 +1900,42 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       return el0;
     },
     buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-      var element0 = dom.childAt(fragment, [0, 1]);
-      var element1 = dom.childAt(element0, [1]);
-      var element2 = dom.childAt(element0, [5, 1]);
-      var element3 = dom.childAt(element0, [7]);
-      var element4 = dom.childAt(element0, [9, 1]);
-      var element5 = dom.childAt(fragment, [2]);
-      var element6 = dom.childAt(element5, [1, 1, 1]);
-      var element7 = dom.childAt(element5, [3]);
-      var element8 = dom.childAt(element5, [9]);
-      var element9 = dom.childAt(element8, [3, 1]);
-      var morphs = new Array(16);
-      morphs[0] = dom.createElementMorph(element1);
-      morphs[1] = dom.createElementMorph(element2);
-      morphs[2] = dom.createElementMorph(element3);
-      morphs[3] = dom.createElementMorph(element4);
-      morphs[4] = dom.createMorphAt(dom.childAt(element6, [1]),1,1);
-      morphs[5] = dom.createMorphAt(dom.childAt(element6, [3]),1,1);
-      morphs[6] = dom.createMorphAt(dom.childAt(element6, [5]),1,1);
-      morphs[7] = dom.createMorphAt(dom.childAt(element6, [7]),1,1);
-      morphs[8] = dom.createMorphAt(dom.childAt(element6, [9]),1,1);
-      morphs[9] = dom.createMorphAt(dom.childAt(element6, [11]),1,1);
-      morphs[10] = dom.createElementMorph(element7);
-      morphs[11] = dom.createMorphAt(dom.childAt(element5, [5]),1,1);
-      morphs[12] = dom.createMorphAt(dom.childAt(element5, [7]),1,1);
-      morphs[13] = dom.createMorphAt(dom.childAt(element8, [1, 1, 3]),0,0);
-      morphs[14] = dom.createElementMorph(element9);
-      morphs[15] = dom.createMorphAt(dom.childAt(element9, [3]),0,0);
+      var element0 = dom.childAt(fragment, [2]);
+      var element1 = dom.childAt(element0, [1, 1, 1]);
+      var element2 = dom.childAt(element0, [3]);
+      var element3 = dom.childAt(element0, [9]);
+      var element4 = dom.childAt(element3, [3, 1]);
+      var morphs = new Array(13);
+      morphs[0] = dom.createMorphAt(fragment,0,0,contextualElement);
+      morphs[1] = dom.createMorphAt(dom.childAt(element1, [1]),1,1);
+      morphs[2] = dom.createMorphAt(dom.childAt(element1, [3]),1,1);
+      morphs[3] = dom.createMorphAt(dom.childAt(element1, [5]),1,1);
+      morphs[4] = dom.createMorphAt(dom.childAt(element1, [7]),1,1);
+      morphs[5] = dom.createMorphAt(dom.childAt(element1, [9]),1,1);
+      morphs[6] = dom.createMorphAt(dom.childAt(element1, [11]),1,1);
+      morphs[7] = dom.createElementMorph(element2);
+      morphs[8] = dom.createMorphAt(dom.childAt(element0, [5]),1,1);
+      morphs[9] = dom.createMorphAt(dom.childAt(element0, [7]),1,1);
+      morphs[10] = dom.createMorphAt(dom.childAt(element3, [1, 1, 3]),0,0);
+      morphs[11] = dom.createElementMorph(element4);
+      morphs[12] = dom.createMorphAt(dom.childAt(element4, [3]),0,0);
+      dom.insertBoundary(fragment, 0);
       return morphs;
     },
     statements: [
-      ["element","action",["navAppMenuToggle"],[],["loc",[null,[3,51],[3,80]]]],
-      ["element","action",["navUserMenuToggle"],["on","mouseDown"],["loc",[null,[11,39],[11,85]]]],
-      ["element","action",["toggleSearchForm"],["on","mouseDown"],["loc",[null,[13,73],[13,118]]]],
-      ["element","action",["toggleSearchForm"],["on","mouseDown"],["loc",[null,[17,44],[17,89]]]],
-      ["block","link-to",["transactions"],[],0,null,["loc",[null,[40,20],[42,88]]]],
-      ["block","link-to",["accounts"],[],1,null,["loc",[null,[45,20],[47,84]]]],
-      ["block","link-to",["categories"],[],2,null,["loc",[null,[50,20],[52,86]]]],
-      ["block","link-to",["cost_centers"],[],3,null,["loc",[null,[55,20],[57,88]]]],
-      ["block","link-to",["tags"],[],4,null,["loc",[null,[60,20],[62,80]]]],
-      ["block","link-to",["users"],[],5,null,["loc",[null,[65,20],[67,81]]]],
-      ["element","action",["hideOpenedNav"],["on","mouseDown"],["loc",[null,[72,54],[72,96]]]],
-      ["content","outlet",["loc",[null,[74,8],[74,18]]]],
-      ["inline","outlet",["sideForm"],[],["loc",[null,[77,8],[77,29]]]],
-      ["content","session.user.login",["loc",[null,[83,22],[83,44]]]],
-      ["element","action",["logout"],[],["loc",[null,[87,45],[87,64]]]],
-      ["inline","t",["logout"],[],["loc",[null,[89,22],[89,36]]]]
+      ["inline","partial",["header-nav"],[],["loc",[null,[1,0],[1,24]]]],
+      ["block","link-to",["transactions"],[],0,null,["loc",[null,[7,20],[9,88]]]],
+      ["block","link-to",["accounts"],[],1,null,["loc",[null,[12,20],[14,84]]]],
+      ["block","link-to",["categories"],[],2,null,["loc",[null,[17,20],[19,86]]]],
+      ["block","link-to",["cost_centers"],[],3,null,["loc",[null,[22,20],[24,88]]]],
+      ["block","link-to",["tags"],[],4,null,["loc",[null,[27,20],[29,80]]]],
+      ["block","link-to",["users"],[],5,null,["loc",[null,[32,20],[34,81]]]],
+      ["element","action",["hideOpenedNav"],["on","mouseDown"],["loc",[null,[39,54],[39,96]]]],
+      ["content","outlet",["loc",[null,[41,8],[41,18]]]],
+      ["inline","outlet",["sideForm"],[],["loc",[null,[44,8],[44,29]]]],
+      ["content","session.user.login",["loc",[null,[50,22],[50,44]]]],
+      ["element","action",["logout"],[],["loc",[null,[54,45],[54,64]]]],
+      ["inline","t",["logout"],[],["loc",[null,[56,22],[56,36]]]]
     ],
     locals: [],
     templates: [child0, child1, child2, child3, child4, child5]
@@ -5375,6 +5182,209 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
     ],
     locals: [],
     templates: [child0, child1]
+  };
+}()));
+Ember.TEMPLATES["_header-nav"] = Ember.HTMLBars.template((function() {
+  return {
+    meta: {
+      "revision": "Ember@1.13.3+c3accfb0",
+      "loc": {
+        "source": null,
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 35,
+          "column": 0
+        }
+      }
+    },
+    arity: 0,
+    cachedFragment: null,
+    hasRendered: false,
+    buildFragment: function buildFragment(dom) {
+      var el0 = dom.createDocumentFragment();
+      var el1 = dom.createElement("header");
+      dom.setAttribute(el1,"class","layout_header");
+      var el2 = dom.createTextNode("\n    ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","main-header");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","head-item head-nav-app-toggle");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","nav-app-toggle");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","head-item brand");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("img");
+      dom.setAttribute(el4,"alt","logo");
+      dom.setAttribute(el4,"src","/SharedResources/logos/cashtracker_small.png");
+      dom.setAttribute(el4,"class","brand-logo");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("span");
+      dom.setAttribute(el4,"class","brand-title");
+      var el5 = dom.createTextNode("CashTracker");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","head-item head-nav-ws-toggle");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","nav-ws-toggle");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","head-item nav-search-toggle");
+      dom.setAttribute(el3,"id","toggle-head-search");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("i");
+      dom.setAttribute(el4,"class","fa fa-search");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("div");
+      dom.setAttribute(el3,"class","head-item nav-search");
+      dom.setAttribute(el3,"id","search-block");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","search-toggle-back");
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("i");
+      dom.setAttribute(el5,"class","fa fa-chevron-left");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n            ");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("form");
+      dom.setAttribute(el4,"action","Provider");
+      dom.setAttribute(el4,"method","GET");
+      dom.setAttribute(el4,"name","search");
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("input");
+      dom.setAttribute(el5,"type","hidden");
+      dom.setAttribute(el5,"name","type");
+      dom.setAttribute(el5,"value","page");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("input");
+      dom.setAttribute(el5,"type","hidden");
+      dom.setAttribute(el5,"name","id");
+      dom.setAttribute(el5,"value","search");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("input");
+      dom.setAttribute(el5,"type","search");
+      dom.setAttribute(el5,"name","keyword");
+      dom.setAttribute(el5,"value","");
+      dom.setAttribute(el5,"class","search-keyword");
+      dom.setAttribute(el5,"required","required");
+      dom.setAttribute(el5,"placeholder","Поиск");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n                ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("button");
+      dom.setAttribute(el5,"type","submit");
+      dom.setAttribute(el5,"class","search-btn");
+      var el6 = dom.createTextNode("\n                    ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("i");
+      dom.setAttribute(el6,"class","fa fa-search");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n                ");
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n            ");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("a");
+      dom.setAttribute(el3,"class","no-desktop head-item nav-action");
+      dom.setAttribute(el3,"href","#");
+      dom.setAttribute(el3,"data-action","add_new");
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("i");
+      dom.setAttribute(el4,"class","fa fa-plus");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n            ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("span");
+      dom.setAttribute(el4,"class","action-label");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n        ");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      var el1 = dom.createTextNode("\n");
+      dom.appendChild(el0, el1);
+      return el0;
+    },
+    buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+      var element0 = dom.childAt(fragment, [0, 1]);
+      var element1 = dom.childAt(element0, [1]);
+      var element2 = dom.childAt(element0, [5, 1]);
+      var element3 = dom.childAt(element0, [7]);
+      var element4 = dom.childAt(element0, [9, 1]);
+      var morphs = new Array(4);
+      morphs[0] = dom.createElementMorph(element1);
+      morphs[1] = dom.createElementMorph(element2);
+      morphs[2] = dom.createElementMorph(element3);
+      morphs[3] = dom.createElementMorph(element4);
+      return morphs;
+    },
+    statements: [
+      ["element","action",["navAppMenuToggle"],[],["loc",[null,[3,51],[3,80]]]],
+      ["element","action",["navUserMenuToggle"],["on","mouseDown"],["loc",[null,[11,39],[11,85]]]],
+      ["element","action",["toggleSearchForm"],["on","mouseDown"],["loc",[null,[13,73],[13,118]]]],
+      ["element","action",["toggleSearchForm"],["on","mouseDown"],["loc",[null,[17,44],[17,89]]]]
+    ],
+    locals: [],
+    templates: []
   };
 }()));
 Ember.TEMPLATES["components/accounts"] = Ember.HTMLBars.template((function() {

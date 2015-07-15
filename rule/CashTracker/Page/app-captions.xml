@@ -2,6 +2,7 @@
 <rule type="page" id="app-captions" mode="on">
 	<description>app-captions</description>
 
+	<caption name="save" />
 	<caption name="close" />
 	<caption name="cancel" />
 

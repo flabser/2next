@@ -1,0 +1,29 @@
+<div class="form-wrapper">
+    <header class="form-header">
+        <h1 class="header-title">User / {{name}}</h1>
+        <div class="action-bar">
+            <button class="btn btn-primary" {{action 'save' this}}>{{t 'save'}}</button>
+            <a class="btn" href="#/users">{{t 'cancel'}}</a>
+        </div>
+    </header>
+    <section class="form-content">
+        <fieldset class="fieldset">
+            <div class="control-group">
+                <div class="control-label">
+                    {{t 'name'}}
+                </div>
+                <div class="controls">
+                    {{input name="name" value=name required=true class="span7"}}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    {{t 'email'}}
+                </div>
+                <div class="controls">
+                    {{input name="email" value=email required=true class="span7"}}
+                </div>
+            </div>
+        </fieldset>
+    </section>
+</div>

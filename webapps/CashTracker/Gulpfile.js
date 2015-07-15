@@ -6,7 +6,8 @@ var uglify = require('gulp-uglify');
 var csso = require('gulp-csso');
 var emberTemplates = require('gulp-ember-templates');
 var replace = require('gulp-replace');
-var babel = require('ember-cli-babel');
+var babel = require('gulp-babel');
+var transpiler = require('gulp-es6-module-transpiler');
 
 
 // js lib
@@ -70,13 +71,12 @@ gulp.task('em_minify_js', function() {
 });
 
 gulp.task('em_minify_js_babel', function() {
-    gulp.src(js_ember_files)
-        .pipe(concat('app.build.js'))
-        .pipe(babel())
-        .pipe(gulp.dest('./js/dist'))
+    gulp.src('./app/**/*.js')
+        .pipe(transpiler({
+            formatter: 'bundle'
+        }))
         .pipe(concat('app.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('./js/dist'));
+        .pipe(gulp.dest('./dist'));
 });
 // --------------------------------
 
@@ -108,15 +108,28 @@ gulp.task('em_templates_compile', function() {
 });
 // --------------------------------
 
+
+gulp.task('dist_ct', function() {
+    gulp.src('./dist/cash-tracker.js')
+        .pipe(transpiler({
+            formatter: 'bundle'
+        }))
+        .pipe(concat('app.min.js'))
+        .pipe(gulp.dest('./dist'));
+});
+
+
 // run
 gulp.task('default', function() {
-    gulp.run('lint', 'em_lint', 'em_templates_compile', 'em_minify_js', 'minify_js', 'minify_css');
+    gulp.run('em_minify_js_babel');
+
+    // gulp.run('lint', 'em_minify_js_babel', 'em_lint', 'em_templates_compile', 'em_minify_js', 'minify_js', 'minify_css');
 
     // gulp.watch(em_templates, function(event) {
     //    gulp.run('em_templates_trim');
     //});
 
-    gulp.watch(em_templates, function(event) {
+    /*gulp.watch(em_templates, function(event) {
         gulp.run('em_templates_compile');
     });
 
@@ -130,5 +143,5 @@ gulp.task('default', function() {
 
     gulp.watch(css_files, function(event) {
         gulp.run('minify_css');
-    });
+    });*/
 });

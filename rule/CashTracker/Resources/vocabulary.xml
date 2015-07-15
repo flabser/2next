@@ -325,6 +325,12 @@
 		<entry lang="ENG" hint="Save then close">Save then close</entry>
 		<entry lang="BG" hint="Запиши и затвори">Запиши и затвори</entry>
 	</sentence>
+	<sentence mode="on" keyword="save">
+		<entry lang="RUS" hint="Сохранить">Сохранить</entry>
+		<entry lang="KAZ" hint="Сақтау">Сақтау</entry>
+		<entry lang="ENG" hint="Save">Save</entry>
+		<entry lang="BG" hint="Запиши">Запиши</entry>
+	</sentence>
 	<sentence mode="on" keyword="close">
 		<entry lang="RUS" hint="Закрыть">Закрыть</entry>
 		<entry lang="KAZ" hint="Закрыть">Закрыть</entry>

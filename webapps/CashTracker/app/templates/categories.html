@@ -1,0 +1,52 @@
+<section style="display:flex;">
+    <div class="view">
+        <div class="view-header">
+            <h1 class="header-title">Categories</h1>
+            <nav class="nav-action-bar">
+                <div class="-on-desktop">
+                    <div class="action-bar">
+                        {{#link-to 'categories.new' class="btn"}} {{t 'categories.new.btn_label'}} {{/link-to}}
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="view-content">
+            <header class="entries-head">
+                <div class="head-wrap">
+                    <label class="entry-select">
+                        <input type="checkbox" data-toggle="id" class="all" />
+                    </label>
+                    <div class="entry-captions">
+                        <span>
+                        name
+                    </span>
+                    </div>
+                </div>
+            </header>
+            <div class="entries">
+                {{#each model as |category|}}
+                <div class="entry-wrap">
+                    <div class="entry-actions">
+                        <a class="entry-action action-delete" data-ddbid="{{category.id}}" href="#">
+                            <i class="fa fa-trash" />
+                        </a>
+                    </div>
+                    <div data-ddbid="{{category.id}}" class="entry document js-swipe-entry">
+                        <label class="entry-select">
+                            <input type="checkbox" name="id" value="{{category.id}}" />
+                        </label>
+                        {{#link-to 'categories.category' category class="entry-link"}}
+                        <div class="entry-fields">
+                            <span class="entry-field">
+                            {{category.name}}
+                        </span>
+                        </div>
+                        {{/link-to}}
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    {{outlet}}
+</section>

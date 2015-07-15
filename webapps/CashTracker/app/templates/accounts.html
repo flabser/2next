@@ -1,0 +1,82 @@
+<section style="display:flex;">
+    <div class="view view_accounts">
+        <header class="view-header">
+            <h1 class="header-title">
+            <div class="pull-right">
+                saldo
+            </div>
+            Accounts
+            <sup class="entry-count">
+                <small>
+                    count
+                </small>
+            </sup>
+        </h1>
+            <nav class="nav-action-bar">
+                <div class="-on-desktop">
+                    <div class="action-bar">
+                        {{#link-to 'accounts.new' class="btn"}} {{t 'account.new.btn_label'}} {{/link-to}}
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <section class="view-content">
+            <header class="entries-head">
+                <div class="head-wrap">
+                    <label class="entry-select">
+                        <input type="checkbox" class="all" {{action "selectAll"}} />
+                    </label>
+                    <div class="entry-captions">
+                        <span class="vaccount-name">
+                        {{viewtext1}}
+                    </span>
+                        <span class="vaccount-user">
+                        {{viewtext2}}
+                    </span>
+                        <span class="vaccount-observers">
+                        {{viewtext3}}
+                    </span>
+                        <span class="vaccount-amount-control">
+                        {{viewnumber}}
+                    </span>
+                    </div>
+                </div>
+            </header>
+            <div class="entries">
+                {{#each model as |account|}}
+                <div class="entry-wrap">
+                    <div class="entry-actions">
+                        <a class="entry-action action-delete" data-ddbid="{{account.id}}" href="#">
+                            <i class="fa fa-trash" />
+                        </a>
+                    </div>
+                    <div data-ddbid="{{id}}" class="entry document js-swipe-entry">
+                        <label class="entry-select">
+                            <input type="checkbox" name="id" value="{{account.id}}" {{action "selectOne"}} />
+                        </label>
+                        {{#link-to "accounts.account" account class="entry-link"}}
+                        <div class="entry-fields">
+                            <span class="entry-field vaccount-name">
+                            {{account.name}}
+                        </span>
+                            <span class="entry-field vaccount-user">
+                            {{account.owner.name}}
+                        </span>
+                            <span class="entry-field vaccount-observers">
+                            <span>
+                                {{account.observers.name}}
+                            </span>
+                            </span>
+                            <span class="entry-field vaccount-amount-control">
+                            {{account.amountControl}}
+                        </span>
+                        </div>
+                        {{/link-to}}
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+    </div>
+    {{outlet}}
+</section>
