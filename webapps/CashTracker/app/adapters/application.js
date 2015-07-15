@@ -15,5 +15,9 @@ export default DS.RESTAdapter.extend({
             default:
                 return type + 's';
         }
+    },
+
+    shouldReloadAll: function() {
+        return true;
     }
 });

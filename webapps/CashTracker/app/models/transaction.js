@@ -1,12 +1,20 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-    user: DS.belongsTo('user'),
-    accountFrom: DS.belongsTo('account'),
-    accountTo: DS.belongsTo('account'),
+    user: DS.belongsTo('user', {
+        async: false
+    }),
+    accountFrom: DS.belongsTo('account', {
+        async: false
+    }),
+    accountTo: DS.belongsTo('account', {
+        async: false
+    }),
     amount: DS.attr('number'),
     regDate: DS.attr('date'),
-    category: DS.belongsTo('category'),
+    category: DS.belongsTo('category', {
+        async: false
+    }),
     costCenter: DS.belongsTo('costCenter', {
         async: false
     }),

@@ -24,7 +24,7 @@ export default Ember.Route.extend({
     beforeModel: function() {
         var i18n = this.get('i18n');
         this.fetchTranslations().then(function(translations) {
-            i18n.translations = translations;
+            i18n.set('translations', translations);
         });
     },
 
