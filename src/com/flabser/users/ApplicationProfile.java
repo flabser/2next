@@ -16,6 +16,7 @@ public class ApplicationProfile {
 	public String dbLogin;
 	public String dbPwd;
 	public String dbName;
+    public ApplicationStatusType statausType = ApplicationStatusType.ON_LINE;
 
 	public ApplicationProfile() {
 
@@ -65,6 +66,11 @@ public class ApplicationProfile {
 			return true;
 		}
 	}
+
+    public String getDbInitializerClass(){
+        return appName.toLowerCase() + ".init.DDEScripts";
+        // TODO Need to write a class resolver that is implementation of IAppDatabaseInit
+    }
 
 	public void fill(ResultSet rs) {
 		// TODO Auto-generated method stub

@@ -29,7 +29,8 @@ public class DDEScripts {
 				"dbhost varchar(64), " +
 				"dbname varchar(64), " +
 				"dblogin varchar(64), " +
-				"dbpwd varchar(32), " +				
+				"dbpwd varchar(32), " +
+                "status integer, " +
 				"CONSTRAINT apps_pkey PRIMARY KEY (ID), CONSTRAINT apps_id_unique UNIQUE (ID))";
 		return dde;
 	} 

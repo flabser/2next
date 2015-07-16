@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import com.flabser.dataengine.IAppDatabaseInit;
 import org.apache.catalina.realm.RealmBase;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -151,7 +152,9 @@ public class User {
 					IDatabase dataBase = (IDatabase) cls.newInstance();
 					IDeployer ad = dataBase.getDeployer();
 					ad.init(appProfile);
-					ad.deploy(null);
+                    Class appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
+                    IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
+					ad.deploy(dbInitializer);
 				} else {
 					return false;
 				}
@@ -163,15 +166,6 @@ public class User {
 
 	public String toString() {
 		return "userID=" + login + ", email=" + email;
-	}
-
-	public String toXML() {
-		return "<userid>" + login + "</userid>";
-	}
-
-	public String usersByKeytoXML() {
-		return "<login>" + login + "</login><key>" + id + "</key><email>" + email + "</email>";
-
 	}
 
 	public void setLogin(String l) {

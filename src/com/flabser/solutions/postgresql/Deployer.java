@@ -27,6 +27,7 @@ public class Deployer extends DatabaseCore implements IDeployer {
 
 	@Override
 	public int deploy(IAppDatabaseInit dbInit) {
+        //dbInit.getTablesDDE()
 		Connection conn = pool.getConnection();
 		try {
 			conn = pool.getConnection();
