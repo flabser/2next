@@ -27,6 +27,12 @@
 		<entry lang="ENG" hint="Transactions">Transactions</entry>
 		<entry lang="BG" hint="Сделки">Сделки</entry>
 	</sentence>
+	<sentence mode="on" keyword="transactions">
+		<entry lang="RUS" hint="Операции">Операции</entry>
+		<entry lang="KAZ" hint="Операции">Операции</entry>
+		<entry lang="ENG" hint="Transactions">Transactions</entry>
+		<entry lang="BG" hint="Сделки">Сделки</entry>
+	</sentence>
 	<sentence mode="on" keyword="user_profile">
 		<entry lang="RUS" hint="Профиль">Профиль</entry>
 		<entry lang="KAZ" hint="Профиль">Профиль</entry>

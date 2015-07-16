@@ -14,11 +14,11 @@ class Welcome extends _DoScript {
 
 		def toLang = formData.getValueSilently("lang")
 		try {
-			if (toLang && !toLang.isEmpty()) {
+			if (!toLang.equals("")) {
 				session.switchLang(LanguageType.valueOf(toLang.toUpperCase()))
 				publishElement("process", "lang-switched")
 			}
-		} catch(IllegalArgumentException e) {
+		} catch(Exception e) {
 			publishElement("error", "the " + toLang + " language is not available")
 		}
 
