@@ -140,7 +140,7 @@ public class DDEScripts implements IAppDatabaseInit {
 
 	@Override
 	public ArrayList <String> getInitActions() {
-		// TODO list ?
+		// INFO заполнение базовых значений (справочников, ...)
 		return null;
 	}
 }
