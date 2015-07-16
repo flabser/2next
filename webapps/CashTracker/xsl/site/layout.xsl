@@ -50,12 +50,11 @@
 			<xsl:call-template name="STYLE_FIX_FIELDSET" />
 
 			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-2.1.4.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery.cookie.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/js/mobile-detect.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/vendor/jso/build/jso.js"></script>
-			<script type="text/javascript" src="js/app.min.js"></script>
+			<script type="text/javascript" src="js/welcome.js"></script>
 			<script type="text/javascript">
-				$(document).ready(nbApp.wlc.init);
+				$(document).ready(nbApp.init);
 			</script>
 
 			<xsl:copy-of select="$include" />
@@ -181,7 +180,7 @@
 	</xsl:template>
 
 	<xsl:template match="value" mode="lang">
-		<a class="lang" href="#" onclick="nbApp.wlc.setLang('{entry[2]}')">
+		<a class="lang" href="#{entry[2]}" data-lang="{entry[2]}">
 			<xsl:value-of select="entry[3]" />
 		</a>
 	</xsl:template>
@@ -217,7 +216,9 @@
 					<h1 class="wlc_reg-header">
 						<xsl:value-of select="//captions/reg/@caption" />
 					</h1>
-					<h2 class="reg-result-ok"></h2>
+					<h2 class="reg-result-ok">
+						<xsl:value-of select="//captions/reg_confirm_mail/@caption" />
+					</h2>
 					<form action="Provider" method="post" name="form-reg" class="reg_form">
 						<input type="hidden" name="type" value="page" />
 						<input type="hidden" name="id" value="reg-user" />

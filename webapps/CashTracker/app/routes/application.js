@@ -9,13 +9,10 @@ export default Route.extend({
 
     translationsFetcher: inject.service(),
 
-    init: function() {
-        this.windowOnResize();
-        Ember.$(window).resize(this.windowOnResize);
-    },
-
     activate: function() {
         Ember.$('.page-loading').hide();
+        this.windowOnResize();
+        Ember.$(window).resize(this.windowOnResize);
     },
 
     windowOnResize: function() {
@@ -74,7 +71,7 @@ export default Route.extend({
 
         error: function(error, transition) {
             if (error.status === 401 || (!this.get('session').isAuthenticated() && this.routeName !== 'login')) {
-                // window.location.href = 'Provider?id=login';
+                window.location.href = 'Provider?id=login';
 
                 /*this.controllerFor('login').setProperties({
                     transition: transition

@@ -6,6 +6,7 @@ module.exports = function(environment) {
         environment: environment,
         baseURL: '/',
         locationType: 'hash',
+        exportApplicationGlobal: true,
         i18n: {
             defaultLocale: 'en'
         },

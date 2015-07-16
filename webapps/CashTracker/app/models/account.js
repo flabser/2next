@@ -1,6 +1,7 @@
 import DS from 'ember-data';
+import EmberValidations from 'ember-validations';
 
-export default DS.Model.extend({
+export default DS.Model.extend(EmberValidations.Mixin, {
     type: DS.attr('number'),
     name: DS.attr('string'),
     currencyCode: DS.attr('string'),
@@ -14,5 +15,20 @@ export default DS.Model.extend({
     }),
     includeInTotals: DS.attr('boolean'),
     note: DS.attr('string'),
-    sortOrder: DS.attr('number')
+    sortOrder: DS.attr('number'),
+
+    validations: {
+        name: {
+            presence: true,
+            length: {
+                minimum: 5
+            }
+        },
+        currencyCode: {
+            presence: true,
+            length: {
+                minimum: 5
+            }
+        }
+    }
 });

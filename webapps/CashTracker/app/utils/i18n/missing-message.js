@@ -1,7 +1,9 @@
-export default function(locale, key, context) {
-    var values = Object.keys(context).map(function(key) {
-        return context[key];
-    });
+import config from '../../config/environment';
 
-    return 't[' + key + '] ' + (values.join(', '));
+export default function(locale, key, context) {
+    if (config.environment === 'development') {
+        console.log('Missing translations: ' + key);
+    }
+
+    return 't[' + key + ']';
 }

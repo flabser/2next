@@ -1,12 +1,20 @@
-nbApp.wlc = {};
+var nbApp = {};
 
-nbApp.wlc.init = function() {
+nbApp.init = function() {
 
+    $('#main-load').hide();
+    $('#login-error').hide();
+
+    // switch lang
+    $('[data-lang]').click(function() {
+        nbApp.setLang($(this).data('lang'));
+    });
+
+    // reg form
     var $regForm = $('form[name=form-reg]');
-
     $regForm.submit(function(e) {
         e.preventDefault();
-        nbApp.wlc.reg(this);
+        nbApp.reg(this);
     });
 
     $('input', $regForm).blur(function() {
@@ -26,26 +34,21 @@ nbApp.wlc.init = function() {
         $('.reg-email-invalid,.reg-email-exists,.reg-pwd-weak').css('height', '0px');
     });
 
-    $('#main-load').hide();
-    $('#login-error').hide();
-
+    // login form
     $loginForm = $('form[name=login-form]');
     $loginForm.submit(function(e) {
         e.preventDefault();
-        nbApp.wlc.login(this);
+        nbApp.login(this);
     });
-
-    window.onunload = window.onbeforeunload = null;
 };
 
-nbApp.wlc.setLang = function(lang) {
-    $.cookie('lang', lang, {
-        path: '/'
+nbApp.setLang = function(lang) {
+    $.get('rest/page/switch-lang?lang=' + lang).then(function() {
+        window.location.reload();
     });
-    window.location.reload();
 };
 
-nbApp.wlc.reg = function(form) {
+nbApp.reg = function(form) {
     if ($(form).hasClass('process')) {
         return false;
     }
@@ -55,7 +58,7 @@ nbApp.wlc.reg = function(form) {
     $('.reg-email-invalid,.reg-email-exists,.reg-pwd-weak', form).css('height', '0px');
     $(form).addClass('process');
 
-    nb.ajax({
+    $.ajax({
         method: 'POST',
         datatype: 'text',
         url: 'Provider?client=' + screen.height + 'x' + screen.width,
@@ -87,7 +90,6 @@ nbApp.wlc.reg = function(form) {
 
             if (pr.indexOf('verify-email-send') != -1) {
                 var $msg = $('.reg-result-ok');
-                $msg.html(nb.getText('reg_confirm_mail', 'Для завершения регистрации подтвердите свой email'));
                 $msg.css({
                     'display': 'block'
                 });
@@ -110,7 +112,7 @@ nbApp.wlc.reg = function(form) {
     });
 };
 
-nbApp.wlc.login = function(form) {
+nbApp.login = function(form) {
     if ($(form).hasClass('process')) {
         return false;
     }
@@ -119,7 +121,7 @@ nbApp.wlc.login = function(form) {
     $('#main-load').show();
     $(form).addClass('process');
 
-    nb.ajax({
+    $.ajax({
         method: 'POST',
         dataType: 'json',
         contentType: 'application/json',
@@ -149,8 +151,8 @@ nbApp.wlc.login = function(form) {
     return false;
 };
 
-nbApp.wlc.logout = function(form) {
-    nb.ajax({
+nbApp.logout = function(form) {
+    $.ajax({
         method: 'DELETE',
         url: 'rest/session',
         success: function(result) {
