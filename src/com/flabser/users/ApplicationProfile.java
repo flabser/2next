@@ -16,7 +16,7 @@ public class ApplicationProfile {
 	public String dbLogin;
 	public String dbPwd;
 	public String dbName;
-    public ApplicationStatusType statausType = ApplicationStatusType.ON_LINE;
+	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
 
 	public ApplicationProfile() {
 
@@ -67,14 +67,23 @@ public class ApplicationProfile {
 		}
 	}
 
-    public String getDbInitializerClass(){
-        return appName.toLowerCase() + ".init.DDEScripts";
-        // TODO Need to write a class resolver that is implementation of IAppDatabaseInit
-    }
+	public String getDbInitializerClass(){
+		return appName.toLowerCase() + ".init.DDEScripts";
+		// TODO Need to write a class resolver that is implementation of IAppDatabaseInit
+	}
 
 	public void fill(ResultSet rs) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void setStatus(ApplicationStatusType onLine) {
+		status = onLine;
+
+	}
+
+	public ApplicationStatusType getStatus() {
+		return status;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.flabser.solutions.postgresql;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import cashtracker.init.DDEScripts;
 
@@ -27,7 +28,6 @@ public class Deployer extends DatabaseCore implements IDeployer {
 
 	@Override
 	public int deploy(IAppDatabaseInit dbInit) {
-        //dbInit.getTablesDDE()
 		Connection conn = pool.getConnection();
 		try {
 			conn = pool.getConnection();
@@ -38,16 +38,21 @@ public class Deployer extends DatabaseCore implements IDeployer {
 			createTable(DDEScripts.getCostCenterDDE(), "COSTCENTERS");
 			createTable(DDEScripts.getTagDDE(), "TAGS");
 			createTable(DDEScripts.getTransactionDDE(), "TRANSACTIONS");
+
+			ArrayList<String> ddes = dbInit.getTablesDDE();
+
 			conn.commit();
+			return 0;
 		} catch (Throwable e) {
 			Server.logger.errorLogEntry(e);
 			e.printStackTrace();
 			DatabaseUtil.debugErrorPrint(e);
+			return -1;
 
 		} finally {
 			pool.returnConnection(conn);
 		}
-		return 0;
+
 	}
 
 	@Override

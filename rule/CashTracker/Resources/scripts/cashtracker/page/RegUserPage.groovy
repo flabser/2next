@@ -1,7 +1,7 @@
 package cashtracker.page
 
-import cashtracker.page.app.RegWebForm;
-import cashtracker.page.app.VerifyEMail;
+import cashtracker.page.app.RegWebForm
+import cashtracker.page.app.VerifyEMail
 
 import com.flabser.script.*
 import com.flabser.script.actions.*
@@ -46,7 +46,7 @@ class RegUserPage extends _DoScript {
 		com.flabser.users.User user = session.getUser()
 		user.setLogin(regForm.email)
 		user.setUserName(regForm.userName)
-		user.setPassword(regForm.pwd)
+		user.setPwd(regForm.pwd)
 		user.setPasswordHash(regForm.pwd)
 		user.setEmail(regForm.email)
 		user.setStatus(UserStatusType.NOT_VERIFIED)

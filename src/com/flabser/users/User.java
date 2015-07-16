@@ -6,11 +6,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import com.flabser.dataengine.IAppDatabaseInit;
 import org.apache.catalina.realm.RealmBase;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.pool.DatabasePoolException;
@@ -21,7 +21,6 @@ import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
 import com.flabser.util.Util;
 
-
 @JsonRootName("user")
 public class User {
 	public int id;
@@ -30,7 +29,6 @@ public class User {
 	public boolean isAuthorized;
 	public String lastURL;
 	public LanguageType preferredLang = LanguageType.ENG;
-
 
 	private HashSet<UserRole> roles = new HashSet<UserRole>();
 	private transient ISystemDatabase sysDatabase;
@@ -78,12 +76,11 @@ public class User {
 		return passwordHash;
 	}
 
-
 	public void setPasswordHash(String password) throws WebFormValueException {
 		if (!("".equalsIgnoreCase(password))) {
 			if (Util.pwdIsCorrect(password)) {
 				this.passwordHash = password.hashCode() + "";
-				//this.passwordHash = getMD5Hash(password);
+				// this.passwordHash = getMD5Hash(password);
 				this.passwordHash = RealmBase.Digest(password, "MD5", "UTF-8");
 			} else {
 				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
@@ -103,10 +100,9 @@ public class User {
 		return true;
 	}
 
-	public void addRole(UserRole role){
+	public void addRole(UserRole role) {
 		roles.add(role);
 	}
-
 
 	public HashSet<UserRole> getRoles() {
 		return roles;
@@ -128,7 +124,7 @@ public class User {
 		return hash;
 	}
 
-	public ApplicationProfile getApplicationProfile(String appName){
+	public ApplicationProfile getApplicationProfile(String appName) {
 		return enabledApps.get(appName);
 	}
 
@@ -144,19 +140,29 @@ public class User {
 			return false;
 		} else {
 			for (ApplicationProfile appProfile : enabledApps.values()) {
-				IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
-				int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.dbLogin,
-						appProfile.dbPwd);
-				if (res == 0 || res == 1) {
-					Class cls = Class.forName(appProfile.getImpl());
-					IDatabase dataBase = (IDatabase) cls.newInstance();
-					IDeployer ad = dataBase.getDeployer();
-					ad.init(appProfile);
-                    Class appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
-                    IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
-					ad.deploy(dbInitializer);
-				} else {
-					return false;
+				if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
+					IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
+					int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.dbLogin,
+							appProfile.dbPwd);
+					if (res == 0 || res == 1) {
+						Class cls = Class.forName(appProfile.getImpl());
+						IDatabase dataBase = (IDatabase) cls.newInstance();
+						IDeployer ad = dataBase.getDeployer();
+						ad.init(appProfile);
+						Class appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
+						IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
+						if (ad.deploy(dbInitializer) == 0) {
+							appProfile.setStatus(ApplicationStatusType.ON_LINE);
+							appProfile.save();
+						} else {
+							appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+							appProfile.save();
+						}
+					} else {
+						appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
+						appProfile.save();
+						return false;
+					}
 				}
 			}
 		}
@@ -175,7 +181,6 @@ public class User {
 	public String getLogin() {
 		return login;
 	}
-
 
 	public String getEmail() {
 		return email;
@@ -196,7 +201,6 @@ public class User {
 	public String getPwd() {
 		return password;
 	}
-
 
 	public void setPwd(String password) throws WebFormValueException {
 		if (!("".equalsIgnoreCase(password))) {
@@ -241,7 +245,8 @@ public class User {
 	}
 
 	public void setStatus(UserStatusType status) {
-		if ((this.status == UserStatusType.NOT_VERIFIED || this.status == UserStatusType.WAITING_FOR_VERIFYCODE) && status == UserStatusType.REGISTERED) {
+		if ((this.status == UserStatusType.NOT_VERIFIED || this.status == UserStatusType.WAITING_FOR_VERIFYCODE)
+				&& status == UserStatusType.REGISTERED) {
 			regDate = new Date();
 		}
 		this.status = status;
@@ -266,7 +271,6 @@ public class User {
 
 	public boolean delete() {
 		return false;
-
 
 	}
 
