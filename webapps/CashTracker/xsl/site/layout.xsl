@@ -180,7 +180,7 @@
 	</xsl:template>
 
 	<xsl:template match="value" mode="lang">
-		<a class="lang" href="#{entry[2]}" data-lang="{entry[2]}">
+		<a class="lang" href="?id={//request/@id}&amp;lang={entry[2]}">
 			<xsl:value-of select="entry[3]" />
 		</a>
 	</xsl:template>

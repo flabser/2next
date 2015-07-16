@@ -1,5 +1,6 @@
 package cashtracker.page
 
+import com.flabser.localization.LanguageType
 import com.flabser.script.*
 import com.flabser.script.actions.*
 import com.flabser.script.events.*
@@ -10,6 +11,17 @@ class Welcome extends _DoScript {
 
 	@Override
 	public void doGet(_Session session, _WebFormData formData, String lang) {
+
+		def toLang = formData.getValueSilently("lang")
+		try {
+			if (toLang && !toLang.isEmpty()) {
+				session.switchLang(LanguageType.valueOf(toLang.toUpperCase()))
+				publishElement("process", "lang-switched")
+			}
+		} catch(IllegalArgumentException e) {
+			publishElement("error", "the " + toLang + " language is not available")
+		}
+
 		def ent = session.getAppEntourage()
 		publishElement("serverversion", ent.getServerVersion())
 		publishElement("build", ent.getBuildTime())
