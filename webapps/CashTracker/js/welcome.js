@@ -5,11 +5,6 @@ nbApp.init = function() {
     $('#main-load').hide();
     $('#login-error').hide();
 
-    // switch lang
-    $('[data-lang]').click(function() {
-        nbApp.setLang($(this).data('lang'));
-    });
-
     // reg form
     var $regForm = $('form[name=form-reg]');
     $regForm.submit(function(e) {
@@ -39,12 +34,6 @@ nbApp.init = function() {
     $loginForm.submit(function(e) {
         e.preventDefault();
         nbApp.login(this);
-    });
-};
-
-nbApp.setLang = function(lang) {
-    $.get('rest/page/switch-lang?lang=' + lang).then(function() {
-        window.location.reload();
     });
 };
 
@@ -135,12 +124,20 @@ nbApp.login = function(form) {
         success: function(result) {
             if (result.authUser.status === 'PASSWORD_INCORRECT') {
                 $('#login-error').show();
+
+                setTimeout(function() {
+                    $('#login-error').hide();
+                }, 5000);
             } else {
                 location.href = 'index.html';
             }
         },
         error: function(err) {
-            alert('error');
+            $('#login-error').show();
+
+            setTimeout(function() {
+                $('#login-error').hide();
+            }, 5000);
         },
         complete: function() {
             $(form).removeClass('process');
