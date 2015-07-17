@@ -19,16 +19,14 @@ export default DS.Model.extend(EmberValidations.Mixin, {
 
     validations: {
         name: {
-            presence: true,
-            length: {
-                minimum: 5
-            }
+            presence: true
         },
         currencyCode: {
-            presence: true,
-            length: {
-                minimum: 5
-            }
+            presence: true
+        },
+        sortOrder: {
+            numericality: true,
+            allowBlank: true
         }
     }
 });

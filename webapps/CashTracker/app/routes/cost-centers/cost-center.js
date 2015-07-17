@@ -8,9 +8,12 @@ export default Ember.Route.extend({
     },
 
     actions: {
-        save: function(costCenter) {
-            costCenter.save();
-            this.transitionTo('cost_centers');
+        save: function(model) {
+            model.save().then(function() {
+                model.transitionTo('cost_centers');
+            }, function(err) {
+                console.log(err);
+            });
         }
     }
 });

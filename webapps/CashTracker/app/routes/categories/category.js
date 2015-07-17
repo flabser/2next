@@ -8,9 +8,12 @@ export default Ember.Route.extend({
     },
 
     actions: {
-        save: function(category) {
-            category.save();
-            this.transitionTo('categories');
+        save: function(model) {
+            model.save().then(function() {
+                model.transitionTo('categories');
+            }, function(err) {
+                console.log(err);
+            });
         }
     }
 });
