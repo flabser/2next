@@ -1,83 +1,83 @@
-<div class="form-wrapper">
-    <header class="form-header">
-        <h1 class="header-title">
+{{#form-for model=model onSubmit="submit" bubbles=false}}
+<header class="form-header">
+    <h1 class="header-title">
         <small id="saldo" class="pull-right" title="Сальдо"></small>
         {{title}} № {{vn}} {{date}}
     </h1>
-        <div class="action-bar">
-            <button class="btn btn-default" {{action 'save' this}}>{{t 'save'}}</button>
-            <button class="btn" {{action 'goBack'}}>{{t 'cancel'}}</button>
+    <div class="action-bar">
+        <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
+    </div>
+</header>
+<section class="form-content">
+    <fieldset class="fieldset">
+        <!-- Дата операции -->
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'date'}}
+            </div>
+            <div class="controls">
+                {{input value=model.date class="span7"}}
+            </div>
         </div>
-    </header>
-    <section class="form-content">
-        <fieldset class="fieldset">
-            <!-- Дата операции -->
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'date'}}
-                </div>
-                <div class="controls">
-                    {{input name="date" value=date required=true class="span7"}}
-                </div>
+        <!-- Касса -->
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'account'}}
             </div>
-            <!-- Касса -->
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'account'}}
-                </div>
-                <div class="controls">
-                    {{account}}
-                </div>
+            <div class="controls">
+                {{input value=model.account class="span7"}}
             </div>
-            <!-- category -->
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'category'}}
-                </div>
-                <div class="controls">
-                    {{category}}
-                </div>
-            </div>
-            <!-- Целевая касса -->
-            <!-- Сумма -->
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'amount'}}
-                </div>
-                <div class="controls">
-                    {{input type="number" name="amount" value=amount required=true class="span7"}}
-                </div>
-            </div>
-            <!-- Место возникновения -->
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'cost_center'}}
-                </div>
-                <div class="controls">
-                    {{costcenter}}
-                </div>
-            </div>
-            <!-- Основание -->
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'basis'}}
-                </div>
-                <div class="controls">
-                    {{textarea name="basis" value=basis required=true class="span7"}}
-                </div>
-            </div>
-            <!-- documented -->
-        </fieldset>
-        <div id="tabs-2">
-            <form action="Uploader" name="upload" id="upload" method="post" enctype="multipart/form-data">
-                <!-- Секция "Вложения" -->
-                <div display="block" id="att">
-                    <br /> attach
-                </div>
-            </form>
         </div>
-        <div id="tabs-3">
-            doc info
+        <!-- category -->
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'category'}}
+            </div>
+            <div class="controls">
+                {{input value=model.category class="span7"}}
+            </div>
         </div>
-    </section>
-</div>
+        <!-- Целевая касса -->
+        <!-- Сумма -->
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'amount'}}
+            </div>
+            <div class="controls">
+                {{input type="number" value=model.amount class="span7"}}
+            </div>
+        </div>
+        <!-- Место возникновения -->
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'cost_center'}}
+            </div>
+            <div class="controls">
+                {{input value=model.costCenter class="span7"}}
+            </div>
+        </div>
+        <!-- Основание -->
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'basis'}}
+            </div>
+            <div class="controls">
+                {{textarea value=model.basis class="span7"}}
+            </div>
+        </div>
+        <!-- documented -->
+    </fieldset>
+    <div id="tabs-2">
+        <form action="Uploader" name="upload" id="upload" method="post" enctype="multipart/form-data">
+            <!-- Секция "Вложения" -->
+            <div display="block" id="att">
+                <br /> attach
+            </div>
+        </form>
+    </div>
+    <div id="tabs-3">
+        doc info
+    </div>
+</section>
+{{/form-for}}

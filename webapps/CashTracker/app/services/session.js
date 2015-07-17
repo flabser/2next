@@ -16,6 +16,7 @@ export default Ember.Service.extend({
 
     _setResult: function(result) {
         this.set('user', result.authUser);
+        this.set('_isAuthenticated', true);
     },
 
     login: function(userName, password) {
@@ -33,14 +34,15 @@ export default Ember.Service.extend({
                 }
             }),
             success: function(result) {
-                _this._isAuthenticated = true;
+                _this.set('_isAuthenticated', true);
                 return result;
             }
         });
     },
 
     logout: function() {
-        this._isAuthenticated = false;
+        this.set('_isAuthenticated', false);
+        this.set('user', null);
         return Ember.$.ajax({
             method: 'DELETE',
             url: PATH

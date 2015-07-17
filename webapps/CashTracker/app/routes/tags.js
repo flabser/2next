@@ -6,9 +6,6 @@ export default Ember.Route.extend({
     },
 
     actions: {
-        selectAll: function() {},
-        openNewForm: function() {
-            this.transitionTo('tags.new');
-        }
+
     }
 });

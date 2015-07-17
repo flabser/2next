@@ -1,8 +1,9 @@
+{{#form-for model=model onSubmit="submit" bubbles=false}}
 <header class="form-header">
     <h1 class="header-title">UserProfile / {{name}}</h1>
     <div class="action-bar">
-        <button class="btn btm-primary" {{action 'save'}}>{{t 'save'}}</button>
-        <a class="btn" href="#/users">{{t 'cancel'}}</a>
+        <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
     </div>
 </header>
 <section class="form-content">
@@ -12,8 +13,9 @@
                 {{t 'name'}}
             </div>
             <div class="controls">
-                {{input name="name" value=name required=true class="span7"}}
+                {{input value=model.name required=true class="span7"}}
             </div>
         </div>
     </fieldset>
 </section>
+{{/form-for}}

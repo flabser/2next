@@ -6,6 +6,6 @@ export default Ember.Route.extend({
     },
 
     actions: {
-        selectAll: function() {}
+
     }
 });

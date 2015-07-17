@@ -1,6 +1,6 @@
 import Ember from 'ember';
 const {
-    Route, inject
+    Route, inject, $
 } = Ember;
 
 export default Route.extend({
@@ -10,16 +10,16 @@ export default Route.extend({
     translationsFetcher: inject.service(),
 
     activate: function() {
-        Ember.$('.page-loading').hide();
+        $('.page-loading').hide();
         this.windowOnResize();
-        Ember.$(window).resize(this.windowOnResize);
+        $(window).resize(this.windowOnResize);
     },
 
     windowOnResize: function() {
         if (window.innerWidth <= 800) {
-            Ember.$('body').addClass('phone');
+            $('body').addClass('phone');
         } else {
-            Ember.$('body').removeClass('phone');
+            $('body').removeClass('phone');
         }
     },
 
@@ -42,11 +42,9 @@ export default Route.extend({
         logout: function() {
             var route = this;
             this.get('session').logout().then(function() {
-                route.session.set('user', null);
                 // route.transitionTo('index');
                 window.location.href = 'Provider?id=welcome';
             });
-
         },
 
         goBack: function() {
@@ -54,19 +52,19 @@ export default Route.extend({
         },
 
         navAppMenuToggle: function() {
-            Ember.$('body').toggleClass('nav-app-open');
+            $('body').toggleClass('nav-app-open');
         },
 
         navUserMenuToggle: function() {
-            Ember.$('body').toggleClass('nav-ws-open');
+            $('body').toggleClass('nav-ws-open');
         },
 
         hideOpenedNav: function() {
-            Ember.$('body').removeClass('nav-app-open nav-ws-open');
+            $('body').removeClass('nav-app-open nav-ws-open');
         },
 
         toggleSearchForm: function() {
-            Ember.$('body').toggleClass('search-open');
+            $('body').toggleClass('search-open');
         },
 
         error: function(error, transition) {
@@ -85,7 +83,7 @@ export default Route.extend({
         },
 
         willTransition: function() {
-            Ember.$('body').removeClass('nav-app-open nav-ws-open');
+            this.hideOpenedNav();
         }
     }
 });

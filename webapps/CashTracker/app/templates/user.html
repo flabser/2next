@@ -1,29 +1,29 @@
-<div class="form-wrapper">
-    <header class="form-header">
-        <h1 class="header-title">User / {{name}}</h1>
-        <div class="action-bar">
-            <button class="btn btn-primary" {{action 'save' this}}>{{t 'save'}}</button>
-            <button class="btn" {{action 'goBack'}}>{{t 'cancel'}}</button>
+{{#form-for model=model onSubmit="submit" bubbles=false}}
+<header class="form-header">
+    <h1 class="header-title">User / {{name}}</h1>
+    <div class="action-bar">
+        <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
+    </div>
+</header>
+<section class="form-content">
+    <fieldset class="fieldset">
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'name'}}
+            </div>
+            <div class="controls">
+                {{input value=model.name class="span7"}}
+            </div>
         </div>
-    </header>
-    <section class="form-content">
-        <fieldset class="fieldset">
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'name'}}
-                </div>
-                <div class="controls">
-                    {{input name="name" value=name required=true class="span7"}}
-                </div>
+        <div class="control-group">
+            <div class="control-label">
+                {{t 'email'}}
             </div>
-            <div class="control-group">
-                <div class="control-label">
-                    {{t 'email'}}
-                </div>
-                <div class="controls">
-                    {{input name="email" value=email required=true class="span7"}}
-                </div>
+            <div class="controls">
+                {{input value=model.email class="span7"}}
             </div>
-        </fieldset>
-    </section>
-</div>
+        </div>
+    </fieldset>
+</section>
+{{/form-for}}

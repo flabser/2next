@@ -3,19 +3,24 @@ import Ember from 'ember';
 export default Ember.Route.extend({
     templateName: 'cost-center',
 
+    model: function(params) {
+        return this.store.createRecord('costCenter');
+    },
+
+    deactivate: function() {
+        var model = this.currentModel;
+        if (model.get('isNew') && model.get('isSaving') == false) {
+            model.rollbackAttributes();
+        }
+    },
+
     actions: {
-        create: function() {
-            this.transitionTo('cost_centers.new');
-        },
         save: function() {
-            var controller = this.controller;
-            var newCostCenter = this.store.createRecord('costCenter', {
-                name: controller.get('name')
+            model.save().then(function() {
+                model.transitionTo('cost_centers');
+            }, function(err) {
+                console.log(err);
             });
-            newCostCenter.save();
-        },
-        cancel: function() {
-            this.transitionTo('cost_centers');
         }
     }
 });

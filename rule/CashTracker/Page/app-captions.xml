@@ -36,6 +36,7 @@
 	<caption name="costcenter" />
 	<caption name="user" />
 	<caption name="transaction" />
+	<caption name="transactions" />
 
 	<caption name="name" />
 	<caption name="amount_control" />
