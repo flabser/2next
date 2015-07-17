@@ -117,7 +117,7 @@ public class Login extends HttpServlet {
 				if (noHash != null) {
 					user = systemDatabase.checkUser(login, pwd, user);
 				} else {
-					user = systemDatabase.checkUserHash(login, pwd, appCookies.authHash, user);
+					user = systemDatabase.checkUserHash(login, pwd, "", user);
 				}
 				if (!user.isAuthorized) {
 					throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);

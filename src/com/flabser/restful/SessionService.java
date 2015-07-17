@@ -73,7 +73,7 @@ public class SessionService {
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		User user = new User();
 		Cookies appCookies = new Cookies(request);
-		user = systemDatabase.checkUserHash(signUser.getLogin(), signUser.getPwd(), appCookies.authHash, user);
+		user = systemDatabase.checkUserHash(signUser.getLogin(), signUser.getPwd(), "", user);
 
 		if (!user.isAuthorized) {
 			throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT,

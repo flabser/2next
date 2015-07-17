@@ -28,7 +28,7 @@ public class AccessGuard implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain) {
 		try {
 			HttpServletRequest http = (HttpServletRequest) request;
-			Server.logger.normalLogEntry(" Filter " + http.getMethod() + " " + http.getRequestURI());
+			//	Server.logger.normalLogEntry(" Filter " + http.getMethod() + " " + http.getRequestURI());
 			if (http.getRequestURI().contains("session") || http.getRequestURI().contains("page")
 					|| http.getRequestURI().contains("Provider")) {
 				chain.doFilter(request, resp);

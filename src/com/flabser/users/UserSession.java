@@ -26,7 +26,7 @@ public class UserSession implements ICache {
 	public int pageSize;
 	public String host = "localhost";
 
-	private String lang = "ENG";
+	private String lang;
 	private IDatabase dataBase;
 	private HttpSession jses;
 
@@ -81,11 +81,12 @@ public class UserSession implements ICache {
 	}
 
 	public String getLang() {
-		try {
-			Object o = currentUser.getPesistentValue("lang");
-			this.lang = (String) o;
-		} catch (Exception e) {
 
+		Object o = currentUser.getPesistentValue("lang");
+		if (o == null) {
+			lang = "ENG";
+		}else {
+			this.lang = (String) o;
 		}
 		return lang;
 	}

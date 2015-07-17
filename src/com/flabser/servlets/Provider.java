@@ -75,6 +75,8 @@ public class Provider extends HttpServlet {
 						userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 						if (userSession == null) {
 							userSession = new UserSession(new com.flabser.users.User());
+							Cookies c = new Cookies(request);
+							userSession.setLang(c.currentLang);
 						}
 
 
