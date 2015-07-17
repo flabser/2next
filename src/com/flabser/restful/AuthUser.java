@@ -11,6 +11,7 @@ public class AuthUser {
 	private String pwd;
 	private AuthFailedExceptionType status;
 	private String error;
+	private String redirect;
 	private String[] roles;
 
 	public AuthUser() {
@@ -54,5 +55,13 @@ public class AuthUser {
 
 	public void setError(String error) {
 		this.error = error;
+	}
+
+	public String getRedirect() {
+		return redirect;
+	}
+
+	public void setRedirect(String r) {
+		this.redirect = r;
 	}
 }

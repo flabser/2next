@@ -26,10 +26,12 @@ public class Database extends DatabaseCore implements IDatabase {
 	public static final SimpleDateFormat sqlDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final String driver = "org.postgresql.Driver";
 	private String dbURI;
+	private ApplicationProfile appProfile;
 
 	@Override
 	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException, DatabasePoolException {
+	ClassNotFoundException, DatabasePoolException {
+		this.appProfile = appProfile;
 		dbURI = appProfile.getURI();
 		pool = getPool(driver, appProfile);
 	}
@@ -40,8 +42,10 @@ public class Database extends DatabaseCore implements IDatabase {
 	}
 
 	@Override
-	public IFTIndexEngine getFTSearchEngine() {
-		return new FTIndexEngine(this);
+	public IFTIndexEngine getFTSearchEngine() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+		IFTIndexEngine ftEng = new FTIndexEngine();
+		ftEng.init(appProfile);
+		return ftEng;
 	}
 
 	@Override

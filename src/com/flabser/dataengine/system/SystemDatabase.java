@@ -27,6 +27,7 @@ public class SystemDatabase implements ISystemDatabase {
 	static String connectionURL = "jdbc:postgresql://localhost/2next_system";
 	static String dbUser = "postgres";
 	static String dbUserPwd = "3287";
+	//TODO Need to bring the setting out
 
 	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException,
 	ClassNotFoundException {

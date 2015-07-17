@@ -79,7 +79,7 @@ public class Page {
 	}
 
 	public String getID() {
-		return "PAGE_" + rule.id + "_" + userSession.lang;
+		return "PAGE_" + rule.id + "_" + userSession.getLang();
 
 	}
 
@@ -91,7 +91,7 @@ public class Page {
 			loop: for (ElementRule elementRule : rule.elements) {
 				switch (elementRule.type) {
 				case SCRIPT:
-					DoProcessor sProcessor = new DoProcessor(env, userSession, userSession.lang, fields);
+					DoProcessor sProcessor = new DoProcessor(env, userSession, userSession.getLang(), fields);
 					ScriptResponse scriptResp = sProcessor.processScript(elementRule.doClassName, httpMethod);
 
 					for (IQuerySaveTransaction toPostObects : sProcessor.transactionToPost) {
@@ -113,7 +113,7 @@ public class Page {
 			}
 		}
 
-		SourceSupplier captionTextSupplier = new SourceSupplier(env, userSession.lang);
+		SourceSupplier captionTextSupplier = new SourceSupplier(env, userSession.getLang());
 		pp.setCaptions(getCaptions(captionTextSupplier, rule.captions));
 		return pp;
 	}

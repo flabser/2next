@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingDeque;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.omg.CORBA.UserException;
@@ -19,18 +17,17 @@ import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
 
-
 public class UserSession implements ICache {
 
 	public final static String SESSION_ATTR = "usersession";
 
 	public User currentUser;
 	public HistoryEntryCollection history;
-	public String lang = "ENG";
 	public int pageSize;
 	public String host = "localhost";
-	private IDatabase dataBase;
 
+	private String lang = "ENG";
+	private IDatabase dataBase;
 	private HttpSession jses;
 
 	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
@@ -38,7 +35,7 @@ public class UserSession implements ICache {
 		currentUser = user;
 		initHistory();
 		if (implemantion != null) {
-			Class <?> cls = Class.forName(implemantion);
+			Class<?> cls = Class.forName(implemantion);
 			dataBase = (IDatabase) cls.newInstance();
 			ApplicationProfile app = user.enabledApps.get(appID);
 			if (app != null) {
@@ -54,12 +51,12 @@ public class UserSession implements ICache {
 
 	@SuppressWarnings("unchecked")
 	public void setObject(String name, _Page obj) {
-		HashMap <String, _Page> cache = null;
+		HashMap<String, _Page> cache = null;
 		if (jses != null) {
-			cache = (HashMap <String, _Page>) jses.getAttribute("cache");
+			cache = (HashMap<String, _Page>) jses.getAttribute("cache");
 		}
 		if (cache == null) {
-			cache = new HashMap <>();
+			cache = new HashMap<>();
 		}
 		cache.put(name, obj);
 		if (jses != null) {
@@ -71,32 +68,26 @@ public class UserSession implements ICache {
 	public Object getObject(String name) {
 		try {
 			@SuppressWarnings("unchecked")
-			HashMap <String, StringBuffer> cache = (HashMap <String, StringBuffer>) jses.getAttribute("cache");
+			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 			return cache.get(name);
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	public void setLang(String lang, HttpServletResponse response) {
+	public void setLang(String lang) {
 		this.lang = lang;
-		Cookie cpCookie = new Cookie("lang", lang);
-		cpCookie.setMaxAge(99999);
-		cpCookie.setPath("/");
-		response.addCookie(cpCookie);
+		currentUser.setPersistentValue("lang", lang);
 	}
 
-	public void setPageSize(String size, HttpServletResponse response) {
+	public String getLang() {
 		try {
-			pageSize = Integer.parseInt(size);
-		} catch (NumberFormatException e) {
-			pageSize = 30;
-			size = "30";
-		}
+			Object o = currentUser.getPesistentValue("lang");
+			this.lang = (String) o;
+		} catch (Exception e) {
 
-		Cookie cpCookie = new Cookie("pagesize", size);
-		cpCookie.setMaxAge(999991);
-		response.addCookie(cpCookie);
+		}
+		return lang;
 	}
 
 	public void addHistoryEntry(String type, String url) throws UserException {
@@ -112,8 +103,8 @@ public class UserSession implements ICache {
 
 		// type of collection has been changed from linked list to
 		// LinkedBlockingDeque for better thread safe
-		private LinkedBlockingDeque <HistoryEntry> history = new LinkedBlockingDeque <HistoryEntry>();
-		private LinkedBlockingDeque <HistoryEntry> pageHistory = new LinkedBlockingDeque <HistoryEntry>();
+		private LinkedBlockingDeque<HistoryEntry> history = new LinkedBlockingDeque<HistoryEntry>();
+		private LinkedBlockingDeque<HistoryEntry> pageHistory = new LinkedBlockingDeque<HistoryEntry>();
 
 		public void add(HistoryEntry entry) throws UserException {
 			if (history.size() == 0 || (!history.getLast().equals(entry))) {
@@ -198,7 +189,7 @@ public class UserSession implements ICache {
 	}
 
 	@Override
-	public _Page getPage(Page page, Map <String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
 		String cid = page.getID() + "_";
 		Object obj = getObject(cid);
 		String c[] = formData.get("cache");
@@ -226,7 +217,7 @@ public class UserSession implements ICache {
 	@Override
 	public void flush() {
 		@SuppressWarnings("unchecked")
-		HashMap <String, StringBuffer> cache = (HashMap <String, StringBuffer>) jses.getAttribute("cache");
+		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 		if (cache != null) {
 			cache.clear();
 		}
