@@ -135,7 +135,12 @@ public class User {
 	}
 
 	public Object getPesistentValue(String key) {
-		return persistentValues.get(key).value;
+		PersistentValue pv = persistentValues.get(key);
+		if (pv != null) {
+			return pv.value;
+		} else {
+			return null;
+		}
 	}
 
 	public boolean save() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
@@ -283,7 +288,5 @@ public class User {
 		return false;
 
 	}
-
-
 
 }

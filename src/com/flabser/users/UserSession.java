@@ -17,7 +17,6 @@ import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
 
-
 public class UserSession implements ICache {
 
 	public final static String SESSION_ATTR = "usersession";
@@ -36,7 +35,7 @@ public class UserSession implements ICache {
 		currentUser = user;
 		initHistory();
 		if (implemantion != null) {
-			Class <?> cls = Class.forName(implemantion);
+			Class<?> cls = Class.forName(implemantion);
 			dataBase = (IDatabase) cls.newInstance();
 			ApplicationProfile app = user.enabledApps.get(appID);
 			if (app != null) {
@@ -52,12 +51,12 @@ public class UserSession implements ICache {
 
 	@SuppressWarnings("unchecked")
 	public void setObject(String name, _Page obj) {
-		HashMap <String, _Page> cache = null;
+		HashMap<String, _Page> cache = null;
 		if (jses != null) {
-			cache = (HashMap <String, _Page>) jses.getAttribute("cache");
+			cache = (HashMap<String, _Page>) jses.getAttribute("cache");
 		}
 		if (cache == null) {
-			cache = new HashMap <>();
+			cache = new HashMap<>();
 		}
 		cache.put(name, obj);
 		if (jses != null) {
@@ -69,13 +68,12 @@ public class UserSession implements ICache {
 	public Object getObject(String name) {
 		try {
 			@SuppressWarnings("unchecked")
-			HashMap <String, StringBuffer> cache = (HashMap <String, StringBuffer>) jses.getAttribute("cache");
+			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 			return cache.get(name);
 		} catch (Exception e) {
 			return null;
 		}
 	}
-
 
 	public void setLang(String lang) {
 		this.lang = lang;
@@ -83,7 +81,12 @@ public class UserSession implements ICache {
 	}
 
 	public String getLang() {
-		this.lang = (String)currentUser.getPesistentValue("lang");
+		try {
+			Object o = currentUser.getPesistentValue("lang");
+			this.lang = (String) o;
+		} catch (Exception e) {
+
+		}
 		return lang;
 	}
 
@@ -100,8 +103,8 @@ public class UserSession implements ICache {
 
 		// type of collection has been changed from linked list to
 		// LinkedBlockingDeque for better thread safe
-		private LinkedBlockingDeque <HistoryEntry> history = new LinkedBlockingDeque <HistoryEntry>();
-		private LinkedBlockingDeque <HistoryEntry> pageHistory = new LinkedBlockingDeque <HistoryEntry>();
+		private LinkedBlockingDeque<HistoryEntry> history = new LinkedBlockingDeque<HistoryEntry>();
+		private LinkedBlockingDeque<HistoryEntry> pageHistory = new LinkedBlockingDeque<HistoryEntry>();
 
 		public void add(HistoryEntry entry) throws UserException {
 			if (history.size() == 0 || (!history.getLast().equals(entry))) {
@@ -186,7 +189,7 @@ public class UserSession implements ICache {
 	}
 
 	@Override
-	public _Page getPage(Page page, Map <String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
 		String cid = page.getID() + "_";
 		Object obj = getObject(cid);
 		String c[] = formData.get("cache");
@@ -214,7 +217,7 @@ public class UserSession implements ICache {
 	@Override
 	public void flush() {
 		@SuppressWarnings("unchecked")
-		HashMap <String, StringBuffer> cache = (HashMap <String, StringBuffer>) jses.getAttribute("cache");
+		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 		if (cache != null) {
 			cache.clear();
 		}
