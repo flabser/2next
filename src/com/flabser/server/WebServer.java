@@ -9,7 +9,6 @@ import org.apache.catalina.LifecycleException;
 import org.apache.catalina.Wrapper;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.AprLifecycleListener;
-import org.apache.catalina.core.StandardHost;
 import org.apache.catalina.core.StandardServer;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.descriptor.web.FilterDef;
@@ -22,7 +21,7 @@ import com.flabser.restful.ResourceLoader;
 
 public class WebServer implements IWebServer {
 	private static Tomcat tomcat;
-	private static final String defaultWelcomeList[] = { "index.html", "index.htm" };
+	private static final String defaultWelcomeList[]={"index.html", "index.htm"};
 
 	@Override
 	public void init(String defaultHostName) throws MalformedURLException, LifecycleException {
@@ -37,12 +36,12 @@ public class WebServer implements IWebServer {
 		AprLifecycleListener listener = new AprLifecycleListener();
 		server.addLifecycleListener(listener);
 
-		getSharedResources("/SharedResources");
+		initSharedResources("/SharedResources");
 		initDefaultURL();
 
 	}
 
-	public Context getSharedResources(String URLPath) throws LifecycleException, MalformedURLException {
+	public Context initSharedResources(String URLPath) throws LifecycleException, MalformedURLException {
 		String db = new File("webapps/SharedResources").getAbsolutePath();
 		Context sharedResContext = tomcat.addContext(URLPath, db);
 		sharedResContext.setDisplayName("sharedresources");
@@ -52,7 +51,6 @@ public class WebServer implements IWebServer {
 
 		sharedResContext.addMimeMapping("css", "text/css");
 		sharedResContext.addMimeMapping("js", "text/javascript");
-
 		return sharedResContext;
 	}
 
@@ -63,27 +61,14 @@ public class WebServer implements IWebServer {
 		if (docBase.equalsIgnoreCase("Administrator")) {
 			String db = new File(Environment.primaryAppDir + "webapps/" + docBase).getAbsolutePath();
 			context = tomcat.addContext(URLPath, db);
-			for (int i = 0; i < defaultWelcomeList.length; i++) {
-				context.addWelcomeFile(defaultWelcomeList[i]);
-			}
+
 			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
 			context.setDisplayName("Administrator");
 		} else {
 			Server.logger.normalLogEntry("Load \"" + docBase + "\" application...");
-			if (siteName == null || siteName.equalsIgnoreCase("")) {
-				String db = new File("webapps/" + docBase).getAbsolutePath();
-				context = tomcat.addContext(URLPath, db);
-				context.setDisplayName(URLPath.substring(1));
-			} else {
-				URLPath = "";
-				StandardHost appHost = new StandardHost();
-				appHost.setName(siteName);
-				String baseDir = new File("webapps/" + docBase).getAbsolutePath();
-				appHost.setAppBase(baseDir);
-
-				context = tomcat.addContext(appHost, URLPath, baseDir);
-				context.setDisplayName(siteName);
-			}
+			String db = new File("webapps/" + docBase).getAbsolutePath();
+			context = tomcat.addContext(URLPath, db);
+			context.setDisplayName(URLPath.substring(1));
 			context.addWelcomeFile("Provider");
 			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 		}
@@ -134,13 +119,14 @@ public class WebServer implements IWebServer {
 	}
 
 	public Context initDefaultURL() throws LifecycleException, MalformedURLException {
-		String db = new File(Environment.primaryAppDir + "webapps/Administrator").getAbsolutePath();
-		// String db = new File("webapps/Administrator").getAbsolutePath();
+		String db = new File(Environment.primaryAppDir + "webapps/ROOT").getAbsolutePath();
 		Context context = tomcat.addContext("", db);
 
-		// Tomcat.addServlet(context, "Redirector",
-		// "kz.flabs.servlets.Redirector");
-		// context.addServletMapping("/", "Redirector");
+		for (int i = 0; i < defaultWelcomeList.length; i++) {
+			context.addWelcomeFile(defaultWelcomeList[i]);
+		}
+		//		Tomcat.addServlet(context, "Redirector", "com.flabser.servlets.Redirector");
+		//		context.addServletMapping("/", "Redirector");
 
 		return context;
 	}
@@ -179,7 +165,7 @@ public class WebServer implements IWebServer {
 	public void startContainer() {
 		try {
 			tomcat.start();
-		//	tomcat.getServer().await();
+			//	tomcat.getServer().await();
 		} catch (LifecycleException e) {
 			Server.logger.errorLogEntry(e);
 		}
