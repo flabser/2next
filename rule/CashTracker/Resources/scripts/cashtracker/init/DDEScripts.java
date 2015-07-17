@@ -1,8 +1,10 @@
 package cashtracker.init;
 
-import java.util.ArrayList;
-
 import com.flabser.dataengine.IAppDatabaseInit;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class DDEScripts implements IAppDatabaseInit {
@@ -52,7 +54,7 @@ public class DDEScripts implements IAppDatabaseInit {
 		sql.append("  NOTE               TEXT,\n");
 		sql.append("  COLOR              SMALLINT,\n");
 		sql.append("  SORT_ORDER         SMALLINT,\n");
-		sql.append("  CONSTRAINT CATEGORY_ID_PRIMARY_KEY PRIMARY KEY (ID)");
+		sql.append("  CONSTRAINT CATEGORY_ID_PRIMARY_KEY PRIMARY KEY (ID), ");
 		sql.append("  CONSTRAINT FK_CATEGORY_PARENT_ID FOREIGN KEY (PARENT_ID)\n");
 		sql.append("    REFERENCES CATEGORIES (ID) MATCH SIMPLE\n");
 		sql.append("    ON UPDATE NO ACTION ON DELETE NO ACTION");
@@ -125,15 +127,15 @@ public class DDEScripts implements IAppDatabaseInit {
 	}
 
 	@Override
-	public ArrayList <String> getTablesDDE() {
-		ArrayList <String> result = new ArrayList <String>();
+	public Map<String, String> getTablesDDE() {
+		Map <String, String> result = new HashMap<>();
 
-		result.add(getBudgetDDE());
-		result.add(getAccountDDE());
-		result.add(getCategoryDDE());
-		result.add(getCostCenterDDE());
-		result.add(getTagDDE());
-		result.add(getTransactionDDE());
+		result.putIfAbsent("BUDGETS", getBudgetDDE());
+        result.putIfAbsent("ACCOUNTS", getAccountDDE());
+        result.putIfAbsent("CATEGORIES", getCategoryDDE());
+        result.putIfAbsent("COSTCENTERS", getCostCenterDDE());
+        result.putIfAbsent("TAGS", getTagDDE());
+        result.putIfAbsent("TRANSACTIONS", getTransactionDDE());
 
 		return result;
 	}
