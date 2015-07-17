@@ -48,7 +48,7 @@ public class Deployer extends DatabaseCore implements IDeployer {
 
 			dbInit.getTablesDDE().forEach(
 					(tableName, query) -> {
-						if(!tables.contains(tableName)){
+						if(!tables.contains(tableName.toLowerCase())){
 							try {
 								stmt.executeUpdate(query);
 							} catch (SQLException e) {
