@@ -2,6 +2,18 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 
+    beforeModel: function() {
+        this.session.set('user', null);
+    },
+
+    resetController: function(controller) {
+        controller.setProperties({
+            username: null,
+            password: null,
+            transition: null
+        });
+    },
+
     actions: {
         login: function() {
             var route = this,
@@ -25,17 +37,5 @@ export default Ember.Route.extend({
         cancel: function() {
             this.transitionTo('index');
         }
-    },
-
-    beforeModel: function() {
-        this.session.set('user', null);
-    },
-
-    resetController: function(controller) {
-        controller.setProperties({
-            username: null,
-            password: null,
-            transition: null
-        });
     }
 });

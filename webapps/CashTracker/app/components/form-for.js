@@ -15,26 +15,20 @@ export default Em.Component.extend({
         if (e) {
             e.preventDefault();
         }
-        console.log('1', this);
-        var model = Em.get(this, 'model');
-        return model.validate()
-            .then(function() {
-                console.log(this.get('action'));
-                // this.sendAction('save', model);
-                model.save().then(function() {
-                    console.log('2', this);
-                }.bind(this));
-            }.bind(this))
-            .catch(function(err) {
-                console.log('form-for catch err', err);
-                return false;
-                // generate error messages on this.validationErrors
-            });
-    },
 
-    actions: {
-        save: function() {
-            console.log('form for save');
-        }
+        var _this = this;
+        var model = Em.get(this, 'model');
+        var promise = model.validate();
+        return promise.then(function() {
+                if (model.get('isValid')) {
+                    return this.sendAction('save');
+                }
+            }.bind(this), function(err) {
+                console.log(err);
+            })
+            .catch(function(err) {
+                console.log('form-for catch err', model.errors);
+                return false;
+            });
     }
 });

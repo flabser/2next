@@ -25,8 +25,7 @@ export default DS.Model.extend(EmberValidations.Mixin, {
             presence: true
         },
         sortOrder: {
-            numericality: true,
-            allowBlank: true
+            numericality: true
         }
     }
 });

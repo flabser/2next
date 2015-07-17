@@ -8,9 +8,12 @@ export default Ember.Route.extend({
     },
 
     actions: {
-        afterSave: function(model) {
-            console.log('route action save', model);
-            // this.transitionTo('tags');
+        save: function() {
+            var _this = this;
+            var model = this.currentModel;
+            model.save().then(function() {
+                _this.transitionTo('tags');
+            });
         }
     }
 });

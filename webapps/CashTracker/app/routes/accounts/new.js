@@ -24,10 +24,10 @@ export default Ember.Route.extend({
 
     actions: {
         save: function() {
+            var _this = this;
+            var model = this.currentModel;
             model.save().then(function() {
-                model.transitionTo('accounts');
-            }, function(err) {
-                console.log(err);
+                _this.transitionTo('accounts');
             });
         }
     }

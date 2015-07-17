@@ -31,11 +31,11 @@ export default Ember.Route.extend({
     },
 
     actions: {
-        save: function(model) {
+        save: function() {
+            var _this = this;
+            var model = this.currentModel;
             model.save().then(function() {
-                model.transitionTo('transactions');
-            }, function(err) {
-                console.log(err);
+                _this.transitionTo('transactions');
             });
         }
     }
