@@ -8,9 +8,11 @@ export default Ember.Route.extend({
     },
 
     actions: {
-        save: function(account) {
-            account.save().then(function() {
-                this.transitionTo('accounts');
+        save: function(model) {
+            model.save().then(function() {
+                model.transitionTo('accounts');
+            }, function(err) {
+                console.log(err);
             });
         }
     }

@@ -76,8 +76,7 @@ public class Provider extends HttpServlet {
 						if (userSession == null) {
 							userSession = new UserSession(new com.flabser.users.User());
 						}
-						Cookies cook = new Cookies(request);
-						userSession.lang = cook.currentLang;
+
 
 						if (type == null || type.equalsIgnoreCase("page")) {
 							result = page(response, request, rule, userSession);

@@ -1,8 +1,10 @@
 package com.flabser.servlets;
 
 import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.exception.XSLTFileNotFoundException;
 import com.flabser.users.UserException;
@@ -17,26 +19,28 @@ public class ProviderOutput{
 	protected StringBuffer output;
 	protected String historyXML = "";
 	protected UserSession userSession;
-	protected HttpSession jses;	
+	protected HttpSession jses;
 	protected String id;
 	private HttpServletRequest request;
 
 
-	public ProviderOutput(String type, String id, StringBuffer output, HttpServletRequest request, UserSession userSession, HttpSession jses, boolean addHistory) throws UserException{		
+	public ProviderOutput(String type, String id, StringBuffer output, HttpServletRequest request, UserSession userSession, HttpSession jses, boolean addHistory) throws UserException{
 		this.type = type;
-		this.id = id;		
+		this.id = id;
 		this.output = output;
 		this.request = request;
 		this.jses = jses;
 
 		browser = ServletUtil.getBrowserType(request);
-		
-		this.userSession = userSession;	
+
+		this.userSession = userSession;
 
 
-		if (addHistory) addHistory();
+		if (addHistory) {
+			addHistory();
+		}
 		if (userSession.history != null) {
-		/*	for(UserSession.HistoryEntry entry: userSession.history.getEntries()){				
+			/*	for(UserSession.HistoryEntry entry: userSession.history.getEntries()){
 				historyXML += "<entry type=\"" + entry.type + "\" title=\"" + entry.title + "\">" + XMLUtil.getAsTagValue(entry.URLforXML) + "</entry>";
 			}*/
 		}
@@ -45,18 +49,18 @@ public class ProviderOutput{
 
 
 
-	public boolean prepareXSLT(AppEnv env, String xsltFile) throws XSLTFileNotFoundException{		
+	public boolean prepareXSLT(AppEnv env, String xsltFile) throws XSLTFileNotFoundException{
 		boolean result;
-	
-			xslFile = new File(xsltFile);
-			if (xslFile.exists()){								
-				env.xsltFileMap.put(xsltFile, xslFile);
-				result = true;
-			}else{
-				throw new XSLTFileNotFoundException(xslFile.getAbsolutePath());
-			}
-		
-		
+
+		xslFile = new File(xsltFile);
+		if (xslFile.exists()){
+			env.xsltFileMap.put(xsltFile, xslFile);
+			result = true;
+		}else{
+			throw new XSLTFileNotFoundException(xslFile.getAbsolutePath());
+		}
+
+
 		return result;
 	}
 
@@ -73,20 +77,20 @@ public class ProviderOutput{
 			queryString = "";
 		}
 
-		return xmlTextUTF8Header + "<request " + queryString + " type=\"" + type + "\" lang=\"" + userSession.lang + "\" id=\"" + id + "\" " +
+		return xmlTextUTF8Header + "<request " + queryString + " type=\"" + type + "\" lang=\"" + userSession.getLang() + "\" id=\"" + id + "\" " +
 		"useragent=\"" + browser + "\"  userid=\"" + userSession.currentUser.getLogin() + "\" >" +
 		"<history>" + historyXML + "</history>" + output + "</request>";
 	}
-	
+
 	protected void addHistory() throws UserException{
-		String ref = request.getRequestURI() + "?" + request.getQueryString();	
+		String ref = request.getRequestURI() + "?" + request.getQueryString();
 		try {
 			userSession.addHistoryEntry(type, ref);
 		} catch (org.omg.CORBA.UserException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 
-	
+
 
 }

@@ -1,6 +1,7 @@
 import DS from 'ember-data';
+import EmberValidations from 'ember-validations';
 
-export default DS.Model.extend({
+export default DS.Model.extend(EmberValidations.Mixin, {
     user: DS.belongsTo('user', {
         async: false
     }),
@@ -29,5 +30,11 @@ export default DS.Model.extend({
     endDate: DS.attr('date'),
     basis: DS.attr('string'),
     note: DS.attr('string'),
-    includeInReports: DS.attr('boolean')
+    includeInReports: DS.attr('boolean'),
+
+    validations: {
+        amount: {
+            presence: true
+        }
+    }
 });

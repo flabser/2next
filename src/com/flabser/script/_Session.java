@@ -58,7 +58,7 @@ public class _Session {
 	}
 
 	public void switchLang(LanguageType lang) {
-		userSession.lang = lang.name();
+		userSession.setLang(lang.name());
 	}
 
 	public String toString() {

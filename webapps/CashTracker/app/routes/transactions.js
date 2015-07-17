@@ -20,7 +20,7 @@ export default Ember.Route.extend({
     beforeModel: function(transition) {
         if (transition.targetName === 'transactions.index') {
             if (!parseInt(transition.queryParams.limit, 0)) {
-                transition.queryParams.limit = 10;
+                transition.queryParams.limit = 20;
             }
 
             if (!parseInt(transition.queryParams.offset, 0)) {
@@ -40,26 +40,6 @@ export default Ember.Route.extend({
     },
 
     actions: {
-        addTransaction: function() {
-            var controller = this.controller;
-            var newTransaction = this.store.createRecord('transaction', {
-                author: controller.get('author'),
-                regDate: controller.get('regDate'),
-                date: controller.get('date'),
-                endDate: controller.get('endDate'),
-                parentCategory: controller.get('parentCategory'),
-                category: controller.get('category'),
-                account: controller.get('account'),
-                costCenter: controller.get('costCenter'),
-                amount: controller.get('amount'),
-                repeat: controller.get('repeat'),
-                every: controller.get('every'),
-                repeatStep: controller.get('repeatStep'),
-                basis: controller.get('basis'),
-                observers: controller.get('observers'),
-                comment: controller.get('comment')
-            });
-            newTransaction.save();
-        }
+
     }
 });

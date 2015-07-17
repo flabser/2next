@@ -8,9 +8,12 @@ export default Ember.Route.extend({
     },
 
     actions: {
-        save: function(user) {
-            user.save();
-            this.transitionTo('users');
+        save: function(model) {
+            model.save().then(function() {
+                model.transitionTo('users');
+            }, function(err) {
+                console.log(err);
+            });
         }
     }
 });

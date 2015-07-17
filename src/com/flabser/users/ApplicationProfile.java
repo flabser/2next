@@ -2,6 +2,7 @@ package com.flabser.users;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.DatabaseFactory;
@@ -17,6 +18,7 @@ public class ApplicationProfile {
 	public String dbPwd;
 	public String dbName;
 	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
+	private Date statusDate;
 
 	public ApplicationProfile() {
 
@@ -79,11 +81,16 @@ public class ApplicationProfile {
 
 	public void setStatus(ApplicationStatusType onLine) {
 		status = onLine;
+		statusDate = new Date();
 
 	}
 
 	public ApplicationStatusType getStatus() {
 		return status;
+	}
+
+	public Date getStatusDate() {
+		return statusDate;
 	}
 
 }
