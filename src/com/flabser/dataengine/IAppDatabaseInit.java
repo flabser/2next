@@ -1,8 +1,9 @@
 package com.flabser.dataengine;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface IAppDatabaseInit {
-    ArrayList<String> getTablesDDE();
+    Map<String, String> getTablesDDE();
     ArrayList<String> getInitActions();
 }
