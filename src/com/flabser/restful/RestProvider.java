@@ -55,7 +55,7 @@ public class RestProvider {
 			us = new UserSession(new com.flabser.users.User());
 		}
 		Cookies cook = new Cookies(request);
-		us.lang = cook.currentLang;
+		us.setLang(cook.currentLang);
 		return us;
 
 	}
@@ -75,7 +75,7 @@ public class RestProvider {
 	public _Page producePage(@PathParam("id") String id, @Context UriInfo uriInfo) throws RuleException, AuthFailedException, UserException,
 	ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
-        MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
+		MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
 		AppEnv env = getAppEnv();
 		IRule rule = env.ruleProvider.getRule(id);
 

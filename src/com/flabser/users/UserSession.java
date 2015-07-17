@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingDeque;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.omg.CORBA.UserException;
@@ -26,11 +24,11 @@ public class UserSession implements ICache {
 
 	public User currentUser;
 	public HistoryEntryCollection history;
-	public String lang = "ENG";
 	public int pageSize;
 	public String host = "localhost";
-	private IDatabase dataBase;
 
+	private String lang = "ENG";
+	private IDatabase dataBase;
 	private HttpSession jses;
 
 	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
@@ -78,25 +76,15 @@ public class UserSession implements ICache {
 		}
 	}
 
-	public void setLang(String lang, HttpServletResponse response) {
+
+	public void setLang(String lang) {
 		this.lang = lang;
-		Cookie cpCookie = new Cookie("lang", lang);
-		cpCookie.setMaxAge(99999);
-		cpCookie.setPath("/");
-		response.addCookie(cpCookie);
+		currentUser.setPersistentValue("lang", lang);
 	}
 
-	public void setPageSize(String size, HttpServletResponse response) {
-		try {
-			pageSize = Integer.parseInt(size);
-		} catch (NumberFormatException e) {
-			pageSize = 30;
-			size = "30";
-		}
-
-		Cookie cpCookie = new Cookie("pagesize", size);
-		cpCookie.setMaxAge(999991);
-		response.addCookie(cpCookie);
+	public String getLang() {
+		this.lang = (String)currentUser.getPesistentValue("lang");
+		return lang;
 	}
 
 	public void addHistoryEntry(String type, String url) throws UserException {

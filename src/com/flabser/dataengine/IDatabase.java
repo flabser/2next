@@ -12,13 +12,13 @@ import com.flabser.users.User;
 public interface IDatabase {
 
 	void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException, DatabasePoolException;
+	ClassNotFoundException, DatabasePoolException;
 
 	int getVersion();
 
 	IDeployer getDeployer();
 
-	IFTIndexEngine getFTSearchEngine();
+	IFTIndexEngine getFTSearchEngine() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException;
 
 	ArrayList <Object[]> select(String condition, User user);
 

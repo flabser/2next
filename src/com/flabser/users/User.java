@@ -34,6 +34,7 @@ public class User {
 	private transient ISystemDatabase sysDatabase;
 	private String login;
 	private String userName;
+	private HashMap<String, PersistentValue> persistentValues = new HashMap<String, PersistentValue>();
 
 	private Date primaryRegDate;
 	private Date regDate;
@@ -126,6 +127,15 @@ public class User {
 
 	public ApplicationProfile getApplicationProfile(String appName) {
 		return enabledApps.get(appName);
+	}
+
+	public void setPersistentValue(String key, String lang) {
+		persistentValues.put(key, new PersistentValue(key, lang));
+
+	}
+
+	public Object getPesistentValue(String key) {
+		return persistentValues.get(key).value;
 	}
 
 	public boolean save() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
@@ -273,5 +283,7 @@ public class User {
 		return false;
 
 	}
+
+
 
 }

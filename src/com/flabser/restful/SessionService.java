@@ -99,11 +99,11 @@ public class SessionService {
 					ap.save();
 					user.addApplication(ap);
 					user.save();
-					// TODO add feature for redirect the user to a general setup of the application
+					signUser.setRedirect("setup");
 				}
 			}
 		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
-			// TODO add feature for redirect the user to his userprfile to change a password
+			signUser.setRedirect("tochangepwd");
 		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED
 				|| user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
 			throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED, signUser.getLogin());
@@ -114,21 +114,6 @@ public class SessionService {
 		userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
 		SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
-
-		/*	} catch (AuthFailedException ae) {
-			try {
-				signUser.setStatus(ae.type);
-				signUser.setError(ae.getMessage());
-				//response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			} catch (IllegalStateException ise) {
-				// new PortalException(ise, env, response, PublishAsType.HTML);
-			} catch (Exception e) {
-				// new PortalException(e, response,
-				// ProviderExceptionType.INTERNAL,
-				// PublishAsType.HTML);
-			}
-		 */
-
 
 		return signUser;
 	}
