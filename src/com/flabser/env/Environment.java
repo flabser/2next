@@ -16,7 +16,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import com.flabser.scheduler.PeriodicalServices;
-import com.flabser.users.UserSession;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -24,11 +23,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.RuleException;
 import com.flabser.log.ILogger;
-import com.flabser.rule.constants.RunMode;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
@@ -42,7 +39,6 @@ public class Environment implements ICache {
 	public static String serverName;
 	public static String hostName;
 	public static int httpPort = 38779;
-	public static boolean noWSAuth = false;
 	public static String httpSchema = WebServer.httpSchema;
 
 	public static ISystemDatabase systemBase;
@@ -68,10 +64,8 @@ public class Environment implements ICache {
 	public static String smtpPassword;
 	public static Boolean mailEnable = false;
 	private static String defaultRedirectURL;
-	public static RunMode debugMode = RunMode.OFF;
 	private static HashMap <String, AppEnv> applications = new HashMap <String, AppEnv>();
 	private static HashMap <String, Object> cache = new HashMap <String, Object>();
-	private static ArrayList <IDatabase> delayedStart = new ArrayList <IDatabase>();
 
 
 	public static void init() {
@@ -104,15 +98,6 @@ public class Environment implements ICache {
 				logger.normalLogEntry("WebServer is going to use port: " + httpPort);
 			} catch (NumberFormatException nfe) {
 				logger.normalLogEntry("WebServer is going to use standart port");
-			}
-
-			try {
-				String auth = XMLUtil.getTextContent(xmlDocument, "/tn/no-ws-auth");
-				if ("true".equalsIgnoreCase(auth)) {
-					noWSAuth = true;
-				}
-			} catch (Exception e) {
-				noWSAuth = false;
 			}
 
 
@@ -199,10 +184,7 @@ public class Environment implements ICache {
 			}
 
 			libsDir = libs.getAbsolutePath();
-
-			if (XMLUtil.getTextContent(xmlDocument, "/tn/debug/@mode").equalsIgnoreCase("on")) {
-				debugMode = RunMode.ON;
-			}
+		
 		} catch (SAXException se) {
 			logger.errorLogEntry(se);
 		} catch (ParserConfigurationException pce) {
@@ -216,11 +198,7 @@ public class Environment implements ICache {
 	public static void addApplication(AppEnv env) {
 		applications.put(env.appType, env);		
 	}
-
-	public static void addDelayedInit(IDatabase db) {
-		delayedStart.add(db);
-	}
-
+	
 	public static AppEnv getApplication(String appID) {
 		return applications.get(appID);
 	}
@@ -236,12 +214,6 @@ public class Environment implements ICache {
 	public static String getDefaultRedirectURL() {
 		return defaultRedirectURL;
 	}
-
-	public static String getWorkspaceURL() {
-		return "Workspace";
-	}
-
-
 
 	private static void initMimeTypes() {
 		mimeHash.put("pdf", "application/pdf");
