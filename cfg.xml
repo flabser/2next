@@ -11,7 +11,7 @@
 	</applications>
 		
 		
-    <tls mode="ON">
+    <tls mode="OFF">
         <port>38789</port>
     	<certfile>server.crt</certfile>
     	<certkeyfile>server.key</certkeyfile>    	
