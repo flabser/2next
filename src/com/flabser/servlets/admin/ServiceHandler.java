@@ -28,11 +28,9 @@ public class ServiceHandler{
 		xmlFragment += "<version>" + Server.serverVersion + "</version>";		
 		xmlFragment += "<host>" + Environment.hostName+ "</host>";
 		xmlFragment += "<port>" + Environment.httpPort+ "</port>";
-		xmlFragment += "<sslenable>" + Environment.isSSLEnable + "</sslenable>";
-		xmlFragment += "<keystore>" + Environment.keyStore+ "</keystore>";
-		xmlFragment += "<keypwd>" + Environment.keyPwd + "</keypwd>";
-		xmlFragment += "<tlsauth>" + Environment.isClientSSLAuthEnable+ "</tlsauth>";
-		xmlFragment += "<truststore>" + Environment.trustStore+ "</truststore>";	
+		xmlFragment += "<sslenable>" + Environment.isTLSEnable + "</sslenable>";
+		xmlFragment += "<certkeyfile>" + Environment.certKeyFile+ "</certkeyfile>";
+		xmlFragment += "<certfile>" + Environment.certFile + "</certfile>";
 		
 		xmlFragment += "<tmpdir>" + Environment.tmpDir + "</tmpdir>";
 		xmlFragment += "<smtphost>" + Environment.SMTPHost + "</smtphost>";

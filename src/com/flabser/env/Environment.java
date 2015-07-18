@@ -17,6 +17,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import com.flabser.scheduler.PeriodicalServices;
 import com.flabser.users.UserSession;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -32,6 +33,7 @@ import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
 import com.flabser.server.Server;
+import com.flabser.server.WebServer;
 import com.flabser.util.XMLUtil;
 
 
@@ -41,7 +43,7 @@ public class Environment implements ICache {
 	public static String hostName;
 	public static int httpPort = 38779;
 	public static boolean noWSAuth = false;
-	public static String httpSchema = "http";
+	public static String httpSchema = WebServer.httpSchema;
 
 	public static ISystemDatabase systemBase;
 	public static String defaultSender = "";
@@ -54,14 +56,10 @@ public class Environment implements ICache {
 	public static ILogger logger;
 	public static PeriodicalServices periodicalServices;
 
-	public static Boolean isSSLEnable = false;
+	public static Boolean isTLSEnable = false;
 	public static int secureHttpPort;
-	public static String keyPwd = "";
-	public static String keyStore = "";
-	public static String trustStore;
-	public static String trustStorePwd;
-	public static boolean isClientSSLAuthEnable;
-
+	public static String certFile = "";
+	public static String certKeyFile = "";
 
 	public static String smtpPort;
 	public static boolean smtpAuth;
@@ -145,32 +143,25 @@ public class Environment implements ICache {
 			}
 
 			try {
-				isSSLEnable = XMLUtil.getTextContent(xmlDocument, "/tn/ssl/@mode").equalsIgnoreCase("on");
-				if (isSSLEnable) {
-					String sslPort = XMLUtil.getTextContent(xmlDocument, "/tn/ssl/port");
+				isTLSEnable = XMLUtil.getTextContent(xmlDocument, "/tn/tls/@mode").equalsIgnoreCase("on");
+				if (isTLSEnable) {
+					String tlsPort = XMLUtil.getTextContent(xmlDocument, "/tn/tls/port");
 					try {
-						secureHttpPort = Integer.parseInt(sslPort);
+						secureHttpPort = Integer.parseInt(tlsPort);
 					} catch (NumberFormatException nfe) {
 						secureHttpPort = 38789;
 					}
-					keyPwd = XMLUtil.getTextContent(xmlDocument, "/tn/ssl/keypass");
-					keyStore = XMLUtil.getTextContent(xmlDocument, "/tn/ssl/keystore");
-					isClientSSLAuthEnable = XMLUtil.getTextContent(xmlDocument, "/tn/ssl/clientauth/@mode")
-							.equalsIgnoreCase("on");
-					if (isClientSSLAuthEnable) {
-						trustStore = XMLUtil.getTextContent(xmlDocument, "/tn/ssl/clientauth/truststorefile");
-						trustStorePwd = XMLUtil.getTextContent(xmlDocument, "/tn/ssl/clientauth/truststorepass");
-					}
-					// logger.normalLogEntry("SSL is enabled. keyPass: " + keyPwd +", keyStore:" +
-					// keyStore);
+					certFile = XMLUtil.getTextContent(xmlDocument, "/tn/tls/certfile");
+					certKeyFile = XMLUtil.getTextContent(xmlDocument, "/tn/tls/certkeyfile");
+					
 					logger.normalLogEntry("TLS is enabled");
-					httpSchema = "https";
+					httpSchema = WebServer.httpSecureSchema;
 				}
 			} catch (Exception ex) {
-				logger.normalLogEntry("TLS configiration error");
-				isSSLEnable = false;
-				keyPwd = "";
-				keyStore = "";
+				logger.normalLogEntry("TLS configuration error");
+				isTLSEnable = false;
+				certFile = "";
+				certKeyFile = "";
 			}
 
 			try {

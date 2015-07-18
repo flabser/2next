@@ -30,7 +30,7 @@ public class Server{
 		logger.normalLogEntry("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "(" + System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
 
 		Environment.init();
-		logger.verboseLogEntry("Build " + compilationTime);
+		if (!compilationTime.equalsIgnoreCase("")) logger.verboseLogEntry("Build: " + compilationTime);
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
 		webServerInst.init(Environment.hostName);
 		

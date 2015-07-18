@@ -11,15 +11,11 @@
 	</applications>
 		
 		
-    <ssl mode="OFF">
+    <tls mode="ON">
         <port>38789</port>
-    	<keypass>123456</keypass>
-    	<keystore>c:\tmp\ssl\aikonamedia.jks</keystore>
-    	<clientauth mode="OFF">
-	   	 	<truststorepass>123456</truststorepass>
-	    	<truststorefile>c:\tmp\ssl\truststore.jks</truststorefile>
-    	</clientauth>
-    </ssl>
+    	<certfile>server.crt</certfile>
+    	<certkeyfile>server.key</certkeyfile>    	
+    </tls>
    
     <mailagent mode="on">
 		<smtphost>smtp.mail.ru</smtphost>
