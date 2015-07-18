@@ -29,7 +29,7 @@ import com.flabser.server.Server;
 import com.flabser.servlets.PublishAsType;
 import com.flabser.util.XMLUtil;
 
-public abstract class Rule implements IElement, IRule{
+public abstract class Rule implements IElement, IRule {
 	public RunMode isOn = RunMode.ON;
 	public boolean isValid = true;
 	public String description;
@@ -53,134 +53,139 @@ public abstract class Rule implements IElement, IRule{
 
 	private boolean allowAnonymousAccess;
 
-	protected Rule(AppEnv env, File docFile) throws RuleException{
+	protected Rule(AppEnv env, File docFile) throws RuleException {
 		try {
 			this.env = env;
-			DocumentBuilderFactory pageFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory pageFactory = DocumentBuilderFactory
+					.newInstance();
 			DocumentBuilder pageBuilder = pageFactory.newDocumentBuilder();
 			Document xmlFileDoc = pageBuilder.parse(docFile.toString());
 			doc = xmlFileDoc;
 			filePath = docFile.getAbsolutePath();
-			//	parentScriptDirPath = docFile.getParentFile().getAbsolutePath();
-			scriptDirPath = env.globalSetting.rulePath + File.separator + "Resources" + File.separator + "scripts";
+			scriptDirPath = env.globalSetting.rulePath + File.separator
+					+ "Resources" + File.separator + "scripts";
 			primaryScriptDirPath = Environment.primaryAppDir + scriptDirPath;
 
-			id = XMLUtil.getTextContent(doc,"/rule/@id");
-			Server.logger.verboseLogEntry("Load rule: " + this.getClass().getSimpleName() + ", id=" + id);
-			if (XMLUtil.getTextContent(doc,"/rule/@mode").equalsIgnoreCase("off")){
+			id = XMLUtil.getTextContent(doc, "/rule/@id");
+			Server.logger.verboseLogEntry("Load rule: "
+					+ this.getClass().getSimpleName() + ", id=" + id);
+			if (XMLUtil.getTextContent(doc, "/rule/@mode").equalsIgnoreCase(
+					"off")) {
 				isOn = RunMode.OFF;
 				isValid = false;
 			}
 
-			if (XMLUtil.getTextContent(doc,"/rule/@anonymous").equalsIgnoreCase("on")){
+			if (XMLUtil.getTextContent(doc, "/rule/@anonymous")
+					.equalsIgnoreCase("on")) {
 				allowAnonymousAccess = true;
 			}
 
-			if (XMLUtil.getTextContent(doc,"/rule/@history").equalsIgnoreCase("on")){
+			if (XMLUtil.getTextContent(doc, "/rule/@history").equalsIgnoreCase(
+					"on")) {
 				addToHistory = true;
 			}
 
-			xsltFile = XMLUtil.getTextContent(doc,"/rule/xsltfile");
+			xsltFile = XMLUtil.getTextContent(doc, "/rule/xsltfile");
 			if (!xsltFile.equals("")) {
 				publishAs = PublishAsType.HTML;
 			}
-			xsltFile = "webapps" + File.separator + env.appType + File.separator + "xsl" + File.separator  + xsltFile;
-			description = XMLUtil.getTextContent(doc,"/rule/description");
+			xsltFile = "webapps" + File.separator + env.appType
+					+ File.separator + "xsl" + File.separator + xsltFile;
+			description = XMLUtil.getTextContent(doc, "/rule/description");
 
-
-
-			NodeList captionList =  XMLUtil.getNodeList(doc,"/rule/caption");
-			for(int i = 0; i < captionList.getLength(); i++){
+			NodeList captionList = XMLUtil.getNodeList(doc, "/rule/caption");
+			for (int i = 0; i < captionList.getLength(); i++) {
 				Caption c = new Caption(captionList.item(i));
-				if (c.isOn == RunMode.ON){
+				if (c.isOn == RunMode.ON) {
 					captions.add(c);
 				}
 			}
 
-
-		}catch(SAXParseException spe){
-			Server.logger.errorLogEntry("XML-file structure error (" + docFile.getAbsolutePath() + ")");
+		} catch (SAXParseException spe) {
+			Server.logger.errorLogEntry("XML-file structure error ("
+					+ docFile.getAbsolutePath() + ")");
 			Server.logger.errorLogEntry(spe);
-		}catch(FileNotFoundException e){
-			throw new RuleException("Rule \"" + docFile.getAbsolutePath() + "\" has not found");
-		}catch (ParserConfigurationException e) {
+		} catch (FileNotFoundException e) {
+			throw new RuleException("Rule \"" + docFile.getAbsolutePath()
+					+ "\" has not found");
+		} catch (ParserConfigurationException e) {
 			Server.logger.errorLogEntry(e);
-		}catch (IOException e) {
+		} catch (IOException e) {
 			Server.logger.errorLogEntry(e);
-		}catch (SAXException se) {
+		} catch (SAXException se) {
 			Server.logger.errorLogEntry(se);
 		}
 
 	}
 
-	protected String[] getWebFormValue(String fieldName, Map<String, String[]> fields) throws WebFormValueException{
-		try{
+	protected String[] getWebFormValue(String fieldName,
+			Map<String, String[]> fields) throws WebFormValueException {
+		try {
 			return fields.get(fieldName);
-		}catch(Exception e){
-			throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, fieldName);
+		} catch (Exception e) {
+			throw new WebFormValueException(
+					WebFormValueExceptionType.FORMDATA_INCORRECT, fieldName);
 		}
 	}
 
-	protected void setIsOn(String isOnAsText){
-		if(isOnAsText.equalsIgnoreCase("on")){
+	protected void setIsOn(String isOnAsText) {
+		if (isOnAsText.equalsIgnoreCase("on")) {
 			isOn = RunMode.ON;
-		}else{
+		} else {
 			isOn = RunMode.OFF;
 		}
 	}
 
-	protected void setDescription(String d){
+	protected void setDescription(String d) {
 		description = d;
 	}
 
-	protected void setID(String id){
+	protected void setID(String id) {
 		this.id = id;
 	}
 
-	protected void setCaptions(String[]id){
+	protected void setCaptions(String[] id) {
 
 	}
 
-	public boolean isAnonymousAccessAllowed(){
+	public boolean isAnonymousAccessAllowed() {
 		return allowAnonymousAccess;
 	}
 
-	public void plusHit(){
-		hits ++ ;
+	public void plusHit() {
+		hits++;
 	}
 
-	public String toString(){
-		return getClass().getSimpleName() + " id=" + id + ", file=" + filePath ;
+	public String toString() {
+		return getClass().getSimpleName() + " id=" + id + ", file=" + filePath;
 	}
 
 	public String getXSLT() {
 		return xsltFile.replace("\\", File.separator);
 	}
 
-	public String getAsXML(){
+	public String getAsXML() {
 		return "";
 	}
 
-	public String getRuleAsXML(String app){
-		String xmlText = "<rule id=\"" + id + "\" isvalid=\"" + isValid + "\" app=\"" + app + "\" ison=\"" + isOn + "\">" +
-				"<description>" + description + "</description>";
+	public String getRuleAsXML(String app) {
+		String xmlText = "<rule id=\"" + id + "\" isvalid=\"" + isValid
+				+ "\" app=\"" + app + "\" ison=\"" + isOn + "\">"
+				+ "<description>" + description + "</description>";
 		return xmlText + "</fields></rule>";
 	}
 
-
-
 	@Override
-	public boolean addToHistory(){
+	public boolean addToHistory() {
 		return addToHistory;
 	}
 
-	abstract public void update(Map<String, String[]> fields) throws WebFormValueException;
+	abstract public void update(Map<String, String[]> fields)
+			throws WebFormValueException;
 
-	abstract public boolean save() ;
+	abstract public boolean save();
 
-
-
-	public 	String getRuleID(){
+	public String getRuleID() {
 		return type + "_" + id;
 	}
 
@@ -203,7 +208,6 @@ public abstract class Rule implements IElement, IRule{
 	public String getPrimaryScriptDirPath() {
 		return primaryScriptDirPath;
 	}
-
 
 	@Override
 	public ArrayList<Caption> getCaptions() {

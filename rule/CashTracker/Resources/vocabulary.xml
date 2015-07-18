@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<vocabulary primary="ENG">
+<vocabulary>
 	<sentence mode="on" keyword="copyright">
 		<entry lang="RUS" hint="@copyright">@copyright</entry>
 		<entry lang="KAZ" hint="@copyright">@copyright</entry>
@@ -32,6 +32,96 @@
 		<entry lang="KAZ" hint="Операции">Операции</entry>
 		<entry lang="ENG" hint="Transactions">Transactions</entry>
 		<entry lang="BG" hint="Сделки">Сделки</entry>
+	</sentence>
+	<sentence mode="on" keyword="accounts">
+		<entry lang="RUS">Счета</entry>
+		<entry lang="KAZ">Шоттар</entry>
+		<entry lang="ENG">Accounts</entry>
+		<entry lang="BG">Сметки</entry>
+	</sentence>
+	<sentence mode="on" keyword="categories">
+		<entry lang="RUS">Категории</entry>
+		<entry lang="KAZ">Категории</entry>
+		<entry lang="ENG">Categories</entry>
+		<entry lang="BG">Категори</entry>
+	</sentence>
+	<sentence mode="on" keyword="cost_centers">
+		<entry lang="RUS">Места возникновения затрат</entry>
+		<entry lang="KAZ">Места возникновения затрат</entry>
+		<entry lang="ENG">Cost centers</entry>
+		<entry lang="BG">Мяста на расходи</entry>
+	</sentence>
+	<sentence mode="on" keyword="tags">
+		<entry lang="RUS">Тэги</entry>
+		<entry lang="KAZ">Тэги</entry>
+		<entry lang="ENG">Tags</entry>
+		<entry lang="BG">Теги</entry>
+	</sentence>
+	<sentence mode="on" keyword="users">
+		<entry lang="RUS">Пользователи</entry>
+		<entry lang="KAZ">Пользователи</entry>
+		<entry lang="ENG">Users</entry>
+		<entry lang="BG">Потребители</entry>
+	</sentence>
+	<sentence mode="on" keyword="transactions.new.btn_label">
+		<entry lang="RUS">Новая операция</entry>
+		<entry lang="KAZ">Жана операция</entry>
+		<entry lang="ENG">New transaction</entry>
+		<entry lang="BG">Новая сделка</entry>
+	</sentence>
+	<sentence mode="on" keyword="account.new.btn_label">
+		<entry lang="RUS">Новый счет</entry>
+		<entry lang="KAZ">Жана шот</entry>
+		<entry lang="ENG">New account</entry>
+		<entry lang="BG">Нова сметка</entry>
+	</sentence>
+	<sentence mode="on" keyword="categories.new.btn_label">
+		<entry lang="RUS">Новая категория</entry>
+		<entry lang="KAZ">Жана категория</entry>
+		<entry lang="ENG">New category</entry>
+		<entry lang="BG">Нова категория</entry>
+	</sentence>
+	<sentence mode="on" keyword="cost_centers.new.btn_label">
+		<entry lang="RUS">Новое место возникновения затрат</entry>
+		<entry lang="KAZ">Жана ...</entry>
+		<entry lang="ENG">New spending place</entry>
+		<entry lang="BG">Нова място на расходи</entry>
+	</sentence>
+		<sentence mode="on" keyword="tag.new.btn_label">
+		<entry lang="RUS">Новый хештэг</entry>
+		<entry lang="KAZ">Жана хэштэг</entry>
+		<entry lang="ENG">New hash tag</entry>
+		<entry lang="BG">Нова хеш тег</entry>
+	</sentence>
+		<sentence mode="on" keyword="users.new.btn_label">
+		<entry lang="RUS">Новый пользователь</entry>
+		<entry lang="KAZ">Жана пользователь</entry>
+		<entry lang="ENG">New user</entry>
+		<entry lang="BG">Нова потребител</entry>
+	</sentence>
+		<sentence mode="on" keyword="amount">
+		<entry lang="RUS">Сумма</entry>
+		<entry lang="KAZ">Сумма</entry>
+		<entry lang="ENG">Amount</entry>
+		<entry lang="BG">Сума</entry>
+	</sentence>
+		<sentence mode="on" keyword="cost_center">
+		<entry lang="RUS">Место возникновения затрат</entry>
+		<entry lang="KAZ">Место возникновения затрат</entry>
+		<entry lang="ENG">Spending place</entry>
+		<entry lang="BG">Място на расходи</entry>
+	</sentence>
+		<sentence mode="on" keyword="owner">
+		<entry lang="RUS">Владелец</entry>
+		<entry lang="KAZ">Владелец</entry>
+		<entry lang="ENG">Owner</entry>
+		<entry lang="BG">Собственик</entry>
+	</sentence>
+		<sentence mode="on" keyword="color">
+		<entry lang="RUS">Цвет</entry>
+		<entry lang="KAZ">Цвет</entry>
+		<entry lang="ENG">Color</entry>
+		<entry lang="BG">Цвят</entry>
 	</sentence>
 	<sentence mode="on" keyword="user_profile">
 		<entry lang="RUS" hint="Профиль">Профиль</entry>

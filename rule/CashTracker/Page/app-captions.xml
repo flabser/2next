@@ -36,8 +36,21 @@
 	<caption name="costcenter" />
 	<caption name="user" />
 	<caption name="transaction" />
+	
 	<caption name="transactions" />
-
+	<caption name="accounts" />
+	<caption name="categories" />
+	<caption name="cost_centers" />
+	<caption name="tags" />
+	<caption name="users" />
+	
+	<caption name="transactions.new.btn_label" />
+	<caption name="account.new.btn_label" />
+	<caption name="categories.new.btn_label" />
+	<caption name="cost.centers.new.btn_label" />
+	<caption name="tag.new.btn_label" />
+	<caption name="users.new.btn_label" />
+	
 	<caption name="name" />
 	<caption name="amount_control" />
 	<caption name="observers" />
@@ -62,4 +75,10 @@
 	<caption name="basis" />
 	<caption name="documented" />
 	<caption name="btn_send_invite" />
+	
+	<caption name="amount" />
+	<caption name="cost_center" />
+	<caption name="owner" />
+	<caption name="color" />
+	
 </rule>

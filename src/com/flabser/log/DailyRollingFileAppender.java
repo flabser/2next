@@ -137,15 +137,6 @@ public class DailyRollingFileAppender extends RollingFileAppender {
 		}
 	}
 
-	// This method computes the roll over period by looping over the
-	// periods, starting with the shortest, and stopping when the r0 is
-	// different from from r1, where r0 is the epoch formatted according
-	// the datePattern (supplied by the user) and r1 is the
-	// epoch+nextMillis(i) formatted according to datePattern. All date
-	// formatting is done in GMT and not local format because the test
-	// logic is based on comparisons relative to 1970-01-01 00:00:00
-	// GMT (the epoch).
-
 	int computeCheckPeriod() {
 		RollingCalendar rollingCalendar = new RollingCalendar(gmtTimeZone,
 				Locale.getDefault());

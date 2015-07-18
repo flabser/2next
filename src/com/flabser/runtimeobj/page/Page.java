@@ -33,17 +33,20 @@ public class Page {
 	protected Map<String, String[]> fields = new HashMap<String, String[]>();
 	protected UserSession userSession;
 
-	public Page(AppEnv env, UserSession userSession, PageRule rule, String httpMethod) {
+	public Page(AppEnv env, UserSession userSession, PageRule rule,
+			String httpMethod) {
 		this.userSession = userSession;
 		this.env = env;
 		this.rule = rule;
 		this.httpMethod = httpMethod;
 	}
 
-	public HashMap<String, String[]> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
+	public HashMap<String, String[]> getCaptions(
+			SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
 		HashMap<String, String[]> captionsList = new HashMap<String, String[]>();
 		for (Caption cap : captions) {
-			SentenceCaption sc = captionTextSupplier.getValueAsCaption(cap.source, cap.captionID);
+			SentenceCaption sc = captionTextSupplier
+					.getValueAsCaption(cap.captionID);
 			String c[] = new String[2];
 			c[0] = sc.word;
 			c[1] = sc.hint;
@@ -52,7 +55,8 @@ public class Page {
 		return captionsList;
 	}
 
-	public _Page process(Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page process(Map<String, String[]> formData)
+			throws ClassNotFoundException, RuleException {
 		_Page pp = null;
 		long start_time = System.currentTimeMillis();
 		switch (rule.caching) {
@@ -83,7 +87,8 @@ public class Page {
 
 	}
 
-	public _Page getContent(Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page getContent(Map<String, String[]> formData)
+			throws ClassNotFoundException, RuleException {
 		fields = formData;
 		_Page pp = new _Page();
 
@@ -91,8 +96,10 @@ public class Page {
 			loop: for (ElementRule elementRule : rule.elements) {
 				switch (elementRule.type) {
 				case SCRIPT:
-					DoProcessor sProcessor = new DoProcessor(env, userSession, userSession.getLang(), fields);
-					ScriptResponse scriptResp = sProcessor.processScript(elementRule.doClassName, httpMethod);
+					DoProcessor sProcessor = new DoProcessor(env, userSession,
+							userSession.getLang(), fields);
+					ScriptResponse scriptResp = sProcessor.processScript(
+							elementRule.doClassName, httpMethod);
 
 					for (IQuerySaveTransaction toPostObects : sProcessor.transactionToPost) {
 						toPostObects.post();
@@ -103,8 +110,10 @@ public class Page {
 					break;
 
 				case INCLUDED_PAGE:
-					PageRule rule = (PageRule) env.ruleProvider.getRule(elementRule.value);
-					IncludedPage page = new IncludedPage(env, userSession, rule, httpMethod);
+					PageRule rule = (PageRule) env.ruleProvider
+							.getRule(elementRule.value);
+					IncludedPage page = new IncludedPage(env, userSession,
+							rule, httpMethod);
 					pp.addPage(page.process(fields));
 					break;
 				default:
@@ -113,7 +122,8 @@ public class Page {
 			}
 		}
 
-		SourceSupplier captionTextSupplier = new SourceSupplier(env, userSession.getLang());
+		SourceSupplier captionTextSupplier = new SourceSupplier(env,
+				userSession.getLang());
 		pp.setCaptions(getCaptions(captionTextSupplier, rule.captions));
 		return pp;
 	}

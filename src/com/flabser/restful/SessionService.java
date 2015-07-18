@@ -14,6 +14,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
 
 import org.omg.CORBA.UserException;
 
@@ -34,7 +36,6 @@ import com.flabser.users.UserSession;
 import com.flabser.users.UserStatusType;
 import com.flabser.util.Util;
 
-
 @Path("/session")
 public class SessionService {
 
@@ -51,7 +52,8 @@ public class SessionService {
 		HttpSession jses = request.getSession(true);
 
 		AuthUser user = new AuthUser();
-		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
+		UserSession userSession = (UserSession) jses
+				.getAttribute(UserSession.SESSION_ATTR);
 		if (userSession == null) {
 			return user;
 		}
@@ -63,20 +65,22 @@ public class SessionService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public AuthUser createSession(AuthUser signUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException, UserException, IllegalAccessException, SQLException {
+	public Response createSession(AuthUser signUser)
+			throws ClassNotFoundException, InstantiationException,
+			DatabasePoolException, UserException, IllegalAccessException,
+			SQLException {
 		UserSession userSession = null;
-
-		//		System.out.println(request.getRequestedSessionId() + "  " + signUser.getClass().getName());
 		HttpSession jses;
 
 		AppEnv env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		User user = new User();
-		Cookies appCookies = new Cookies(request);
-		user = systemDatabase.checkUserHash(signUser.getLogin(), signUser.getPwd(), "", user);
+		user = systemDatabase.checkUserHash(signUser.getLogin(),
+				signUser.getPwd(), "", user);
 
 		if (!user.isAuthorized) {
-			throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT,
+			throw new AuthFailedException(
+					AuthFailedExceptionType.PASSWORD_INCORRECT,
 					signUser.getLogin());
 		}
 
@@ -93,9 +97,11 @@ public class SessionService {
 					ApplicationProfile ap = new ApplicationProfile();
 					ap.appName = env.appType;
 					ap.owner = user.getLogin();
-					ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
+					ap.dbLogin = (user.getLogin().replace("@", "_")
+							.replace(".", "_").replace("-", "_")).toLowerCase();
 					ap.dbName = ap.appName.toLowerCase() + "_" + ap.dbLogin;
-					ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
+					ap.dbPwd = Util
+							.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
 					ap.save();
 					user.addApplication(ap);
 					user.save();
@@ -106,16 +112,22 @@ public class SessionService {
 			signUser.setRedirect("tochangepwd");
 		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED
 				|| user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
-			throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED, signUser.getLogin());
+			throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED,
+					signUser.getLogin());
 		} else if (user.getStatus() == UserStatusType.DELETED) {
-			throw new AuthFailedException(AuthFailedExceptionType.DELETED, signUser.getLogin());
+			throw new AuthFailedException(AuthFailedExceptionType.DELETED,
+					signUser.getLogin());
 		}
 
-		userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
+		userSession = new UserSession(user, env.globalSetting.implementation,
+				env.appType);
+		Cookies c = new Cookies(request);
+		userSession.setLang(c.currentLang);
 		SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 
-		return signUser;
+		return Response.ok(signUser)
+				.cookie(new NewCookie("lang", c.currentLang)).build();
 	}
 
 	@DELETE
