@@ -22,13 +22,14 @@ import com.flabser.restful.ResourceLoader;
 public class WebServer implements IWebServer {
 	public static final String httpSchema = "http";
 	public static final String httpSecureSchema = "https";
-	
+
 	private static Tomcat tomcat;
-	private static final String defaultWelcomeList[]={"index.html", "index.htm"};
-	
+	private static final String defaultWelcomeList[] = { "index.html",
+			"index.htm" };
 
 	@Override
-	public void init(String defaultHostName) throws MalformedURLException, LifecycleException {
+	public void init(String defaultHostName) throws MalformedURLException,
+			LifecycleException {
 		Server.logger.verboseLogEntry("Init webserver ...");
 
 		tomcat = new Tomcat();
@@ -45,12 +46,14 @@ public class WebServer implements IWebServer {
 
 	}
 
-	public Context initSharedResources(String URLPath) throws LifecycleException, MalformedURLException {
+	public Context initSharedResources(String URLPath)
+			throws LifecycleException, MalformedURLException {
 		String db = new File("webapps/SharedResources").getAbsolutePath();
 		Context sharedResContext = tomcat.addContext(URLPath, db);
 		sharedResContext.setDisplayName("sharedresources");
 
-		Tomcat.addServlet(sharedResContext, "default", "org.apache.catalina.servlets.DefaultServlet");
+		Tomcat.addServlet(sharedResContext, "default",
+				"org.apache.catalina.servlets.DefaultServlet");
 		sharedResContext.addServletMapping("/", "default");
 
 		sharedResContext.addMimeMapping("css", "text/css");
@@ -58,26 +61,36 @@ public class WebServer implements IWebServer {
 		return sharedResContext;
 	}
 
-	public Host addApplication(String siteName, String URLPath, String docBase) throws LifecycleException,
-	MalformedURLException {
+	@Override
+	public Host addApplication(String siteName, String URLPath, String docBase)
+			throws LifecycleException, MalformedURLException {
 		Context context = null;
 
 		if (docBase.equalsIgnoreCase("Administrator")) {
-			String db = new File(Environment.primaryAppDir + "webapps/" + docBase).getAbsolutePath();
+			String db = new File(Environment.primaryAppDir + "webapps/"
+					+ docBase).getAbsolutePath();
 			context = tomcat.addContext(URLPath, db);
 
-			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
+			for (int i = 0; i < defaultWelcomeList.length; i++) {
+				context.addWelcomeFile(defaultWelcomeList[i]);
+			}
+
+			Tomcat.addServlet(context, "Provider",
+					"com.flabser.servlets.admin.AdminProvider");
 			context.setDisplayName("Administrator");
 		} else {
-			Server.logger.normalLogEntry("Load \"" + docBase + "\" application...");
+			Server.logger.normalLogEntry("Load \"" + docBase
+					+ "\" application...");
 			String db = new File("webapps/" + docBase).getAbsolutePath();
 			context = tomcat.addContext(URLPath, db);
 			context.setDisplayName(URLPath.substring(1));
 			context.addWelcomeFile("Provider");
-			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
+			Tomcat.addServlet(context, "Provider",
+					"com.flabser.servlets.Provider");
 		}
 
-		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
+		Tomcat.addServlet(context, "default",
+				"org.apache.catalina.servlets.DefaultServlet");
 		context.addServletMapping("/", "default");
 
 		context.addServletMapping("/Provider", "Provider");
@@ -93,13 +106,14 @@ public class WebServer implements IWebServer {
 		context.addFilterDef(filterAccessGuard);
 		context.addFilterMap(filterAccessGuardMapping);
 
-		//		Tomcat.addServlet(context, "Login", "com.flabser.servlets.Login");
-		//		context.addServletMapping("/Login", "Login");
+		// Tomcat.addServlet(context, "Login", "com.flabser.servlets.Login");
+		// context.addServletMapping("/Login", "Login");
 
-		Tomcat.addServlet(context, "Logout", "com.flabser.servlets.Logout");
-		context.addServletMapping("/Logout", "Logout");
+		// Tomcat.addServlet(context, "Logout", "com.flabser.servlets.Logout");
+		// context.addServletMapping("/Logout", "Logout");
 
-		Wrapper w = Tomcat.addServlet(context, "PortalInit", "com.flabser.servlets.PortalInit");
+		Wrapper w = Tomcat.addServlet(context, "PortalInit",
+				"com.flabser.servlets.PortalInit");
 		w.setLoadOnStartup(1);
 
 		context.addServletMapping("/PortalInit", "PortalInit");
@@ -113,28 +127,36 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
+				new ServletContainer(new ResourceConfig(new ResourceLoader(
+						docBase).getClasses())));
 		w1.setLoadOnStartup(1);
-		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
+		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature",
+				"true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
 		filterAccessGuardMapping.addServletName("Jersey REST Service");
 
 		return null;
 	}
 
-	public Context initDefaultURL() throws LifecycleException, MalformedURLException {
-		String db = new File(Environment.primaryAppDir + "webapps/ROOT").getAbsolutePath();
+	public Context initDefaultURL() throws LifecycleException,
+			MalformedURLException {
+		String db = new File(Environment.primaryAppDir + "webapps/ROOT")
+				.getAbsolutePath();
 		Context context = tomcat.addContext("", db);
 
 		for (int i = 0; i < defaultWelcomeList.length; i++) {
 			context.addWelcomeFile(defaultWelcomeList[i]);
 		}
-		//		Tomcat.addServlet(context, "Redirector", "com.flabser.servlets.Redirector");
-		//		context.addServletMapping("/", "Redirector");
+
+		Tomcat.addServlet(context, "Redirector",
+				"com.flabser.servlets.Redirector");
+		context.addServletMapping("/", "Redirector");
 
 		return context;
 	}
 
+	@Override
 	public String initConnectors() {
 		String portInfo = "";
 		if (Environment.isTLSEnable) {
@@ -143,32 +165,38 @@ public class WebServer implements IWebServer {
 			secureConnector = tomcat.getConnector();
 			secureConnector.setPort(Environment.secureHttpPort);
 			secureConnector.setScheme(httpSecureSchema);
-			secureConnector.setProtocol("org.apache.coyote.http11.Http11AprProtocol");
+			secureConnector
+					.setProtocol("org.apache.coyote.http11.Http11AprProtocol");
 			secureConnector.setSecure(true);
 			secureConnector.setEnableLookups(false);
 			secureConnector.setSecure(true);
 			secureConnector.setProperty("SSLEnabled", "true");
-			secureConnector.setProperty("sslProtocol", "TLS");			
-			secureConnector.setProperty("SSLCertificateFile", Environment.certFile);
-			secureConnector.setProperty("SSLCertificateKeyFile", Environment.certKeyFile);			
+			secureConnector.setProperty("SSLCertificateFile",
+					Environment.certFile);
+			secureConnector.setProperty("SSLCertificateKeyFile",
+					Environment.certKeyFile);
 			tomcat.setConnector(secureConnector);
-			portInfo = httpSecureSchema + "://" + tomcat.getHost().getName() + ":" + Integer.toString(Environment.secureHttpPort);
+			portInfo = httpSecureSchema + "://" + tomcat.getHost().getName()
+					+ ":" + Integer.toString(Environment.secureHttpPort);
 		} else {
-			portInfo = tomcat.getHost().getName() + ":" + Integer.toString(Environment.httpPort);
+			portInfo = tomcat.getHost().getName() + ":"
+					+ Integer.toString(Environment.httpPort);
 		}
 		return portInfo;
 
 	}
 
+	@Override
 	public void startContainer() {
 		try {
 			tomcat.start();
-			//	tomcat.getServer().await();
+			// tomcat.getServer().await();
 		} catch (LifecycleException e) {
 			Server.logger.errorLogEntry(e);
 		}
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
 			public void run() {
 				stopContainer();
 			}
@@ -181,7 +209,8 @@ public class WebServer implements IWebServer {
 				tomcat.stop();
 			}
 		} catch (LifecycleException exception) {
-			Server.logger.errorLogEntry("Cannot Stop WebServer" + exception.getMessage());
+			Server.logger.errorLogEntry("Cannot Stop WebServer "
+					+ exception.getMessage());
 		}
 
 	}
