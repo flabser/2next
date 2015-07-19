@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rule type="page" id="site-inc" mode="on" anonymous="on">
 	<description></description>
-	<caching>CACHING_IN_USER_SESSION_SCOPE</caching>
+	<!-- <caching>CACHING_IN_USER_SESSION_SCOPE</caching> -->
+	<caching>NO_CACHING</caching>
 
 	<element mode="ON" type="SCRIPT">
 		<events>

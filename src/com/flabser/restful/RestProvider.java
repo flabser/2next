@@ -26,12 +26,10 @@ import com.flabser.script._Exception;
 import com.flabser.script._Page;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
-import com.flabser.servlets.Cookies;
 import com.flabser.servlets.ProviderResult;
 import com.flabser.users.AuthFailedException;
 import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
-
 
 @Path("/")
 public class RestProvider {
@@ -50,12 +48,11 @@ public class RestProvider {
 
 	public UserSession getUserSession() {
 		HttpSession jses = request.getSession(true);
-		UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
+		UserSession us = (UserSession) jses
+				.getAttribute(UserSession.SESSION_ATTR);
 		if (us == null) {
-			us = new UserSession(new com.flabser.users.User());
+			us = new UserSession(new com.flabser.users.User(), jses);
 		}
-		Cookies cook = new Cookies(request);
-		us.setLang(cook.currentLang);
 		return us;
 
 	}
@@ -72,16 +69,20 @@ public class RestProvider {
 	@GET
 	@Path("/page/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public _Page producePage(@PathParam("id") String id, @Context UriInfo uriInfo) throws RuleException, AuthFailedException, UserException,
-	ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public _Page producePage(@PathParam("id") String id,
+			@Context UriInfo uriInfo) throws RuleException,
+			AuthFailedException, UserException, ClassNotFoundException,
+			InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
-		MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
+		MultivaluedMap<String, String> queryParams = uriInfo
+				.getQueryParameters();
 		AppEnv env = getAppEnv();
 		IRule rule = env.ruleProvider.getRule(id);
 
 		if (rule != null) {
 			try {
-				return page(env, (Map)queryParams, request, rule, getUserSession());
+				return page(env, (Map) queryParams, request, rule,
+						getUserSession());
 			} catch (final UnsupportedEncodingException e) {
 				e.printStackTrace();
 			} catch (final ClassNotFoundException e) {
@@ -96,23 +97,28 @@ public class RestProvider {
 
 	@GET
 	@Path("/{model}")
-	public _Page produceEmptyPage(@PathParam("model") String model) throws RuleException, AuthFailedException, UserException,
-	ClassNotFoundException, InstantiationException, IllegalAccessException {
-		String msg = "The request \"" + request.getRequestURI() + "\" has not processed by some application handler";
+	public _Page produceEmptyPage(@PathParam("model") String model)
+			throws RuleException, AuthFailedException, UserException,
+			ClassNotFoundException, InstantiationException,
+			IllegalAccessException {
+		String msg = "The request \"" + request.getRequestURI()
+				+ "\" has not processed by some application handler";
 		Server.logger.errorLogEntry(msg);
 		throw new WebApplicationException(msg, HttpServletResponse.SC_NOT_FOUND);
 	}
 
-
-	private _Page page(AppEnv env, Map <String, String[]> parMap, HttpServletRequest request, IRule rule,
-			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,
-			_Exception {
+	private _Page page(AppEnv env, Map<String, String[]> parMap,
+			HttpServletRequest request, IRule rule, UserSession userSession)
+			throws RuleException, UnsupportedEncodingException,
+			ClassNotFoundException, _Exception {
 		PageRule pageRule = (PageRule) rule;
-		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
+		ProviderResult result = new ProviderResult(pageRule.publishAs,
+				pageRule.getXSLT());
 		result.addHistory = pageRule.addToHistory;
-		//HashMap <String, String[]> fields = new HashMap <String, String[]>();
-		//Map <String, String[]> parMap = request.getParameterMap();
-		//fields.putAll(parMap);
-		return new Page(env, userSession, pageRule, request.getMethod()).process(parMap);
+		// HashMap <String, String[]> fields = new HashMap <String, String[]>();
+		// Map <String, String[]> parMap = request.getParameterMap();
+		// fields.putAll(parMap);
+		return new Page(env, userSession, pageRule, request.getMethod())
+				.process(parMap);
 	}
 }

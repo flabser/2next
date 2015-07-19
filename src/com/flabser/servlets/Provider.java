@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +38,7 @@ public class Provider extends HttpServlet {
 	private AppEnv env;
 	private ServletContext context;
 
+	@Override
 	public void init(ServletConfig config) throws ServletException {
 		try {
 			context = config.getServletContext();
@@ -48,11 +48,13 @@ public class Provider extends HttpServlet {
 		}
 	}
 
+	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) {
 		doPost(request, response);
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) {
 		// long start_time = System.currentTimeMillis();
@@ -74,14 +76,22 @@ public class Provider extends HttpServlet {
 					IRule rule = env.ruleProvider.getRule(id);
 
 					if (rule != null) {
-						jses = request.getSession(true);
+						boolean isNewSession = false;
+						jses = request.getSession(false);
+						if (jses == null) {
+							jses = request.getSession(true);
+							isNewSession = true;
+						}
+
 						userSession = (UserSession) jses
 								.getAttribute(UserSession.SESSION_ATTR);
 						if (userSession == null) {
 							userSession = new UserSession(
-									new com.flabser.users.User());
-							Cookies c = new Cookies(request);
-							userSession.setLang(c.currentLang);
+									new com.flabser.users.User(), jses);
+							if (isNewSession) {
+								Cookies c = new Cookies(request);
+								userSession.setLang(c.currentLang);
+							}
 
 						}
 
@@ -91,11 +101,6 @@ public class Provider extends HttpServlet {
 								attachHandler = new AttachmentHandler(request,
 										response, true);
 							}
-							Cookie cpCookie = new Cookie("lang",
-									userSession.getLang());
-							cpCookie.setMaxAge(0);
-							cpCookie.setPath("/");
-							response.addCookie(cpCookie);
 						} else if (type.equalsIgnoreCase("search")) {
 							result = search(request, userSession);
 						} else if (type.equalsIgnoreCase("getattach")) {
@@ -104,8 +109,7 @@ public class Provider extends HttpServlet {
 									response, true);
 						} else {
 							String reqEnc = request.getCharacterEncoding();
-							type = new String(
-									((String) type).getBytes("ISO-8859-1"),
+							type = new String(type.getBytes("ISO-8859-1"),
 									reqEnc);
 							new PortalException(
 									"Request has been undefined, type=" + type
@@ -253,14 +257,12 @@ public class Provider extends HttpServlet {
 			UnsupportedEncodingException {
 		ProviderResult result = new ProviderResult(PublishAsType.HTML,
 				"searchres.xsl");
-		int page = 0;
 		try {
-			page = Integer.parseInt(request.getParameter("page"));
+			Integer.parseInt(request.getParameter("page"));
 		} catch (NumberFormatException nfe) {
-			page = 1;
 		}
 		String keyWord = request.getParameter("keyword");
-		keyWord = new String(((String) keyWord).getBytes("ISO-8859-1"), "UTF-8");
+		keyWord = new String(keyWord.getBytes("ISO-8859-1"), "UTF-8");
 		// FTSearchRequest ftRequest = new FTSearchRequest(env,
 		// userSession.currentUser.getAllUserGroups(),
 		// userSession.currentUser.getUserID(), keyWord, page,

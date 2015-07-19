@@ -26,13 +26,15 @@ public class UserSession implements ICache {
 	public int pageSize;
 	public String host = "localhost";
 
-	private String lang;
 	private IDatabase dataBase;
 	private HttpSession jses;
 
-	public UserSession(User user, String implemantion, String appID) throws UserException, ClassNotFoundException,
-	InstantiationException, IllegalAccessException, DatabasePoolException {
+	public UserSession(User user, String implemantion, String appID,
+			HttpSession jses) throws UserException, ClassNotFoundException,
+			InstantiationException, IllegalAccessException,
+			DatabasePoolException {
 		currentUser = user;
+		this.jses = jses;
 		initHistory();
 		if (implemantion != null) {
 			Class<?> cls = Class.forName(implemantion);
@@ -44,13 +46,88 @@ public class UserSession implements ICache {
 		}
 	}
 
-	public UserSession(User user) {
+	public UserSession(User user, HttpSession jses) {
 		currentUser = user;
+		this.jses = jses;
 		initHistory();
 	}
 
+	public void setLang(String lang) {
+		if (!currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
+			currentUser.setPersistentValue("lang", lang);
+		}
+		jses.setAttribute("lang", lang);
+	}
+
+	public String getLang() {
+		if (currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
+			return (String) jses.getAttribute("lang");
+		} else {
+			Object o = currentUser.getPesistentValue("lang");
+			if (o == null) {
+				return (String) jses.getAttribute("lang");
+			} else {
+				return (String) o;
+			}
+		}
+	}
+
+	public void addHistoryEntry(String type, String url) throws UserException {
+		HistoryEntry entry = new HistoryEntry(type, url);
+		history.add(entry);
+	}
+
+	public boolean isAppAllowed(String appType) {
+		return true;
+	}
+
+	@Override
+	public void flush() {
+		@SuppressWarnings("unchecked")
+		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses
+				.getAttribute("cache");
+		if (cache != null) {
+			cache.clear();
+		}
+	}
+
+	public IDatabase getDataBase() {
+		return dataBase;
+	}
+
+	private void initHistory() {
+		history = new HistoryEntryCollection();
+	}
+
+	@Override
+	public _Page getPage(Page page, Map<String, String[]> formData)
+			throws ClassNotFoundException, RuleException {
+		String cid = page.getID() + "_";
+		Object obj = getObject(cid);
+		String c[] = formData.get("cache");
+		if (c != null) {
+			String cache = c[0];
+			if (obj == null || cache.equalsIgnoreCase("reload")) {
+				_Page buffer = page.getContent(formData);
+				setObject(cid, buffer);
+				return buffer;
+			} else {
+				return (_Page) obj;
+			}
+		} else {
+			if (obj == null) {
+				_Page buffer = page.getContent(formData);
+				setObject(cid, buffer);
+				return buffer;
+			} else {
+				return (_Page) obj;
+			}
+		}
+
+	}
+
 	@SuppressWarnings("unchecked")
-	public void setObject(String name, _Page obj) {
+	private void setObject(String name, _Page obj) {
 		HashMap<String, _Page> cache = null;
 		if (jses != null) {
 			cache = (HashMap<String, _Page>) jses.getAttribute("cache");
@@ -65,39 +142,15 @@ public class UserSession implements ICache {
 
 	}
 
-	public Object getObject(String name) {
+	private Object getObject(String name) {
 		try {
 			@SuppressWarnings("unchecked")
-			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
+			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses
+					.getAttribute("cache");
 			return cache.get(name);
 		} catch (Exception e) {
 			return null;
 		}
-	}
-
-	public void setLang(String lang) {
-		this.lang = lang;
-		currentUser.setPersistentValue("lang", lang);
-	}
-
-	public String getLang() {
-
-		Object o = currentUser.getPesistentValue("lang");
-		if (o == null) {
-			lang = "ENG";
-		}else {
-			this.lang = (String) o;
-		}
-		return lang;
-	}
-
-	public void addHistoryEntry(String type, String url) throws UserException {
-		HistoryEntry entry = new HistoryEntry(type, url);
-		history.add(entry);
-	}
-
-	public boolean isAppAllowed(String appType) {
-		return true;
 	}
 
 	public class HistoryEntryCollection {
@@ -126,6 +179,7 @@ public class UserSession implements ICache {
 
 		}
 
+		@Override
 		public String toString() {
 			String v = "";
 			for (HistoryEntry entry : history) {
@@ -167,15 +221,18 @@ public class UserSession implements ICache {
 			isPageURL = isPage(url);
 		}
 
+		@Override
 		public boolean equals(Object obj) {
 			HistoryEntry entry = (HistoryEntry) obj;
 			return entry.URLforXML.equalsIgnoreCase(URLforXML);
 		}
 
+		@Override
 		public int hashCode() {
 			return this.URLforXML.hashCode();
 		}
 
+		@Override
 		public String toString() {
 			return URLforXML;
 		}
@@ -183,49 +240,6 @@ public class UserSession implements ICache {
 		private boolean isPage(String url) {
 			return url.indexOf("type=page") > (-1);
 		}
-	}
-
-	private void initHistory() {
-		history = new HistoryEntryCollection();
-	}
-
-	@Override
-	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
-		String cid = page.getID() + "_";
-		Object obj = getObject(cid);
-		String c[] = formData.get("cache");
-		if (c != null) {
-			String cache = c[0];
-			if (obj == null || cache.equalsIgnoreCase("reload")) {
-				_Page buffer = page.getContent(formData);
-				setObject(cid, buffer);
-				return buffer;
-			} else {
-				return (_Page) obj;
-			}
-		} else {
-			if (obj == null) {
-				_Page buffer = page.getContent(formData);
-				setObject(cid, buffer);
-				return buffer;
-			} else {
-				return (_Page) obj;
-			}
-		}
-
-	}
-
-	@Override
-	public void flush() {
-		@SuppressWarnings("unchecked")
-		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
-		if (cache != null) {
-			cache.clear();
-		}
-	}
-
-	public IDatabase getDataBase() {
-		return dataBase;
 	}
 
 }

@@ -3,7 +3,6 @@ package com.flabser.servlets;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,71 +20,57 @@ public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AppEnv env;
 
-	public void init (ServletConfig config)throws ServletException{
+	@Override
+	public void init(ServletConfig config) throws ServletException {
 		ServletContext context = config.getServletContext();
 		env = (AppEnv) context.getAttribute("portalenv");
 	}
 
-	protected void  doGet(HttpServletRequest request, HttpServletResponse response){
+	@Override
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	@Override
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) {
 		UserSession userSession = null;
 
 		String mode = request.getParameter("mode");
-		if(mode == null) {
+		if (mode == null) {
 			mode = "leave_ses";
 		}
 
-		try{
+		try {
 			HttpSession jses = request.getSession(false);
-			if (jses != null){
-				userSession = (UserSession)jses.getAttribute(UserSession.SESSION_ATTR);
-				if (userSession != null){
+			if (jses != null) {
+				userSession = (UserSession) jses
+						.getAttribute(UserSession.SESSION_ATTR);
+				if (userSession != null) {
 					User user = userSession.currentUser;
 					String userID = user.getLogin();
-					IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
+					IActivity ua = DatabaseFactory.getSysDatabase()
+							.getActivity();
 					ua.postLogout(ServletUtil.getClientIpAddr(request), user);
-
+					jses.removeAttribute(UserSession.SESSION_ATTR);
 					Server.logger.normalLogEntry(userID + " logout");
 				}
-
-				if (env != null){
-					String addParameters = "&autologin=0";
-					if (mode != null && mode.equalsIgnoreCase("session_lost")){
-						addParameters = "&reason=session_lost&autologin=0";
-					}else{
-						addParameters = "&reason=user_logout";
-						Cookie loginCook = new Cookie("auth","0");
-						loginCook.setMaxAge(0);
-						response.addCookie(loginCook);
-
-						if (userSession != null){
-
-							//HistoryEntry entry = userSession.history.getLastEntry();
-							Cookie ruCookie = new Cookie("ru",env.globalSetting.entryPoint);
-							ruCookie.setMaxAge(99999);
-							response.addCookie(ruCookie);
-						}
-
-					}
-				}
-				jses.invalidate();
-				jses = null;
 			}
 			response.sendRedirect(getRedirect());
-		}catch (Exception e) {
-			new PortalException(e,env, response, ProviderExceptionType.LOGOUTERROR);
+		} catch (Exception e) {
+			new PortalException(e, env, response,
+					ProviderExceptionType.LOGOUTERROR);
 		}
 
 	}
 
-	private String getRedirect(){
-		if (env != null){
+	private String getRedirect() {
+		if (env != null) {
 			return env.globalSetting.entryPoint;
-		}else{
-			return env.globalSetting.entryPoint + "&reason=session_lost&autologin=0";
+		} else {
+			return env.globalSetting.entryPoint
+					+ "&reason=session_lost&autologin=0";
 		}
 	}
 

@@ -81,7 +81,7 @@
 		<entry lang="ENG">New category</entry>
 		<entry lang="BG">Нова категория</entry>
 	</sentence>
-	<sentence mode="on" keyword="cost_centers.new.btn_label">
+	<sentence mode="on" keyword="cost.centers.new.btn_label">
 		<entry lang="RUS">Новое место возникновения затрат</entry>
 		<entry lang="KAZ">Жана ...</entry>
 		<entry lang="ENG">New spending place</entry>

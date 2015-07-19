@@ -26,7 +26,6 @@ import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.SessionPool;
 import com.flabser.server.Server;
-import com.flabser.servlets.Cookies;
 import com.flabser.servlets.ServletUtil;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.AuthFailedException;
@@ -120,23 +119,24 @@ public class SessionService {
 		}
 
 		userSession = new UserSession(user, env.globalSetting.implementation,
-				env.appType);
-		Cookies c = new Cookies(request);
-		userSession.setLang(c.currentLang);
+				env.appType, jses);
 		SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 
 		return Response.ok(signUser)
-				.cookie(new NewCookie("lang", c.currentLang)).build();
+				.cookie(new NewCookie("lang", userSession.getLang())).build();
 	}
 
 	@DELETE
 	public void destroySession() {
 		HttpSession jses = request.getSession(true);
-
-		if (jses.getAttribute(UserSession.SESSION_ATTR) != null) {
+		UserSession userSession = (UserSession) jses
+				.getAttribute(UserSession.SESSION_ATTR);
+		if (userSession != null) {
 			jses.removeAttribute(UserSession.SESSION_ATTR);
-			jses.invalidate();
+			SessionPool.remove(userSession);
+			userSession = null;
+			// jses.invalidate();
 		}
 	}
 }

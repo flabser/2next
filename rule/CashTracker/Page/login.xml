@@ -5,7 +5,6 @@
 	<xsltfile>site/login.xsl</xsltfile>
 
 	<element mode="ON" type="INCLUDED_PAGE">
-		<name>site-inc</name>
 		<value>site-inc</value>
 	</element>
 

@@ -1,14 +1,18 @@
 package com.flabser.env;
 
-import com.flabser.users.UserSession;
-
 import java.util.HashMap;
 
-public class SessionPool {
-    private static HashMap<String, UserSession> userSessions = new HashMap <String, UserSession>();
+import com.flabser.users.UserSession;
 
-    public static void put(UserSession us){
-        userSessions.put(us.currentUser.getLogin(),us);
-    }
+public class SessionPool {
+	private static HashMap<String, UserSession> userSessions = new HashMap<String, UserSession>();
+
+	public static void put(UserSession us) {
+		userSessions.put(us.currentUser.getLogin(), us);
+	}
+
+	public static void remove(UserSession us) {
+		userSessions.remove(us.currentUser.getLogin());
+	}
 
 }

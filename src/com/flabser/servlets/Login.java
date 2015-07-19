@@ -40,11 +40,13 @@ public class Login extends HttpServlet {
 		env = (AppEnv) context.getAttribute("portalenv");
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) {
 		UserSession userSession = null;
 		try {
 			String login = request.getParameter("login");
@@ -56,21 +58,26 @@ public class Login extends HttpServlet {
 			ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 
 			if (env == null || env.appType.equalsIgnoreCase("administrator")) {
-				HashMap<String, User> admins = systemDatabase.getAllAdministrators();
+				HashMap<String, User> admins = systemDatabase
+						.getAllAdministrators();
 				if (admins.size() > 0) {
 					User admin = admins.get(login);
 					if (admin != null) {
 						if (admin.getPasswordHash() != null) {
 							if (!admin.getPasswordHash().equals("")) {
 								RealmBase rb = null;
-								if (admin != null && admin.getPasswordHash().equals(rb.Digest(pwd, "MD5", "UTF-8"))) {
+								if (admin != null
+										&& admin.getPasswordHash().equals(
+												rb.Digest(pwd, "MD5", "UTF-8"))) {
 									jses = request.getSession(true);
 									jses.setAttribute("adminLoggedIn", true);
 									response.sendRedirect("Provider?type=view&element=users");
 								} else {
 									Server.logger
-									.warningLogEntry("Authorization failed, login or password is incorrect *");
-									throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
+											.warningLogEntry("Authorization failed, login or password is incorrect *");
+									throw new AuthFailedException(
+											AuthFailedExceptionType.PASSWORD_INCORRECT,
+											login);
 								}
 							} else {
 								if (admin.getPwd().equals(pwd)) {
@@ -79,8 +86,10 @@ public class Login extends HttpServlet {
 									response.sendRedirect("Provider?type=view&element=users");
 								} else {
 									Server.logger
-									.warningLogEntry("Authorization failed, login or password is incorrect *");
-									throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
+											.warningLogEntry("Authorization failed, login or password is incorrect *");
+									throw new AuthFailedException(
+											AuthFailedExceptionType.PASSWORD_INCORRECT,
+											login);
 								}
 							}
 
@@ -90,24 +99,33 @@ public class Login extends HttpServlet {
 								jses.setAttribute("adminLoggedIn", true);
 								response.sendRedirect("Provider?type=view&element=users");
 							} else {
-								Server.logger.warningLogEntry("Authorization failed, login or password is incorrect *");
-								throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
+								Server.logger
+										.warningLogEntry("Authorization failed, login or password is incorrect *");
+								throw new AuthFailedException(
+										AuthFailedExceptionType.PASSWORD_INCORRECT,
+										login);
 							}
 						}
 					} else {
-						Server.logger.warningLogEntry("Authorization failed, login or password is incorrect *");
-						throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
+						Server.logger
+								.warningLogEntry("Authorization failed, login or password is incorrect *");
+						throw new AuthFailedException(
+								AuthFailedExceptionType.PASSWORD_INCORRECT,
+								login);
 					}
 				} else {
 					if (login.equals("admin") && pwd.equals("G2xQoZp4eLK@")) {
 						jses = request.getSession(true);
 						jses.setAttribute("adminLoggedIn", true);
-						userSession = new UserSession(new User());
+						userSession = new UserSession(new User(), jses);
 						jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 						response.sendRedirect("Provider?type=view&element=users");
 					} else {
-						Server.logger.warningLogEntry("Authorization failed, special login or password is incorrect");
-						throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
+						Server.logger
+								.warningLogEntry("Authorization failed, special login or password is incorrect");
+						throw new AuthFailedException(
+								AuthFailedExceptionType.PASSWORD_INCORRECT,
+								login);
 					}
 				}
 
@@ -120,7 +138,8 @@ public class Login extends HttpServlet {
 					user = systemDatabase.checkUserHash(login, pwd, "", user);
 				}
 				if (!user.isAuthorized) {
-					throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, login);
+					throw new AuthFailedException(
+							AuthFailedExceptionType.PASSWORD_INCORRECT, login);
 				}
 
 				String userID = user.getLogin();
@@ -136,22 +155,28 @@ public class Login extends HttpServlet {
 						ApplicationProfile ap = new ApplicationProfile();
 						ap.appName = env.appType;
 						ap.owner = user.getLogin();
-						ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
+						ap.dbLogin = (user.getLogin().replace("@", "_")
+								.replace(".", "_").replace("-", "_"))
+								.toLowerCase();
 						ap.dbName = ap.appName.toLowerCase() + "_" + ap.dbLogin;
-						ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
+						ap.dbPwd = Util
+								.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
 						ap.save();
 						user.addApplication(ap);
 						user.save();
 						redirect = "Provider?id=setup";
 					}
-				}else if (user.getStatus() == UserStatusType.NOT_VERIFIED
+				} else if (user.getStatus() == UserStatusType.NOT_VERIFIED
 						|| user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
-					throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED, login);
-				}else if (user.getStatus() == UserStatusType.DELETED) {
-					throw new AuthFailedException(AuthFailedExceptionType.DELETED, login);
+					throw new AuthFailedException(
+							AuthFailedExceptionType.NOT_VERIFED, login);
+				} else if (user.getStatus() == UserStatusType.DELETED) {
+					throw new AuthFailedException(
+							AuthFailedExceptionType.DELETED, login);
 				}
 
-				userSession = new UserSession(user, env.globalSetting.implementation, env.appType);
+				userSession = new UserSession(user,
+						env.globalSetting.implementation, env.appType, jses);
 				jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 
 				response.sendRedirect(redirect);
@@ -160,18 +185,22 @@ public class Login extends HttpServlet {
 		} catch (AuthFailedException e) {
 			try {
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				request.getRequestDispatcher("/Error?type=ws_auth_error").forward(request, response);
+				request.getRequestDispatcher("/Error?type=ws_auth_error")
+						.forward(request, response);
 			} catch (IOException e1) {
-				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
+				new PortalException(e, env, response,
+						ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 			} catch (ServletException e2) {
-				new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
+				new PortalException(e, env, response,
+						ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 			}
 		} catch (IOException ioe) {
 			new PortalException(ioe, env, response, PublishAsType.HTML);
 		} catch (IllegalStateException ise) {
 			new PortalException(ise, env, response, PublishAsType.HTML);
 		} catch (Exception e) {
-			new PortalException(e, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
+			new PortalException(e, response, ProviderExceptionType.INTERNAL,
+					PublishAsType.HTML);
 		}
 	}
 

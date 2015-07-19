@@ -46,7 +46,7 @@ public class User {
 	private int hash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
-	private final static String ANONYMOUS_USER = "anonymous";
+	public final static String ANONYMOUS_USER = "anonymous";
 
 	public User() {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
@@ -84,7 +84,9 @@ public class User {
 				// this.passwordHash = getMD5Hash(password);
 				this.passwordHash = RealmBase.Digest(password, "MD5", "UTF-8");
 			} else {
-				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
+				throw new WebFormValueException(
+						WebFormValueExceptionType.FORMDATA_INCORRECT,
+						"password");
 			}
 		}
 	}
@@ -143,8 +145,9 @@ public class User {
 		}
 	}
 
-	public boolean save() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-	DatabasePoolException, SQLException {
+	public boolean save() throws InstantiationException,
+			IllegalAccessException, ClassNotFoundException,
+			DatabasePoolException, SQLException {
 		if (id == 0) {
 			id = sysDatabase.insert(this);
 		} else {
@@ -156,25 +159,31 @@ public class User {
 		} else {
 			for (ApplicationProfile appProfile : enabledApps.values()) {
 				if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
-					IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
-					int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.dbLogin,
+					IApplicationDatabase appDb = sysDatabase
+							.getApplicationDatabase();
+					int res = appDb.createDatabase(appProfile.dbHost,
+							appProfile.getDbName(), appProfile.dbLogin,
 							appProfile.dbPwd);
 					if (res == 0 || res == 1) {
 						Class cls = Class.forName(appProfile.getImpl());
 						IDatabase dataBase = (IDatabase) cls.newInstance();
 						IDeployer ad = dataBase.getDeployer();
 						ad.init(appProfile);
-						Class appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
-						IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
+						Class appDatabaseInitializerClass = Class
+								.forName(appProfile.getDbInitializerClass());
+						IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass
+								.newInstance();
 						if (ad.deploy(dbInitializer) == 0) {
 							appProfile.setStatus(ApplicationStatusType.ON_LINE);
 							appProfile.save();
 						} else {
-							appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+							appProfile
+									.setStatus(ApplicationStatusType.DEPLOING_FAILED);
 							appProfile.save();
 						}
 					} else {
-						appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
+						appProfile
+								.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 						appProfile.save();
 						return false;
 					}
@@ -208,7 +217,8 @@ public class User {
 			} else if (Util.addrIsCorrect(email)) {
 				this.email = email;
 			} else {
-				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "email");
+				throw new WebFormValueException(
+						WebFormValueExceptionType.FORMDATA_INCORRECT, "email");
 			}
 		}
 	}
@@ -222,7 +232,9 @@ public class User {
 			if (Util.pwdIsCorrect(password)) {
 				this.password = password;
 			} else {
-				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
+				throw new WebFormValueException(
+						WebFormValueExceptionType.FORMDATA_INCORRECT,
+						"password");
 			}
 		}
 	}

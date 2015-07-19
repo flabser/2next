@@ -15,8 +15,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import com.flabser.scheduler.PeriodicalServices;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -28,11 +26,11 @@ import com.flabser.exception.RuleException;
 import com.flabser.log.ILogger;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
+import com.flabser.scheduler.PeriodicalServices;
 import com.flabser.script._Page;
 import com.flabser.server.Server;
 import com.flabser.server.WebServer;
 import com.flabser.util.XMLUtil;
-
 
 public class Environment implements ICache {
 	public static int serverVersion;
@@ -43,12 +41,12 @@ public class Environment implements ICache {
 
 	public static ISystemDatabase systemBase;
 	public static String defaultSender = "";
-	public static HashMap <String, String> mimeHash = new HashMap <String, String>();
+	public static HashMap<String, String> mimeHash = new HashMap<String, String>();
 	public static String primaryAppDir;
-	public static HashMap <String, Site> webAppToStart = new HashMap <String, Site>();
+	public static HashMap<String, Site> webAppToStart = new HashMap<String, Site>();
 	public static String tmpDir;
 	public static String libsDir;
-	public static ArrayList <String> fileToDelete = new ArrayList <String>();
+	public static ArrayList<String> fileToDelete = new ArrayList<String>();
 	public static ILogger logger;
 	public static PeriodicalServices periodicalServices;
 
@@ -64,9 +62,8 @@ public class Environment implements ICache {
 	public static String smtpPassword;
 	public static Boolean mailEnable = false;
 	private static String defaultRedirectURL;
-	private static HashMap <String, AppEnv> applications = new HashMap <String, AppEnv>();
-	private static HashMap <String, Object> cache = new HashMap <String, Object>();
-
+	private static HashMap<String, AppEnv> applications = new HashMap<String, AppEnv>();
+	private static HashMap<String, Object> cache = new HashMap<String, Object>();
 
 	public static void init() {
 		logger = Server.logger;
@@ -95,30 +92,39 @@ public class Environment implements ICache {
 			String portAsText = XMLUtil.getTextContent(xmlDocument, "/tn/port");
 			try {
 				httpPort = Integer.parseInt(portAsText);
-				logger.normalLogEntry("WebServer is going to use port: " + httpPort);
+				logger.normalLogEntry("WebServer is going to use port: "
+						+ httpPort);
 			} catch (NumberFormatException nfe) {
 				logger.normalLogEntry("WebServer is going to use standart port");
 			}
 
+			primaryAppDir = XMLUtil.getTextContent(xmlDocument,
+					"/tn/primaryappdir");
+			if (!primaryAppDir.equalsIgnoreCase(""))
+				primaryAppDir = primaryAppDir + File.separator;
 
-			primaryAppDir = XMLUtil.getTextContent(xmlDocument, "/tn/primaryappdir");
-			if (!primaryAppDir.equalsIgnoreCase("")) primaryAppDir = primaryAppDir + File.separator;
-						
-	
-			defaultRedirectURL = "/" + XMLUtil.getTextContent(xmlDocument, "/tn/applications/@default", false, "Workspace", true);
+			defaultRedirectURL = "/"
+					+ XMLUtil.getTextContent(xmlDocument,
+							"/tn/applications/@default", false, "Workspace",
+							true);
 
-			NodeList nodeList = XMLUtil.getNodeList(xmlDocument, "/tn/applications");
+			NodeList nodeList = XMLUtil.getNodeList(xmlDocument,
+					"/tn/applications");
 			if (nodeList.getLength() > 0) {
 				org.w3c.dom.Element root = xmlDocument.getDocumentElement();
 				NodeList nodes = root.getElementsByTagName("app");
 				for (int i = 0; i < nodes.getLength(); i++) {
 					Node appNode = nodes.item(i);
-					if (XMLUtil.getTextContent(appNode, "name/@mode", false).equals("on")) {
-						String appName = XMLUtil.getTextContent(appNode, "name", false);
+					if (XMLUtil.getTextContent(appNode, "name/@mode", false)
+							.equals("on")) {
+						String appName = XMLUtil.getTextContent(appNode,
+								"name", false);
 						Site site = new Site();
-						site.appBase = appName;						
-						site.name = XMLUtil.getTextContent(appNode, "name/@sitename", false);
-						String globalAttrValue = XMLUtil.getTextContent(appNode, "name/@global", false);
+						site.appBase = appName;
+						site.name = XMLUtil.getTextContent(appNode,
+								"name/@sitename", false);
+						String globalAttrValue = XMLUtil.getTextContent(
+								appNode, "name/@global", false);
 						if (!globalAttrValue.equals("")) {
 							site.global = globalAttrValue;
 						}
@@ -128,19 +134,24 @@ public class Environment implements ICache {
 			}
 
 			try {
-				isTLSEnable = XMLUtil.getTextContent(xmlDocument, "/tn/tls/@mode").equalsIgnoreCase("on");
+				isTLSEnable = XMLUtil.getTextContent(xmlDocument,
+						"/tn/tls/@mode").equalsIgnoreCase("on");
 				if (isTLSEnable) {
-					String tlsPort = XMLUtil.getTextContent(xmlDocument, "/tn/tls/port");
+					String tlsPort = XMLUtil.getTextContent(xmlDocument,
+							"/tn/tls/port");
 					try {
 						secureHttpPort = Integer.parseInt(tlsPort);
 					} catch (NumberFormatException nfe) {
 						secureHttpPort = 38789;
 					}
-					certFile = XMLUtil.getTextContent(xmlDocument, "/tn/tls/certfile");
-					certKeyFile = XMLUtil.getTextContent(xmlDocument, "/tn/tls/certkeyfile");
-					
+					certFile = XMLUtil.getTextContent(xmlDocument,
+							"/tn/tls/certfile");
+					certKeyFile = XMLUtil.getTextContent(xmlDocument,
+							"/tn/tls/certkeyfile");
+
 					logger.normalLogEntry("TLS is enabled");
 					httpSchema = WebServer.httpSecureSchema;
+					httpPort = secureHttpPort;
 				}
 			} catch (Exception ex) {
 				logger.normalLogEntry("TLS configuration error");
@@ -150,16 +161,24 @@ public class Environment implements ICache {
 			}
 
 			try {
-				mailEnable = (XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/@mode").equalsIgnoreCase("on")) ? true
+				mailEnable = (XMLUtil.getTextContent(xmlDocument,
+						"/tn/mailagent/@mode").equalsIgnoreCase("on")) ? true
 						: false;
 				if (mailEnable) {
-					SMTPHost = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtphost");
-					defaultSender = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/defaultsender");
-					smtpAuth = Boolean.valueOf(XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/auth"));
-					smtpUser = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtpuser");
-					smtpPassword = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtppassword");
-					smtpPort = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtpport");
-					logger.normalLogEntry("MailAgent is going to redirect some messages to host: " + SMTPHost);
+					SMTPHost = XMLUtil.getTextContent(xmlDocument,
+							"/tn/mailagent/smtphost");
+					defaultSender = XMLUtil.getTextContent(xmlDocument,
+							"/tn/mailagent/defaultsender");
+					smtpAuth = Boolean.valueOf(XMLUtil.getTextContent(
+							xmlDocument, "/tn/mailagent/auth"));
+					smtpUser = XMLUtil.getTextContent(xmlDocument,
+							"/tn/mailagent/smtpuser");
+					smtpPassword = XMLUtil.getTextContent(xmlDocument,
+							"/tn/mailagent/smtppassword");
+					smtpPort = XMLUtil.getTextContent(xmlDocument,
+							"/tn/mailagent/smtpport");
+					logger.normalLogEntry("MailAgent is going to redirect some messages to host: "
+							+ SMTPHost);
 				} else {
 					logger.normalLogEntry("MailAgent is switch off");
 				}
@@ -169,22 +188,20 @@ public class Environment implements ICache {
 				defaultSender = "";
 			}
 
-			
-
 			File tmp = new File("tmp");
 			if (!tmp.exists()) {
 				tmp.mkdir();
 			}
 
 			tmpDir = tmp.getAbsolutePath();
-			
+
 			File libs = new File("bin");
 			if (!libs.exists()) {
 				tmp.mkdir();
 			}
 
 			libsDir = libs.getAbsolutePath();
-		
+
 		} catch (SAXException se) {
 			logger.errorLogEntry(se);
 		} catch (ParserConfigurationException pce) {
@@ -194,21 +211,21 @@ public class Environment implements ICache {
 		}
 	}
 
-	
 	public static void addApplication(AppEnv env) {
-		applications.put(env.appType, env);		
+		applications.put(env.appType, env);
 	}
-	
+
 	public static AppEnv getApplication(String appID) {
 		return applications.get(appID);
 	}
-	
-	public static Collection <AppEnv> getApplications() {
+
+	public static Collection<AppEnv> getApplications() {
 		return applications.values();
 	}
 
 	public static String getFullHostName() {
-		return httpSchema + "://" + Environment.hostName + ":" + Environment.httpPort;
+		return httpSchema + "://" + Environment.hostName + ":"
+				+ Environment.httpPort;
 	}
 
 	public static String getDefaultRedirectURL() {
@@ -230,7 +247,8 @@ public class Environment implements ICache {
 
 	private static Document getDocument() {
 		try {
-			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilderFactory domFactory = DocumentBuilderFactory
+					.newInstance();
 			DocumentBuilder builder;
 
 			builder = domFactory.newDocumentBuilder();
@@ -256,7 +274,8 @@ public class Environment implements ICache {
 	}
 
 	@Override
-	public _Page getPage(Page page, Map <String, String[]> formData) throws ClassNotFoundException, RuleException{
+	public _Page getPage(Page page, Map<String, String[]> formData)
+			throws ClassNotFoundException, RuleException {
 		Object obj = cache.get(page.getID());
 		String cacheParam = formData.get("cache")[0];
 		if (obj == null || cacheParam.equalsIgnoreCase("reload")) {
@@ -277,6 +296,5 @@ public class Environment implements ICache {
 	public static void shutdown() {
 		periodicalServices.stop();
 	}
-
 
 }
