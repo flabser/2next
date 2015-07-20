@@ -123,6 +123,7 @@ nbApp.login = function(form) {
         }),
         success: function(result) {
             if (result.authUser.status === 'PASSWORD_INCORRECT') {
+                $('#main-load').hide();
                 $('#login-error').show();
 
                 setTimeout(function() {
@@ -133,6 +134,7 @@ nbApp.login = function(form) {
             }
         },
         error: function(err) {
+            $('#main-load').hide();
             $('#login-error').show();
 
             setTimeout(function() {
@@ -141,7 +143,6 @@ nbApp.login = function(form) {
         },
         complete: function() {
             $(form).removeClass('process');
-            $('#main-load').hide();
         }
     });
 
