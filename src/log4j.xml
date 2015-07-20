@@ -25,9 +25,8 @@
 
 	<logger name="org.quartz">
 		<level value="INFO" />
-		<appender-ref ref="console" />
-
 	</logger>
+	
 	<root>
 		<priority value="debug" />
 		<appender-ref ref="console" />

@@ -1,6 +1,7 @@
 package com.flabser.restful;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.SessionPool;
 import com.flabser.server.Server;
 import com.flabser.servlets.ServletUtil;
+import com.flabser.solutions.DatabaseType;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.AuthFailedException;
 import com.flabser.users.AuthFailedExceptionType;
@@ -70,6 +72,7 @@ public class SessionService {
 			SQLException {
 		UserSession userSession = null;
 		HttpSession jses;
+		String appID = ""; // temporary variable
 
 		AppEnv env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
@@ -91,20 +94,30 @@ public class SessionService {
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
 		if (user.getStatus() == UserStatusType.REGISTERED) {
 			if (!env.appType.equalsIgnoreCase("administrator")) {
-				ApplicationProfile app = user.enabledApps.get(env.appType);
-				if (app == null) {
+				HashMap<String, ApplicationProfile> apps = user
+						.getApplicationProfiles(env.appType);
+				// TODO Need to add redirect to choice certainly application if
+				// apps size > 1
+
+				if (apps == null) {
 					ApplicationProfile ap = new ApplicationProfile();
-					ap.appName = env.appType;
+					ap.appType = env.appType;
+					ap.appID = Util
+							.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
+					ap.appName = env.appType + " of " + user.getLogin();
 					ap.owner = user.getLogin();
 					ap.dbLogin = (user.getLogin().replace("@", "_")
 							.replace(".", "_").replace("-", "_")).toLowerCase();
-					ap.dbName = ap.appName.toLowerCase() + "_" + ap.dbLogin;
+					ap.dbType = DatabaseType.POSTGRESQL;
+					ap.dbName = ap.appType.toLowerCase() + "_" + ap.appID;
 					ap.dbPwd = Util
 							.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
 					ap.save();
 					user.addApplication(ap);
 					user.save();
 					signUser.setRedirect("setup");
+				} else {
+					appID = apps.values().iterator().next().appID;
 				}
 			}
 		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
@@ -118,8 +131,7 @@ public class SessionService {
 					signUser.getLogin());
 		}
 
-		userSession = new UserSession(user, env.globalSetting.implementation,
-				env.appType, jses);
+		userSession = new UserSession(user, appID, jses);
 		SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 

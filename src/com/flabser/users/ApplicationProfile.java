@@ -4,15 +4,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.IDatabase;
+import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
-import com.flabser.env.Environment;
+import com.flabser.solutions.DatabaseType;
 
 public class ApplicationProfile {
 	public int id;
+	public String appType;
+	public String appID;
 	public String appName;
 	public String owner;
+	public DatabaseType dbType;
 	public String dbHost = "localhost";
 	public String dbLogin;
 	public String dbPwd;
@@ -25,24 +29,15 @@ public class ApplicationProfile {
 	}
 
 	public ApplicationProfile(ResultSet rs) throws SQLException {
-		id = rs.getInt("ID");
-		appName = rs.getString("APPNAME");
-		owner = rs.getString("OWNER");
-		dbHost = rs.getString("DBHOST");
-		dbName = rs.getString("DBNAME");
-		dbLogin = rs.getString("DBLOGIN");
-		dbPwd = rs.getString("DBPWD");
+		fill(rs);
 	}
 
 	public StringBuffer toXML() {
 		StringBuffer output = new StringBuffer(1000);
-		return output.append("<entry><appname>" + appName + "</appname><owner>" + owner + "</owner>"
-				+ "<dbhost>" + dbHost + "</dbhost><dbname>" + dbName + "</dbname><dblogin>" + dbLogin + "</dblogin></entry>");
-	}
-
-	public String getImpl() {
-		AppEnv env = Environment.getApplication(appName);
-		return env.globalSetting.implementation;
+		return output.append("<entry><appname>" + appName + "</appname><owner>"
+				+ owner + "</owner>" + "<dbhost>" + dbHost
+				+ "</dbhost><dbname>" + dbName + "</dbname><dblogin>" + dbLogin
+				+ "</dblogin></entry>");
 	}
 
 	public String getDbName() {
@@ -50,7 +45,20 @@ public class ApplicationProfile {
 	}
 
 	public String getURI() {
-		return "jdbc:postgresql://" + dbHost + "/" + dbName;
+		return dbType.getJDBCPrefix(dbType) + dbHost + "/" + dbName;
+	}
+
+	public IDatabase getDatabase() throws InstantiationException,
+			IllegalAccessException, ClassNotFoundException,
+			DatabasePoolException {
+		switch (dbType) {
+		case POSTGRESQL:
+			IDatabase db = new com.flabser.solutions.postgresql.Database();
+			db.init(this);
+			return db;
+		default:
+			return null;
+		}
 	}
 
 	public boolean save() {
@@ -69,14 +77,23 @@ public class ApplicationProfile {
 		}
 	}
 
-	public String getDbInitializerClass(){
-		return appName.toLowerCase() + ".init.DDEScripts";
-		// TODO Need to write a class resolver that is implementation of IAppDatabaseInit
+	public String getDbInitializerClass() {
+		return appType.toLowerCase() + ".init.DDEScripts";
+		// TODO Need to write a class resolver that is implementation of
+		// IAppDatabaseInit
 	}
 
-	public void fill(ResultSet rs) {
-		// TODO Auto-generated method stub
-
+	public void fill(ResultSet rs) throws SQLException {
+		id = rs.getInt("ID");
+		appType = rs.getString("APPTYPE");
+		appID = rs.getString("APPID");
+		appName = rs.getString("APPNAME");
+		owner = rs.getString("OWNER");
+		dbType = DatabaseType.getType(rs.getInt("DBTYPE"));
+		dbHost = rs.getString("DBHOST");
+		dbName = rs.getString("DBNAME");
+		dbLogin = rs.getString("DBLOGIN");
+		dbPwd = rs.getString("DBPWD");
 	}
 
 	public void setStatus(ApplicationStatusType onLine) {

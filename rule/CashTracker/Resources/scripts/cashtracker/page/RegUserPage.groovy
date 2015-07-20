@@ -53,15 +53,6 @@ class RegUserPage extends _DoScript {
 		user.setRegDate(new Date())
 		user.setVerifyCode(_Helper.randomValue)
 
-		/*def appName = session.getGlobalSettings().appName;
-		 ApplicationProfile ap = new ApplicationProfile()
-		 ap.appName = appName
-		 ap.owner = (user.getUserID().replace("@","_").replace(".","_")).replace("-","_").toLowerCase()
-		 ap.dbName = appName.toLowerCase() + "_" + ap.owner
-		 ap.dbLogin = ap.owner
-		 ap.dbPwd = regForm.pwd
-		 user.addApplication(ap)*/
-
 		if (!user.save()) {
 			publishElement("error", "save-error")
 			return

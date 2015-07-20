@@ -16,7 +16,7 @@ import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
 import com.flabser.server.Server;
 
-public class AppEnv implements ICache{
+public class AppEnv implements ICache {
 	public boolean isValid;
 	public String appType = "undefined";
 	public RuleProvider ruleProvider;
@@ -28,74 +28,75 @@ public class AppEnv implements ICache{
 
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 
-	public AppEnv(String at){
+	public AppEnv(String at) {
 		isValid = true;
 		appType = "administrator";
 	}
 
-
-	public AppEnv(String appType, String globalFileName){
+	public AppEnv(String appType, String globalFileName) {
 		this.appType = appType;
-		try{
-			Server.logger.normalLogEntry("# Start application \"" + appType + "\"");
+		try {
+			Server.logger.normalLogEntry("# Start application \"" + appType
+					+ "\"");
 			ruleProvider = new RuleProvider(this);
 			ruleProvider.initApp(globalFileName);
 			globalSetting = ruleProvider.global;
 
-			if (globalSetting.isOn == RunMode.ON){
-				if (globalSetting.langsList.size() > 0){
+			if (globalSetting.isOn == RunMode.ON) {
+				if (globalSetting.langsList.size() > 0) {
 					Server.logger.normalLogEntry("Dictionary is loading...");
 
-					try{
+					try {
 						Localizator l = new Localizator(globalSetting);
 						vocabulary = l.populate("vocabulary");
-						if (vocabulary != null){
-							Server.logger.normalLogEntry("Dictionary has loaded");
+						if (vocabulary != null) {
+							Server.logger
+									.normalLogEntry("Dictionary has loaded");
 						}
-					}catch(LocalizatorException le){
+					} catch (LocalizatorException le) {
 						Server.logger.verboseLogEntry(le.getMessage());
 					}
 
 				}
 
 				isValid = true;
-			}else{
-				Server.logger.warningLogEntry("Application: \"" + appType + "\" is off");
+			} else {
+				Server.logger.warningLogEntry("Application: \"" + appType
+						+ "\" is off");
 
 			}
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			Server.logger.errorLogEntry(e);
 		}
 	}
 
-	public String toString(){
-		return appType + "(" + globalSetting.implementation + ")";
+	@Override
+	public String toString() {
+		return appType;
 	}
 
-
-
 	@Override
-	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page getPage(Page page, Map<String, String[]> formData)
+			throws ClassNotFoundException, RuleException {
 		boolean reload = false;
 		Object obj = cache.get(page.getID());
 		String p[] = formData.get("cache");
-		if (p != null){
+		if (p != null) {
 			String cacheParam = formData.get("cache")[0];
-			if (cacheParam.equalsIgnoreCase("reload")){
+			if (cacheParam.equalsIgnoreCase("reload")) {
 				reload = true;
 			}
 		}
-		if (obj == null || reload){
+		if (obj == null || reload) {
 			_Page buffer = page.getContent(formData);
-			cache.put(page.getID(),buffer);
+			cache.put(page.getID(), buffer);
 			return buffer;
-		}else{
-			return (_Page)obj;
+		} else {
+			return (_Page) obj;
 		}
 
 	}
-
 
 	@Override
 	public void flush() {

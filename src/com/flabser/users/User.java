@@ -2,6 +2,7 @@ package com.flabser.users;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,11 +26,12 @@ import com.flabser.util.Util;
 public class User {
 	public int id;
 	public boolean isValid = false;
-	public HashMap<String, ApplicationProfile> enabledApps = new HashMap<String, ApplicationProfile>();
 	public boolean isAuthorized;
 	public String lastURL;
 	public LanguageType preferredLang = LanguageType.ENG;
 
+	private HashMap<String, HashMap<String, ApplicationProfile>> enabledApps = new HashMap<String, HashMap<String, ApplicationProfile>>();
+	private HashMap<String, ApplicationProfile> applications = new HashMap<String, ApplicationProfile>();
 	private HashSet<UserRole> roles = new HashSet<UserRole>();
 	private transient ISystemDatabase sysDatabase;
 	private String login;
@@ -116,7 +118,13 @@ public class User {
 	}
 
 	public void addApplication(ApplicationProfile ap) {
-		enabledApps.put(ap.appName, ap);
+		HashMap<String, ApplicationProfile> apps = enabledApps.get(ap.appType);
+		if (apps == null) {
+			apps = new HashMap<String, ApplicationProfile>();
+		}
+		apps.put(ap.appID, ap);
+		enabledApps.put(ap.appType, apps);
+		applications.put(ap.appID, ap);
 	}
 
 	public void setHash(int hash) {
@@ -127,8 +135,17 @@ public class User {
 		return hash;
 	}
 
-	public ApplicationProfile getApplicationProfile(String appName) {
-		return enabledApps.get(appName);
+	public HashMap<String, ApplicationProfile> getApplicationProfiles(
+			String appType) {
+		return enabledApps.get(appType);
+	}
+
+	public ApplicationProfile getApplicationProfile(String appID) {
+		return applications.get(appID);
+	}
+
+	public Collection<ApplicationProfile> getApplications() {
+		return applications.values();
 	}
 
 	public void setPersistentValue(String key, String lang) {
@@ -157,35 +174,38 @@ public class User {
 		if (id < 0) {
 			return false;
 		} else {
-			for (ApplicationProfile appProfile : enabledApps.values()) {
-				if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
-					IApplicationDatabase appDb = sysDatabase
-							.getApplicationDatabase();
-					int res = appDb.createDatabase(appProfile.dbHost,
-							appProfile.getDbName(), appProfile.dbLogin,
-							appProfile.dbPwd);
-					if (res == 0 || res == 1) {
-						Class cls = Class.forName(appProfile.getImpl());
-						IDatabase dataBase = (IDatabase) cls.newInstance();
-						IDeployer ad = dataBase.getDeployer();
-						ad.init(appProfile);
-						Class appDatabaseInitializerClass = Class
-								.forName(appProfile.getDbInitializerClass());
-						IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass
-								.newInstance();
-						if (ad.deploy(dbInitializer) == 0) {
-							appProfile.setStatus(ApplicationStatusType.ON_LINE);
-							appProfile.save();
+			for (HashMap<String, ApplicationProfile> apps : enabledApps
+					.values()) {
+				for (ApplicationProfile appProfile : apps.values()) {
+					if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
+						IApplicationDatabase appDb = sysDatabase
+								.getApplicationDatabase();
+						int res = appDb.createDatabase(appProfile.dbHost,
+								appProfile.getDbName(), appProfile.dbLogin,
+								appProfile.dbPwd);
+						if (res == 0 || res == 1) {
+							IDatabase dataBase = appProfile.getDatabase();
+							IDeployer ad = dataBase.getDeployer();
+							ad.init(appProfile);
+							Class appDatabaseInitializerClass = Class
+									.forName(appProfile.getDbInitializerClass());
+							IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass
+									.newInstance();
+							if (ad.deploy(dbInitializer) == 0) {
+								appProfile
+										.setStatus(ApplicationStatusType.ON_LINE);
+								appProfile.save();
+							} else {
+								appProfile
+										.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+								appProfile.save();
+							}
 						} else {
 							appProfile
-									.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+									.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 							appProfile.save();
+							return false;
 						}
-					} else {
-						appProfile
-								.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
-						appProfile.save();
-						return false;
 					}
 				}
 			}
@@ -194,6 +214,7 @@ public class User {
 
 	}
 
+	@Override
 	public String toString() {
 		return "userID=" + login + ", email=" + email;
 	}

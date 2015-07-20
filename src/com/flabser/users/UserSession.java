@@ -29,20 +29,16 @@ public class UserSession implements ICache {
 	private IDatabase dataBase;
 	private HttpSession jses;
 
-	public UserSession(User user, String implemantion, String appID,
-			HttpSession jses) throws UserException, ClassNotFoundException,
+	public UserSession(User user, String appID, HttpSession jses)
+			throws UserException, ClassNotFoundException,
 			InstantiationException, IllegalAccessException,
 			DatabasePoolException {
 		currentUser = user;
 		this.jses = jses;
 		initHistory();
-		if (implemantion != null) {
-			Class<?> cls = Class.forName(implemantion);
-			dataBase = (IDatabase) cls.newInstance();
-			ApplicationProfile app = user.enabledApps.get(appID);
-			if (app != null) {
-				dataBase.init(app);
-			}
+		ApplicationProfile appProfile = user.getApplicationProfile(appID);
+		if (appProfile != null) {
+			dataBase = appProfile.getDatabase();
 		}
 	}
 
