@@ -66,7 +66,7 @@ public class SessionService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createSession(AuthUser signUser)
+	public Response createSession(AuthUser authUser)
 			throws ClassNotFoundException, InstantiationException,
 			DatabasePoolException, UserException, IllegalAccessException,
 			SQLException {
@@ -77,13 +77,13 @@ public class SessionService {
 		AppEnv env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		User user = new User();
-		user = systemDatabase.checkUserHash(signUser.getLogin(),
-				signUser.getPwd(), "", user);
+		user = systemDatabase.checkUserHash(authUser.getLogin(),
+				authUser.getPwd(), "", user);
 
 		if (!user.isAuthorized) {
 			throw new AuthFailedException(
 					AuthFailedExceptionType.PASSWORD_INCORRECT,
-					signUser.getLogin());
+					authUser.getLogin());
 		}
 
 		String userID = user.getLogin();
@@ -115,27 +115,28 @@ public class SessionService {
 					ap.save();
 					user.addApplication(ap);
 					user.save();
-					signUser.setRedirect("setup");
+					authUser.setRedirect("setup");
 				} else {
+					authUser.setApplications(apps);
 					appID = apps.values().iterator().next().appID;
 				}
 			}
 		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
-			signUser.setRedirect("tochangepwd");
+			authUser.setRedirect("tochangepwd");
 		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED
 				|| user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
 			throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED,
-					signUser.getLogin());
+					authUser.getLogin());
 		} else if (user.getStatus() == UserStatusType.DELETED) {
 			throw new AuthFailedException(AuthFailedExceptionType.DELETED,
-					signUser.getLogin());
+					authUser.getLogin());
 		}
 
 		userSession = new UserSession(user, appID, jses);
 		SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 
-		return Response.ok(signUser)
+		return Response.ok(authUser)
 				.cookie(new NewCookie("lang", userSession.getLang())).build();
 	}
 

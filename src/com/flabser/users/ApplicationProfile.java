@@ -4,12 +4,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.solutions.DatabaseType;
 
+@JsonRootName("applicationProfile")
 public class ApplicationProfile {
 	public int id;
 	public String appType;
@@ -44,10 +47,12 @@ public class ApplicationProfile {
 		return dbName;
 	}
 
+	@JsonIgnore
 	public String getURI() {
 		return dbType.getJDBCPrefix(dbType) + dbHost + "/" + dbName;
 	}
 
+	@JsonIgnore
 	public IDatabase getDatabase() throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException,
 			DatabasePoolException {
@@ -77,6 +82,7 @@ public class ApplicationProfile {
 		}
 	}
 
+	@JsonIgnore
 	public String getDbInitializerClass() {
 		return appType.toLowerCase() + ".init.DDEScripts";
 		// TODO Need to write a class resolver that is implementation of
@@ -108,6 +114,10 @@ public class ApplicationProfile {
 
 	public Date getStatusDate() {
 		return statusDate;
+	}
+
+	public String getAppID() {
+		return appID;
 	}
 
 }

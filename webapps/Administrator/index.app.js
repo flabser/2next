@@ -1,10 +1,10 @@
 App = Ember.Application.create();
 
-var host = DS.RESTAdapter.extend({
-    host: 'http://localhost:38779',
-});
+/*var host = DS.RESTAdapter.extend({
+    host: 'https://localhost:38789',
+});*/
 
-var baseURL = host.extend({
+var baseURL = DS.RESTAdapter.extend({
     namespace: 'Administrator/rest'
 });
 

@@ -1,8 +1,10 @@
 package com.flabser.restful;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.users.AuthFailedExceptionType;
+import java.util.HashMap;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.flabser.users.ApplicationProfile;
+import com.flabser.users.AuthFailedExceptionType;
 
 @JsonRootName("authUser")
 public class AuthUser {
@@ -13,6 +15,7 @@ public class AuthUser {
 	private String error;
 	private String redirect;
 	private String[] roles;
+	private HashMap<String, ApplicationProfile> applications = new HashMap<String, ApplicationProfile>();
 
 	public AuthUser() {
 	}
@@ -63,5 +66,13 @@ public class AuthUser {
 
 	public void setRedirect(String r) {
 		this.redirect = r;
+	}
+
+	public HashMap<String, ApplicationProfile> getApplications() {
+		return applications;
+	}
+
+	public void setApplications(HashMap<String, ApplicationProfile> applications) {
+		this.applications = applications;
 	}
 }
