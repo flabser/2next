@@ -1,0 +1,49 @@
+<div class="view">
+    <div class="view-header">
+        <h1 class="header-title">{{t "cost_centers"}}</h1>
+        <nav class="nav-action-bar">
+            <div class="-on-desktop">
+                <div class="action-bar">
+                    {{#link-to "cost_centers.new" class="btn"}} {{t "btn.add"}} {{/link-to}}
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="view-content">
+        <header class="entries-head">
+            <div class="head-wrap">
+                <label class="entry-select">
+                    <input type="checkbox" data-toggle="id" class="all" />
+                </label>
+                <div class="entry-captions">
+                    <span>
+                        {{t "name"}}
+                    </span>
+                </div>
+            </div>
+        </header>
+        <div class="entries">
+            {{#each model as |costCenter|}}
+            <div class="entry-wrap">
+                <div class="entry-actions">
+                    <a class="entry-action action-delete" data-ddbid="{{costCenter.id}}" href="#">
+                        <i class="fa fa-trash" />
+                    </a>
+                </div>
+                <div class="entry document js-swipe-entry">
+                    <label class="entry-select">
+                        <input type="checkbox" name="id" value="{{costCenter.id}}" />
+                    </label>
+                    {{#link-to "cost_centers.cost_center" costCenter class="entry-link"}}
+                    <div class="entry-fields">
+                        <span class="entry-field">
+                            {{costCenter.name}}
+                        </span>
+                    </div>
+                    {{/link-to}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

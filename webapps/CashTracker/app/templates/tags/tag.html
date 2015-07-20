@@ -1,0 +1,29 @@
+{{#form-for model=model onSubmit="submit" save="save"}}
+<header class="form-header">
+    <h1 class="header-title">{{t "tag"}} / {{model.name}}</h1>
+    <div class="action-bar">
+        <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
+    </div>
+</header>
+<section class="form-content">
+    <div class="fieldset">
+        <div class="control-group">
+            <div class="control-label">
+                {{t "name"}}
+            </div>
+            <div class="controls">
+                {{input value=model.name class="span7"}}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                {{t "color"}}
+            </div>
+            <div class="controls">
+                {{input value=model.color}}
+            </div>
+        </div>
+    </div>
+</section>
+{{/form-for}}
