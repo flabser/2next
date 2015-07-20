@@ -76,14 +76,13 @@ export default Route.extend({
                 });*/
 
                 // this.transitionTo('login');
-                // window.location.href = 'Provider?id=login' + location.hash;
             } else {
                 return true;
             }
         },
 
         willTransition: function() {
-            this.hideOpenedNav();
+            this.send('hideOpenedNav');
         }
     }
 });

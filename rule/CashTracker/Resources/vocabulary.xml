@@ -21,12 +21,6 @@
 		<entry lang="BG" hint="фирмени и семейни финанси">фирмени и семейни финанси</entry>
 	</sentence>
 
-	<sentence mode="on" keyword="operations">
-		<entry lang="RUS" hint="Операции">Операции</entry>
-		<entry lang="KAZ" hint="Операции">Операции</entry>
-		<entry lang="ENG" hint="Transactions">Transactions</entry>
-		<entry lang="BG" hint="Сделки">Сделки</entry>
-	</sentence>
 	<sentence mode="on" keyword="transactions">
 		<entry lang="RUS" hint="Операции">Операции</entry>
 		<entry lang="KAZ" hint="Операции">Операции</entry>
@@ -63,61 +57,26 @@
 		<entry lang="ENG">Users</entry>
 		<entry lang="BG">Потребители</entry>
 	</sentence>
-	<sentence mode="on" keyword="transactions.new.btn_label">
-		<entry lang="RUS">Новая операция</entry>
-		<entry lang="KAZ">Жана операция</entry>
-		<entry lang="ENG">New transaction</entry>
-		<entry lang="BG">Новая сделка</entry>
-	</sentence>
-	<sentence mode="on" keyword="account.new.btn_label">
-		<entry lang="RUS">Новый счет</entry>
-		<entry lang="KAZ">Жана шот</entry>
-		<entry lang="ENG">New account</entry>
-		<entry lang="BG">Нова сметка</entry>
-	</sentence>
-	<sentence mode="on" keyword="categories.new.btn_label">
-		<entry lang="RUS">Новая категория</entry>
-		<entry lang="KAZ">Жана категория</entry>
-		<entry lang="ENG">New category</entry>
-		<entry lang="BG">Нова категория</entry>
-	</sentence>
-	<sentence mode="on" keyword="cost.centers.new.btn_label">
-		<entry lang="RUS">Новое место возникновения затрат</entry>
-		<entry lang="KAZ">Жана ...</entry>
-		<entry lang="ENG">New spending place</entry>
-		<entry lang="BG">Нова място на расходи</entry>
-	</sentence>
-		<sentence mode="on" keyword="tag.new.btn_label">
-		<entry lang="RUS">Новый хештэг</entry>
-		<entry lang="KAZ">Жана хэштэг</entry>
-		<entry lang="ENG">New hash tag</entry>
-		<entry lang="BG">Нова хеш тег</entry>
-	</sentence>
-		<sentence mode="on" keyword="users.new.btn_label">
-		<entry lang="RUS">Новый пользователь</entry>
-		<entry lang="KAZ">Жана пользователь</entry>
-		<entry lang="ENG">New user</entry>
-		<entry lang="BG">Нова потребител</entry>
-	</sentence>
-		<sentence mode="on" keyword="amount">
+
+	<sentence mode="on" keyword="amount">
 		<entry lang="RUS">Сумма</entry>
 		<entry lang="KAZ">Сумма</entry>
 		<entry lang="ENG">Amount</entry>
 		<entry lang="BG">Сума</entry>
 	</sentence>
-		<sentence mode="on" keyword="cost_center">
+	<sentence mode="on" keyword="cost_center">
 		<entry lang="RUS">Место возникновения затрат</entry>
 		<entry lang="KAZ">Место возникновения затрат</entry>
 		<entry lang="ENG">Spending place</entry>
 		<entry lang="BG">Място на расходи</entry>
 	</sentence>
-		<sentence mode="on" keyword="owner">
+	<sentence mode="on" keyword="owner">
 		<entry lang="RUS">Владелец</entry>
 		<entry lang="KAZ">Владелец</entry>
 		<entry lang="ENG">Owner</entry>
 		<entry lang="BG">Собственик</entry>
 	</sentence>
-		<sentence mode="on" keyword="color">
+	<sentence mode="on" keyword="color">
 		<entry lang="RUS">Цвет</entry>
 		<entry lang="KAZ">Цвет</entry>
 		<entry lang="ENG">Color</entry>
@@ -287,6 +246,12 @@
 		<entry lang="ENG" hint="Register">Register</entry>
 		<entry lang="BG" hint="Регистрирайте се">Регистрирайте се</entry>
 	</sentence>
+	<sentence mode="on" keyword="reg_confirm_mail">
+		<entry lang="RUS" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+		<entry lang="KAZ" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+		<entry lang="ENG" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+		<entry lang="BG" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+	</sentence>
 	<sentence mode="on" keyword="reg_terms">
 		<entry lang="RUS" hint="Пользуясь сервисом вы соглащаетесь с условиями использования">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>
 		<entry lang="KAZ" hint="Пользуясь сервисом вы соглащаетесь с условиями использования">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>
@@ -409,11 +374,12 @@
 		<entry lang="BG" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
 	</sentence>
 
-	<sentence mode="on" keyword="transactions">
-		<entry lang="RUS" hint="Операции">Операции</entry>
-		<entry lang="KAZ" hint="Операции">Операции</entry>
-		<entry lang="ENG" hint="Transactions">Transactions</entry>
-		<entry lang="BG" hint="Сделки">Сделки</entry>
+	<!-- -->
+	<sentence mode="on" keyword="btn.add">
+		<entry lang="RUS">Добавить</entry>
+		<entry lang="KAZ">Жана</entry>
+		<entry lang="ENG">Add</entry>
+		<entry lang="BG">Добави</entry>
 	</sentence>
 	<sentence mode="on" keyword="save_close">
 		<entry lang="RUS" hint="Сохранить и закрыть">Сохранить и закрыть</entry>
@@ -433,6 +399,7 @@
 		<entry lang="ENG" hint="Close">Close</entry>
 		<entry lang="BG" hint="Затвори">Затвори</entry>
 	</sentence>
+
 	<sentence mode="on" keyword="members">
 		<entry lang="RUS" hint="Участники">Участники</entry>
 		<entry lang="KAZ" hint="Участники">Участники</entry>
@@ -629,7 +596,7 @@
 	<sentence mode="on" keyword="user">
 		<entry lang="RUS" hint="Пользователь">Пользователь</entry>
 		<entry lang="KAZ" hint="Пользователь">Пользователь</entry>
-		<entry lang="ENG" hint="Пользователь">Пользователь</entry>
+		<entry lang="ENG" hint="User">User</entry>
 		<entry lang="BG" hint="Пользователь">Пользователь</entry>
 	</sentence>
 	<sentence mode="on" keyword="transaction">

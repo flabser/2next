@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    templateName: 'cost-center',
+    templateName: 'cost-centers/cost-center',
 
     model: function(params) {
         return this.store.find('cost_center', params.costcenter_id);

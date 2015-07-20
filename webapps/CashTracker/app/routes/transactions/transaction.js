@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    templateName: 'transaction',
+    templateName: 'transactions/transaction',
 
     model: function(params) {
         return this.store.find('transaction', params.transaction_id);

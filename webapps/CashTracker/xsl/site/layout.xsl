@@ -103,12 +103,12 @@
 							</a>
 							<div class="nav-dropdown-menu">
 								<a class="nav-item" href="index.html">
-									<xsl:value-of select="//captions/operations/@caption" />
+									<xsl:value-of select="//captions/transactions/@caption" />
 								</a>
 								<a class="nav-item" href="index.html#/userprofile">
 									<xsl:value-of select="//captions/user_profile/@caption" />
 								</a>
-								<a class="nav-item btn-logout" href="#logout" onclick="nbApp.wlc.logout()">
+								<a class="nav-item btn-logout" href="#logout" onclick="nbApp.logout()">
 									<span>
 										<xsl:value-of select="//captions/logout/@caption" />
 									</span>

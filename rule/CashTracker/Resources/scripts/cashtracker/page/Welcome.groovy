@@ -12,9 +12,9 @@ class Welcome extends _DoScript {
 	@Override
 	public void doGet(_Session session, _WebFormData formData, String lang) {
 
-		def toLang = formData.getValueSilently("lang")
+		String toLang = formData.getValueSilently("lang")
 		try {
-			if (!toLang.equals("")) {
+			if (toLang.length() > 0) {
 				session.switchLang(LanguageType.valueOf(toLang.toUpperCase()))
 				publishElement("process", "lang-switched")
 			}

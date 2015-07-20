@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rule type="page" id="site-inc" mode="on" anonymous="on">
 	<description></description>
-	<!-- <caching>CACHING_IN_USER_SESSION_SCOPE</caching> -->
 	<caching>NO_CACHING</caching>
 
 	<element mode="ON" type="SCRIPT">
@@ -14,7 +13,7 @@
 	<caption name="promo_line2" />
 	<caption name="copyright" />
 
-	<caption name="operations" />
+	<caption name="transactions" />
 	<caption name="user_profile" />
 	<caption name="logout" />
 
@@ -34,6 +33,7 @@
 	<caption name="reg_pwd_inf" />
 	<caption name="reg_pwd_weak" />
 	<caption name="reg_button" />
+	<caption name="reg_confirm_mail" />
 	<caption name="reg_terms" />
 
 	<caption name="login_or" />

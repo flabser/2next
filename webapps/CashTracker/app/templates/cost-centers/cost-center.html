@@ -1,6 +1,6 @@
 {{#form-for model=model onSubmit="submit" save="save"}}
 <header class="form-header">
-    <h1 class="header-title">User / {{name}}</h1>
+    <h1 class="header-title">{{t "cost_center"}} / {{model.name}}</h1>
     <div class="action-bar">
         <button type="submit" class="btn btn-primary">{{t "save"}}</button>
         <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
@@ -10,18 +10,10 @@
     <fieldset class="fieldset">
         <div class="control-group">
             <div class="control-label">
-                {{t 'name'}}
+                {{t "name"}}
             </div>
             <div class="controls">
                 {{input value=model.name class="span7"}}
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="control-label">
-                {{t 'email'}}
-            </div>
-            <div class="controls">
-                {{input value=model.email class="span7"}}
             </div>
         </div>
     </fieldset>
