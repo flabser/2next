@@ -344,7 +344,7 @@
 		<entry lang="RUS" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
 		<entry lang="KAZ" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
 		<entry lang="ENG" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="BG">Подтверждение E-mail</entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_error">
 		<entry lang="RUS" hint="Не верные данные">Не верные данные</entry>
