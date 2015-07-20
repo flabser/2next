@@ -2,6 +2,7 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 	<xsl:import href="layout.xsl" />
+	<xsl:import href="-login.xsl" />
 
 	<xsl:template match="/request">
 		<xsl:call-template name="layout">
@@ -20,7 +21,7 @@
 				<h1>
 					<xsl:value-of select="//captions/verify_email_title/@caption" />
 				</h1>
-				<section style="font-size:1.5em;">
+				<div style="font-size:1.5em;margin-bottom:2em;">
 					<xsl:choose>
 						<xsl:when test="//process = 'verify-ok'">
 							<xsl:value-of select="//captions/verify_email_done/@caption" />
@@ -32,7 +33,10 @@
 							<xsl:value-of select="//captions/verify_email_error/@caption" />
 						</xsl:otherwise>
 					</xsl:choose>
-				</section>
+				</div>
+				<xsl:if test="//process = 'verify-ok'">
+					<xsl:call-template name="login" />
+				</xsl:if>
 			</div>
 		</div>
 	</xsl:template>

@@ -246,6 +246,12 @@
 		<entry lang="ENG" hint="Register">Register</entry>
 		<entry lang="BG" hint="Регистрирайте се">Регистрирайте се</entry>
 	</sentence>
+	<sentence mode="on" keyword="reg_confirm_mail">
+		<entry lang="RUS" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+		<entry lang="KAZ" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+		<entry lang="ENG" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+		<entry lang="BG" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+	</sentence>
 	<sentence mode="on" keyword="reg_terms">
 		<entry lang="RUS" hint="Пользуясь сервисом вы соглащаетесь с условиями использования">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>
 		<entry lang="KAZ" hint="Пользуясь сервисом вы соглащаетесь с условиями использования">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>

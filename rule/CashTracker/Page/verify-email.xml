@@ -18,4 +18,7 @@
 	<caption name="verify_email_error" />
 	<caption name="verify_email_done" />
 	<caption name="verify_email_already" />
+
+	<caption name="login_title" />
+	<caption name="login_data_incorrect" />
 </rule>

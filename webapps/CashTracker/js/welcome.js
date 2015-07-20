@@ -19,7 +19,7 @@ nbApp.init = function() {
             }
         }
 
-        $('.reg-result-ok').html('').css({
+        $('.reg-result-ok').css({
             'display': 'none'
         });
     });
@@ -85,7 +85,7 @@ nbApp.reg = function(form) {
                 form.reset();
 
                 setTimeout(function() {
-                    $('.reg-result-ok').html('').css({
+                    $('.reg-result-ok').css({
                         'display': 'none'
                     });
                 }, 1000 * 60);

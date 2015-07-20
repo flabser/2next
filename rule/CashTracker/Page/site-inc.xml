@@ -33,6 +33,7 @@
 	<caption name="reg_pwd_inf" />
 	<caption name="reg_pwd_weak" />
 	<caption name="reg_button" />
+	<caption name="reg_confirm_mail" />
 	<caption name="reg_terms" />
 
 	<caption name="login_or" />
