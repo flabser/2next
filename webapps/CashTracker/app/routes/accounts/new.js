@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import AccountRoute from './account';
 
-export default Ember.Route.extend({
-    templateName: 'account',
-
+export default AccountRoute.extend({
     model: function(params) {
         return this.store.createRecord('account', {
             type: 0,
@@ -16,19 +14,9 @@ export default Ember.Route.extend({
     },
 
     deactivate: function() {
-        var model = this.currentModel;
+        let model = this.currentModel;
         if (model.get('isNew') && model.get('isSaving') == false) {
             model.rollbackAttributes();
-        }
-    },
-
-    actions: {
-        save: function() {
-            var _this = this;
-            var model = this.currentModel;
-            model.save().then(function() {
-                _this.transitionTo('accounts');
-            });
         }
     }
 });

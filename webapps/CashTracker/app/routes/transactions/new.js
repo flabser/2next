@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import TransactionRoute from './transaction';
 
-export default Ember.Route.extend({
-    templateName: 'transaction',
-
+export default TransactionRoute.extend({
     model: function(params) {
         return this.store.createRecord('transaction', {
             author: null,
@@ -27,16 +25,6 @@ export default Ember.Route.extend({
         var model = this.currentModel;
         if (model.get('isNew') && model.get('isSaving') == false) {
             model.rollbackAttributes();
-        }
-    },
-
-    actions: {
-        save: function() {
-            var _this = this;
-            var model = this.currentModel;
-            model.save().then(function() {
-                _this.transitionTo('transactions');
-            });
         }
     }
 });

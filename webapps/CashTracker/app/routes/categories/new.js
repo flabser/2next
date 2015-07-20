@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import CategoryRoute from './category';
 
-export default Ember.Route.extend({
-    templateName: 'category',
-
+export default CategoryRoute.extend({
     model: function(params) {
         return this.store.createRecord('category', {
 
@@ -10,19 +8,9 @@ export default Ember.Route.extend({
     },
 
     deactivate: function() {
-        var model = this.currentModel;
+        let model = this.currentModel;
         if (model.get('isNew') && model.get('isSaving') == false) {
             model.rollbackAttributes();
-        }
-    },
-
-    actions: {
-        save: function() {
-            var _this = this;
-            var model = this.currentModel;
-            model.save().then(function() {
-                _this.transitionTo('categories');
-            });
         }
     }
 });
