@@ -103,7 +103,7 @@
 							</a>
 							<div class="nav-dropdown-menu">
 								<a class="nav-item" href="index.html">
-									<xsl:value-of select="//captions/operations/@caption" />
+									<xsl:value-of select="//captions/transactions/@caption" />
 								</a>
 								<a class="nav-item" href="index.html#/userprofile">
 									<xsl:value-of select="//captions/user_profile/@caption" />
