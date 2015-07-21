@@ -1,7 +1,7 @@
 import CategoryRoute from './category';
 
 export default CategoryRoute.extend({
-    model: function(params) {
+    model: function() {
         return this.store.createRecord('category', {
 
         });

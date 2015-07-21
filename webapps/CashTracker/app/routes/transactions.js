@@ -2,6 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
     queryParams: {
+        type: {
+            refreshModel: true
+        },
         offset: {
             refreshModel: true
         },
@@ -14,7 +17,7 @@ export default Ember.Route.extend({
     },
 
     model: function(params) {
-        return this.store.findAll('transaction');
+        return this.store.query('transaction', params);
     },
 
     beforeModel: function(transition) {
@@ -29,6 +32,10 @@ export default Ember.Route.extend({
 
             if (!transition.queryParams.order_by || transition.queryParams.order_by === 'undefined') {
                 transition.queryParams.order_by = '';
+            }
+
+            if (!transition.queryParams.type || transition.queryParams.type === 'undefined') {
+                transition.queryParams.type = '';
             }
 
             this.transitionTo('transactions', {

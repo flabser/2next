@@ -1,7 +1,7 @@
 import TransactionRoute from './transaction';
 
 export default TransactionRoute.extend({
-    model: function(params) {
+    model: function() {
         return this.store.createRecord('transaction', {
             author: null,
             regDate: null,

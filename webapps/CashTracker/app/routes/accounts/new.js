@@ -1,7 +1,7 @@
 import AccountRoute from './account';
 
 export default AccountRoute.extend({
-    model: function(params) {
+    model: function() {
         return this.store.createRecord('account', {
             type: 0,
             name: '',

@@ -10,8 +10,6 @@ Router.map(function() {
         path: '/'
     });
 
-    this.route('userprofile');
-
     this.route('transactions', function() {
         this.route('new');
         this.route('transaction', {
@@ -56,13 +54,17 @@ Router.map(function() {
         });
     });
 
+    this.route('dashboard');
+    this.route('reports');
+    this.route('ws');
     this.route('login');
+    this.route('userprofile');
 });
 
 Ember.Route.reopen({
     redirect: function() {
         if (this.routeName === 'index') {
-            this.transitionTo('transactions');
+            this.transitionTo('dashboard');
         }
     }
 });

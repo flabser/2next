@@ -2,33 +2,61 @@
     <nav class="side-nav">
         <ul class="side-tree">
             <li class="side-tree-item">
-                {{#link-to "transactions"}}
-                <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
-                <span class="nav-item-text">{{t "transactions"}}</span> {{/link-to}}
+                {{#link-to "dashboard"}}
+                <span class="nav-item-icon"><i class="fa fa-dashboard"></i></span>
+                <span class="nav-item-text">{{t "dashboard"}}</span> {{/link-to}}
             </li>
             <li class="side-tree-item">
+                {{#link-to "transactions" (query-params type="")}}
+                <span class="nav-item-icon"><i class="fa fa-tasks"></i></span>
+                <span class="nav-item-text">{{t "transactions"}}</span> {{/link-to}}
+                <ul class="side-tree">
+                    <li class="side-tree-item">
+                        {{#link-to "transactions" (query-params type="income")}}
+                        <span class="nav-item-icon"><i class="fa fa-long-arrow-left"></i></span>
+                        <span class="nav-item-text">{{t "incomes"}}</span> {{/link-to}}
+                    </li>
+                    <li class="side-tree-item">
+                        {{#link-to "transactions" (query-params type="expense")}}
+                        <span class="nav-item-icon"><i class="fa fa-long-arrow-right"></i></span>
+                        <span class="nav-item-text">{{t "expenses"}}</span> {{/link-to}}
+                    </li>
+                    <li class="side-tree-item">
+                        {{#link-to "transactions" (query-params type="transfer")}}
+                        <span class="nav-item-icon"><i class="fa fa-retweet"></i></span>
+                        <span class="nav-item-text">{{t "transfers"}}</span> {{/link-to}}
+                    </li>
+                </ul>
+            </li>
+            <li class="side-tree-item">
+                {{#link-to "reports"}}
+                <span class="nav-item-icon"><i class="fa fa-bar-chart-o"></i></span>
+                <span class="nav-item-text">{{t "reports"}}</span> {{/link-to}}
+            </li>
+            <li class="items-separator"></li>
+            <li class="side-tree-item">
                 {{#link-to "accounts"}}
-                <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
+                <span class="nav-item-icon"><i class="fa fa-credit-card"></i></span>
                 <span class="nav-item-text">{{t "accounts"}}</span> {{/link-to}}
             </li>
             <li class="side-tree-item">
                 {{#link-to "categories"}}
-                <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
+                <span class="nav-item-icon"><i class="fa fa-sitemap"></i></span>
                 <span class="nav-item-text">{{t "categories"}}</span> {{/link-to}}
             </li>
             <li class="side-tree-item">
                 {{#link-to "cost_centers"}}
-                <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
+                <span class="nav-item-icon"><i class="fa fa-building-o"></i></span>
                 <span class="nav-item-text">{{t "cost_centers"}}</span> {{/link-to}}
             </li>
             <li class="side-tree-item">
                 {{#link-to "tags"}}
-                <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
+                <span class="nav-item-icon"><i class="fa fa-tags"></i></span>
                 <span class="nav-item-text">{{t "tags"}}</span> {{/link-to}}
             </li>
             <li class="side-tree-item">
                 {{#link-to "users"}}
-                <span class="nav-item-icon"><i class="fa fa-file-o"></i></span>
+                <span class="nav-item-icon"><i class="fa fa-users"></i></span>
                 <span class="nav-item-text">{{t "users"}}</span> {{/link-to}}
             </li>
         </ul>

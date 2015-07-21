@@ -22,6 +22,8 @@ export default Em.Component.extend({
         return promise.then(function() {
                 if (model.get('isValid')) {
                     return this.sendAction('save');
+                } else {
+                    console.log(this);
                 }
             }.bind(this), function(err) {
                 console.log(err);

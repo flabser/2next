@@ -67,8 +67,8 @@ export default Route.extend({
             $('body').toggleClass('search-open');
         },
 
-        error: function(error, transition) {
-            if (error.status === 401 || (!this.get('session').isAuthenticated() && this.routeName !== 'login')) {
+        error: function(_error, transition) {
+            if (_error.status === 401 || (!this.get('session').isAuthenticated() && this.routeName !== 'login')) {
                 window.location.href = 'Provider?id=login';
 
                 /*this.controllerFor('login').setProperties({
