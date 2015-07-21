@@ -21,11 +21,41 @@
 		<entry lang="BG" hint="фирмени и семейни финанси">фирмени и семейни финанси</entry>
 	</sentence>
 
+	<sentence mode="on" keyword="dashboard">
+		<entry lang="RUS">Обзор</entry>
+		<entry lang="KAZ">Жалпы шолу</entry>
+		<entry lang="ENG">Dashboard</entry>
+		<entry lang="BG">Обзор</entry>
+	</sentence>
 	<sentence mode="on" keyword="transactions">
 		<entry lang="RUS" hint="Операции">Операции</entry>
 		<entry lang="KAZ" hint="Операции">Операции</entry>
 		<entry lang="ENG" hint="Transactions">Transactions</entry>
 		<entry lang="BG" hint="Сделки">Сделки</entry>
+	</sentence>
+	<sentence mode="on" keyword="incomes">
+		<entry lang="RUS">Доходы</entry>
+		<entry lang="KAZ">Кіріс</entry>
+		<entry lang="ENG">Incomes</entry>
+		<entry lang="BG">Доходы</entry>
+	</sentence>
+	<sentence mode="on" keyword="expenses">
+		<entry lang="RUS">Расходы</entry>
+		<entry lang="KAZ">Шығыс</entry>
+		<entry lang="ENG">Expenses</entry>
+		<entry lang="BG">Расходы</entry>
+	</sentence>
+	<sentence mode="on" keyword="transfers">
+		<entry lang="RUS">Переводы</entry>
+		<entry lang="KAZ">Аударымдар</entry>
+		<entry lang="ENG">Transfers</entry>
+		<entry lang="BG">Переводы</entry>
+	</sentence>
+	<sentence mode="on" keyword="reports">
+		<entry lang="RUS">Отчеты</entry>
+		<entry lang="KAZ">Есептемелер</entry>
+		<entry lang="ENG">Reports</entry>
+		<entry lang="BG">Отчеты</entry>
 	</sentence>
 	<sentence mode="on" keyword="accounts">
 		<entry lang="RUS">Счета</entry>

@@ -38,7 +38,12 @@
 	<caption name="user" />
 	<caption name="transaction" />
 
+	<caption name="dashboard" />
 	<caption name="transactions" />
+	<caption name="incomes" />
+	<caption name="expenses" />
+	<caption name="transfers" />
+	<caption name="reports" />
 	<caption name="accounts" />
 	<caption name="categories" />
 	<caption name="cost_centers" />
