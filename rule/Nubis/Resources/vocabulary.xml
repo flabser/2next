@@ -32,4 +32,17 @@
 		<entry lang="ENG">Sign Up</entry>
 		<entry lang="BG">Sign Up</entry>
 	</sentence>
+
+	<sentence mode="on" keyword="username">
+		<entry lang="RUS">User name</entry>
+		<entry lang="KAZ">User name</entry>
+		<entry lang="ENG">User name</entry>
+		<entry lang="BG">User name</entry>
+	</sentence>
+	<sentence mode="on" keyword="password">
+		<entry lang="RUS">Password</entry>
+		<entry lang="KAZ">Password</entry>
+		<entry lang="ENG">Password</entry>
+		<entry lang="BG">Password</entry>
+	</sentence>
 </vocabulary>

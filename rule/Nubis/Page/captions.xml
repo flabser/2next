@@ -5,4 +5,6 @@
 	<caption name="signin_btn" />
 	<caption name="signup_title" />
 	<caption name="signup_btn" />
+	<caption name="username" />
+	<caption name="password" />
 </rule>
