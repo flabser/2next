@@ -11,6 +11,7 @@ import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.AprLifecycleListener;
 import org.apache.catalina.core.StandardServer;
 import org.apache.catalina.startup.Tomcat;
+import org.apache.tomcat.JarScanner;
 import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -57,6 +58,7 @@ public class WebServer implements IWebServer {
 
 		sharedResContext.addMimeMapping("css", "text/css");
 		sharedResContext.addMimeMapping("js", "text/javascript");
+		sharedResContext.setTldValidation(false);
 		return sharedResContext;
 	}
 
@@ -69,11 +71,6 @@ public class WebServer implements IWebServer {
 			String db = new File(Environment.primaryAppDir + "webapps/"
 					+ docBase).getAbsolutePath();
 			context = tomcat.addContext(URLPath, db);
-
-			for (int i = 0; i < defaultWelcomeList.length; i++) {
-				context.addWelcomeFile(defaultWelcomeList[i]);
-			}
-
 			Tomcat.addServlet(context, "Provider",
 					"com.flabser.servlets.admin.AdminProvider");
 			context.setDisplayName("Administrator");
@@ -83,9 +80,12 @@ public class WebServer implements IWebServer {
 			String db = new File("webapps/" + docBase).getAbsolutePath();
 			context = tomcat.addContext(URLPath, db);
 			context.setDisplayName(URLPath.substring(1));
-			context.addWelcomeFile("Provider");
 			Tomcat.addServlet(context, "Provider",
 					"com.flabser.servlets.Provider");
+		}
+
+		for (int i = 0; i < defaultWelcomeList.length; i++) {
+			context.addWelcomeFile(defaultWelcomeList[i]);
 		}
 
 		Tomcat.addServlet(context, "default",
@@ -135,6 +135,8 @@ public class WebServer implements IWebServer {
 		context.addServletMapping("/rest/*", "Jersey REST Service");
 		filterAccessGuardMapping.addServletName("Jersey REST Service");
 
+		context.setTldValidation(false);
+
 		return null;
 	}
 
@@ -143,6 +145,10 @@ public class WebServer implements IWebServer {
 		String db = new File(Environment.primaryAppDir + "webapps/ROOT")
 				.getAbsolutePath();
 		Context context = tomcat.addWebapp(host, "", db);
+		context.setDisplayName("root");
+		context.setTldValidation(false);
+		JarScanner scanner = context.getJarScanner();
+		scanner.getJarScanFilter();
 
 		for (int i = 0; i < defaultWelcomeList.length; i++) {
 			context.addWelcomeFile(defaultWelcomeList[i]);

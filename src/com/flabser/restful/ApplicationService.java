@@ -26,15 +26,17 @@ import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.SessionPool;
 import com.flabser.server.Server;
 import com.flabser.servlets.ServletUtil;
+import com.flabser.solutions.DatabaseType;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.AuthFailedException;
 import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.users.UserStatusType;
+import com.flabser.util.Util;
 
 @Path("/session")
-public class SessionService {
+public class ApplicationService {
 
 	@Context
 	ServletContext context;
@@ -69,7 +71,7 @@ public class SessionService {
 		UserSession userSession = null;
 		HttpSession jses;
 		String appID = authUser.getDefaultApp();
-		context.getAttribute(AppEnv.APP_ATTR);
+		AppEnv env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		User user = new User();
 		user = systemDatabase.checkUserHash(authUser.getLogin(),
@@ -88,11 +90,37 @@ public class SessionService {
 		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
 		if (user.getStatus() == UserStatusType.REGISTERED) {
-			HashMap<String, ApplicationProfile> apps = user
-					.getApplicationProfiles();
-			authUser.setApplications(apps);
-			authUser.setDefaultApp(appID);
+			if (!env.appType.equalsIgnoreCase("administrator")) {
+				HashMap<String, ApplicationProfile> apps = user
+						.getApplicationProfiles(env.appType);
+				// TODO Need to add redirect to choice certainly application if
+				// apps size > 1
 
+				if (apps == null) {
+					ApplicationProfile ap = new ApplicationProfile();
+					ap.appType = env.appType;
+					ap.appID = Util
+							.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
+					ap.appName = env.appType + " of " + user.getLogin();
+					ap.owner = user.getLogin();
+					ap.dbLogin = (user.getLogin().replace("@", "_")
+							.replace(".", "_").replace("-", "_")).toLowerCase();
+					ap.dbType = DatabaseType.POSTGRESQL;
+					ap.dbName = ap.appType.toLowerCase() + "_" + ap.appID;
+					ap.dbPwd = Util
+							.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
+					ap.save();
+					user.addApplication(ap);
+					user.save();
+					authUser.setRedirect("setup");
+				} else {
+					authUser.setApplications(apps);
+					if (appID == null && apps.values().size() == 1) {
+						appID = apps.values().iterator().next().appID;
+						authUser.setDefaultApp(appID);
+					}
+				}
+			}
 		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
 			authUser.setRedirect("tochangepwd");
 		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED

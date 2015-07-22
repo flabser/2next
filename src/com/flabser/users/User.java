@@ -140,6 +140,14 @@ public class User {
 		return enabledApps.get(appType);
 	}
 
+	public HashMap<String, ApplicationProfile> getApplicationProfiles() {
+		HashMap<String, ApplicationProfile> allApps = new HashMap<String, ApplicationProfile>();
+		for (HashMap<String, ApplicationProfile> a : enabledApps.values()) {
+			allApps.putAll(a);
+		}
+		return allApps;
+	}
+
 	public ApplicationProfile getApplicationProfile(String appID) {
 		return applications.get(appID);
 	}
