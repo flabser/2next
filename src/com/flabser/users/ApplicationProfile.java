@@ -24,6 +24,7 @@ public class ApplicationProfile {
 	public String dbLogin;
 	public String dbPwd;
 	public String dbName;
+	public String defaultURL;
 	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
 	private Date statusDate;
 	private VisibiltyType visibilty = VisibiltyType.PUBLIC;
@@ -127,6 +128,14 @@ public class ApplicationProfile {
 
 	public void setVisibilty(VisibiltyType visibilty) {
 		this.visibilty = visibilty;
+	}
+
+	public String getDefaultURL() {
+		return defaultURL;
+	}
+
+	public void setDefaultURL(String defaultURL) {
+		this.defaultURL = defaultURL;
 	}
 
 }
