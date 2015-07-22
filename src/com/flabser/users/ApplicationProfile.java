@@ -26,6 +26,7 @@ public class ApplicationProfile {
 	public String dbName;
 	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
 	private Date statusDate;
+	private VisibiltyType visibilty = VisibiltyType.PUBLIC;
 
 	public ApplicationProfile() {
 
@@ -118,6 +119,14 @@ public class ApplicationProfile {
 
 	public String getAppID() {
 		return appID;
+	}
+
+	public VisibiltyType getVisibilty() {
+		return visibilty;
+	}
+
+	public void setVisibilty(VisibiltyType visibilty) {
+		this.visibilty = visibilty;
 	}
 
 }

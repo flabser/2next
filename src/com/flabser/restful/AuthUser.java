@@ -16,6 +16,7 @@ public class AuthUser {
 	private String redirect;
 	private String[] roles;
 	private HashMap<String, ApplicationProfile> applications = new HashMap<String, ApplicationProfile>();
+	private String defaultApp;
 
 	public AuthUser() {
 	}
@@ -74,5 +75,13 @@ public class AuthUser {
 
 	public void setApplications(HashMap<String, ApplicationProfile> applications) {
 		this.applications = applications;
+	}
+
+	public String getDefaultApp() {
+		return defaultApp;
+	}
+
+	public void setDefaultApp(String defaultApp) {
+		this.defaultApp = defaultApp;
 	}
 }

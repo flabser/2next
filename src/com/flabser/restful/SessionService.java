@@ -72,8 +72,7 @@ public class SessionService {
 			SQLException {
 		UserSession userSession = null;
 		HttpSession jses;
-		String appID = ""; // temporary variable
-
+		String appID = authUser.getDefaultApp();
 		AppEnv env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		User user = new User();
@@ -118,7 +117,10 @@ public class SessionService {
 					authUser.setRedirect("setup");
 				} else {
 					authUser.setApplications(apps);
-					appID = apps.values().iterator().next().appID;
+					if (appID == null && apps.values().size() == 1) {
+						appID = apps.values().iterator().next().appID;
+						authUser.setDefaultApp(appID);
+					}
 				}
 			}
 		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
