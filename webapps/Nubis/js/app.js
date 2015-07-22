@@ -134,7 +134,7 @@ nubis.login = function(form) {
 					$('#login-error').hide();
 				}, 5000);
 			} else {
-				location.href = 'index.html';
+				location.href = '?id=ws';
 			}
 		},
 		error: function(err) {
@@ -158,7 +158,7 @@ nubis.logout = function(form) {
 		method: 'DELETE',
 		url: 'rest/session',
 		success: function(result) {
-			location.href = '?id=welcome';
+			location.href = '?id=login';
 		}
 	});
 };
