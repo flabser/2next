@@ -13,8 +13,8 @@
 				<h1 class="text-center">
 					<xsl:value-of select="//captions/signup_title/@caption" />
 				</h1>
-				<form method="post">
-					<input class="form-control" type="text" name="login" value="" required="required" placeholder="{//captions/username/@caption}" />
+				<form method="post" name="signup">
+					<input class="form-control" type="email" name="email" value="" required="required" placeholder="E-mail" />
 					<input class="form-control" type="password" name="pwd" value="" required="required" placeholder="{//captions/password/@caption}" />
 					<div class="form-group">
 						<button type="submit" class="btn btn-default">
