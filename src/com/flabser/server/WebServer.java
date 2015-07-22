@@ -42,7 +42,6 @@ public class WebServer implements IWebServer {
 		server.addLifecycleListener(listener);
 
 		initSharedResources("/SharedResources");
-		initDefaultURL();
 
 	}
 
@@ -139,21 +138,22 @@ public class WebServer implements IWebServer {
 		return null;
 	}
 
-	public Context initDefaultURL() throws LifecycleException,
-			MalformedURLException {
+	@Override
+	public void initDefaultURL(Host host) {
 		String db = new File(Environment.primaryAppDir + "webapps/ROOT")
 				.getAbsolutePath();
-		Context context = tomcat.addContext("", db);
+		Context context = tomcat.addWebapp(host, "", db);
 
 		for (int i = 0; i < defaultWelcomeList.length; i++) {
 			context.addWelcomeFile(defaultWelcomeList[i]);
 		}
 
-		Tomcat.addServlet(context, "Redirector",
-				"com.flabser.servlets.Redirector");
-		context.addServletMapping("/", "Redirector");
+		/*
+		 * Tomcat.addServlet(context, "Redirector",
+		 * "com.flabser.servlets.Redirector"); context.addServletMapping("/",
+		 * "Redirector");
+		 */
 
-		return context;
 	}
 
 	@Override

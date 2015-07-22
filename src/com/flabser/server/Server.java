@@ -36,13 +36,16 @@ public class Server {
 				+ System.getProperty("java.version"));
 
 		Environment.init();
-		if (!compilationTime.equalsIgnoreCase(""))
+		if (!compilationTime.equalsIgnoreCase("")) {
 			logger.verboseLogEntry("Build: " + compilationTime);
+		}
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
 		webServerInst.init(Environment.hostName);
 
 		Host host = webServerInst.addApplication("Administrator",
 				"/Administrator", "Administrator");
+
+		webServerInst.initDefaultURL(host);
 
 		HashSet<Host> hosts = new HashSet<Host>();
 		hosts.add(host);
