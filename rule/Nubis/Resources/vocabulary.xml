@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<vocabulary>
+	<sentence mode="on" keyword="promo">
+		<entry lang="RUS">Nubis</entry>
+		<entry lang="KAZ">Nubis</entry>
+		<entry lang="ENG">Nubis</entry>
+		<entry lang="BG">Nubis</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="signin_title">
+		<entry lang="RUS">Sign In</entry>
+		<entry lang="KAZ">Sign In</entry>
+		<entry lang="ENG">Sign In</entry>
+		<entry lang="BG">Sign In</entry>
+	</sentence>
+	<sentence mode="on" keyword="signin_btn">
+		<entry lang="RUS">Sign In</entry>
+		<entry lang="KAZ">Sign In</entry>
+		<entry lang="ENG">Sign In</entry>
+		<entry lang="BG">Sign In</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="signup_title">
+		<entry lang="RUS">Sign Up</entry>
+		<entry lang="KAZ">Sign Up</entry>
+		<entry lang="ENG">Sign Up</entry>
+		<entry lang="BG">Sign Up</entry>
+	</sentence>
+	<sentence mode="on" keyword="signup_btn">
+		<entry lang="RUS">Sign Up</entry>
+		<entry lang="KAZ">Sign Up</entry>
+		<entry lang="ENG">Sign Up</entry>
+		<entry lang="BG">Sign Up</entry>
+	</sentence>
+</vocabulary>

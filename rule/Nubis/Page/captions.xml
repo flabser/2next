@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rule type="page" id="captions" mode="on">
+	<caption name="promo" />
+	<caption name="signin_title" />
+	<caption name="signin_btn" />
+	<caption name="signup_title" />
+	<caption name="signup_btn" />
+</rule>

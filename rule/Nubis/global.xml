@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rule mode="on" type="global">
+	<description>Nubis</description>
+	<appname>Nubis</appname>
+	<entrypoint>Provider?id=signin</entrypoint>
+	<defaultredirecturl>Provider?id=ws</defaultredirecturl>
+	<langs>
+		<entry id="ENG">English</entry>
+		<entry id="RUS">Русский</entry>
+		<entry id="KAZ">Қазақша</entry>
+		<entry id="BG">Българский</entry>
+	</langs>
+</rule>
