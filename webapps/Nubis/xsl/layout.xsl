@@ -6,7 +6,7 @@
 	<xsl:output method="html" encoding="utf-8" indent="no" />
 
 	<xsl:template name="layout">
-		<xsl:param name="w_title" select="concat(//captions/title/@caption, ' - ', $APP_NAME)" />
+		<xsl:param name="w_title" select="concat(//captions/title/@caption, ' - ', //captions/brand/@caption)" />
 		<xsl:param name="include" select="''" />
 		<xsl:param name="body_class" select="''" />
 
@@ -53,8 +53,9 @@
 
 	<xsl:template name="main-header">
 		<h1>
-			<xsl:value-of select="//captions/promo/@caption" />
+			<xsl:value-of select="//captions/brand/@caption" />
 		</h1>
+		<a href="#signout" class="pull-right" onclick="nubis.signOut()">Sing Out</a>
 	</xsl:template>
 
 	<!-- -->

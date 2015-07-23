@@ -9,6 +9,14 @@ class WS extends _DoScript {
 
 	@Override
 	public void doGet(_Session session, _WebFormData formData, String lang) {
+		def apps = [:]
+		def list = session.getUser().applications
+		list.each {
+			// def el = new _Element(it.appID, it.appName)
+			apps.put(it.defaultURL, it.appName)
+		}
+		publishElement("apps", apps)
+		publishElement("apps-count", list.size())
 	}
 
 	@Override
