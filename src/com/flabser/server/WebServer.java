@@ -11,7 +11,6 @@ import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.AprLifecycleListener;
 import org.apache.catalina.core.StandardServer;
 import org.apache.catalina.startup.Tomcat;
-import org.apache.tomcat.JarScanner;
 import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -39,6 +38,7 @@ public class WebServer implements IWebServer {
 		tomcat.setBaseDir("webserver");
 
 		StandardServer server = (StandardServer) WebServer.tomcat.getServer();
+
 		AprLifecycleListener listener = new AprLifecycleListener();
 		server.addLifecycleListener(listener);
 
@@ -144,15 +144,16 @@ public class WebServer implements IWebServer {
 	public void initDefaultURL(Host host) {
 		String db = new File(Environment.primaryAppDir + "webapps/ROOT")
 				.getAbsolutePath();
-		Context context = tomcat.addWebapp(host, "", db);
+		Context context = tomcat.addContext(host, "", db);
 		context.setDisplayName("root");
-		context.setTldValidation(false);
-		JarScanner scanner = context.getJarScanner();
-		scanner.getJarScanFilter();
 
 		for (int i = 0; i < defaultWelcomeList.length; i++) {
 			context.addWelcomeFile(defaultWelcomeList[i]);
 		}
+
+		Tomcat.addServlet(context, "default",
+				"org.apache.catalina.servlets.DefaultServlet");
+		context.addServletMapping("/", "default");
 
 		/*
 		 * Tomcat.addServlet(context, "Redirector",

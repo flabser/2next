@@ -55,6 +55,9 @@ public class Server {
 					+ webApp.appBase, webApp.appBase));
 		}
 
+		hosts.add(webServerInst.addApplication("CashTracker",
+				"/CashTracker/k4j24040au55ka85", "CashTracker"));
+
 		String info = webServerInst.initConnectors();
 		Server.logger.normalLogEntry("Webserver start (" + info + ")");
 		webServerInst.startContainer();

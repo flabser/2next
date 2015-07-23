@@ -23,6 +23,7 @@
 		</layout>
 	</appender>
 
+	
 	<logger name="org.quartz">
 		<level value="INFO" />
 	</logger>

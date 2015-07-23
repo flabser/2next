@@ -74,6 +74,7 @@ public class UserSession implements ICache {
 	}
 
 	public boolean isAppAllowed(String appType) {
+		currentUser.getApplicationProfiles(appType);
 		return true;
 	}
 

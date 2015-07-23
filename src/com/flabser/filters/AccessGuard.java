@@ -42,6 +42,7 @@ public class AccessGuard implements Filter {
 							.getAttribute(UserSession.SESSION_ATTR);
 					if (us != null) {
 						ServletContext context = http.getServletContext();
+
 						AppEnv env = (AppEnv) context
 								.getAttribute(AppEnv.APP_ATTR);
 						if (us.isAppAllowed(env.appType)) {
