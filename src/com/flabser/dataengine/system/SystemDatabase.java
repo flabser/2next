@@ -27,7 +27,7 @@ public class SystemDatabase implements ISystemDatabase {
 			"yyyy-MM-dd HH:mm:ss");
 	static String connectionURL = "jdbc:postgresql://localhost/2next_system";
 	static String dbUser = "postgres";
-	static String dbUserPwd = "3287";
+	static String dbUserPwd = "1";
 
 	// TODO Need to bring the setting out
 
