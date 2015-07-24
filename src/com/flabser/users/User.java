@@ -12,6 +12,7 @@ import org.apache.catalina.realm.RealmBase;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
@@ -21,6 +22,8 @@ import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
+import com.flabser.restful.AuthUser;
+import com.flabser.server.Server;
 import com.flabser.util.Util;
 
 @JsonRootName("user")
@@ -169,44 +172,57 @@ public class User {
 		}
 	}
 
-	public boolean save() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException, SQLException {
-		if (id == 0) {
-			id = sysDatabase.insert(this);
-		} else {
-			id = sysDatabase.update(this);
-		}
+	public boolean save() {
+		try {
+			if (id == 0) {
+				id = sysDatabase.insert(this);
+			} else {
+				id = sysDatabase.update(this);
+			}
 
-		if (id < 0) {
-			return false;
-		} else {
-			for (HashMap<String, ApplicationProfile> apps : enabledApps.values()) {
-				for (ApplicationProfile appProfile : apps.values()) {
-					if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
-						IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
-						int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.dbLogin, appProfile.dbPwd);
-						if (res == 0 || res == 1) {
-							IDatabase dataBase = appProfile.getDatabase();
-							IDeployer ad = dataBase.getDeployer();
-							ad.init(appProfile);
-							Class appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
-							IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
-							if (ad.deploy(dbInitializer) == 0) {
-								appProfile.setStatus(ApplicationStatusType.ON_LINE);
-								appProfile.save();
+			if (id < 0) {
+				return false;
+			} else {
+				for (HashMap<String, ApplicationProfile> apps : enabledApps.values()) {
+					for (ApplicationProfile appProfile : apps.values()) {
+						if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
+							IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
+							int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.dbLogin, appProfile.dbPwd);
+							if (res == 0 || res == 1) {
+								IDatabase dataBase = appProfile.getDatabase();
+								IDeployer ad = dataBase.getDeployer();
+								ad.init(appProfile);
+								Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
+								IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
+								if (ad.deploy(dbInitializer) == 0) {
+									appProfile.setStatus(ApplicationStatusType.ON_LINE);
+									appProfile.save();
+								} else {
+									appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+									appProfile.save();
+								}
 							} else {
-								appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+								appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 								appProfile.save();
+								return false;
 							}
-						} else {
-							appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
-							appProfile.save();
-							return false;
 						}
 					}
 				}
 			}
+			return true;
+		} catch (InstantiationException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (IllegalAccessException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (ClassNotFoundException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (SQLException e) {
+			DatabaseUtil.debugErrorPrint(e);
+		} catch (DatabasePoolException e) {
+			Server.logger.errorLogEntry(e);
 		}
-		return true;
+		return false;
 
 	}
 
@@ -313,6 +329,15 @@ public class User {
 	public boolean delete() {
 		return false;
 
+	}
+
+	public AuthUser getAuthUser() {
+		AuthUser aUser = new AuthUser();
+		aUser.setLogin(login);
+		aUser.setName(userName);
+		aUser.setRoles(roles);
+		aUser.setApplications(applications);
+		return aUser;
 	}
 
 }

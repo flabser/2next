@@ -14,14 +14,12 @@ import com.flabser.users.UserSession;
 
 public class _Session {
 	private IDatabase dataBase;
-	private User user;
 	private AppEnv env;
 	private UserSession userSession;
 
 	public _Session(AppEnv env, UserSession userSession) {
 		this.env = env;
 		dataBase = userSession.getDataBase(env.appType);
-		this.user = userSession.currentUser;
 		this.userSession = userSession;
 	}
 
@@ -35,8 +33,7 @@ public class _Session {
 
 	public ArrayList<Role> getRolesList() {
 		@SuppressWarnings("unchecked")
-		ArrayList<Role> rolesList = (ArrayList<Role>) env.globalSetting.roleCollection
-				.getRolesList().clone();
+		ArrayList<Role> rolesList = (ArrayList<Role>) env.globalSetting.roleCollection.getRolesList().clone();
 		return rolesList;
 	}
 
@@ -53,7 +50,7 @@ public class _Session {
 	}
 
 	public User getUser() {
-		return user;
+		return userSession.currentUser;
 	}
 
 	public void switchLang(LanguageType lang) {
@@ -62,8 +59,7 @@ public class _Session {
 
 	@Override
 	public String toString() {
-		return "userid=" + user.getLogin() + ", database="
-				+ dataBase.toString();
+		return "userid=" + userSession.currentUser.getLogin() + ", database=" + dataBase.toString();
 	}
 
 }

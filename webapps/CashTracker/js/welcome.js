@@ -53,6 +53,7 @@ nbApp.reg = function(form) {
         url: 'Provider?client=' + screen.height + 'x' + screen.width,
         data: $(form).serialize(),
         success: function(result) {
+          console.log(result);
             var pr = result.split(',');
             if (pr.indexOf('email') != -1) {
                 $('input[name=email]', form).addClass('invalid');
