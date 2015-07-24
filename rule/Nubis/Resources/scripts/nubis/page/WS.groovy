@@ -13,7 +13,7 @@ class WS extends _DoScript {
 		def list = session.getUser().applications
 		list.each {
 			// def el = new _Element(it.appID, it.appName)
-			apps.put(it.defaultURL, it.appName)
+			apps.put(it.appType, it.appName)
 		}
 		publishElement("apps", apps)
 		publishElement("apps-count", list.size())

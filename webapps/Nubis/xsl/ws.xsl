@@ -16,7 +16,7 @@
 	</xsl:template>
 
 	<xsl:template match="entry">
-		<a href="{@key}">
+		<a href="/{@key}">
 			<xsl:value-of select="." />
 		</a>
 	</xsl:template>

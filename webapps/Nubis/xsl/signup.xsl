@@ -14,8 +14,8 @@
 					<xsl:value-of select="//captions/signup_title/@caption" />
 				</h1>
 				<form method="post" name="signup">
-					<input class="form-control" type="email" name="email" value="" required="required" placeholder="E-mail" />
-					<input class="form-control" type="password" name="pwd" value="" required="required" placeholder="{//captions/password/@caption}" />
+					<input class="form-control" type="email" name="email" required="required" placeholder="E-mail" />
+					<input class="form-control" type="password" name="pwd" required="required" placeholder="{//captions/password/@caption}" />
 					<div class="form-group">
 						<button type="submit" class="btn btn-default">
 							<xsl:value-of select="//captions/signup_btn/@caption" />
