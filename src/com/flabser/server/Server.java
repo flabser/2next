@@ -23,17 +23,14 @@ public class Server {
 	public static IDatabase dataBase;
 	public static IWebServer webServerInst;
 
-	public static void start() throws MalformedURLException,
-			LifecycleException, URISyntaxException {
+	public static void start() throws MalformedURLException, LifecycleException, URISyntaxException {
 		logger = new Log4jLogger("");
 		logger.normalLogEntry(serverTitle + " start");
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 
 		logger.normalLogEntry("Copyright(c) the F developers team 2015. All Right Reserved");
-		logger.normalLogEntry("OS: " + System.getProperty("os.name") + " "
-				+ System.getProperty("os.version") + "("
-				+ System.getProperty("os.arch") + "), jvm: "
-				+ System.getProperty("java.version"));
+		logger.normalLogEntry("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "(" + System.getProperty("os.arch")
+				+ "), jvm: " + System.getProperty("java.version"));
 
 		Environment.init();
 		if (!compilationTime.equalsIgnoreCase("")) {
@@ -42,8 +39,7 @@ public class Server {
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
 		webServerInst.init(Environment.hostName);
 
-		Host host = webServerInst.addApplication("Administrator",
-				"/Administrator", "Administrator");
+		Host host = webServerInst.addApplication("Administrator", "/Administrator", "Administrator");
 
 		webServerInst.initDefaultURL(host);
 
@@ -51,12 +47,8 @@ public class Server {
 		hosts.add(host);
 
 		for (Site webApp : Environment.webAppToStart.values()) {
-			hosts.add(webServerInst.addApplication(webApp.name, "/"
-					+ webApp.appBase, webApp.appBase));
+			hosts.add(webServerInst.addApplication(webApp.name, "/" + webApp.appBase, webApp.appBase));
 		}
-
-		hosts.add(webServerInst.addApplication("CashTracker",
-				"/CashTracker/k4j24040au55ka85", "CashTracker"));
 
 		String info = webServerInst.initConnectors();
 		Server.logger.normalLogEntry("Webserver start (" + info + ")");

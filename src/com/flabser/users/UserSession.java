@@ -26,19 +26,19 @@ public class UserSession implements ICache {
 	public int pageSize;
 	public String host = "localhost";
 
-	private IDatabase dataBase;
+	// private IDatabase dataBase;
 	private HttpSession jses;
+	private HashMap<String, ActiveApplication> acitveApps = new HashMap<String, ActiveApplication>();
 
-	public UserSession(User user, String appID, HttpSession jses)
-			throws UserException, ClassNotFoundException,
-			InstantiationException, IllegalAccessException,
+	public UserSession(User user, String appID, HttpSession jses) throws UserException, ClassNotFoundException, InstantiationException, IllegalAccessException,
 			DatabasePoolException {
 		currentUser = user;
 		this.jses = jses;
 		initHistory();
 		ApplicationProfile appProfile = user.getApplicationProfile(appID);
 		if (appProfile != null) {
-			dataBase = appProfile.getDatabase();
+			// dataBase = appProfile.getDatabase();
+			acitveApps.put(appProfile.appType, new ActiveApplication(appProfile, appProfile.getDatabase()));
 		}
 	}
 
@@ -46,6 +46,14 @@ public class UserSession implements ICache {
 		currentUser = user;
 		this.jses = jses;
 		initHistory();
+	}
+
+	public void init(String appID) throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+		ApplicationProfile appProfile = currentUser.getApplicationProfile(appID);
+		if (appProfile != null) {
+			// dataBase = appProfile.getDatabase();
+			acitveApps.put(appProfile.appType, new ActiveApplication(appProfile, appProfile.getDatabase()));
+		}
 	}
 
 	public void setLang(String lang) {
@@ -74,22 +82,31 @@ public class UserSession implements ICache {
 	}
 
 	public boolean isAppAllowed(String appType) {
-		currentUser.getApplicationProfiles(appType);
-		return true;
+		ActiveApplication aa = acitveApps.get(appType);
+		if (aa == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	@Override
 	public void flush() {
 		@SuppressWarnings("unchecked")
-		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses
-				.getAttribute("cache");
+		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 		if (cache != null) {
 			cache.clear();
 		}
 	}
 
-	public IDatabase getDataBase() {
-		return dataBase;
+	public IDatabase getDataBase(String appType) {
+		ActiveApplication aa = acitveApps.get(appType);
+		if (aa == null) {
+			return null;
+		} else {
+			return aa.db;
+		}
+
 	}
 
 	private void initHistory() {
@@ -97,8 +114,7 @@ public class UserSession implements ICache {
 	}
 
 	@Override
-	public _Page getPage(Page page, Map<String, String[]> formData)
-			throws ClassNotFoundException, RuleException {
+	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
 		String cid = page.getID() + "_";
 		Object obj = getObject(cid);
 		String c[] = formData.get("cache");
@@ -142,8 +158,7 @@ public class UserSession implements ICache {
 	private Object getObject(String name) {
 		try {
 			@SuppressWarnings("unchecked")
-			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses
-					.getAttribute("cache");
+			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 			return cache.get(name);
 		} catch (Exception e) {
 			return null;
@@ -198,6 +213,18 @@ public class UserSession implements ICache {
 				// "");
 			}
 			return null;
+		}
+
+	}
+
+	class ActiveApplication {
+		IDatabase db;
+		ApplicationProfile appProfile;
+
+		ActiveApplication(ApplicationProfile appProfile, IDatabase db) {
+			this.appProfile = appProfile;
+			this.db = db;
+
 		}
 
 	}

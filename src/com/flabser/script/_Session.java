@@ -12,8 +12,6 @@ import com.flabser.script.mail._MailAgent;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
-
-
 public class _Session {
 	private IDatabase dataBase;
 	private User user;
@@ -22,7 +20,7 @@ public class _Session {
 
 	public _Session(AppEnv env, UserSession userSession) {
 		this.env = env;
-		dataBase = userSession.getDataBase();
+		dataBase = userSession.getDataBase(env.appType);
 		this.user = userSession.currentUser;
 		this.userSession = userSession;
 	}
@@ -35,9 +33,10 @@ public class _Session {
 		return dataBase;
 	}
 
-	public ArrayList<Role> getRolesList(){
+	public ArrayList<Role> getRolesList() {
 		@SuppressWarnings("unchecked")
-		ArrayList <Role> rolesList = (ArrayList<Role>) env.globalSetting.roleCollection.getRolesList().clone();
+		ArrayList<Role> rolesList = (ArrayList<Role>) env.globalSetting.roleCollection
+				.getRolesList().clone();
 		return rolesList;
 	}
 
@@ -61,8 +60,10 @@ public class _Session {
 		userSession.setLang(lang.name());
 	}
 
+	@Override
 	public String toString() {
-		return "userid=" + user.getLogin() + ", database=" + dataBase.toString();
+		return "userid=" + user.getLogin() + ", database="
+				+ dataBase.toString();
 	}
 
 }

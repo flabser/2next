@@ -49,8 +49,7 @@ public class SessionService {
 		HttpSession jses = request.getSession(true);
 
 		AuthUser user = new AuthUser();
-		UserSession userSession = (UserSession) jses
-				.getAttribute(UserSession.SESSION_ATTR);
+		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 		if (userSession == null) {
 			return user;
 		}
@@ -62,23 +61,18 @@ public class SessionService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public AuthUser createSession(AuthUser authUser)
-			throws ClassNotFoundException, InstantiationException,
-			DatabasePoolException, UserException, IllegalAccessException,
-			SQLException {
+	public AuthUser createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException, UserException,
+			IllegalAccessException, SQLException {
 		UserSession userSession = null;
 		HttpSession jses;
 		String appID = authUser.getDefaultApp();
 		context.getAttribute(AppEnv.APP_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		User user = new User();
-		user = systemDatabase.checkUserHash(authUser.getLogin(),
-				authUser.getPwd(), "", user);
+		user = systemDatabase.checkUserHash(authUser.getLogin(), authUser.getPwd(), "", user);
 
 		if (!user.isAuthorized) {
-			throw new AuthFailedException(
-					AuthFailedExceptionType.PASSWORD_INCORRECT,
-					authUser.getLogin());
+			throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, authUser.getLogin());
 		}
 
 		String userID = user.getLogin();
@@ -88,25 +82,22 @@ public class SessionService {
 		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
 		if (user.getStatus() == UserStatusType.REGISTERED) {
-			HashMap<String, ApplicationProfile> apps = user
-					.getApplicationProfiles();
+			HashMap<String, ApplicationProfile> apps = user.getApplicationProfiles();
 			authUser.setApplications(apps);
 			authUser.setDefaultApp(appID);
 
 		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
 			authUser.setRedirect("tochangepwd");
-		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED
-				|| user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
-			throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED,
-					authUser.getLogin());
+		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED || user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
+			throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED, authUser.getLogin());
 		} else if (user.getStatus() == UserStatusType.DELETED) {
-			throw new AuthFailedException(AuthFailedExceptionType.DELETED,
-					authUser.getLogin());
+			throw new AuthFailedException(AuthFailedExceptionType.DELETED, authUser.getLogin());
 		}
 
-		userSession = new UserSession(user, appID, jses);
+		userSession = new UserSession(user, jses);
 		SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
+		context.setAttribute("test", "zzzz");
 
 		return authUser;
 	}
@@ -114,8 +105,7 @@ public class SessionService {
 	@DELETE
 	public void destroySession() {
 		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses
-				.getAttribute(UserSession.SESSION_ATTR);
+		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 		if (userSession != null) {
 			jses.removeAttribute(UserSession.SESSION_ATTR);
 			SessionPool.remove(userSession);
