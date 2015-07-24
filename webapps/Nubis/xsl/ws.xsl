@@ -8,7 +8,23 @@
 	</xsl:template>
 
 	<xsl:template name="page_content">
-		ws
+		<xsl:apply-templates />
+	</xsl:template>
+
+	<xsl:template match="apps">
+		<xsl:apply-templates select="entry" />
+	</xsl:template>
+
+	<xsl:template match="entry">
+		<a href="/{@key}">
+			<xsl:value-of select="." />
+		</a>
+	</xsl:template>
+
+	<xsl:template match="apps-count">
+		<div>
+			count <xsl:value-of select="." />
+		</div>
 	</xsl:template>
 
 </xsl:stylesheet>
