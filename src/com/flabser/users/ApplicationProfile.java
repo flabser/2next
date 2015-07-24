@@ -19,10 +19,15 @@ public class ApplicationProfile {
 	public String appID;
 	public String appName;
 	public String owner;
+	@JsonIgnore
 	public DatabaseType dbType;
+	@JsonIgnore
 	public String dbHost = "localhost";
+	@JsonIgnore
 	public String dbLogin;
+	@JsonIgnore
 	public String dbPwd;
+	@JsonIgnore
 	public String dbName;
 	public String defaultURL;
 	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
@@ -39,10 +44,8 @@ public class ApplicationProfile {
 
 	public StringBuffer toXML() {
 		StringBuffer output = new StringBuffer(1000);
-		return output.append("<entry><appname>" + appName + "</appname><owner>"
-				+ owner + "</owner>" + "<dbhost>" + dbHost
-				+ "</dbhost><dbname>" + dbName + "</dbname><dblogin>" + dbLogin
-				+ "</dblogin></entry>");
+		return output.append("<entry><appname>" + appName + "</appname><owner>" + owner + "</owner>" + "<dbhost>" + dbHost + "</dbhost><dbname>" + dbName
+				+ "</dbname><dblogin>" + dbLogin + "</dblogin></entry>");
 	}
 
 	public String getDbName() {
@@ -55,9 +58,7 @@ public class ApplicationProfile {
 	}
 
 	@JsonIgnore
-	public IDatabase getDatabase() throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException {
+	public IDatabase getDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
 		switch (dbType) {
 		case POSTGRESQL:
 			IDatabase db = new com.flabser.solutions.postgresql.Database();

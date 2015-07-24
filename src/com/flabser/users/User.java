@@ -9,6 +9,7 @@ import java.util.HashSet;
 
 import org.apache.catalina.realm.RealmBase;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IAppDatabaseInit;
@@ -75,6 +76,7 @@ public class User {
 		}
 	}
 
+	@JsonIgnore
 	public String getPasswordHash() {
 		return passwordHash;
 	}
@@ -86,9 +88,7 @@ public class User {
 				// this.passwordHash = getMD5Hash(password);
 				this.passwordHash = RealmBase.Digest(password, "MD5", "UTF-8");
 			} else {
-				throw new WebFormValueException(
-						WebFormValueExceptionType.FORMDATA_INCORRECT,
-						"password");
+				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
 			}
 		}
 	}
@@ -135,8 +135,7 @@ public class User {
 		return hash;
 	}
 
-	public HashMap<String, ApplicationProfile> getApplicationProfiles(
-			String appType) {
+	public HashMap<String, ApplicationProfile> getApplicationProfiles(String appType) {
 		return enabledApps.get(appType);
 	}
 
@@ -170,9 +169,7 @@ public class User {
 		}
 	}
 
-	public boolean save() throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException, SQLException {
+	public boolean save() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException, SQLException {
 		if (id == 0) {
 			id = sysDatabase.insert(this);
 		} else {
@@ -182,35 +179,26 @@ public class User {
 		if (id < 0) {
 			return false;
 		} else {
-			for (HashMap<String, ApplicationProfile> apps : enabledApps
-					.values()) {
+			for (HashMap<String, ApplicationProfile> apps : enabledApps.values()) {
 				for (ApplicationProfile appProfile : apps.values()) {
 					if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
-						IApplicationDatabase appDb = sysDatabase
-								.getApplicationDatabase();
-						int res = appDb.createDatabase(appProfile.dbHost,
-								appProfile.getDbName(), appProfile.dbLogin,
-								appProfile.dbPwd);
+						IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
+						int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.dbLogin, appProfile.dbPwd);
 						if (res == 0 || res == 1) {
 							IDatabase dataBase = appProfile.getDatabase();
 							IDeployer ad = dataBase.getDeployer();
 							ad.init(appProfile);
-							Class appDatabaseInitializerClass = Class
-									.forName(appProfile.getDbInitializerClass());
-							IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass
-									.newInstance();
+							Class appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
+							IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
 							if (ad.deploy(dbInitializer) == 0) {
-								appProfile
-										.setStatus(ApplicationStatusType.ON_LINE);
+								appProfile.setStatus(ApplicationStatusType.ON_LINE);
 								appProfile.save();
 							} else {
-								appProfile
-										.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+								appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
 								appProfile.save();
 							}
 						} else {
-							appProfile
-									.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
+							appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 							appProfile.save();
 							return false;
 						}
@@ -246,12 +234,12 @@ public class User {
 			} else if (Util.addrIsCorrect(email)) {
 				this.email = email;
 			} else {
-				throw new WebFormValueException(
-						WebFormValueExceptionType.FORMDATA_INCORRECT, "email");
+				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "email");
 			}
 		}
 	}
 
+	@JsonIgnore
 	public String getPwd() {
 		return password;
 	}
@@ -261,9 +249,7 @@ public class User {
 			if (Util.pwdIsCorrect(password)) {
 				this.password = password;
 			} else {
-				throw new WebFormValueException(
-						WebFormValueExceptionType.FORMDATA_INCORRECT,
-						"password");
+				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
 			}
 		}
 	}
@@ -301,8 +287,7 @@ public class User {
 	}
 
 	public void setStatus(UserStatusType status) {
-		if ((this.status == UserStatusType.NOT_VERIFIED || this.status == UserStatusType.WAITING_FOR_VERIFYCODE)
-				&& status == UserStatusType.REGISTERED) {
+		if ((this.status == UserStatusType.NOT_VERIFIED || this.status == UserStatusType.WAITING_FOR_VERIFYCODE) && status == UserStatusType.REGISTERED) {
 			regDate = new Date();
 		}
 		this.status = status;
