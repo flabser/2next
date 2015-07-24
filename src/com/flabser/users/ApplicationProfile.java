@@ -105,6 +105,7 @@ public class ApplicationProfile {
 		dbPwd = rs.getString("DBPWD");
 	}
 
+	@JsonIgnore
 	public void setStatus(ApplicationStatusType onLine) {
 		status = onLine;
 		statusDate = new Date();

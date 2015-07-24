@@ -19,11 +19,12 @@ public class RegApp extends _DoScript {
 	public void doPost(_Session session, _WebFormData formData, String lang) {
 		User user = session.getUser();
 		String appType = formData.getValueSilently("apptype");
+		String appName = formData.getValueSilently("appname");
 		if (appType != null) {
 			ApplicationProfile ap = new ApplicationProfile();
 			ap.appType = appType;
 			ap.appID = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
-			ap.appName = appType + " of " + user.getLogin();
+			ap.appName = appName;
 			ap.owner = user.getLogin();
 			ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
 			ap.dbType = DatabaseType.POSTGRESQL;

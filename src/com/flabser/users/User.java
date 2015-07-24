@@ -84,6 +84,7 @@ public class User {
 		return passwordHash;
 	}
 
+	@JsonIgnore
 	public void setPasswordHash(String password) throws WebFormValueException {
 		if (!("".equalsIgnoreCase(password))) {
 			if (Util.pwdIsCorrect(password)) {

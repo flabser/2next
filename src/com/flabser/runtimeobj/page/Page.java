@@ -97,6 +97,8 @@ public class Page {
 					switch (elementRule.doClassName.getType()) {
 					case GROOVY_FILE:
 						scriptResp = sProcessor.processGroovyScript(elementRule.doClassName.getClassName(), httpMethod);
+					case FILE:
+						scriptResp = sProcessor.processGroovyScript(elementRule.doClassName.getClassName(), httpMethod);
 					case JAVA_CLASS:
 						scriptResp = sProcessor.processJava(elementRule.doClassName.getClassName(), httpMethod);
 					case UNKNOWN:

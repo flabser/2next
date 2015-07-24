@@ -74,7 +74,7 @@ public class ElementRule {
 		ValueSourceType qsSourceType = ValueSourceType.valueOf(XMLUtil.getTextContent(node, "@source", true, "UNKNOWN", true));
 		try {
 			Class<GroovyObject> process = null;
-			if (qsSourceType == ValueSourceType.GROOVY_FILE) {
+			if (qsSourceType == ValueSourceType.GROOVY_FILE || qsSourceType == ValueSourceType.FILE) {
 				CompilerConfiguration compiler = new CompilerConfiguration();
 				compiler.setTargetDirectory(Environment.libsDir);
 				GroovyClassLoader loader = new GroovyClassLoader(parent, compiler);
