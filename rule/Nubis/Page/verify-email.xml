@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rule type="page" id="verify-email" mode="on" anonymous="on">
+<rule type="page" id="verify-email" mode="on">
 	<description></description>
-	<rununderuser source="STATIC" type="TEXT">[observer]</rununderuser>
-	<xsltfile>site/verify-email.xsl</xsltfile>
+	<xsltfile>verify-email.xsl</xsltfile>
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.VerifyEMailPage</doscript>
+			<doscript source="java_class">nubis.page.VerifyEMailPage</doscript>
 		</events>
 	</element>
-	<element mode="ON" type="INCLUDED_PAGE">
+	<!-- <element mode="ON" type="INCLUDED_PAGE">
 		<name>site-inc</name>
 		<value>site-inc</value>
-	</element>
+	</element> -->
 
 	<caption name="verify_email_title" />
 	<caption name="verify_email_error" />

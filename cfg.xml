@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <tn>
-	<adminapp mode="on" />
 	<hostname>localhost</hostname>
 	<port />
 
-	<applications default="CashTracker">
+	<applications>
 		<app>
 			<name mode="on">CashTracker</name>
 		</app>
@@ -13,7 +12,7 @@
 		</app>
 	</applications>
 
-	<tls mode="OFF">
+	<tls mode="ON">
 		<port>38789</port>
 		<certfile>server.crt</certfile>
 		<certkeyfile>server.key</certkeyfile>

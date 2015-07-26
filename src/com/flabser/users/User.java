@@ -52,6 +52,7 @@ public class User {
 	private int hash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
+	private String defaultDbPwd;
 	public final static String ANONYMOUS_USER = "anonymous";
 
 	public User() {
@@ -70,6 +71,7 @@ public class User {
 			isSupervisor = rs.getInt("ISSUPERVISOR");
 			password = rs.getString("PWD");
 			passwordHash = rs.getString("PWDHASH");
+			defaultDbPwd = rs.getString("DEFAULTDBPWD");
 			setHash(rs.getInt("LOGINHASH"));
 			verifyCode = rs.getString("VERIFYCODE");
 			status = UserStatusType.getType(rs.getInt("STATUS"));
@@ -97,6 +99,16 @@ public class User {
 		}
 	}
 
+	@JsonIgnore
+	public String getDefaultDbPwd() {
+		return defaultDbPwd;
+	}
+
+	@JsonIgnore
+	public void setDefaultDbPwd(String defaultDbPwd) {
+		this.defaultDbPwd = defaultDbPwd;
+	}
+
 	public boolean isSupervisor() {
 		if (isSupervisor == 1) {
 			return true;
@@ -122,12 +134,12 @@ public class User {
 	}
 
 	public void addApplication(ApplicationProfile ap) {
-		HashMap<String, ApplicationProfile> apps = enabledApps.get(ap.appType);
+		HashMap<String, ApplicationProfile> apps = getEnabledApps().get(ap.appType);
 		if (apps == null) {
 			apps = new HashMap<String, ApplicationProfile>();
 		}
 		apps.put(ap.appID, ap);
-		enabledApps.put(ap.appType, apps);
+		getEnabledApps().put(ap.appType, apps);
 		applications.put(ap.appID, ap);
 	}
 
@@ -140,12 +152,12 @@ public class User {
 	}
 
 	public HashMap<String, ApplicationProfile> getApplicationProfiles(String appType) {
-		return enabledApps.get(appType);
+		return getEnabledApps().get(appType);
 	}
 
 	public HashMap<String, ApplicationProfile> getApplicationProfiles() {
 		HashMap<String, ApplicationProfile> allApps = new HashMap<String, ApplicationProfile>();
-		for (HashMap<String, ApplicationProfile> a : enabledApps.values()) {
+		for (HashMap<String, ApplicationProfile> a : getEnabledApps().values()) {
 			allApps.putAll(a);
 		}
 		return allApps;
@@ -176,6 +188,11 @@ public class User {
 	public boolean save() {
 		try {
 			if (id == 0) {
+				primaryRegDate = new Date();
+				hash = (login + password).hashCode();
+				if (defaultDbPwd == null) {
+					defaultDbPwd = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
+				}
 				id = sysDatabase.insert(this);
 			} else {
 				id = sysDatabase.update(this);
@@ -184,7 +201,7 @@ public class User {
 			if (id < 0) {
 				return false;
 			} else {
-				for (HashMap<String, ApplicationProfile> apps : enabledApps.values()) {
+				for (HashMap<String, ApplicationProfile> apps : getEnabledApps().values()) {
 					for (ApplicationProfile appProfile : apps.values()) {
 						if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
 							IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
@@ -339,6 +356,14 @@ public class User {
 		aUser.setRoles(roles);
 		aUser.setApplications(applications);
 		return aUser;
+	}
+
+	public HashMap<String, HashMap<String, ApplicationProfile>> getEnabledApps() {
+		return enabledApps;
+	}
+
+	public void setEnabledApps(HashMap<String, HashMap<String, ApplicationProfile>> enabledApps) {
+		this.enabledApps = enabledApps;
 	}
 
 }

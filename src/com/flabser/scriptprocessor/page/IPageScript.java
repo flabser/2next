@@ -1,10 +1,10 @@
 package com.flabser.scriptprocessor.page;
 
+import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.Vocabulary;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.util.ScriptResponse;
-
 
 public interface IPageScript {
 
@@ -16,5 +16,5 @@ public interface IPageScript {
 
 	void setCurrentLang(Vocabulary vocabulary, String lang);
 
-	ScriptResponse process();
+	ScriptResponse process() throws WebFormValueException;
 }

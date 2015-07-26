@@ -68,11 +68,11 @@ public class SessionService {
 		String appID = authUser.getDefaultApp();
 		context.getAttribute(AppEnv.APP_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
-		User user = new User();
-		user = systemDatabase.checkUserHash(authUser.getLogin(), authUser.getPwd(), "", user);
+		User user = systemDatabase.checkUserHash(authUser.getLogin(), authUser.getPwd(), "");
 
 		if (!user.isAuthorized) {
-			throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, authUser.getLogin());
+			authUser.setError(AuthFailedExceptionType.PASSWORD_OR_LOGIN_INCORRECT);
+			throw new AuthFailedException(authUser);
 		}
 
 		String userID = user.getLogin();
@@ -85,13 +85,19 @@ public class SessionService {
 			HashMap<String, ApplicationProfile> apps = user.getApplicationProfiles();
 			authUser.setApplications(apps);
 			authUser.setDefaultApp(appID);
+			authUser.setStatus(user.getStatus());
 
 		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
 			authUser.setRedirect("tochangepwd");
-		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED || user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
-			throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED, authUser.getLogin());
+		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED) {
+			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION);
+			throw new AuthFailedException(authUser);
+		} else if (user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
+			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION);
+			throw new AuthFailedException(authUser);
 		} else if (user.getStatus() == UserStatusType.DELETED) {
-			throw new AuthFailedException(AuthFailedExceptionType.DELETED, authUser.getLogin());
+			authUser.setError(AuthFailedExceptionType.NOT_FOUND);
+			throw new AuthFailedException(authUser);
 		}
 
 		userSession = new UserSession(user, jses);

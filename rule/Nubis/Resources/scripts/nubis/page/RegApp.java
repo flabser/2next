@@ -29,7 +29,7 @@ public class RegApp extends _DoScript {
 			ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
 			ap.dbType = DatabaseType.POSTGRESQL;
 			ap.dbName = ap.appType.toLowerCase() + "_" + ap.appID;
-			ap.dbPwd = Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
+			ap.dbPwd = user.getDefaultDbPwd();
 			if (ap.save()) {
 				user.addApplication(ap);
 				if (user.save()) {

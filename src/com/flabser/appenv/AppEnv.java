@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.flabser.exception.RuleException;
+import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.Localizator;
 import com.flabser.localization.LocalizatorException;
 import com.flabser.localization.Vocabulary;
@@ -36,8 +37,7 @@ public class AppEnv implements ICache {
 	public AppEnv(String appType, String globalFileName) {
 		this.appType = appType;
 		try {
-			Server.logger.normalLogEntry("# Start application \"" + appType
-					+ "\"");
+			Server.logger.normalLogEntry("# Start application \"" + appType + "\"");
 			ruleProvider = new RuleProvider(this);
 			ruleProvider.initApp(globalFileName);
 			globalSetting = ruleProvider.global;
@@ -50,8 +50,7 @@ public class AppEnv implements ICache {
 						Localizator l = new Localizator(globalSetting);
 						vocabulary = l.populate("vocabulary");
 						if (vocabulary != null) {
-							Server.logger
-									.normalLogEntry("Dictionary has loaded");
+							Server.logger.normalLogEntry("Dictionary has loaded");
 						}
 					} catch (LocalizatorException le) {
 						Server.logger.verboseLogEntry(le.getMessage());
@@ -61,8 +60,7 @@ public class AppEnv implements ICache {
 
 				isValid = true;
 			} else {
-				Server.logger.warningLogEntry("Application: \"" + appType
-						+ "\" is off");
+				Server.logger.warningLogEntry("Application: \"" + appType + "\" is off");
 
 			}
 
@@ -77,8 +75,7 @@ public class AppEnv implements ICache {
 	}
 
 	@Override
-	public _Page getPage(Page page, Map<String, String[]> formData)
-			throws ClassNotFoundException, RuleException {
+	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, WebFormValueException {
 		boolean reload = false;
 		Object obj = cache.get(page.getID());
 		String p[] = formData.get("cache");

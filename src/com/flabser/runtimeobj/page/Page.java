@@ -7,6 +7,7 @@ import java.util.Map;
 import com.flabser.appenv.AppEnv;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
+import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.SentenceCaption;
 import com.flabser.rule.Caption;
 import com.flabser.rule.page.ElementRule;
@@ -52,7 +53,7 @@ public class Page {
 		return captionsList;
 	}
 
-	public _Page process(Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page process(Map<String, String[]> formData) throws ClassNotFoundException, RuleException, WebFormValueException {
 		_Page pp = null;
 		long start_time = System.currentTimeMillis();
 		switch (rule.caching) {
@@ -84,7 +85,7 @@ public class Page {
 	}
 
 	@SuppressWarnings("unused")
-	public _Page getContent(Map<String, String[]> formData) throws ClassNotFoundException, RuleException {
+	public _Page getContent(Map<String, String[]> formData) throws ClassNotFoundException, RuleException, WebFormValueException {
 		fields = formData;
 		_Page pp = new _Page();
 

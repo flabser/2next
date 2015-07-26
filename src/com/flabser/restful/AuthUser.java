@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.UserRole;
+import com.flabser.users.UserStatusType;
 import com.flabser.users.VisibiltyType;
 
 @JsonRootName("authUser")
@@ -16,8 +17,8 @@ public class AuthUser {
 	private String login;
 	private String name;
 	private String pwd;
-	private AuthFailedExceptionType status;
-	private String error;
+	private UserStatusType status = UserStatusType.UNKNOWN;
+	private AuthFailedExceptionType error;
 	private String redirect;
 	private String[] roles = new String[0];
 	private HashMap<String, Application> applications = new HashMap<String, Application>();
@@ -42,6 +43,7 @@ public class AuthUser {
 		this.name = name;
 	}
 
+	@JsonIgnore
 	public String getPwd() {
 		return pwd;
 	}
@@ -58,19 +60,19 @@ public class AuthUser {
 		this.roles = roles;
 	}
 
-	public AuthFailedExceptionType getStatus() {
+	public UserStatusType getStatus() {
 		return status;
 	}
 
-	public void setStatus(AuthFailedExceptionType status) {
+	public void setStatus(UserStatusType status) {
 		this.status = status;
 	}
 
-	public String getError() {
+	public AuthFailedExceptionType getError() {
 		return error;
 	}
 
-	public void setError(String error) {
+	public void setError(AuthFailedExceptionType error) {
 		this.error = error;
 	}
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rule type="page" id="regapp" mode="on">
+<rule type="page" id="reg-app" mode="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
 

@@ -22,6 +22,7 @@ import com.flabser.exception.RuleException;
 import com.flabser.exception.ServerException;
 import com.flabser.exception.ServerExceptionType;
 import com.flabser.exception.TransformatorException;
+import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.XSLTFileNotFoundException;
 import com.flabser.rule.IRule;
 import com.flabser.rule.page.PageRule;
@@ -168,7 +169,7 @@ public class Provider extends HttpServlet {
 						return;
 					}
 				} else {
-					throw new RuleException("id is not defined");
+					throw new RuleException("parameter \"id\" is not defined in request");
 				}
 			} else {
 				throw new ServerException(ServerExceptionType.APPENV_HAS_NOT_INITIALIZED, "context=" + context.getServletContextName());
@@ -199,7 +200,7 @@ public class Provider extends HttpServlet {
 	}
 
 	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule, UserSession userSession) throws RuleException,
-			UnsupportedEncodingException, ClassNotFoundException, _Exception {
+			UnsupportedEncodingException, ClassNotFoundException, _Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		result.addHistory = pageRule.addToHistory;

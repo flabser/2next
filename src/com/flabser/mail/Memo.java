@@ -3,6 +3,7 @@ package com.flabser.mail;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
+
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -17,8 +18,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
 import com.flabser.env.Environment;
 import com.flabser.server.Server;
+import com.sun.mail.smtp.SMTPSendFailedException;
 
 public class Memo {
 
@@ -31,15 +34,15 @@ public class Memo {
 	private boolean isValid;
 	private boolean hasRecipients;
 
-	public Memo(String sender, List <String> recipients, String subj, String body) {
+	public Memo(String sender, List<String> recipients, String subj, String body) {
 		_Memo(sender, null, recipients, subj, body);
 	}
 
-	public Memo(String sender, String personal, List <String> recipients, String subj, String body) {
+	public Memo(String sender, String personal, List<String> recipients, String subj, String body) {
 		_Memo(sender, personal, recipients, subj, body);
 	}
 
-	private void _Memo(String sender, String personal, List <String> recipients, String subj, String body) {
+	private void _Memo(String sender, String personal, List<String> recipients, String subj, String body) {
 		if (Environment.mailEnable) {
 			Properties props = new Properties();
 			props.put("mail.smtp.host", smtpServer);
@@ -71,7 +74,7 @@ public class Memo {
 						msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 						hasRecipients = true;
 					} catch (AddressException ae) {
-						Environment.logger.errorLogEntry("Incorrect e-mail \"" + recipient + "\"");
+						Server.logger.errorLogEntry("Incorrect e-mail \"" + recipient + "\"");
 						continue;
 					}
 				}
@@ -85,13 +88,12 @@ public class Memo {
 					msg.setContent(mp);
 					isValid = true;
 				} else {
-					Environment.logger
-							.errorLogEntry("Unable to send the message. List of recipients is empty or consist is incorrect data");
+					Server.logger.errorLogEntry("Unable to send the message. List of recipients is empty or consist is incorrect data");
 				}
 			} catch (MessagingException e) {
-				Environment.logger.errorLogEntry(e);
+				Server.logger.errorLogEntry(e);
 			} catch (UnsupportedEncodingException e) {
-				Environment.logger.errorLogEntry(e);
+				Server.logger.errorLogEntry(e);
 			}
 		}
 	}
@@ -102,21 +104,24 @@ public class Memo {
 				Transport.send(msg);
 				return true;
 			}
+		} catch (SMTPSendFailedException sse) {
+			Server.logger.errorLogEntry(sse);
 		} catch (SendFailedException se) {
 			if (se.getMessage().contains("Relay rejected for policy reasons")) {
 				Server.logger.warningLogEntry("Relay rejected for policy reasons by SMTP server. Message has not sent");
 			} else {
-				Environment.logger.errorLogEntry("Unable to send a message, probably SMTP host did not set");
-				Environment.logger.errorLogEntry(se);
+				Server.logger.errorLogEntry("Unable to send a message, probably SMTP host did not set");
+				Server.logger.errorLogEntry(se);
 			}
 		} catch (MessagingException e) {
-			Environment.logger.errorLogEntry(e);
+			Server.logger.errorLogEntry(e);
 		}
 		return false;
 	}
 
 	class SMTPAuthenticator extends javax.mail.Authenticator {
 
+		@Override
 		public PasswordAuthentication getPasswordAuthentication() {
 			return new PasswordAuthentication(smtpUser, smtpPassword);
 		}

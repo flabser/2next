@@ -4,7 +4,7 @@
 	<xsl:template match="/request/error">
 		<html>
 			<head>
-				<title>Nextbase - Ошибка</title>						
+				<title>2Next - Ошибка</title>						
 				<link rel="stylesheet" href="classic/css/main.css"/>	
 				<link rel="stylesheet" href="classic/css/actionbar.css"/>			
 				<script>
@@ -22,7 +22,7 @@
 				<table width="100%" border="0" style="margin-top:140px">
 					<tr>
 						<td width="20%" align="right" style="font-size:9pt;">
-							<font style="font-size:1.9em;">NextBase</font>
+							<font style="font-size:1.9em;">2Next</font>
 							<div style="clear:both; height:10px"/>
 							<font style="font-size:1.1em;">
 								version <xsl:value-of select="version"/> &#169; Lab of the Future 2012

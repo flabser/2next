@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.flabser.appenv.AppEnv;
+import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.Vocabulary;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
@@ -35,7 +36,7 @@ public class DoProcessor {
 		}
 	}
 
-	public ScriptResponse processGroovyScript(String className, String method) throws ClassNotFoundException {
+	public ScriptResponse processGroovyScript(String className, String method) throws ClassNotFoundException, WebFormValueException {
 		GroovyObject groovyObject = null;
 		try {
 			Class<?> pageClass = Class.forName(className);
@@ -56,7 +57,7 @@ public class DoProcessor {
 		return myObject.process();
 	}
 
-	public ScriptResponse processJava(String className, String method) throws ClassNotFoundException {
+	public ScriptResponse processJava(String className, String method) throws ClassNotFoundException, WebFormValueException {
 		Object object = null;
 		try {
 			Class<?> pageClass = Class.forName(className);
