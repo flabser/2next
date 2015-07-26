@@ -11,10 +11,6 @@ public interface ISystemDatabase {
 
 	IActivity getActivity();
 
-	User checkUser(String userID, String pwd, User user);
-
-	User checkUser(String userID, String pwd, String hash, User user);
-
 	User checkUserHash(String userID, String pwd, String hash);
 
 	User getUser(int id);

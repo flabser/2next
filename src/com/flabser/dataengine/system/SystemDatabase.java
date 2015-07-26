@@ -58,129 +58,6 @@ public class SystemDatabase implements ISystemDatabase {
 	}
 
 	@Override
-	public User checkUser(String login, String pwd, User user) {
-		Connection conn = dbPool.getConnection();
-
-		try {
-			conn.setAutoCommit(false);
-			Statement s = conn.createStatement();
-			String sql = "select * from USERS, APPS where USERS.DOCID = APPS.DOCID and USERID = '" + login + "'";
-			ResultSet rs = s.executeQuery(sql);
-			String password = "";
-
-			if (rs.next()) {
-
-				if (rs.getString("PWDHASH") != null) {
-					if (!rs.getString("PWDHASH").trim().equals("")) {
-						password = rs.getString("PWDHASH");
-						String pwdHash = "";
-						if (password.length() < 30) {
-							pwdHash = pwd.hashCode() + "";
-						} else {
-							// pwdHash = getMD5Hash(pwd);
-							pwdHash = RealmBase.Digest(pwd, "MD5", "UTF-8");
-
-						}
-
-						if (pwdHash.equals(password)) {
-							user = initUser(conn, rs, login);
-							user.isAuthorized = true;
-							if (password.length() < 11) {// !!!!
-								pswToPswHash(user, pwd);
-							}
-
-						}
-					} else {
-						password = rs.getString("PWD");
-						if (pwd.equals(password)) {
-							user = initUser(conn, rs, login);
-							user.isAuthorized = true;
-							pswToPswHash(user, password);
-						}
-					}
-				} else {
-					password = rs.getString("PWD");
-					if (pwd.equals(password)) {
-						user = initUser(conn, rs, login);
-						user.isAuthorized = true;
-						pswToPswHash(user, password);
-					}
-				}
-			}
-			rs.close();
-			s.close();
-			conn.commit();
-			return user;
-		} catch (Throwable e) {
-			DatabaseUtil.debugErrorPrint(e);
-			return null;
-		} finally {
-			dbPool.returnConnection(conn);
-		}
-	}
-
-	@Override
-	public User checkUser(String login, String pwd, String hashAsText, User user) {
-		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			Statement s = conn.createStatement();
-			String sql = "select * from USERS, APPS where USERS.DOCID = APPS.DOCID and USERID = '" + login + "'";
-			ResultSet rs = s.executeQuery(sql);
-			String password = "";
-
-			if (rs.next()) {
-
-				// .trim().equals("")
-				if (rs.getString("PWDHASH") != null) {
-					if (!rs.getString("PWDHASH").trim().equals("")) {
-						password = rs.getString("PWDHASH");
-						String pwdHash = pwd;
-						int hash = rs.getInt("LOGINHASH");
-						if (checkHash(hashAsText, hash)) {
-							user = initUser(conn, rs, login);
-							user.isAuthorized = true;
-						} else if (checkHashPSW(pwdHash, password)) {
-							user = initUser(conn, rs, login);
-							user.isAuthorized = true;
-						}
-					} else {
-						password = rs.getString("PWD");
-						int hash = rs.getInt("LOGINHASH");
-						if (checkHash(hashAsText, hash)) {
-							user = initUser(conn, rs, login);
-							user.isAuthorized = true;
-						} else if (pwd.equals(password)) {
-							user = initUser(conn, rs, login);
-							user.isAuthorized = true;
-						}
-					}
-				} else {
-					password = rs.getString("PWD");
-					int hash = rs.getInt("LOGINHASH");
-					if (checkHash(hashAsText, hash)) {
-						user = initUser(conn, rs, login);
-						user.isAuthorized = true;
-					} else if (pwd.equals(password)) {
-						user = initUser(conn, rs, login);
-						user.isAuthorized = true;
-						pswToPswHash(user, password);
-					}
-				}
-			}
-			rs.close();
-			s.close();
-			conn.commit();
-			return user;
-		} catch (Throwable e) {
-			DatabaseUtil.debugErrorPrint(e);
-			return null;
-		} finally {
-			dbPool.returnConnection(conn);
-		}
-	}
-
-	@Override
 	public User checkUserHash(String login, String pwd, String hashAsText) {
 		User user = new User();
 		Connection conn = dbPool.getConnection();
@@ -192,11 +69,9 @@ public class SystemDatabase implements ISystemDatabase {
 			String password = "";
 
 			if (rs.next()) {
-
-				// .trim().equals("")
-				if (rs.getString("PWDHASH") != null) {
-					if (!rs.getString("PWDHASH").trim().equals("")) {
-						password = rs.getString("PWDHASH");
+				if (pwd != null && rs.getString("PWDHASH") != null) {
+					password = rs.getString("PWDHASH").trim();
+					if (!password.trim().equals("")) {
 						String pwdHash = "";
 						if (password.length() < 11) {
 							pwdHash = pwd.hashCode() + "";
@@ -226,7 +101,7 @@ public class SystemDatabase implements ISystemDatabase {
 							pswToPswHash(user, password);
 						}
 					}
-				} else {
+				} else if (hashAsText != null) {
 					password = rs.getString("PWD");
 					int hash = rs.getInt("LOGINHASH");
 					if (checkHash(hashAsText, hash)) {

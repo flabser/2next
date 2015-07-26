@@ -68,7 +68,7 @@ public class SessionService {
 		String appID = authUser.getDefaultApp();
 		context.getAttribute(AppEnv.APP_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
-		User user = systemDatabase.checkUserHash(authUser.getLogin(), authUser.getPwd(), "");
+		User user = systemDatabase.checkUserHash(authUser.getLogin(), authUser.getPwd(), null);
 
 		if (!user.isAuthorized) {
 			authUser.setError(AuthFailedExceptionType.PASSWORD_OR_LOGIN_INCORRECT);
