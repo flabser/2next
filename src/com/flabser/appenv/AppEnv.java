@@ -28,12 +28,13 @@ public class AppEnv implements ICache, _IContent {
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
 	public final static String APP_ATTR = "appenv";
+	public final static String ADMIN_APP_NAME = "administrator";
 
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 
 	public AppEnv(String at) {
 		isValid = true;
-		appType = "administrator";
+		appType = ADMIN_APP_NAME;
 	}
 
 	public AppEnv(String appType, String globalFileName) {

@@ -108,7 +108,7 @@ public class SessionService {
 		userSession = new UserSession(user, jses);
 		String token = SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
-		context.setAttribute("test", "zzzz");
+		// context.setAttribute("test", "zzzz");
 
 		return Response.status(HttpServletResponse.SC_OK).entity(authUser).cookie(new NewCookie("2nses", token)).build();
 	}

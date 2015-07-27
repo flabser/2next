@@ -192,13 +192,14 @@ public class WebServer implements IWebServer {
 		});
 	}
 
+	@Override
 	public synchronized void stopContainer() {
 		try {
 			if (tomcat != null) {
 				tomcat.stop();
 			}
 		} catch (LifecycleException exception) {
-			Server.logger.errorLogEntry("Cannot Stop WebServer " + exception.getMessage());
+			Server.logger.errorLogEntry("cannot stop WebServer normally " + exception.getMessage());
 		}
 
 	}

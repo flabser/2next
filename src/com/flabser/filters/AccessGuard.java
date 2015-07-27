@@ -38,10 +38,14 @@ public class AccessGuard implements Filter {
 				chain.doFilter(request, resp);
 			} else {
 
-				ServletContext srcServletContext = http.getServletContext();
-				ServletContext targetServletContext = srcServletContext.getContext("/Nubis");
-
-				System.out.println(srcServletContext.getContextPath() + " = " + targetServletContext.getAttribute("test"));
+				/*
+				 * ServletContext srcServletContext = http.getServletContext();
+				 * ServletContext targetServletContext =
+				 * srcServletContext.getContext("/Nubis");
+				 * 
+				 * System.out.println(srcServletContext.getContextPath() + " = "
+				 * + targetServletContext.getAttribute("test"));
+				 */
 
 				HttpSession jses = http.getSession(false);
 				if (jses != null) {
@@ -50,19 +54,29 @@ public class AccessGuard implements Filter {
 						ServletContext context = http.getServletContext();
 
 						AppEnv env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
-						if (us.isAppAllowed(env.appType)) {
-							Server.logger.warningLogEntry("session alive ...");
-							chain.doFilter(request, resp);
-						} else {
-							HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
-							if (hh.size() > 0) {
-								Server.logger.warningLogEntry("database initializing ...");
-								us.init((String) request.getAttribute("appid"));
+						if (env.appType.equals(AppEnv.ADMIN_APP_NAME)) {
+							if (us.currentUser.isSupervisor()) {
 								chain.doFilter(request, resp);
 							} else {
 								HttpServletResponse httpResponse = (HttpServletResponse) resp;
 								httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-								Server.logger.warningLogEntry("access to application '" + env.appType + "' restricted");
+								Server.logger.warningLogEntry("User is not Administrator");
+							}
+						} else {
+							if (us.isAppAllowed(env.appType)) {
+								Server.logger.warningLogEntry("session alive ...");
+								chain.doFilter(request, resp);
+							} else {
+								HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
+								if (hh != null) {
+									Server.logger.warningLogEntry("database initializing ...");
+									us.init((String) request.getAttribute("appid"));
+									chain.doFilter(request, resp);
+								} else {
+									HttpServletResponse httpResponse = (HttpServletResponse) resp;
+									httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+									Server.logger.warningLogEntry("access to application '" + env.appType + "' restricted");
+								}
 							}
 						}
 					} else {

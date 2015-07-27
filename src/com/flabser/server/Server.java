@@ -55,6 +55,10 @@ public class Server {
 		webServerInst.startContainer();
 
 		Environment.periodicalServices = new PeriodicalServices();
+
+		Thread thread = new Thread(new Console());
+		thread.setPriority(Thread.MIN_PRIORITY);
+		thread.start();
 	}
 
 	public static void main(String[] arg) {
@@ -72,7 +76,8 @@ public class Server {
 	public static void shutdown() {
 		logger.normalLogEntry("server is stopping ... ");
 		Environment.shutdown();
-		// webServerInst.stopContainer();
+		webServerInst.stopContainer();
+		logger.normalLogEntry("bye, bye... ");
 		System.exit(0);
 	}
 }
