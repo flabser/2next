@@ -68,9 +68,12 @@ public class SessionService {
 		String appID = authUser.getDefaultApp();
 		context.getAttribute(AppEnv.APP_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
-		User user = systemDatabase.checkUserHash(authUser.getLogin(), authUser.getPwd(), null);
-
+		String login = authUser.getLogin();
+		Server.logger.normalLogEntry(login + " is attempting to signin");
+		User user = systemDatabase.checkUserHash(login, authUser.getPwd(), null);
+		authUser.setPwd(null);
 		if (!user.isAuthorized) {
+			Server.logger.warningLogEntry("signin of " + login + " was failed");
 			authUser.setError(AuthFailedExceptionType.PASSWORD_OR_LOGIN_INCORRECT);
 			throw new AuthFailedException(authUser);
 		}

@@ -155,7 +155,7 @@ public class Environment implements ICache {
 					smtpUser = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtpuser");
 					smtpPassword = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtppassword");
 					smtpPort = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtpport");
-					Server.logger.normalLogEntry("MailAgent is going to redirect some messages to host: " + SMTPHost);
+					Server.logger.normalLogEntry("MailAgent will redirect some messages to host: " + SMTPHost);
 				} else {
 					Server.logger.normalLogEntry("MailAgent is switch off");
 				}

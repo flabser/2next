@@ -43,7 +43,6 @@ public class AuthUser {
 		this.name = name;
 	}
 
-	@JsonIgnore
 	public String getPwd() {
 		return pwd;
 	}
