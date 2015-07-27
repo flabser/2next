@@ -68,6 +68,7 @@ public class _Element implements _IContent {
 			output.append("<" + name + ">");
 		}
 
+		// System.out.println(value.getClass().getName() + " " + name);
 		if (value instanceof _IContent) {
 			output.append(((_IContent) value).toXML());
 		} else if (value instanceof ArrayList) {
@@ -78,6 +79,12 @@ public class _Element implements _IContent {
 					output.append("<entry>" + strVal.toString() + "</entry>");
 				}
 				output.append("</value>");
+			}
+		} else if (value instanceof Collection) {
+			Collection<_IContent> list = (Collection) value;
+			for (_IContent e : list) {
+				output.append("<entry>" + e.toXML() + "</entry>");
+
 			}
 		} else if (value instanceof Map) {
 			Map map = (Map) value;

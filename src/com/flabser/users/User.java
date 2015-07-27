@@ -349,7 +349,7 @@ public class User {
 
 	}
 
-	public AuthUser getAuthUser() {
+	public AuthUser getPOJO() {
 		AuthUser aUser = new AuthUser();
 		aUser.setLogin(login);
 		aUser.setName(userName);

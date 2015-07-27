@@ -15,6 +15,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
 
 import org.omg.CORBA.UserException;
 
@@ -61,7 +63,7 @@ public class SessionService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public AuthUser createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException, UserException,
+	public Response createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException, UserException,
 			IllegalAccessException, SQLException {
 		UserSession userSession = null;
 		HttpSession jses;
@@ -104,11 +106,11 @@ public class SessionService {
 		}
 
 		userSession = new UserSession(user, jses);
-		SessionPool.put(userSession);
+		String token = SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 		context.setAttribute("test", "zzzz");
 
-		return authUser;
+		return Response.status(HttpServletResponse.SC_OK).entity(authUser).cookie(new NewCookie("2nses", token)).build();
 	}
 
 	@DELETE

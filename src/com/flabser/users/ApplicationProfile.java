@@ -10,10 +10,12 @@ import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.restful.Application;
+import com.flabser.script._IContent;
 import com.flabser.solutions.DatabaseType;
 
 @JsonRootName("applicationProfile")
-public class ApplicationProfile {
+public class ApplicationProfile implements _IContent {
 	public int id;
 	public String appType;
 	public String appID;
@@ -42,6 +44,7 @@ public class ApplicationProfile {
 		fill(rs);
 	}
 
+	@Override
 	public StringBuffer toXML() {
 		StringBuffer output = new StringBuffer(1000);
 		return output.append("<entry><appname>" + appName + "</appname><owner>" + owner + "</owner>" + "<dbhost>" + dbHost + "</dbhost><dbname>" + dbName
@@ -138,6 +141,14 @@ public class ApplicationProfile {
 
 	public void setDefaultURL(String defaultURL) {
 		this.defaultURL = defaultURL;
+	}
+
+	public Application getPOJO() {
+		Application app = new Application();
+		app.appType = appType;
+
+		return app;
+
 	}
 
 }

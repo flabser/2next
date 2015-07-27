@@ -14,10 +14,12 @@ import com.flabser.rule.RuleProvider;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
+import com.flabser.script._Exception;
+import com.flabser.script._IContent;
 import com.flabser.script._Page;
 import com.flabser.server.Server;
 
-public class AppEnv implements ICache {
+public class AppEnv implements ICache, _IContent {
 	public boolean isValid;
 	public String appType = "undefined";
 	public RuleProvider ruleProvider;
@@ -98,6 +100,12 @@ public class AppEnv implements ICache {
 	@Override
 	public void flush() {
 		cache.clear();
+	}
+
+	@Override
+	public StringBuffer toXML() throws _Exception {
+		StringBuffer output = new StringBuffer(1000);
+		return output.append("<entry><apptype>" + appType + "</apptype></entry>");
 	}
 
 }

@@ -44,7 +44,7 @@ public class Page {
 		this.rule = rule;
 		this.httpMethod = httpMethod;
 		if ((!rule.isAnonymousAllowed()) && userSession.currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
-			AuthUser authUser = userSession.currentUser.getAuthUser();
+			AuthUser authUser = userSession.currentUser.getPOJO();
 			authUser.setError(AuthFailedExceptionType.ACCESS_DENIED);
 			throw new AuthFailedException(authUser, "rule \"" + rule.id + "\" is not allowed anonymous access");
 		}
