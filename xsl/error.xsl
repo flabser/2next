@@ -32,7 +32,7 @@
 						<font style="font-size:1.9em;">2Next</font>
 						<div style="clear:both; height:10px"/>
 						<font style="font-size:1.1em;">
-							version <xsl:value-of select="error/message/version"/> &#169; Lab of the Future 2014
+							version <xsl:value-of select="error/message/version"/> &#169; F dev team 2015
 						</font>
 						<br/>
 					</td>
@@ -83,7 +83,7 @@
 										</xsl:when>
 										<xsl:when test="error/@type = 'DEFAULT_URL_NOT_DEFINED'">
 											<font style="font-size:2em;">System default url is not set</font>
-										</xsl:when>
+										</xsl:when>										
 										<xsl:otherwise>
 											<font style="font-size:2em;">Error</font>
 										</xsl:otherwise>
@@ -181,7 +181,7 @@
 						</td>
 					</tr>
 				</table>
-				<div style="z-index:999; margin-top:-2%; margin-left:22.5%; font-family:arial; font-size:0.71em">&#xA0;<a href="http://www.flabs.kz" target="_blank">Lab of the Future</a>&#xA0; &#8226; &#xA0;<a href="http://www.flabser.com" target="_blank">Feedback</a></div>
+				<div style="z-index:999; margin-top:-2%; margin-left:22.5%; font-family:arial; font-size:0.71em">&#xA0;<a href="http://www.flabs.kz" target="_blank">F dev team</a>&#xA0; &#8226; &#xA0;<a href="http://www.flabser.com" target="_blank">Feedback</a></div>
 			</body>
 		</html>
 	</xsl:template>

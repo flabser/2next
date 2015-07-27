@@ -31,6 +31,7 @@ import com.flabser.script._Exception;
 import com.flabser.server.Server;
 import com.flabser.servlets.sitefiles.AttachmentHandler;
 import com.flabser.servlets.sitefiles.AttachmentHandlerException;
+import com.flabser.users.AuthFailedException;
 import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
 
@@ -174,6 +175,9 @@ public class Provider extends HttpServlet {
 			} else {
 				throw new ServerException(ServerExceptionType.APPENV_HAS_NOT_INITIALIZED, "context=" + context.getServletContextName());
 			}
+		} catch (AuthFailedException rnf) {
+			// TODO Need to more informative handler in this case
+			new AuthFailedException(rnf.getMessage(), response, true);
 		} catch (RuleException rnf) {
 			new PortalException(rnf, env, response, ProviderExceptionType.RULENOTFOUND);
 		} catch (XSLTFileNotFoundException xfnf) {
@@ -194,8 +198,12 @@ public class Provider extends HttpServlet {
 			new PortalException(e, env, response, ProviderExceptionType.CLASS_NOT_FOUND_EXCEPTION, PublishAsType.HTML);
 		} catch (ServerException e) {
 			new PortalException(e, response, ProviderExceptionType.SERVER, PublishAsType.HTML);
-		} catch (Exception e) {
-			new PortalException(e, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
+		} catch (_Exception e) {
+			// TODO Need to more informative handler in this case
+			new PortalException(e, env, response, ProviderExceptionType.APPLICATION_ERROR, PublishAsType.HTML);
+		} catch (WebFormValueException e) {
+			// TODO Need to more informative handler in this case
+			new PortalException(e, env, response, ProviderExceptionType.APPLICATION_ERROR, PublishAsType.HTML);
 		}
 	}
 
