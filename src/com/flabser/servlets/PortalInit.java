@@ -33,7 +33,7 @@ public class PortalInit extends HttpServlet {
 				isValid = true;
 			} catch (DatabasePoolException e) {
 				Server.logger.errorLogEntry(e);
-				Server.logger.fatalLogEntry("Server has not connected to system database");
+				Server.logger.fatalLogEntry("server has not connected to system database");
 			} catch (Exception e) {
 				Server.logger.errorLogEntry(e);
 			}

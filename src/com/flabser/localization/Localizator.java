@@ -14,8 +14,7 @@ import org.xml.sax.SAXException;
 import com.flabser.rule.GlobalSetting;
 import com.flabser.server.Server;
 
-
-public class Localizator{
+public class Localizator {
 	private GlobalSetting globalSetting;
 
 	public Localizator(GlobalSetting globalSetting) {
@@ -26,8 +25,7 @@ public class Localizator{
 		}
 	}
 
-
-	public Vocabulary populate(String vocabular) throws LocalizatorException{
+	public Vocabulary populate(String vocabular) throws LocalizatorException {
 		String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator + vocabular + ".xml";
 		try {
 			File docFile = new File(vocabuarFilePath);
@@ -39,8 +37,8 @@ public class Localizator{
 				throw new LocalizatorException(LocalizatorExceptionType.VOCABULAR_NOT_FOUND);
 			}
 			return new Vocabulary(queryDoc, vocabular, globalSetting);
-		} catch (FileNotFoundException e){
-			Server.logger.errorLogEntry("File not found, filepath=" + vocabuarFilePath + ", the vocabulary file has not loaded");
+		} catch (FileNotFoundException e) {
+			Server.logger.errorLogEntry("file not found, filepath=" + vocabuarFilePath + ", the vocabulary file has not loaded");
 		} catch (ParserConfigurationException e) {
 			Server.logger.errorLogEntry(e);
 		} catch (IOException e) {

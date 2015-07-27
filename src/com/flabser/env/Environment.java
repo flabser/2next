@@ -79,7 +79,7 @@ public class Environment implements ICache {
 			saxParser.parse(file, cfgXMLhandler);
 			Document xmlDocument = getDocument();
 
-			Server.logger.normalLogEntry("Initialize runtime environment");
+			Server.logger.normalLogEntry("initialize runtime environment");
 			initMimeTypes();
 
 			hostName = XMLUtil.getTextContent(xmlDocument, "/tn/hostname");
@@ -91,9 +91,9 @@ public class Environment implements ICache {
 			String portAsText = XMLUtil.getTextContent(xmlDocument, "/tn/port");
 			try {
 				httpPort = Integer.parseInt(portAsText);
-				Server.logger.normalLogEntry("WebServer is going to use port: " + httpPort);
+				Server.logger.normalLogEntry("webServer will use port: " + httpPort);
 			} catch (NumberFormatException nfe) {
-				Server.logger.normalLogEntry("WebServer is going to use standart port");
+				Server.logger.normalLogEntry("webServer will use standart port");
 			}
 
 			primaryAppDir = XMLUtil.getTextContent(xmlDocument, "/tn/primaryappdir");

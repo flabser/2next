@@ -25,7 +25,7 @@ public class AppEnv implements ICache {
 	public String adminXSLTPath;
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
-	public final static String APP_ATTR = "usersession";
+	public final static String APP_ATTR = "appenv";
 
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 
@@ -37,20 +37,20 @@ public class AppEnv implements ICache {
 	public AppEnv(String appType, String globalFileName) {
 		this.appType = appType;
 		try {
-			Server.logger.normalLogEntry("# Start application \"" + appType + "\"");
+			Server.logger.normalLogEntry("# start application \"" + appType + "\"");
 			ruleProvider = new RuleProvider(this);
 			ruleProvider.initApp(globalFileName);
 			globalSetting = ruleProvider.global;
 
 			if (globalSetting.isOn == RunMode.ON) {
 				if (globalSetting.langsList.size() > 0) {
-					Server.logger.normalLogEntry("Dictionary is loading...");
+					Server.logger.normalLogEntry("dictionary is loading...");
 
 					try {
 						Localizator l = new Localizator(globalSetting);
 						vocabulary = l.populate("vocabulary");
 						if (vocabulary != null) {
-							Server.logger.normalLogEntry("Dictionary has loaded");
+							Server.logger.normalLogEntry("dictionary has loaded");
 						}
 					} catch (LocalizatorException le) {
 						Server.logger.verboseLogEntry(le.getMessage());
@@ -60,7 +60,7 @@ public class AppEnv implements ICache {
 
 				isValid = true;
 			} else {
-				Server.logger.warningLogEntry("Application: \"" + appType + "\" is off");
+				Server.logger.warningLogEntry("application: \"" + appType + "\" is off");
 
 			}
 
