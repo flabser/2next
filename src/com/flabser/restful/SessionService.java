@@ -15,6 +15,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
 
 import org.omg.CORBA.UserException;
 
@@ -61,18 +63,21 @@ public class SessionService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public AuthUser createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException, UserException,
+	public Response createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException, UserException,
 			IllegalAccessException, SQLException {
 		UserSession userSession = null;
 		HttpSession jses;
 		String appID = authUser.getDefaultApp();
 		context.getAttribute(AppEnv.APP_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
-		User user = new User();
-		user = systemDatabase.checkUserHash(authUser.getLogin(), authUser.getPwd(), "", user);
-
+		String login = authUser.getLogin();
+		Server.logger.normalLogEntry(login + " is attempting to signin");
+		User user = systemDatabase.checkUserHash(login, authUser.getPwd(), null);
+		authUser.setPwd(null);
 		if (!user.isAuthorized) {
-			throw new AuthFailedException(AuthFailedExceptionType.PASSWORD_INCORRECT, authUser.getLogin());
+			Server.logger.warningLogEntry("signin of " + login + " was failed");
+			authUser.setError(AuthFailedExceptionType.PASSWORD_OR_LOGIN_INCORRECT);
+			throw new AuthFailedException(authUser);
 		}
 
 		String userID = user.getLogin();
@@ -85,21 +90,27 @@ public class SessionService {
 			HashMap<String, ApplicationProfile> apps = user.getApplicationProfiles();
 			authUser.setApplications(apps);
 			authUser.setDefaultApp(appID);
+			authUser.setStatus(user.getStatus());
 
 		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
 			authUser.setRedirect("tochangepwd");
-		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED || user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
-			throw new AuthFailedException(AuthFailedExceptionType.NOT_VERIFED, authUser.getLogin());
+		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED) {
+			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION);
+			throw new AuthFailedException(authUser);
+		} else if (user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
+			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION);
+			throw new AuthFailedException(authUser);
 		} else if (user.getStatus() == UserStatusType.DELETED) {
-			throw new AuthFailedException(AuthFailedExceptionType.DELETED, authUser.getLogin());
+			authUser.setError(AuthFailedExceptionType.NOT_FOUND);
+			throw new AuthFailedException(authUser);
 		}
 
 		userSession = new UserSession(user, jses);
-		SessionPool.put(userSession);
+		String token = SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
-		context.setAttribute("test", "zzzz");
+		// context.setAttribute("test", "zzzz");
 
-		return authUser;
+		return Response.status(HttpServletResponse.SC_OK).entity(authUser).cookie(new NewCookie("2nses", token)).build();
 	}
 
 	@DELETE

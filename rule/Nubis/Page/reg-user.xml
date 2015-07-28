@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="reg-user" mode="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="java_class">nubis.page.RegUser</doscript>
+		</events>
+	</element>
+</rule>

@@ -1,0 +1,40 @@
+{{#form-for model=model onSubmit="submit" action="save"}}
+<header class="form-header">
+    <h1 class="header-title">{{t "user_profile"}} / {{name}}</h1>
+    <div class="action-bar">
+        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
+        <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+    </div>
+</header>
+<section class="form-content">
+    <div class="user_avatar">
+        avatar
+    </div>
+    <div class="fieldset">
+        <div class="control-group">
+            <div class="control-label">
+                {{t "user_fullname"}}
+            </div>
+            <div class="controls">
+                {{input value=model.name required=true}}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                {{t "email"}}
+            </div>
+            <div class="controls">
+                {{input type="email" value=model.email required=true}}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label">
+                {{t "password"}}
+            </div>
+            <div class="controls">
+                {{input type="password" value=model.password required=true}}
+            </div>
+        </div>
+    </div>
+</section>
+{{/form-for}}

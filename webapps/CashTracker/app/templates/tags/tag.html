@@ -1,16 +1,18 @@
-{{#form-for model=model onSubmit="submit" save="save"}}
+{{#em-form model=model submit_button=false action="save"}}
 <header class="form-header">
     <h1 class="header-title">{{t "tag"}} / {{model.name}}</h1>
     <div class="action-bar">
-        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
+        <button class="btn" {{action "goBack"}} {{bind-attr disabled="isNotValid" }}>{{t "cancel"}}</button>
         <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+        {{em-form-submit text="save"}}
     </div>
 </header>
 <section class="form-content">
     <div class="fieldset">
+        {{em-input property="name" label="name"}}
         <div class="control-group">
             <div class="control-label">
-                {{t "name"}}
+                {{t "name"}} {{errors.email}}
             </div>
             <div class="controls">
                 {{input value=model.name class="span7"}}
@@ -26,4 +28,4 @@
         </div>
     </div>
 </section>
-{{/form-for}}
+{{/em-form}}

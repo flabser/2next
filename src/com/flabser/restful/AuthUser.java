@@ -1,21 +1,26 @@
 package com.flabser.restful;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.AuthFailedExceptionType;
+import com.flabser.users.UserRole;
+import com.flabser.users.UserStatusType;
 
 @JsonRootName("authUser")
 public class AuthUser {
 
 	private String login;
+	private String name;
 	private String pwd;
-	private AuthFailedExceptionType status;
-	private String error;
+	private UserStatusType status = UserStatusType.UNKNOWN;
+	private AuthFailedExceptionType error;
 	private String redirect;
-	private String[] roles;
-	private HashMap<String, ApplicationProfile> applications = new HashMap<String, ApplicationProfile>();
+	private String[] roles = new String[0];
+	private HashMap<String, Application> applications = new HashMap<String, Application>();
 	private String defaultApp;
 
 	public AuthUser() {
@@ -27,6 +32,14 @@ public class AuthUser {
 
 	public void setLogin(String login) {
 		this.login = login;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPwd() {
@@ -45,19 +58,19 @@ public class AuthUser {
 		this.roles = roles;
 	}
 
-	public AuthFailedExceptionType getStatus() {
+	public UserStatusType getStatus() {
 		return status;
 	}
 
-	public void setStatus(AuthFailedExceptionType status) {
+	public void setStatus(UserStatusType status) {
 		this.status = status;
 	}
 
-	public String getError() {
+	public AuthFailedExceptionType getError() {
 		return error;
 	}
 
-	public void setError(String error) {
+	public void setError(AuthFailedExceptionType error) {
 		this.error = error;
 	}
 
@@ -69,12 +82,21 @@ public class AuthUser {
 		this.redirect = r;
 	}
 
-	public HashMap<String, ApplicationProfile> getApplications() {
+	public HashMap<String, Application> getApplications() {
 		return applications;
 	}
 
-	public void setApplications(HashMap<String, ApplicationProfile> applications) {
-		this.applications = applications;
+	public void setApplications(HashMap<String, ApplicationProfile> apps) {
+		for (ApplicationProfile ap : apps.values()) {
+			Application a = new Application();
+			a.appID = ap.appID;
+			a.appName = ap.appName;
+			a.appType = ap.appType;
+			a.owner = ap.owner;
+			a.visibilty = ap.getVisibilty();
+			this.applications.put(ap.appID, a);
+		}
+
 	}
 
 	public String getDefaultApp() {
@@ -84,4 +106,11 @@ public class AuthUser {
 	public void setDefaultApp(String defaultApp) {
 		this.defaultApp = defaultApp;
 	}
+
+	@JsonIgnore
+	public void setRoles(HashSet<UserRole> roles2) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

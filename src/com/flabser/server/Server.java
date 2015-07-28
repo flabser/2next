@@ -28,13 +28,13 @@ public class Server {
 		logger.normalLogEntry(serverTitle + " start");
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 
-		logger.normalLogEntry("Copyright(c) the F developers team 2015. All Right Reserved");
+		logger.normalLogEntry("copyright(c) the F developers team 2015. All Right Reserved");
 		logger.normalLogEntry("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "(" + System.getProperty("os.arch")
 				+ "), jvm: " + System.getProperty("java.version"));
 
 		Environment.init();
 		if (!compilationTime.equalsIgnoreCase("")) {
-			logger.verboseLogEntry("Build: " + compilationTime);
+			logger.verboseLogEntry("build: " + compilationTime);
 		}
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
 		webServerInst.init(Environment.hostName);
@@ -51,10 +51,14 @@ public class Server {
 		}
 
 		String info = webServerInst.initConnectors();
-		Server.logger.normalLogEntry("Webserver start (" + info + ")");
+		Server.logger.normalLogEntry("webserver start (" + info + ")");
 		webServerInst.startContainer();
 
 		Environment.periodicalServices = new PeriodicalServices();
+
+		Thread thread = new Thread(new Console());
+		thread.setPriority(Thread.MIN_PRIORITY);
+		thread.start();
 	}
 
 	public static void main(String[] arg) {
@@ -70,9 +74,10 @@ public class Server {
 	}
 
 	public static void shutdown() {
-		logger.normalLogEntry("Server is stopping ... ");
+		logger.normalLogEntry("server is stopping ... ");
 		Environment.shutdown();
-		// webServerInst.stopContainer();
+		webServerInst.stopContainer();
+		logger.normalLogEntry("bye, bye... ");
 		System.exit(0);
 	}
 }

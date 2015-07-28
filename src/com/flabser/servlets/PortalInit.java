@@ -21,7 +21,7 @@ public class PortalInit extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		ServletContext context = config.getServletContext();
 		String app = context.getServletContextName();
-		Server.logger = new Log4jLogger(app);
+		Server.logger = new Log4jLogger("");
 		AppEnv env = null;
 
 		if (app.equalsIgnoreCase("Administrator")) {
@@ -33,8 +33,7 @@ public class PortalInit extends HttpServlet {
 				isValid = true;
 			} catch (DatabasePoolException e) {
 				Server.logger.errorLogEntry(e);
-				Server.logger
-						.fatalLogEntry("Server has not connected to system database");
+				Server.logger.fatalLogEntry("server has not connected to system database");
 			} catch (Exception e) {
 				Server.logger.errorLogEntry(e);
 			}

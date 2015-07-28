@@ -9,8 +9,10 @@ import java.util.HashSet;
 
 import org.apache.catalina.realm.RealmBase;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
@@ -20,6 +22,8 @@ import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
+import com.flabser.restful.AuthUser;
+import com.flabser.server.Server;
 import com.flabser.util.Util;
 
 @JsonRootName("user")
@@ -48,6 +52,7 @@ public class User {
 	private int hash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
+	private String defaultDbPwd;
 	public final static String ANONYMOUS_USER = "anonymous";
 
 	public User() {
@@ -66,6 +71,7 @@ public class User {
 			isSupervisor = rs.getInt("ISSUPERVISOR");
 			password = rs.getString("PWD");
 			passwordHash = rs.getString("PWDHASH");
+			defaultDbPwd = rs.getString("DEFAULTDBPWD");
 			setHash(rs.getInt("LOGINHASH"));
 			verifyCode = rs.getString("VERIFYCODE");
 			status = UserStatusType.getType(rs.getInt("STATUS"));
@@ -75,10 +81,12 @@ public class User {
 		}
 	}
 
+	@JsonIgnore
 	public String getPasswordHash() {
 		return passwordHash;
 	}
 
+	@JsonIgnore
 	public void setPasswordHash(String password) throws WebFormValueException {
 		if (!("".equalsIgnoreCase(password))) {
 			if (Util.pwdIsCorrect(password)) {
@@ -86,11 +94,19 @@ public class User {
 				// this.passwordHash = getMD5Hash(password);
 				this.passwordHash = RealmBase.Digest(password, "MD5", "UTF-8");
 			} else {
-				throw new WebFormValueException(
-						WebFormValueExceptionType.FORMDATA_INCORRECT,
-						"password");
+				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
 			}
 		}
+	}
+
+	@JsonIgnore
+	public String getDefaultDbPwd() {
+		return defaultDbPwd;
+	}
+
+	@JsonIgnore
+	public void setDefaultDbPwd(String defaultDbPwd) {
+		this.defaultDbPwd = defaultDbPwd;
 	}
 
 	public boolean isSupervisor() {
@@ -118,12 +134,12 @@ public class User {
 	}
 
 	public void addApplication(ApplicationProfile ap) {
-		HashMap<String, ApplicationProfile> apps = enabledApps.get(ap.appType);
+		HashMap<String, ApplicationProfile> apps = getEnabledApps().get(ap.appType);
 		if (apps == null) {
 			apps = new HashMap<String, ApplicationProfile>();
 		}
 		apps.put(ap.appID, ap);
-		enabledApps.put(ap.appType, apps);
+		getEnabledApps().put(ap.appType, apps);
 		applications.put(ap.appID, ap);
 	}
 
@@ -135,14 +151,13 @@ public class User {
 		return hash;
 	}
 
-	public HashMap<String, ApplicationProfile> getApplicationProfiles(
-			String appType) {
-		return enabledApps.get(appType);
+	public HashMap<String, ApplicationProfile> getApplicationProfiles(String appType) {
+		return getEnabledApps().get(appType);
 	}
 
 	public HashMap<String, ApplicationProfile> getApplicationProfiles() {
 		HashMap<String, ApplicationProfile> allApps = new HashMap<String, ApplicationProfile>();
-		for (HashMap<String, ApplicationProfile> a : enabledApps.values()) {
+		for (HashMap<String, ApplicationProfile> a : getEnabledApps().values()) {
 			allApps.putAll(a);
 		}
 		return allApps;
@@ -170,55 +185,62 @@ public class User {
 		}
 	}
 
-	public boolean save() throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException, SQLException {
-		if (id == 0) {
-			id = sysDatabase.insert(this);
-		} else {
-			id = sysDatabase.update(this);
-		}
+	public boolean save() {
+		try {
+			if (id == 0) {
+				primaryRegDate = new Date();
+				hash = (login + password).hashCode();
+				if (defaultDbPwd == null) {
+					defaultDbPwd = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
+				}
+				id = sysDatabase.insert(this);
+			} else {
+				id = sysDatabase.update(this);
+			}
 
-		if (id < 0) {
-			return false;
-		} else {
-			for (HashMap<String, ApplicationProfile> apps : enabledApps
-					.values()) {
-				for (ApplicationProfile appProfile : apps.values()) {
-					if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
-						IApplicationDatabase appDb = sysDatabase
-								.getApplicationDatabase();
-						int res = appDb.createDatabase(appProfile.dbHost,
-								appProfile.getDbName(), appProfile.dbLogin,
-								appProfile.dbPwd);
-						if (res == 0 || res == 1) {
-							IDatabase dataBase = appProfile.getDatabase();
-							IDeployer ad = dataBase.getDeployer();
-							ad.init(appProfile);
-							Class appDatabaseInitializerClass = Class
-									.forName(appProfile.getDbInitializerClass());
-							IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass
-									.newInstance();
-							if (ad.deploy(dbInitializer) == 0) {
-								appProfile
-										.setStatus(ApplicationStatusType.ON_LINE);
-								appProfile.save();
+			if (id < 0) {
+				return false;
+			} else {
+				for (HashMap<String, ApplicationProfile> apps : getEnabledApps().values()) {
+					for (ApplicationProfile appProfile : apps.values()) {
+						if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
+							IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
+							int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.dbLogin, appProfile.dbPwd);
+							if (res == 0 || res == 1) {
+								IDatabase dataBase = appProfile.getDatabase();
+								IDeployer ad = dataBase.getDeployer();
+								ad.init(appProfile);
+								Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
+								IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
+								if (ad.deploy(dbInitializer) == 0) {
+									appProfile.setStatus(ApplicationStatusType.ON_LINE);
+									appProfile.save();
+								} else {
+									appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+									appProfile.save();
+								}
 							} else {
-								appProfile
-										.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+								appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 								appProfile.save();
+								return false;
 							}
-						} else {
-							appProfile
-									.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
-							appProfile.save();
-							return false;
 						}
 					}
 				}
 			}
+			return true;
+		} catch (InstantiationException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (IllegalAccessException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (ClassNotFoundException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (SQLException e) {
+			DatabaseUtil.debugErrorPrint(e);
+		} catch (DatabasePoolException e) {
+			Server.logger.errorLogEntry(e);
 		}
-		return true;
+		return false;
 
 	}
 
@@ -246,12 +268,12 @@ public class User {
 			} else if (Util.addrIsCorrect(email)) {
 				this.email = email;
 			} else {
-				throw new WebFormValueException(
-						WebFormValueExceptionType.FORMDATA_INCORRECT, "email");
+				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "email");
 			}
 		}
 	}
 
+	@JsonIgnore
 	public String getPwd() {
 		return password;
 	}
@@ -261,9 +283,7 @@ public class User {
 			if (Util.pwdIsCorrect(password)) {
 				this.password = password;
 			} else {
-				throw new WebFormValueException(
-						WebFormValueExceptionType.FORMDATA_INCORRECT,
-						"password");
+				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
 			}
 		}
 	}
@@ -301,8 +321,7 @@ public class User {
 	}
 
 	public void setStatus(UserStatusType status) {
-		if ((this.status == UserStatusType.NOT_VERIFIED || this.status == UserStatusType.WAITING_FOR_VERIFYCODE)
-				&& status == UserStatusType.REGISTERED) {
+		if ((this.status == UserStatusType.NOT_VERIFIED || this.status == UserStatusType.WAITING_FOR_VERIFYCODE) && status == UserStatusType.REGISTERED) {
 			regDate = new Date();
 		}
 		this.status = status;
@@ -328,6 +347,23 @@ public class User {
 	public boolean delete() {
 		return false;
 
+	}
+
+	public AuthUser getAuthUser() {
+		AuthUser aUser = new AuthUser();
+		aUser.setLogin(login);
+		aUser.setName(userName);
+		aUser.setRoles(roles);
+		aUser.setApplications(applications);
+		return aUser;
+	}
+
+	public HashMap<String, HashMap<String, ApplicationProfile>> getEnabledApps() {
+		return enabledApps;
+	}
+
+	public void setEnabledApps(HashMap<String, HashMap<String, ApplicationProfile>> enabledApps) {
+		this.enabledApps = enabledApps;
 	}
 
 }

@@ -22,6 +22,7 @@ import com.flabser.exception.RuleException;
 import com.flabser.exception.ServerException;
 import com.flabser.exception.ServerExceptionType;
 import com.flabser.exception.TransformatorException;
+import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.XSLTFileNotFoundException;
 import com.flabser.rule.IRule;
 import com.flabser.rule.page.PageRule;
@@ -30,6 +31,7 @@ import com.flabser.script._Exception;
 import com.flabser.server.Server;
 import com.flabser.servlets.sitefiles.AttachmentHandler;
 import com.flabser.servlets.sitefiles.AttachmentHandlerException;
+import com.flabser.users.AuthFailedException;
 import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
 
@@ -49,14 +51,12 @@ public class Provider extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		doPost(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		// long start_time = System.currentTimeMillis();
 		HttpSession jses = null;
 		UserSession userSession = null;
@@ -83,11 +83,9 @@ public class Provider extends HttpServlet {
 							isNewSession = true;
 						}
 
-						userSession = (UserSession) jses
-								.getAttribute(UserSession.SESSION_ATTR);
+						userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 						if (userSession == null) {
-							userSession = new UserSession(
-									new com.flabser.users.User(), jses);
+							userSession = new UserSession(new com.flabser.users.User(), jses);
 							if (isNewSession) {
 								Cookies c = new Cookies(request);
 								userSession.setLang(c.currentLang);
@@ -98,30 +96,22 @@ public class Provider extends HttpServlet {
 						if (type == null || type.equalsIgnoreCase("page")) {
 							result = page(response, request, rule, userSession);
 							if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
-								attachHandler = new AttachmentHandler(request,
-										response, true);
+								attachHandler = new AttachmentHandler(request, response, true);
 							}
 						} else if (type.equalsIgnoreCase("search")) {
 							result = search(request, userSession);
 						} else if (type.equalsIgnoreCase("getattach")) {
 							result = getAttach(request, userSession, key);
-							attachHandler = new AttachmentHandler(request,
-									response, true);
+							attachHandler = new AttachmentHandler(request, response, true);
 						} else {
 							String reqEnc = request.getCharacterEncoding();
-							type = new String(type.getBytes("ISO-8859-1"),
-									reqEnc);
-							new PortalException(
-									"Request has been undefined, type=" + type
-											+ ", id=" + id + ", key=" + key,
-									env, response,
-									ProviderExceptionType.PROVIDERERROR,
-									PublishAsType.HTML);
+							type = new String(type.getBytes("ISO-8859-1"), reqEnc);
+							new PortalException("Request has been undefined, type=" + type + ", id=" + id + ", key=" + key, env, response,
+									ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML);
 							return;
 						}
 
-						if (result.publishAs == PublishAsType.XML
-								|| onlyXML != null) {
+						if (result.publishAs == PublishAsType.XML || onlyXML != null) {
 							result.publishAs = PublishAsType.XML;
 							result.addHistory = false;
 						}
@@ -130,9 +120,7 @@ public class Provider extends HttpServlet {
 							if (result.disableClientCache) {
 								disableCash(response);
 							}
-							ProviderOutput po = new ProviderOutput(type, id,
-									result.output, request, userSession, jses,
-									result.addHistory);
+							ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses, result.addHistory);
 							response.setContentType("text/html");
 
 							if (po.prepareXSLT(env, result.xslt)) {
@@ -140,8 +128,7 @@ public class Provider extends HttpServlet {
 								// long start_time = System.currentTimeMillis();
 								// //
 								// for speed debuging
-								new SaxonTransformator().toTrans(response,
-										po.xslFile, outputContent);
+								new SaxonTransformator().toTrans(response, po.xslFile, outputContent);
 								// System.out.println(getClass().getSimpleName()
 								// +
 								// " transformation  >>> " +
@@ -159,9 +146,7 @@ public class Provider extends HttpServlet {
 								disableCash(response);
 							}
 							response.setContentType("text/xml;charset=utf-8");
-							ProviderOutput po = new ProviderOutput(type, id,
-									result.output, request, userSession, jses,
-									result.addHistory);
+							ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses, result.addHistory);
 							String outputContent = po.getStandartOutput();
 							// System.out.println(outputContent);
 							PrintWriter out = response.getWriter();
@@ -169,13 +154,11 @@ public class Provider extends HttpServlet {
 							out.close();
 						} else if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
 							if (request.getParameter("disposition") != null) {
-								disposition = request
-										.getParameter("disposition");
+								disposition = request.getParameter("disposition");
 							} else {
 								disposition = "attachment";
 							}
-							attachHandler.publish(result.filePath,
-									result.originalAttachName, disposition);
+							attachHandler.publish(result.filePath, result.originalAttachName, disposition);
 						} else if (result.publishAs == PublishAsType.FORWARD) {
 							response.sendRedirect(result.forwardTo);
 							return;
@@ -187,57 +170,47 @@ public class Provider extends HttpServlet {
 						return;
 					}
 				} else {
-					throw new RuleException("Not found");
+					throw new RuleException("parameter \"id\" is not defined in request");
 				}
 			} else {
-				throw new ServerException(
-						ServerExceptionType.APPENV_HAS_NOT_INITIALIZED,
-						"context=" + context.getServletContextName());
+				throw new ServerException(ServerExceptionType.APPENV_HAS_NOT_INITIALIZED, "context=" + context.getServletContextName());
 			}
+		} catch (AuthFailedException rnf) {
+			// TODO Need to more informative handler in this case
+			new AuthFailedException(rnf.getMessage(), response, true);
 		} catch (RuleException rnf) {
-			new PortalException(rnf, env, response,
-					ProviderExceptionType.RULENOTFOUND);
+			new PortalException(rnf, env, response, ProviderExceptionType.RULENOTFOUND);
 		} catch (XSLTFileNotFoundException xfnf) {
-			new PortalException(xfnf, env, response,
-					ProviderExceptionType.XSLTNOTFOUND, PublishAsType.HTML);
+			new PortalException(xfnf, env, response, ProviderExceptionType.XSLTNOTFOUND, PublishAsType.HTML);
 		} catch (IOException ioe) {
 			new PortalException(ioe, env, response, PublishAsType.HTML);
 		} catch (IllegalStateException ise) {
 			new PortalException(ise, env, response, PublishAsType.HTML);
 		} catch (AttachmentHandlerException e) {
-			new PortalException(e, env, response,
-					ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML);
+			new PortalException(e, env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML);
 		} catch (UserException e) {
-			new PortalException(e, env, response,
-					ProviderExceptionType.INTERNAL, PublishAsType.HTML);
+			new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
 		} catch (SaxonApiException e) {
-			new PortalException(e, env, response,
-					ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR,
-					PublishAsType.HTML);
+			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML);
 		} catch (TransformatorException e) {
-			new PortalException(e, env, response,
-					ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR,
-					PublishAsType.HTML);
+			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML);
 		} catch (ClassNotFoundException e) {
-			new PortalException(e, env, response,
-					ProviderExceptionType.CLASS_NOT_FOUND_EXCEPTION,
-					PublishAsType.HTML);
+			new PortalException(e, env, response, ProviderExceptionType.CLASS_NOT_FOUND_EXCEPTION, PublishAsType.HTML);
 		} catch (ServerException e) {
-			new PortalException(e, response, ProviderExceptionType.SERVER,
-					PublishAsType.HTML);
-		} catch (Exception e) {
-			new PortalException(e, response, ProviderExceptionType.INTERNAL,
-					PublishAsType.HTML);
+			new PortalException(e, response, ProviderExceptionType.SERVER, PublishAsType.HTML);
+		} catch (_Exception e) {
+			// TODO Need to more informative handler in this case
+			new PortalException(e, env, response, ProviderExceptionType.APPLICATION_ERROR, PublishAsType.HTML);
+		} catch (WebFormValueException e) {
+			// TODO Need to more informative handler in this case
+			new PortalException(e, env, response, ProviderExceptionType.APPLICATION_ERROR, PublishAsType.HTML);
 		}
 	}
 
-	private ProviderResult page(HttpServletResponse response,
-			HttpServletRequest request, IRule rule, UserSession userSession)
-			throws RuleException, UnsupportedEncodingException,
-			ClassNotFoundException, _Exception {
+	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule, UserSession userSession) throws RuleException,
+			UnsupportedEncodingException, ClassNotFoundException, _Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
-		ProviderResult result = new ProviderResult(pageRule.publishAs,
-				pageRule.getXSLT());
+		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		result.addHistory = pageRule.addToHistory;
 		HashMap<String, String[]> fields = new HashMap<String, String[]>();
 		Map<String, String[]> parMap = request.getParameterMap();
@@ -252,11 +225,8 @@ public class Provider extends HttpServlet {
 		return result;
 	}
 
-	private ProviderResult search(HttpServletRequest request,
-			UserSession userSession) throws RuleException,
-			UnsupportedEncodingException {
-		ProviderResult result = new ProviderResult(PublishAsType.HTML,
-				"searchres.xsl");
+	private ProviderResult search(HttpServletRequest request, UserSession userSession) throws RuleException, UnsupportedEncodingException {
+		ProviderResult result = new ProviderResult(PublishAsType.HTML, "searchres.xsl");
 		try {
 			Integer.parseInt(request.getParameter("page"));
 		} catch (NumberFormatException nfe) {
@@ -272,11 +242,8 @@ public class Provider extends HttpServlet {
 		return result;
 	}
 
-	private ProviderResult getAttach(HttpServletRequest request,
-			UserSession userSession, String key)
-			throws UnsupportedEncodingException {
-		ProviderResult result = new ProviderResult(PublishAsType.OUTPUTSTREAM,
-				null);
+	private ProviderResult getAttach(HttpServletRequest request, UserSession userSession, String key) throws UnsupportedEncodingException {
+		ProviderResult result = new ProviderResult(PublishAsType.OUTPUTSTREAM, null);
 		/*
 		 * String fieldName = request.getParameter("field"); String attachName =
 		 * request.getParameter("file");
@@ -310,8 +277,7 @@ public class Provider extends HttpServlet {
 	}
 
 	private void disableCash(HttpServletResponse response) {
-		response.setHeader("Cache-Control",
-				"no-cache, must-revalidate, private, no-store, s-maxage=0, max-age=0");
+		response.setHeader("Cache-Control", "no-cache, must-revalidate, private, no-store, s-maxage=0, max-age=0");
 		response.setHeader("Pragma", "no-cache");
 		response.setDateHeader("Expires", 0);
 	}

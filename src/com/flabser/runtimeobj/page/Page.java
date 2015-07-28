@@ -7,7 +7,9 @@ import java.util.Map;
 import com.flabser.appenv.AppEnv;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
+import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.SentenceCaption;
+import com.flabser.restful.AuthUser;
 import com.flabser.rule.Caption;
 import com.flabser.rule.page.ElementRule;
 import com.flabser.rule.page.PageRule;
@@ -16,6 +18,9 @@ import com.flabser.script._URL;
 import com.flabser.scriptprocessor.page.DoProcessor;
 import com.flabser.scriptprocessor.page.IQuerySaveTransaction;
 import com.flabser.supplier.SourceSupplier;
+import com.flabser.users.AuthFailedException;
+import com.flabser.users.AuthFailedExceptionType;
+import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.util.ScriptResponse;
 import com.flabser.util.Util;
@@ -33,20 +38,22 @@ public class Page {
 	protected Map<String, String[]> fields = new HashMap<String, String[]>();
 	protected UserSession userSession;
 
-	public Page(AppEnv env, UserSession userSession, PageRule rule,
-			String httpMethod) {
+	public Page(AppEnv env, UserSession userSession, PageRule rule, String httpMethod) throws AuthFailedException {
 		this.userSession = userSession;
 		this.env = env;
 		this.rule = rule;
 		this.httpMethod = httpMethod;
+		if ((!rule.isAnonymousAllowed()) && userSession.currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
+			AuthUser authUser = userSession.currentUser.getPOJO();
+			authUser.setError(AuthFailedExceptionType.ACCESS_DENIED);
+			throw new AuthFailedException(authUser, "rule \"" + rule.id + "\" is not allowed anonymous access");
+		}
 	}
 
-	public HashMap<String, String[]> getCaptions(
-			SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
+	public HashMap<String, String[]> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
 		HashMap<String, String[]> captionsList = new HashMap<String, String[]>();
 		for (Caption cap : captions) {
-			SentenceCaption sc = captionTextSupplier
-					.getValueAsCaption(cap.captionID);
+			SentenceCaption sc = captionTextSupplier.getValueAsCaption(cap.captionID);
 			String c[] = new String[2];
 			c[0] = sc.word;
 			c[1] = sc.hint;
@@ -55,8 +62,7 @@ public class Page {
 		return captionsList;
 	}
 
-	public _Page process(Map<String, String[]> formData)
-			throws ClassNotFoundException, RuleException {
+	public _Page process(Map<String, String[]> formData) throws ClassNotFoundException, RuleException, WebFormValueException {
 		_Page pp = null;
 		long start_time = System.currentTimeMillis();
 		switch (rule.caching) {
@@ -87,8 +93,8 @@ public class Page {
 
 	}
 
-	public _Page getContent(Map<String, String[]> formData)
-			throws ClassNotFoundException, RuleException {
+	@SuppressWarnings("unused")
+	public _Page getContent(Map<String, String[]> formData) throws ClassNotFoundException, RuleException, WebFormValueException {
 		fields = formData;
 		_Page pp = new _Page();
 
@@ -96,10 +102,21 @@ public class Page {
 			loop: for (ElementRule elementRule : rule.elements) {
 				switch (elementRule.type) {
 				case SCRIPT:
-					DoProcessor sProcessor = new DoProcessor(env, userSession,
-							userSession.getLang(), fields);
-					ScriptResponse scriptResp = sProcessor.processScript(
-							elementRule.doClassName, httpMethod);
+					ScriptResponse scriptResp = null;
+					DoProcessor sProcessor = new DoProcessor(env, userSession, userSession.getLang(), fields);
+					switch (elementRule.doClassName.getType()) {
+					case GROOVY_FILE:
+						scriptResp = sProcessor.processGroovyScript(elementRule.doClassName.getClassName(), httpMethod);
+					case FILE:
+						scriptResp = sProcessor.processGroovyScript(elementRule.doClassName.getClassName(), httpMethod);
+					case JAVA_CLASS:
+						scriptResp = sProcessor.processJava(elementRule.doClassName.getClassName(), httpMethod);
+					case UNKNOWN:
+						break;
+					default:
+						break;
+
+					}
 
 					for (IQuerySaveTransaction toPostObects : sProcessor.transactionToPost) {
 						toPostObects.post();
@@ -110,10 +127,8 @@ public class Page {
 					break;
 
 				case INCLUDED_PAGE:
-					PageRule rule = (PageRule) env.ruleProvider
-							.getRule(elementRule.value);
-					IncludedPage page = new IncludedPage(env, userSession,
-							rule, httpMethod);
+					PageRule rule = (PageRule) env.ruleProvider.getRule(elementRule.value);
+					IncludedPage page = new IncludedPage(env, userSession, rule, httpMethod);
 					pp.addPage(page.process(fields));
 					break;
 				default:
@@ -122,8 +137,7 @@ public class Page {
 			}
 		}
 
-		SourceSupplier captionTextSupplier = new SourceSupplier(env,
-				userSession.getLang());
+		SourceSupplier captionTextSupplier = new SourceSupplier(env, userSession.getLang());
 		pp.setCaptions(getCaptions(captionTextSupplier, rule.captions));
 		return pp;
 	}

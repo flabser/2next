@@ -2,6 +2,7 @@ package com.flabser.scriptprocessor.page;
 
 import javax.ws.rs.HttpMethod;
 
+import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.Vocabulary;
 import com.flabser.script._Element;
 import com.flabser.script._Exception;
@@ -12,7 +13,6 @@ import com.flabser.scriptprocessor.ScriptProcessorUtil;
 import com.flabser.util.ResponseType;
 import com.flabser.util.ScriptResponse;
 
-
 public abstract class AbstractPageScript extends ScriptEvent implements IPageScript {
 
 	private String method;
@@ -20,18 +20,22 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 	private _WebFormData formData;
 	private ScriptResponse resp = new ScriptResponse(ResponseType.RESULT_OF_PAGE_SCRIPT);
 
+	@Override
 	public void setSession(_Session ses) {
 		this.ses = ses;
 	}
 
+	@Override
 	public void setFormData(_WebFormData formData) {
 		this.formData = formData;
 	}
 
+	@Override
 	public void setMethod(String method) {
 		this.method = method;
 	}
 
+	@Override
 	public void setCurrentLang(Vocabulary vocabulary, String lang) {
 		this.lang = lang;
 		this.vocabulary = vocabulary;
@@ -40,8 +44,7 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 	public void println(Exception e) throws _Exception {
 		String errText = e.toString();
 		System.out.println(errText);
-		_Element element = new _Element("error", errText + "stack:"
-				+ ScriptProcessorUtil.getScriptError(e.getStackTrace()));
+		_Element element = new _Element("error", errText + "stack:" + ScriptProcessorUtil.getScriptError(e.getStackTrace()));
 		publishElement("error", element);
 	}
 
@@ -49,6 +52,7 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 		System.out.println(e);
 	}
 
+	@Override
 	public ScriptResponse process() {
 		try {
 			switch (method) {
@@ -86,11 +90,11 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 		return resp;
 	}
 
-	public abstract void doGet(_Session session, _WebFormData formData, String lang);
+	public abstract void doGet(_Session session, _WebFormData formData, String lang) throws WebFormValueException, _Exception;
 
-	public abstract void doPost(_Session session, _WebFormData formData, String lang);
+	public abstract void doPost(_Session session, _WebFormData formData, String lang) throws WebFormValueException;
 
-	public abstract void doPut(_Session session, _WebFormData formData, String lang);
+	public abstract void doPut(_Session session, _WebFormData formData, String lang) throws WebFormValueException;
 
-	public abstract void doDelete(_Session session, _WebFormData formData, String lang);
+	public abstract void doDelete(_Session session, _WebFormData formData, String lang) throws WebFormValueException;
 }

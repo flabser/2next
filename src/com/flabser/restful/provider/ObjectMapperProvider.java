@@ -7,9 +7,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-
 @Provider
-public class ObjectMapperProvider implements ContextResolver <ObjectMapper> {
+public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
 	private ObjectMapper objectMapper;
 
@@ -17,6 +16,7 @@ public class ObjectMapperProvider implements ContextResolver <ObjectMapper> {
 		objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
 		objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
+		objectMapper.getSerializerProvider().setNullKeySerializer(new MyNullKeySerializer());
 	}
 
 	@Override

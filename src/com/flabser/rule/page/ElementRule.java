@@ -18,14 +18,13 @@ import com.flabser.rule.constants.ValueSourceType;
 import com.flabser.server.Server;
 import com.flabser.util.XMLUtil;
 
-public class ElementRule{
+public class ElementRule {
 	public ElementType type;
 	public boolean isValid = true;
 	public RunMode isOn;
 	public String value;
-	public String doClassName;
+	public ElementScript doClassName;
 	public RuleValue query;
-
 
 	private IElement parentRule;
 
@@ -38,8 +37,7 @@ public class ElementRule{
 				return;
 			}
 
-			type = ElementType.valueOf(XMLUtil.getTextContent(node, "@type",
-					true, "UNKNOWN", false));
+			type = ElementType.valueOf(XMLUtil.getTextContent(node, "@type", true, "UNKNOWN", false));
 			switch (type) {
 			case SCRIPT:
 				Node qoNode = XMLUtil.getNode(node, "events/doscript", false);
@@ -52,6 +50,9 @@ public class ElementRule{
 			case INCLUDED_PAGE:
 				value = XMLUtil.getTextContent(node, "value", false);
 				break;
+			default:
+				value = "Type of the Page element is not defined";
+				break;
 
 			}
 		} catch (Exception e) {
@@ -60,65 +61,65 @@ public class ElementRule{
 		}
 	}
 
+	@Override
 	public String toString() {
 		return "value=" + value;
 	}
 
-	private String getClassName(Node node, String normailzator){
+	@SuppressWarnings({ "unchecked", "resource" })
+	private ElementScript getClassName(Node node, String normailzator) {
 		ClassLoader parent = getClass().getClassLoader();
 
-		String value = XMLUtil.getTextContent(node,".", true);
-		ValueSourceType qsSourceType = ValueSourceType.valueOf(XMLUtil.getTextContent(node,"@source",true,"STATIC", true));
-		try{
+		String value = XMLUtil.getTextContent(node, ".", true);
+		ValueSourceType qsSourceType = ValueSourceType.valueOf(XMLUtil.getTextContent(node, "@source", true, "UNKNOWN", true));
+		try {
 			Class<GroovyObject> process = null;
-			if (qsSourceType == ValueSourceType.FILE){
+			if (qsSourceType == ValueSourceType.GROOVY_FILE || qsSourceType == ValueSourceType.FILE) {
 				CompilerConfiguration compiler = new CompilerConfiguration();
 				compiler.setTargetDirectory(Environment.libsDir);
 				GroovyClassLoader loader = new GroovyClassLoader(parent, compiler);
-				File groovyFile = new File(getScriptDirPath() + File.separator + value.replace(".",File.separator) + ".groovy");
-				if (groovyFile.exists()){
-					try{
+				File groovyFile = new File(getScriptDirPath() + File.separator + value.replace(".", File.separator) + ".groovy");
+				if (groovyFile.exists()) {
+					try {
 						process = loader.parseClass(groovyFile);
-						return process.getName();
+						return new ElementScript(qsSourceType, process.getName());
 					} catch (CompilationFailedException e) {
 						Server.logger.errorLogEntry(e);
 					} catch (IOException e) {
 						Server.logger.errorLogEntry(e);
 					}
-				}else{
-					groovyFile = new File(parentRule.getPrimaryScriptDirPath() + File.separator + value.replace(".",File.separator) + ".groovy");
-					if (groovyFile.exists()){
-						try{
+				} else {
+					groovyFile = new File(parentRule.getPrimaryScriptDirPath() + File.separator + value.replace(".", File.separator) + ".groovy");
+					if (groovyFile.exists()) {
+						try {
 							process = loader.parseClass(groovyFile);
 							loader.addClasspath(groovyFile.getParentFile().getAbsolutePath() + File.pathSeparator);
-							return process.getName();
+							return new ElementScript(qsSourceType, process.getName());
 						} catch (CompilationFailedException e) {
 							Server.logger.errorLogEntry(e);
 						} catch (IOException e) {
 							Server.logger.errorLogEntry(e);
 						}
-					}else {
+					} else {
 						Server.logger.errorLogEntry("File \"" + groovyFile.getAbsolutePath() + "\" not found");
 					}
 				}
-			}else {
+			} else if (qsSourceType == ValueSourceType.JAVA_CLASS) {
+				return new ElementScript(qsSourceType, XMLUtil.getTextContent(node, ".", true));
+			} else {
 				Server.logger.errorLogEntry("Included script did not implemented, form rule=" + parentRule.getID() + ", node=" + node.getBaseURI());
 
 			}
 
-		}catch(MultipleCompilationErrorsException e){
+		} catch (MultipleCompilationErrorsException e) {
 			Server.logger.errorLogEntry("Script compilation error at form rule compiling=" + parentRule.getID() + ", node=" + node.getBaseURI());
 			Server.logger.errorLogEntry(e.getMessage());
 		}
 		return null;
 	}
 
-
-
 	public String getScriptDirPath() {
 		return parentRule.getScriptDirPath();
 	}
-
-
 
 }

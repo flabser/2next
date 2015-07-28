@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Em from 'ember';
 
 const {
-    Service, inject
-} = Ember;
+    Service, inject, $
+} = Em;
 
 const PATH = 'rest/page/app-captions';
 
@@ -10,7 +10,7 @@ export default Service.extend({
     i18n: inject.service(),
 
     fetch: function() {
-        return Ember.$.get(PATH).then(this._addTranslations.bind(this));
+        return $.get(PATH).then(this._addTranslations.bind(this));
     },
 
     _addTranslations: function(json) {

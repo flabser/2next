@@ -1,9 +1,19 @@
 package com.flabser.exception;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.*;
-import javax.xml.transform.stream.*;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.server.Server;
@@ -11,28 +21,23 @@ import com.flabser.servlets.ProviderExceptionType;
 import com.flabser.servlets.PublishAsType;
 import com.flabser.util.XMLUtil;
 
-import java.io.*;
-
-
-
-public class PortalException extends Exception{	
-	private Enum type = ProviderExceptionType.INTERNAL;
+public class PortalException extends Exception {
+	private Enum<?> type = ProviderExceptionType.INTERNAL;
 	private AppEnv env;
 
 	private static final long serialVersionUID = 3214292820186296427L;
 	private Source xsltSource;
-	
-	
-	public PortalException(Exception e, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs){
+
+	public PortalException(Exception e, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
 		super(e);
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		response.setContentType("text/xml;charset=utf-8");
 		this.type = type;
-		xsltSource =	new StreamSource(new File("xsl" + File.separator + "error.xsl"));
+		xsltSource = new StreamSource(new File("xsl" + File.separator + "error.xsl"));
 		message(errorMessage(e), response, publishAs);
 	}
-	
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response, PublishAsType publishAs){
+
+	public PortalException(Exception e, AppEnv env, HttpServletResponse response, PublishAsType publishAs) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -41,7 +46,7 @@ public class PortalException extends Exception{
 		message(errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(String text,Exception e, AppEnv env, HttpServletResponse response,  ProviderExceptionType type, PublishAsType publishAs){
+	public PortalException(String text, Exception e, AppEnv env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -51,18 +56,18 @@ public class PortalException extends Exception{
 		message("<errorcontex>" + text + "</errorcontext>" + errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response,  Enum type){
+	public PortalException(Exception e, AppEnv env, HttpServletResponse response, Enum type) {
 		super(e);
-		this.env = env;		
+		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		response.setContentType("text/xml;charset=utf-8");
 		this.type = type;
 		message(errorMessage(e), response, PublishAsType.XML);
 	}
 
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response,  Enum type, PublishAsType publishAs){
+	public PortalException(Exception e, AppEnv env, HttpServletResponse response, Enum type, PublishAsType publishAs) {
 		super(e);
-		this.env = env;	
+		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		response.setContentType("text/xml;charset=utf-8");
 		this.type = type;
@@ -70,92 +75,91 @@ public class PortalException extends Exception{
 		message(errorMessage(e), response, publishAs);
 	}
 
-
-	public PortalException(String text,AppEnv env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs){
+	public PortalException(String text, AppEnv env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
 		super(text);
 		this.env = env;
 		this.type = type;
 		xsltSource = getXSLT();
-		message(text, response, publishAs);	
+		message(text, response, publishAs);
 	}
 
-
-	private void message(String text, HttpServletResponse response, PublishAsType publishAs){
+	private void message(String text, HttpServletResponse response, PublishAsType publishAs) {
 		ServletOutputStream out;
 		String xmlText;
 		Server.logger.errorLogEntry(text);
-		try{
+		try {
 
-			xmlText = "<?xml version = \"1.0\" encoding=\"utf-8\"?><request><error type=\"" + type +"\">" +
-					"<message><version>" +  Server.serverVersion + "</version><errortext>" + XMLUtil.getAsTagValue(text) + "</errortext></message></error></request>";
-			//		System.out.println("xml text = "+xmlText);
+			xmlText = "<?xml version = \"1.0\" encoding=\"utf-8\"?><request><error type=\"" + type + "\">" + "<message><version>" + Server.serverVersion
+					+ "</version><errortext>" + XMLUtil.getAsTagValue(text) + "</errortext></message></error></request>";
+			// System.out.println("xml text = "+xmlText);
 			response.setHeader("Cache-Control", "no-cache, must-revalidate, private, no-store, s-maxage=0, max-age=0");
 			response.setHeader("Pragma", "no-cache");
 			response.setDateHeader("Expires", 0);
 
-			if (publishAs == PublishAsType.HTML){
-				response.setContentType("text/html;charset=utf-8");				
-				out = response.getOutputStream();					
-				Source xmlSource = new StreamSource(new StringReader(xmlText));				
-				Result result =	new StreamResult(out);
-				TransformerFactory transFact = TransformerFactory.newInstance( );
+			if (publishAs == PublishAsType.HTML) {
+				response.setContentType("text/html;charset=utf-8");
+				out = response.getOutputStream();
+				Source xmlSource = new StreamSource(new StringReader(xmlText));
+				Result result = new StreamResult(out);
+				TransformerFactory transFact = TransformerFactory.newInstance();
 				Transformer trans = transFact.newTransformer(xsltSource);
-				//System.out.println(PortalEnv.appID+": xsl transformation="+PortalEnv.errorXSL);
+				// System.out.println(PortalEnv.appID+": xsl transformation="+PortalEnv.errorXSL);
 				trans.transform(xmlSource, result);
-			}else{
+			} else {
 				response.setContentType("text/xml;charset=utf-8");
-				//response.sendError(550);
+				// response.sendError(550);
 				out = response.getOutputStream();
 				out.println(xmlText);
 			}
-		}catch(IOException ioe){
+		} catch (IOException ioe) {
 			System.out.println(ioe);
 			ioe.printStackTrace();
-		}catch(TransformerConfigurationException tce){
+		} catch (TransformerConfigurationException tce) {
 			System.out.println(tce);
 			tce.printStackTrace();
-		}catch(TransformerException te){
+		} catch (TransformerException te) {
 			System.out.println(te);
 			te.printStackTrace();
 		}
 	}
 
-	public static String errorMessage (Exception exception){
+	public static String errorMessage(Exception exception) {
 		String message = "";
-		try{
+		try {
 			String addErrorMessage = getErrorStackString(exception.getStackTrace());
 
-			message = exception.toString();				
+			message = exception.toString();
 
-			return "<errortext>" + message + "</errortext>".replaceAll("\"","'")+"<stack>" + addErrorMessage.replaceAll(">","-").replaceAll("<","-")+"</stack>\n\r";
-		}catch(Exception e) {
+			return "<errortext>" + message + "</errortext>".replaceAll("\"", "'") + "<stack>" + addErrorMessage.replaceAll(">", "-").replaceAll("<", "-")
+					+ "</stack>\n\r";
+		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			return "";	
+			return "";
 		}
-	} 
+	}
 
-	public static String getErrorStackString(StackTraceElement stack[]){
+	public static String getErrorStackString(StackTraceElement stack[]) {
 		String addErrorMessage = "";
-		for (int i=0; i<stack.length; i++){
-			addErrorMessage = addErrorMessage + "\n" +stack[i].getClassName()+" > "+stack[i].getMethodName()+" "+Integer.toString(stack[i].getLineNumber())+"\n";
+		for (int i = 0; i < stack.length; i++) {
+			addErrorMessage = addErrorMessage + "\n" + stack[i].getClassName() + " > " + stack[i].getMethodName() + " "
+					+ Integer.toString(stack[i].getLineNumber()) + "\n";
 		}
 		return addErrorMessage;
 	}
-	
-	private Source getXSLT(){
+
+	private Source getXSLT() {
 		Source xsltSource = null;
-		if (env.appType.equalsIgnoreCase("administrator")){
-			xsltSource =	new StreamSource(new File("xsl" + File.separator + "error.xsl"));
-		}else{
-			xsltSource =	new StreamSource(new File("xsl" + File.separator + "error.xsl"));
-			/*Skin skin = env.globalSetting.skinsMap.get(currentSkin);
-			if (skin == null){
-				skin = env.globalSetting.defaultSkin;
-			}
-			xsltSource = new StreamSource(new File(skin.errorPagePath));*/
+		if (env.appType.equalsIgnoreCase("administrator")) {
+			xsltSource = new StreamSource(new File("xsl" + File.separator + "error.xsl"));
+		} else {
+			xsltSource = new StreamSource(new File("xsl" + File.separator + "error.xsl"));
+			/*
+			 * Skin skin = env.globalSetting.skinsMap.get(currentSkin); if (skin
+			 * == null){ skin = env.globalSetting.defaultSkin; } xsltSource =
+			 * new StreamSource(new File(skin.errorPagePath));
+			 */
 		}
 		return xsltSource;
 	}
-}	
-
+}

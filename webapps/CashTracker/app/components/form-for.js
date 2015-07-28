@@ -5,32 +5,43 @@ export default Em.Component.extend({
 
     method: 'POST',
 
-    classNames: ['form-wrapper', 'form-component'],
+    classNames: ['form-wrapper'],
 
     attributeBindings: ['method'],
 
+    action: 'save',
+
     validationErrors: [],
+
+    isNotValid: Em.computed('model.isValid', function() {
+        if (!Em.isNone(this.get('model.isValid'))) {
+            return !this.get('model.isValid');
+        } else {
+            return false;
+        }
+    }),
 
     submit: function(e) {
         if (e) {
             e.preventDefault();
         }
 
-        var _this = this;
-        var model = Em.get(this, 'model');
-        var promise = model.validate();
-        return promise.then(function() {
-                if (model.get('isValid')) {
-                    return this.sendAction('save');
-                } else {
-                    console.log(this);
-                }
+        if (Em.isNone(this.get('model.validate'))) {
+            return this.send(this.get('action'));
+        } else {
+            var promise = this.get('model').validate();
+            return promise.then(function() {
+                return function() {
+                    if (this.get('model.isValid')) {
+                        return this.send(this.get('action'));
+                    }
+                }.bind(this);
             }.bind(this), function(err) {
-                console.log(err);
-            })
-            .catch(function(err) {
-                console.log('form-for catch err', model.errors);
+                console.log('form for err', err, this.get('errors'));
+            }).catch(function(err) {
+                console.log('form-for catch err', err);
                 return false;
             });
+        }
     }
 });

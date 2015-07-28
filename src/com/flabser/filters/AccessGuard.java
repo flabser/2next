@@ -16,7 +16,9 @@ import javax.servlet.http.HttpSession;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.env.SessionPool;
 import com.flabser.server.Server;
+import com.flabser.servlets.Cookies;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.UserSession;
 
@@ -31,15 +33,19 @@ public class AccessGuard implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain) {
 		try {
 			HttpServletRequest http = (HttpServletRequest) request;
-			Server.logger.normalLogEntry(" Filter " + http.getMethod() + " " + http.getRequestURI());
+			Server.logger.normalLogEntry(" filter " + http.getMethod() + " " + http.getRequestURI());
 			if (http.getRequestURI().contains("session") || http.getRequestURI().contains("page") || http.getRequestURI().contains("Provider")) {
 				chain.doFilter(request, resp);
 			} else {
 
-				ServletContext srcServletContext = http.getServletContext();
-				ServletContext targetServletContext = srcServletContext.getContext("/Nubis");
-
-				System.out.println(srcServletContext.getContextPath() + " = " + targetServletContext.getAttribute("test"));
+				/*
+				 * ServletContext srcServletContext = http.getServletContext();
+				 * ServletContext targetServletContext =
+				 * srcServletContext.getContext("/Nubis");
+				 * 
+				 * System.out.println(srcServletContext.getContextPath() + " = "
+				 * + targetServletContext.getAttribute("test"));
+				 */
 
 				HttpSession jses = http.getSession(false);
 				if (jses != null) {
@@ -48,30 +54,53 @@ public class AccessGuard implements Filter {
 						ServletContext context = http.getServletContext();
 
 						AppEnv env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
-						if (us.isAppAllowed(env.appType)) {
-							Server.logger.warningLogEntry("Session alive ...");
-							chain.doFilter(request, resp);
-						} else {
-							HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
-							if (hh.size() > 0) {
-								Server.logger.warningLogEntry("Database initializing ...");
-								us.init((String) request.getAttribute("appid"));
+						if (env.appType.equals(AppEnv.ADMIN_APP_NAME)) {
+							if (us.currentUser.isSupervisor()) {
 								chain.doFilter(request, resp);
 							} else {
 								HttpServletResponse httpResponse = (HttpServletResponse) resp;
 								httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-								Server.logger.warningLogEntry("Access to application '" + env.appType + "' restricted");
+								Server.logger.warningLogEntry("User is not Administrator");
 							}
+						} else {
+							if (us.isAppAllowed(env.appType)) {
+								Server.logger.warningLogEntry("session alive ...");
+								chain.doFilter(request, resp);
+							} else {
+								HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
+								if (hh != null) {
+									Server.logger.warningLogEntry("database initializing ...");
+									us.init((String) request.getAttribute("appid"));
+									chain.doFilter(request, resp);
+								} else {
+									HttpServletResponse httpResponse = (HttpServletResponse) resp;
+									httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+									Server.logger.warningLogEntry("access to application '" + env.appType + "' restricted");
+								}
+							}
+						}
+					} else {
+						HttpServletResponse httpResponse = (HttpServletResponse) resp;
+						httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+						Server.logger.warningLogEntry("user session was expired");
+					}
+
+				} else {
+					Cookies appCookies = new Cookies(http);
+					String token = appCookies.auth;
+					if (token.length() > 0) {
+						UserSession userSession = SessionPool.getLoggeedUser(token);
+						if (userSession != null) {
+							jses = http.getSession(true);
+							jses.setAttribute(UserSession.SESSION_ATTR, userSession);
+							Server.logger.verboseLogEntry("user session \"" + userSession.toString() + "\" got from session pool");
+							doFilter(request, resp, chain);
 						}
 					} else {
 						HttpServletResponse httpResponse = (HttpServletResponse) resp;
 						httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 						Server.logger.warningLogEntry("User session was expired");
 					}
-				} else {
-					HttpServletResponse httpResponse = (HttpServletResponse) resp;
-					httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-					Server.logger.warningLogEntry("User session was expired");
 				}
 
 			}

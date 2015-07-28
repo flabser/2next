@@ -10,19 +10,26 @@ import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.restful.Application;
+import com.flabser.script._IContent;
 import com.flabser.solutions.DatabaseType;
 
 @JsonRootName("applicationProfile")
-public class ApplicationProfile {
+public class ApplicationProfile implements _IContent {
 	public int id;
 	public String appType;
 	public String appID;
 	public String appName;
 	public String owner;
+	@JsonIgnore
 	public DatabaseType dbType;
+	@JsonIgnore
 	public String dbHost = "localhost";
+	@JsonIgnore
 	public String dbLogin;
+	@JsonIgnore
 	public String dbPwd;
+	@JsonIgnore
 	public String dbName;
 	public String defaultURL;
 	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
@@ -37,12 +44,11 @@ public class ApplicationProfile {
 		fill(rs);
 	}
 
+	@Override
 	public StringBuffer toXML() {
 		StringBuffer output = new StringBuffer(1000);
-		return output.append("<entry><appname>" + appName + "</appname><owner>"
-				+ owner + "</owner>" + "<dbhost>" + dbHost
-				+ "</dbhost><dbname>" + dbName + "</dbname><dblogin>" + dbLogin
-				+ "</dblogin></entry>");
+		return output.append("<entry><appname>" + appName + "</appname><owner>" + owner + "</owner>" + "<dbhost>" + dbHost + "</dbhost><dbname>" + dbName
+				+ "</dbname><dblogin>" + dbLogin + "</dblogin></entry>");
 	}
 
 	public String getDbName() {
@@ -55,9 +61,7 @@ public class ApplicationProfile {
 	}
 
 	@JsonIgnore
-	public IDatabase getDatabase() throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException {
+	public IDatabase getDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
 		switch (dbType) {
 		case POSTGRESQL:
 			IDatabase db = new com.flabser.solutions.postgresql.Database();
@@ -104,6 +108,7 @@ public class ApplicationProfile {
 		dbPwd = rs.getString("DBPWD");
 	}
 
+	@JsonIgnore
 	public void setStatus(ApplicationStatusType onLine) {
 		status = onLine;
 		statusDate = new Date();
@@ -136,6 +141,14 @@ public class ApplicationProfile {
 
 	public void setDefaultURL(String defaultURL) {
 		this.defaultURL = defaultURL;
+	}
+
+	public Application getPOJO() {
+		Application app = new Application();
+		app.appType = appType;
+
+		return app;
+
 	}
 
 }

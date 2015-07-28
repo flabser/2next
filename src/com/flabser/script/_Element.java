@@ -1,6 +1,7 @@
 package com.flabser.script;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -17,12 +18,18 @@ public class _Element implements _IContent {
 		this.value = value;
 	}
 
-	public _Element(String name, ArrayList<String[]> value) {
+	public _Element(String name, Collection<?> value) {
 		this.name = name;
 		this.value = value;
 	}
 
-	public _Element(String name, Map value) {
+	@Deprecated
+	public _Element(String name, ArrayList<?> value) {
+		this.name = name;
+		this.value = value;
+	}
+
+	public _Element(String name, Map<?, ?> value) {
 		this.name = name;
 		this.value = value;
 	}
@@ -57,9 +64,11 @@ public class _Element implements _IContent {
 	public StringBuffer toXML() throws _Exception {
 		StringBuffer output = new StringBuffer(1000);
 
-		if (!name.equalsIgnoreCase(""))
+		if (!name.equalsIgnoreCase("")) {
 			output.append("<" + name + ">");
+		}
 
+		// System.out.println(value.getClass().getName() + " " + name);
 		if (value instanceof _IContent) {
 			output.append(((_IContent) value).toXML());
 		} else if (value instanceof ArrayList) {
@@ -71,6 +80,12 @@ public class _Element implements _IContent {
 				}
 				output.append("</value>");
 			}
+		} else if (value instanceof Collection) {
+			Collection<_IContent> list = (Collection) value;
+			for (_IContent e : list) {
+				output.append("<entry>" + e.toXML() + "</entry>");
+
+			}
 		} else if (value instanceof Map) {
 			Map map = (Map) value;
 
@@ -78,14 +93,15 @@ public class _Element implements _IContent {
 			while (it.hasNext()) {
 				Map.Entry pair = (Map.Entry) it.next();
 				output.append("<entry key=\"" + pair.getKey() + "\">" + pair.getValue() + "</entry>");
-				it.remove(); 
+				it.remove();
 			}
 
 		} else {
 			output.append(value);
 		}
-		if (!name.equalsIgnoreCase(""))
+		if (!name.equalsIgnoreCase("")) {
 			output.append("</" + name + ">");
+		}
 
 		return output;
 

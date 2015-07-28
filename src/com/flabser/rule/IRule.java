@@ -9,6 +9,6 @@ public interface IRule {
 	String getRuleAsXML(String app);
 	void plusHit();
 	String getRuleID();
-	boolean isAnonymousAccessAllowed();
+	boolean isAnonymousAllowed();
 	
 }

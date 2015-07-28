@@ -16,14 +16,10 @@
 	</xsl:template>
 
 	<xsl:template match="entry">
-		<a href="/{@key}">
-			<xsl:value-of select="." />
-		</a>
-	</xsl:template>
-
-	<xsl:template match="apps-count">
 		<div>
-			count <xsl:value-of select="." />
+			<a href="/{.}">
+				<xsl:value-of select="." />
+			</a>
 		</div>
 	</xsl:template>
 

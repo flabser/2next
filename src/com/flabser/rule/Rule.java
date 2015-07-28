@@ -56,32 +56,26 @@ public abstract class Rule implements IElement, IRule {
 	protected Rule(AppEnv env, File docFile) throws RuleException {
 		try {
 			this.env = env;
-			DocumentBuilderFactory pageFactory = DocumentBuilderFactory
-					.newInstance();
+			DocumentBuilderFactory pageFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder pageBuilder = pageFactory.newDocumentBuilder();
 			Document xmlFileDoc = pageBuilder.parse(docFile.toString());
 			doc = xmlFileDoc;
 			filePath = docFile.getAbsolutePath();
-			scriptDirPath = env.globalSetting.rulePath + File.separator
-					+ "Resources" + File.separator + "scripts";
+			scriptDirPath = env.globalSetting.rulePath + File.separator + "Resources" + File.separator + "scripts";
 			primaryScriptDirPath = Environment.primaryAppDir + scriptDirPath;
 
 			id = XMLUtil.getTextContent(doc, "/rule/@id");
-			Server.logger.verboseLogEntry("Load rule: "
-					+ this.getClass().getSimpleName() + ", id=" + id);
-			if (XMLUtil.getTextContent(doc, "/rule/@mode").equalsIgnoreCase(
-					"off")) {
+			Server.logger.verboseLogEntry("load rule: " + this.getClass().getSimpleName() + ", id=" + id);
+			if (XMLUtil.getTextContent(doc, "/rule/@mode").equalsIgnoreCase("off")) {
 				isOn = RunMode.OFF;
 				isValid = false;
 			}
 
-			if (XMLUtil.getTextContent(doc, "/rule/@anonymous")
-					.equalsIgnoreCase("on")) {
+			if (XMLUtil.getTextContent(doc, "/rule/@anonymous").equalsIgnoreCase("on")) {
 				allowAnonymousAccess = true;
 			}
 
-			if (XMLUtil.getTextContent(doc, "/rule/@history").equalsIgnoreCase(
-					"on")) {
+			if (XMLUtil.getTextContent(doc, "/rule/@history").equalsIgnoreCase("on")) {
 				addToHistory = true;
 			}
 
@@ -89,8 +83,7 @@ public abstract class Rule implements IElement, IRule {
 			if (!xsltFile.equals("")) {
 				publishAs = PublishAsType.HTML;
 			}
-			xsltFile = "webapps" + File.separator + env.appType
-					+ File.separator + "xsl" + File.separator + xsltFile;
+			xsltFile = "webapps" + File.separator + env.appType + File.separator + "xsl" + File.separator + xsltFile;
 			description = XMLUtil.getTextContent(doc, "/rule/description");
 
 			NodeList captionList = XMLUtil.getNodeList(doc, "/rule/caption");
@@ -102,12 +95,10 @@ public abstract class Rule implements IElement, IRule {
 			}
 
 		} catch (SAXParseException spe) {
-			Server.logger.errorLogEntry("XML-file structure error ("
-					+ docFile.getAbsolutePath() + ")");
+			Server.logger.errorLogEntry("XML-file structure error (" + docFile.getAbsolutePath() + ")");
 			Server.logger.errorLogEntry(spe);
 		} catch (FileNotFoundException e) {
-			throw new RuleException("Rule \"" + docFile.getAbsolutePath()
-					+ "\" has not found");
+			throw new RuleException("Rule \"" + docFile.getAbsolutePath() + "\" has not found");
 		} catch (ParserConfigurationException e) {
 			Server.logger.errorLogEntry(e);
 		} catch (IOException e) {
@@ -118,13 +109,11 @@ public abstract class Rule implements IElement, IRule {
 
 	}
 
-	protected String[] getWebFormValue(String fieldName,
-			Map<String, String[]> fields) throws WebFormValueException {
+	protected String[] getWebFormValue(String fieldName, Map<String, String[]> fields) throws WebFormValueException {
 		try {
 			return fields.get(fieldName);
 		} catch (Exception e) {
-			throw new WebFormValueException(
-					WebFormValueExceptionType.FORMDATA_INCORRECT, fieldName);
+			throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, fieldName);
 		}
 	}
 
@@ -148,14 +137,17 @@ public abstract class Rule implements IElement, IRule {
 
 	}
 
-	public boolean isAnonymousAccessAllowed() {
+	@Override
+	public boolean isAnonymousAllowed() {
 		return allowAnonymousAccess;
 	}
 
+	@Override
 	public void plusHit() {
 		hits++;
 	}
 
+	@Override
 	public String toString() {
 		return getClass().getSimpleName() + " id=" + id + ", file=" + filePath;
 	}
@@ -168,10 +160,10 @@ public abstract class Rule implements IElement, IRule {
 		return "";
 	}
 
+	@Override
 	public String getRuleAsXML(String app) {
-		String xmlText = "<rule id=\"" + id + "\" isvalid=\"" + isValid
-				+ "\" app=\"" + app + "\" ison=\"" + isOn + "\">"
-				+ "<description>" + description + "</description>";
+		String xmlText = "<rule id=\"" + id + "\" isvalid=\"" + isValid + "\" app=\"" + app + "\" ison=\"" + isOn + "\">" + "<description>" + description
+				+ "</description>";
 		return xmlText + "</fields></rule>";
 	}
 
@@ -180,11 +172,13 @@ public abstract class Rule implements IElement, IRule {
 		return addToHistory;
 	}
 
-	abstract public void update(Map<String, String[]> fields)
-			throws WebFormValueException;
+	@Override
+	abstract public void update(Map<String, String[]> fields) throws WebFormValueException;
 
+	@Override
 	abstract public boolean save();
 
+	@Override
 	public String getRuleID() {
 		return type + "_" + id;
 	}

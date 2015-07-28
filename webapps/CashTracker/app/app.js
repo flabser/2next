@@ -1,15 +1,15 @@
 "use strict";
 
-import Ember from 'ember';
+import Em from 'ember';
 import Resolver from 'ember/resolver';
 import loadInitializers from 'ember/load-initializers';
 import config from './config/environment';
 
 var App;
 
-Ember.MODEL_FACTORY_INJECTIONS = true;
+Em.MODEL_FACTORY_INJECTIONS = true;
 
-App = Ember.Application.extend({
+App = Em.Application.extend({
     modulePrefix: config.modulePrefix,
     podModulePrefix: config.podModulePrefix,
     Resolver: Resolver
