@@ -1,9 +1,10 @@
 package com.flabser.users;
 
-import java.io.Serializable;
-
 import com.flabser.rule.Role;
 
+import java.io.Serializable;
+
+@Deprecated
 public class UserRole implements Serializable {
 	public static final long serialVersionUID = 1L;
 
