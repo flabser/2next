@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Em from 'ember';
 import config from './config/environment';
 
-var Router = Ember.Router.extend({
+var Router = Em.Router.extend({
     // location: config.locationType
 });
 
@@ -56,12 +56,19 @@ Router.map(function() {
 
     this.route('dashboard');
     this.route('reports');
-    this.route('ws');
     this.route('login');
-    this.route('userprofile');
+    this.route('ws');
+
+    this.route('user_profile', {
+        path: 'user-profile'
+    });
+
+    this.route('unknown_url', {
+        path: '/*path'
+    });
 });
 
-Ember.Route.reopen({
+Em.Route.reopen({
     redirect: function() {
         if (this.routeName === 'index') {
             this.transitionTo('dashboard');

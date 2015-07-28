@@ -1,16 +1,18 @@
 import Ember from 'ember';
+
 const {
     Route, inject, $
 } = Ember;
 
 export default Route.extend({
 
+    tagName: '',
+
     session: inject.service(),
 
     translationsFetcher: inject.service(),
 
     activate: function() {
-        $('.page-loading').hide();
         this.windowOnResize();
         $(window).resize(this.windowOnResize);
     },
@@ -29,6 +31,11 @@ export default Route.extend({
 
     afterModel: function(user) {
         // this.set('i18n.locale', user.get('locale'));
+        if (!this.get('session').isAuthenticated()) {
+            window.location.href = 'Provider?id=login';
+        } else {
+            $('.page-loading').hide();
+        }
     },
 
     model: function() {
@@ -67,7 +74,17 @@ export default Route.extend({
             $('body').toggleClass('search-open');
         },
 
+        willTransition: function() {
+            this.send('hideOpenedNav');
+        },
+
         error: function(_error, transition) {
+            console.log(_error);
+
+            if (_error.errors && _error.errors.length && _error.errors[0].status === '401') {
+                // window.location.href = 'Provider?id=login';
+            }
+
             if (_error.status === 401 || (!this.get('session').isAuthenticated() && this.routeName !== 'login')) {
                 window.location.href = 'Provider?id=login';
 
@@ -76,13 +93,11 @@ export default Route.extend({
                 });*/
 
                 // this.transitionTo('login');
+            } else if (_error.status === '400') {
+                return true;
             } else {
                 return true;
             }
-        },
-
-        willTransition: function() {
-            this.send('hideOpenedNav');
         }
     }
 });
