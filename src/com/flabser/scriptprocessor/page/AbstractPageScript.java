@@ -90,7 +90,7 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 		return resp;
 	}
 
-	public abstract void doGet(_Session session, _WebFormData formData, String lang) throws WebFormValueException;
+	public abstract void doGet(_Session session, _WebFormData formData, String lang) throws WebFormValueException, _Exception;
 
 	public abstract void doPost(_Session session, _WebFormData formData, String lang) throws WebFormValueException;
 

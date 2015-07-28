@@ -1,4 +1,4 @@
-package com.flabser.users;
+package com.flabser.exception;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import com.flabser.restful.AuthUser;
 import com.flabser.server.Server;
 
 public class AuthFailedException extends WebApplicationException {
-	public AuthFailedExceptionType type;
+	public com.flabser.users.AuthFailedExceptionType type;
 
 	private static final long serialVersionUID = 3214292820186296427L;
 	private String errorText;
@@ -40,11 +40,6 @@ public class AuthFailedException extends WebApplicationException {
 		default:
 			break;
 		}
-	}
-
-	public AuthFailedException(AuthUser user, String addText) {
-		super(Response.status(Response.Status.UNAUTHORIZED).header(HttpHeaders.WWW_AUTHENTICATE, user.getError().toString()).entity(user).build());
-		errorText = addText;
 	}
 
 	public AuthFailedException(String text, HttpServletResponse response, boolean doTransform) {
@@ -84,7 +79,7 @@ public class AuthFailedException extends WebApplicationException {
 				Transformer trans = transFact.newTransformer(xsltSource);
 				trans.transform(xmlSource, result);
 			} else {
-				response.setContentType("text/xml;charset=Windows-1251");
+				response.setContentType("text/xml;charset=utf-8");
 				// response.sendError(550);
 				out = response.getWriter();
 				out.println(xmlText);

@@ -79,7 +79,7 @@ public class Environment implements ICache {
 			saxParser.parse(file, cfgXMLhandler);
 			Document xmlDocument = getDocument();
 
-			Server.logger.normalLogEntry("Initialize runtime environment");
+			Server.logger.normalLogEntry("initialize runtime environment");
 			initMimeTypes();
 
 			hostName = XMLUtil.getTextContent(xmlDocument, "/tn/hostname");
@@ -91,9 +91,9 @@ public class Environment implements ICache {
 			String portAsText = XMLUtil.getTextContent(xmlDocument, "/tn/port");
 			try {
 				httpPort = Integer.parseInt(portAsText);
-				Server.logger.normalLogEntry("WebServer is going to use port: " + httpPort);
+				Server.logger.normalLogEntry("webServer will use port: " + httpPort);
 			} catch (NumberFormatException nfe) {
-				Server.logger.normalLogEntry("WebServer is going to use standart port");
+				Server.logger.normalLogEntry("webServer will use standart port");
 			}
 
 			primaryAppDir = XMLUtil.getTextContent(xmlDocument, "/tn/primaryappdir");
@@ -155,12 +155,12 @@ public class Environment implements ICache {
 					smtpUser = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtpuser");
 					smtpPassword = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtppassword");
 					smtpPort = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtpport");
-					Server.logger.normalLogEntry("MailAgent will redirect some messages to host: " + SMTPHost);
+					Server.logger.normalLogEntry("mailAgent will redirect some messages to host: " + SMTPHost);
 				} else {
-					Server.logger.normalLogEntry("MailAgent is switch off");
+					Server.logger.normalLogEntry("mailAgent is switch off");
 				}
 			} catch (NumberFormatException nfe) {
-				Server.logger.normalLogEntry("MailAgent is not set");
+				Server.logger.normalLogEntry("mailAgent is not set");
 				SMTPHost = "";
 				defaultSender = "";
 			}

@@ -1,8 +1,10 @@
 package com.flabser.script;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import com.flabser.appenv.AppEnv;
+import com.flabser.env.Environment;
 import com.flabser.rule.Lang;
 import com.flabser.server.Server;
 import com.flabser.users.ApplicationProfile;
@@ -48,6 +50,11 @@ public class _AppEntourage {
 			list.add(p);
 		}
 		return list;
+	}
+
+	public Collection<AppEnv> getAvailableTemplates() {
+		Collection<AppEnv> apps = Environment.getApplications();
+		return apps;
 	}
 
 }

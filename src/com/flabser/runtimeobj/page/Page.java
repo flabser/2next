@@ -9,6 +9,7 @@ import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.SentenceCaption;
+import com.flabser.restful.AuthUser;
 import com.flabser.rule.Caption;
 import com.flabser.rule.page.ElementRule;
 import com.flabser.rule.page.PageRule;
@@ -17,6 +18,9 @@ import com.flabser.script._URL;
 import com.flabser.scriptprocessor.page.DoProcessor;
 import com.flabser.scriptprocessor.page.IQuerySaveTransaction;
 import com.flabser.supplier.SourceSupplier;
+import com.flabser.users.AuthFailedException;
+import com.flabser.users.AuthFailedExceptionType;
+import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.util.ScriptResponse;
 import com.flabser.util.Util;
@@ -34,11 +38,16 @@ public class Page {
 	protected Map<String, String[]> fields = new HashMap<String, String[]>();
 	protected UserSession userSession;
 
-	public Page(AppEnv env, UserSession userSession, PageRule rule, String httpMethod) {
+	public Page(AppEnv env, UserSession userSession, PageRule rule, String httpMethod) throws AuthFailedException {
 		this.userSession = userSession;
 		this.env = env;
 		this.rule = rule;
 		this.httpMethod = httpMethod;
+		if ((!rule.isAnonymousAllowed()) && userSession.currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
+			AuthUser authUser = userSession.currentUser.getPOJO();
+			authUser.setError(AuthFailedExceptionType.ACCESS_DENIED);
+			throw new AuthFailedException(authUser, "rule \"" + rule.id + "\" is not allowed anonymous access");
+		}
 	}
 
 	public HashMap<String, String[]> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {

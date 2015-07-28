@@ -14,10 +14,12 @@ import com.flabser.rule.RuleProvider;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
+import com.flabser.script._Exception;
+import com.flabser.script._IContent;
 import com.flabser.script._Page;
 import com.flabser.server.Server;
 
-public class AppEnv implements ICache {
+public class AppEnv implements ICache, _IContent {
 	public boolean isValid;
 	public String appType = "undefined";
 	public RuleProvider ruleProvider;
@@ -25,32 +27,33 @@ public class AppEnv implements ICache {
 	public String adminXSLTPath;
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
-	public final static String APP_ATTR = "usersession";
+	public final static String APP_ATTR = "appenv";
+	public final static String ADMIN_APP_NAME = "administrator";
 
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 
 	public AppEnv(String at) {
 		isValid = true;
-		appType = "administrator";
+		appType = ADMIN_APP_NAME;
 	}
 
 	public AppEnv(String appType, String globalFileName) {
 		this.appType = appType;
 		try {
-			Server.logger.normalLogEntry("# Start application \"" + appType + "\"");
+			Server.logger.normalLogEntry("# start application \"" + appType + "\"");
 			ruleProvider = new RuleProvider(this);
 			ruleProvider.initApp(globalFileName);
 			globalSetting = ruleProvider.global;
 
 			if (globalSetting.isOn == RunMode.ON) {
 				if (globalSetting.langsList.size() > 0) {
-					Server.logger.normalLogEntry("Dictionary is loading...");
+					Server.logger.normalLogEntry("dictionary is loading...");
 
 					try {
 						Localizator l = new Localizator(globalSetting);
 						vocabulary = l.populate("vocabulary");
 						if (vocabulary != null) {
-							Server.logger.normalLogEntry("Dictionary has loaded");
+							Server.logger.normalLogEntry("dictionary has loaded");
 						}
 					} catch (LocalizatorException le) {
 						Server.logger.verboseLogEntry(le.getMessage());
@@ -60,7 +63,7 @@ public class AppEnv implements ICache {
 
 				isValid = true;
 			} else {
-				Server.logger.warningLogEntry("Application: \"" + appType + "\" is off");
+				Server.logger.warningLogEntry("application: \"" + appType + "\" is off");
 
 			}
 
@@ -98,6 +101,12 @@ public class AppEnv implements ICache {
 	@Override
 	public void flush() {
 		cache.clear();
+	}
+
+	@Override
+	public StringBuffer toXML() throws _Exception {
+		StringBuffer output = new StringBuffer(1000);
+		return output.append("<entry><apptype>" + appType + "</apptype></entry>");
 	}
 
 }

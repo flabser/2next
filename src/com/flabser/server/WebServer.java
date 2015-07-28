@@ -28,7 +28,7 @@ public class WebServer implements IWebServer {
 
 	@Override
 	public void init(String defaultHostName) throws MalformedURLException, LifecycleException {
-		Server.logger.verboseLogEntry("Init webserver ...");
+		Server.logger.verboseLogEntry("init webserver ...");
 
 		tomcat = new Tomcat();
 		tomcat.setPort(Environment.httpPort);
@@ -68,7 +68,7 @@ public class WebServer implements IWebServer {
 			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
 			context.setDisplayName("Administrator");
 		} else {
-			Server.logger.normalLogEntry("Load \"" + docBase + "\" application...");
+			Server.logger.normalLogEntry("load \"" + docBase + "\" application...");
 
 			String db = new File("webapps/" + docBase).getAbsolutePath();
 			context = tomcat.addContext(URLPath, db);
@@ -192,13 +192,14 @@ public class WebServer implements IWebServer {
 		});
 	}
 
+	@Override
 	public synchronized void stopContainer() {
 		try {
 			if (tomcat != null) {
 				tomcat.stop();
 			}
 		} catch (LifecycleException exception) {
-			Server.logger.errorLogEntry("Cannot Stop WebServer " + exception.getMessage());
+			Server.logger.errorLogEntry("cannot stop WebServer normally " + exception.getMessage());
 		}
 
 	}

@@ -9,7 +9,6 @@ import com.flabser.users.ApplicationProfile;
 import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.UserRole;
 import com.flabser.users.UserStatusType;
-import com.flabser.users.VisibiltyType;
 
 @JsonRootName("authUser")
 public class AuthUser {
@@ -111,44 +110,6 @@ public class AuthUser {
 	@JsonIgnore
 	public void setRoles(HashSet<UserRole> roles2) {
 		// TODO Auto-generated method stub
-
-	}
-
-	class Application {
-		public String appID;
-		public String appName;
-		public String owner;
-		public String defaultURL;
-		private VisibiltyType visibilty;
-		public String appType;
-
-		public String getDefaultURL() {
-			return defaultURL;
-		}
-
-		public void setDefaultURL(String defaultURL) {
-			this.defaultURL = defaultURL;
-		}
-
-		public String getAppType() {
-			return appType;
-		}
-
-		public String getAppID() {
-			return appID;
-		}
-
-		public String getAppName() {
-			return appName;
-		}
-
-		public String getOwner() {
-			return owner;
-		}
-
-		public VisibiltyType getVisibilty() {
-			return visibilty;
-		}
 
 	}
 
