@@ -73,11 +73,6 @@
 					</a>
 				</nav>
 				<nav class="header-nav pull-right">
-					<xsl:if test="@id != 'login'">
-						<a class="nav-item" href="?id=about">
-							<xsl:value-of select="//captions/about/@caption" />
-						</a>
-					</xsl:if>
 					<xsl:if test="@id = 'login' and (@userid = 'anonymous' or @userid = '')">
 						<a href="?id=welcome" class="nav-item btn-login">
 							<span>
@@ -140,11 +135,6 @@
 					<li>
 						<a href="?id=help">
 							<xsl:value-of select="//captions/help/@caption" />
-						</a>
-					</li>
-					<li>
-						<a href="?id=about">
-							<xsl:value-of select="//captions/about/@caption" />
 						</a>
 					</li>
 					<li class="sep"></li>

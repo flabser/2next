@@ -1,8 +1,12 @@
-import Ember from 'ember';
+import Em from 'ember';
 
 const PATH = 'rest/session';
 
-export default Ember.Service.extend({
+const {
+    Service, $
+} = Em;
+
+export default Service.extend({
 
     _isAuthenticated: false,
 
@@ -11,18 +15,22 @@ export default Ember.Service.extend({
     },
 
     getSession: function() {
-        return Ember.$.get(PATH).then(this._setResult.bind(this));
+        return $.get(PATH).then(this._setResult.bind(this));
     },
 
     _setResult: function(result) {
-        this.set('user', result.authUser);
-        this.set('_isAuthenticated', true);
+        if (result.authUser.login) {
+            this.set('user', result.authUser);
+            this.set('_isAuthenticated', true);
+        } else {
+            this.set('_isAuthenticated', false);
+        }
     },
 
     login: function(userName, password) {
         const _this = this;
 
-        return Ember.$.ajax({
+        return $.ajax({
             method: 'POST',
             dataType: 'json',
             contentType: 'application/json',
@@ -43,7 +51,7 @@ export default Ember.Service.extend({
     logout: function() {
         this.set('_isAuthenticated', false);
         this.set('user', null);
-        return Ember.$.ajax({
+        return $.ajax({
             method: 'DELETE',
             url: PATH
         });

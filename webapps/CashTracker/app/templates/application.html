@@ -8,10 +8,9 @@
         </section>
         <aside class="layout_aside nav-ws">
             <header>
-                <a href="#/userprofile" class="user">
-                    <i class="fa fa-user"></i>
-                    <span>{{model.login}}</span>
-                </a>
+                {{#link-to "user_profile" class="user"}}
+                <i class="fa fa-user"></i>
+                <span>{{model.login}}</span> {{/link-to}}
             </header>
             <footer>
                 <a href="#index" class="ws-exit" {{action "logout"}}>

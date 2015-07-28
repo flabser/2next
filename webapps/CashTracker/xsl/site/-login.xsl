@@ -12,8 +12,8 @@
 						<xsl:value-of select="//captions/login_data_incorrect/@caption" />
 					</div>
 					<form method="post" name="login-form" class="login-form">
-						<input class="input" type="text" name="login" value="" required="required" placeholder="{//captions/login_login/@caption}" />
-						<input class="input" type="password" name="pwd" value="" required="required" placeholder="{//captions/login_pwd/@caption}" />
+						<input class="input" type="text" name="login" required="required" placeholder="{//captions/login_login/@caption}" />
+						<input class="input" type="password" name="pwd" required="required" placeholder="{//captions/password/@caption}" />
 						<div class="login-form-bottom">
 							<label class="noauth">
 								<input type="checkbox" name="noauth" value="1" />
