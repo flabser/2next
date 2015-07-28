@@ -649,7 +649,7 @@ public class SystemDatabase implements ISystemDatabase {
 			conn.setAutoCommit(false);
 			Statement stmt = conn.createStatement();
 			String sql = "update APPS set APPNAME='" + ap.appName + "', OWNER='" + ap.owner + "',DBHOST='" + ap.dbHost + "', DBLOGIN = '" + ap.dbLogin
-					+ "',DBPWD='" + ap.dbPwd + "' where ID=" + ap.appID;
+					+ "',DBPWD='" + ap.dbPwd + "' where ID=" + ap.id;
 
 			PreparedStatement pst = conn.prepareStatement(sql);
 			pst.executeUpdate();
