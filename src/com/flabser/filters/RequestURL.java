@@ -4,4 +4,8 @@ public class RequestURL {
 	String appName;
 	String appID;
 
+	RequestURL(String url) {
+
+	}
+
 }
