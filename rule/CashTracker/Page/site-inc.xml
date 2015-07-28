@@ -18,7 +18,7 @@
 	<caption name="logout" />
 
 	<caption name="login_login" />
-	<caption name="login_pwd" />
+	<caption name="password" />
 	<caption name="login_alien_device" />
 	<caption name="login_button" />
 	<caption name="lost_password" />

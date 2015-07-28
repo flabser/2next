@@ -16,7 +16,6 @@ public class WS extends _DoScript {
 		Collection<ApplicationProfile> list = session.getUser().getApplications();
 
 		publishElement("apps", list);
-		publishElement("apps-count", list.size());
 
 		_AppEntourage ent = session.getAppEntourage();
 		publishElement("templates", ent.getAvailableTemplates());

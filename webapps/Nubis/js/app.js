@@ -55,10 +55,10 @@ nubis.reg = function(form) {
         method: 'POST',
         datatype: 'text',
         //url: 'Provider?client=' + screen.height + 'x' + screen.width,
-        url: 'rest/page/reg-user',       
+        url: 'rest/page/reg-user',
         data: $(form).serialize(),
         success: function(result) {
-           console.log(result);
+            console.log(result);
             var pr = result.split(',');
             if (pr.indexOf('email') != -1) {
                 $('input[name=email]', form).addClass('invalid');
@@ -123,8 +123,8 @@ nubis.login = function(form) {
         url: 'rest/session',
         data: JSON.stringify({
             "authUser": {
-                login: form.username.value,
-                pwd: form.password.value
+                login: form.login.value,
+                pwd: form.pwd.value
             }
         }),
         success: function(result) {

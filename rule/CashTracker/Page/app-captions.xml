@@ -2,6 +2,8 @@
 <rule type="page" id="app-captions" mode="on">
 	<description>app-captions</description>
 
+	<caption name="logout" />
+
 	<caption name="save" />
 	<caption name="close" />
 	<caption name="cancel" />
@@ -37,6 +39,7 @@
 	<caption name="costcenter" />
 	<caption name="user" />
 	<caption name="transaction" />
+	<caption name="user_profile" />
 
 	<caption name="dashboard" />
 	<caption name="transactions" />
@@ -50,6 +53,7 @@
 	<caption name="tags" />
 	<caption name="users" />
 
+	<caption name="password" />
 	<caption name="name" />
 	<caption name="amount_control" />
 	<caption name="observers" />

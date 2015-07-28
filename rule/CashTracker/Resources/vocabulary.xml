@@ -76,10 +76,10 @@
 		<entry lang="BG">Мяста на расходи</entry>
 	</sentence>
 	<sentence mode="on" keyword="tags">
-		<entry lang="RUS">Тэги</entry>
-		<entry lang="KAZ">Тэги</entry>
+		<entry lang="RUS">Метки</entry>
+		<entry lang="KAZ">Белгілер</entry>
 		<entry lang="ENG">Tags</entry>
-		<entry lang="BG">Теги</entry>
+		<entry lang="BG">Метки</entry>
 	</sentence>
 	<sentence mode="on" keyword="users">
 		<entry lang="RUS">Пользователи</entry>
@@ -190,7 +190,7 @@
 		<entry lang="ENG" hint="E-mail">E-mail</entry>
 		<entry lang="BG" hint="E-mail">E-mail</entry>
 	</sentence>
-	<sentence mode="on" keyword="login_pwd">
+	<sentence mode="on" keyword="password">
 		<entry lang="RUS" hint="Пароль">Пароль</entry>
 		<entry lang="KAZ" hint="Пароль">Пароль</entry>
 		<entry lang="ENG" hint="Password">Password</entry>
@@ -407,7 +407,7 @@
 	<!-- -->
 	<sentence mode="on" keyword="btn.add">
 		<entry lang="RUS">Добавить</entry>
-		<entry lang="KAZ">Жана</entry>
+		<entry lang="KAZ">Жаңа</entry>
 		<entry lang="ENG">Add</entry>
 		<entry lang="BG">Добави</entry>
 	</sentence>
