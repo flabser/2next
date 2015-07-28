@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.Localizator;
@@ -31,6 +32,7 @@ public class AppEnv implements ICache, _IContent {
 	public final static String ADMIN_APP_NAME = "administrator";
 
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
+	private String docBase;
 
 	public AppEnv(String at) {
 		isValid = true;
@@ -44,7 +46,7 @@ public class AppEnv implements ICache, _IContent {
 			ruleProvider = new RuleProvider(this);
 			ruleProvider.initApp(globalFileName);
 			globalSetting = ruleProvider.global;
-
+			docBase = new File(Environment.primaryAppDir + "webapps/" + appType).getAbsolutePath();
 			if (globalSetting.isOn == RunMode.ON) {
 				if (globalSetting.langsList.size() > 0) {
 					Server.logger.normalLogEntry("dictionary is loading...");
@@ -107,6 +109,10 @@ public class AppEnv implements ICache, _IContent {
 	public StringBuffer toXML() throws _Exception {
 		StringBuffer output = new StringBuffer(1000);
 		return output.append("<entry><apptype>" + appType + "</apptype></entry>");
+	}
+
+	public String getDocBase() {
+		return docBase;
 	}
 
 }

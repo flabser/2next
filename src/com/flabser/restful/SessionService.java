@@ -38,6 +38,7 @@ import com.flabser.users.UserStatusType;
 @Path("/session")
 public class SessionService {
 
+	private static final String AUTH_COOKIE_NAME = "2nses";
 	@Context
 	ServletContext context;
 	@Context
@@ -109,8 +110,11 @@ public class SessionService {
 		String token = SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 		// context.setAttribute("test", "zzzz");
+		int maxAge = -1;
 
-		return Response.status(HttpServletResponse.SC_OK).entity(authUser).cookie(new NewCookie("2nses", token)).build();
+		NewCookie cookie = new NewCookie(AUTH_COOKIE_NAME, token, "/", null, null, maxAge, false);
+
+		return Response.status(HttpServletResponse.SC_OK).entity(authUser).cookie(cookie).build();
 	}
 
 	@DELETE

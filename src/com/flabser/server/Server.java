@@ -48,6 +48,12 @@ public class Server {
 
 		for (Site webApp : Environment.webAppToStart.values()) {
 			hosts.add(webServerInst.addApplication(webApp.name, "/" + webApp.appBase, webApp.appBase));
+			// hosts.add(webServerInst.addApplication(webApp.name, "/" +
+			// webApp.appBase + "/454", webApp.appBase));
+			// hosts.add(webServerInst.addApplication(webApp.name, "/" +
+			// webApp.appBase + "/424", webApp.appBase));
+			// hosts.add(webServerInst.addApplication(webApp.name, "/" +
+			// webApp.appBase + "/421", webApp.appBase));
 		}
 
 		String info = webServerInst.initConnectors();

@@ -366,4 +366,9 @@ public class User {
 		this.enabledApps = enabledApps;
 	}
 
+	public AuthUser getPOJO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

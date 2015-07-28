@@ -53,7 +53,7 @@ public class UserSession implements ICache {
 		ApplicationProfile appProfile = currentUser.getApplicationProfile(appID);
 		if (appProfile != null) {
 			// dataBase = appProfile.getDatabase();
-			acitveApps.put(appProfile.appType, new ActiveApplication(appProfile, appProfile.getDatabase()));
+			acitveApps.put(appProfile.appID, new ActiveApplication(appProfile, appProfile.getDatabase()));
 		}
 	}
 

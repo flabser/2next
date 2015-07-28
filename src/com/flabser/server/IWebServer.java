@@ -2,6 +2,7 @@ package com.flabser.server;
 
 import java.net.MalformedURLException;
 
+import org.apache.catalina.Context;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
 
@@ -17,5 +18,7 @@ public interface IWebServer {
 	void initDefaultURL(Host host);
 
 	void stopContainer();
+
+	Context addApplication(String appID, String appType) throws LifecycleException, MalformedURLException;
 
 }
