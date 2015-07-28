@@ -82,7 +82,7 @@ public class UserSession implements ICache {
 		history.add(entry);
 	}
 
-	public boolean isAppAllowed(String appType) {
+	public boolean isBootstrapped(String appType) {
 		ActiveApplication aa = acitveApps.get(appType);
 		if (aa == null) {
 			return false;

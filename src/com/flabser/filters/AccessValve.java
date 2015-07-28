@@ -3,18 +3,16 @@ package com.flabser.filters;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
+import org.apache.catalina.connector.Request;
+import org.apache.catalina.connector.Response;
+import org.apache.catalina.valves.ValveBase;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.pool.DatabasePoolException;
@@ -25,44 +23,20 @@ import com.flabser.servlets.Cookies;
 import com.flabser.users.ApplicationProfile;
 import com.flabser.users.UserSession;
 
-public class AccessGuard implements Filter {
+public class AccessValve extends ValveBase {
 
 	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-
-	}
-
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse resp, FilterChain chain) {
+	public void invoke(Request request, Response response) throws IOException, ServletException {
 		try {
-			HttpServletRequest http = (HttpServletRequest) request;
-			Server.logger.normalLogEntry(" filter " + http.getMethod() + " " + http.getRequestURI());
-			if (http.getRequestURI().contains("session") || http.getRequestURI().contains("page") || http.getRequestURI().contains("Provider")
-					|| http.getRequestURI().contains("js") || http.getRequestURI().contains("css")) {
-				// try {
-				// String v =
-				// Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
-				// Server.webServerInst.addApplication("CashTracker",
-				// "/CashTracker/" + v, "CashTracker");
-				// System.out.println("CashTracker/" + v);
-				// } catch (LifecycleException e) {
-				// TODO Auto-generated catch block
-				// e.printStackTrace();
-				// }
-				chain.doFilter(request, resp);
+			HttpServletRequest http = request;
+			String requestURI = http.getRequestURI();
+			Server.logger.normalLogEntry(" valve " + http.getMethod() + " " + http.getRequestURI());
+			if (requestURI.contains("session") || requestURI.contains("page") || requestURI.contains("Provider") || requestURI.contains("js")
+					|| requestURI.contains("css") || requestURI.contains("SharedResources") || requestURI.contains("img")) {
+				getNext().invoke(request, response);
 			} else {
 
-				/*
-				 * ServletContext srcServletContext = http.getServletContext();
-				 * ServletContext targetServletContext =
-				 * srcServletContext.getContext("/Nubis");
-				 * 
-				 * System.out.println(srcServletContext.getContextPath() + " = "
-				 * + targetServletContext.getAttribute("test"));
-				 */
-
-				String v = http.getRequestURI();
-				String g = v.substring(1, v.length());
+				String g = requestURI.substring(1, requestURI.length());
 				String appType = g.substring(0, g.indexOf("/"));
 				String appID = g.substring(appType.length() + 1, g.indexOf("/index.html"));
 
@@ -72,26 +46,22 @@ public class AccessGuard implements Filter {
 					if (us != null) {
 
 						AppEnv env = Environment.getApplication(appType);
-						// AppEnv env = (AppEnv)http.getServletContext();
-						// context.getAttribute(AppEnv.APP_ATTR);
 						if (env.appType.equals(AppEnv.ADMIN_APP_NAME)) {
 							if (us.currentUser.isSupervisor()) {
-								chain.doFilter(request, resp);
+								getNext().invoke(request, response);
 							} else {
-								HttpServletResponse httpResponse = (HttpServletResponse) resp;
+								HttpServletResponse httpResponse = response;
 								httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 								Server.logger.warningLogEntry("User is not Administrator");
 							}
 						} else {
 							if (us.isBootstrapped(appID)) {
 								Server.logger.warningLogEntry("session alive ...");
-								chain.doFilter(request, resp);
+								getNext().invoke(request, response);
 							} else {
 								HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
 								if (hh != null) {
-									Server.logger.warningLogEntry("database initializing ...");
-									// us.init((String)
-									// request.getAttribute("appid"));
+									Server.logger.warningLogEntry("application initializing ...");
 									us.init(appID);
 									try {
 										Context context = Server.webServerInst.addApplication(appID, env.appType);
@@ -100,17 +70,17 @@ public class AccessGuard implements Filter {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
-									System.out.println("request again " + v);
-									((HttpServletResponse) resp).sendRedirect(v);
+									System.out.println("request again " + requestURI);
+									((HttpServletResponse) response).sendRedirect(requestURI);
 								} else {
-									HttpServletResponse httpResponse = (HttpServletResponse) resp;
-									httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-									Server.logger.warningLogEntry("access to application '" + env.appType + "' restricted");
+									HttpServletResponse httpResponse = response;
+									httpResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+									Server.logger.warningLogEntry("\"" + env.appType + "\" has not set");
 								}
 							}
 						}
 					} else {
-						HttpServletResponse httpResponse = (HttpServletResponse) resp;
+						HttpServletResponse httpResponse = response;
 						httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 						Server.logger.warningLogEntry("user session was expired");
 					}
@@ -124,14 +94,14 @@ public class AccessGuard implements Filter {
 							jses = http.getSession(true);
 							jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 							Server.logger.verboseLogEntry("user session \"" + userSession.toString() + "\" got from session pool");
-							doFilter(request, resp, chain);
+							invoke(request, response);
 						} else {
-							HttpServletResponse httpResponse = (HttpServletResponse) resp;
+							HttpServletResponse httpResponse = response;
 							httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 							Server.logger.warningLogEntry("There is no user session ");
 						}
 					} else {
-						HttpServletResponse httpResponse = (HttpServletResponse) resp;
+						HttpServletResponse httpResponse = response;
 						httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 						Server.logger.warningLogEntry("User session was expired");
 					}
@@ -155,10 +125,6 @@ public class AccessGuard implements Filter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void destroy() {
 
 	}
 }
