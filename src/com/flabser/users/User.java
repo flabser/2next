@@ -349,15 +349,6 @@ public class User {
 
 	}
 
-	public AuthUser getAuthUser() {
-		AuthUser aUser = new AuthUser();
-		aUser.setLogin(login);
-		aUser.setName(userName);
-		aUser.setRoles(roles);
-		aUser.setApplications(applications);
-		return aUser;
-	}
-
 	public HashMap<String, HashMap<String, ApplicationProfile>> getEnabledApps() {
 		return enabledApps;
 	}
@@ -367,8 +358,12 @@ public class User {
 	}
 
 	public AuthUser getPOJO() {
-		// TODO Auto-generated method stub
-		return null;
+		AuthUser aUser = new AuthUser();
+		aUser.setLogin(login);
+		aUser.setName(userName);
+		aUser.setRoles(roles);
+		aUser.setApplications(applications);
+		return aUser;
 	}
 
 }
