@@ -1,8 +1,9 @@
 package com.flabser.restful;
 
+import com.flabser.script._IContent;
 import com.flabser.users.VisibiltyType;
 
-public class Application {
+public class Application implements _IContent {
 	public String appID;
 	public String appName;
 	public String owner;
@@ -36,6 +37,12 @@ public class Application {
 
 	public VisibiltyType getVisibilty() {
 		return visibilty;
+	}
+
+	@Override
+	public StringBuffer toXML() {
+		StringBuffer output = new StringBuffer(1000);
+		return output.append("<apptype>" + appType + "</apptype><appname>" + appName + "</appname><owner>" + owner + "</owner><appid>" + appID + "</appid>");
 	}
 
 }

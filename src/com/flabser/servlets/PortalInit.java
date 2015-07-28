@@ -38,8 +38,15 @@ public class PortalInit extends HttpServlet {
 				Server.logger.errorLogEntry(e);
 			}
 		} else {
-			// String appContextName = app.substring(0, app.indexOf("/"));
-			// System.out.println(appContextName);
+			/*
+			 * System.out.println("app=" + app); String appContextName =
+			 * app.substring(0, app.indexOf("/"));
+			 * System.out.println(appContextName); String global =
+			 * Environment.webAppToStart.get(appContextName).global; env = new
+			 * AppEnv(appContextName, global); Environment.addApplication(env);
+			 * isValid = true;
+			 */
+
 			String global = Environment.webAppToStart.get(app).global;
 			env = new AppEnv(app, global);
 			Environment.addApplication(env);
