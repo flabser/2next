@@ -20,10 +20,10 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.restful.RestProvider;
 import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.script._Session;
-import com.flabser.users.ApplicationProfile;
 import com.flabser.users.User;
 import com.flabser.users.UserStatusType;
 
@@ -35,7 +35,7 @@ public class AppService extends RestProvider {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public AppsList get() {
-		//	System.out.println("get users");
+		// System.out.println("get users");
 		_Session ses = getSession();
 		if (ses != null) {
 			ArrayList<ApplicationProfile> apps = sysDatabase.getAllApps("", RuntimeObjUtil.calcStartEntry(1, pageSize), pageSize);

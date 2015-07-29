@@ -34,9 +34,9 @@ public class AccessValve extends ValveBase {
 				getNext().invoke(request, response);
 			} else {
 
-				String g = requestURI.substring(1, requestURI.length());
-				String appType = g.substring(0, g.indexOf("/"));
-				String appID = g.substring(appType.length() + 1, g.indexOf("/index.html"));
+				RequestURL ru = new RequestURL(requestURI);
+				String appType = ru.appName;
+				String appID = ru.appID;
 
 				HttpSession jses = http.getSession(false);
 				if (jses != null) {
@@ -86,7 +86,7 @@ public class AccessValve extends ValveBase {
 				} else {
 					Cookies appCookies = new Cookies(http);
 					String token = appCookies.auth;
-					if (token.length() > 0) {
+					if (token != null) {
 						UserSession userSession = SessionPool.getLoggeedUser(token);
 						if (userSession != null) {
 							jses = http.getSession(true);
