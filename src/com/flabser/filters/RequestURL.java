@@ -9,7 +9,7 @@ public class RequestURL {
 
 	RequestURL(String url) {
 		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)/([\\p{Lower}0-9]{16}/)?[\\w\\.]+$");
-		Matcher matcher = pattern.matcher(url);
+		Matcher matcher = pattern.matcher(url != null ? url.trim() : "");
 		if (matcher.matches()) {
 			appName = matcher.group(1);
 			appID = matcher.group(2);
