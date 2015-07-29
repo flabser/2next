@@ -47,11 +47,11 @@ public class Server {
 		hosts.add(host);
 
 		for (Site webApp : Environment.webAppToStart.values()) {
-			if (webApp.appBase.equalsIgnoreCase("nubis")) {
-				webServerInst.addApplication(webApp.name, "/" + webApp.appBase, webApp.appBase);
-			} else {
-				webServerInst.initAppEnv(webApp.appBase);
-			}
+			// if (webApp.appBase.equalsIgnoreCase("nubis")) {
+			webServerInst.addApplication(webApp.name, "/" + webApp.appBase, webApp.appBase);
+			// } else {
+			// webServerInst.initAppEnv(webApp.appBase);
+			// }
 		}
 
 		String info = webServerInst.initConnectors();
