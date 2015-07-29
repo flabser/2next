@@ -1,8 +1,4 @@
-package com.flabser.users;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
+package com.flabser.dataengine.system.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -13,6 +9,12 @@ import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.restful.Application;
 import com.flabser.script._IContent;
 import com.flabser.solutions.DatabaseType;
+import com.flabser.users.ApplicationStatusType;
+import com.flabser.users.VisibiltyType;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
 
 @JsonRootName("applicationProfile")
 public class ApplicationProfile implements _IContent {
@@ -36,8 +38,21 @@ public class ApplicationProfile implements _IContent {
 	private Date statusDate;
 	private VisibiltyType visibilty = VisibiltyType.PUBLIC;
 
-	public ApplicationProfile() {
+	public ApplicationProfile() {}
 
+	public ApplicationProfile(int id, String appType, String appID, String appName, String owner, int dbType, String dbHost, String dbName, String dbLogin, String dbPwd, int status, Date statusDate){
+		this.id = id;
+		this.appType = appType;
+		this.appID = appID;
+		this.appName = appName;
+		this.owner = owner;
+		this.dbType = DatabaseType.getType(dbType);
+		this.dbHost = dbHost;
+		this.dbName = dbName;
+		this.dbLogin = dbLogin;
+		this.dbPwd = dbPwd;
+		this.status = ApplicationStatusType.getType(status);
+		this.statusDate = statusDate;
 	}
 
 	public ApplicationProfile(ResultSet rs) throws SQLException {
@@ -95,6 +110,7 @@ public class ApplicationProfile implements _IContent {
 		// IAppDatabaseInit
 	}
 
+	@Deprecated
 	public void fill(ResultSet rs) throws SQLException {
 		id = rs.getInt("ID");
 		appType = rs.getString("APPTYPE");

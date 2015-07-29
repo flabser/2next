@@ -1,7 +1,7 @@
 package com.flabser.dataengine.ft;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.users.ApplicationProfile;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 
 
 public interface IFTIndexEngine {
