@@ -41,8 +41,6 @@ public class Server {
 
 		Host host = webServerInst.addApplication("Administrator", "/Administrator", "Administrator");
 
-		webServerInst.initDefaultURL(host);
-
 		HashSet<Host> hosts = new HashSet<Host>();
 		hosts.add(host);
 
@@ -53,6 +51,8 @@ public class Server {
 			// webServerInst.initAppEnv(webApp.appBase);
 			// }
 		}
+
+		webServerInst.initDefaultURL(host);
 
 		String info = webServerInst.initConnectors();
 		Server.logger.normalLogEntry("webserver start (" + info + ")");
