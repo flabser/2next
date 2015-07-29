@@ -689,8 +689,6 @@ public class SystemDatabase implements ISystemDatabase {
 								Server.logger.errorLogEntry("Unable to create table \"" + tableName + "\"");
 								Server.logger.errorLogEntry(e);
 							}
-						} else {
-							Server.logger.errorLogEntry("Table \"" + tableName + "\" already exist");
 						}
 					}
 			);
