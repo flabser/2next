@@ -18,6 +18,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.env.Environment;
+import com.flabser.filters.AccessValve;
 import com.flabser.restful.ResourceLoader;
 
 public class WebServer implements IWebServer {
@@ -115,6 +116,43 @@ public class WebServer implements IWebServer {
 	}
 
 	@Override
+	public Context initAppEnv(String appType) {
+		Context context = null;
+
+		Server.logger.normalLogEntry("init \"" + appType + "\" environment...");
+
+		String db = new File("webapps/" + appType).getAbsolutePath();
+		String URLPath = "/" + appType;
+		context = tomcat.addContext(URLPath, db);
+		context.setDisplayName(appType);
+
+		for (int i = 0; i < defaultWelcomeList.length; i++) {
+			context.addWelcomeFile(defaultWelcomeList[i]);
+		}
+
+		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
+		context.addServletMapping("/", "default");
+
+		FilterDef filterAccessGuard = new FilterDef();
+		filterAccessGuard.setFilterName("AccessGuard");
+		filterAccessGuard.setFilterClass("com.flabser.filters.AccessGuard");
+
+		FilterMap filterAccessGuardMapping = new FilterMap();
+		filterAccessGuardMapping.setFilterName("AccessGuard");
+		filterAccessGuardMapping.addURLPattern("/*");
+
+		Wrapper w = Tomcat.addServlet(context, "PortalInit", "com.flabser.servlets.PortalInit");
+		w.setLoadOnStartup(1);
+
+		context.addServletMapping("/PortalInit", "PortalInit");
+
+		context.addMimeMapping("css", "text/css");
+		context.addMimeMapping("js", "text/javascript");
+
+		return null;
+	}
+
+	@Override
 	public Host addApplication(String siteName, String URLPath, String docBase) throws LifecycleException, MalformedURLException {
 		Context context = null;
 
@@ -144,17 +182,17 @@ public class WebServer implements IWebServer {
 
 		context.addServletMapping("/Provider", "Provider");
 
-		FilterDef filterAccessGuard = new FilterDef();
-		filterAccessGuard.setFilterName("AccessGuard");
-		filterAccessGuard.setFilterClass("com.flabser.filters.AccessGuard");
+		// FilterDef filterAccessGuard = new FilterDef();
+		// filterAccessGuard.setFilterName("AccessGuard");
+		// filterAccessGuard.setFilterClass("com.flabser.filters.AccessGuard");
 
-		FilterMap filterAccessGuardMapping = new FilterMap();
-		filterAccessGuardMapping.setFilterName("AccessGuard");
+		// FilterMap filterAccessGuardMapping = new FilterMap();
+		// filterAccessGuardMapping.setFilterName("AccessGuard");
 		// filterAccessGuardMapping.addServletName("Provider");
-		filterAccessGuardMapping.addURLPattern("/*");
+		// filterAccessGuardMapping.addURLPattern("/*");
 
-		context.addFilterDef(filterAccessGuard);
-		context.addFilterMap(filterAccessGuardMapping);
+		// context.addFilterDef(filterAccessGuard);
+		// context.addFilterMap(filterAccessGuardMapping);
 
 		// Tomcat.addServlet(context, "Login", "com.flabser.servlets.Login");
 		// context.addServletMapping("/Login", "Login");
@@ -180,7 +218,7 @@ public class WebServer implements IWebServer {
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
-		filterAccessGuardMapping.addServletName("Jersey REST Service");
+		// filterAccessGuardMapping.addServletName("Jersey REST Service");
 
 		context.setTldValidation(false);
 
@@ -197,24 +235,10 @@ public class WebServer implements IWebServer {
 			context.addWelcomeFile(defaultWelcomeList[i]);
 		}
 
+		tomcat.getEngine().getPipeline().addValve(new AccessValve());
+
 		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 		context.addServletMapping("/", "default");
-
-		FilterDef filterAccessGuard = new FilterDef();
-		filterAccessGuard.setFilterName("AccessGuard");
-		filterAccessGuard.setFilterClass("com.flabser.filters.AccessGuard");
-
-		FilterMap filterAccessGuardMapping = new FilterMap();
-		filterAccessGuardMapping.setFilterName("AccessGuard");
-		filterAccessGuardMapping.addURLPattern("/*");
-
-		context.addFilterDef(filterAccessGuard);
-		context.addFilterMap(filterAccessGuardMapping);
-		/*
-		 * Tomcat.addServlet(context, "Redirector",
-		 * "com.flabser.servlets.Redirector"); context.addServletMapping("/",
-		 * "Redirector");
-		 */
 
 	}
 

@@ -103,6 +103,11 @@ public class Environment implements ICache {
 
 			defaultRedirectURL = "/" + XMLUtil.getTextContent(xmlDocument, "/tn/applications/@default", false, "Workspace", true);
 
+			Site site = new Site();
+			site.appBase = "Nubis";
+			site.name = "Nubis";
+			webAppToStart.put("Nubis", site);
+
 			NodeList nodeList = XMLUtil.getNodeList(xmlDocument, "/tn/applications");
 			if (nodeList.getLength() > 0) {
 				org.w3c.dom.Element root = xmlDocument.getDocumentElement();
@@ -111,7 +116,7 @@ public class Environment implements ICache {
 					Node appNode = nodes.item(i);
 					if (XMLUtil.getTextContent(appNode, "name/@mode", false).equals("on")) {
 						String appName = XMLUtil.getTextContent(appNode, "name", false);
-						Site site = new Site();
+						site = new Site();
 						site.appBase = appName;
 						site.name = XMLUtil.getTextContent(appNode, "name/@sitename", false);
 						String globalAttrValue = XMLUtil.getTextContent(appNode, "name/@global", false);

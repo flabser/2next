@@ -21,4 +21,6 @@ public interface IWebServer {
 
 	Context addApplication(String appID, String appType) throws LifecycleException, MalformedURLException;
 
+	Context initAppEnv(String appType);
+
 }
