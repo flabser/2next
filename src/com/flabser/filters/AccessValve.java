@@ -1,27 +1,25 @@
 package com.flabser.filters;
 
-import java.io.IOException;
-import java.util.HashMap;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.flabser.appenv.AppEnv;
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.env.Environment;
+import com.flabser.env.SessionPool;
+import com.flabser.server.Server;
+import com.flabser.servlets.Cookies;
+import com.flabser.users.UserSession;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 
-import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.env.Environment;
-import com.flabser.env.SessionPool;
-import com.flabser.server.Server;
-import com.flabser.servlets.Cookies;
-import com.flabser.users.ApplicationProfile;
-import com.flabser.users.UserSession;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
 
 public class AccessValve extends ValveBase {
 

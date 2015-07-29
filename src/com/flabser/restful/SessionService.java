@@ -1,7 +1,20 @@
 package com.flabser.restful;
 
-import java.sql.SQLException;
-import java.util.HashMap;
+import com.flabser.appenv.AppEnv;
+import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.activity.IActivity;
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.env.SessionPool;
+import com.flabser.server.Server;
+import com.flabser.servlets.ServletUtil;
+import com.flabser.users.AuthFailedException;
+import com.flabser.users.AuthFailedExceptionType;
+import com.flabser.users.User;
+import com.flabser.users.UserSession;
+import com.flabser.users.UserStatusType;
+import org.omg.CORBA.UserException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -17,23 +30,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-
-import org.omg.CORBA.UserException;
-
-import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.DatabaseFactory;
-import com.flabser.dataengine.activity.IActivity;
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.system.ISystemDatabase;
-import com.flabser.env.SessionPool;
-import com.flabser.server.Server;
-import com.flabser.servlets.ServletUtil;
-import com.flabser.users.ApplicationProfile;
-import com.flabser.users.AuthFailedException;
-import com.flabser.users.AuthFailedExceptionType;
-import com.flabser.users.User;
-import com.flabser.users.UserSession;
-import com.flabser.users.UserStatusType;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 @Path("/session")
 public class SessionService {

@@ -4,7 +4,7 @@ import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
 import com.flabser.solutions.DatabaseType;
-import com.flabser.users.ApplicationProfile;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.users.User;
 import com.flabser.util.Util;
 

@@ -1,6 +1,7 @@
 package com.flabser.users;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.util.Util;
 

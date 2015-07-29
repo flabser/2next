@@ -1,11 +1,11 @@
 package com.flabser.dataengine.system;
 
+import com.flabser.dataengine.activity.IActivity;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.users.User;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import com.flabser.dataengine.activity.IActivity;
-import com.flabser.users.ApplicationProfile;
-import com.flabser.users.User;
 
 public interface ISystemDatabase {
 

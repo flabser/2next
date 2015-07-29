@@ -3,7 +3,7 @@ package com.flabser.dataengine;
 import com.flabser.dataengine.pool.DBConnectionPool;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.pool.IDBConnectionPool;
-import com.flabser.users.ApplicationProfile;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 
 public abstract class DatabaseCore {
 	protected IDBConnectionPool pool;

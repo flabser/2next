@@ -1,14 +1,14 @@
 package com.flabser.restful;
 
-import java.util.HashMap;
-import java.util.HashSet;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.users.ApplicationProfile;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.users.AuthFailedExceptionType;
-import com.flabser.users.UserRole;
+import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.users.UserStatusType;
+
+import java.util.HashMap;
+import java.util.HashSet;
 
 @JsonRootName("authUser")
 public class AuthUser {
@@ -108,7 +108,7 @@ public class AuthUser {
 	}
 
 	@JsonIgnore
-	public void setRoles(HashSet<UserRole> roles2) {
+	public void setRoles(HashSet<UserRole> roles) {
 		// TODO Auto-generated method stub
 
 	}
