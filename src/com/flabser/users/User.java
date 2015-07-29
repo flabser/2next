@@ -362,6 +362,7 @@ public class User {
 
 	}
 
+	@Deprecated
 	public AuthUser getAuthUser() {
 		AuthUser aUser = new AuthUser();
 		aUser.setLogin(login);
