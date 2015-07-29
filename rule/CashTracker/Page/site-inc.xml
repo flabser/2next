@@ -24,7 +24,6 @@
 	<caption name="lost_password" />
 	<caption name="no_verify_mail" />
 
-	<caption name="reg_budget_name" />
 	<caption name="reg_email" />
 	<caption name="reg_email_inf" />
 	<caption name="reg_email_invalid" />
