@@ -18,11 +18,11 @@ import org.apache.catalina.LifecycleException;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.server.Server;
 import com.flabser.servlets.Cookies;
-import com.flabser.users.ApplicationProfile;
 import com.flabser.users.UserSession;
 
 public class AccessGuard implements Filter {
