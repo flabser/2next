@@ -1,14 +1,5 @@
 package com.flabser.users;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-
-import org.apache.catalina.realm.RealmBase;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
@@ -19,12 +10,23 @@ import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.UserGroup;
+import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.AuthUser;
 import com.flabser.server.Server;
 import com.flabser.util.Util;
+import org.apache.catalina.realm.RealmBase;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 
 @JsonRootName("user")
 public class User {
@@ -34,13 +36,15 @@ public class User {
 	public String lastURL;
 	public LanguageType preferredLang = LanguageType.ENG;
 
-	private HashMap<String, HashMap<String, ApplicationProfile>> enabledApps = new HashMap<String, HashMap<String, ApplicationProfile>>();
-	private HashMap<String, ApplicationProfile> applications = new HashMap<String, ApplicationProfile>();
-	private HashSet<UserRole> roles = new HashSet<UserRole>();
+	private HashMap<String, HashMap<String, ApplicationProfile>> enabledApps = new HashMap<>();
+	private HashMap<String, ApplicationProfile> applications = new HashMap<>();
 	private transient ISystemDatabase sysDatabase;
 	private String login;
 	private String userName;
-	private HashMap<String, PersistentValue> persistentValues = new HashMap<String, PersistentValue>();
+	private HashSet<UserRole> roles = new HashSet<>();
+	private HashSet<UserGroup> groups = new HashSet<>();
+	private HashMap<String, PersistentValue> persistentValues = new HashMap<>();
+
 
 	private Date primaryRegDate;
 	private Date regDate;
@@ -48,7 +52,7 @@ public class User {
 	private String passwordHash = "";
 	private String email = "";
 
-	private int isSupervisor;
+	private boolean isSupervisor;
 	private int hash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
@@ -60,6 +64,27 @@ public class User {
 		login = ANONYMOUS_USER;
 	}
 
+	public User(int id, String userName, Date primaryRegDate, Date regDate, String login, String email, boolean isSupervisor, String password, String passwordHash, String defaultDbPwd, int hash, String verifyCode, UserStatusType status, HashSet<UserGroup> groups, HashSet<UserRole> roles, HashMap<String, ApplicationProfile> applications, boolean isValid ) {
+		this.id = id;
+		this.userName = userName;
+		this.primaryRegDate = primaryRegDate;
+		this.regDate = regDate;
+		this.login = login;
+		this.email = email;
+		this.isSupervisor = isSupervisor;
+		this.password = password;
+		this.passwordHash = passwordHash;
+		this.defaultDbPwd = defaultDbPwd;
+		this.hash = hash;
+		this.verifyCode = verifyCode;
+		this.status = status;
+		this.groups = groups;
+		this.roles = roles;
+		this.applications = applications;
+		this.isValid = isValid;
+	}
+
+	@Deprecated
 	public void fill(ResultSet rs) throws SQLException {
 		try {
 			id = rs.getInt("ID");
@@ -68,7 +93,7 @@ public class User {
 			regDate = rs.getTimestamp("REGDATE");
 			login = rs.getString("LOGIN");
 			setEmail(rs.getString("EMAIL"));
-			isSupervisor = rs.getInt("ISSUPERVISOR");
+			isSupervisor = rs.getBoolean("ISSUPERVISOR");
 			password = rs.getString("PWD");
 			passwordHash = rs.getString("PWDHASH");
 			defaultDbPwd = rs.getString("DEFAULTDBPWD");
@@ -110,24 +135,20 @@ public class User {
 	}
 
 	public boolean isSupervisor() {
-		if (isSupervisor == 1) {
-			return true;
-		} else {
-			return false;
-		}
+		return isSupervisor;
 	}
 
-	public boolean hasRole(String roleName) {
-		return true;
-	}
+//	public boolean hasRole(String roleName) {
+//		return true;
+//	}
 
-	public void addRole(UserRole role) {
-		roles.add(role);
-	}
-
-	public HashSet<UserRole> getRoles() {
-		return roles;
-	}
+//	public void addRole(UserRole role) {
+//		roles.add(role);
+//	}
+//
+//	public HashSet<UserRole> getRoles() {
+//		return roles;
+//	}
 
 	public void setRoles(HashSet<UserRole> roles) {
 		this.roles = roles;
@@ -229,16 +250,10 @@ public class User {
 				}
 			}
 			return true;
-		} catch (InstantiationException e) {
-			Server.logger.errorLogEntry(e);
-		} catch (IllegalAccessException e) {
-			Server.logger.errorLogEntry(e);
-		} catch (ClassNotFoundException e) {
+		} catch (InstantiationException | DatabasePoolException | IllegalAccessException | ClassNotFoundException e) {
 			Server.logger.errorLogEntry(e);
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
-		} catch (DatabasePoolException e) {
-			Server.logger.errorLogEntry(e);
 		}
 		return false;
 
@@ -327,12 +342,8 @@ public class User {
 		this.status = status;
 	}
 
-	public void setIsSupervisor(int isSupervisor) {
+	public void setIsSupervisor(boolean isSupervisor) {
 		this.isSupervisor = isSupervisor;
-	}
-
-	public int getIsSupervisor() {
-		return isSupervisor;
 	}
 
 	public void refresh(User u) {
@@ -349,15 +360,7 @@ public class User {
 
 	}
 
-	public HashMap<String, HashMap<String, ApplicationProfile>> getEnabledApps() {
-		return enabledApps;
-	}
-
-	public void setEnabledApps(HashMap<String, HashMap<String, ApplicationProfile>> enabledApps) {
-		this.enabledApps = enabledApps;
-	}
-
-	public AuthUser getPOJO() {
+	public AuthUser getAuthUser() {
 		AuthUser aUser = new AuthUser();
 		aUser.setLogin(login);
 		aUser.setName(userName);
@@ -366,4 +369,27 @@ public class User {
 		return aUser;
 	}
 
+	public HashMap<String, HashMap<String, ApplicationProfile>> getEnabledApps() {
+		return enabledApps;
+	}
+
+	public void setEnabledApps(HashMap<String, HashMap<String, ApplicationProfile>> enabledApps) {
+		this.enabledApps = enabledApps;
+	}
+
+	public HashSet<UserRole> getUserRoles() {
+		return roles;
+	}
+
+	public void setUserRoles(HashSet<UserRole> userRoles) {
+		this.roles = userRoles;
+	}
+
+	public HashSet<UserGroup> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(HashSet<UserGroup> groups) {
+		this.groups = groups;
+	}
 }

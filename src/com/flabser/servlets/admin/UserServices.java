@@ -1,20 +1,20 @@
 package com.flabser.servlets.admin;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.exception.RuleException;
 import com.flabser.localization.LocalizatorException;
 import com.flabser.runtimeobj.RuntimeObjUtil;
-import com.flabser.users.ApplicationProfile;
 import com.flabser.users.User;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class UserServices {
 	private ISystemDatabase sysDatabase;

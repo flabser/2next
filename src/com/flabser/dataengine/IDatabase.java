@@ -1,12 +1,12 @@
 package com.flabser.dataengine;
 
-import java.util.ArrayList;
-
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.script._IObject;
-import com.flabser.users.ApplicationProfile;
 import com.flabser.users.User;
+
+import java.util.ArrayList;
 
 
 public interface IDatabase {

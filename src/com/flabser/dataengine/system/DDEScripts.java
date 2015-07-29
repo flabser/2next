@@ -10,7 +10,7 @@ public class DDEScripts {
 				+ "pwd character varying(32),  "
 				+ "primaryregdate timestamp without time zone DEFAULT now(), "
 				+ "regdate timestamp without time zone, "
-				+ "ISSUPERVISOR integer, "
+				+ "ISSUPERVISOR boolean, "
 				+ "loginhash integer, "
 				+ "pwdhash character varying(64), "
 				+ "defaultDbPwd character varying(32), "
@@ -18,7 +18,12 @@ public class DDEScripts {
 				+ "status integer,"
 				+ "verifycode character varying(64),"
 				+ "preferredlang varchar(10),"
-				+ "CONSTRAINT users_pkey PRIMARY KEY (ID), CONSTRAINT users_id_unique UNIQUE (ID))";
+				+ "apps integer[], "
+				+ "roles integer[], "
+				+ "groups integer[], "
+				+ "CONSTRAINT users_pkey PRIMARY KEY (ID));" +
+				"" +
+				"create index users_login_hash on users using hash(login text_ops); ";
 
 		return createTable;
 	}
@@ -36,21 +41,7 @@ public class DDEScripts {
 				+ "dbpwd varchar(32), "
 				+ "status integer, "
 				+ "statusdate timestamp without time zone, "
-				+ "CONSTRAINT apps_pkey PRIMARY KEY (ID), CONSTRAINT apps_id_unique UNIQUE (ID))";
-		return dde;
-	}
-
-	public static String getUserAppsDDE() {
-		String dde = "CREATE TABLE USERAPPS (" + " ID serial NOT NULL,"
-				+ " USERID int NOT NULL," + " APPID int,"
-				+ " UNIQUE (USERID, APPID))";
-		return dde;
-	}
-
-	public static String getUserRolesDDE() {
-		String dde = "CREATE TABLE USERROLES (" + " ID serial NOT NULL,"
-				+ " USERID int NOT NULL," + " APPID int,"
-				+ " NAME varchar(32)," + " UNIQUE (USERID, APPID, NAME))";
+				+ "CONSTRAINT apps_pkey PRIMARY KEY (ID))";
 		return dde;
 	}
 
@@ -71,4 +62,44 @@ public class DDEScripts {
 		return dde;
 	}
 
+	public static final String ROLES_DDE =
+			"create table roles (" +
+					"id serial not null, " +
+					"name character varying, " +
+					"description character varying, " +
+					"app_id integer, " +
+					"is_on boolean, " +
+					"CONSTRAINT roles_pkey PRIMARY KEY (id)" +
+					");";
+
+	public static final String GROUPS_DDE =
+			"create table groups (" +
+					"id serial not null, " +
+					"name varchar, " +
+					"description varchar, " +
+					"roles_id integer[], " +
+					"CONSTRAINT groups_pkey PRIMARY KEY (id)" +
+					");";
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
