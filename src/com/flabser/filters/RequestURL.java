@@ -8,7 +8,7 @@ public class RequestURL {
 	String appID;
 
 	RequestURL(String url) {
-		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)/([\\p{Lower}0-9]{16}/)?[\\w\\.]+$");
+		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)/([\\p{Lower}0-9]{16}/)?.+$");
 		Matcher matcher = pattern.matcher(url != null ? url.trim() : "");
 		if (matcher.matches()) {
 			appName = matcher.group(1);
