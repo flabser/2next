@@ -1,7 +1,5 @@
 package com.flabser.filters.tests;
 
-import java.util.ArrayList;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,27 +9,29 @@ public class RequestURITest extends Assert {
 
 	@Test
 	public void test() {
-		ArrayList<String> variants = new ArrayList<String>();
-		;
-		variants.add("/Nubis/Provider");
-		variants.add("/Nubis/css/app.css");
-		variants.add("/SharedResources/vendor/jquery/jquery-2.1.4.min.js");
-		variants.add("/Nubis/js/app.js");
-		variants.add("/Nubis/rest/session");
-		variants.add("/CashTracker/zu2l161ce0cfi00b/favicon.png");
-		variants.add("/CashTracker/zu2l161ce0cfi00b/rest/session");
-		variants.add("/CashTracker/zu2l161ce0cfi00b");
-		variants.add("/CashTracker");
-		variants.add("/CashTracker//");
-		variants.add("");
 
-		for (String val : variants) {
-			System.out.println("val=" + val);
-			RequestURL ru = new RequestURL(val);
-			assertNotNull(ru);
-			assertNotNull(ru.getAppName());
-			assertNotNull(ru.getAppID());
-		}
+		assertNotNull(new RequestURL("/Nubis/Provider").getAppName());
+		assertNotNull(new RequestURL("/Nubis/Provider").getAppID());
+		assertNotNull(new RequestURL("/Nubis/css/app.css").getAppName());
+		assertNotNull(new RequestURL("/Nubis/css/app.css").getAppID());
+		assertNotNull(new RequestURL("/SharedResources/vendor/jquery/jquery-2.1.4.min.js").getAppName());
+		assertNotNull(new RequestURL("/SharedResources/vendor/jquery/jquery-2.1.4.min.js").getAppID());
+		assertNotNull(new RequestURL("/Nubis/js/app.js").getAppName());
+		assertNotNull(new RequestURL("/Nubis/js/app.js").getAppID());
+		assertNotNull(new RequestURL("/Nubis/rest/session").getAppName());
+		assertNotNull(new RequestURL("/Nubis/rest/session").getAppID());
+		assertNotNull(new RequestURL("/CashTracker/zu2l161ce0cfi00b/favicon.png").getAppName());
+		assertNotNull(new RequestURL("/CashTracker/zu2l161ce0cfi00b/favicon.png").getAppID());
+		assertNotNull(new RequestURL("/CashTracker/zu2l161ce0cfi00b/rest/session").getAppName());
+		assertNotNull(new RequestURL("/CashTracker/zu2l161ce0cfi00b/rest/session").getAppID());
+		assertNotNull(new RequestURL("/CashTracker/zu2l161ce0cfi00b").getAppName());
+		assertNotNull(new RequestURL("/CashTracker/zu2l161ce0cfi00b").getAppID());
+		assertNotNull(new RequestURL("/CashTracker").getAppName());
+		assertNotNull(new RequestURL("/CashTracker").getAppID());
+		assertNotNull(new RequestURL("/CashTracker//").getAppName());
+		assertNotNull(new RequestURL("/CashTracker//").getAppID());
+		assertNotNull(new RequestURL("").getAppName());
+		assertNotNull(new RequestURL("").getAppID());
 
 	}
 }
