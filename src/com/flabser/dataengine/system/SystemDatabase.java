@@ -687,19 +687,28 @@ public class SystemDatabase implements ISystemDatabase {
 	@Override
 	public int update(ApplicationProfile ap) {
 		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			Statement stmt = conn.createStatement();
-			String sql = "update APPS set APPNAME='" + ap.appName + "', OWNER='" + ap.owner + "',DBHOST='" + ap.dbHost + "', DBNAME='" + ap.dbName
-					+ "', DBLOGIN = '" + ap.dbLogin + "',DBPWD='" + ap.dbPwd + "'";
 
-			PreparedStatement pst = conn.prepareStatement(sql);
+		try(PreparedStatement pst = conn.prepareStatement(
+				"UPDATE APPS SET APPNAME = ?, OWNER = ?, DBHOST = ?, DBNAME = ?, DBLOGIN = ?, DBPWD = ?, APPTYPE = ?, APPID = ?, DBTYPE = ?, STATUS = ?, STATUSDATE = ? WHERE ID = ?;")){
+
+			pst.setString(1, ap.appName);
+			pst.setString(2, ap.owner);
+			pst.setString(3, ap.dbHost);
+			pst.setString(4, ap.dbName);
+			pst.setString(5, ap.dbLogin);
+			pst.setString(6, ap.dbPwd);
+			pst.setString(7, ap.appType);
+			pst.setString(8, ap.appID);
+			pst.setInt(9, ap.dbType.getCode());
+			pst.setInt(10, ap.status.getCode());
+			pst.setDate(11, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
+			pst.setInt(12, ap.id);
+
 			pst.executeUpdate();
+
 			conn.commit();
-			pst.close();
-			stmt.close();
 			return ap.id;
-		} catch (Throwable e) {
+		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;
 		} finally {
