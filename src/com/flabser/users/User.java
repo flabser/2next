@@ -1,5 +1,14 @@
 package com.flabser.users;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import org.apache.catalina.realm.RealmBase;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
@@ -19,14 +28,6 @@ import com.flabser.localization.LanguageType;
 import com.flabser.restful.AuthUser;
 import com.flabser.server.Server;
 import com.flabser.util.Util;
-import org.apache.catalina.realm.RealmBase;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 
 @JsonRootName("user")
 public class User {
@@ -64,8 +65,9 @@ public class User {
 	}
 
 	public User(int id, String userName, Date primaryRegDate, Date regDate, String login, String email, boolean isSupervisor, String password,
-			String passwordHash, String defaultDbPwd, int loginHash, String verifyCode, UserStatusType status, HashSet<UserGroup> groups, HashSet<UserRole> roles,
-			HashMap<String, ApplicationProfile> applications, boolean isValid) {
+			String passwordHash, String defaultDbPwd, int loginHash, String verifyCode, UserStatusType status, HashSet<UserGroup> groups,
+			HashSet<UserRole> roles, HashMap<String, ApplicationProfile> applications, boolean isValid) {
+		this.sysDatabase = DatabaseFactory.getSysDatabase();
 		this.id = id;
 		this.userName = userName;
 		this.primaryRegDate = primaryRegDate;
