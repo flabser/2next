@@ -39,7 +39,7 @@ public class UserServices {
 					+ "</username><email>" + user.getEmail() + "</email>"
 					+ "<password>" + user.getPwd() + "</password><isadmin>"
 					+ user.isSupervisor() + "</isadmin>" + "<hash>"
-					+ user.getHash() + "</hash><enabledapps>" + ea
+					+ user.getLoginHash() + "</hash><enabledapps>" + ea
 					+ "</enabledapps>";
 
 		}
