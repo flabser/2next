@@ -1,5 +1,18 @@
 package com.flabser.dataengine.system;
 
+import com.flabser.dataengine.DatabaseUtil;
+import com.flabser.dataengine.activity.Activity;
+import com.flabser.dataengine.activity.IActivity;
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.pool.IDBConnectionPool;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.UserGroup;
+import com.flabser.dataengine.system.entities.UserRole;
+import com.flabser.server.Server;
+import com.flabser.users.User;
+import com.flabser.users.UserStatusType;
+import org.apache.catalina.realm.RealmBase;
+
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -17,20 +30,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.apache.catalina.realm.RealmBase;
-
-import com.flabser.dataengine.DatabaseUtil;
-import com.flabser.dataengine.activity.Activity;
-import com.flabser.dataengine.activity.IActivity;
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.pool.IDBConnectionPool;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.dataengine.system.entities.UserGroup;
-import com.flabser.dataengine.system.entities.UserRole;
-import com.flabser.server.Server;
-import com.flabser.users.User;
-import com.flabser.users.UserStatusType;
 
 @SuppressWarnings({ "SqlDialectInspection", "SqlNoDataSourceInspection" })
 public class SystemDatabase implements ISystemDatabase {
@@ -64,88 +63,45 @@ public class SystemDatabase implements ISystemDatabase {
 	}
 
 	@Override
-	public User checkUserHash(String login, String pwd, String hashAsText) {
-		User user = new User();
-		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			Statement s = conn.createStatement();
-			String sql = "select * from USERS where LOGIN = '" + login + "'";
-			ResultSet rs = s.executeQuery(sql);
-			String password = "";
+	public User checkUserHash(String login, String pwd, String loginHash) {
+		User user = initUser(login);
+		if(user == null) return new User();
 
-			if (rs.next()) {
-				if (rs.getString("PWDHASH") != null) {
-					if (!rs.getString("PWDHASH").trim().equals("")) {
-						password = rs.getString("PWDHASH");
-						String pwdHash = "";
-						if (password.length() < 11) {
-							pwdHash = pwd.hashCode() + "";
-						} else {
-							pwdHash = RealmBase.Digest(pwd, "MD5", "UTF-8");
-						}
-						int hash1 = rs.getInt("LOGINHASH");
-						if (checkHash(hashAsText, hash1)) {
-							user = initUser(login);
-							user.isAuthorized = true;
-						} else if (checkHashPSW(pwdHash, password)) {
-							user = initUser(login);
-							user.isAuthorized = true;
-							if (password.length() < 11) {
-								pswToPswHash(user, pwd);
-							}
-						}
-					} else {
-						password = rs.getString("PWD");
-						int hash1 = rs.getInt("LOGINHASH");
-						if (checkHash(hashAsText, hash1)) {
-							user = initUser(login);
-							user.isAuthorized = true;
-						} else if (pwd.equals(password)) {
-							user = initUser(login);
-							user.isAuthorized = true;
-							pswToPswHash(user, password);
-						}
-					}
-				} else {
-					password = rs.getString("PWD");
-					int hash = rs.getInt("LOGINHASH");
-					if (checkHash(hashAsText, hash)) {
-						user = initUser(login);
-						user.isAuthorized = true;
-					} else if (pwd.equals(password)) {
-						user = initUser(login);
-						user.isAuthorized = true;
-						pswToPswHash(user, password);
-					}
-				}
-			}
-			rs.close();
-			s.close();
-			conn.commit();
+		if(checkHash(loginHash, user.getLoginHash())){
+			user.isAuthorized = true;
 			return user;
-		} catch (Throwable e) {
+		}
+
+		if(user.getPasswordHash() != null && user.getPasswordHash().trim().length() > 0) {
+			String pwdHash = user.getPasswordHash().length() < 11 ? pwd.hashCode() + "" : RealmBase.Digest(pwd, "MD5", "UTF-8");
+			if(user.getPasswordHash().equals(pwdHash)){
+				user.isAuthorized = true;
+				pswToPswHash(user, pwd);
+			}
+		} else {
+			if(pwd != null && pwd.trim().length() > 0 && pwd.equals(user.getPwd())){
+				user.isAuthorized = true;
+				pswToPswHash(user, pwd);
+			}
+		}
+
+		return user;
+	}
+
+	private void pswToPswHash(User user, String pwd){
+
+		Connection conn = dbPool.getConnection();
+		String pwdHsh = RealmBase.Digest(pwd, "MD5", "UTF-8");
+
+		try (PreparedStatement pst = conn.prepareStatement("update USERS set PWD = '', PWDHASH = ? where ID = ?")){
+			pst.setString(1, pwdHsh);
+			pst.setInt(2, user.id);
+			pst.executeUpdate();
+		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
-			return null;
 		} finally {
 			dbPool.returnConnection(conn);
 		}
-	}
-
-	private void pswToPswHash(User user, String pwd) throws SQLException {
-		Connection conn = dbPool.getConnection();
-		conn.setAutoCommit(false);
-		// String pwdHsh = pwd.hashCode()+"";
-		// String pwdHsh = getMD5Hash(pwd);
-		String pwdHsh = RealmBase.Digest(pwd, "MD5", "UTF-8");
-
-		String userUpdateSQL = "update USERS set PWD='', PWDHASH='" + pwdHsh + "'" + " where DOCID=" + user.id;
-		PreparedStatement pst = conn.prepareStatement(userUpdateSQL);
-		pst.executeUpdate();
-		conn.commit();
-		conn.close();
-		// user.setPasswordHash(pwd);
-		// user.setPassword("");
 	}
 
 	private User initUser(String login) {
@@ -166,8 +122,8 @@ public class SystemDatabase implements ISystemDatabase {
 				return new User(rs.getInt("ID"), rs.getString("USERNAME"), rs.getDate("PRIMARYREGDATE"), rs.getDate("REGDATE"), rs.getString("LOGIN"),
 						rs.getString("EMAIL"), rs.getBoolean("ISSUPERVISOR"), rs.getString("PWD"), rs.getString("PWDHASH"), rs.getString("DEFAULTDBPWD"),
 						rs.getInt("LOGINHASH"), rs.getString("VERIFYCODE"), UserStatusType.getType(rs.getInt("STATUS")), new HashSet<>(
-								getUserGroups(Arrays.asList((Integer[]) getObjectArray(rs.getArray("GROUPS"))))), new HashSet<>(
-								getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))), apps, true);
+						getUserGroups(Arrays.asList((Integer[]) getObjectArray(rs.getArray("GROUPS"))))), new HashSet<>(
+						getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))), apps, true);
 			}
 
 		} catch (SQLException e) {
@@ -182,15 +138,15 @@ public class SystemDatabase implements ISystemDatabase {
 			dbPool.returnConnection(conn);
 		}
 
-		return new User();
+		return null;
 	}
 
 	public List<UserRole> getUserRoles(Collection<Integer> ids) {
 		List<UserRole> result = new ArrayList<>();
 		Connection conn = dbPool.getConnection();
 		try (Statement getApps = conn.createStatement();
-				ResultSet rs = getApps.executeQuery("select id, name, description, app_id, is_on from " + "(select unnest(ARRAY"
-						+ ids.stream().collect(Collectors.toList()) + "::integer[]) as g_id) as ids inner join roles on ids.g_id = ID ")) {
+			 ResultSet rs = getApps.executeQuery("select id, name, description, app_id, is_on from " + "(select unnest(ARRAY"
+					 + ids.stream().collect(Collectors.toList()) + "::integer[]) as g_id) as ids inner join roles on ids.g_id = ID ")) {
 
 			while (rs.next()) {
 				result.add(new UserRole(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("app_id"), rs.getBoolean("is_on")));
@@ -208,8 +164,8 @@ public class SystemDatabase implements ISystemDatabase {
 		List<UserGroup> result = new ArrayList<>();
 		Connection conn = dbPool.getConnection();
 		try (Statement getApps = conn.createStatement();
-				ResultSet rs = getApps.executeQuery("select id, name, description, roles_id from " + "(select unnest(ARRAY"
-						+ ids.stream().collect(Collectors.toList()) + "::integer[]) as g_id) as ids inner join groups on ids.g_id = ID ")) {
+			 ResultSet rs = getApps.executeQuery("select id, name, description, roles_id from " + "(select unnest(ARRAY"
+					 + ids.stream().collect(Collectors.toList()) + "::integer[]) as g_id) as ids inner join groups on ids.g_id = ID ")) {
 
 			while (rs.next()) {
 				result.add(new UserGroup(rs.getInt("id"), rs.getString("name"), rs.getString("description"), new HashSet<>(getUserRoles(Arrays
@@ -232,10 +188,10 @@ public class SystemDatabase implements ISystemDatabase {
 		List<ApplicationProfile> result = new ArrayList<>();
 		Connection conn = dbPool.getConnection();
 		try (Statement getApps = conn.createStatement();
-				ResultSet rs = getApps
-						.executeQuery("select ID, APPTYPE, APPID, APPNAME, OWNER, DBTYPE, DBHOST, DBNAME, DBLOGIN, DBPWD, STATUS, STATUSDATE from "
-								+ "(select unnest(ARRAY" + ids.stream().collect(Collectors.toList())
-								+ "::integer[]) as app_id) as ids inner join apps on ids.app_id = ID ")) {
+			 ResultSet rs = getApps
+					 .executeQuery("select ID, APPTYPE, APPID, APPNAME, OWNER, DBTYPE, DBHOST, DBNAME, DBLOGIN, DBPWD, STATUS, STATUSDATE from "
+							 + "(select unnest(ARRAY" + ids.stream().collect(Collectors.toList())
+							 + "::integer[]) as app_id) as ids inner join apps on ids.app_id = ID ")) {
 
 			while (rs.next()) {
 				result.add(new ApplicationProfile(rs.getInt("ID"), rs.getString("APPTYPE"), rs.getString("APPID"), rs.getString("APPNAME"), rs
@@ -645,29 +601,9 @@ public class SystemDatabase implements ISystemDatabase {
 
 	private boolean checkHash(String hashAsString, int hash) {
 		try {
-			int userHash = Integer.parseInt(hashAsString);
-			if (userHash == hash) {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
-	}
-
-	private boolean checkHashPSW(String hashPSW, String hashPSWDB) {
-		try {
-
-			// int userHash = hashPSW;
-			if (hashPSW.equals(hashPSWDB)) {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
+			return (Integer.parseInt(hashAsString) == hash);
+		} catch (NumberFormatException ignored) {}
+		return false;
 	}
 
 	@Override

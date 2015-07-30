@@ -9,11 +9,12 @@ import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
 
+
 public class WS extends _DoScript {
 
 	@Override
 	public void doGet(_Session session, _WebFormData formData, String lang) throws _Exception {
-		HashMap<String, Application> list = session.getUser().getPOJO().getApplications();
+		HashMap <String, Application> list = session.getUser().getPOJO().getApplications();
 
 		publishElement("apps", list.values());
 

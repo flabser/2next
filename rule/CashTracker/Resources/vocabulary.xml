@@ -219,14 +219,8 @@
 	<sentence mode="on" keyword="reg">
 		<entry lang="RUS" hint="Регистрация">Регистрация</entry>
 		<entry lang="KAZ" hint="Тіркелу">Тіркелу</entry>
-		<entry lang="ENG" hint="Registration">Registration</entry>
+		<entry lang="ENG">Sign up</entry>
 		<entry lang="BG" hint="Регистрация">Регистрация</entry>
-	</sentence>
-	<sentence mode="on" keyword="reg_budget_name">
-		<entry lang="RUS" hint="Имя бюджета">Имя бюджета</entry>
-		<entry lang="KAZ" hint="Имя бюджета">Имя бюджета</entry>
-		<entry lang="ENG" hint="Budget name">Budget name</entry>
-		<entry lang="BG" hint="Име на Бюджет">Име на Бюджет</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_email">
 		<entry lang="RUS" hint="E-mail">E-mail</entry>
@@ -273,7 +267,7 @@
 	<sentence mode="on" keyword="reg_button">
 		<entry lang="RUS" hint="Зарегистрироваться">Зарегистрироваться</entry>
 		<entry lang="KAZ" hint="Зарегистрироваться">Зарегистрироваться</entry>
-		<entry lang="ENG" hint="Register">Register</entry>
+		<entry lang="ENG">Sign up</entry>
 		<entry lang="BG" hint="Регистрирайте се">Регистрирайте се</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_confirm_mail">

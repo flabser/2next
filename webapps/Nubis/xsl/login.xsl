@@ -9,28 +9,27 @@
 
 	<xsl:template name="page_content">
 		<div class="container">
-			<section class="signup">
+			<section class="login">
 				<h1 class="text-center">
-					<xsl:value-of select="//captions/signup_title/@caption" />
+					<xsl:value-of select="//captions/login_title/@caption" />
 				</h1>
-				<div class="alert alert-success reg-result-ok" role="alert" style="display:none;">reg-result-ok</div>
-				<form method="post" name="signup">
+				<div class="alert alert-danger" id="login-error" role="alert" style="display:none;">Login or password incorrect</div>
+				<form method="post" name="signin">
 					<div class="form-group">
-						<input class="form-control" type="email" name="email" required="required" placeholder="E-mail" autocomplete="off" />
+						<input class="form-control" type="email" name="login" required="required" placeholder="E-mail" />
 					</div>
 					<div class="form-group">
-						<input class="form-control" type="password" name="pwd" required="required" placeholder="{//captions/password/@caption}"
-							autocomplete="off" />
+						<input class="form-control" type="password" name="pwd" required="required" placeholder="{//captions/password/@caption}" />
 					</div>
 					<div class="form-group">
 						<button type="submit" class="btn btn-default">
-							<xsl:value-of select="//captions/signup_btn/@caption" />
+							<xsl:value-of select="//captions/login_btn/@caption" />
 						</button>
 					</div>
 				</form>
 			</section>
 			<footer>
-				<a href="?id=login">Sign in</a>
+				<a href="?id=signup">Sign up</a>
 			</footer>
 		</div>
 	</xsl:template>

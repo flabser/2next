@@ -8,14 +8,35 @@
 	</xsl:template>
 
 	<xsl:template name="page_content">
-		<xsl:apply-templates />
+		<div class="container">
+			<div class="ws">
+				<xsl:apply-templates />
+			</div>
+		</div>
 	</xsl:template>
 
 	<xsl:template match="apps">
-		<xsl:apply-templates select="entry" />
+		<h1>Apps</h1>
+		<xsl:apply-templates select="entry" mode="app" />
 	</xsl:template>
 
-	<xsl:template match="entry">
+	<xsl:template match="entry" mode="app">
+		<div>
+			<a href="/{apptype}/{appid}">
+				<xsl:value-of select="appname" />
+				<small>
+					<xsl:value-of select="concat('(', apptype, ')')" />
+				</small>
+			</a>
+		</div>
+	</xsl:template>
+
+	<xsl:template match="templates">
+		<h1>Templates</h1>
+		<xsl:apply-templates select="entry" mode="template" />
+	</xsl:template>
+
+	<xsl:template match="entry" mode="template">
 		<div>
 			<a href="/{.}">
 				<xsl:value-of select="." />

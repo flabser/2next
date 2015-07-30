@@ -4,14 +4,14 @@
 	<caching>NO_CACHING</caching>
 	<xsltfile>retry-send-verify-email.xsl</xsltfile>
 
-	<!-- <element mode="ON" type="INCLUDED_PAGE">
-		<name>site-inc</name>
-		<value>site-inc</value>
-	</element> -->
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="java_class">nubis.page.RetrySendVerifyEMailPage</doscript>
+			<doscript source="java_class">nubis.page.RetrySendVerifyEMail</doscript>
 		</events>
+	</element>
+
+	<element mode="ON" type="INCLUDED_PAGE">
+		<value>captions</value>
 	</element>
 
 	<caption name="retry_send_verify_email_title" />
