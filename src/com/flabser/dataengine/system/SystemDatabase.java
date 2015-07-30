@@ -540,7 +540,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 		try (PreparedStatement updateUser = conn.prepareStatement("update USERS set " + "USERNAME = ?, " + "LOGIN = ?, " + "EMAIL = ?, " + "PWD = ?, "
 				+ "ISSUPERVISOR = ?, " + "PRIMARYREGDATE = ?, " + "REGDATE = ?, " + "LOGINHASH = ?, " + "PWDHASH = ?, " + "LASTDEFAULTURL = ?, "
-				+ "STATUS = ?, " + "VERIFYCODE = ?, " + "APPS = ?, " + "ROLES = ?, " + "GROUPS = ? " + "where id = ?")) {
+				+ "STATUS = ?, " + "VERIFYCODE = ?, " + "APPS = ?, " + "ROLES = ?, " + "GROUPS = ?, DEFAULTDBPWD = ? " + "where id = ?")) {
 
 			updateUser.setString(1, user.getUserName());
 			updateUser.setString(2, user.getLogin());
@@ -557,7 +557,8 @@ public class SystemDatabase implements ISystemDatabase {
 			updateUser.setArray(13, conn.createArrayOf("integer", user.getApplications().stream().map(a -> a.id).toArray()));
 			updateUser.setArray(14, conn.createArrayOf("integer", user.getUserRoles().stream().map(UserRole::getId).toArray()));
 			updateUser.setArray(15, conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
-			updateUser.setInt(16, user.id);
+			updateUser.setString(16, user.getDefaultDbPwd());
+			updateUser.setInt(17, user.id);
 
 			updateUser.executeUpdate();
 
