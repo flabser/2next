@@ -1,14 +1,5 @@
 package com.flabser.users;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-
-import org.apache.catalina.realm.RealmBase;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
@@ -28,6 +19,14 @@ import com.flabser.localization.LanguageType;
 import com.flabser.restful.AuthUser;
 import com.flabser.server.Server;
 import com.flabser.util.Util;
+import org.apache.catalina.realm.RealmBase;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 
 @JsonRootName("user")
 public class User {
@@ -83,7 +82,7 @@ public class User {
 		this.status = status;
 		this.groups = groups;
 		this.roles = roles;
-		this.applications = applications;
+		applications.forEach((appID, app) -> addApplication(app));
 		this.isValid = isValid;
 	}
 
