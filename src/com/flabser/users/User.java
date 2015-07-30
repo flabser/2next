@@ -37,7 +37,7 @@ public class User {
 	public String lastURL;
 	public LanguageType preferredLang = LanguageType.ENG;
 
-	private HashMap<String, HashMap<String, ApplicationProfile>> enabledApps = new HashMap<>();
+	private HashMap<String, HashMap<String, ApplicationProfile>> applicationsMap = new HashMap<>();
 	private HashMap<String, ApplicationProfile> applications = new HashMap<>();
 	private transient ISystemDatabase sysDatabase;
 	private String login;
@@ -163,7 +163,7 @@ public class User {
 			apps = new HashMap<String, ApplicationProfile>();
 		}
 		apps.put(ap.appID, ap);
-		getEnabledApps().put(ap.appType, apps);
+		applicationsMap.put(ap.appType, apps);
 		applications.put(ap.appID, ap);
 	}
 
@@ -374,11 +374,11 @@ public class User {
 	}
 
 	public HashMap<String, HashMap<String, ApplicationProfile>> getEnabledApps() {
-		return enabledApps;
+		return applicationsMap;
 	}
 
 	public void setEnabledApps(HashMap<String, HashMap<String, ApplicationProfile>> enabledApps) {
-		this.enabledApps = enabledApps;
+		this.applicationsMap = enabledApps;
 	}
 
 	public HashSet<UserRole> getUserRoles() {
