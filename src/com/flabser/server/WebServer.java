@@ -170,7 +170,6 @@ public class WebServer implements IWebServer {
 			context.setDisplayName(URLPath.substring(1));
 
 			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
-			// context.setCrossContext(true);
 		}
 
 		for (int i = 0; i < defaultWelcomeList.length; i++) {
@@ -227,7 +226,7 @@ public class WebServer implements IWebServer {
 
 	@Override
 	public void initDefaultURL(Host host) {
-		String db = new File(Environment.primaryAppDir + "webapps/ROOT").getAbsolutePath();
+		String db = new File(Environment.primaryAppDir + "webapps/Nubis").getAbsolutePath();
 		Context context = tomcat.addContext(host, "", db);
 		context.setDisplayName("root");
 
@@ -239,6 +238,14 @@ public class WebServer implements IWebServer {
 
 		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 		context.addServletMapping("/", "default");
+
+		/*
+		 * Tomcat.addServlet(context, "Provider",
+		 * "com.flabser.servlets.Provider");
+		 * context.addServletMapping("/Provider", "Provider"); AppEnv env =
+		 * Environment.getApplication("Nubis");
+		 * context.getServletContext().setAttribute(AppEnv.APP_ATTR, env);
+		 */
 
 	}
 

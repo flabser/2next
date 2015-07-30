@@ -1,12 +1,13 @@
 package nubis.page;
 
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
 import com.flabser.solutions.DatabaseType;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.users.User;
 import com.flabser.util.Util;
+
 
 public class RegApp extends _DoScript {
 
@@ -46,12 +47,9 @@ public class RegApp extends _DoScript {
 
 	@Override
 	public void doPut(_Session session, _WebFormData formData, String lang) {
-
 	}
 
 	@Override
 	public void doDelete(_Session session, _WebFormData formData, String lang) {
-
 	}
-
 }

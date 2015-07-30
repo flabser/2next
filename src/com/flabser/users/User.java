@@ -1,5 +1,14 @@
 package com.flabser.users;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import org.apache.catalina.realm.RealmBase;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
@@ -19,14 +28,6 @@ import com.flabser.localization.LanguageType;
 import com.flabser.restful.AuthUser;
 import com.flabser.server.Server;
 import com.flabser.util.Util;
-import org.apache.catalina.realm.RealmBase;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 
 @JsonRootName("user")
 public class User {
@@ -44,7 +45,6 @@ public class User {
 	private HashSet<UserRole> roles = new HashSet<>();
 	private HashSet<UserGroup> groups = new HashSet<>();
 	private HashMap<String, PersistentValue> persistentValues = new HashMap<>();
-
 
 	private Date primaryRegDate;
 	private Date regDate;
@@ -64,7 +64,9 @@ public class User {
 		login = ANONYMOUS_USER;
 	}
 
-	public User(int id, String userName, Date primaryRegDate, Date regDate, String login, String email, boolean isSupervisor, String password, String passwordHash, String defaultDbPwd, int hash, String verifyCode, UserStatusType status, HashSet<UserGroup> groups, HashSet<UserRole> roles, HashMap<String, ApplicationProfile> applications, boolean isValid ) {
+	public User(int id, String userName, Date primaryRegDate, Date regDate, String login, String email, boolean isSupervisor, String password,
+			String passwordHash, String defaultDbPwd, int hash, String verifyCode, UserStatusType status, HashSet<UserGroup> groups, HashSet<UserRole> roles,
+			HashMap<String, ApplicationProfile> applications, boolean isValid) {
 		this.id = id;
 		this.userName = userName;
 		this.primaryRegDate = primaryRegDate;
@@ -138,17 +140,17 @@ public class User {
 		return isSupervisor;
 	}
 
-//	public boolean hasRole(String roleName) {
-//		return true;
-//	}
+	// public boolean hasRole(String roleName) {
+	// return true;
+	// }
 
-//	public void addRole(UserRole role) {
-//		roles.add(role);
-//	}
-//
-//	public HashSet<UserRole> getRoles() {
-//		return roles;
-//	}
+	// public void addRole(UserRole role) {
+	// roles.add(role);
+	// }
+	//
+	// public HashSet<UserRole> getRoles() {
+	// return roles;
+	// }
 
 	public void setRoles(HashSet<UserRole> roles) {
 		this.roles = roles;
@@ -360,6 +362,7 @@ public class User {
 
 	}
 
+	@Deprecated
 	public AuthUser getAuthUser() {
 		AuthUser aUser = new AuthUser();
 		aUser.setLogin(login);
@@ -391,5 +394,14 @@ public class User {
 
 	public void setGroups(HashSet<UserGroup> groups) {
 		this.groups = groups;
+	}
+
+	public AuthUser getPOJO() {
+		AuthUser aUser = new AuthUser();
+		aUser.setLogin(login);
+		aUser.setName(userName);
+		aUser.setRoles(roles);
+		aUser.setApplications(applications);
+		return aUser;
 	}
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rule type="page" id="captions" mode="on" anonymous="on">
 	<caption name="brand" />
-	<caption name="signin_title" />
-	<caption name="signin_btn" />
+	<caption name="login_title" />
+	<caption name="login_btn" />
 	<caption name="signup_title" />
 	<caption name="signup_btn" />
 	<caption name="password" />

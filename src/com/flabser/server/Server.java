@@ -41,18 +41,18 @@ public class Server {
 
 		Host host = webServerInst.addApplication("Administrator", "/Administrator", "Administrator");
 
-		webServerInst.initDefaultURL(host);
-
 		HashSet<Host> hosts = new HashSet<Host>();
 		hosts.add(host);
 
 		for (Site webApp : Environment.webAppToStart.values()) {
-			if (webApp.appBase.equalsIgnoreCase("nubis")) {
-				webServerInst.addApplication(webApp.name, "/" + webApp.appBase, webApp.appBase);
-			} else {
-				webServerInst.initAppEnv(webApp.appBase);
-			}
+			// if (webApp.appBase.equalsIgnoreCase("nubis")) {
+			webServerInst.addApplication(webApp.name, "/" + webApp.appBase, webApp.appBase);
+			// } else {
+			// webServerInst.initAppEnv(webApp.appBase);
+			// }
 		}
+
+		webServerInst.initDefaultURL(host);
 
 		String info = webServerInst.initConnectors();
 		Server.logger.normalLogEntry("webserver start (" + info + ")");

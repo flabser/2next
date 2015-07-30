@@ -57,6 +57,10 @@ public class _Session {
 		userSession.setLang(lang.name());
 	}
 
+	public String getAppType() {
+		return env.appType;
+	}
+
 	@Override
 	public String toString() {
 		return "userid=" + userSession.currentUser.getLogin() + ", database=" + dataBase.toString();

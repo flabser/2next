@@ -1,16 +1,8 @@
-.header {
-	border-bottom: 1px solid #ccc;
-}
-
 footer {
 	border-top: 1px solid #ccc;
 }
 
-input {
-	margin-bottom: 10px;
-}
-
-.signin, .signup {
+.login, .signup {
 	margin: auto;
 	max-width: 98%;
 	width: 360px;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rule type="page" id="signin" mode="on" anonymous="on">
+<rule type="page" id="login" mode="on" anonymous="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>signin.xsl</xsltfile>
+	<xsltfile>login.xsl</xsltfile>
 
 	<element mode="ON" type="INCLUDED_PAGE">
 		<value>captions</value>
