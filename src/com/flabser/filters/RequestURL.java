@@ -4,15 +4,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RequestURL {
-	private String appName;
-	private String appID;
+	private String appName = "";
+	private String appID = "";
 
 	public RequestURL(String url) {
-		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)/([\\p{Lower}0-9]{16})?.*$");
+		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)(/[\\p{Lower}0-9]{16})?(/.*)*$");
 		Matcher matcher = pattern.matcher(url != null ? url.trim() : "");
 		if (matcher.matches()) {
-			appName = matcher.group(1);
-			appID = matcher.group(2);
+			appName = matcher.group(1) == null ? "" : matcher.group(1) ;
+			appID = matcher.group(2) == null ? "" : matcher.group(2).substring(1);
 		}
 	}
 
