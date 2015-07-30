@@ -36,9 +36,9 @@ public class SystemDatabase implements ISystemDatabase {
 	public static final String jdbcDriver = "org.postgresql.Driver";
 	private IDBConnectionPool dbPool;
 	private static final SimpleDateFormat sqlDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	static String connectionURL = "jdbc:postgresql://localhost/2next_system";
+	static String connectionURL = "jdbc:postgresql://localhost/2Next";
 	static String dbUser = "postgres";
-	static String dbUserPwd = "3287";
+	static String dbUserPwd = "smartdoc";
 
 	// TODO Need to bring the setting out
 
@@ -703,19 +703,15 @@ public class SystemDatabase implements ISystemDatabase {
 		return 0;
 	}
 
-	@Deprecated
 	private void fillUserApp(Connection conn, User user) throws SQLException {
 		Statement s = conn.createStatement();
-		ResultSet rs = s.executeQuery("select * from USERAPPS where USERID = " + user.id);
+		ResultSet rs = s.executeQuery("select apps from USERS where id = " + user.id);
 		if (rs.next()) {
-			Statement s2 = conn.createStatement();
-			ResultSet rs2 = s2.executeQuery("select * from APPS where ID = " + rs.getInt("APPID"));
-			if (rs2.next()) {
-				ApplicationProfile ap = new ApplicationProfile(rs2);
-				user.getApplicationProfiles().put(ap.appName, ap);
+			Integer[] appsId = (Integer[])getObjectArray(rs.getArray("apps"));
+			List<ApplicationProfile> list = getApplicationProfiles(Arrays.asList(appsId));
+			for (ApplicationProfile applicationProfile : list) {
+				user.getApplicationProfiles().put(applicationProfile.appName, applicationProfile);
 			}
-			rs2.close();
-			s2.close();
 		}
 		rs.close();
 		s.close();
