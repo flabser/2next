@@ -654,25 +654,33 @@ public class SystemDatabase implements ISystemDatabase {
 	@Override
 	public int insert(ApplicationProfile ap) {
 		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			int key = 0;
-			Statement stmt = conn.createStatement();
-			String sql = "insert into APPS(APPNAME, OWNER, DBHOST, DBNAME, DBLOGIN, DBPWD) values(" + "'" + ap.appName + "','" + ap.owner + "','" + ap.dbHost
-					+ "','" + ap.dbName + "','" + ap.dbLogin + "','" + ap.dbPwd + "')";
 
-			PreparedStatement pst = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+		try(PreparedStatement pst = conn.prepareStatement(
+				"insert into APPS(APPNAME, OWNER, DBHOST, DBNAME, DBLOGIN, DBPWD, APPTYPE, APPID, DBTYPE, STATUS, STATUSDATE) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+				PreparedStatement.RETURN_GENERATED_KEYS)){
+
+			pst.setString(1, ap.appName);
+			pst.setString(2, ap.owner);
+			pst.setString(3, ap.dbHost);
+			pst.setString(4, ap.dbName);
+			pst.setString(5, ap.dbLogin);
+			pst.setString(6, ap.dbPwd);
+			pst.setString(7, ap.appType);
+			pst.setString(8, ap.appID);
+			pst.setInt(9, ap.dbType.getCode());
+			pst.setInt(10, ap.status.getCode());
+			pst.setDate(11, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
 
 			pst.executeUpdate();
-			ResultSet rs = pst.getGeneratedKeys();
-			while (rs.next()) {
-				key = rs.getInt(1);
+			try(ResultSet rs = pst.getGeneratedKeys()) {
+				if (rs.next()) {
+					ap.id  = rs.getInt(1);
+				}
 			}
+
 			conn.commit();
-			pst.close();
-			stmt.close();
-			return key;
-		} catch (Throwable e) {
+			return ap.id;
+		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;
 		} finally {
