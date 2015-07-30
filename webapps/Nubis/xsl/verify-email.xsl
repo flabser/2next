@@ -17,7 +17,7 @@
 					<xsl:when test="//process = 'verify-ok'">
 						<xsl:value-of select="//captions/verify_email_done/@caption" />
 						<p>
-							<a href="?id=signin">Sign In</a>
+							<a href="?id=login">Sign In</a>
 						</p>
 					</xsl:when>
 					<xsl:when test="//process = 'already-registered'">
