@@ -7,6 +7,7 @@ const {
 const PATH = 'rest/page/app-captions';
 
 export default Service.extend({
+
     i18n: inject.service(),
 
     fetch: function() {

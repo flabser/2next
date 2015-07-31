@@ -63,7 +63,7 @@ Router.map(function() {
         path: 'user-profile'
     });
 
-    this.route('unknown_url', {
+    this.route('error404', {
         path: '/*path'
     });
 });

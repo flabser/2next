@@ -13,13 +13,13 @@ export default Em.Component.extend({
 
     validationErrors: [],
 
-    isNotValid: Em.computed('model.isValid', function() {
+    /*isNotValid: Em.computed('model.isValid', function() {
         if (!Em.isNone(this.get('model.isValid'))) {
             return !this.get('model.isValid');
         } else {
             return false;
         }
-    }),
+    }),*/
 
     submit: function(e) {
         if (e) {
