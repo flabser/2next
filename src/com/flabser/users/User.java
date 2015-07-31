@@ -36,7 +36,7 @@ public class User {
 	public String lastURL;
 	public LanguageType preferredLang = LanguageType.ENG;
 
-	private HashMap<String, HashMap<String, ApplicationProfile>> enabledApps = new HashMap<>();
+	private HashMap<String, HashMap<String, ApplicationProfile>> applicationsMap = new HashMap<>();
 	private HashMap<String, ApplicationProfile> applications = new HashMap<>();
 	private transient ISystemDatabase sysDatabase;
 	private String login;
@@ -64,8 +64,9 @@ public class User {
 	}
 
 	public User(int id, String userName, Date primaryRegDate, Date regDate, String login, String email, boolean isSupervisor, String password,
-			String passwordHash, String defaultDbPwd, int loginHash, String verifyCode, UserStatusType status, HashSet<UserGroup> groups, HashSet<UserRole> roles,
-			HashMap<String, ApplicationProfile> applications, boolean isValid) {
+			String passwordHash, String defaultDbPwd, int loginHash, String verifyCode, UserStatusType status, HashSet<UserGroup> groups,
+			HashSet<UserRole> roles, HashMap<String, ApplicationProfile> applications, boolean isValid) {
+		this.sysDatabase = DatabaseFactory.getSysDatabase();
 		this.id = id;
 		this.userName = userName;
 		this.primaryRegDate = primaryRegDate;
@@ -81,7 +82,7 @@ public class User {
 		this.status = status;
 		this.groups = groups;
 		this.roles = roles;
-		this.applications = applications;
+		applications.forEach((appID, app) -> addApplication(app));
 		this.isValid = isValid;
 	}
 
@@ -161,7 +162,7 @@ public class User {
 			apps = new HashMap<String, ApplicationProfile>();
 		}
 		apps.put(ap.appID, ap);
-		getEnabledApps().put(ap.appType, apps);
+		applicationsMap.put(ap.appType, apps);
 		applications.put(ap.appID, ap);
 	}
 
@@ -372,11 +373,11 @@ public class User {
 	}
 
 	public HashMap<String, HashMap<String, ApplicationProfile>> getEnabledApps() {
-		return enabledApps;
+		return applicationsMap;
 	}
 
 	public void setEnabledApps(HashMap<String, HashMap<String, ApplicationProfile>> enabledApps) {
-		this.enabledApps = enabledApps;
+		this.applicationsMap = enabledApps;
 	}
 
 	public HashSet<UserRole> getUserRoles() {

@@ -4,18 +4,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RequestURL {
-	String appName;
-	String appID;
+	private String appName = "";
+	private String appID = "";
 
-	RequestURL(String url) {
-		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)/([\\p{Lower}0-9]{16}/)?[\\w\\.]+$");
+	public RequestURL(String url) {
+		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)(/[\\p{Lower}0-9]{16})?(/.*)*$");
 		Matcher matcher = pattern.matcher(url != null ? url.trim() : "");
 		if (matcher.matches()) {
-			appName = matcher.group(1);
-			appID = matcher.group(2);
-			if(appID != null)
-				appID = appID.substring(0, appID.length() - 1);
+			appName = matcher.group(1) == null ? "" : matcher.group(1) ;
+			appID = matcher.group(2) == null ? "" : matcher.group(2).substring(1);
 		}
+	}
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public String getAppID() {
+		return appID;
 	}
 
 }
