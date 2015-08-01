@@ -20,10 +20,10 @@ public class Unsecure extends ValveBase {
 		RequestURL ru = new RequestURL(requestURI);
 
 		Server.logger.normalLogEntry(" valve " + http.getMethod() + " " + http.getRequestURI());
-		if (!ru.isWebResource() && !ru.isAuth() && !ru.isTemplate()) {
-			((Secure) getNext()).invoke(request, response, ru);
-		} else {
+		if (ru.isWebResource() || ru.isAuth() || ru.isTemplate() || ru.isDefault()) {
 			getNext().getNext().invoke(request, response);
+		} else {
+			((Secure) getNext()).invoke(request, response, ru);
 		}
 	}
 

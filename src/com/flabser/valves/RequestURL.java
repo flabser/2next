@@ -35,9 +35,18 @@ public class RequestURL {
 		}
 	}
 
+	public boolean isDefault() {
+		// TODO Need to improve
+		if (url.equalsIgnoreCase("/")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public boolean isTemplate() {
 		// TODO Need to improve
-		if (url.equalsIgnoreCase("/CashTracker")) {
+		if (url.equalsIgnoreCase("/CashTracker") || url.equalsIgnoreCase("/Nubis")) {
 			return true;
 		} else {
 			return false;

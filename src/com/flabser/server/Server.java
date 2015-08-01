@@ -43,7 +43,7 @@ public class Server {
 			webServerInst.addAppTemplate(webApp.name, "/" + webApp.appBase, webApp.appBase);
 		}
 
-		webServerInst.initDefaultURL(null);
+		webServerInst.initDefaultURL();
 
 		String info = webServerInst.initConnectors();
 		Server.logger.normalLogEntry("webserver start (" + info + ")");

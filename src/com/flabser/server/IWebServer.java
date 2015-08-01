@@ -17,7 +17,7 @@ public interface IWebServer {
 
 	void startContainer();
 
-	void initDefaultURL(Host host);
+	void initDefaultURL();
 
 	void stopContainer();
 

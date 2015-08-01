@@ -15,6 +15,7 @@ import com.flabser.script._IContent;
 import com.flabser.solutions.DatabaseType;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.VisibiltyType;
+import com.flabser.util.Util;
 
 @JsonRootName("applicationProfile")
 public class ApplicationProfile implements _IContent {
@@ -103,6 +104,7 @@ public class ApplicationProfile implements _IContent {
 		ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
 
 		if (id == 0) {
+			appID = "_" + Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 14) + "_";
 			id = sysDatabase.insert(this);
 		} else {
 			id = sysDatabase.update(this);

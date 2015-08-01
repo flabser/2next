@@ -6,8 +6,6 @@ import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
 import com.flabser.solutions.DatabaseType;
 import com.flabser.users.User;
-import com.flabser.util.Util;
-
 
 public class RegApp extends _DoScript {
 
@@ -24,7 +22,6 @@ public class RegApp extends _DoScript {
 		if (appType != null) {
 			ApplicationProfile ap = new ApplicationProfile();
 			ap.appType = appType;
-			ap.appID = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
 			ap.appName = appName;
 			ap.owner = user.getLogin();
 			ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
