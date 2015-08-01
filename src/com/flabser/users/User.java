@@ -1,11 +1,11 @@
 package com.flabser.users;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import org.apache.catalina.realm.RealmBase;
 
@@ -66,7 +66,7 @@ public class User {
 
 	public User(int id, String userName, Date primaryRegDate, Date regDate, String login, String email, boolean isSupervisor, String password,
 			String passwordHash, String defaultDbPwd, int loginHash, String verifyCode, UserStatusType status, HashSet<UserGroup> groups,
-			HashSet<UserRole> roles, HashMap<String, ApplicationProfile> applications, boolean isValid) {
+			HashSet<UserRole> roles, List<ApplicationProfile> applications, boolean isValid) {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
 		this.id = id;
 		this.userName = userName;
@@ -83,30 +83,8 @@ public class User {
 		this.status = status;
 		this.groups = groups;
 		this.roles = roles;
-		applications.forEach((appID, app) -> addApplication(app));
+		applications.forEach(this::addApplication);
 		this.isValid = isValid;
-	}
-
-	@Deprecated
-	public void fill(ResultSet rs) throws SQLException {
-		try {
-			id = rs.getInt("ID");
-			userName = rs.getString("USERNAME");
-			primaryRegDate = rs.getTimestamp("PRIMARYREGDATE");
-			regDate = rs.getTimestamp("REGDATE");
-			login = rs.getString("LOGIN");
-			setEmail(rs.getString("EMAIL"));
-			isSupervisor = rs.getBoolean("ISSUPERVISOR");
-			password = rs.getString("PWD");
-			passwordHash = rs.getString("PWDHASH");
-			defaultDbPwd = rs.getString("DEFAULTDBPWD");
-			setLoginHash(rs.getInt("LOGINHASH"));
-			verifyCode = rs.getString("VERIFYCODE");
-			status = UserStatusType.getType(rs.getInt("STATUS"));
-			isValid = true;
-		} catch (Exception e) {
-			isValid = false;
-		}
 	}
 
 	@JsonIgnore
@@ -160,7 +138,7 @@ public class User {
 	public void addApplication(ApplicationProfile ap) {
 		HashMap<String, ApplicationProfile> apps = getEnabledApps().get(ap.appType);
 		if (apps == null) {
-			apps = new HashMap<String, ApplicationProfile>();
+			apps = new HashMap<>();
 		}
 		apps.put(ap.appID, ap);
 		applicationsMap.put(ap.appType, apps);

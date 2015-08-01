@@ -32,7 +32,7 @@ export default Route.extend({
     afterModel: function(user) {
         // this.set('i18n.locale', user.get('locale'));
         if (!this.get('session').isAuthenticated()) {
-            window.location.href = 'Provider?id=login';
+            // window.location.href = 'Provider?id=login';
         } else {
             $('.page-loading').hide();
         }
@@ -86,7 +86,7 @@ export default Route.extend({
             }
 
             if (_error.status === 401 || (!this.get('session').isAuthenticated() && this.routeName !== 'login')) {
-                window.location.href = 'Provider?id=login';
+                // window.location.href = 'Provider?id=login';
 
                 /*this.controllerFor('login').setProperties({
                     transition: transition
