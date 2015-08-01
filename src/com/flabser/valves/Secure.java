@@ -48,22 +48,28 @@ public class Secure extends ValveBase {
 						if (hh != null) {
 							Server.logger.warningLogEntry("application initializing ...");
 							us.init(appID);
-							Server.webServerInst.addApplication(appID, env);
-							Server.logger.warningLogEntry("application ready on: " + ru.getUrl());
-							((HttpServletResponse) response).sendRedirect(ru.getUrl());
+							try {
+								Server.webServerInst.addApplication(appID, env);
+								Server.logger.warningLogEntry("application ready on: " + ru.getUrl());
+								((HttpServletResponse) response).sendRedirect(ru.getUrl());
+							} catch (Exception e) {
+								response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+								getNext().invoke(request, response);
+							}
+
 						} else {
-							HttpServletResponse httpResponse = response;
-							httpResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-							Server.logger.warningLogEntry("\"" + env.appType + "\" has not set");
+							String msg = "\"" + env.appType + "\" has not set";
+							response.sendError(HttpServletResponse.SC_BAD_REQUEST, msg);
+							Server.logger.warningLogEntry(msg);
 							getNext().invoke(request, response);
 						}
 					} else {
 						getNext().invoke(request, response);
 					}
 				} else {
-					HttpServletResponse httpResponse = response;
-					httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-					Server.logger.warningLogEntry("user session was expired");
+					String msg = "user session was expired";
+					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
+					Server.logger.warningLogEntry(msg);
 					getNext().invoke(request, response);
 				}
 			} else {
@@ -77,15 +83,17 @@ public class Secure extends ValveBase {
 						Server.logger.verboseLogEntry("user session \"" + userSession.toString() + "\" got from session pool");
 						invoke(request, response);
 					} else {
-						HttpServletResponse httpResponse = response;
-						httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-						Server.logger.warningLogEntry("There is no user session ");
+						String msg = "there is no user session ";
+						response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
+						Server.logger.warningLogEntry(msg);
+						// exception(request, response, new
+						// AuthFailedException(msg));
 						getNext().invoke(request, response);
 					}
 				} else {
-					HttpServletResponse httpResponse = response;
-					httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-					Server.logger.warningLogEntry("User session was expired");
+					String msg = "user session was expired";
+					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
+					Server.logger.warningLogEntry(msg);
 					getNext().invoke(request, response);
 				}
 

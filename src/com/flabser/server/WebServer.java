@@ -3,6 +3,7 @@ package com.flabser.server;
 import java.io.File;
 import java.net.MalformedURLException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.Context;
@@ -112,7 +113,7 @@ public class WebServer implements IWebServer {
 	}
 
 	@Override
-	public Context addApplication(String appID, AppEnv env) {
+	public Context addApplication(String appID, AppEnv env) throws ServletException {
 		Context context = null;
 
 		Server.logger.normalLogEntry("add context \"" + env.appType + "/" + appID + "\" application...");
@@ -124,7 +125,7 @@ public class WebServer implements IWebServer {
 
 			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 
-			initErrorPages(context);
+			// initErrorPages(context);
 
 			for (int i = 0; i < defaultWelcomeList.length; i++) {
 				context.addWelcomeFile(defaultWelcomeList[i]);
@@ -152,6 +153,7 @@ public class WebServer implements IWebServer {
 			context.setTldValidation(false);
 		} catch (IllegalArgumentException iae) {
 			Server.logger.warningLogEntry("Context \"" + URLPath + "\" has not been initialized");
+			throw new ServletException("Context \"" + URLPath + "\" has not been initialized");
 		}
 		context.getServletContext().setAttribute(AppEnv.APP_ATTR, env);
 		return context;
@@ -161,7 +163,7 @@ public class WebServer implements IWebServer {
 	public Host addAppTemplate(String siteName, String URLPath, String docBase) throws LifecycleException, MalformedURLException {
 		Context context = null;
 
-		Server.logger.normalLogEntry("load \"" + docBase + "\" application...");
+		Server.logger.normalLogEntry("load \"" + docBase + "\" application template...");
 
 		String db = new File("webapps/" + docBase).getAbsolutePath();
 		context = tomcat.addContext(URLPath, db);

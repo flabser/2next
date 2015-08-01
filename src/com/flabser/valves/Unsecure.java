@@ -17,14 +17,17 @@ public class Unsecure extends ValveBase {
 	public void invoke(Request request, Response response) throws IOException, ServletException {
 		HttpServletRequest http = request;
 		String requestURI = http.getRequestURI();
+		String params = http.getQueryString();
+		if (params != null) {
+			requestURI = requestURI + "?" + http.getQueryString();
+		}
 		RequestURL ru = new RequestURL(requestURI);
 
-		Server.logger.normalLogEntry(" valve " + http.getMethod() + " " + http.getRequestURI());
-		if (ru.isWebResource() || ru.isAuth() || ru.isTemplate() || ru.isDefault()) {
+		Server.logger.normalLogEntry(" valve " + http.getMethod() + " " + requestURI);
+		if (ru.isWebResource() || ru.isAuth() || ru.isTemplate() || ru.isDefault() || ru.isServerMessage()) {
 			getNext().getNext().invoke(request, response);
 		} else {
 			((Secure) getNext()).invoke(request, response, ru);
 		}
 	}
-
 }

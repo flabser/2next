@@ -37,7 +37,7 @@ public class ApplicationProfile implements _IContent {
 	public String defaultURL;
 	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
 	private Date statusDate;
-	private VisibiltyType visibilty = VisibiltyType.PUBLIC;
+	private VisibiltyType visibilty;;
 
 	public ApplicationProfile() {
 	}

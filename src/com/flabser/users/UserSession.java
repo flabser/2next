@@ -202,10 +202,6 @@ public class UserSession implements ICache {
 			return v;
 		}
 
-		public Object getEntries() {
-			return null;
-		}
-
 		public HistoryEntry getLastEntry() {
 			try {
 				return history.getLast();

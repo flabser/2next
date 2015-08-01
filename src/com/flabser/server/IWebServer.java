@@ -2,6 +2,8 @@ package com.flabser.server;
 
 import java.net.MalformedURLException;
 
+import javax.servlet.ServletException;
+
 import org.apache.catalina.Context;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
@@ -21,7 +23,7 @@ public interface IWebServer {
 
 	void stopContainer();
 
-	Context addApplication(String appID, AppEnv env);
+	Context addApplication(String appID, AppEnv env) throws ServletException;
 
 	Context initAdministartor();
 

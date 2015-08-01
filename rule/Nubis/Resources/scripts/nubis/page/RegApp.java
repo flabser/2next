@@ -6,6 +6,7 @@ import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
 import com.flabser.solutions.DatabaseType;
 import com.flabser.users.User;
+import com.flabser.users.VisibiltyType;
 
 public class RegApp extends _DoScript {
 
@@ -16,13 +17,20 @@ public class RegApp extends _DoScript {
 
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
+		VisibiltyType vis = VisibiltyType.ONLY_MEMBERS;
 		User user = session.getUser();
 		String appType = formData.getValueSilently("apptype");
 		String appName = formData.getValueSilently("appname");
+		String visibilty = formData.getValueSilently("visibilty");
+		if (visibilty.equalsIgnoreCase("public")) {
+			vis = VisibiltyType.PUBLIC;
+		}
+
 		if (appType != null) {
 			ApplicationProfile ap = new ApplicationProfile();
 			ap.appType = appType;
 			ap.appName = appName;
+			ap.setVisibilty(vis);
 			ap.owner = user.getLogin();
 			ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
 			ap.dbType = DatabaseType.POSTGRESQL;
