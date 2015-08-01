@@ -18,7 +18,7 @@
 		</xsl:call-template>
 	</xsl:template>
 
-	<xsl:template name="page_content">
+	<xsl:template name="_content">
 		<div class="container">
 			<h1>
 				<xsl:value-of select="//captions/retry_send_verify_email_title/@caption" />

@@ -7,7 +7,7 @@
 		<xsl:call-template name="layout" />
 	</xsl:template>
 
-	<xsl:template name="page_content">
+	<xsl:template name="_content">
 		<xsl:choose>
 			<xsl:when test="//recovery-mode = 'password'">
 				<xsl:call-template name="page_content_password" />

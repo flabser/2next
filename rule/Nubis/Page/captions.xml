@@ -3,6 +3,7 @@
 	<caption name="brand" />
 	<caption name="login_title" />
 	<caption name="login_btn" />
+	<caption name="logout" />
 	<caption name="signup_title" />
 	<caption name="signup_btn" />
 	<caption name="password" />
