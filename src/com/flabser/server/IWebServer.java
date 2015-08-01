@@ -11,7 +11,7 @@ import com.flabser.appenv.AppEnv;
 public interface IWebServer {
 	void init(String defaultHostName) throws MalformedURLException, LifecycleException;
 
-	Host addApplication(String siteName, String URLPath, String docBase) throws LifecycleException, MalformedURLException;
+	Host addAppTemplate(String siteName, String URLPath, String docBase) throws LifecycleException, MalformedURLException;
 
 	String initConnectors();
 
@@ -23,6 +23,6 @@ public interface IWebServer {
 
 	Context addApplication(String appID, AppEnv env);
 
-	Context initAppEnv(String appType);
+	Context initAdministartor();
 
 }

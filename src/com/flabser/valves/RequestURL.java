@@ -35,6 +35,15 @@ public class RequestURL {
 		}
 	}
 
+	public boolean isTemplate() {
+		// TODO Need to improve
+		if (url.equalsIgnoreCase("/CashTracker")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public boolean isAuth() {
 		// TODO Need to improve
 		if (url.contains("session") || url.equalsIgnoreCase("/Nubis/Provider")) {

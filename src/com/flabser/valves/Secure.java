@@ -90,6 +90,8 @@ public class Secure extends ValveBase {
 				}
 
 			}
+		} else {
+			getNext().invoke(request, response);
 		}
 
 	}

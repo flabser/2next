@@ -3,9 +3,7 @@ package com.flabser.server;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Date;
-import java.util.HashSet;
 
-import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
 
 import com.flabser.dataengine.IDatabase;
@@ -39,20 +37,13 @@ public class Server {
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
 		webServerInst.init(Environment.hostName);
 
-		Host host = webServerInst.addApplication("Administrator", "/Administrator", "Administrator");
-
-		HashSet<Host> hosts = new HashSet<Host>();
-		hosts.add(host);
+		webServerInst.initAdministartor();
 
 		for (Site webApp : Environment.webAppToStart.values()) {
-			// if (webApp.appBase.equalsIgnoreCase("nubis")) {
-			webServerInst.addApplication(webApp.name, "/" + webApp.appBase, webApp.appBase);
-			// } else {
-			// webServerInst.initAppEnv(webApp.appBase);
-			// }
+			webServerInst.addAppTemplate(webApp.name, "/" + webApp.appBase, webApp.appBase);
 		}
 
-		webServerInst.initDefaultURL(host);
+		webServerInst.initDefaultURL(null);
 
 		String info = webServerInst.initConnectors();
 		Server.logger.normalLogEntry("webserver start (" + info + ")");
