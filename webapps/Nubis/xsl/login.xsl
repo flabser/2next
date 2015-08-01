@@ -7,7 +7,7 @@
 		<xsl:call-template name="layout" />
 	</xsl:template>
 
-	<xsl:template name="page_content">
+	<xsl:template name="_content">
 		<div class="container">
 			<section class="login">
 				<h1 class="text-center">
@@ -28,9 +28,6 @@
 					</div>
 				</form>
 			</section>
-			<footer>
-				<a href="?id=signup">Sign up</a>
-			</footer>
 		</div>
 	</xsl:template>
 
