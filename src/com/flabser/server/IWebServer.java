@@ -6,6 +6,8 @@ import org.apache.catalina.Context;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
 
+import com.flabser.appenv.AppEnv;
+
 public interface IWebServer {
 	void init(String defaultHostName) throws MalformedURLException, LifecycleException;
 
@@ -19,7 +21,7 @@ public interface IWebServer {
 
 	void stopContainer();
 
-	Context addApplication(String appID, String appType) throws LifecycleException, MalformedURLException;
+	Context addApplication(String appID, AppEnv env);
 
 	Context initAppEnv(String appType);
 

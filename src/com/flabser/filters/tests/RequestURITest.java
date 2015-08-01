@@ -3,7 +3,7 @@ package com.flabser.filters.tests;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.flabser.filters.RequestURL;
+import com.flabser.valves.RequestURL;
 
 public class RequestURITest extends Assert {
 

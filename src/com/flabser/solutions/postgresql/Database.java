@@ -1,15 +1,5 @@
 package com.flabser.solutions.postgresql;
 
-import com.flabser.dataengine.DatabaseCore;
-import com.flabser.dataengine.DatabaseUtil;
-import com.flabser.dataengine.IDatabase;
-import com.flabser.dataengine.IDeployer;
-import com.flabser.dataengine.ft.IFTIndexEngine;
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.script._IObject;
-import com.flabser.users.User;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +10,15 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import com.flabser.dataengine.DatabaseCore;
+import com.flabser.dataengine.DatabaseUtil;
+import com.flabser.dataengine.IDatabase;
+import com.flabser.dataengine.IDeployer;
+import com.flabser.dataengine.ft.IFTIndexEngine;
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.script._IObject;
+import com.flabser.users.User;
 
 public class Database extends DatabaseCore implements IDatabase {
 
@@ -29,8 +28,7 @@ public class Database extends DatabaseCore implements IDatabase {
 	private ApplicationProfile appProfile;
 
 	@Override
-	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
-	ClassNotFoundException, DatabasePoolException {
+	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
 		this.appProfile = appProfile;
 		dbURI = appProfile.getURI();
 		pool = getPool(driver, appProfile);
@@ -49,9 +47,9 @@ public class Database extends DatabaseCore implements IDatabase {
 	}
 
 	@Override
-	public ArrayList <Object[]> select(String condition, User user) {
+	public ArrayList<Object[]> select(String condition, User user) {
 		ResultSet rs = null;
-		ArrayList <Object[]> l = new ArrayList <Object[]>();
+		ArrayList<Object[]> l = new ArrayList<Object[]>();
 		Connection conn = pool.getConnection();
 		try {
 			conn.setAutoCommit(false);
@@ -93,8 +91,9 @@ public class Database extends DatabaseCore implements IDatabase {
 		return l;
 	}
 
-	public ArrayList <_IObject> select(String condition, Class <_IObject> objClass, User user) {
-		ArrayList <_IObject> o = new ArrayList <_IObject>();
+	@Override
+	public ArrayList<_IObject> select(String condition, Class<_IObject> objClass, User user) {
+		ArrayList<_IObject> o = new ArrayList<_IObject>();
 		Connection conn = pool.getConnection();
 		try {
 			conn.setAutoCommit(false);
@@ -104,7 +103,7 @@ public class Database extends DatabaseCore implements IDatabase {
 			ResultSet rs = s.executeQuery(sql);
 
 			while (rs.next()) {
-				_IObject grObj = (_IObject) objClass.newInstance();
+				_IObject grObj = objClass.newInstance();
 				grObj.init(rs);
 				o.add(grObj);
 			}

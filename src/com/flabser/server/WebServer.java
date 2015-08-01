@@ -18,8 +18,10 @@ import org.glassfish.jersey.servlet.ServletContainer;
 
 import com.flabser.appenv.AppEnv;
 import com.flabser.env.Environment;
-import com.flabser.filters.AccessValve;
 import com.flabser.restful.ResourceLoader;
+import com.flabser.valves.Logging;
+import com.flabser.valves.Secure;
+import com.flabser.valves.Unsecure;
 
 public class WebServer implements IWebServer {
 	public static final String httpSchema = "http";
@@ -61,57 +63,48 @@ public class WebServer implements IWebServer {
 	}
 
 	@Override
-	public Context addApplication(String appID, String appType) throws LifecycleException, MalformedURLException {
+	public Context addApplication(String appID, AppEnv env) {
 		Context context = null;
-		AppEnv env = Environment.getApplication(appType);
 
-		Server.logger.normalLogEntry("load \"" + env.appType + "/" + appID + "\" application...");
-
+		Server.logger.normalLogEntry("add context \"" + env.appType + "/" + appID + "\" application...");
 		String db = env.getDocBase();
 		String URLPath = "/" + env.appType + "/" + appID;
-		context = tomcat.addContext(URLPath, db);
-		context.setDisplayName(URLPath.substring(1));
+		try {
+			context = tomcat.addContext(URLPath, db);
+			context.setDisplayName(URLPath.substring(1));
 
-		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
+			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 
-		for (int i = 0; i < defaultWelcomeList.length; i++) {
-			context.addWelcomeFile(defaultWelcomeList[i]);
+			for (int i = 0; i < defaultWelcomeList.length; i++) {
+				context.addWelcomeFile(defaultWelcomeList[i]);
+			}
+
+			Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
+			context.addServletMapping("/", "default");
+
+			context.addServletMapping("/Provider", "Provider");
+
+			Tomcat.addServlet(context, "Uploader", "com.flabser.servlets.Uploader");
+			context.addServletMapping("/Uploader", "Uploader");
+
+			Tomcat.addServlet(context, "Error", "com.flabser.servlets.Error");
+			context.addServletMapping("/Error", "Error");
+
+			context.addMimeMapping("css", "text/css");
+			context.addMimeMapping("js", "text/javascript");
+
+			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
+					new ServletContainer(new ResourceConfig(new ResourceLoader(env.getDocBase()).getClasses())));
+			w1.setLoadOnStartup(1);
+			w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
+			context.addServletMapping("/rest/*", "Jersey REST Service");
+			// filterAccessGuardMapping.addServletName("Jersey REST Service");
+			context.setTldValidation(false);
+		} catch (IllegalArgumentException iae) {
+			Server.logger.warningLogEntry("Context \"" + URLPath + "\" has not been initialized");
 		}
-
-		FilterDef filterAccessGuard = new FilterDef();
-		filterAccessGuard.setFilterName("AccessGuard");
-		filterAccessGuard.setFilterClass("com.flabser.filters.AccessGuard");
-
-		FilterMap filterAccessGuardMapping = new FilterMap();
-		filterAccessGuardMapping.setFilterName("AccessGuard");
-		// filterAccessGuardMapping.addServletName("Provider");
-		filterAccessGuardMapping.addURLPattern("/*");
-
-		context.addFilterDef(filterAccessGuard);
-		context.addFilterMap(filterAccessGuardMapping);
-
-		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
-		context.addServletMapping("/", "default");
-
-		context.addServletMapping("/Provider", "Provider");
-
-		Tomcat.addServlet(context, "Uploader", "com.flabser.servlets.Uploader");
-		context.addServletMapping("/Uploader", "Uploader");
-
-		Tomcat.addServlet(context, "Error", "com.flabser.servlets.Error");
-		context.addServletMapping("/Error", "Error");
-
-		context.addMimeMapping("css", "text/css");
-		context.addMimeMapping("js", "text/javascript");
-
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
-				new ServletContainer(new ResourceConfig(new ResourceLoader(env.getDocBase()).getClasses())));
-		w1.setLoadOnStartup(1);
-		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
-		context.addServletMapping("/rest/*", "Jersey REST Service");
-		filterAccessGuardMapping.addServletName("Jersey REST Service");
-		context.setTldValidation(false);
-
+		context.getServletContext().setAttribute(AppEnv.APP_ATTR, env);
+		// context.reload();
 		return context;
 	}
 
@@ -234,7 +227,11 @@ public class WebServer implements IWebServer {
 			context.addWelcomeFile(defaultWelcomeList[i]);
 		}
 
-		tomcat.getEngine().getPipeline().addValve(new AccessValve());
+		tomcat.getEngine().getPipeline().addValve(new Logging());
+		tomcat.getEngine().getPipeline().addValve(new Unsecure());
+		tomcat.getEngine().getPipeline().addValve(new Secure());
+
+		// tomcat.getEngine().getPipeline().addValve(new RemoteAddrValve());
 
 		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 		context.addServletMapping("/", "default");
