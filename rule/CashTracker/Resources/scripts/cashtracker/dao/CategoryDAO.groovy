@@ -17,13 +17,29 @@ public class CategoryDAO {
 		this.user = session.getUser();
 	}
 
+	public String getSelectQuery() {
+		return "SELECT * FROM categories";
+	}
+
+	public String getCreateQuery() {
+		return "insert into categories...";
+	}
+
+	public String getUpdateQuery() {
+		return "update categories...";
+	}
+
+	public String getDeleteQuery() {
+		return "delete from categories where id = ";
+	}
+
 	public List <Category> findAll() {
-		List <Category> result = db.select("SELECT * FROM categories", Category.class, user);
+		List <Category> result = db.select(getSelectQuery(), Category.class, user);
 		return result;
 	}
 
 	public Category findById(long id) {
-		List <Category> list = db.select("select * from categories where id = $id", Category.class, user)
+		List <Category> list = db.select(getSelectQuery() + " where id = $id", Category.class, user)
 		Category result = list.size() ? list[0] : null
 		return result
 	}
@@ -52,7 +68,7 @@ public class CategoryDAO {
 	}
 
 	public void delete(Category m) {
-		String sql = "delete from categories where id = ${m.id}"
+		String sql = getDeleteQuery() + m.id
 		db.delete(sql, user)
 	}
 }

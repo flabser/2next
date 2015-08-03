@@ -17,13 +17,29 @@ public class AccountDAO {
 		this.user = session.getUser()
 	}
 
+	public String getSelectQuery() {
+		return "SELECT * FROM accounts";
+	}
+
+	public String getCreateQuery() {
+		return "insert into accounts...";
+	}
+
+	public String getUpdateQuery() {
+		return "update accounts...";
+	}
+
+	public String getDeleteQuery() {
+		return "delete from accounts where id = ";
+	}
+
 	public List <Account> findAll() {
-		List <Account> result = db.select("SELECT * FROM accounts", Account.class, user)
+		List <Account> result = db.select(getSelectQuery(), Account.class, user)
 		return result
 	}
 
 	public Account findById(long id) {
-		List <Account> list = db.select("select * from accounts where id = $id", Account.class, user)
+		List <Account> list = db.select(getSelectQuery() + " where id = $id", Account.class, user)
 		Account result = list.size() ? list[0] : null
 		return result
 	}
@@ -56,7 +72,7 @@ public class AccountDAO {
 	}
 
 	public void delete(Account a) {
-		String sql = "delete from accounts where id = ${a.id}"
+		String sql = getDeleteQuery() + a.id
 		db.delete(sql, user)
 	}
 }
