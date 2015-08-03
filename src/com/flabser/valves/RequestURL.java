@@ -26,50 +26,8 @@ public class RequestURL {
 		return appID;
 	}
 
-	@Deprecated
-	public boolean isWebResource() {
-		// TODO Need to improve
-		if (appName.equalsIgnoreCase("SharedResources") || url.contains("js") || url.contains("css")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public boolean isDefault() {
 		return url.matches("/" + appName + "(/(Provider)?)?/?") || url.trim().equals("");
-	}
-
-	@Deprecated
-	public boolean isTemplate() {
-		// TODO Need to improve
-
-		if (url.equalsIgnoreCase("/CashTracker/") || url.equalsIgnoreCase("/Nubis")) {
-
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	@Deprecated
-	public boolean isAuth() {
-		// TODO Need to improve
-		if (url.contains("session") || url.equalsIgnoreCase("/Nubis/Provider") || url.equalsIgnoreCase("/CashTracker/Provider?type=page&id=login")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	@Deprecated
-	public boolean isServerMessage() {
-		// TODO Need to improve
-		if (url.contains("error")) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	public boolean isAuthRequest() {
@@ -87,7 +45,6 @@ public class RequestURL {
 	public String getUrl() {
 		return url;
 	}
-
 
 	public boolean isProtected() {
 		return !appName.equals("") && !appID.equals("") || !(isDefault() || url.matches(".*/[\\w\\.-]+$") || appName.equalsIgnoreCase("SharedResources"));

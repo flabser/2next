@@ -36,6 +36,7 @@ public class Secure extends ValveBase {
 
 		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(AppEnv.ADMIN_APP_NAME)) {
 			HttpSession jses = http.getSession(false);
+			System.out.println(http.getServletContext().getContextPath());
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 				if (us != null) {
@@ -64,40 +65,41 @@ public class Secure extends ValveBase {
 						getNext().invoke(request, response);
 					}
 				} else {
-					String msg = "user session was expired";
-					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
-					Server.logger.warningLogEntry(msg);
-					getNext().invoke(request, response);
+					restoreSession(request, response);
 				}
 			} else {
-				Cookies appCookies = new Cookies(http);
-				String token = appCookies.auth;
-				if (token != null) {
-					UserSession userSession = SessionPool.getLoggeedUser(token);
-					if (userSession != null) {
-						jses = http.getSession(true);
-						jses.setAttribute(UserSession.SESSION_ATTR, userSession);
-						Server.logger.verboseLogEntry("user session \"" + userSession.toString() + "\" got from session pool");
-						invoke(request, response);
-					} else {
-						String msg = "there is no user session ";
-						response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
-						Server.logger.warningLogEntry(msg);
-						// exception(request, response, new
-						// AuthFailedException(msg));
-						getNext().invoke(request, response);
-					}
-				} else {
-					String msg = "user session was expired";
-					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
-					Server.logger.warningLogEntry(msg);
-					getNext().invoke(request, response);
-				}
-
+				restoreSession(request, response);
 			}
 		} else {
 			getNext().invoke(request, response);
 		}
 
+	}
+
+	private void restoreSession(Request request, Response response) throws IOException, ServletException {
+		HttpServletRequest http = request;
+		Cookies appCookies = new Cookies(http);
+		String token = appCookies.auth;
+		if (token != null) {
+			UserSession userSession = SessionPool.getLoggeedUser(token);
+			if (userSession != null) {
+				HttpSession jses = http.getSession(true);
+				jses.setAttribute(UserSession.SESSION_ATTR, userSession);
+				Server.logger.verboseLogEntry(userSession.toString() + "\" got from session pool " + jses.getServletContext().getContextPath());
+				invoke(request, response);
+			} else {
+				String msg = "there is no user session ";
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
+				Server.logger.warningLogEntry(msg);
+				// exception(request, response, new
+				// AuthFailedException(msg));
+				getNext().invoke(request, response);
+			}
+		} else {
+			String msg = "user session was expired";
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
+			Server.logger.warningLogEntry(msg);
+			getNext().invoke(request, response);
+		}
 	}
 }

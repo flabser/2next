@@ -167,6 +167,11 @@ public class UserSession implements ICache {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "user session of the " + currentUser;
+	}
+
 	public class HistoryEntryCollection {
 
 		// type of collection has been changed from linked list to

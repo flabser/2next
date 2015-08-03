@@ -23,9 +23,9 @@ public class Unsecure extends ValveBase {
 		}
 		RequestURL ru = new RequestURL(requestURI);
 
-		Server.logger.normalLogEntry(" valve " + http.getMethod() + " " + requestURI);
+		Server.logger.normalLogEntry(http.getMethod() + " " + requestURI);
 		if ((!ru.isProtected()) || ru.isAuthRequest()) {
-			Server.logger.verboseLogEntry("free area");
+			// Server.logger.verboseLogEntry("free area");
 			getNext().getNext().invoke(request, response);
 		} else {
 			if (ru.isPage()) {
