@@ -22,7 +22,7 @@ public class RequestURITest extends Assert {
 
 		// запросы к простым объектам являются не защищенными
 		String v1[] = { "/Nubis/info.html", "/Nubis/index.html", "/Nubis/css/info.css", "/CashTracker/js/gg.js", "/Nubis/logo.png", "/Nubis/index.htm",
-				"/index.htm" };
+				"/index.htm", "/CashTracker/css/all.min.css" };
 		for (String url : v1) {
 			RequestURL ru = new RequestURL(url);
 			assertNotNull(ru.getAppName());
