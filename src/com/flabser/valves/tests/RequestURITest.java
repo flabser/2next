@@ -22,7 +22,7 @@ public class RequestURITest extends Assert {
 
 		// запросы к простым объектам являются не защищенными
 		String v1[] = { "/Nubis/info.html", "/Nubis/index.html", "/Nubis/css/info.css", "/CashTracker/js/gg.js", "/Nubis/logo.png", "/Nubis/index.htm",
-				"/index.htm" };
+				"/index.htm", "/CashTracker/css/all.min.css" };
 		for (String url : v1) {
 			RequestURL ru = new RequestURL(url);
 			assertNotNull(ru.getAppName());
@@ -50,7 +50,7 @@ public class RequestURITest extends Assert {
 
 		// имеется id которы идет после названия приложения в слэшах и знаков
 		// подчеркивания являютса защищенными
-		String v4[] = { "/CashTracker/_u2l161ce0cfi00_/favicon.png", "/CashTracker/_u2l161ce0cfi0b_/rest/session", "/CashTracker/_u2l161ce0cfi00_" };
+		String v4[] = { "/CashTracker/gu2l161ce0cfi00f/favicon.png", "/CashTracker/fu2l161ce0cfi0bf/rest/session", "/CashTracker/fu2l161ce0cfi00f" };
 		for (String url : v4) {
 			RequestURL ru = new RequestURL(url);
 			assertNotNull(ru.getAppName());
@@ -62,8 +62,8 @@ public class RequestURITest extends Assert {
 
 		// запросы к page (в т.ч. защищенные и не защищенные)
 		String v5[] = { "/CashTracker/Provider?id=login", "/CashTracker/Provider?type=page&id=login", "/CashTracker/rest/page/ws", "/Nubis/rest/page/welcome",
-				"/CashTracker/_zu2l161ce0cfi00b_/Provider?id=login", "/CashTracker/Provider?type=page&id=login",
-				"/CashTracker/_zu2l161ce0cfi00b_/rest/page/ws", "/Nubis/_zu2l161ce0cfi00b_/rest/page/welcome" };
+				"/CashTracker/fzu2l161ce0cfi00bf/Provider?id=login", "/CashTracker/Provider?type=page&id=login",
+				"/CashTracker/fzu2l161ce0cfi00bf/rest/page/ws", "/Nubis/fzu2l161ce0cfi00bf/rest/page/welcome" };
 		for (String url : v5) {
 			RequestURL ru = new RequestURL(url);
 			assertNotNull(ru.getAppName());

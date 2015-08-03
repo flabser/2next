@@ -18,19 +18,19 @@ public class CostCenterDAO {
 	}
 
 	public String getSelectQuery() {
-		return "SELECT * FROM costcenters";
+		return "SELECT id, name FROM costcenters"
 	}
 
 	public String getCreateQuery() {
-		return "insert into costcenters...";
+		return "INSERT INTO costcenters (name) VALUES (?)"
 	}
 
 	public String getUpdateQuery() {
-		return "update costcenters...";
+		return "UPDATE costcenters SET name = ? WHERE id = ?"
 	}
 
 	public String getDeleteQuery() {
-		return "delete from costcenters where id = ";
+		return "DELETE FROM costcenters WHERE id = "
 	}
 
 	public List <CostCenter> findAll() {
@@ -39,18 +39,18 @@ public class CostCenterDAO {
 	}
 
 	public CostCenter findById(long id) {
-		List <CostCenter> list = db.select(getSelectQuery() + " where id = $id", CostCenter.class, user)
+		List <CostCenter> list = db.select(getSelectQuery() + " WHERE id = $id", CostCenter.class, user)
 		CostCenter result = list.size() ? list[0] : null
 		return result
 	}
 
 	public int add(CostCenter m) {
-		String sql = "insert into costcenters (name) values ('${m.name}')"
+		String sql = "INSERT INTO costcenters (name) VALUES ('${m.name}')"
 		return db.insert(sql, user)
 	}
 
 	public void update(CostCenter m) {
-		String sql = "update costcenters set name = '${m.name}' where id = ${m.id}"
+		String sql = "UPDATE costcenters SET name = '${m.name}' WHERE id = ${m.id}"
 		db.update(sql, user)
 	}
 

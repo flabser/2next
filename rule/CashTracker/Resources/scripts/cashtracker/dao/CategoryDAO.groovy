@@ -18,19 +18,29 @@ public class CategoryDAO {
 	}
 
 	public String getSelectQuery() {
-		return "SELECT * FROM categories";
+		return "SELECT id, transaction_type, parent_id, name, note, color, sort_order FROM categories";
 	}
 
 	public String getCreateQuery() {
-		return "insert into categories...";
+		return """INSERT INTO categories
+					(transaction_type, parent_id, name, note, color, sort_order)
+				  VALUES (?, ?, ?, ?, ?, ?)"""
 	}
 
 	public String getUpdateQuery() {
-		return "update categories...";
+		return """UPDATE categories
+					SET
+						transaction_type = ?,
+						parent_id = ?,
+						name = ?,
+						note = ?,
+						color = ?,
+						sort_order = ?
+					WHERE id = ?"""
 	}
 
 	public String getDeleteQuery() {
-		return "delete from categories where id = ";
+		return "DELETE FROM categories WHERE id = ";
 	}
 
 	public List <Category> findAll() {
@@ -39,31 +49,31 @@ public class CategoryDAO {
 	}
 
 	public Category findById(long id) {
-		List <Category> list = db.select(getSelectQuery() + " where id = $id", Category.class, user)
+		List <Category> list = db.select(getSelectQuery() + " WHERE id = $id", Category.class, user)
 		Category result = list.size() ? list[0] : null
 		return result
 	}
 
 	public int add(Category m) {
-		String sql = """insert into categories
+		String sql = """INSERT INTO categories
 							(transaction_type, parent_id,
 							name, note, color, sort_order)
-						values
+						VALUES
 							(${m.transactionType}, ${m.parentCategory.id},
 							'${m.name}', '${m.note}', ${m.color}, ${m.sortOrder})""";
 		return db.insert(sql, user);
 	}
 
 	public void update(Category m) {
-		String sql = """update categories
-						set
+		String sql = """UPDATE categories
+						SET
 							transaction_type = ${m.transactionType},
 							parent_id = ${m.parentCategory.id},
 							name = '${m.name}',
 							note = '${m.note}',
 							color = ${m.color},
 							sort_order = ${m.sortOrder}
-						where id = ${m.id}"""
+						WHERE id = ${m.id}"""
 		db.update(sql, user);
 	}
 
