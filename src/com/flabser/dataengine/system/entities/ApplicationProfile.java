@@ -104,7 +104,7 @@ public class ApplicationProfile implements _IContent {
 		ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
 
 		if (id == 0) {
-			appID = "_" + Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 14) + "_";
+			appID = appId();
 			id = sysDatabase.insert(this);
 		} else {
 			id = sysDatabase.update(this);
@@ -143,6 +143,16 @@ public class ApplicationProfile implements _IContent {
 		status = onLine;
 		statusDate = new Date();
 
+	}
+
+	@JsonIgnore
+	public String appId() {
+		if (appID == null || appID.isEmpty()) {
+			appID = "_" + Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 14) + "_";
+			return appID;
+		} else {
+			return appID;
+		}
 	}
 
 	public ApplicationStatusType getStatus() {
