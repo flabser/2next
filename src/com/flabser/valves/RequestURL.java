@@ -48,7 +48,7 @@ public class RequestURL {
 	@Deprecated
 	public boolean isTemplate() {
 		// TODO Need to improve
-		if (url.equals("/CashTracker/") || url.equals("/Nubis")) {
+		if (url.equals("/CashTracker/") || url.equals("/Nubis/")) {
 			return true;
 		} else {
 			return false;

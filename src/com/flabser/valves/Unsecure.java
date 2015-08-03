@@ -25,8 +25,10 @@ public class Unsecure extends ValveBase {
 
 		Server.logger.normalLogEntry(" valve " + http.getMethod() + " " + requestURI);
 		if (ru.isWebResource() || ru.isAuth() || ru.isTemplate() || ru.isDefault() || ru.isServerMessage()) {
+			Server.logger.verboseLogEntry("free area");
 			getNext().getNext().invoke(request, response);
 		} else {
+			Server.logger.verboseLogEntry("not anonymous area");
 			((Secure) getNext()).invoke(request, response, ru);
 		}
 	}

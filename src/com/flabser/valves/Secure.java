@@ -25,10 +25,7 @@ public class Secure extends ValveBase {
 
 	public void invoke(Request request, Response response, RequestURL ru) throws IOException, ServletException {
 		this.ru = ru;
-		Server.logger.verboseLogEntry("not anonymous area");
-
 		invoke(request, response);
-
 	}
 
 	@Override
@@ -37,7 +34,7 @@ public class Secure extends ValveBase {
 		String appType = ru.getAppName();
 		String appID = ru.getAppID();
 
-		if (!appType.equalsIgnoreCase(AppEnv.ADMIN_APP_NAME)) {
+		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(AppEnv.ADMIN_APP_NAME)) {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
