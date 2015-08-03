@@ -29,7 +29,7 @@ public class RequestURL {
 	@Deprecated
 	public boolean isWebResource() {
 		// TODO Need to improve
-		if (appName.equalsIgnoreCase("SharedResources") || url.contains("js") || url.contains("css")) {
+		if (appName.equals("SharedResources") || url.contains("js") || url.contains("css")) {
 			return true;
 		} else {
 			return false;
@@ -38,7 +38,7 @@ public class RequestURL {
 
 	public boolean isDefault() {
 		// TODO Need to improve
-		if (url.equalsIgnoreCase("/")) {
+		if (url.equals("/")) {
 			return true;
 		} else {
 			return false;
@@ -48,7 +48,7 @@ public class RequestURL {
 	@Deprecated
 	public boolean isTemplate() {
 		// TODO Need to improve
-		if (url.equalsIgnoreCase("/CashTracker/") || url.equalsIgnoreCase("/Nubis")) {
+		if (url.equals("/CashTracker/") || url.equals("/Nubis")) {
 			return true;
 		} else {
 			return false;
@@ -58,7 +58,7 @@ public class RequestURL {
 	@Deprecated
 	public boolean isAuth() {
 		// TODO Need to improve
-		if (url.contains("session") || url.equalsIgnoreCase("/Nubis/Provider") || url.equalsIgnoreCase("/CashTracker/Provider?type=page&id=login")) {
+		if (url.contains("session") || url.startsWith("/Nubis/Provider") || url.equals("/CashTracker/Provider?id=login")) {
 			return true;
 		} else {
 			return false;
