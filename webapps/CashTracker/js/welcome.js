@@ -53,7 +53,7 @@ nbApp.reg = function(form) {
         url: 'Provider?client=' + screen.height + 'x' + screen.width,
         data: $(form).serialize(),
         success: function(result) {
-          console.log(result);
+            console.log(result);
             var pr = result.split(',');
             if (pr.indexOf('email') != -1) {
                 $('input[name=email]', form).addClass('invalid');
@@ -131,7 +131,11 @@ nbApp.login = function(form) {
                     $('#login-error').hide();
                 }, 5000);
             } else {
-                location.href = 'index.html';
+                var appId;
+                for (var key in result.authUser.applications) {
+                    appId = key;
+                }
+                location.href = appId + '/index.html';
             }
         },
         error: function(err) {
