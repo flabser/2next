@@ -17,29 +17,45 @@ public class TagDAO {
 		this.user = session.getUser()
 	}
 
+	public String getSelectQuery() {
+		return "SELECT * FROM tags";
+	}
+
+	public String getCreateQuery() {
+		return "insert into tags...";
+	}
+
+	public String getUpdateQuery() {
+		return "update tags...";
+	}
+
+	public String getDeleteQuery() {
+		return "delete from tags where id = ";
+	}
+
 	public List <Tag> findAll() {
-		List <Tag> result = db.select("SELECT * FROM tags", Tag.class, user)
+		List <Tag> result = db.select(getSelectQuery(), Tag.class, user)
 		return result
 	}
 
 	public Tag findById(long id) {
-		List <Tag> list = db.select("select * from tags where id = $id", Tag.class, user)
+		List <Tag> list = db.select(getSelectQuery() + " where id = $id", Tag.class, user)
 		Tag result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int addTag(Tag m) {
+	public int add(Tag m) {
 		String sql = "insert into tags (name, color) values ('${m.name}', ${m.color})"
 		return db.insert(sql, user)
 	}
 
-	public void updateTag(Tag m) {
+	public void update(Tag m) {
 		String sql = "update tags set name = '${m.name}', color = ${m.color} where id = ${m.id}"
 		db.update(sql, user)
 	}
 
-	public void deleteTag(Tag m) {
-		String sql = "delete from tags where id = ${m.id}"
+	public void delete(Tag m) {
+		String sql = getDeleteQuery() + m.id
 		db.delete(sql, user)
 	}
 }

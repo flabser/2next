@@ -17,18 +17,34 @@ public class AccountDAO {
 		this.user = session.getUser()
 	}
 
+	public String getSelectQuery() {
+		return "SELECT * FROM accounts";
+	}
+
+	public String getCreateQuery() {
+		return "insert into accounts...";
+	}
+
+	public String getUpdateQuery() {
+		return "update accounts...";
+	}
+
+	public String getDeleteQuery() {
+		return "delete from accounts where id = ";
+	}
+
 	public List <Account> findAll() {
-		List <Account> result = db.select("SELECT * FROM accounts", Account.class, user)
+		List <Account> result = db.select(getSelectQuery(), Account.class, user)
 		return result
 	}
 
 	public Account findById(long id) {
-		List <Account> list = db.select("select * from accounts where id = $id", Account.class, user)
+		List <Account> list = db.select(getSelectQuery() + " where id = $id", Account.class, user)
 		Account result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int addAccount(Account a) {
+	public int add(Account a) {
 		String sql = """insert into accounts
 							(name, type, currency_code, opening_balance, amount_control,
 							owner, observers, include_in_totals, note, sort_order)
@@ -38,7 +54,7 @@ public class AccountDAO {
 		return db.insert(sql, user)
 	}
 
-	public void updateAccount(Account a) {
+	public void update(Account a) {
 		String sql = """update accounts
 						set
 							name = '${a.name}',
@@ -55,8 +71,8 @@ public class AccountDAO {
 		db.update(sql, user)
 	}
 
-	public void deleteAccount(Account a) {
-		String sql = "delete from accounts where id = ${a.id}"
+	public void delete(Account a) {
+		String sql = getDeleteQuery() + a.id
 		db.delete(sql, user)
 	}
 }

@@ -12,7 +12,7 @@ public class TagValidator {
 		ValidationError ve = new ValidationError()
 
 		if (m.getName() == null || m.getName().isEmpty()) {
-			ve.addError("name", "required", "name_required")
+			ve.addError("name", "required", "required")
 		}
 
 		ve
