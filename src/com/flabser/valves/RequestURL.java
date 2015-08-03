@@ -90,7 +90,7 @@ public class RequestURL {
 
 
 	public boolean isProtected() {
-		return !appName.equals("") && !appID.equals("") || !(isDefault() || url.matches(".*/[\\w\\.]+$") || appName.equalsIgnoreCase("SharedResources"));
+		return !appName.equals("") && !appID.equals("") || !(isDefault() || url.matches(".*/[\\w\\.-]+$") || appName.equalsIgnoreCase("SharedResources"));
 	}
 
 }
