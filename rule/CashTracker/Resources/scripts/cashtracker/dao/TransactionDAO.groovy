@@ -33,40 +33,48 @@ public class TransactionDAO {
 		this.user = session.getUser()
 	}
 
+	public String getSelectQuery() {
+		return "select * from transactions"
+	}
+
+	public String getDeleteQuery() {
+		return "delete from transactions where id = "
+	}
+
 	public List <Transaction> findAll() {
-		List <Transaction> result = db.select("select * from transactions", Transaction.class, user)
+		List <Transaction> result = db.select(getSelectQuery(), Transaction.class, user)
 		return result
 	}
 
 	public Transaction findById(long id) {
-		String sql = "select * from transactions where id = $id"
+		String sql = "${getSelectQuery()} where id = $id"
 		List <Transaction> list = db.select(sql, Transaction.class, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
 	public List <Transaction> findAllByAccount(Account m) {
-		String sql ="select * from transactions where account_id = ${m.id}"
+		String sql ="${getSelectQuery()} where account_id = ${m.id}"
 		List <Transaction> list = db.select(sql, Transaction.class, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
 	public List <Transaction> findAllByCostCenter(CostCenter m) {
-		String sql ="select * from transactions where cost_center_id = ${m.id}"
+		String sql ="${getSelectQuery()} where cost_center_id = ${m.id}"
 		List <Transaction> list = db.select(sql, Transaction.class, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
 	public List <Transaction> findAllByCategory(Category m) {
-		String sql ="select * from transactions where category_id = ${m.id}"
+		String sql ="${getSelectQuery()} where category_id = ${m.id}"
 		List <Transaction> list = db.select(sql, Transaction.class, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int addTransaction(Transaction m) {
+	public int add(Transaction m) {
 		String sql = """insert into transactions
 							("USER", transaction_type, transaction_state,
 							reg_date, account_from, account_to,
@@ -81,7 +89,7 @@ public class TransactionDAO {
 		return db.insert(sql, user)
 	}
 
-	public void updateTransaction(Transaction m) {
+	public void update(Transaction m) {
 		String sql = """update transactions
 						set
 							"USER" = '${m.user.login}',
@@ -107,8 +115,8 @@ public class TransactionDAO {
 		db.update(sql, user)
 	}
 
-	public void deleteTransaction(Transaction m) {
-		String sql = "delete from transactions where id = ${m.id}"
+	public void delete(Transaction m) {
+		String sql = "${getDeleteQuery()} ${m.id}"
 		db.delete(sql, user)
 	}
 }

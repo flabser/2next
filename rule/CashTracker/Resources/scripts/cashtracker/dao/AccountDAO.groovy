@@ -28,7 +28,7 @@ public class AccountDAO {
 		return result
 	}
 
-	public int addAccount(Account a) {
+	public int add(Account a) {
 		String sql = """insert into accounts
 							(name, type, currency_code, opening_balance, amount_control,
 							owner, observers, include_in_totals, note, sort_order)
@@ -38,7 +38,7 @@ public class AccountDAO {
 		return db.insert(sql, user)
 	}
 
-	public void updateAccount(Account a) {
+	public void update(Account a) {
 		String sql = """update accounts
 						set
 							name = '${a.name}',
@@ -55,7 +55,7 @@ public class AccountDAO {
 		db.update(sql, user)
 	}
 
-	public void deleteAccount(Account a) {
+	public void delete(Account a) {
 		String sql = "delete from accounts where id = ${a.id}"
 		db.delete(sql, user)
 	}

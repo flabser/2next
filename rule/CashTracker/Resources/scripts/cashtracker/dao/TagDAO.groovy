@@ -28,17 +28,17 @@ public class TagDAO {
 		return result
 	}
 
-	public int addTag(Tag m) {
+	public int add(Tag m) {
 		String sql = "insert into tags (name, color) values ('${m.name}', ${m.color})"
 		return db.insert(sql, user)
 	}
 
-	public void updateTag(Tag m) {
+	public void update(Tag m) {
 		String sql = "update tags set name = '${m.name}', color = ${m.color} where id = ${m.id}"
 		db.update(sql, user)
 	}
 
-	public void deleteTag(Tag m) {
+	public void delete(Tag m) {
 		String sql = "delete from tags where id = ${m.id}"
 		db.delete(sql, user)
 	}

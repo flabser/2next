@@ -12,7 +12,7 @@ public class TransactionValidator {
 		ValidationError ve = new ValidationError()
 
 		if (m.amount == null || m.amount == 0) {
-			ve.addError("amount", "required", "amount_required")
+			ve.addError("amount", "required", "required")
 		}
 
 		ve

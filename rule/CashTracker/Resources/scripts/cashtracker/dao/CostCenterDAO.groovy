@@ -28,17 +28,17 @@ public class CostCenterDAO {
 		return result
 	}
 
-	public int addCostCenter(CostCenter m) {
+	public int add(CostCenter m) {
 		String sql = "insert into costcenters (name) values ('${m.name}')"
 		return db.insert(sql, user)
 	}
 
-	public void updateCostCenter(CostCenter m) {
+	public void update(CostCenter m) {
 		String sql = "update costcenters set name = '${m.name}' where id = ${m.id}"
 		db.update(sql, user)
 	}
 
-	public void deleteCostCenter(CostCenter m) {
+	public void delete(CostCenter m) {
 		String sql = "delete from costcenters where id = ${m.id}"
 		db.delete(sql, user)
 	}

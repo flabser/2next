@@ -55,7 +55,7 @@ public class TransactionService extends RestProvider {
 		}
 
 		TransactionDAO dao = new TransactionDAO(getSession());
-		m.setId(dao.addTransaction(m));
+		m.setId(dao.add(m));
 		return Response.ok(m).build();
 	}
 
@@ -71,7 +71,7 @@ public class TransactionService extends RestProvider {
 
 		m.setId(id);
 		TransactionDAO dao = new TransactionDAO(getSession());
-		dao.updateTransaction(m);
+		dao.update(m);
 		return Response.ok(m).build();
 	}
 
@@ -82,7 +82,7 @@ public class TransactionService extends RestProvider {
 		TransactionDAO dao = new TransactionDAO(getSession());
 		Transaction m = dao.findById(id);
 		if (m != null) {
-			dao.deleteTransaction(m);
+			dao.delete(m);
 		}
 		return Response.ok().build();
 	}

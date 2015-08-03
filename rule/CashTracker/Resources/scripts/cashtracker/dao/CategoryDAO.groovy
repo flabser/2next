@@ -28,7 +28,7 @@ public class CategoryDAO {
 		return result
 	}
 
-	public int addCategory(Category m) {
+	public int add(Category m) {
 		String sql = """insert into categories
 							(transaction_type, parent_id,
 							name, note, color, sort_order)
@@ -38,7 +38,7 @@ public class CategoryDAO {
 		return db.insert(sql, user);
 	}
 
-	public void updateCategory(Category m) {
+	public void update(Category m) {
 		String sql = """update categories
 						set
 							transaction_type = ${m.transactionType},
@@ -51,7 +51,7 @@ public class CategoryDAO {
 		db.update(sql, user);
 	}
 
-	public void deleteCategory(Category m) {
+	public void delete(Category m) {
 		String sql = "delete from categories where id = ${m.id}"
 		db.delete(sql, user)
 	}

@@ -55,7 +55,7 @@ public class CostCenterService extends RestProvider {
 		}
 
 		CostCenterDAO dao = new CostCenterDAO(getSession());
-		m.setId(dao.addCostCenter(m));
+		m.setId(dao.add(m));
 		return Response.ok(m).build();
 	}
 
@@ -71,7 +71,7 @@ public class CostCenterService extends RestProvider {
 
 		m.setId(id);
 		CostCenterDAO dao = new CostCenterDAO(getSession());
-		dao.updateCostCenter(m);
+		dao.update(m);
 		return Response.ok(m).build();
 	}
 
@@ -82,7 +82,7 @@ public class CostCenterService extends RestProvider {
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		CostCenter m = dao.findById(id);
 		if (m != null) {
-			dao.deleteCostCenter(m);
+			dao.delete(m);
 		}
 		return Response.ok().build();
 	}

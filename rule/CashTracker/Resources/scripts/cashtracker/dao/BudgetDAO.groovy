@@ -34,18 +34,18 @@ public class BudgetDAO {
 		return result
 	}
 
-	public int addBudget(Budget b) {
+	public int add(Budget b) {
 		String sql = """INSERT BUDGETS (NAME, REGDATE, OWNER, STATUS)
 							values ('${b.name}', '${b.regDate}', '${b.owner}', ${b.status.code})"""
 		return db.insert(sql, user)
 	}
 
-	public void updateBudget(Budget b) {
+	public void update(Budget b) {
 		String sql = "update budgets set name='${b.name}', owner='${b.owner}', status=${b.status.code} where id = ${b.id}"
 		db.update(sql, user)
 	}
 
-	public void deleteBudget(Budget b) {
+	public void delete(Budget b) {
 		String sql = "delete from budgets where id = ${b.id}"
 		db.delete(sql, user)
 	}
