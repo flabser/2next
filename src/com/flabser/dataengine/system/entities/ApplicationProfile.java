@@ -145,6 +145,16 @@ public class ApplicationProfile implements _IContent {
 
 	}
 
+	@JsonIgnore
+	public String appId() {
+		if (appID == null || appID.isEmpty()) {
+			appID = "_" + Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 14) + "_";
+			return appID;
+		} else {
+			return appID;
+		}
+	}
+
 	public ApplicationStatusType getStatus() {
 		return status;
 	}
