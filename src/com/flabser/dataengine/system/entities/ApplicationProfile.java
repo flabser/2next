@@ -104,7 +104,7 @@ public class ApplicationProfile implements _IContent {
 		ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
 
 		if (id == 0) {
-			appID = "_" + Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 14) + "_";
+			appID = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
 			id = sysDatabase.insert(this);
 		} else {
 			id = sysDatabase.update(this);
