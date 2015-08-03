@@ -53,7 +53,7 @@ public class UserSession implements ICache {
 	public void init(String appID) {
 		ApplicationProfile appProfile = currentUser.getApplicationProfile(appID);
 		if (appProfile != null) {
-			// dataBase = appProfile.getDatabase();
+			acitveApps.put(appProfile.appType, new ActiveApplication(appProfile, appProfile.getDatabase()));
 			acitveApps.put(appProfile.appID, new ActiveApplication(appProfile, appProfile.getDatabase()));
 		}
 	}
@@ -83,8 +83,8 @@ public class UserSession implements ICache {
 		history.add(entry);
 	}
 
-	public boolean isBootstrapped(String appType) {
-		ActiveApplication aa = acitveApps.get(appType);
+	public boolean isBootstrapped(String appID) {
+		ActiveApplication aa = acitveApps.get(appID);
 		if (aa == null) {
 			return false;
 		} else {
