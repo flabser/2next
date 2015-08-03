@@ -7,8 +7,6 @@ public class RequestURL {
 	private String appName = "";
 	private String appID = "";
 	private String url;
-	public final static int SERVLET = 11;
-	public final static int REST = 12;
 
 	public RequestURL(String url) {
 		this.url = url;
@@ -77,19 +75,11 @@ public class RequestURL {
 		}
 	}
 
-	public boolean isSimpleObject() {
-		return false;
-	}
-
 	public boolean isAuthRequest() {
 		return false;
 	}
 
 	public boolean isPage() {
-		return false;
-	}
-
-	public boolean isSharedResource() {
 		return false;
 	}
 
@@ -99,6 +89,10 @@ public class RequestURL {
 
 	public String getUrl() {
 		return url;
+	}
+
+	public boolean isProtected() {
+		return false;
 	}
 
 }
