@@ -55,7 +55,7 @@ public class TagService extends RestProvider {
 		}
 
 		TagDAO dao = new TagDAO(getSession());
-		m.setId(dao.addTag(m));
+		m.setId(dao.add(m));
 		return Response.ok(m).build();
 	}
 
@@ -71,7 +71,7 @@ public class TagService extends RestProvider {
 
 		m.setId(id);
 		TagDAO dao = new TagDAO(getSession());
-		dao.updateTag(m);
+		dao.update(m);
 		return Response.ok(m).build();
 	}
 
@@ -82,7 +82,7 @@ public class TagService extends RestProvider {
 		TagDAO dao = new TagDAO(getSession());
 		Tag m = dao.findById(id);
 		if (m != null) {
-			dao.deleteTag(m);
+			dao.delete(m);
 		}
 		return Response.ok().build();
 	}
