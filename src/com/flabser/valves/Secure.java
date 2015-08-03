@@ -1,5 +1,17 @@
 package com.flabser.valves;
 
+import java.io.IOException;
+import java.util.HashMap;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.catalina.connector.Request;
+import org.apache.catalina.connector.Response;
+import org.apache.catalina.valves.ValveBase;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
@@ -7,16 +19,6 @@ import com.flabser.env.SessionPool;
 import com.flabser.server.Server;
 import com.flabser.servlets.Cookies;
 import com.flabser.users.UserSession;
-import org.apache.catalina.connector.Request;
-import org.apache.catalina.connector.Response;
-import org.apache.catalina.valves.ValveBase;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.HashMap;
 
 public class Secure extends ValveBase {
 	RequestURL ru;
@@ -48,7 +50,7 @@ public class Secure extends ValveBase {
 								Server.logger.warningLogEntry("application ready on: " + ru.getUrl());
 								((HttpServletResponse) response).sendRedirect(ru.getUrl());
 							} catch (Exception e) {
-								response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+								Server.logger.errorLogEntry(e);
 								getNext().invoke(request, response);
 							}
 

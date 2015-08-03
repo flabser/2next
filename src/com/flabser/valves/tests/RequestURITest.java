@@ -50,7 +50,7 @@ public class RequestURITest extends Assert {
 
 		// имеется id которы идет после названия приложения в слэшах и знаков
 		// подчеркивания являютса защищенными
-		String v4[] = { "/CashTracker/_zu2l161ce0cfi00b_/favicon.png", "/CashTracker/_zu2l161ce0cfi00b_/rest/session", "/CashTracker/_zu2l161ce0cfi00b_" };
+		String v4[] = { "/CashTracker/_u2l161ce0cfi00_/favicon.png", "/CashTracker/_u2l161ce0cfi0b_/rest/session", "/CashTracker/_u2l161ce0cfi00_" };
 		for (String url : v4) {
 			RequestURL ru = new RequestURL(url);
 			assertNotNull(ru.getAppName());
