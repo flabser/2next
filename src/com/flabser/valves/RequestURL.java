@@ -10,11 +10,11 @@ public class RequestURL {
 
 	public RequestURL(String url) {
 		this.url = url;
-		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)(/_[\\p{Lower}0-9]{16}_)?.*$");
+		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)(/[\\p{Lower}0-9]{16})?.*$");
 		Matcher matcher = pattern.matcher(url != null ? url.trim() : "");
 		if (matcher.matches()) {
 			appName = matcher.group(1) == null ? "" : matcher.group(1);
-			appID = matcher.group(2) == null ? "" : matcher.group(2).substring(2, matcher.group(2).length() - 1);
+			appID = matcher.group(2) == null ? "" : matcher.group(2).substring(1);
 		}
 	}
 
