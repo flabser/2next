@@ -8,19 +8,4 @@
 		<xsl:text disable-output-escaping="yes">&lt;</xsl:text>!DOCTYPE html<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
 	</xsl:template>
 
-	<xsl:template name="STYLE_FIX_FIELDSET">
-		<style>
-			/* fix: fieldset content overflow */
-			fieldset {
-				display: block;
-				min-width: inherit; /* chrome */
-			}
-			@-moz-document url-prefix() {
-					fieldset {
-					display: table-column !important;
-				}
-			}
-		</style>
-	</xsl:template>
-
 </xsl:stylesheet>

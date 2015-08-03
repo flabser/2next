@@ -7,7 +7,7 @@
 		<xsl:call-template name="layout" />
 	</xsl:template>
 
-	<xsl:template name="page_content">
+	<xsl:template name="_content">
 		<div class="container">
 			<h1>
 				<xsl:value-of select="//captions/verify_email_title/@caption" />

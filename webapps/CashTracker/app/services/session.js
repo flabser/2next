@@ -1,10 +1,10 @@
 import Em from 'ember';
 
-const PATH = 'rest/session';
-
 const {
     Service, $
 } = Em;
+
+const PATH = 'rest/session';
 
 export default Service.extend({
 

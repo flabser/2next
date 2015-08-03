@@ -7,13 +7,12 @@ import com.flabser.dataengine.system.entities.ApplicationProfile;
 
 public abstract class DatabaseCore {
 	protected IDBConnectionPool pool;
-	
-	protected IDBConnectionPool getPool(String driver, ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
-		pool = new DBConnectionPool(); 
-		//appProfile.dbLogin = "postgres"; //temporary login
+
+	protected IDBConnectionPool getPool(String driver, ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException, DatabasePoolException {
+		pool = new DBConnectionPool();
 		pool.initConnectionPool(driver, appProfile.getURI(), appProfile.dbLogin, appProfile.dbPwd);
 		return pool;
 	}
-	
-	
+
 }

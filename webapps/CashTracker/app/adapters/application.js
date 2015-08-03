@@ -1,7 +1,11 @@
 import DS from 'ember-data';
 
+function getHost() {
+    return window.location.pathname;
+}
+
 export default DS.RESTAdapter.extend({
-    namespace: 'CashTracker/rest',
+    namespace: getHost() + 'rest',
 
     pathForType: function(type) {
         switch (type) {

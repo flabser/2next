@@ -1,25 +1,5 @@
 package com.flabser.dataengine.system;
 
-import java.sql.Array;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.apache.catalina.realm.RealmBase;
-
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.activity.Activity;
 import com.flabser.dataengine.activity.IActivity;
@@ -31,12 +11,29 @@ import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.server.Server;
 import com.flabser.users.User;
 import com.flabser.users.UserStatusType;
+import org.apache.catalina.realm.RealmBase;
+
+import java.sql.Array;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @SuppressWarnings({ "SqlDialectInspection", "SqlNoDataSourceInspection" })
 public class SystemDatabase implements ISystemDatabase {
 	public static final String jdbcDriver = "org.postgresql.Driver";
 	private IDBConnectionPool dbPool;
-	private static final SimpleDateFormat sqlDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	static String connectionURL = "jdbc:postgresql://localhost/2Next";
 	static String dbUser = "postgres";
 	static String dbUserPwd = "smartdoc";
@@ -75,14 +72,15 @@ public class SystemDatabase implements ISystemDatabase {
 			return user;
 		}
 
+		if(pwd == null) pwd = "";
 		if (user.getPasswordHash() != null && user.getPasswordHash().trim().length() > 0) {
-			String pwdHash = user.getPasswordHash().length() < 11 ? pwd.hashCode() + "" : RealmBase.Digest(pwd, "MD5", "UTF-8");
+			String pwdHash = user.getPasswordHash().length() < 11 ? String.valueOf(pwd.hashCode()) : RealmBase.Digest(pwd, "MD5", "UTF-8");
 			if (user.getPasswordHash().equals(pwdHash)) {
 				user.isAuthorized = true;
 				pswToPswHash(user, pwd);
 			}
 		} else {
-			if (pwd != null && pwd.trim().length() > 0 && pwd.equals(user.getPwd())) {
+			if (pwd.equals(user.getPwd())) {
 				user.isAuthorized = true;
 				pswToPswHash(user, pwd);
 			}
@@ -96,10 +94,13 @@ public class SystemDatabase implements ISystemDatabase {
 		Connection conn = dbPool.getConnection();
 		String pwdHsh = RealmBase.Digest(pwd, "MD5", "UTF-8");
 
-		try (PreparedStatement pst = conn.prepareStatement("update USERS set PWD = '', PWDHASH = ? where ID = ?")) {
-			pst.setString(1, pwdHsh);
-			pst.setInt(2, user.id);
+		try (PreparedStatement pst = conn.prepareStatement("update USERS set PWD = ?, PWDHASH = ? where ID = ?")) {
+			pst.setString(1, null);
+			pst.setString(2, pwdHsh);
+			pst.setInt(3, user.id);
 			pst.executeUpdate();
+
+			conn.commit();
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
@@ -110,34 +111,19 @@ public class SystemDatabase implements ISystemDatabase {
 	private User initUser(String login) {
 
 		Connection conn = dbPool.getConnection();
-		ResultSet rs = null;
-		try (PreparedStatement getUser = conn
-				.prepareStatement("select ID, USERNAME, PRIMARYREGDATE, REGDATE, LOGIN, EMAIL, ISSUPERVISOR, PWD, PWDHASH, DEFAULTDBPWD, LOGINHASH, VERIFYCODE, STATUS, APPS, ROLES, GROUPS from users where login = ? limit 1;")) {
+		try (PreparedStatement getUser = conn.prepareStatement("select ID from users where login = ? limit 1;")) {
 
 			getUser.setString(1, login);
-			rs = getUser.executeQuery();
-
-			if (rs.next()) {
-
-				HashMap<String, ApplicationProfile> apps = new HashMap<>();
-				getApplicationProfiles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("APPS")))).forEach(app -> apps.put(app.appID, app));
-
-				return new User(rs.getInt("ID"), rs.getString("USERNAME"), rs.getDate("PRIMARYREGDATE"), rs.getDate("REGDATE"), rs.getString("LOGIN"),
-						rs.getString("EMAIL"), rs.getBoolean("ISSUPERVISOR"), rs.getString("PWD"), rs.getString("PWDHASH"), rs.getString("DEFAULTDBPWD"),
-						rs.getInt("LOGINHASH"), rs.getString("VERIFYCODE"), UserStatusType.getType(rs.getInt("STATUS")), new HashSet<>(
-								getUserGroups(Arrays.asList((Integer[]) getObjectArray(rs.getArray("GROUPS"))))), new HashSet<>(
-								getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))), apps, true);
+			try(ResultSet rs = getUser.executeQuery()) {
+				if (rs.next()) {
+					return getUser(rs.getInt("ID"));
+				}
 			}
 
+			conn.commit();
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-			} catch (SQLException ignored) {
-			}
 			dbPool.returnConnection(conn);
 		}
 
@@ -154,6 +140,8 @@ public class SystemDatabase implements ISystemDatabase {
 			while (rs.next()) {
 				result.add(new UserRole(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("app_id"), rs.getBoolean("is_on")));
 			}
+
+			conn.commit();
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
@@ -171,9 +159,11 @@ public class SystemDatabase implements ISystemDatabase {
 						+ ids.stream().collect(Collectors.toList()) + "::integer[]) as g_id) as ids inner join groups on ids.g_id = ID ")) {
 
 			while (rs.next()) {
-				result.add(new UserGroup(rs.getInt("id"), rs.getString("name"), rs.getString("description"), new HashSet<>(getUserRoles(Arrays
-						.asList((Integer[]) getObjectArray(rs.getArray("roles_id")))))));
+				result.add(new UserGroup(rs.getInt("id"), rs.getString("name"), rs.getString("description"),
+						new HashSet<>(getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("roles_id")))))));
 			}
+
+			conn.commit();
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
@@ -201,6 +191,8 @@ public class SystemDatabase implements ISystemDatabase {
 						.getString("OWNER"), rs.getInt("DBTYPE"), rs.getString("DBHOST"), rs.getString("DBNAME"), rs.getString("DBLOGIN"), rs
 						.getString("DBPWD"), rs.getInt("STATUS"), rs.getDate("STATUSDATE")));
 			}
+
+			conn.commit();
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
@@ -211,27 +203,21 @@ public class SystemDatabase implements ISystemDatabase {
 
 	}
 
+	//risk of sql injection
 	@Override
 	public int getAllUsersCount(String condition) {
 		int count = 0;
 		String wherePiece = "";
+		if (!condition.equals("")) wherePiece = "WHERE " + condition;
+
 		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			if (!condition.equals("")) {
-				wherePiece = "WHERE " + condition;
-			}
-			Statement s = conn.createStatement();
-			String sql = "select count(*) from USERS " + wherePiece;
-			ResultSet rs = s.executeQuery(sql);
-			if (rs.next()) {
-				count = rs.getInt(1);
-			}
-			rs.close();
-			s.close();
+		try (Statement s = conn.createStatement();
+			 ResultSet rs = s.executeQuery("select count(*) from USERS " + wherePiece)) {
+
+			if (rs.next())  count = rs.getInt(1);
 			conn.commit();
 			return count;
-		} catch (Throwable e) {
+		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 			return 0;
 		} finally {
@@ -239,221 +225,144 @@ public class SystemDatabase implements ISystemDatabase {
 		}
 	}
 
+	//risk of sql injection
+	//identical to getAllUsersCount(String condition)
 	@Override
 	public int getUsersCount(String condition) {
-		int count = 0;
-		String wherePiece = "";
-		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			if (!condition.equals("")) {
-				wherePiece = "WHERE " + condition;
-			}
-			Statement s = conn.createStatement();
-			String sql = "select count(*) from USERS " + wherePiece;
-			ResultSet rs = s.executeQuery(sql);
-
-			if (rs.next()) {
-				count = rs.getInt(1);
-			}
-
-			rs.close();
-			s.close();
-			conn.commit();
-		} catch (Throwable e) {
-			DatabaseUtil.debugErrorPrint(e);
-		} finally {
-			dbPool.returnConnection(conn);
-		}
-		return count;
+		return getAllUsersCount(condition);
 	}
 
 	@Override
 	public HashMap<String, User> getAllAdministrators() {
-		HashMap<String, User> users = new HashMap<String, User>();
+		HashMap<String, User> users = new HashMap<>();
 		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			Statement s = conn.createStatement();
-			String sql = "select * from USERS WHERE ISSUPERVISOR = 1";
-			ResultSet rs = s.executeQuery(sql);
 
-			while (rs.next()) {
-				User user = new User();
-				user.fill(rs);
-				user.isValid = true;
-				users.put(user.getLogin(), user);
+		try (Statement s = conn.createStatement();
+			 ResultSet rs = s.executeQuery("SELECT ARRAY(SELECT ID FROM USERS WHERE ISSUPERVISOR = TRUE) as IDS")){
+
+			if (rs.next()) {
+				List<User> userList = getUsers((Integer[])getObjectArray(rs.getArray("IDS")));
+				userList.forEach(u -> users.put(u.getLogin(), u));
 			}
 
-			rs.close();
-			s.close();
 			conn.commit();
 			return users;
 		} catch (Throwable e) {
 			DatabaseUtil.debugErrorPrint(e);
-			return null;
 		} finally {
 			dbPool.returnConnection(conn);
 		}
+
+		return null;
 	}
 
 	@Override
 	public User getUserByVerifyCode(String code) {
-		User user = null;
 		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			Statement s = conn.createStatement();
-			String sql = "select * from USERS where USERS.VERIFYCODE='" + code + "'";
-			ResultSet rs = s.executeQuery(sql);
+		try (PreparedStatement pstmt = conn.prepareStatement("select ID from USERS where USERS.VERIFYCODE = ?")){
 
-			if (rs.next()) {
-				user = new User();
-				user.fill(rs);
-				if (user.isValid) {
-					fillUserApp(conn, user);
+			conn.setAutoCommit(true);
+			pstmt.setString(1, code);
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					return getUser(rs.getInt("ID"));
 				}
 			}
-			rs.close();
-			s.close();
-			conn.commit();
 
-		} catch (Throwable e) {
+		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
-			user = null;
 		} finally {
 			dbPool.returnConnection(conn);
 		}
-		return user;
+
+		return null;
 	}
 
-	public User getUserByEmail(String email) {
-		User user = null;
-		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			Statement s = conn.createStatement();
-			String sql = "select * from USERS where USERS.EMAIL='" + email + "'";
-			ResultSet rs = s.executeQuery(sql);
 
-			if (rs.next()) {
-				user = new User();
-				user.fill(rs);
-				if (user.isValid) {
-					fillUserApp(conn, user);
+	@SuppressWarnings("unused")
+	public User getUserByEmail(String email) {
+
+		Connection conn = dbPool.getConnection();
+		try (PreparedStatement pstmt = conn.prepareStatement("select ID from USERS where USERS.EMAIL = ?")){
+			pstmt.setString(1, email);
+
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return getUser(rs.getInt("ID"));
 				}
 			}
-			rs.close();
-			s.close();
-			conn.commit();
 
-		} catch (Throwable e) {
+			conn.commit();
+		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
-			user = null;
 		} finally {
 			dbPool.returnConnection(conn);
 		}
-		return user;
+
+		return null;
+	}
+
+	private List<User> getUsers( Integer... ids ){
+
+		Connection conn = dbPool.getConnection();
+		List<User> result = new ArrayList<>();
+		if(ids == null) return result;
+
+		try (Statement stmt = conn.createStatement();
+			 ResultSet rs = stmt.executeQuery("select ID, USERNAME, PRIMARYREGDATE, REGDATE, LOGIN, EMAIL, ISSUPERVISOR, PWD, PWDHASH, DEFAULTDBPWD, LOGINHASH, VERIFYCODE, STATUS, APPS, ROLES, GROUPS " +
+					 "FROM (SELECT unnest(ARRAY" + Arrays.toString(ids) + "::integer[]) as u_id) as ids inner join users on ids.u_id = ID" )){
+
+			while (rs.next()) {
+				result.add(new User(rs.getInt("ID"), rs.getString("USERNAME"), rs.getDate("PRIMARYREGDATE"), rs.getDate("REGDATE"), rs.getString("LOGIN"),
+						rs.getString("EMAIL"), rs.getBoolean("ISSUPERVISOR"), rs.getString("PWD"), rs.getString("PWDHASH"), rs.getString("DEFAULTDBPWD"),
+						rs.getInt("LOGINHASH"), rs.getString("VERIFYCODE"), UserStatusType.getType(rs.getInt("STATUS")),
+						new HashSet<>(getUserGroups(Arrays.asList((Integer[]) getObjectArray(rs.getArray("GROUPS"))))),
+						new HashSet<>(getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))),
+						getApplicationProfiles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true)
+				);
+			}
+
+			conn.commit();
+		} catch (SQLException e) {
+			DatabaseUtil.debugErrorPrint(e);
+		} finally {
+			dbPool.returnConnection(conn);
+		}
+
+		return result;
 	}
 
 	@Override
 	public User getUser(int id) {
-		User user = null;
-		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			Statement s = conn.createStatement();
-			String sql = "select * from USERS where USERS.ID=" + id;
-			ResultSet rs = s.executeQuery(sql);
-
-			if (rs.next()) {
-				user = new User();
-				user.fill(rs);
-				if (user.isValid) {
-					fillUserApp(conn, user);
-				}
-			}
-			rs.close();
-			s.close();
-			conn.commit();
-
-		} catch (Throwable e) {
-			DatabaseUtil.debugErrorPrint(e);
-			user = null;
-		} finally {
-			dbPool.returnConnection(conn);
-		}
-		return user;
+		List<User> users = getUsers(id);
+		if (users.size() == 0) return null;
+		return users.get(0);
 	}
 
+	//identical to initUser(String login)
 	@Override
 	public User getUser(String id) {
-		User user = null;
-		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			Statement s = conn.createStatement();
-			String sql = "select * from USERS where USERS.LOGIN='" + id + "'";
-			ResultSet rs = s.executeQuery(sql);
-
-			if (rs.next()) {
-				user = new User();
-				user.fill(rs);
-				if (user.isValid) {
-					fillUserApp(conn, user);
-				}
-			}
-			rs.close();
-			s.close();
-			conn.commit();
-
-		} catch (Throwable e) {
-			DatabaseUtil.debugErrorPrint(e);
-			user = null;
-		} finally {
-			dbPool.returnConnection(conn);
-		}
-		return user;
+		return initUser(id);
 	}
 
 	@Override
 	public int deleteUser(int id) {
+
 		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			String delEnApp = "delete from USERAPPS where USERID = " + id;
-			PreparedStatement pst = conn.prepareStatement(delEnApp);
+		try (PreparedStatement pst = conn.prepareStatement("delete from USERS where ID = ?")) {
+
+			pst.setInt(1, id);
 			pst.executeUpdate();
-			String delUserTab = "delete from USERS where DOCID = " + id;
-			pst = conn.prepareStatement(delUserTab);
-			pst.executeUpdate();
+
 			conn.commit();
-			pst.close();
 			return 1;
-		} catch (Throwable e) {
+		} catch (SQLException e) {
 			DatabaseUtil.errorPrint(e);
-			return -1;
 		} finally {
 			dbPool.returnConnection(conn);
 		}
 
-	}
-
-	public boolean hasUserTable(String tableName) {
-		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			Statement s = conn.createStatement();
-			String sql = "select * from " + tableName;
-			s.executeQuery(sql);
-			s.close();
-			conn.commit();
-			return true;
-		} catch (Throwable e) {
-			return false;
-		} finally {
-			dbPool.returnConnection(conn);
-		}
+		return -1;
 	}
 
 	public void createTable(HashMap<String, String> queries) {
@@ -490,13 +399,11 @@ public class SystemDatabase implements ISystemDatabase {
 		}
 	}
 
-	// requires that list of applications, roles and groups are exists
 	@Override
 	public int insert(User user) {
 		Connection conn = dbPool.getConnection();
 
-		try (PreparedStatement insertUser = conn
-				.prepareStatement(
+		try (PreparedStatement insertUser = conn.prepareStatement(
 						"insert into USERS(USERNAME, LOGIN, EMAIL, PWD, ISSUPERVISOR, PRIMARYREGDATE, REGDATE, LOGINHASH, PWDHASH, LASTDEFAULTURL, STATUS, VERIFYCODE, APPS, ROLES, GROUPS, DEFAULTDBPWD) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 						PreparedStatement.RETURN_GENERATED_KEYS)) {
 
@@ -536,7 +443,6 @@ public class SystemDatabase implements ISystemDatabase {
 		}
 	}
 
-	// requires that list of applications, roles and groups are exists
 	@Override
 	public int update(User user) {
 		Connection conn = dbPool.getConnection();
@@ -577,73 +483,55 @@ public class SystemDatabase implements ISystemDatabase {
 
 	@Override
 	public ArrayList<User> getUsers(String keyWord) {
-		ArrayList<User> users = new ArrayList<User>();
+		ArrayList<User> users = new ArrayList<>();
 
 		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			Statement s = conn.createStatement();
-			String sql = "select * from USERS where USERS.USERID LIKE '" + keyWord + "%'";
-			ResultSet rs = s.executeQuery(sql);
-
-			while (rs.next()) {
-				User user = new User();
-				user.fill(rs);
-				users.add(user);
+		try (PreparedStatement pst = conn.prepareStatement("select ARRAY(SELECT ID from USERS where USERS.LOGIN LIKE ?) AS IDS")){
+			conn.setAutoCommit(true);
+			pst.setString(1, keyWord + "%");
+			try(ResultSet rs = pst.executeQuery()){
+				if(rs.next()) {
+					return (ArrayList<User>)getUsers((Integer[])getObjectArray(rs.getArray("IDS")));
+				}
 			}
-			rs.close();
-			s.close();
-			conn.commit();
-		} catch (Throwable e) {
+		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
 			dbPool.returnConnection(conn);
 		}
+
 		return users;
 	}
 
 	private boolean checkHash(String hashAsString, int hash) {
 		try {
 			return (Integer.parseInt(hashAsString) == hash);
-		} catch (NumberFormatException ignored) {
-		}
+		} catch (NumberFormatException ignored) {}
 		return false;
 	}
 
+	//risk of sql injection
 	@Override
 	public ArrayList<User> getAllUsers(String condition, int calcStartEntry, int pageSize) {
-		ArrayList<User> users = new ArrayList<User>();
+
+		ArrayList<User> users = null;
 		String wherePiece = "";
+		if (!condition.equals("")) wherePiece = "WHERE " + condition;
+
 		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			if (!condition.equals("")) {
-				wherePiece = "WHERE " + condition;
-			}
-			Statement s = conn.createStatement();
-			String sql = "select * from USERS " + wherePiece + " LIMIT " + pageSize + " OFFSET " + calcStartEntry;
-			ResultSet rs = s.executeQuery(sql);
+		try (Statement s = conn.createStatement();
+			 ResultSet rs = s.executeQuery("select ARRAY(select ID from USERS " + wherePiece + " LIMIT " + pageSize + " OFFSET " + calcStartEntry + ") as IDS;")){
 
-			while (rs.next()) {
-				User user = new User();
-				user.fill(rs);
-				/*
-				 * if (user.isValid) { fillUserApp(conn, user); }
-				 */
-				user.isValid = true;
-				users.add(user);
-			}
+			if (rs.next()) users = (ArrayList<User>)getUsers((Integer[])getObjectArray(rs.getArray("IDS")));
 
-			rs.close();
-			s.close();
 			conn.commit();
-			return users;
-		} catch (Throwable e) {
+		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
-			return null;
 		} finally {
 			dbPool.returnConnection(conn);
 		}
+
+		return users;
 	}
 
 	@Override
@@ -723,48 +611,27 @@ public class SystemDatabase implements ISystemDatabase {
 
 	@Override
 	public int deleteApplicationProfile(int id) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	private void fillUserApp(Connection conn, User user) throws SQLException {
-		Statement s = conn.createStatement();
-		ResultSet rs = s.executeQuery("select apps from USERS where id = " + user.id);
-		if (rs.next()) {
-			Integer[] appsId = (Integer[]) getObjectArray(rs.getArray("apps"));
-			List<ApplicationProfile> list = getApplicationProfiles(Arrays.asList(appsId));
-			for (ApplicationProfile applicationProfile : list) {
-				user.getApplicationProfiles().put(applicationProfile.appName, applicationProfile);
-			}
-		}
-		rs.close();
-		s.close();
-	}
-
+	//risk of sql injection
 	@Override
 	public ArrayList<ApplicationProfile> getAllApps(String condition, int calcStartEntry, int pageSize) {
-		ArrayList<ApplicationProfile> apps = new ArrayList<ApplicationProfile>();
+		ArrayList<ApplicationProfile> apps = new ArrayList<>();
 		String wherePiece = "";
+		if (!condition.equals("")) wherePiece = "WHERE " + condition;
+
 		Connection conn = dbPool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			if (!condition.equals("")) {
-				wherePiece = "WHERE " + condition;
-			}
-			Statement s = conn.createStatement();
-			String sql = "select * from APPS " + wherePiece + " LIMIT " + pageSize + " OFFSET " + calcStartEntry;
-			ResultSet rs = s.executeQuery(sql);
+		try (Statement s = conn.createStatement();
+			 ResultSet rs = s.executeQuery("select * from APPS " + wherePiece + " LIMIT " + pageSize + " OFFSET " + calcStartEntry)){
 
 			while (rs.next()) {
-				ApplicationProfile app = new ApplicationProfile(rs);
-				apps.add(app);
+				apps.add(new ApplicationProfile(rs));
 			}
 
-			rs.close();
-			s.close();
 			conn.commit();
 			return apps;
-		} catch (Throwable e) {
+		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 			return null;
 		} finally {

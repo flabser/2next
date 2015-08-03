@@ -1,5 +1,9 @@
 package com.flabser.dataengine.system.entities;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
@@ -11,10 +15,7 @@ import com.flabser.script._IContent;
 import com.flabser.solutions.DatabaseType;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.VisibiltyType;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
+import com.flabser.util.Util;
 
 @JsonRootName("applicationProfile")
 public class ApplicationProfile implements _IContent {
@@ -36,11 +37,13 @@ public class ApplicationProfile implements _IContent {
 	public String defaultURL;
 	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
 	private Date statusDate;
-	private VisibiltyType visibilty = VisibiltyType.PUBLIC;
+	private VisibiltyType visibilty;;
 
-	public ApplicationProfile() {}
+	public ApplicationProfile() {
+	}
 
-	public ApplicationProfile(int id, String appType, String appID, String appName, String owner, int dbType, String dbHost, String dbName, String dbLogin, String dbPwd, int status, Date statusDate){
+	public ApplicationProfile(int id, String appType, String appID, String appName, String owner, int dbType, String dbHost, String dbName, String dbLogin,
+			String dbPwd, int status, Date statusDate) {
 		this.id = id;
 		this.appType = appType;
 		this.appID = appID;
@@ -76,11 +79,21 @@ public class ApplicationProfile implements _IContent {
 	}
 
 	@JsonIgnore
-	public IDatabase getDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+	public IDatabase getDatabase() {
 		switch (dbType) {
 		case POSTGRESQL:
 			IDatabase db = new com.flabser.solutions.postgresql.Database();
-			db.init(this);
+			try {
+				db.init(this);
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (DatabasePoolException e) {
+				e.printStackTrace();
+			}
 			return db;
 		default:
 			return null;
@@ -91,6 +104,7 @@ public class ApplicationProfile implements _IContent {
 		ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
 
 		if (id == 0) {
+			appID = "_" + Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 14) + "_";
 			id = sysDatabase.insert(this);
 		} else {
 			id = sysDatabase.update(this);
