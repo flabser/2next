@@ -88,6 +88,7 @@ public class RequestURL {
 		return url;
 	}
 
+
 	public boolean isProtected() {
 		return !appName.equals("") && !appID.equals("") || !(isDefault() || url.matches(".*/\\w+\\.\\w+$") || appName.equalsIgnoreCase("SharedResources"));
 	}
