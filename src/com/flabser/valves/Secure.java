@@ -1,17 +1,5 @@
 package com.flabser.valves;
 
-import java.io.IOException;
-import java.util.HashMap;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.apache.catalina.connector.Request;
-import org.apache.catalina.connector.Response;
-import org.apache.catalina.valves.ValveBase;
-
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
@@ -19,6 +7,16 @@ import com.flabser.env.SessionPool;
 import com.flabser.server.Server;
 import com.flabser.servlets.Cookies;
 import com.flabser.users.UserSession;
+import org.apache.catalina.connector.Request;
+import org.apache.catalina.connector.Response;
+import org.apache.catalina.valves.ValveBase;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
 
 public class Secure extends ValveBase {
 	RequestURL ru;
@@ -81,14 +79,16 @@ public class Secure extends ValveBase {
 						invoke(request, response);
 					} else {
 						String msg = "there is no user session ";
-						Server.logger.warningLogEntry(msg);
 						response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
+						Server.logger.warningLogEntry(msg);
+						// exception(request, response, new
+						// AuthFailedException(msg));
 						getNext().invoke(request, response);
 					}
 				} else {
 					String msg = "user session was expired";
-					Server.logger.warningLogEntry(msg);
 					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
+					Server.logger.warningLogEntry(msg);
 					getNext().invoke(request, response);
 				}
 
