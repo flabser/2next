@@ -179,7 +179,7 @@ public class Provider extends HttpServlet {
 			// TODO Need to more informative handler in this case
 			new AuthFailedException(rnf.getMessage(), response, true);
 		} catch (RuleException rnf) {
-			new PortalException(rnf, env, response, ProviderExceptionType.RULENOTFOUND);
+			new PortalException(rnf, env, response, ProviderExceptionType.RULENOTFOUND, PublishAsType.HTML);
 		} catch (XSLTFileNotFoundException xfnf) {
 			new PortalException(xfnf, env, response, ProviderExceptionType.XSLTNOTFOUND, PublishAsType.HTML);
 		} catch (IOException ioe) {

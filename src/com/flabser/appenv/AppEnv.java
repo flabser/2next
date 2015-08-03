@@ -1,6 +1,7 @@
 package com.flabser.appenv;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +32,7 @@ public class AppEnv implements ICache, _IContent {
 	public final static String APP_ATTR = "appenv";
 	public final static String ADMIN_APP_NAME = "administrator";
 
+	private ArrayList<String> unsecuredPage = new ArrayList<String>();
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 	private String docBase;
 
@@ -113,6 +115,14 @@ public class AppEnv implements ICache, _IContent {
 
 	public String getDocBase() {
 		return docBase;
+	}
+
+	public void addUnsecurePage(String id) {
+		unsecuredPage.add(id);
+	}
+
+	public void isPageUnsecure(String id) {
+		unsecuredPage.add(id);
 	}
 
 }
