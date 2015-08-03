@@ -81,12 +81,12 @@ public class TransactionDAO {
 
 	public String getCreateQuery() {
 		return """INSERT INTO transactions
-							("USER", transaction_type, transaction_state,
-							reg_date, account_from, account_to,
-							amount, exchange_rate, category, cost_center,
-							tags, repeat, every, repeat_step, start_date, end_date,
-							basis, note, include_in_reports)
-						VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+						("USER", transaction_type, transaction_state,
+						reg_date, account_from, account_to,
+						amount, exchange_rate, category, cost_center,
+						tags, repeat, every, repeat_step, start_date, end_date,
+						basis, note, include_in_reports)
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
 	}
 
 	public String getUpdateQuery() {

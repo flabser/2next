@@ -22,7 +22,7 @@ public class BudgetDAO {
 	}
 
 	public String getCreateQuery() {
-		return "INSERT budgets (name, regdate, owner, status) VALUES (?, ?, ?, ?)"
+		return "INSERT INTO budgets (name, regdate, owner, status) VALUES (?, ?, ?, ?)"
 	}
 
 	public String getUpdateQuery() {
@@ -51,13 +51,15 @@ public class BudgetDAO {
 	}
 
 	public int add(Budget m) {
-		String sql = """INSERT budgets (name, regdate, owner, status)
+		String sql = """INSERT INTO budgets (name, regdate, owner, status)
 							VALUES ('${m.name}', '${m.regDate}', '${m.owner}', ${m.status.code})"""
 		return db.insert(sql, user)
 	}
 
 	public void update(Budget m) {
-		String sql = "UPDATE budgets SET name = '${m.name}', owner = '${m.owner}', status = ${m.status.code} WHERE id = ${m.id}"
+		String sql = """UPDATE budgets
+							SET name = '${m.name}', owner = '${m.owner}', status = ${m.status.code}
+						WHERE id = ${m.id}"""
 		db.update(sql, user)
 	}
 
