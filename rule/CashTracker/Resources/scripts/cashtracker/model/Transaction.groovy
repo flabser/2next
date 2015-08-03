@@ -220,25 +220,25 @@ public class Transaction implements _IObject {
 	}
 
 	public void init(ResultSet rs) {
-		setId(rs.getInt("id"));
+		setId(rs.getInt("t.id"));
 		setUser(null);
-		setTransactionType(TransactionType.typeOf(rs.getInt("transaction_type")))
-		setTransactionState(TransactionState.stateOf(rs.getInt("transaction_state")))
-		setRegDate(rs.getDate("reg_date"));
+		setTransactionType(TransactionType.typeOf(rs.getInt("t.transaction_type")))
+		setTransactionState(TransactionState.stateOf(rs.getInt("t.transaction_state")))
+		setRegDate(rs.getDate("t.reg_date"));
 		setAccountFrom(null);
 		setAccountTo(null);
-		setAmount(rs.getBigDecimal("amount"));
-		setExchangeRate(rs.getFloat("exchange_rate"));
+		setAmount(rs.getBigDecimal("t.amount"));
+		setExchangeRate(rs.getFloat("t.exchange_rate"));
 		setCategory(null);
 		setCostCenter(null);
-		setTags(rs.getArray("tags"));
-		setRepeat(rs.getBoolean("repeat"));
-		setEvery(rs.getInt("every"));
-		setRepeatStep(rs.getInt("repeat_step"));
-		setStartDate(rs.getDate("start_date"));
-		setEndDate(rs.getDate("end_date"));
-		setBasis(rs.getString("basis"));
-		setNote(rs.getString("note"));
-		setIncludeInReports(rs.getBoolean("include_in_reports"))
+		setTags(rs.getArray("t.tags"));
+		setRepeat(rs.getBoolean("t.repeat"));
+		setEvery(rs.getInt("t.every"));
+		setRepeatStep(rs.getInt("t.repeat_step"));
+		setStartDate(rs.getDate("t.start_date"));
+		setEndDate(rs.getDate("t.end_date"));
+		setBasis(rs.getString("t.basis"));
+		setNote(rs.getString("t.note"));
+		setIncludeInReports(rs.getBoolean("t.include_in_reports"))
 	}
 }

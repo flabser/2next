@@ -18,19 +18,19 @@ public class TagDAO {
 	}
 
 	public String getSelectQuery() {
-		return "SELECT * FROM tags";
+		return "SELECT id, name, color FROM tags"
 	}
 
 	public String getCreateQuery() {
-		return "insert into tags...";
+		return "INSERT INTO tags (name, color) VALUES (?, ?)"
 	}
 
 	public String getUpdateQuery() {
-		return "update tags...";
+		return "UPDATE tags SET name = ?, color = ? WHERE id = ?"
 	}
 
 	public String getDeleteQuery() {
-		return "delete from tags where id = ";
+		return "DELETE FROM tags WHERE id = ";
 	}
 
 	public List <Tag> findAll() {
@@ -39,18 +39,18 @@ public class TagDAO {
 	}
 
 	public Tag findById(long id) {
-		List <Tag> list = db.select(getSelectQuery() + " where id = $id", Tag.class, user)
+		List <Tag> list = db.select(getSelectQuery() + " WHERE id = $id", Tag.class, user)
 		Tag result = list.size() ? list[0] : null
 		return result
 	}
 
 	public int add(Tag m) {
-		String sql = "insert into tags (name, color) values ('${m.name}', ${m.color})"
+		String sql = "INSERT INTO tags (name, color) VALUES ('${m.name}', ${m.color})"
 		return db.insert(sql, user)
 	}
 
 	public void update(Tag m) {
-		String sql = "update tags set name = '${m.name}', color = ${m.color} where id = ${m.id}"
+		String sql = "UPDATE tags SET name = '${m.name}', color = ${m.color} WHERE id = ${m.id}"
 		db.update(sql, user)
 	}
 

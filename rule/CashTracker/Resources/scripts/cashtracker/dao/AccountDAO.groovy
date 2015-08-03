@@ -18,19 +18,36 @@ public class AccountDAO {
 	}
 
 	public String getSelectQuery() {
-		return "SELECT * FROM accounts";
+		return """SELECT id, name, type, currency_code, opening_balance, amount_control,
+					owner, observers, include_in_totals, note, sort_order FROM accounts"""
 	}
 
 	public String getCreateQuery() {
-		return "insert into accounts...";
+		return """INSERT INTO accounts
+					(name, type, currency_code, opening_balance, amount_control,
+					 owner, observers, include_in_totals, note, sort_order)
+				  VALUES
+					(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
 	}
 
 	public String getUpdateQuery() {
-		return "update accounts...";
+		return """UPDATE accounts
+					SET
+						name = ?,
+						type = ?,
+						currency_code = ?,
+						opening_balance = ?,
+						amount_control = ?,
+						owner = ?,
+						observers = ?,
+						include_in_totals = ?,
+						note = ?,
+						sort_order = ?
+					WHERE id = ?"""
 	}
 
 	public String getDeleteQuery() {
-		return "delete from accounts where id = ";
+		return "DELETE FROM accounts WHERE id = ";
 	}
 
 	public List <Account> findAll() {
@@ -39,24 +56,24 @@ public class AccountDAO {
 	}
 
 	public Account findById(long id) {
-		List <Account> list = db.select(getSelectQuery() + " where id = $id", Account.class, user)
+		List <Account> list = db.select(getSelectQuery() + " WHERE id = $id", Account.class, user)
 		Account result = list.size() ? list[0] : null
 		return result
 	}
 
 	public int add(Account a) {
-		String sql = """insert into accounts
+		String sql = """INSERT INTO accounts
 							(name, type, currency_code, opening_balance, amount_control,
 							owner, observers, include_in_totals, note, sort_order)
-						values
+						VALUES
 							('${a.name}', ${a.type}, '${a.currencyCode}', ${a.openingBalance}, ${a.amountControl},
 							'${a.owner}', '${a.observers}', ${a.includeInTotals}, '${a.note}', ${a.sortOrder})"""
 		return db.insert(sql, user)
 	}
 
 	public void update(Account a) {
-		String sql = """update accounts
-						set
+		String sql = """UPDATE accounts
+						SET
 							name = '${a.name}',
 							type = ${a.type},
 							currency_code = '${a.currencyCode}',
@@ -67,7 +84,7 @@ public class AccountDAO {
 							include_in_totals = ${a.includeInTotals},
 							note = '${a.note}',
 							sort_order = ${a.sortOrder}
-						where id = ${a.id}"""
+						WHERE id = ${a.id}"""
 		db.update(sql, user)
 	}
 
