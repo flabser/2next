@@ -84,16 +84,14 @@ public class Secure extends ValveBase {
 						invoke(request, response);
 					} else {
 						String msg = "there is no user session ";
-						response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
 						Server.logger.warningLogEntry(msg);
-						// exception(request, response, new
-						// AuthFailedException(msg));
+						response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
 						getNext().invoke(request, response);
 					}
 				} else {
 					String msg = "user session was expired";
-					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
 					Server.logger.warningLogEntry(msg);
+					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
 					getNext().invoke(request, response);
 				}
 
