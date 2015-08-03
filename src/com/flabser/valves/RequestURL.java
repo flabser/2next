@@ -12,16 +12,16 @@ public class RequestURL {
 
 	public RequestURL(String url) {
 		this.url = url;
-		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)(/[\\p{Lower}0-9]{16})?(/.*)*$");
+		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)(/_[\\p{Lower}0-9]{16}_)?.*$");
 		Matcher matcher = pattern.matcher(url != null ? url.trim() : "");
 		if (matcher.matches()) {
 			appName = matcher.group(1) == null ? "" : matcher.group(1);
-			appID = matcher.group(2) == null ? "" : matcher.group(2).substring(1);
+			appID = matcher.group(2) == null ? "" : matcher.group(2).substring(2, matcher.group(2).length() - 1);
 		}
 	}
 
 	public String getAppName() {
-		return appName;
+		return isSharedResource() ? "" : appName;
 	}
 
 	public String getAppID() {
@@ -39,12 +39,7 @@ public class RequestURL {
 	}
 
 	public boolean isDefault() {
-		// TODO Need to improve
-		if (url.equalsIgnoreCase("/")) {
-			return true;
-		} else {
-			return false;
-		}
+		return url.matches("/" + appName + "(/(Provider)?)?/?") || url.trim().equals("");
 	}
 
 	@Deprecated
@@ -78,19 +73,19 @@ public class RequestURL {
 	}
 
 	public boolean isSimpleObject() {
-		return false;
+		return url.matches(".*/\\w+\\.\\w+$");
 	}
 
 	public boolean isAuthRequest() {
-		return false;
+		return url.matches(".+/session$");
 	}
 
 	public boolean isPage() {
-		return false;
+		return url.matches(".*/Provider\\?(\\w+=\\w+)(&\\w+=\\w+)*") || url.matches(".*/page/[\\w\\.]+");
 	}
 
 	public boolean isSharedResource() {
-		return false;
+		return appName.equalsIgnoreCase("SharedResources");
 	}
 
 	public boolean isAnonymousPage() {
