@@ -18,6 +18,7 @@ import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.server.Server;
 import com.flabser.servlets.Cookies;
+import com.flabser.users.AuthModeType;
 import com.flabser.users.UserSession;
 
 public class Secure extends ValveBase {
@@ -36,7 +37,6 @@ public class Secure extends ValveBase {
 
 		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(AppEnv.ADMIN_APP_NAME)) {
 			HttpSession jses = http.getSession(false);
-			System.out.println(http.getServletContext().getContextPath());
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 				if (us != null) {
@@ -84,6 +84,7 @@ public class Secure extends ValveBase {
 			UserSession userSession = SessionPool.getLoggeedUser(token);
 			if (userSession != null) {
 				HttpSession jses = http.getSession(true);
+				userSession.setAuthMode(AuthModeType.LOGIN_THROUGH_NUBIS);
 				jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 				Server.logger.verboseLogEntry(userSession.toString() + "\" got from session pool " + jses.getServletContext().getContextPath());
 				invoke(request, response);

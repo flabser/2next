@@ -1,20 +1,7 @@
 package com.flabser.restful;
 
-import com.flabser.appenv.AppEnv;
-import com.flabser.dataengine.DatabaseFactory;
-import com.flabser.dataengine.activity.IActivity;
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.system.ISystemDatabase;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.env.SessionPool;
-import com.flabser.server.Server;
-import com.flabser.servlets.ServletUtil;
-import com.flabser.users.AuthFailedException;
-import com.flabser.users.AuthFailedExceptionType;
-import com.flabser.users.User;
-import com.flabser.users.UserSession;
-import com.flabser.users.UserStatusType;
-import org.omg.CORBA.UserException;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +17,24 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import java.sql.SQLException;
-import java.util.HashMap;
+
+import org.omg.CORBA.UserException;
+
+import com.flabser.appenv.AppEnv;
+import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.activity.IActivity;
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.env.SessionPool;
+import com.flabser.server.Server;
+import com.flabser.servlets.ServletUtil;
+import com.flabser.users.AuthFailedException;
+import com.flabser.users.AuthFailedExceptionType;
+import com.flabser.users.AuthModeType;
+import com.flabser.users.User;
+import com.flabser.users.UserSession;
+import com.flabser.users.UserStatusType;
 
 @Path("/session")
 public class SessionService {
@@ -105,9 +108,9 @@ public class SessionService {
 		}
 
 		userSession = new UserSession(user, jses);
+		userSession.setAuthMode(AuthModeType.DIRECRT_LOGIN);
 		String token = SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
-		// context.setAttribute("test", "zzzz");
 		int maxAge = -1;
 
 		NewCookie cookie = new NewCookie(AUTH_COOKIE_NAME, token, "/", null, null, maxAge, false);

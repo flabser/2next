@@ -28,7 +28,7 @@ public class UserSession implements ICache {
 	public int pageSize;
 	public String host = "localhost";
 
-	// private IDatabase dataBase;
+	private AuthModeType authMode;
 	private HttpSession jses;
 	private HashMap<String, ActiveApplication> acitveApps = new HashMap<String, ActiveApplication>();
 
@@ -109,6 +109,14 @@ public class UserSession implements ICache {
 			return aa.db;
 		}
 
+	}
+
+	public AuthModeType getAuthMode() {
+		return authMode;
+	}
+
+	public void setAuthMode(AuthModeType authMode) {
+		this.authMode = authMode;
 	}
 
 	private void initHistory() {

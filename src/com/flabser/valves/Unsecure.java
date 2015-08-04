@@ -23,7 +23,6 @@ public class Unsecure extends ValveBase {
 		}
 		RequestURL ru = new RequestURL(requestURI);
 
-		Server.logger.normalLogEntry(http.getMethod() + " " + requestURI);
 		if ((!ru.isProtected()) || ru.isAuthRequest()) {
 			// Server.logger.verboseLogEntry("free area");
 			getNext().getNext().invoke(request, response);
@@ -32,6 +31,7 @@ public class Unsecure extends ValveBase {
 				Server.logger.verboseLogEntry("is Page");
 				getNext().getNext().invoke(request, response);
 			} else {
+				Server.logger.normalLogEntry(http.getMethod() + " " + requestURI);
 				Server.logger.verboseLogEntry("not anonymous area");
 				((Secure) getNext()).invoke(request, response, ru);
 			}
