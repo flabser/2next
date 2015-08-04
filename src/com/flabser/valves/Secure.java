@@ -85,6 +85,7 @@ public class Secure extends ValveBase {
 			if (userSession != null) {
 				HttpSession jses = http.getSession(true);
 				userSession.setAuthMode(AuthModeType.LOGIN_THROUGH_NUBIS);
+
 				jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 				Server.logger.verboseLogEntry(userSession.toString() + "\" got from session pool " + jses.getServletContext().getContextPath());
 				invoke(request, response);
