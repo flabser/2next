@@ -5,8 +5,8 @@ const {
 } = Em;
 
 export default Route.extend({
-
     tagName: '',
+    navProfileIsExpanded: false,
 
     session: inject.service(),
 
@@ -72,6 +72,10 @@ export default Route.extend({
 
         toggleSearchForm: function() {
             $('body').toggleClass('search-open');
+        },
+
+        toggleNavProfile: function() {
+            $('.nav-profile').toggleClass('expanded');
         },
 
         willTransition: function() {

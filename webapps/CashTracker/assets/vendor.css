@@ -1,1 +1,1 @@
-.inline-non-edit{color:#428bca;border-bottom:dashed 1px #428bca;cursor:pointer;text-decoration:none!important}
+.nav-profile{border-radius:3px;border-bottom:1px solid #E6E6E6}.nav-profile>header{cursor:pointer;margin:0;padding:1em}.nav-profile>section{max-height:0;overflow:hidden;transition:max-height 200ms}.nav-profile.expanded>section{max-height:200px}.nav-profile ul{margin:0;padding:0}.nav-profile li{list-style:none;margin:0;padding:0}.nav-profile .profile{display:block;padding:.5em}.nav-profile .logout{border:none;display:block;padding:.5em}

@@ -44,5 +44,11 @@ export default Em.Route.extend({
         }
 
         this._super(transition);
+    },
+
+    actions: {
+        add() {
+            this.transitionTo('transactions.new');
+        }
     }
 });
