@@ -12,6 +12,7 @@ import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
+import com.flabser.restful.AuthUser;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
@@ -143,6 +144,16 @@ public class UserSession implements ICache {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	public AuthUser getUserPOJO() {
+		AuthUser aUser = new AuthUser();
+		aUser.setLogin(currentUser.getLogin());
+		aUser.setName(currentUser.getUserName());
+		aUser.setRoles(currentUser.getUserRoles());
+		aUser.setApplications(currentUser.getApplicationProfiles());
+		aUser.setAuthMode(authMode);
+		return aUser;
 	}
 
 	@Override
