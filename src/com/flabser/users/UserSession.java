@@ -164,7 +164,7 @@ public class UserSession implements ICache {
 
 	@Override
 	public String toString() {
-		return "user session of the " + currentUser;
+		return currentUser + ", authMode=" + authMode.name() + ", lang=" + lang;
 	}
 
 	public class HistoryEntryCollection {

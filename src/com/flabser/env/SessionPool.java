@@ -33,4 +33,8 @@ public class SessionPool {
 		userSessions.remove(us.currentUser.getLogin());
 	}
 
+	public static HashMap<Integer, UserSession> getUserSessions() {
+		return userSessions;
+	}
+
 }
