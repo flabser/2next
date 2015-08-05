@@ -6,7 +6,7 @@ export default Em.Controller.extend({
     actions: {
         save: function() {
             var _this = this;
-            var model = this.currentModel;
+            var model = this.get('user');
             model.save().then(function() {
                 _this.send('goBack');
             });

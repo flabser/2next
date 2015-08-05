@@ -6,7 +6,7 @@ export default Em.Controller.extend({
     actions: {
         save: function() {
             let _this = this;
-            let model = this.currentModel;
+            let model = this.get('category');
             model.save().then(function() {
                 _this.transitionTo('categories');
             });
