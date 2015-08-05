@@ -135,7 +135,7 @@ nbApp.login = function(form) {
                 for (var key in result.authUser.applications) {
                     appId = key;
                 }
-                location.href = appId + '/index.html';
+                location.href = appId;
             }
         },
         error: function(err) {
