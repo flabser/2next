@@ -3,7 +3,7 @@
     <h1 class="header-title">{{t "tag"}} / {{tag.name}}</h1>
     <div class="action-bar">
         <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
-        <button type="submit" class="btn btn-primary" {{bind-attr disabled=isNotValid }}>{{t "save"}}</button>
+        <button type="submit" class="btn btn-primary">{{t "save"}}</button>
     </div>
 </header>
 <section class="form-content">
@@ -14,16 +14,6 @@
             </div>
             <div class="controls">
                 {{input value=tag.name}}
-                {{tn-error-message}}
-            </div>
-        {{/tn-form-group}}
-
-        {{#tn-form-group property="color"}}
-            <div class="control-label">
-                {{t "color"}}
-            </div>
-            <div class="controls">
-                {{input value=tag.color}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}
