@@ -6,12 +6,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingDeque;
 
-import javax.servlet.http.HttpSession;
-
 import org.omg.CORBA.UserException;
 
 import com.flabser.dataengine.IDatabase;
-import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
@@ -29,27 +26,14 @@ public class UserSession implements ICache {
 	public String host = "localhost";
 
 	private AuthModeType authMode;
-	// private HttpSession jses;
 	private HashMap<String, ActiveApplication> acitveApps = new HashMap<String, ActiveApplication>();
 
 	private String lang;
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 
-	public UserSession(User user, String appID, HttpSession jses) throws UserException, ClassNotFoundException, InstantiationException, IllegalAccessException,
-			DatabasePoolException {
+	public UserSession(User user) {
 		currentUser = user;
-		// this.jses = jses;
-		initHistory();
-		ApplicationProfile appProfile = user.getApplicationProfile(appID);
-		if (appProfile != null) {
-			// dataBase = appProfile.getDatabase();
-			acitveApps.put(appProfile.appType, new ActiveApplication(appProfile, appProfile.getDatabase()));
-		}
-	}
-
-	public UserSession(User user, HttpSession jses) {
-		currentUser = user;
-		// this.jses = jses;
+		authMode = AuthModeType.DIRECT_LOGIN;
 		initHistory();
 	}
 
@@ -65,7 +49,6 @@ public class UserSession implements ICache {
 		if (!currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
 			currentUser.setPersistentValue("lang", lang);
 		}
-		// jses.setAttribute("lang", lang);
 	}
 
 	public String getLang() {

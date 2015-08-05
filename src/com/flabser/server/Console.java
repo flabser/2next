@@ -8,10 +8,6 @@ import com.flabser.users.UserSession;
 
 public class Console implements Runnable {
 
-	Console() {
-
-	}
-
 	@Override
 	public void run() {
 
@@ -21,8 +17,9 @@ public class Console implements Runnable {
 			System.out.println("> " + command);
 			if (command.equalsIgnoreCase("quit") || command.equalsIgnoreCase("q")) {
 				Server.shutdown();
+				in.close();
 			} else if (command.equalsIgnoreCase("sessions") || command.equalsIgnoreCase("us")) {
-				Collection sc = SessionPool.getUserSessions().values();
+				Collection<UserSession> sc = SessionPool.getUserSessions().values();
 				if (sc.size() > 0) {
 					for (UserSession us : SessionPool.getUserSessions().values()) {
 						System.out.println(us);
@@ -36,6 +33,5 @@ public class Console implements Runnable {
 				}
 			}
 		}
-		;
 	}
 }
