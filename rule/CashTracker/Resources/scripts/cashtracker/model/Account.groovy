@@ -12,7 +12,7 @@ public class Account implements _IObject {
 
 	private long id;
 
-	private int type;
+	// private int type;
 
 	private String name;
 
@@ -49,13 +49,13 @@ public class Account implements _IObject {
 		this.name = name;
 	}
 
-	public int getType() {
+	/*public int getType() {
 		return type;
 	}
 
 	public void setType(int type) {
 		this.type = type;
-	}
+	}*/
 
 	public String getCurrencyCode() {
 		return currencyCode;
@@ -129,7 +129,7 @@ public class Account implements _IObject {
 	public void init(ResultSet rs) {
 		setId(rs.getInt("id"));
 		setName(rs.getString("name"));
-		setType(rs.getInt("type"));
+		// setType(rs.getInt("type"));
 		setCurrencyCode(rs.getString("currency_code"));
 		setOpeningBalance(rs.getBigDecimal("opening_balance"));
 		setAmountControl(rs.getBigDecimal("amount_control"));

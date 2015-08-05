@@ -18,15 +18,15 @@ public class TagDAO {
 	}
 
 	public String getSelectQuery() {
-		return "SELECT id, name, color FROM tags"
+		return "SELECT id, name FROM tags"
 	}
 
 	public String getCreateQuery() {
-		return "INSERT INTO tags (name, color) VALUES (?, ?)"
+		return "INSERT INTO tags (name) VALUES (?)"
 	}
 
 	public String getUpdateQuery() {
-		return "UPDATE tags SET name = ?, color = ? WHERE id = ?"
+		return "UPDATE tags SET name = ? WHERE id = ?"
 	}
 
 	public String getDeleteQuery() {
@@ -45,12 +45,12 @@ public class TagDAO {
 	}
 
 	public int add(Tag m) {
-		String sql = "INSERT INTO tags (name, color) VALUES ('${m.name}', ${m.color})"
+		String sql = "INSERT INTO tags (name) VALUES ('${m.name}')"
 		return db.insert(sql, user)
 	}
 
 	public void update(Tag m) {
-		String sql = "UPDATE tags SET name = '${m.name}', color = ${m.color} WHERE id = ${m.id}"
+		String sql = "UPDATE tags SET name = '${m.name}' WHERE id = ${m.id}"
 		db.update(sql, user)
 	}
 

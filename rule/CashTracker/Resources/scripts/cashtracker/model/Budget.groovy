@@ -18,7 +18,7 @@ public class Budget implements _IObject {
 
 	private Date regDate;
 
-	private String owner;
+	private User owner;
 
 	private BudgetState status;
 
@@ -47,12 +47,12 @@ public class Budget implements _IObject {
 		this.regDate = regDate;
 	}
 
-	public String getOwner() {
+	public User getOwner() {
 		return owner;
 	}
 
 	public void setOwner(User user) {
-		this.owner = user.getLogin();
+		this.owner = user;
 	}
 
 	public BudgetState getStatus() {

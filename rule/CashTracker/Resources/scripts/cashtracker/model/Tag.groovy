@@ -13,8 +13,6 @@ public class Tag implements _IObject {
 
 	private String name;
 
-	private int color;
-
 	//
 	public long getId() {
 		return id;
@@ -32,14 +30,6 @@ public class Tag implements _IObject {
 		this.name = name;
 	}
 
-	public int getColor() {
-		return color;
-	}
-
-	public void setColor(int color) {
-		this.color = color;
-	}
-
 	@Override
 	public String toString() {
 		return "Tag[" + name + "]";
@@ -48,6 +38,5 @@ public class Tag implements _IObject {
 	public void init(ResultSet rs) {
 		setId(rs.getInt("id"));
 		setName(rs.getString("name"));
-		setColor(rs.getInt("color"));
 	}
 }

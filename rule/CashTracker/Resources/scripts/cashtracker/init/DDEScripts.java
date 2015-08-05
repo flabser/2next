@@ -18,7 +18,7 @@ public class DDEScripts implements IAppDatabaseInit {
 		sql.append("  REGDATE    TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),\n");
 		sql.append("  OWNER      CHARACTER VARYING(128),\n");
 		sql.append("  STATUS     NUMERIC,\n");
-		sql.append("  CONSTRAINT BUDGET_ID_PRIMARY_KEY PRIMARY KEY (ID)");
+		sql.append("  CONSTRAINT BUDGET_ID_PK PRIMARY KEY (ID)");
 		sql.append(")");
 		return sql.toString();
 	}
@@ -38,7 +38,7 @@ public class DDEScripts implements IAppDatabaseInit {
 		sql.append("  INCLUDE_IN_TOTALS   BOOLEAN,\n");
 		sql.append("  NOTE                TEXT,\n");
 		sql.append("  SORT_ORDER          SMALLINT,\n");
-		sql.append("  CONSTRAINT ACCOUNT_ID_PRIMARY_KEY PRIMARY KEY (ID)");
+		sql.append("  CONSTRAINT ACCOUNT_ID_PK PRIMARY KEY (ID)");
 		sql.append(")");
 		return sql.toString();
 	}
@@ -54,8 +54,8 @@ public class DDEScripts implements IAppDatabaseInit {
 		sql.append("  NOTE               TEXT,\n");
 		sql.append("  COLOR              SMALLINT,\n");
 		sql.append("  SORT_ORDER         SMALLINT,\n");
-		sql.append("  CONSTRAINT CATEGORY_ID_PRIMARY_KEY PRIMARY KEY (ID), ");
-		sql.append("  CONSTRAINT FK_CATEGORY_PARENT_ID FOREIGN KEY (PARENT_ID)\n");
+		sql.append("  CONSTRAINT CATEGORY_ID_PK PRIMARY KEY (ID), ");
+		sql.append("  CONSTRAINT CATEGORY_PARENT_ID_FK FOREIGN KEY (PARENT_ID)\n");
 		sql.append("    REFERENCES CATEGORIES (ID) MATCH SIMPLE\n");
 		sql.append("    ON UPDATE NO ACTION ON DELETE NO ACTION");
 		sql.append(")");
@@ -68,7 +68,7 @@ public class DDEScripts implements IAppDatabaseInit {
 		sql.append("(");
 		sql.append("  ID         SERIAL NOT NULL,\n");
 		sql.append("  NAME       CHARACTER VARYING(256),\n");
-		sql.append("  CONSTRAINT COSTCENTER_ID_PRIMARY_KEY PRIMARY KEY (ID)");
+		sql.append("  CONSTRAINT COSTCENTER_ID_PK PRIMARY KEY (ID)");
 		sql.append(")");
 		return sql.toString();
 	}
@@ -79,8 +79,7 @@ public class DDEScripts implements IAppDatabaseInit {
 		sql.append("(");
 		sql.append("  ID         SERIAL NOT NULL,\n");
 		sql.append("  NAME       CHARACTER VARYING(64),\n");
-		sql.append("  COLOR      SMALLINT,\n");
-		sql.append("  CONSTRAINT TAG_ID_PRIMARY_KEY PRIMARY KEY (ID)");
+		sql.append("  CONSTRAINT TAG_ID_PK PRIMARY KEY (ID)");
 		sql.append(")");
 		return sql.toString();
 	}
@@ -109,17 +108,17 @@ public class DDEScripts implements IAppDatabaseInit {
 		sql.append("  BASIS               BYTEA,\n");
 		sql.append("  NOTE                TEXT,\n");
 		sql.append("  INCLUDE_IN_REPORTS  BOOLEAN,\n");
-		sql.append("  CONSTRAINT TRANSACTION_ID_PRIMARY_KEY PRIMARY KEY (ID),\n");
-		sql.append("  CONSTRAINT FK_TRANSACTION_ACCOUNT_FROM FOREIGN KEY (ACCOUNT_FROM)\n");
+		sql.append("  CONSTRAINT TRANSACTION_ID_PK PRIMARY KEY (ID),\n");
+		sql.append("  CONSTRAINT TRANSACTION_ACCOUNT_FROM_FK FOREIGN KEY (ACCOUNT_FROM)\n");
 		sql.append("    REFERENCES ACCOUNTS (ID) MATCH SIMPLE\n");
 		sql.append("    ON UPDATE NO ACTION ON DELETE NO ACTION,\n");
-		sql.append("  CONSTRAINT FK_TRANSACTION_ACCOUNT_TO FOREIGN KEY (ACCOUNT_TO)\n");
+		sql.append("  CONSTRAINT TRANSACTION_ACCOUNT_TO_FK FOREIGN KEY (ACCOUNT_TO)\n");
 		sql.append("    REFERENCES ACCOUNTS (ID) MATCH SIMPLE\n");
 		sql.append("    ON UPDATE NO ACTION ON DELETE NO ACTION,\n");
-		sql.append("  CONSTRAINT FK_TRANSACTION_CATEGORY FOREIGN KEY (CATEGORY)\n");
+		sql.append("  CONSTRAINT TRANSACTION_CATEGORY_FK FOREIGN KEY (CATEGORY)\n");
 		sql.append("    REFERENCES CATEGORIES (ID) MATCH SIMPLE\n");
 		sql.append("    ON UPDATE NO ACTION ON DELETE NO ACTION,\n");
-		sql.append("  CONSTRAINT FK_TRANSACTION_COST_CENTER FOREIGN KEY (COST_CENTER)\n");
+		sql.append("  CONSTRAINT TRANSACTION_COST_CENTER_FK FOREIGN KEY (COST_CENTER)\n");
 		sql.append("    REFERENCES COSTCENTERS (ID) MATCH SIMPLE\n");
 		sql.append("    ON UPDATE NO ACTION ON DELETE NO ACTION");
 		sql.append(")");
