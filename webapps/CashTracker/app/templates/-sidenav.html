@@ -1,4 +1,26 @@
 <aside class="layout_aside nav-app" id="nav">
+    <div class={{if navProfileIsExpanded "nav-profile side-nav expanded" "nav-profile side-nav" }}>
+        <header {{action "toggleNavProfile"}}>
+            <i class="fa fa-user"></i>
+            <span>{{model.login}}</span>
+            <i class="fa fa-angle-down"></i>
+        </header>
+        <section>
+            <ul>
+                <li>
+                    {{#link-to "user_profile" class="profile"}}
+                    <span class="nav-item-icon"><i class="fa fa-cog"></i></span>
+                    <span class="nav-item-text">{{t "user_profile"}}</span> {{/link-to}}
+                </li>
+                <li>
+                    <button class="logout" {{action "logout"}}>
+                        <span class="nav-item-icon"><i class="fa fa-sign-out"></i></span>
+                        <span class="nav-item-text">{{t "logout"}}</span>
+                    </button>
+                </li>
+            </ul>
+        </section>
+    </div>
     <nav class="side-nav">
         <ul class="side-tree">
             <li class="side-tree-item">
