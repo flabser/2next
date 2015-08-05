@@ -13,7 +13,7 @@ export default DS.Model.extend(EmberValidations.Mixin, {
             numericality: true,
             inclusion: {
                 range: [0, 10],
-                allowBlank: true
+                allowBlank: false
             }
         }
     }

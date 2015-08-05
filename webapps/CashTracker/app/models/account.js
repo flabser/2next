@@ -21,8 +21,14 @@ export default DS.Model.extend(EmberValidations.Mixin, {
         name: {
             presence: true
         },
+        note: {
+            presence: true
+        },
         currencyCode: {
             presence: true
+        },
+        openingBalance: {
+            numericality: true
         },
         sortOrder: {
             numericality: true

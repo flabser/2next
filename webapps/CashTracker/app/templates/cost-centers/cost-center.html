@@ -1,6 +1,6 @@
-{{#form-for model=model onSubmit="submit"}}
+{{#tn-form model=costCenter onSubmit="submit" action="save"}}
 <header class="form-header">
-    <h1 class="header-title">{{t "cost_center"}} / {{model.name}}</h1>
+    <h1 class="header-title">{{t "cost_center"}} / {{costCenter.name}}</h1>
     <div class="action-bar">
         <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
         <button type="submit" class="btn btn-primary">{{t "save"}}</button>
@@ -8,14 +8,15 @@
 </header>
 <section class="form-content">
     <fieldset class="fieldset">
-        <div class="control-group">
+        {{#tn-form-group property="name"}}
             <div class="control-label">
                 {{t "name"}}
             </div>
             <div class="controls">
-                {{input value=model.name class="span7"}}
+                {{input value=costCenter.name}}
+                {{tn-error-message}}
             </div>
-        </div>
+        {{/tn-form-group}}
     </fieldset>
 </section>
-{{/form-for}}
+{{/tn-form}}
