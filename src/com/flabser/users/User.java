@@ -214,6 +214,7 @@ public class User {
 								ad.init(appProfile);
 								Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
 								IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
+								dbInitializer.setApplicationProfile(appProfile);
 								if (ad.deploy(dbInitializer) == 0) {
 									appProfile.setStatus(ApplicationStatusType.ON_LINE);
 									appProfile.save();
@@ -365,6 +366,7 @@ public class User {
 		this.groups = groups;
 	}
 
+	// TODO Need to move to UserSession to determination logging method
 	public AuthUser getPOJO() {
 		AuthUser aUser = new AuthUser();
 		aUser.setLogin(login);

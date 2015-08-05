@@ -5,11 +5,37 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.flabser.dataengine.IAppDatabaseInit;
-
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 
 public class DDEScripts implements IAppDatabaseInit {
 
-	public static String getBudgetDDE() {
+	@Override
+	public void setApplicationProfile(ApplicationProfile appProfile) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public ArrayList<String> getInitActions() {
+		// INFO заполнение базовых значений (справочников, ...)
+		return null;
+	}
+
+	@Override
+	public Map<String, String> getTablesDDE() {
+		Map<String, String> result = new HashMap<>();
+
+		result.put("BUDGETS", getBudgetDDE());
+		result.put("ACCOUNTS", getAccountDDE());
+		result.put("CATEGORIES", getCategoryDDE());
+		result.put("COSTCENTERS", getCostCenterDDE());
+		result.put("TAGS", getTagDDE());
+		result.put("TRANSACTIONS", getTransactionDDE());
+
+		return result;
+	}
+
+	private static String getBudgetDDE() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("CREATE TABLE BUDGETS ");
 		sql.append("(");
@@ -23,7 +49,7 @@ public class DDEScripts implements IAppDatabaseInit {
 		return sql.toString();
 	}
 
-	public static String getAccountDDE() {
+	private static String getAccountDDE() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("CREATE TABLE ACCOUNTS ");
 		sql.append("(");
@@ -43,7 +69,7 @@ public class DDEScripts implements IAppDatabaseInit {
 		return sql.toString();
 	}
 
-	public static String getCategoryDDE() {
+	private static String getCategoryDDE() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("CREATE TABLE CATEGORIES ");
 		sql.append("(");
@@ -62,7 +88,7 @@ public class DDEScripts implements IAppDatabaseInit {
 		return sql.toString();
 	}
 
-	public static String getCostCenterDDE() {
+	private static String getCostCenterDDE() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("CREATE TABLE COSTCENTERS ");
 		sql.append("(");
@@ -73,7 +99,7 @@ public class DDEScripts implements IAppDatabaseInit {
 		return sql.toString();
 	}
 
-	public static String getTagDDE() {
+	private static String getTagDDE() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("CREATE TABLE TAGS ");
 		sql.append("(");
@@ -84,7 +110,7 @@ public class DDEScripts implements IAppDatabaseInit {
 		return sql.toString();
 	}
 
-	public static String getTransactionDDE() {
+	private static String getTransactionDDE() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("CREATE TABLE TRANSACTIONS ");
 		sql.append("(");
@@ -125,23 +151,4 @@ public class DDEScripts implements IAppDatabaseInit {
 		return sql.toString();
 	}
 
-	@Override
-	public Map <String, String> getTablesDDE() {
-		Map <String, String> result = new HashMap <>();
-
-		result.put("BUDGETS", getBudgetDDE());
-		result.put("ACCOUNTS", getAccountDDE());
-		result.put("CATEGORIES", getCategoryDDE());
-		result.put("COSTCENTERS", getCostCenterDDE());
-		result.put("TAGS", getTagDDE());
-		result.put("TRANSACTIONS", getTransactionDDE());
-
-		return result;
-	}
-
-	@Override
-	public ArrayList <String> getInitActions() {
-		// INFO заполнение базовых значений (справочников, ...)
-		return null;
-	}
 }
