@@ -8,6 +8,7 @@ import com.flabser.solutions.DatabaseType;
 import com.flabser.users.User;
 import com.flabser.users.VisibiltyType;
 
+
 public class RegApp extends _DoScript {
 
 	@Override
@@ -34,7 +35,7 @@ public class RegApp extends _DoScript {
 			ap.owner = user.getLogin();
 			ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
 			ap.dbType = DatabaseType.POSTGRESQL;
-			ap.dbName = ap.appType.toLowerCase() + "_" + ap.appID;
+			ap.dbName = ap.appType.toLowerCase() + ap.appId();
 			ap.dbPwd = user.getDefaultDbPwd();
 			if (ap.save()) {
 				user.addApplication(ap);

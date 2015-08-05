@@ -17,29 +17,45 @@ public class CostCenterDAO {
 		this.user = session.getUser()
 	}
 
+	public String getSelectQuery() {
+		return "SELECT id, name FROM costcenters"
+	}
+
+	public String getCreateQuery() {
+		return "INSERT INTO costcenters (name) VALUES (?)"
+	}
+
+	public String getUpdateQuery() {
+		return "UPDATE costcenters SET name = ? WHERE id = ?"
+	}
+
+	public String getDeleteQuery() {
+		return "DELETE FROM costcenters WHERE id = "
+	}
+
 	public List <CostCenter> findAll() {
-		List <CostCenter> result = db.select("SELECT * FROM costcenters", CostCenter.class, user)
+		List <CostCenter> result = db.select(getSelectQuery(), CostCenter.class, user)
 		return result
 	}
 
 	public CostCenter findById(long id) {
-		List <CostCenter> list = db.select("select * from costcenters where id = $id", CostCenter.class, user)
+		List <CostCenter> list = db.select(getSelectQuery() + " WHERE id = $id", CostCenter.class, user)
 		CostCenter result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int addCostCenter(CostCenter m) {
-		String sql = "insert into costcenters (name) values ('${m.name}')"
+	public int add(CostCenter m) {
+		String sql = "INSERT INTO costcenters (name) VALUES ('${m.name}')"
 		return db.insert(sql, user)
 	}
 
-	public void updateCostCenter(CostCenter m) {
-		String sql = "update costcenters set name = '${m.name}' where id = ${m.id}"
+	public void update(CostCenter m) {
+		String sql = "UPDATE costcenters SET name = '${m.name}' WHERE id = ${m.id}"
 		db.update(sql, user)
 	}
 
-	public void deleteCostCenter(CostCenter m) {
-		String sql = "delete from costcenters where id = ${m.id}"
+	public void delete(CostCenter m) {
+		String sql = getDeleteQuery() + m.id
 		db.delete(sql, user)
 	}
 }

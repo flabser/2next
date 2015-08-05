@@ -56,7 +56,7 @@ public class PortalException extends Exception {
 		message("<errorcontex>" + text + "</errorcontext>" + errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response, Enum type) {
+	public PortalException(Exception e, AppEnv env, HttpServletResponse response, Enum<?> type) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -65,7 +65,7 @@ public class PortalException extends Exception {
 		message(errorMessage(e), response, PublishAsType.XML);
 	}
 
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response, Enum type, PublishAsType publishAs) {
+	public PortalException(Exception e, AppEnv env, HttpServletResponse response, Enum<?> type, PublishAsType publishAs) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

@@ -55,7 +55,7 @@ public class CategoryService extends RestProvider {
 		}
 
 		CategoryDAO dao = new CategoryDAO(getSession());
-		m.setId(dao.addCategory(m));
+		m.setId(dao.add(m));
 		return Response.ok(m).build();
 	}
 
@@ -71,7 +71,7 @@ public class CategoryService extends RestProvider {
 
 		m.setId(id);
 		CategoryDAO dao = new CategoryDAO(getSession());
-		dao.updateCategory(m);
+		dao.update(m);
 		return Response.ok(m).build();
 	}
 
@@ -82,7 +82,7 @@ public class CategoryService extends RestProvider {
 		CategoryDAO dao = new CategoryDAO(getSession());
 		Category m = dao.findById(id);
 		if (m != null) {
-			dao.deleteCategory(m);
+			dao.delete(m);
 		}
 		return Response.ok().build();
 	}

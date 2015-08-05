@@ -17,42 +17,68 @@ public class CategoryDAO {
 		this.user = session.getUser();
 	}
 
+	public String getSelectQuery() {
+		return "SELECT id, transaction_type, parent_id, name, note, color, sort_order FROM categories";
+	}
+
+	public String getCreateQuery() {
+		return """INSERT INTO categories
+					(transaction_type, parent_id, name, note, color, sort_order)
+				  VALUES (?, ?, ?, ?, ?, ?)"""
+	}
+
+	public String getUpdateQuery() {
+		return """UPDATE categories
+					SET
+						transaction_type = ?,
+						parent_id = ?,
+						name = ?,
+						note = ?,
+						color = ?,
+						sort_order = ?
+					WHERE id = ?"""
+	}
+
+	public String getDeleteQuery() {
+		return "DELETE FROM categories WHERE id = ";
+	}
+
 	public List <Category> findAll() {
-		List <Category> result = db.select("SELECT * FROM categories", Category.class, user);
+		List <Category> result = db.select(getSelectQuery(), Category.class, user);
 		return result;
 	}
 
 	public Category findById(long id) {
-		List <Category> list = db.select("select * from categories where id = $id", Category.class, user)
+		List <Category> list = db.select(getSelectQuery() + " WHERE id = $id", Category.class, user)
 		Category result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int addCategory(Category m) {
-		String sql = """insert into categories
+	public int add(Category m) {
+		String sql = """INSERT INTO categories
 							(transaction_type, parent_id,
 							name, note, color, sort_order)
-						values
+						VALUES
 							(${m.transactionType}, ${m.parentCategory.id},
 							'${m.name}', '${m.note}', ${m.color}, ${m.sortOrder})""";
 		return db.insert(sql, user);
 	}
 
-	public void updateCategory(Category m) {
-		String sql = """update categories
-						set
+	public void update(Category m) {
+		String sql = """UPDATE categories
+						SET
 							transaction_type = ${m.transactionType},
 							parent_id = ${m.parentCategory.id},
 							name = '${m.name}',
 							note = '${m.note}',
 							color = ${m.color},
 							sort_order = ${m.sortOrder}
-						where id = ${m.id}"""
+						WHERE id = ${m.id}"""
 		db.update(sql, user);
 	}
 
-	public void deleteCategory(Category m) {
-		String sql = "delete from categories where id = ${m.id}"
+	public void delete(Category m) {
+		String sql = getDeleteQuery() + m.id
 		db.delete(sql, user)
 	}
 }

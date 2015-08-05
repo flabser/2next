@@ -2,7 +2,7 @@
 <rule mode="on" type="global">
 	<description>Nubis</description>
 	<appname>Nubis</appname>
-	<entrypoint>Provider?id=signin</entrypoint>
+	<entrypoint>Provider?id=login</entrypoint>
 	<defaultredirecturl>Provider?id=ws</defaultredirecturl>
 	<langs>
 		<entry id="ENG">English</entry>

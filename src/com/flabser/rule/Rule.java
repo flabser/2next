@@ -45,7 +45,6 @@ public abstract class Rule implements IElement, IRule {
 	public int hits;
 	public ArrayList<Caption> captions = new ArrayList<Caption>();
 	public boolean addToHistory;
-	public AppEnv env;
 	public ArrayList<ElementRule> elements = new ArrayList<ElementRule>();
 	protected org.w3c.dom.Document doc;
 	protected RuleType type = RuleType.UNKNOWN;
@@ -55,7 +54,6 @@ public abstract class Rule implements IElement, IRule {
 
 	protected Rule(AppEnv env, File docFile) throws RuleException {
 		try {
-			this.env = env;
 			DocumentBuilderFactory pageFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder pageBuilder = pageFactory.newDocumentBuilder();
 			Document xmlFileDoc = pageBuilder.parse(docFile.toString());
@@ -186,11 +184,6 @@ public abstract class Rule implements IElement, IRule {
 	@Override
 	public String getID() {
 		return id;
-	}
-
-	@Override
-	public AppEnv getAppEnv() {
-		return env;
 	}
 
 	@Override

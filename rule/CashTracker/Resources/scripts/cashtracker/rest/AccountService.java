@@ -55,7 +55,7 @@ public class AccountService extends RestProvider {
 		}
 
 		AccountDAO dao = new AccountDAO(getSession());
-		m.setId(dao.addAccount(m));
+		m.setId(dao.add(m));
 		return Response.ok(m).build();
 	}
 
@@ -71,7 +71,7 @@ public class AccountService extends RestProvider {
 
 		m.setId(id);
 		AccountDAO dao = new AccountDAO(getSession());
-		dao.updateAccount(m);
+		dao.update(m);
 		return Response.ok(m).build();
 	}
 
@@ -82,7 +82,7 @@ public class AccountService extends RestProvider {
 		AccountDAO dao = new AccountDAO(getSession());
 		Account m = dao.findById(id);
 		if (m != null) {
-			dao.deleteAccount(m);
+			dao.delete(m);
 		}
 		return Response.ok().build();
 	}

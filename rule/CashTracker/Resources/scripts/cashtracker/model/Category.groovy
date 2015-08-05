@@ -12,11 +12,17 @@ import com.flabser.script._IObject
 public class Category implements _IObject {
 
 	private long id;
+
 	private TransactionType transactionType;
+
 	private Category parentCategory;
+
 	private String name;
+
 	private String note;
+
 	private int color;
+
 	private int sortOrder;
 
 	//

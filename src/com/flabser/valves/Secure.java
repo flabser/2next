@@ -18,6 +18,7 @@ import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.server.Server;
 import com.flabser.servlets.Cookies;
+import com.flabser.users.AuthModeType;
 import com.flabser.users.UserSession;
 
 public class Secure extends ValveBase {
@@ -25,10 +26,7 @@ public class Secure extends ValveBase {
 
 	public void invoke(Request request, Response response, RequestURL ru) throws IOException, ServletException {
 		this.ru = ru;
-		Server.logger.verboseLogEntry("not anonymous area");
-
 		invoke(request, response);
-
 	}
 
 	@Override
@@ -37,7 +35,7 @@ public class Secure extends ValveBase {
 		String appType = ru.getAppName();
 		String appID = ru.getAppID();
 
-		if (!appType.equalsIgnoreCase(AppEnv.ADMIN_APP_NAME)) {
+		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(AppEnv.ADMIN_APP_NAME)) {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
@@ -53,7 +51,7 @@ public class Secure extends ValveBase {
 								Server.logger.warningLogEntry("application ready on: " + ru.getUrl());
 								((HttpServletResponse) response).sendRedirect(ru.getUrl());
 							} catch (Exception e) {
-								response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+								Server.logger.errorLogEntry(e);
 								getNext().invoke(request, response);
 							}
 
@@ -67,40 +65,43 @@ public class Secure extends ValveBase {
 						getNext().invoke(request, response);
 					}
 				} else {
-					String msg = "user session was expired";
-					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
-					Server.logger.warningLogEntry(msg);
-					getNext().invoke(request, response);
+					restoreSession(request, response);
 				}
 			} else {
-				Cookies appCookies = new Cookies(http);
-				String token = appCookies.auth;
-				if (token != null) {
-					UserSession userSession = SessionPool.getLoggeedUser(token);
-					if (userSession != null) {
-						jses = http.getSession(true);
-						jses.setAttribute(UserSession.SESSION_ATTR, userSession);
-						Server.logger.verboseLogEntry("user session \"" + userSession.toString() + "\" got from session pool");
-						invoke(request, response);
-					} else {
-						String msg = "there is no user session ";
-						response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
-						Server.logger.warningLogEntry(msg);
-						// exception(request, response, new
-						// AuthFailedException(msg));
-						getNext().invoke(request, response);
-					}
-				} else {
-					String msg = "user session was expired";
-					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
-					Server.logger.warningLogEntry(msg);
-					getNext().invoke(request, response);
-				}
-
+				restoreSession(request, response);
 			}
 		} else {
 			getNext().invoke(request, response);
 		}
 
+	}
+
+	private void restoreSession(Request request, Response response) throws IOException, ServletException {
+		HttpServletRequest http = request;
+		Cookies appCookies = new Cookies(http);
+		String token = appCookies.auth;
+		if (token != null) {
+			UserSession userSession = SessionPool.getLoggeedUser(token);
+			if (userSession != null) {
+				HttpSession jses = http.getSession(true);
+				userSession.setAuthMode(AuthModeType.LOGIN_THROUGH_NUBIS);
+
+				jses.setAttribute(UserSession.SESSION_ATTR, userSession);
+				Server.logger.verboseLogEntry(userSession.toString() + "\" got from session pool " + jses.getServletContext().getContextPath());
+				invoke(request, response);
+			} else {
+				String msg = "there is no user session ";
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
+				Server.logger.warningLogEntry(msg);
+				// exception(request, response, new
+				// AuthFailedException(msg));
+				getNext().invoke(request, response);
+			}
+		} else {
+			String msg = "user session was expired";
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
+			Server.logger.warningLogEntry(msg);
+			getNext().invoke(request, response);
+		}
 	}
 }

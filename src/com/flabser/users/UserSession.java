@@ -28,14 +28,17 @@ public class UserSession implements ICache {
 	public int pageSize;
 	public String host = "localhost";
 
-	// private IDatabase dataBase;
-	private HttpSession jses;
+	private AuthModeType authMode;
+	// private HttpSession jses;
 	private HashMap<String, ActiveApplication> acitveApps = new HashMap<String, ActiveApplication>();
+
+	private String lang;
+	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 
 	public UserSession(User user, String appID, HttpSession jses) throws UserException, ClassNotFoundException, InstantiationException, IllegalAccessException,
 			DatabasePoolException {
 		currentUser = user;
-		this.jses = jses;
+		// this.jses = jses;
 		initHistory();
 		ApplicationProfile appProfile = user.getApplicationProfile(appID);
 		if (appProfile != null) {
@@ -46,14 +49,14 @@ public class UserSession implements ICache {
 
 	public UserSession(User user, HttpSession jses) {
 		currentUser = user;
-		this.jses = jses;
+		// this.jses = jses;
 		initHistory();
 	}
 
 	public void init(String appID) {
 		ApplicationProfile appProfile = currentUser.getApplicationProfile(appID);
 		if (appProfile != null) {
-			// dataBase = appProfile.getDatabase();
+			acitveApps.put(appProfile.appType, new ActiveApplication(appProfile, appProfile.getDatabase()));
 			acitveApps.put(appProfile.appID, new ActiveApplication(appProfile, appProfile.getDatabase()));
 		}
 	}
@@ -62,16 +65,16 @@ public class UserSession implements ICache {
 		if (!currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
 			currentUser.setPersistentValue("lang", lang);
 		}
-		jses.setAttribute("lang", lang);
+		// jses.setAttribute("lang", lang);
 	}
 
 	public String getLang() {
 		if (currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
-			return (String) jses.getAttribute("lang");
+			return lang;
 		} else {
 			Object o = currentUser.getPesistentValue("lang");
 			if (o == null) {
-				return (String) jses.getAttribute("lang");
+				return lang;
 			} else {
 				return (String) o;
 			}
@@ -83,8 +86,8 @@ public class UserSession implements ICache {
 		history.add(entry);
 	}
 
-	public boolean isBootstrapped(String appType) {
-		ActiveApplication aa = acitveApps.get(appType);
+	public boolean isBootstrapped(String appID) {
+		ActiveApplication aa = acitveApps.get(appID);
 		if (aa == null) {
 			return false;
 		} else {
@@ -94,8 +97,6 @@ public class UserSession implements ICache {
 
 	@Override
 	public void flush() {
-		@SuppressWarnings("unchecked")
-		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 		if (cache != null) {
 			cache.clear();
 		}
@@ -109,6 +110,14 @@ public class UserSession implements ICache {
 			return aa.db;
 		}
 
+	}
+
+	public AuthModeType getAuthMode() {
+		return authMode;
+	}
+
+	public void setAuthMode(AuthModeType authMode) {
+		this.authMode = authMode;
 	}
 
 	private void initHistory() {
@@ -141,30 +150,21 @@ public class UserSession implements ICache {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	private void setObject(String name, _Page obj) {
-		HashMap<String, _Page> cache = null;
-		if (jses != null) {
-			cache = (HashMap<String, _Page>) jses.getAttribute("cache");
-		}
-		if (cache == null) {
-			cache = new HashMap<>();
-		}
 		cache.put(name, obj);
-		if (jses != null) {
-			jses.setAttribute("cache", cache);
-		}
-
 	}
 
 	private Object getObject(String name) {
 		try {
-			@SuppressWarnings("unchecked")
-			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 			return cache.get(name);
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "user session of the " + currentUser;
 	}
 
 	public class HistoryEntryCollection {

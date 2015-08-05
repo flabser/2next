@@ -17,13 +17,29 @@ public class BudgetDAO {
 		this.user = session.getUser()
 	}
 
+	public String getSelectQuery() {
+		return "SELECT id, name, regdate, owner, status FROM budgets";
+	}
+
+	public String getCreateQuery() {
+		return "INSERT INTO budgets (name, regdate, owner, status) VALUES (?, ?, ?, ?)"
+	}
+
+	public String getUpdateQuery() {
+		return "UPDATE budgets SET name = ?, owner = ?, status = ? WHERE id = ?";
+	}
+
+	public String getDeleteQuery() {
+		return "DELETE FROM budgets WHERE id = ";
+	}
+
 	public List <Budget> findAll() {
-		List <Budget> result = db.select("SELECT * FROM budgets", Budget.class, user)
+		List <Budget> result = db.select(getSelectQuery(), Budget.class, user)
 		return result
 	}
 
 	public Budget findById(long id) {
-		List <Budget> list = db.select("select * from budgets where id = $id", Budget.class, user)
+		List <Budget> list = db.select(getSelectQuery() + " WHERE id = $id", Budget.class, user)
 
 		Budget result = null
 
@@ -34,19 +50,21 @@ public class BudgetDAO {
 		return result
 	}
 
-	public int addBudget(Budget b) {
-		String sql = """INSERT BUDGETS (NAME, REGDATE, OWNER, STATUS)
-							values ('${b.name}', '${b.regDate}', '${b.owner}', ${b.status.code})"""
+	public int add(Budget m) {
+		String sql = """INSERT INTO budgets (name, regdate, owner, status)
+							VALUES ('${m.name}', '${m.regDate}', '${m.owner}', ${m.status.code})"""
 		return db.insert(sql, user)
 	}
 
-	public void updateBudget(Budget b) {
-		String sql = "update budgets set name='${b.name}', owner='${b.owner}', status=${b.status.code} where id = ${b.id}"
+	public void update(Budget m) {
+		String sql = """UPDATE budgets
+							SET name = '${m.name}', owner = '${m.owner}', status = ${m.status.code}
+						WHERE id = ${m.id}"""
 		db.update(sql, user)
 	}
 
-	public void deleteBudget(Budget b) {
-		String sql = "delete from budgets where id = ${b.id}"
+	public void delete(Budget m) {
+		String sql = getDeleteQuery() + m.id
 		db.delete(sql, user)
 	}
 }
