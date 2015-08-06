@@ -1,10 +1,8 @@
 package cashtracker.init;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.flabser.dataengine.IAppDatabaseInit;
+
+import java.util.ArrayList;
 
 
 public class DDEScripts implements IAppDatabaseInit {
@@ -127,15 +125,15 @@ public class DDEScripts implements IAppDatabaseInit {
 	}
 
 	@Override
-	public Map <String, String> getTablesDDE() {
-		Map <String, String> result = new HashMap <>();
+	public ArrayList <String> getTablesDDE() {
+        ArrayList <String> result = new ArrayList <>();
 
-		result.put("BUDGETS", getBudgetDDE());
-		result.put("ACCOUNTS", getAccountDDE());
-		result.put("CATEGORIES", getCategoryDDE());
-		result.put("COSTCENTERS", getCostCenterDDE());
-		result.put("TAGS", getTagDDE());
-		result.put("TRANSACTIONS", getTransactionDDE());
+		result.add(getBudgetDDE());
+		result.add(getAccountDDE());
+		result.add(getCategoryDDE());
+		result.add(getCostCenterDDE());
+		result.add(getTagDDE());
+		result.add(getTransactionDDE());
 
 		return result;
 	}
