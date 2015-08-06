@@ -4,8 +4,8 @@ import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.server.Server;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.server.Server;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -15,6 +15,8 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.flabser.dataengine.DatabaseUtil.SQLExceptionPrintDebug;
 
