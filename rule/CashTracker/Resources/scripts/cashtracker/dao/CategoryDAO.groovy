@@ -55,11 +55,12 @@ public class CategoryDAO {
 	}
 
 	public int add(Category m) {
+		def parentId = m.parentCategory?.id?:null
 		String sql = """INSERT INTO categories
 							(transaction_type, parent_id,
 							name, note, color, sort_order)
 						VALUES
-							(${m.transactionType}, ${m.parentCategory.id},
+							(${m.transactionType}, ${parentId},
 							'${m.name}', '${m.note}', ${m.color}, ${m.sortOrder})""";
 		return db.insert(sql, user);
 	}

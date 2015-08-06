@@ -50,12 +50,11 @@ public class Account implements _IObject {
 	}
 
 	/*public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}*/
+	 return type;
+	 }
+	 public void setType(int type) {
+	 this.type = type;
+	 }*/
 
 	public String getCurrencyCode() {
 		return currencyCode;
@@ -123,7 +122,7 @@ public class Account implements _IObject {
 
 	@Override
 	public String toString() {
-		return "Account[" + name + ", " + type + ", " + currencyCode + ", " + openingBalance + "]";
+		return "Account[" + name + ", " + currencyCode + ", " + openingBalance + "]";
 	}
 
 	public void init(ResultSet rs) {

@@ -66,7 +66,7 @@ public class AccountDAO {
 							owner, observers, include_in_totals, note, sort_order)
 						VALUES
 							('${a.name}', '${a.currencyCode}', ${a.openingBalance}, ${a.amountControl},
-							'${a.owner}', '${a.observers}', ${a.includeInTotals}, '${a.note}', ${a.sortOrder})"""
+							${a.owner}, ${a.observers}, ${a.includeInTotals}, '${a.note}', ${a.sortOrder})"""
 		return db.insert(sql, user)
 	}
 
@@ -77,8 +77,8 @@ public class AccountDAO {
 							currency_code = '${a.currencyCode}',
 							opening_balance = ${a.openingBalance},
 							amount_control = ${a.amountControl},
-							owner = '${a.owner}',
-							observers = '${a.observers}',
+							owner = ${a.owner},
+							observers = ${a.observers},
 							include_in_totals = ${a.includeInTotals},
 							note = '${a.note}',
 							sort_order = ${a.sortOrder}
