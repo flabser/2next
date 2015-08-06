@@ -8,12 +8,57 @@
 </header>
 <section class="form-content">
     <fieldset class="fieldset">
+        {{#tn-form-group property="transactionType"}}
+            <div class="control-label">
+                {{t "transaction_type"}}
+            </div>
+            <div class="controls">
+                {{input value=category.transactionType}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="parentCategory"}}
+            <div class="control-label">
+                {{t "parent_category"}}
+            </div>
+            <div class="controls">
+                {{view "select"
+                    contentBinding="categories"
+                    optionValuePath="content.id"
+                    optionLabelPath="content.name"
+                    value=category.parentCategory
+                    prompt='- Select -'}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
         {{#tn-form-group property="name"}}
             <div class="control-label">
                 {{t "name"}}
             </div>
             <div class="controls">
                 {{input value=category.name}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="note"}}
+            <div class="control-label">
+                {{t "note"}}
+            </div>
+            <div class="controls">
+                {{input value=category.note}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="color"}}
+            <div class="control-label">
+                {{t "color"}}
+            </div>
+            <div class="controls">
+                {{input value=category.color}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}

@@ -22,7 +22,7 @@
     height: 60px;
     line-height: 60px;
     max-width: inherit;
-    position: relative;
+    position: fixed;
     width: 100%;
     z-index: 5;
 }
@@ -59,6 +59,7 @@
     height: auto;
     margin: 0 0 10px 230px;
     padding: 0;
+    padding-top: 60px;
     position: relative;
 }
 

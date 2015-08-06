@@ -26,7 +26,13 @@
                 {{t 'account'}}
             </div>
             <div class="controls">
-                {{input value=transaction.account class="span7"}}
+                {{view "select"
+                    contentBinding="accounts"
+                    optionValuePath="content.id"
+                    optionLabelPath="content.name"
+                    value=transaction.account
+                    prompt='- Select -'}}
+                {{tn-error-message}}
             </div>
         </div>
         <!-- category -->
@@ -35,7 +41,13 @@
                 {{t 'category'}}
             </div>
             <div class="controls">
-                {{input value=transaction.category class="span7"}}
+                {{view "select"
+                    contentBinding="categories"
+                    optionValuePath="content.id"
+                    optionLabelPath="content.name"
+                    value=transaction.category
+                    prompt='- Select -'}}
+                {{tn-error-message}}
             </div>
         </div>
         <!-- Целевая касса -->
@@ -54,7 +66,12 @@
                 {{t 'cost_center'}}
             </div>
             <div class="controls">
-                {{input value=transaction.costCenter class="span7"}}
+                {{view "select"
+                    contentBinding="costCenters"
+                    optionValuePath="content.id"
+                    optionLabelPath="content.name"
+                    value=transaction.costCenter
+                    prompt='- Select -'}}
             </div>
         </div>
         <!-- Основание -->
@@ -75,9 +92,6 @@
                 <br /> attach
             </div>
         </form>
-    </div>
-    <div id="tabs-3">
-        doc info
     </div>
 </section>
 {{/tn-form}}

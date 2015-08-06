@@ -26,9 +26,6 @@ export default DS.Model.extend(EmberValidations.Mixin, {
         },
         openingBalance: {
             numericality: true
-        },
-        sortOrder: {
-            numericality: true
         }
     }
 });

@@ -3,7 +3,7 @@ import EmberValidations from 'ember-validations';
 
 export default DS.Model.extend(EmberValidations.Mixin, {
     transactionType: DS.attr('number'),
-    parentId: DS.belongsTo('category', {
+    parentCategory: DS.belongsTo('category', {
         async: false
     }),
     name: DS.attr('string'),
@@ -24,9 +24,6 @@ export default DS.Model.extend(EmberValidations.Mixin, {
                 range: [0, 10],
                 allowBlank: true
             }
-        },
-        sortOrder: {
-            numericality: true
         }
     }
 });

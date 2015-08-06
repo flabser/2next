@@ -18,6 +18,16 @@
             </div>
         {{/tn-form-group}}
 
+        {{#tn-form-group property="openingBalance"}}
+            <div class="control-label">
+                {{t "opening_balance"}}
+            </div>
+            <div class="controls">
+                {{input value=account.openingBalance}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
         {{#tn-form-group property="amountControl"}}
             <div class="control-label">
                 {{t "amount_control"}}
@@ -28,22 +38,12 @@
             </div>
         {{/tn-form-group}}
 
-        {{#tn-form-group property="owner"}}
+        {{#tn-form-group property="currencyCode"}}
             <div class="control-label">
-                {{t "owner"}}
+                {{t "currency_code"}}
             </div>
             <div class="controls">
-                {{input value=account.owner}}
-                {{tn-error-message}}
-            </div>
-        {{/tn-form-group}}
-
-        {{#tn-form-group property="observers"}}
-            <div class="control-label">
-                {{t "observers"}}
-            </div>
-            <div class="controls">
-                {{input value=account.observers}}
+                {{input value=account.currencyCode}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}
@@ -54,6 +54,37 @@
             </div>
             <div class="controls">
                 {{input value=account.note}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="owner"}}
+            <div class="control-label">
+                {{t "owner"}}
+            </div>
+            <div class="controls">
+                {{view "select"
+                    contentBinding="users"
+                    optionValuePath="content.id"
+                    optionLabelPath="content.login"
+                    value=account.owner
+                    prompt='- Select -'}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="observers"}}
+            <div class="control-label">
+                {{t "observers"}}
+            </div>
+            <div class="controls">
+                {{view "select"
+                    contentBinding="users"
+                    optionValuePath="content.id"
+                    optionLabelPath="content.login"
+                    value=account.observers
+                    multiple=true
+                    prompt='- Select -'}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}
