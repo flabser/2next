@@ -9,8 +9,6 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 
-import com.flabser.server.Server;
-
 public class Unsecure extends ValveBase {
 	RequestURL ru;
 
@@ -34,11 +32,12 @@ public class Unsecure extends ValveBase {
 			getNext().getNext().invoke(request, response);
 		} else {
 			if (ru.isPage()) {
-				Server.logger.verboseLogEntry("is Page");
+				// Server.logger.verboseLogEntry("is Page");
 				getNext().getNext().invoke(request, response);
 			} else {
-				Server.logger.normalLogEntry(http.getMethod() + " " + requestURI);
-				Server.logger.verboseLogEntry("not anonymous area");
+				// Server.logger.normalLogEntry(http.getMethod() + " " +
+				// requestURI);
+				// Server.logger.verboseLogEntry("not anonymous area");
 				((Secure) getNext()).invoke(request, response, ru);
 			}
 		}

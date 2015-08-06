@@ -34,7 +34,7 @@ public class Secure extends ValveBase {
 		String appType = ru.getAppName();
 		String appID = ru.getAppID();
 
-		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(AppEnv.ADMIN_APP_NAME)) {
+		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(AppEnv.ADMIN_APP_NAME) && !appType.equalsIgnoreCase(AppEnv.WORKSPACE_APP_NAME)) {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);

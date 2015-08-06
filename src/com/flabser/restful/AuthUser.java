@@ -91,11 +91,12 @@ public class AuthUser {
 	public void setApplications(HashMap<String, ApplicationProfile> apps) {
 		for (ApplicationProfile ap : apps.values()) {
 			Application a = new Application();
-			a.appID = ap.appID;
-			a.appName = ap.appName;
-			a.appType = ap.appType;
-			a.owner = ap.owner;
-			a.visibilty = ap.getVisibilty();
+			a.setAppID(ap.appID);
+			a.setAppName(ap.appName);
+			a.setAppType(ap.appType);
+			a.setOwner(ap.owner);
+			a.setVisibilty(ap.getVisibilty());
+			a.setStatus(ap.status);
 			this.applications.put(ap.appID, a);
 		}
 

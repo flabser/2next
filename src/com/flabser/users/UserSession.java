@@ -16,6 +16,7 @@ import com.flabser.restful.AuthUser;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
+import com.flabser.server.Server;
 
 public class UserSession implements ICache {
 
@@ -41,8 +42,19 @@ public class UserSession implements ICache {
 	public void init(String appID) {
 		ApplicationProfile appProfile = currentUser.getApplicationProfile(appID);
 		if (appProfile != null) {
-			acitveApps.put(appProfile.appType, new ActiveApplication(appProfile, appProfile.getDatabase()));
-			acitveApps.put(appProfile.appID, new ActiveApplication(appProfile, appProfile.getDatabase()));
+			if (appProfile.getStatus() == ApplicationStatusType.ON_LINE) {
+				IDatabase db = appProfile.getDatabase();
+				if (db != null) {
+					ActiveApplication aa = new ActiveApplication(appProfile, db);
+					acitveApps.put(appProfile.appType, aa);
+					acitveApps.put(appProfile.appID, aa);
+				} else {
+					appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+					appProfile.save();
+				}
+			} else {
+				Server.logger.errorLogEntry("application \"" + appProfile.getAppID() + "\" cannot init database");
+			}
 		}
 	}
 
@@ -50,6 +62,7 @@ public class UserSession implements ICache {
 		if (!currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
 			currentUser.setPersistentValue("lang", lang);
 		}
+		this.lang = lang;
 	}
 
 	public String getLang() {

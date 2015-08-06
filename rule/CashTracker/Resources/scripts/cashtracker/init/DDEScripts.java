@@ -1,11 +1,9 @@
 package cashtracker.init;
 
+import java.util.ArrayList;
 
 import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-
-import java.util.ArrayList;
-
 
 public class DDEScripts implements IAppDatabaseInit {
 
@@ -13,6 +11,26 @@ public class DDEScripts implements IAppDatabaseInit {
 	public void setApplicationProfile(ApplicationProfile appProfile) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public ArrayList<String> getTablesDDE() {
+		ArrayList<String> result = new ArrayList<>();
+
+		result.add(getBudgetDDE());
+		result.add(getAccountDDE());
+		result.add(getCategoryDDE());
+		result.add(getCostCenterDDE());
+		result.add(getTagDDE());
+		result.add(getTransactionDDE());
+
+		return result;
+	}
+
+	@Override
+	public ArrayList<String> getInitActions() {
+		// INFO заполнение базовых значений (справочников, ...)
+		return null;
 	}
 
 	private static String getBudgetDDE() {
@@ -131,23 +149,4 @@ public class DDEScripts implements IAppDatabaseInit {
 		return sql.toString();
 	}
 
-	@Override
-	public ArrayList <String> getTablesDDE() {
-        ArrayList <String> result = new ArrayList <>();
-
-		result.add(getBudgetDDE());
-		result.add(getAccountDDE());
-		result.add(getCategoryDDE());
-		result.add(getCostCenterDDE());
-		result.add(getTagDDE());
-		result.add(getTransactionDDE());
-
-		return result;
-	}
-
-	@Override
-	public ArrayList <String> getInitActions() {
-		// INFO заполнение базовых значений (справочников, ...)
-		return null;
-	}
 }

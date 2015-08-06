@@ -10,8 +10,6 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 
-import com.flabser.server.Server;
-
 public class Logging extends ValveBase {
 
 	public Logging() {
@@ -32,12 +30,10 @@ public class Logging extends ValveBase {
 
 		Enumeration<String> headerNames = http.getHeaderNames();
 
-		if (headerNames.hasMoreElements()) {  
-			String header = headerNames.nextElement();
-		//	Object v[] = new Object[] { header, http.getHeader(header) };
-		//	Server.logger.normalLogEntry(v[0] + "=" + v[1]);
+		if (headerNames.hasMoreElements()) {
+			headerNames.nextElement();
 		}
-		Server.logger.normalLogEntry(ru.getUrl());
+		// Server.logger.normalLogEntry(ru.getUrl());
 		((Unsecure) getNext()).invoke(request, response, ru);
 		return;
 	}

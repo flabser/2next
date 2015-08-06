@@ -31,6 +31,7 @@ public class AppEnv implements ICache, _IContent {
 	public Vocabulary vocabulary;
 	public final static String APP_ATTR = "appenv";
 	public final static String ADMIN_APP_NAME = "administrator";
+	public final static String WORKSPACE_APP_NAME = "nubis";
 
 	private ArrayList<String> unsecuredPage = new ArrayList<String>();
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();

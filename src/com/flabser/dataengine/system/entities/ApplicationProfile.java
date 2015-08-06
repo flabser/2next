@@ -12,6 +12,7 @@ import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.restful.Application;
 import com.flabser.script._IContent;
+import com.flabser.server.Server;
 import com.flabser.solutions.DatabaseType;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.VisibiltyType;
@@ -85,6 +86,7 @@ public class ApplicationProfile implements _IContent {
 			IDatabase db = new com.flabser.solutions.postgresql.Database();
 			try {
 				db.init(this);
+				return db;
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -92,9 +94,9 @@ public class ApplicationProfile implements _IContent {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (DatabasePoolException e) {
-				e.printStackTrace();
+				Server.logger.errorLogEntry(e.getMessage());
 			}
-			return db;
+
 		default:
 			return null;
 		}
@@ -184,7 +186,7 @@ public class ApplicationProfile implements _IContent {
 
 	public Application getPOJO() {
 		Application app = new Application();
-		app.appType = appType;
+		app.setAppType(appType);
 
 		return app;
 

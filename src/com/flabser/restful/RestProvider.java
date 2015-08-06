@@ -83,6 +83,7 @@ public class RestProvider {
 		if (rule != null) {
 			try {
 				try {
+
 					result = page(env, (Map) queryParams, request, rule, getUserSession());
 				} catch (WebFormValueException e) {
 					return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(result).build();
