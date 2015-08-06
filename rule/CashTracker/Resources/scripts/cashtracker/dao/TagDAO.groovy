@@ -14,7 +14,7 @@ public class TagDAO {
 
 	public TagDAO(_Session session) {
 		this.db = session.getDatabase()
-		this.user = session.getUser()
+		this.user = session.getAppUser()
 	}
 
 	public String getSelectQuery() {

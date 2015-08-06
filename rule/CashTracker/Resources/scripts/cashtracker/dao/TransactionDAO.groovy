@@ -72,7 +72,7 @@ public class TransactionDAO {
 
 	public TransactionDAO(_Session session) {
 		this.db = session.getDatabase()
-		this.user = session.getUser()
+		this.user = session.getAppUser()
 	}
 
 	public String getSelectQuery() {

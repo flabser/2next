@@ -14,27 +14,26 @@ public class AccountDAO {
 
 	public AccountDAO(_Session session) {
 		this.db = session.getDatabase()
-		this.user = session.getUser()
+		this.user = session.getAppUser()
 	}
 
 	public String getSelectQuery() {
-		return """SELECT id, name, type, currency_code, opening_balance, amount_control,
+		return """SELECT id, name, currency_code, opening_balance, amount_control,
 					owner, observers, include_in_totals, note, sort_order FROM accounts"""
 	}
 
 	public String getCreateQuery() {
 		return """INSERT INTO accounts
-					(name, type, currency_code, opening_balance, amount_control,
+					(name, currency_code, opening_balance, amount_control,
 					 owner, observers, include_in_totals, note, sort_order)
 				  VALUES
-					(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+					(?, ?, ?, ?, ?, ?, ?, ?, ?)"""
 	}
 
 	public String getUpdateQuery() {
 		return """UPDATE accounts
 					SET
 						name = ?,
-						type = ?,
 						currency_code = ?,
 						opening_balance = ?,
 						amount_control = ?,
@@ -63,10 +62,10 @@ public class AccountDAO {
 
 	public int add(Account a) {
 		String sql = """INSERT INTO accounts
-							(name, type, currency_code, opening_balance, amount_control,
+							(name, currency_code, opening_balance, amount_control,
 							owner, observers, include_in_totals, note, sort_order)
 						VALUES
-							('${a.name}', ${a.type}, '${a.currencyCode}', ${a.openingBalance}, ${a.amountControl},
+							('${a.name}', '${a.currencyCode}', ${a.openingBalance}, ${a.amountControl},
 							'${a.owner}', '${a.observers}', ${a.includeInTotals}, '${a.note}', ${a.sortOrder})"""
 		return db.insert(sql, user)
 	}
@@ -75,7 +74,6 @@ public class AccountDAO {
 		String sql = """UPDATE accounts
 						SET
 							name = '${a.name}',
-							type = ${a.type},
 							currency_code = '${a.currencyCode}',
 							opening_balance = ${a.openingBalance},
 							amount_control = ${a.amountControl},
