@@ -35,17 +35,17 @@
                 <ul class="side-tree">
                     <li class="side-tree-item">
                         {{#link-to "transactions" (query-params type="income")}}
-                        <span class="nav-item-icon"><i class="fa fa-long-arrow-left"></i></span>
+                        <span class="nav-item-icon"><i class="fa fa-caret-up green"></i></span>
                         <span class="nav-item-text">{{t "incomes"}}</span> {{/link-to}}
                     </li>
                     <li class="side-tree-item">
                         {{#link-to "transactions" (query-params type="expense")}}
-                        <span class="nav-item-icon"><i class="fa fa-long-arrow-right"></i></span>
+                        <span class="nav-item-icon"><i class="fa fa-caret-down red"></i></span>
                         <span class="nav-item-text">{{t "expenses"}}</span> {{/link-to}}
                     </li>
                     <li class="side-tree-item">
                         {{#link-to "transactions" (query-params type="transfer")}}
-                        <span class="nav-item-icon"><i class="fa fa-retweet"></i></span>
+                        <span class="nav-item-icon"><i class="fa fa-retweet blue"></i></span>
                         <span class="nav-item-text">{{t "transfers"}}</span> {{/link-to}}
                     </li>
                 </ul>
