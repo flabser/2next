@@ -1,7 +1,6 @@
 package com.flabser.restful;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +24,6 @@ import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.SessionPool;
 import com.flabser.server.Server;
 import com.flabser.servlets.ServletUtil;
@@ -87,12 +85,10 @@ public class SessionService {
 		Server.logger.normalLogEntry(userID + " has connected");
 		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
+		userSession = new UserSession(user);
 		if (user.getStatus() == UserStatusType.REGISTERED) {
-			HashMap<String, ApplicationProfile> apps = user.getApplicationProfiles();
-			authUser.setApplications(apps);
+			authUser = userSession.getUserPOJO();
 			authUser.setDefaultApp(appID);
-			authUser.setStatus(user.getStatus());
-
 		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
 			authUser.setRedirect("tochangepwd");
 		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED) {
@@ -106,7 +102,6 @@ public class SessionService {
 			throw new AuthFailedException(authUser);
 		}
 
-		userSession = new UserSession(user);
 		String token = SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 		int maxAge = -1;
