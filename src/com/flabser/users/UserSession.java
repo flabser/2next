@@ -12,6 +12,7 @@ import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
+import com.flabser.restful.Application;
 import com.flabser.restful.AuthUser;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
@@ -163,9 +164,22 @@ public class UserSession implements ICache {
 		AuthUser aUser = new AuthUser();
 		aUser.setLogin(currentUser.getLogin());
 		aUser.setName(currentUser.getUserName());
+		aUser.setRoles(currentUser.getUserRoles().toArray(new String[currentUser.getUserRoles().size()]));
+		HashMap<String, Application> applications = new HashMap<String, Application>();
+		for (ApplicationProfile ap : (currentUser.getApplicationProfiles().values())) {
+			Application a = new Application(ap);
+			a.setAppID(ap.appID);
+			a.setAppName(ap.appName);
+			a.setAppType(ap.appType);
+			a.setOwner(ap.owner);
+			a.setVisibilty(ap.getVisibilty());
+			a.setStatus(ap.status);
+			applications.put(ap.appID, a);
+		}
+		aUser.setApplications(applications);
 		aUser.setRoles(currentUser.getUserRoles());
-		aUser.setApplications(currentUser.getApplicationProfiles());
 		aUser.setAuthMode(authMode);
+		aUser.setStatus(currentUser.getStatus());
 		return aUser;
 	}
 

@@ -118,18 +118,6 @@ public class User {
 		return isSupervisor;
 	}
 
-	// public boolean hasRole(String roleName) {
-	// return true;
-	// }
-
-	// public void addRole(UserRole role) {
-	// roles.add(role);
-	// }
-	//
-	// public HashSet<UserRole> getRoles() {
-	// return roles;
-	// }
-
 	public void setRoles(HashSet<UserRole> roles) {
 		this.roles = roles;
 	}
@@ -216,11 +204,10 @@ public class User {
 								dbInitializer.setApplicationProfile(appProfile.getPOJO());
 								if (ad.deploy(dbInitializer) == 0) {
 									appProfile.setStatus(ApplicationStatusType.ON_LINE);
-									appProfile.save();
 								} else {
 									appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
-									appProfile.save();
 								}
+								appProfile.save();
 							} else {
 								appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 								appProfile.save();
