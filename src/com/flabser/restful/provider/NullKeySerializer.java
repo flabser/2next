@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-class MyNullKeySerializer extends JsonSerializer<Object> {
+class NullKeySerializer extends JsonSerializer<Object> {
 	@Override
 	public void serialize(Object nullKey, JsonGenerator jsonGenerator, SerializerProvider unused) throws IOException, JsonProcessingException {
 		jsonGenerator.writeFieldName("");
