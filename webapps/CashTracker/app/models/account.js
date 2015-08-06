@@ -2,7 +2,7 @@ import DS from 'ember-data';
 import EmberValidations from 'ember-validations';
 
 export default DS.Model.extend(EmberValidations.Mixin, {
-    type: DS.attr('number'),
+    // type: DS.attr('number'),
     name: DS.attr('string'),
     currencyCode: DS.attr('string'),
     openingBalance: DS.attr('number'),
@@ -23,6 +23,9 @@ export default DS.Model.extend(EmberValidations.Mixin, {
         },
         currencyCode: {
             presence: true
+        },
+        openingBalance: {
+            numericality: true
         },
         sortOrder: {
             numericality: true

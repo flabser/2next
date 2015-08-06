@@ -1,21 +1,37 @@
 package com.flabser.server;
 
+import java.util.Collection;
 import java.util.Scanner;
+
+import com.flabser.env.SessionPool;
+import com.flabser.users.UserSession;
 
 public class Console implements Runnable {
 
-	Console() {
-
-	}
-
 	@Override
 	public void run() {
-		Scanner scanner = new Scanner(System.in);
-		String command = scanner.nextLine();
-		System.out.println(command);
-		if (command.equalsIgnoreCase("quit") || command.equalsIgnoreCase("q")) {
-			Server.shutdown();
-		}
 
+		final Scanner in = new Scanner(System.in);
+		while (in.hasNext()) {
+			final String command = in.nextLine();
+			System.out.println("> " + command);
+			if (command.equalsIgnoreCase("quit") || command.equalsIgnoreCase("q")) {
+				Server.shutdown();
+				in.close();
+			} else if (command.equalsIgnoreCase("sessions") || command.equalsIgnoreCase("us")) {
+				Collection<UserSession> sc = SessionPool.getUserSessions().values();
+				if (sc.size() > 0) {
+					for (UserSession us : SessionPool.getUserSessions().values()) {
+						System.out.println(us);
+					}
+				} else {
+					System.out.println("No user session");
+				}
+			} else {
+				if (!command.trim().equalsIgnoreCase("")) {
+					System.err.println("command \"" + command + "\" is not recognized");
+				}
+			}
+		}
 	}
 }

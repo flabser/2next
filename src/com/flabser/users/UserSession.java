@@ -6,15 +6,13 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.LinkedBlockingDeque;
 
-import javax.servlet.http.HttpSession;
-
 import org.omg.CORBA.UserException;
 
 import com.flabser.dataengine.IDatabase;
-import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
+import com.flabser.restful.AuthUser;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
@@ -29,24 +27,14 @@ public class UserSession implements ICache {
 	public String host = "localhost";
 
 	private AuthModeType authMode;
-	private HttpSession jses;
 	private HashMap<String, ActiveApplication> acitveApps = new HashMap<String, ActiveApplication>();
 
-	public UserSession(User user, String appID, HttpSession jses) throws UserException, ClassNotFoundException, InstantiationException, IllegalAccessException,
-			DatabasePoolException {
-		currentUser = user;
-		this.jses = jses;
-		initHistory();
-		ApplicationProfile appProfile = user.getApplicationProfile(appID);
-		if (appProfile != null) {
-			// dataBase = appProfile.getDatabase();
-			acitveApps.put(appProfile.appType, new ActiveApplication(appProfile, appProfile.getDatabase()));
-		}
-	}
+	private String lang;
+	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 
-	public UserSession(User user, HttpSession jses) {
+	public UserSession(User user) {
 		currentUser = user;
-		this.jses = jses;
+		authMode = AuthModeType.DIRECT_LOGIN;
 		initHistory();
 	}
 
@@ -62,16 +50,15 @@ public class UserSession implements ICache {
 		if (!currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
 			currentUser.setPersistentValue("lang", lang);
 		}
-		jses.setAttribute("lang", lang);
 	}
 
 	public String getLang() {
 		if (currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
-			return (String) jses.getAttribute("lang");
+			return lang;
 		} else {
 			Object o = currentUser.getPesistentValue("lang");
 			if (o == null) {
-				return (String) jses.getAttribute("lang");
+				return lang;
 			} else {
 				return (String) o;
 			}
@@ -94,8 +81,6 @@ public class UserSession implements ICache {
 
 	@Override
 	public void flush() {
-		@SuppressWarnings("unchecked")
-		HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 		if (cache != null) {
 			cache.clear();
 		}
@@ -149,35 +134,31 @@ public class UserSession implements ICache {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	private void setObject(String name, _Page obj) {
-		HashMap<String, _Page> cache = null;
-		if (jses != null) {
-			cache = (HashMap<String, _Page>) jses.getAttribute("cache");
-		}
-		if (cache == null) {
-			cache = new HashMap<>();
-		}
 		cache.put(name, obj);
-		if (jses != null) {
-			jses.setAttribute("cache", cache);
-		}
-
 	}
 
 	private Object getObject(String name) {
 		try {
-			@SuppressWarnings("unchecked")
-			HashMap<String, StringBuffer> cache = (HashMap<String, StringBuffer>) jses.getAttribute("cache");
 			return cache.get(name);
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
+	public AuthUser getUserPOJO() {
+		AuthUser aUser = new AuthUser();
+		aUser.setLogin(currentUser.getLogin());
+		aUser.setName(currentUser.getUserName());
+		aUser.setRoles(currentUser.getUserRoles());
+		aUser.setApplications(currentUser.getApplicationProfiles());
+		aUser.setAuthMode(authMode);
+		return aUser;
+	}
+
 	@Override
 	public String toString() {
-		return "user session of the " + currentUser;
+		return currentUser + ", authMode=" + authMode.name() + ", lang=" + lang;
 	}
 
 	public class HistoryEntryCollection {

@@ -32,11 +32,10 @@
     "ember-cli-qunit": "0.3.15",
     "ember-cli-release": "0.2.3",
     "ember-cli-uglify": "^1.0.1",
-    "ember-data": "1.13.5",
+    "ember-data": "1.13.7",
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.2",
     "ember-i18n": "4.1.1",
-    "ember-idx-forms": "^0.6.0",
     "ember-validations": "2.0.0-alpha.1"
   }
 }

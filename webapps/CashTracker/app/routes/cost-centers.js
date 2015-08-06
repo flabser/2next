@@ -1,7 +1,13 @@
-import Ember from 'ember';
+import Em from 'ember';
 
-export default Ember.Route.extend({
+export default Em.Route.extend({
     model: function() {
         return this.store.findAll('cost-center');
+    },
+
+    actions: {
+        add() {
+            this.transitionTo('cost_centers.new');
+        }
     }
 });

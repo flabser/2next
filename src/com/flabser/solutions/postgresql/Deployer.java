@@ -4,8 +4,8 @@ import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.server.Server;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -15,8 +15,6 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.flabser.dataengine.DatabaseUtil.SQLExceptionPrintDebug;
 
@@ -36,12 +34,13 @@ public class Deployer extends DatabaseCore implements IDeployer {
 	public int deploy(IAppDatabaseInit dbInit) {
 		Connection conn = pool.getConnection();
 
-		try (Statement stmt = conn.createStatement()){
+		try (Statement stmt = conn.createStatement()) {
 
+			conn.setAutoCommit(false);
 			Set<String> tables = new HashSet<>();
 			DatabaseMetaData dbmd = conn.getMetaData();
-			String[] types = {"TABLE"};
-			try(ResultSet rs = dbmd.getTables(null, null, "%", types)) {
+			String[] types = { "TABLE" };
+			try (ResultSet rs = dbmd.getTables(null, null, "%", types)) {
 				while (rs.next()) {
 					tables.add((Optional.ofNullable(rs.getString("table_name")).orElse("")).toLowerCase());
 				}
@@ -65,7 +64,6 @@ public class Deployer extends DatabaseCore implements IDeployer {
 		} finally {
             pool.returnConnection(conn);
 		}
-
 	}
 
     private String getTableName(String query){

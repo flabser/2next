@@ -25,7 +25,6 @@ import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
-import com.flabser.restful.AuthUser;
 import com.flabser.server.Server;
 import com.flabser.util.Util;
 
@@ -214,6 +213,7 @@ public class User {
 								ad.init(appProfile);
 								Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
 								IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
+								dbInitializer.setApplicationProfile(appProfile);
 								if (ad.deploy(dbInitializer) == 0) {
 									appProfile.setStatus(ApplicationStatusType.ON_LINE);
 									appProfile.save();
@@ -365,12 +365,4 @@ public class User {
 		this.groups = groups;
 	}
 
-	public AuthUser getPOJO() {
-		AuthUser aUser = new AuthUser();
-		aUser.setLogin(login);
-		aUser.setName(userName);
-		aUser.setRoles(roles);
-		aUser.setApplications(applications);
-		return aUser;
-	}
 }

@@ -14,7 +14,6 @@ import com.flabser.script.events._DoScript;
 import com.flabser.users.User;
 import com.flabser.users.UserStatusType;
 
-
 public class SignUp extends _DoScript {
 
 	@Override
@@ -51,7 +50,7 @@ public class SignUp extends _DoScript {
 			return;
 		}
 
-		com.flabser.users.User user = session.getUser();
+		com.flabser.users.User user = session.getAppUser();
 		user.setLogin(regForm.email);
 		user.setUserName(regForm.userName);
 		user.setPwd(regForm.pwd);

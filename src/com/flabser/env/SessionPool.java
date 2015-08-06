@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.apache.commons.codec.binary.Base64;
 
+import com.flabser.users.AuthModeType;
 import com.flabser.users.UserSession;
 import com.flabser.util.Util;
 
@@ -26,11 +27,16 @@ public class SessionPool {
 
 		}
 		UserSession us = userSessions.get(key);
+		us.setAuthMode(AuthModeType.LOGIN_THROUGH_TOKEN);
 		return us;
 	}
 
 	public static void remove(UserSession us) {
 		userSessions.remove(us.currentUser.getLogin());
+	}
+
+	public static HashMap<Integer, UserSession> getUserSessions() {
+		return userSessions;
 	}
 
 }

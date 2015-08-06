@@ -1,8 +1,8 @@
-{{#form-for model=model onSubmit="submit" save="save"}}
+{{#tn-form model=transaction onSubmit="submit" action="save"}}
 <header class="form-header">
     <h1 class="header-title">
         <small id="saldo" class="pull-right" title="Сальдо"></small>
-        {{model.title}} № {{model.vn}} {{model.date}}
+        {{transaction.title}} № {{transaction.vn}} {{transaction.date}}
     </h1>
     <div class="action-bar">
         <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
@@ -17,7 +17,7 @@
                 {{t 'date'}}
             </div>
             <div class="controls">
-                {{input value=model.date class="span7"}}
+                {{input value=transaction.date class="span7"}}
             </div>
         </div>
         <!-- Касса -->
@@ -26,7 +26,7 @@
                 {{t 'account'}}
             </div>
             <div class="controls">
-                {{input value=model.account class="span7"}}
+                {{input value=transaction.account class="span7"}}
             </div>
         </div>
         <!-- category -->
@@ -35,7 +35,7 @@
                 {{t 'category'}}
             </div>
             <div class="controls">
-                {{input value=model.category class="span7"}}
+                {{input value=transaction.category class="span7"}}
             </div>
         </div>
         <!-- Целевая касса -->
@@ -45,7 +45,7 @@
                 {{t 'amount'}}
             </div>
             <div class="controls">
-                {{input type="number" value=model.amount class="span7"}}
+                {{input type="number" value=transaction.amount class="span7"}}
             </div>
         </div>
         <!-- Место возникновения -->
@@ -54,7 +54,7 @@
                 {{t 'cost_center'}}
             </div>
             <div class="controls">
-                {{input value=model.costCenter class="span7"}}
+                {{input value=transaction.costCenter class="span7"}}
             </div>
         </div>
         <!-- Основание -->
@@ -63,7 +63,7 @@
                 {{t 'basis'}}
             </div>
             <div class="controls">
-                {{textarea value=model.basis class="span7"}}
+                {{textarea value=transaction.basis class="span7"}}
             </div>
         </div>
         <!-- documented -->
@@ -80,4 +80,4 @@
         doc info
     </div>
 </section>
-{{/form-for}}
+{{/tn-form}}

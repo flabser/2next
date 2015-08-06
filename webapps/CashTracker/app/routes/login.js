@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Em from 'ember';
 
-export default Ember.Route.extend({
+export default Em.Route.extend({
 
     beforeModel: function() {
         this.session.set('user', null);

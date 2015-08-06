@@ -6,6 +6,7 @@ import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.env.Environment;
 import com.flabser.localization.LanguageType;
+import com.flabser.restful.AuthUser;
 import com.flabser.rule.Role;
 import com.flabser.script.actions._ActionBar;
 import com.flabser.script.mail._MailAgent;
@@ -49,8 +50,13 @@ public class _Session {
 		return new _MailAgent(this);
 	}
 
-	public User getUser() {
+	@Deprecated
+	public User getAppUser() {
 		return userSession.currentUser;
+	}
+
+	public AuthUser getUser() {
+		return userSession.getUserPOJO();
 	}
 
 	public void switchLang(LanguageType lang) {

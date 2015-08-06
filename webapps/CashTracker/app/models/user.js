@@ -8,7 +8,10 @@ export default DS.Model.extend(EmberValidations.Mixin, {
     role: DS.attr('string'),
 
     validations: {
-        name: {
+        login: {
+            presence: true
+        },
+        email: {
             presence: true
         }
     }
