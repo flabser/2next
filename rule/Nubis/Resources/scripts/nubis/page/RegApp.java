@@ -8,7 +8,6 @@ import com.flabser.solutions.DatabaseType;
 import com.flabser.users.User;
 import com.flabser.users.VisibiltyType;
 
-
 public class RegApp extends _DoScript {
 
 	@Override
@@ -19,7 +18,7 @@ public class RegApp extends _DoScript {
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
 		VisibiltyType vis = VisibiltyType.ONLY_MEMBERS;
-		User user = session.getUser();
+		User user = session.getAppUser();
 		String appType = formData.getValueSilently("apptype");
 		String appName = formData.getValueSilently("appname");
 		String visibilty = formData.getValueSilently("visibilty");

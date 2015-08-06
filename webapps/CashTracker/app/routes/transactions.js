@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Em from 'ember';
 
-export default Ember.Route.extend({
+export default Em.Route.extend({
     queryParams: {
         type: {
             refreshModel: true
@@ -44,5 +44,11 @@ export default Ember.Route.extend({
         }
 
         this._super(transition);
+    },
+
+    actions: {
+        add() {
+            this.transitionTo('transactions.new');
+        }
     }
 });

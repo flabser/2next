@@ -1,14 +1,14 @@
 package com.flabser.script;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.flabser.appenv.AppEnv;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
 import com.flabser.rule.Lang;
 import com.flabser.server.Server;
 import com.flabser.users.User;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class _AppEntourage {
 	private AppEnv env;
@@ -42,7 +42,7 @@ public class _AppEntourage {
 	}
 
 	public ArrayList<String[]> getAvailableApps() throws _Exception {
-		User user = ses.getUser();
+		User user = ses.getAppUser();
 		ArrayList<String[]> list = new ArrayList<String[]>();
 
 		for (ApplicationProfile app : user.getApplications()) {

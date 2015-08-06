@@ -1,19 +1,9 @@
-import Ember from 'ember';
+import Em from 'ember';
 
-export default Ember.Route.extend({
+export default Em.Route.extend({
     templateName: 'transactions/transaction',
 
     model: function(params) {
         return this.store.find('transaction', params.transaction_id);
-    },
-
-    actions: {
-        save: function() {
-            var _this = this;
-            var model = this.currentModel;
-            model.save().then(function() {
-                _this.transitionTo('transactions');
-            });
-        }
     }
 });

@@ -36,6 +36,7 @@
 	<caption name="account" />
 	<caption name="budget" />
 	<caption name="category" />
+	<caption name="tag" />
 	<caption name="costcenter" />
 	<caption name="user" />
 	<caption name="transaction" />
@@ -73,7 +74,6 @@
 	<caption name="category" />
 	<caption name="parent_category" />
 	<caption name="targetcash" />
-	<caption name="summa" />
 	<caption name="month" />
 	<caption name="basis" />
 	<caption name="documented" />
@@ -83,4 +83,5 @@
 	<caption name="cost_center" />
 	<caption name="owner" />
 	<caption name="color" />
+	<caption name="note" />
 </rule>

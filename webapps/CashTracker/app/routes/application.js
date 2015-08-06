@@ -1,12 +1,12 @@
-import Ember from 'ember';
+import Em from 'ember';
 
 const {
     Route, inject, $
-} = Ember;
+} = Em;
 
 export default Route.extend({
-
     tagName: '',
+    navProfileIsExpanded: false,
 
     session: inject.service(),
 
@@ -47,7 +47,7 @@ export default Route.extend({
 
     actions: {
         logout: function() {
-            var route = this;
+            // var route = this;
             this.get('session').logout().then(function() {
                 // route.transitionTo('index');
                 window.location.href = 'Provider?id=welcome';
@@ -72,6 +72,10 @@ export default Route.extend({
 
         toggleSearchForm: function() {
             $('body').toggleClass('search-open');
+        },
+
+        toggleNavProfile: function() {
+            $('.nav-profile').toggleClass('expanded');
         },
 
         willTransition: function() {

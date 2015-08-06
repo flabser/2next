@@ -31,7 +31,6 @@ import com.flabser.server.Server;
 import com.flabser.servlets.ServletUtil;
 import com.flabser.users.AuthFailedException;
 import com.flabser.users.AuthFailedExceptionType;
-import com.flabser.users.AuthModeType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.users.UserStatusType;
@@ -107,8 +106,7 @@ public class SessionService {
 			throw new AuthFailedException(authUser);
 		}
 
-		userSession = new UserSession(user, jses);
-		userSession.setAuthMode(AuthModeType.DIRECRT_LOGIN);
+		userSession = new UserSession(user);
 		String token = SessionPool.put(userSession);
 		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
 		int maxAge = -1;

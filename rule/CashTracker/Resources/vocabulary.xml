@@ -112,6 +112,12 @@
 		<entry lang="ENG">Color</entry>
 		<entry lang="BG">Цвят</entry>
 	</sentence>
+	<sentence mode="on" keyword="note">
+		<entry lang="RUS">Примечание</entry>
+		<entry lang="KAZ">Примечание</entry>
+		<entry lang="ENG">Note</entry>
+		<entry lang="BG">Примечание</entry>
+	</sentence>
 	<sentence mode="on" keyword="user_profile">
 		<entry lang="RUS" hint="Профиль">Профиль</entry>
 		<entry lang="KAZ" hint="Профиль">Профиль</entry>
@@ -610,6 +616,12 @@
 		<entry lang="KAZ" hint="Категория">Категория</entry>
 		<entry lang="ENG" hint="Категория">Категория</entry>
 		<entry lang="BG" hint="Категория">Категория</entry>
+	</sentence>
+	<sentence mode="on" keyword="tag">
+		<entry lang="RUS">Метка</entry>
+		<entry lang="KAZ">Белгі</entry>
+		<entry lang="ENG">Tag</entry>
+		<entry lang="BG">Метка</entry>
 	</sentence>
 	<sentence mode="on" keyword="costcenter">
 		<entry lang="RUS" hint="Место возникновения">Место возникновения</entry>

@@ -12,6 +12,12 @@ import org.apache.catalina.valves.ValveBase;
 import com.flabser.server.Server;
 
 public class Unsecure extends ValveBase {
+	RequestURL ru;
+
+	public void invoke(Request request, Response response, RequestURL ru) throws IOException, ServletException {
+		this.ru = ru;
+		invoke(request, response);
+	}
 
 	@Override
 	public void invoke(Request request, Response response) throws IOException, ServletException {

@@ -1,31 +1,22 @@
-{{#em-form model=model submit_button=false action="save"}}
+{{#tn-form model=tag onSubmit="submit" action="save"}}
 <header class="form-header">
-    <h1 class="header-title">{{t "tag"}} / {{model.name}}</h1>
+    <h1 class="header-title">{{t "tag"}} / {{tag.name}}</h1>
     <div class="action-bar">
-        <button class="btn" {{action "goBack"}} {{bind-attr disabled="isNotValid" }}>{{t "cancel"}}</button>
+        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
         <button type="submit" class="btn btn-primary">{{t "save"}}</button>
-        {{em-form-submit text="save"}}
     </div>
 </header>
 <section class="form-content">
     <div class="fieldset">
-        {{em-input property="name" label="name"}}
-        <div class="control-group">
+        {{#tn-form-group property="name"}}
             <div class="control-label">
-                {{t "name"}} {{errors.email}}
+                {{t "name"}}
             </div>
             <div class="controls">
-                {{input value=model.name class="span7"}}
+                {{input value=tag.name}}
+                {{tn-error-message}}
             </div>
-        </div>
-        <div class="control-group">
-            <div class="control-label">
-                {{t "color"}}
-            </div>
-            <div class="controls">
-                {{input value=model.color}}
-            </div>
-        </div>
+        {{/tn-form-group}}
     </div>
 </section>
-{{/em-form}}
+{{/tn-form}}

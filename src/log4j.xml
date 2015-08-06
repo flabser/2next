@@ -15,7 +15,7 @@
 	<appender name="file" class="com.flabser.log.DailyRollingFileAppender">
 		<param name="File" value="logs/today.log" />
 		<param name="DatePattern" value="dd-MM-yyyy'.log'" />
-    	 <param name="MaxFileSize" value="6000KB"/>
+    	 <param name="MaxFileSize" value="60KB"/>
 		<param name="maxBackupIndex" value="30" />
 		<param name="Append" value="true" />
 		<layout class="org.apache.log4j.PatternLayout">

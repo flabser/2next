@@ -15,9 +15,6 @@ import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.spi.LoggingEvent;
 
 public class DailyRollingFileAppender extends RollingFileAppender {
-
-	// The code assumes that the following constants are in a increasing
-	// sequence.
 	static final int TOP_OF_TROUBLE = -1;
 	static final int TOP_OF_MINUTE = 0;
 	static final int TOP_OF_HOUR = 1;
@@ -26,69 +23,33 @@ public class DailyRollingFileAppender extends RollingFileAppender {
 	static final int TOP_OF_WEEK = 4;
 	static final int TOP_OF_MONTH = 5;
 
-	/**
-	 * The date pattern. By default, the pattern is set to "'.'yyyy-MM-dd"
-	 * meaning daily rollover.
-	 */
 	private String datePattern = "'.'yyyy-MM-dd";
-
-	/**
-	 * The log file will be renamed to the value of the scheduledFilename
-	 * variable when the next interval is entered. For example, if the rollover
-	 * period is one hour, the log file will be renamed to the value of
-	 * "scheduledFilename" at the beginning of the next hour.
-	 * 
-	 * The precise time when a rollover occurs depends on logging activity.
-	 */
 	private String scheduledFilename;
-
-	/**
-	 * The next time we estimate a rollover should occur.
-	 */
 	private long nextCheck = System.currentTimeMillis() - 1;
-
 	Date now = new Date();
-
 	SimpleDateFormat sdf;
-
 	RollingCalendar rc = new RollingCalendar();
-
 	int checkPeriod = TOP_OF_TROUBLE;
-
-	// The gmtTimeZone is used only in computeCheckPeriod() method.
 	static final TimeZone gmtTimeZone = TimeZone.getTimeZone("GMT");
 
-	/**
-	 * The default constructor does nothing.
-	 */
 	public DailyRollingFileAppender() {
 	}
 
-	/**
-	 * Instantiate a <code>DailyRollingFileAppender</code> and open the file
-	 * designated by <code>filename</code>. The opened filename will become the
-	 * ouput destination for this appender.
-	 */
-	public DailyRollingFileAppender(Layout layout, String filename,
-			String datePattern) throws IOException {
+	public DailyRollingFileAppender(Layout layout, String filename, String datePattern) throws IOException {
 		super(layout, filename, true);
 		this.datePattern = datePattern;
 		activateOptions();
 	}
 
-	/**
-	 * The <b>DatePattern</b> takes a string in the same format as expected by
-	 * {@link SimpleDateFormat}. This options determines the rollover schedule.
-	 */
 	public void setDatePattern(String pattern) {
 		datePattern = pattern;
 	}
 
-	/** Returns the value of the <b>DatePattern</b> option. */
 	public String getDatePattern() {
 		return datePattern;
 	}
 
+	@Override
 	public void activateOptions() {
 		super.activateOptions();
 		if (datePattern != null && fileName != null) {
@@ -98,13 +59,9 @@ public class DailyRollingFileAppender extends RollingFileAppender {
 			printPeriodicity(type);
 			rc.setType(type);
 			File file = new File(fileName);
-			// scheduledFilename = fileName+sdf.format(new
-			// Date(file.lastModified()));//changed tch_stas
-			scheduledFilename = fileName.split("\\\\")[0] + File.separator
-					+ sdf.format(new Date(file.lastModified()));
+			scheduledFilename = fileName.split("\\\\")[0] + File.separator + sdf.format(new Date(file.lastModified()));
 		} else {
-			LogLog.error("Either File or DatePattern options are not set for appender ["
-					+ name + "].");
+			LogLog.error("Either File or DatePattern options are not set for appender [" + name + "].");
 		}
 	}
 
@@ -114,23 +71,19 @@ public class DailyRollingFileAppender extends RollingFileAppender {
 			LogLog.debug("Appender [" + name + "] to be rolled every minute.");
 			break;
 		case TOP_OF_HOUR:
-			LogLog.debug("Appender [" + name
-					+ "] to be rolled on top of every hour.");
+			LogLog.debug("Appender [" + name + "] to be rolled on top of every hour.");
 			break;
 		case HALF_DAY:
-			LogLog.debug("Appender [" + name
-					+ "] to be rolled at midday and midnight.");
+			LogLog.debug("Appender [" + name + "] to be rolled at midday and midnight.");
 			break;
 		case TOP_OF_DAY:
 			LogLog.debug("Appender [" + name + "] to be rolled at midnight.");
 			break;
 		case TOP_OF_WEEK:
-			LogLog.debug("Appender [" + name
-					+ "] to be rolled at start of week.");
+			LogLog.debug("Appender [" + name + "] to be rolled at start of week.");
 			break;
 		case TOP_OF_MONTH:
-			LogLog.debug("Appender [" + name
-					+ "] to be rolled at start of every month.");
+			LogLog.debug("Appender [" + name + "] to be rolled at start of every month.");
 			break;
 		default:
 			LogLog.warn("Unknown periodicity for appender [" + name + "].");
@@ -138,51 +91,37 @@ public class DailyRollingFileAppender extends RollingFileAppender {
 	}
 
 	int computeCheckPeriod() {
-		RollingCalendar rollingCalendar = new RollingCalendar(gmtTimeZone,
-				Locale.getDefault());
-		// set sate to 1970-01-01 00:00:00 GMT
+		RollingCalendar rollingCalendar = new RollingCalendar(gmtTimeZone, Locale.getDefault());
 		Date epoch = new Date(0);
 		if (datePattern != null) {
 			for (int i = TOP_OF_MINUTE; i <= TOP_OF_MONTH; i++) {
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-						datePattern);
-				simpleDateFormat.setTimeZone(gmtTimeZone); // do all date
-															// formatting in GMT
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
+				simpleDateFormat.setTimeZone(gmtTimeZone);
 				String r0 = simpleDateFormat.format(epoch);
 				rollingCalendar.setType(i);
 				Date next = new Date(rollingCalendar.getNextCheckMillis(epoch));
 				String r1 = simpleDateFormat.format(next);
-				// System.out.println("Type = "+i+", r0 = "+r0+", r1 = "+r1);
 				if (r0 != null && r1 != null && !r0.equals(r1)) {
 					return i;
 				}
 			}
 		}
-		return TOP_OF_TROUBLE; // Deliberately head for trouble...
+		return TOP_OF_TROUBLE;
 	}
 
-	/**
-	 * Rollover the current file to a new file.
-	 */
+	@Override
 	public void rollOver() {
 
-		/* Compute filename, but only if datePattern is specified */
 		if (datePattern == null) {
 			errorHandler.error("Missing DatePattern option in rollOver().");
 			return;
 		}
 
-		// String datedFilename = fileName+sdf.format(now);
-		String datedFilename = fileName.split("\\\\")[0] + File.separator
-				+ sdf.format(now);// Changed by tch_stas
-		// It is too early to roll over because we are still within the
-		// bounds of the current interval. Rollover will occur once the
-		// next interval is reached.
+		String datedFilename = fileName.split("\\\\")[0] + File.separator + sdf.format(now);
 		if (scheduledFilename.equals(datedFilename)) {
 			return;
 		}
 
-		// close current file, and rename it to datedFilename
 		this.closeFile();
 
 		File target = new File(scheduledFilename);
@@ -195,13 +134,10 @@ public class DailyRollingFileAppender extends RollingFileAppender {
 		if (result) {
 			LogLog.debug(fileName + " -> " + scheduledFilename);
 		} else {
-			LogLog.error("Failed to rename [" + fileName + "] to ["
-					+ scheduledFilename + "].");
+			LogLog.error("Failed to rename [" + fileName + "] to [" + scheduledFilename + "].");
 		}
 
 		try {
-			// This will also close the file. This is OK since multiple
-			// close operations are safe.
 			this.setFile(fileName, true, this.bufferedIO, this.bufferSize);
 		} catch (IOException e) {
 			errorHandler.error("setFile(" + fileName + ", true) call failed.");
@@ -209,14 +145,7 @@ public class DailyRollingFileAppender extends RollingFileAppender {
 		scheduledFilename = datedFilename;
 	}
 
-	/**
-	 * This method differentiates DailyRollingFileAppender from its super class.
-	 *
-	 * <p>
-	 * Before actually logging, this method will check whether it is time to do
-	 * a rollover. If it is, it will schedule the next rollover time and then
-	 * rollover.
-	 * */
+	@Override
 	protected void subAppend(LoggingEvent event) {
 		long n = System.currentTimeMillis();
 		if (n >= nextCheck) {
@@ -228,11 +157,6 @@ public class DailyRollingFileAppender extends RollingFileAppender {
 	}
 }
 
-/**
- * RollingCalendar is a helper class to DailyRollingFileAppender. Given a
- * periodicity type and the current time, it computes the start of the next
- * interval.
- * */
 class RollingCalendar extends GregorianCalendar {
 	private static final long serialVersionUID = -3560331770601814177L;
 

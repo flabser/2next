@@ -15,6 +15,9 @@ export default DS.Model.extend(EmberValidations.Mixin, {
         name: {
             presence: true
         },
+        note: {
+            presence: true
+        },
         color: {
             numericality: true,
             inclusion: {
