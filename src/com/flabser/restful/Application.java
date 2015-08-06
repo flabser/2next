@@ -1,5 +1,7 @@
 package com.flabser.restful;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.script._IContent;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.VisibiltyType;
@@ -12,6 +14,13 @@ public class Application implements _IContent {
 	private VisibiltyType visibilty;
 	private String appType;
 	private ApplicationStatusType status;
+
+	@JsonIgnore
+	private ApplicationProfile applicationProfile;
+
+	public Application(ApplicationProfile applicationProfile) {
+		this.applicationProfile = applicationProfile;
+	}
 
 	public String getDefaultURL() {
 		return defaultURL;
@@ -74,6 +83,12 @@ public class Application implements _IContent {
 
 	public void setVisibilty(VisibiltyType visibilty) {
 		this.visibilty = visibilty;
+	}
+
+	@JsonIgnore
+	public void addRole(String name, String descr) {
+		applicationProfile.addRole(name, descr);
+
 	}
 
 }

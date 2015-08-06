@@ -10,10 +10,5 @@
 		<entry id="KAZ">Қазақша</entry>
 		<entry id="BG">Българский</entry>
 	</langs>
-	<roles>
-		<entry id="operations">can add transactions</entry>
-		<entry id="rn_amount_control">a receiver of notifying about exceeding sum of cash transaction</entry>
-		<entry id="dailymailing">a receiver of notifying about a day transaction</entry>
-		<entry id="administrator">administrator</entry>
-	</roles>
+	
 </rule>

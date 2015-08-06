@@ -90,7 +90,7 @@ public class AuthUser {
 
 	public void setApplications(HashMap<String, ApplicationProfile> apps) {
 		for (ApplicationProfile ap : apps.values()) {
-			Application a = new Application();
+			Application a = new Application(ap);
 			a.setAppID(ap.appID);
 			a.setAppName(ap.appName);
 			a.setAppType(ap.appType);

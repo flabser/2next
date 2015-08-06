@@ -3,14 +3,16 @@ package cashtracker.init;
 import java.util.ArrayList;
 
 import com.flabser.dataengine.IAppDatabaseInit;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.restful.Application;
 
-public class DDEScripts implements IAppDatabaseInit {
+public class FirstAction implements IAppDatabaseInit {
 
 	@Override
-	public void setApplicationProfile(ApplicationProfile appProfile) {
-		// TODO Auto-generated method stub
-
+	public void setApplicationProfile(Application app) {
+		app.addRole("operations", "can add transactions");
+		app.addRole("rn_amount_control", "a receiver notifying about exceeding a sum of the cash transaction");
+		app.addRole("dailymailing", "a receiver notifying about a day transactions");
+		app.addRole("administrator", "administrator");
 	}
 
 	@Override

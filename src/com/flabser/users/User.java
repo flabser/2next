@@ -213,7 +213,7 @@ public class User {
 								ad.init(appProfile);
 								Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
 								IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
-								dbInitializer.setApplicationProfile(appProfile);
+								dbInitializer.setApplicationProfile(appProfile.getPOJO());
 								if (ad.deploy(dbInitializer) == 0) {
 									appProfile.setStatus(ApplicationStatusType.ON_LINE);
 									appProfile.save();
