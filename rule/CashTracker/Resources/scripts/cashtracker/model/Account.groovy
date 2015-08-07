@@ -22,6 +22,8 @@ public class Account implements _IObject {
 
 	private BigDecimal amountControl;
 
+	private boolean enabled;
+
 	private boolean includeInTotals;
 
 	private String note;
@@ -89,6 +91,14 @@ public class Account implements _IObject {
 		this.readers = readers;
 	}
 
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	public boolean isIncludeInTotals() {
 		return includeInTotals;
 	}
@@ -124,6 +134,7 @@ public class Account implements _IObject {
 		setCurrencyCode(rs.getString("currency_code"));
 		setOpeningBalance(rs.getBigDecimal("opening_balance"));
 		setAmountControl(rs.getBigDecimal("amount_control"));
+		setEnabled(rs.getBoolean("enabled"));
 		setWriters(null);
 		setReaders(null);
 		// setObservers(rs.getString("observers"));
