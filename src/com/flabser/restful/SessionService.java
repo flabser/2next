@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 
 import org.omg.CORBA.UserException;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
@@ -67,7 +67,7 @@ public class SessionService {
 		UserSession userSession = null;
 		HttpSession jses;
 		String appID = authUser.getDefaultApp();
-		context.getAttribute(AppEnv.APP_ATTR);
+		context.getAttribute(AppTemplate.TEMPLATE_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		String login = authUser.getLogin();
 		Server.logger.normalLogEntry(login + " is attempting to signin");

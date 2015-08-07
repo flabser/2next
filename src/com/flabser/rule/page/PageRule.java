@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.w3c.dom.NodeList;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.rule.Rule;
@@ -22,7 +22,7 @@ public class PageRule extends Rule implements IElement{
 	public CachingStrategyType caching = CachingStrategyType.NO_CACHING;
 	public final RuleType type = RuleType.PAGE;
 
-	public PageRule(AppEnv env, File ruleFile) throws RuleException{
+	public PageRule(AppTemplate env, File ruleFile) throws RuleException{
 		super(env, ruleFile);
 		try{
 			String cachingValue = XMLUtil.getTextContent(doc,"/rule/caching", false);

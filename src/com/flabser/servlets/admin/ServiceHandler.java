@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.Environment;
 import com.flabser.log.LogFiles;
 import com.flabser.rule.Lang;
@@ -41,7 +41,7 @@ public class ServiceHandler {
 				+ "</defaultsender>";
 
 		xmlFragment += "<applications>";
-		for (AppEnv env : Environment.getApplications()) {
+		for (AppTemplate env : Environment.getApplications()) {
 			xmlFragment += "<entry>";
 			xmlFragment += "<apptype>" + env.appType + "</apptype>";
 			xmlFragment += "</entry>";
@@ -53,7 +53,7 @@ public class ServiceHandler {
 		return xmlFragment;
 	}
 
-	String getSettings(AppEnv env) {
+	String getSettings(AppTemplate env) {
 		StringBuffer xmlFragment = new StringBuffer(1000);
 		xmlFragment.append("<application>" + env.globalSetting.appName
 				+ "</application>");

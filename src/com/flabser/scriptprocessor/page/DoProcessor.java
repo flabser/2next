@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.Vocabulary;
 import com.flabser.script._Session;
@@ -25,7 +25,7 @@ public class DoProcessor {
 	private Vocabulary vocabulary;
 	private _WebFormData webFormData;
 
-	public DoProcessor(AppEnv env, UserSession u, String currentLang, Map<String, String[]> formData) {
+	public DoProcessor(AppTemplate env, UserSession u, String currentLang, Map<String, String[]> formData) {
 		ses = new _Session(env, u);
 		vocabulary = env.vocabulary;
 		lang = currentLang;

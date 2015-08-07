@@ -2,7 +2,7 @@ package com.flabser.supplier;
 
 import java.util.HashMap;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.localization.SentenceCaption;
 import com.flabser.localization.Vocabulary;
 import com.flabser.scriptprocessor.IScriptProcessor;
@@ -12,14 +12,14 @@ public class SourceSupplier {
 	public SourceSupplierContextType contextType;
 	public HashMap<String, Vocabulary> staticGlossaries = new HashMap<String, Vocabulary>();
 
-	protected AppEnv env;
+	protected AppTemplate env;
 
 	private IScriptProcessor scriptProcessor;
 	private Vocabulary vocabulary;
 	private String lang;
 	private User user;
 
-	public SourceSupplier(AppEnv env, String lang) {
+	public SourceSupplier(AppTemplate env, String lang) {
 		this.env = env;
 		contextType = SourceSupplierContextType.VOCABULARY;
 		this.vocabulary = env.vocabulary;

@@ -3,7 +3,7 @@ package com.flabser.script;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
 import com.flabser.rule.Lang;
@@ -11,10 +11,10 @@ import com.flabser.server.Server;
 import com.flabser.users.User;
 
 public class _AppEntourage {
-	private AppEnv env;
+	private AppTemplate env;
 	private _Session ses;
 
-	public _AppEntourage(_Session ses, AppEnv env) {
+	public _AppEntourage(_Session ses, AppTemplate env) {
 		this.ses = ses;
 		this.env = env;
 	}
@@ -52,8 +52,8 @@ public class _AppEntourage {
 		return list;
 	}
 
-	public Collection<AppEnv> getAvailableTemplates() {
-		Collection<AppEnv> apps = Environment.getApplications();
+	public Collection<AppTemplate> getAvailableTemplates() {
+		Collection<AppTemplate> apps = Environment.getApplications();
 		return apps;
 	}
 

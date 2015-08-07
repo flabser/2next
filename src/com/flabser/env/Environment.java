@@ -20,7 +20,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
@@ -62,7 +62,7 @@ public class Environment implements ICache {
 	public static String smtpPassword;
 	public static Boolean mailEnable = false;
 	private static String defaultRedirectURL;
-	private static HashMap<String, AppEnv> applications = new HashMap<String, AppEnv>();
+	private static HashMap<String, AppTemplate> applications = new HashMap<String, AppTemplate>();
 	private static HashMap<String, Object> cache = new HashMap<String, Object>();
 
 	public static void init() {
@@ -193,15 +193,15 @@ public class Environment implements ICache {
 		}
 	}
 
-	public static void addApplication(AppEnv env) {
+	public static void addApplication(AppTemplate env) {
 		applications.put(env.appType, env);
 	}
 
-	public static AppEnv getApplication(String appID) {
+	public static AppTemplate getApplication(String appID) {
 		return applications.get(appID);
 	}
 
-	public static Collection<AppEnv> getApplications() {
+	public static Collection<AppTemplate> getApplications() {
 		return applications.values();
 	}
 

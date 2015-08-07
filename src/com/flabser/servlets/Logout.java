@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.exception.PortalException;
@@ -18,12 +18,12 @@ import com.flabser.users.UserSession;
 
 public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private AppEnv env;
+	private AppTemplate env;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		ServletContext context = config.getServletContext();
-		env = (AppEnv) context.getAttribute("portalenv");
+		env = (AppTemplate) context.getAttribute("portalenv");
 	}
 
 	@Override

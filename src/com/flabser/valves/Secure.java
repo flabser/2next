@@ -12,7 +12,7 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
@@ -31,16 +31,16 @@ public class Secure extends ValveBase {
 	@Override
 	public void invoke(Request request, Response response) throws IOException, ServletException {
 		HttpServletRequest http = request;
-		String appType = ru.getAppName();
+		String appType = ru.getAppType();
 		String appID = ru.getAppID();
 
-		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(AppEnv.ADMIN_APP_NAME) && !appType.equalsIgnoreCase(AppEnv.WORKSPACE_APP_NAME)) {
+		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(AppTemplate.ADMIN_APP_NAME) && !appType.equalsIgnoreCase(AppTemplate.WORKSPACE_APP_NAME)) {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 				if (us != null) {
 					if (!us.isBootstrapped(appID)) {
-						AppEnv env = Environment.getApplication(appType);
+						AppTemplate env = Environment.getApplication(appType);
 						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
 						if (hh != null) {
 							Server.logger.verboseLogEntry("start application initializing ...");

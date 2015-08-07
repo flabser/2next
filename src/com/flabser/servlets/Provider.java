@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.saxon.s9api.SaxonApiException;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.exception.PortalException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.ServerException;
@@ -37,14 +37,14 @@ import com.flabser.users.UserSession;
 
 public class Provider extends HttpServlet {
 	private static final long serialVersionUID = 2352885167311108325L;
-	private AppEnv env;
+	private AppTemplate env;
 	private ServletContext context;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		try {
 			context = config.getServletContext();
-			env = (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
+			env = (AppTemplate) context.getAttribute(AppTemplate.TEMPLATE_ATTR);
 		} catch (Exception e) {
 			Server.logger.errorLogEntry(e);
 		}

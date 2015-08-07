@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
@@ -33,12 +33,12 @@ public class Page {
 	private String httpMethod;
 	public ArrayList<_URL> redirects = new ArrayList<_URL>();
 
-	protected AppEnv env;
+	protected AppTemplate env;
 	protected PageRule rule;
 	protected Map<String, String[]> fields = new HashMap<String, String[]>();
 	protected UserSession userSession;
 
-	public Page(AppEnv env, UserSession userSession, PageRule rule, String httpMethod) throws AuthFailedException {
+	public Page(AppTemplate env, UserSession userSession, PageRule rule, String httpMethod) throws AuthFailedException {
 		this.userSession = userSession;
 		this.env = env;
 		this.rule = rule;

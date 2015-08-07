@@ -2,7 +2,7 @@ package com.flabser.script;
 
 import java.util.ArrayList;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.env.Environment;
 import com.flabser.localization.LanguageType;
@@ -15,10 +15,10 @@ import com.flabser.users.UserSession;
 
 public class _Session {
 	private IDatabase dataBase;
-	private AppEnv env;
+	private AppTemplate env;
 	private UserSession userSession;
 
-	public _Session(AppEnv env, UserSession userSession) {
+	public _Session(AppTemplate env, UserSession userSession) {
 		this.env = env;
 		dataBase = userSession.getDataBase(env.appType);
 		this.userSession = userSession;

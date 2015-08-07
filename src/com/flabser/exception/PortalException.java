@@ -15,7 +15,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.server.Server;
 import com.flabser.servlets.ProviderExceptionType;
 import com.flabser.servlets.PublishAsType;
@@ -23,7 +23,7 @@ import com.flabser.util.XMLUtil;
 
 public class PortalException extends Exception {
 	private Enum<?> type = ProviderExceptionType.INTERNAL;
-	private AppEnv env;
+	private AppTemplate env;
 
 	private static final long serialVersionUID = 3214292820186296427L;
 	private Source xsltSource;
@@ -37,7 +37,7 @@ public class PortalException extends Exception {
 		message(errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response, PublishAsType publishAs) {
+	public PortalException(Exception e, AppTemplate env, HttpServletResponse response, PublishAsType publishAs) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -46,7 +46,7 @@ public class PortalException extends Exception {
 		message(errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(String text, Exception e, AppEnv env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
+	public PortalException(String text, Exception e, AppTemplate env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -56,7 +56,7 @@ public class PortalException extends Exception {
 		message("<errorcontex>" + text + "</errorcontext>" + errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response, Enum<?> type) {
+	public PortalException(Exception e, AppTemplate env, HttpServletResponse response, Enum<?> type) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -65,7 +65,7 @@ public class PortalException extends Exception {
 		message(errorMessage(e), response, PublishAsType.XML);
 	}
 
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response, Enum<?> type, PublishAsType publishAs) {
+	public PortalException(Exception e, AppTemplate env, HttpServletResponse response, Enum<?> type, PublishAsType publishAs) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -75,7 +75,7 @@ public class PortalException extends Exception {
 		message(errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(String text, AppEnv env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
+	public PortalException(String text, AppTemplate env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
 		super(text);
 		this.env = env;
 		this.type = type;

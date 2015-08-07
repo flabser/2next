@@ -5,7 +5,7 @@ import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.exception.XSLTFileNotFoundException;
 import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
@@ -49,7 +49,7 @@ public class ProviderOutput{
 
 
 
-	public boolean prepareXSLT(AppEnv env, String xsltFile) throws XSLTFileNotFoundException{
+	public boolean prepareXSLT(AppTemplate env, String xsltFile) throws XSLTFileNotFoundException{
 		boolean result;
 
 		xslFile = new File(xsltFile);

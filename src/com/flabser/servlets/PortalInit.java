@@ -5,7 +5,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.env.Environment;
 import com.flabser.log.Log4jLogger;
@@ -22,11 +22,11 @@ public class PortalInit extends HttpServlet {
 		ServletContext context = config.getServletContext();
 		String app = context.getServletContextName();
 		Server.logger = new Log4jLogger("");
-		AppEnv env = null;
+		AppTemplate env = null;
 
 		if (app.equalsIgnoreCase("Administrator")) {
 			try {
-				env = new AppEnv(app);
+				env = new AppTemplate(app);
 				env.globalSetting = new GlobalSetting();
 				env.globalSetting.entryPoint = "";
 				Environment.systemBase = new com.flabser.dataengine.system.SystemDatabase();
@@ -48,13 +48,13 @@ public class PortalInit extends HttpServlet {
 			 */
 
 			String global = Environment.webAppToStart.get(app).global;
-			env = new AppEnv(app, global);
+			env = new AppTemplate(app, global);
 			Environment.addApplication(env);
 			isValid = true;
 		}
 
 		if (isValid) {
-			context.setAttribute(AppEnv.APP_ATTR, env);
+			context.setAttribute(AppTemplate.TEMPLATE_ATTR, env);
 		}
 
 	}
