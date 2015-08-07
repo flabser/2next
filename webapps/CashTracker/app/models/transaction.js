@@ -28,8 +28,8 @@ export default DS.Model.extend(EmberValidations.Mixin, {
     repeatStep: DS.attr('number'),
     startDate: DS.attr('date'),
     endDate: DS.attr('date'),
-    basis: DS.attr('string'),
     note: DS.attr('string'),
+    basis: DS.attr('string'),
     includeInReports: DS.attr('boolean'),
 
     validations: {

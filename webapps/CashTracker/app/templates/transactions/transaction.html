@@ -2,7 +2,7 @@
 <header class="form-header">
     <h1 class="header-title">
         <small id="saldo" class="pull-right" title="Сальдо"></small>
-        {{transaction.title}} № {{transaction.vn}} {{transaction.date}}
+        {{t "transaction"}}
     </h1>
     <div class="action-bar">
         <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
@@ -11,19 +11,19 @@
 </header>
 <section class="form-content">
     <fieldset class="fieldset">
-        <!-- Дата операции -->
-        <div class="control-group">
+        {{#tn-form-group property="date"}}
             <div class="control-label">
-                {{t 'date'}}
+                {{t "date"}}
             </div>
             <div class="controls">
-                {{input value=transaction.date class="span7"}}
+                {{input value=transaction.date}}
+                {{tn-error-message}}
             </div>
-        </div>
-        <!-- Касса -->
-        <div class="control-group">
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="account"}}
             <div class="control-label">
-                {{t 'account'}}
+                {{t "account"}}
             </div>
             <div class="controls">
                 {{view "select"
@@ -34,11 +34,11 @@
                     prompt='- Select -'}}
                 {{tn-error-message}}
             </div>
-        </div>
-        <!-- category -->
-        <div class="control-group">
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="category"}}
             <div class="control-label">
-                {{t 'category'}}
+                {{t "category"}}
             </div>
             <div class="controls">
                 {{view "select"
@@ -49,21 +49,21 @@
                     prompt='- Select -'}}
                 {{tn-error-message}}
             </div>
-        </div>
-        <!-- Целевая касса -->
-        <!-- Сумма -->
-        <div class="control-group">
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="amount"}}
             <div class="control-label">
-                {{t 'amount'}}
+                {{t "amount"}}
             </div>
             <div class="controls">
-                {{input type="number" value=transaction.amount class="span7"}}
+                {{input value=transaction.amount}}
+                {{tn-error-message}}
             </div>
-        </div>
-        <!-- Место возникновения -->
-        <div class="control-group">
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="costCenter"}}
             <div class="control-label">
-                {{t 'cost_center'}}
+                {{t "cost_center"}}
             </div>
             <div class="controls">
                 {{view "select"
@@ -72,18 +72,19 @@
                     optionLabelPath="content.name"
                     value=transaction.costCenter
                     prompt='- Select -'}}
+                {{tn-error-message}}
             </div>
-        </div>
-        <!-- Основание -->
-        <div class="control-group">
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="note"}}
             <div class="control-label">
-                {{t 'basis'}}
+                {{t "note"}}
             </div>
             <div class="controls">
-                {{textarea value=transaction.basis class="span7"}}
+                {{textarea value=transaction.note}}
+                {{tn-error-message}}
             </div>
-        </div>
-        <!-- documented -->
+        {{/tn-form-group}}
     </fieldset>
     <div id="tabs-2">
         <form action="Uploader" name="upload" id="upload" method="post" enctype="multipart/form-data">

@@ -26,6 +26,9 @@ export default DS.Model.extend(EmberValidations.Mixin, {
         },
         openingBalance: {
             numericality: true
+        },
+        amountControl: {
+            numericality: true
         }
     }
 });

@@ -1,6 +1,6 @@
 {{#tn-form model=user onSubmit="submit" action="save"}}
 <header class="form-header">
-    <h1 class="header-title">{{t "user_profile"}} / {{user.name}}</h1>
+    <h1 class="header-title">{{t "user_profile"}}</h1>
     <div class="action-bar">
         <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
         <button type="submit" class="btn btn-primary">{{t "save"}}</button>
@@ -13,7 +13,7 @@
     <div class="fieldset">
         {{#tn-form-group property="name"}}
             <div class="control-label">
-                {{t "user_fullname"}}
+                {{t "user_name"}}
             </div>
             <div class="controls">
                 {{input value=user.name}}
@@ -36,7 +36,7 @@
                 {{t "password"}}
             </div>
             <div class="controls">
-                {{input value=user.password}}
+                {{input type="password" value=user.password}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}
