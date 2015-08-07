@@ -54,7 +54,7 @@ public class UserSession implements ICache {
 					appProfile.save();
 				}
 			} else {
-				throw new ApplicationException("application \"" + appProfile.getAppID() + "\" cannot init database");
+				throw new ApplicationException("application \"" + appProfile.appType + "/" + appProfile.getAppID() + "\" cannot init its database");
 			}
 		}
 	}
