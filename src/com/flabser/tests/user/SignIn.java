@@ -14,6 +14,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flabser.restful.AuthUser;
 
@@ -50,7 +51,8 @@ public class SignIn extends Assert {
 			result.append(line);
 		}
 		System.out.println(result);
-		ObjectMapper mapper = new ObjectMapper();
+		// ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		AuthUser user = mapper.readValue(result.toString(), AuthUser.class);
 		System.out.println(user);
 

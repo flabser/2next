@@ -10,6 +10,7 @@ import org.omg.CORBA.UserException;
 
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.restful.Application;
@@ -17,7 +18,6 @@ import com.flabser.restful.AuthUser;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
-import com.flabser.server.Server;
 
 public class UserSession implements ICache {
 
@@ -40,7 +40,7 @@ public class UserSession implements ICache {
 		initHistory();
 	}
 
-	public void init(String appID) {
+	public void init(String appID) throws ApplicationException {
 		ApplicationProfile appProfile = currentUser.getApplicationProfile(appID);
 		if (appProfile != null) {
 			if (appProfile.getStatus() == ApplicationStatusType.ON_LINE) {
@@ -54,7 +54,7 @@ public class UserSession implements ICache {
 					appProfile.save();
 				}
 			} else {
-				Server.logger.errorLogEntry("application \"" + appProfile.getAppID() + "\" cannot init database");
+				throw new ApplicationException("application \"" + appProfile.getAppID() + "\" cannot init database");
 			}
 		}
 	}

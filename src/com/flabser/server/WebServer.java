@@ -41,6 +41,9 @@ public class WebServer implements IWebServer {
 		tomcat.setPort(Environment.httpPort);
 		tomcat.setHostname(defaultHostName);
 		tomcat.setBaseDir("webserver");
+		tomcat.getHost().setAutoDeploy(false);
+
+		System.setProperty("org.apache.coyote.USE_CUSTOM_STATUS_MSG_IN_HEADER", "true");
 
 		StandardServer server = (StandardServer) WebServer.tomcat.getServer();
 
@@ -145,8 +148,8 @@ public class WebServer implements IWebServer {
 			context.addMimeMapping("css", "text/css");
 			context.addMimeMapping("js", "text/javascript");
 
-			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
-					new ServletContainer(new ResourceConfig(new ResourceLoader(env.appType).getClasses())));
+			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(
+					new ResourceConfig(new ResourceLoader(env.appType).getClasses())));
 			w1.setLoadOnStartup(1);
 			w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 			context.addServletMapping("/rest/*", "Jersey REST Service");
