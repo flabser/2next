@@ -47,16 +47,12 @@ public class SessionService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public AuthUser getSession() {
-		HttpSession jses = request.getSession(true);
-
-		AuthUser user = new AuthUser();
+		HttpSession jses = request.getSession(false);
 		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 		if (userSession == null) {
-			return user;
+			return new AuthUser();
 		}
-
-		user.setLogin(userSession.currentUser.getLogin());
-		return user;
+		return userSession.getUserPOJO();
 	}
 
 	@POST

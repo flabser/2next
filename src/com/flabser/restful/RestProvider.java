@@ -51,11 +51,8 @@ public class RestProvider {
 	}
 
 	public UserSession getUserSession() {
-		HttpSession jses = request.getSession(true);
+		HttpSession jses = request.getSession(false);
 		UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
-		if (us == null) {
-			us = new UserSession(new com.flabser.users.User());
-		}
 		return us;
 
 	}

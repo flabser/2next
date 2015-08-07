@@ -58,7 +58,10 @@ public class Unsecure extends ValveBase {
 	}
 
 	private void gettingSession(Request request, Response response) {
-		HttpSession jses = http.getSession(true);
-		jses.setAttribute(UserSession.SESSION_ATTR, new UserSession(new User()));
+		HttpSession jses = request.getSession(false);
+		if (jses == null) {
+			jses = http.getSession(true);
+			jses.setAttribute(UserSession.SESSION_ATTR, new UserSession(new User()));
+		}
 	}
 }
