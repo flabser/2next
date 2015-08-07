@@ -7,7 +7,7 @@
 	<caption name="save" />
 	<caption name="close" />
 	<caption name="cancel" />
-	<caption name="btn.add" />
+	<caption name="add" />
 
 	<caption name="saved" />
 	<caption name="newdoc" />
@@ -50,28 +50,20 @@
 	<caption name="password" />
 	<caption name="name" />
 	<caption name="amount_control" />
-	<caption name="moderator" />
-	<caption name="category_refers_to" />
-	<caption name="typeoperation" />
-	<caption name="disable_selection" />
 	<caption name="require_document" />
 	<caption name="require_costcenter" />
-	<caption name="access_roles" />
-	<caption name="comment" />
 	<caption name="user_name" />
 	<caption name="email" />
-	<caption name="has_access_to_account" />
 	<caption name="reg_date" />
 	<caption name="date" />
 	<caption name="parent_category" />
-	<caption name="targetcash" />
 	<caption name="month" />
 	<caption name="basis" />
 	<caption name="documented" />
 	<caption name="btn_send_invite" />
 
 	<caption name="transaction_type" />
-	<caption name="currency_code" />
+	<caption name="currency" />
 	<caption name="opening_balance" />
 	<caption name="amount" />
 	<caption name="cost_center" />
