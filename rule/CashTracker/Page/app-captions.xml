@@ -76,7 +76,11 @@
 	<caption name="opening_balance" />
 	<caption name="amount" />
 	<caption name="cost_center" />
-	<caption name="owner" />
+	<caption name="permissions" />
+	<caption name="writers" />
+	<caption name="writers_hint" />
+	<caption name="readers" />
+	<caption name="readers_hint" />
 	<caption name="color" />
 	<caption name="note" />
 </rule>

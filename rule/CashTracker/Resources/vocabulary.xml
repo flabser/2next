@@ -100,11 +100,29 @@
 		<entry lang="ENG">Spending place</entry>
 		<entry lang="BG">Място на расходи</entry>
 	</sentence>
-	<sentence mode="on" keyword="owner">
+	<sentence mode="on" keyword="writers">
 		<entry lang="RUS">Владелец</entry>
 		<entry lang="KAZ">Владелец</entry>
 		<entry lang="ENG">Owner</entry>
 		<entry lang="BG">Собственик</entry>
+	</sentence>
+	<sentence mode="on" keyword="writers_hint">
+		<entry lang="RUS">право на добавление, редактирование и удаления операций по данному счету</entry>
+		<entry lang="KAZ">право на добавление, редактирование и удаления операций по данному счету</entry>
+		<entry lang="ENG">право на добавление, редактирование и удаления операций по данному счету</entry>
+		<entry lang="BG">право на добавление, редактирование и удаления операций по данному счету</entry>
+	</sentence>
+	<sentence mode="on" keyword="readers">
+		<entry lang="RUS">Просмотр</entry>
+		<entry lang="KAZ">Просмотр</entry>
+		<entry lang="ENG">Readers</entry>
+		<entry lang="BG">Просмотр</entry>
+	</sentence>
+	<sentence mode="on" keyword="readers_hint">
+		<entry lang="RUS">право на просмотр операций по данному счету</entry>
+		<entry lang="KAZ">право на просмотр операций по данному счету</entry>
+		<entry lang="ENG">право на просмотр операций по данному счету</entry>
+		<entry lang="BG">право на просмотр операций по данному счету</entry>
 	</sentence>
 	<sentence mode="on" keyword="color">
 		<entry lang="RUS">Цвет</entry>
@@ -641,7 +659,12 @@
 		<entry lang="ENG" hint="Операция">Операция</entry>
 		<entry lang="BG" hint="Операция">Операция</entry>
 	</sentence>
-
+	<sentence mode="on" keyword="permissions">
+		<entry lang="RUS">Права доступа</entry>
+		<entry lang="KAZ">Права доступа</entry>
+		<entry lang="ENG">Permissions</entry>
+		<entry lang="BG">Права доступа</entry>
+	</sentence>
 	<sentence mode="on" keyword="name">
 		<entry lang="RUS" hint="Название">Название</entry>
 		<entry lang="KAZ" hint="Название">Название</entry>
@@ -665,12 +688,6 @@
 		<entry lang="KAZ">Валюта</entry>
 		<entry lang="ENG">Валюта</entry>
 		<entry lang="BG">Валюта</entry>
-	</sentence>
-	<sentence mode="on" keyword="observers">
-		<entry lang="RUS" hint="Наблюдатели">Наблюдатели</entry>
-		<entry lang="KAZ" hint="Наблюдатели">Наблюдатели</entry>
-		<entry lang="ENG" hint="Наблюдатели">Наблюдатели</entry>
-		<entry lang="BG" hint="Наблюдатели">Наблюдатели</entry>
 	</sentence>
 	<sentence mode="on" keyword="moderator">
 		<entry lang="RUS" hint="Модератор">Модератор</entry>
