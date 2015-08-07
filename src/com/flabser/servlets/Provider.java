@@ -175,6 +175,9 @@ public class Provider extends HttpServlet {
 		} catch (WebFormValueException e) {
 			// TODO Need to more informative handler in this case
 			new PortalException(e, env, response, ProviderExceptionType.APPLICATION_ERROR, PublishAsType.HTML);
+		} catch (Exception e) {
+			// TODO Need to more informative handler in this case
+			new PortalException(e, env, response, ProviderExceptionType.APPLICATION_ERROR, PublishAsType.HTML);
 		}
 	}
 
