@@ -599,12 +599,6 @@
 	</sentence>
 
 	<!-- form fields -->
-	<sentence mode="on" keyword="account">
-		<entry lang="RUS" hint="Касса">Касса</entry>
-		<entry lang="KAZ" hint="Касса">Касса</entry>
-		<entry lang="ENG" hint="Касса">Касса</entry>
-		<entry lang="BG" hint="Касса">Касса</entry>
-	</sentence>
 	<sentence mode="on" keyword="budget">
 		<entry lang="RUS" hint="Бюджет">Бюджет</entry>
 		<entry lang="KAZ" hint="Бюджет">Бюджет</entry>
@@ -616,6 +610,12 @@
 		<entry lang="KAZ" hint="Категория">Категория</entry>
 		<entry lang="ENG" hint="Категория">Категория</entry>
 		<entry lang="BG" hint="Категория">Категория</entry>
+	</sentence>
+	<sentence mode="on" keyword="parent_category">
+		<entry lang="RUS">Родительская категория</entry>
+		<entry lang="KAZ">Категория</entry>
+		<entry lang="ENG">Parent category</entry>
+		<entry lang="BG">Категория</entry>
 	</sentence>
 	<sentence mode="on" keyword="tag">
 		<entry lang="RUS">Метка</entry>
@@ -653,6 +653,18 @@
 		<entry lang="KAZ" hint="Сумма контроля">Сумма контроля</entry>
 		<entry lang="ENG" hint="Сумма контроля">Сумма контроля</entry>
 		<entry lang="BG" hint="Сумма контроля">Сумма контроля</entry>
+	</sentence>
+	<sentence mode="on" keyword="opening_balance">
+		<entry lang="RUS">Начальный балланс</entry>
+		<entry lang="KAZ">Начальный балланс</entry>
+		<entry lang="ENG">Initial</entry>
+		<entry lang="BG">Начальный балланс</entry>
+	</sentence>
+	<sentence mode="on" keyword="currency_code">
+		<entry lang="RUS">Валюта</entry>
+		<entry lang="KAZ">Валюта</entry>
+		<entry lang="ENG">Валюта</entry>
+		<entry lang="BG">Валюта</entry>
 	</sentence>
 	<sentence mode="on" keyword="observers">
 		<entry lang="RUS" hint="Наблюдатели">Наблюдатели</entry>
@@ -708,7 +720,7 @@
 		<entry lang="ENG" hint="Комментарий">Комментарий</entry>
 		<entry lang="BG" hint="Комментарий">Комментарий</entry>
 	</sentence>
-	<sentence mode="on" keyword="user_fullname">
+	<sentence mode="on" keyword="user_name">
 		<entry lang="RUS" hint="Имя пользователя">Имя пользователя</entry>
 		<entry lang="KAZ" hint="Имя пользователя">Имя пользователя</entry>
 		<entry lang="ENG" hint="Имя пользователя">Имя пользователя</entry>
@@ -737,18 +749,6 @@
 		<entry lang="KAZ" hint="Дата">Дата</entry>
 		<entry lang="ENG" hint="Дата">Дата</entry>
 		<entry lang="BG" hint="Дата">Дата</entry>
-	</sentence>
-	<sentence mode="on" keyword="category">
-		<entry lang="RUS" hint="Категория">Категория</entry>
-		<entry lang="KAZ" hint="Категория">Категория</entry>
-		<entry lang="ENG" hint="Категория">Категория</entry>
-		<entry lang="BG" hint="Категория">Категория</entry>
-	</sentence>
-	<sentence mode="on" keyword="parent_category">
-		<entry lang="RUS" hint="Категория">Категория</entry>
-		<entry lang="KAZ" hint="Категория">Категория</entry>
-		<entry lang="ENG" hint="Категория">Категория</entry>
-		<entry lang="BG" hint="Категория">Категория</entry>
 	</sentence>
 	<sentence mode="on" keyword="targetcash">
 		<entry lang="RUS" hint="Целевая касса">Целевая касса</entry>

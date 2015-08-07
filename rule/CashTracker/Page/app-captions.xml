@@ -20,13 +20,6 @@
 	<caption name="attachments" />
 	<caption name="additional" />
 
-	<caption name="info_status_doc" />
-	<caption name="info_permissions" />
-	<caption name="info_read" />
-	<caption name="info_readers" />
-	<caption name="info_read_time" />
-	<caption name="info_ds" />
-
 	<caption name="attach" />
 	<caption name="attach_delete" />
 	<caption name="attach_open" />
@@ -66,12 +59,11 @@
 	<caption name="require_costcenter" />
 	<caption name="access_roles" />
 	<caption name="comment" />
-	<caption name="user_fullname" />
+	<caption name="user_name" />
 	<caption name="email" />
 	<caption name="has_access_to_account" />
 	<caption name="reg_date" />
 	<caption name="date" />
-	<caption name="category" />
 	<caption name="parent_category" />
 	<caption name="targetcash" />
 	<caption name="month" />
@@ -79,6 +71,9 @@
 	<caption name="documented" />
 	<caption name="btn_send_invite" />
 
+	<caption name="transaction_type" />
+	<caption name="currency_code" />
+	<caption name="opening_balance" />
 	<caption name="amount" />
 	<caption name="cost_center" />
 	<caption name="owner" />
