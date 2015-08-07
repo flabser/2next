@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
@@ -14,6 +15,8 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.server.Server;
+import com.flabser.users.User;
+import com.flabser.users.UserSession;
 
 public class Unsecure extends ValveBase {
 	RequestURL ru;
@@ -34,12 +37,16 @@ public class Unsecure extends ValveBase {
 		RequestURL ru = new RequestURL(requestURI);
 
 		if ((!ru.isProtected()) || ru.isAuthRequest()) {
+			HttpSession jses = http.getSession(true);
+			jses.setAttribute(UserSession.SESSION_ATTR, new UserSession(new User()));
 			getNext().getNext().invoke(request, response);
 		} else {
 			if (ru.isPage()) {
 				AppTemplate aTemplate = Environment.getApplication(ru.getAppType());
 				try {
 					if (aTemplate.ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
+						HttpSession jses = http.getSession(true);
+						jses.setAttribute(UserSession.SESSION_ATTR, new UserSession(new User()));
 						getNext().getNext().invoke(request, response);
 					} else {
 						((Secure) getNext()).invoke(request, response, ru);
