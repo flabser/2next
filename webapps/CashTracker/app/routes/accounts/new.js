@@ -8,15 +8,8 @@ export default AccountRoute.extend({
             currency: 'KZT',
             openingBalance: 0,
             amountControl: 0,
-            owner: null,
-            observers: []
+            writers: [],
+            readers: []
         });
-    },
-
-    deactivate: function() {
-        let model = this.currentModel;
-        if (model.get('isNew') && model.get('isSaving') == false) {
-            model.rollbackAttributes();
-        }
     }
 });
