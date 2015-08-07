@@ -617,6 +617,12 @@
 	</sentence>
 
 	<!-- form fields -->
+	<sentence mode="on" keyword="active">
+		<entry lang="RUS">Активный</entry>
+		<entry lang="KAZ">Активный</entry>
+		<entry lang="ENG">Активный</entry>
+		<entry lang="BG">Активный</entry>
+	</sentence>
 	<sentence mode="on" keyword="budget">
 		<entry lang="RUS" hint="Бюджет">Бюджет</entry>
 		<entry lang="KAZ" hint="Бюджет">Бюджет</entry>
@@ -634,6 +640,18 @@
 		<entry lang="KAZ">Категория</entry>
 		<entry lang="ENG">Parent category</entry>
 		<entry lang="BG">Категория</entry>
+	</sentence>
+	<sentence mode="on" keyword="category_active_hint">
+		<entry lang="RUS">Неактивные категории скрыты</entry>
+		<entry lang="KAZ">Неактивные категории скрыты</entry>
+		<entry lang="ENG">Неактивные категории скрыты</entry>
+		<entry lang="BG">Неактивные категории скрыты</entry>
+	</sentence>
+	<sentence mode="on" keyword="account_active_hint">
+		<entry lang="RUS">Неактивные счета скрыты</entry>
+		<entry lang="KAZ">Неактивные счета скрыты</entry>
+		<entry lang="ENG">Неактивные счета скрыты</entry>
+		<entry lang="BG">Неактивные счета скрыты</entry>
 	</sentence>
 	<sentence mode="on" keyword="tag">
 		<entry lang="RUS">Метка</entry>
@@ -706,12 +724,6 @@
 		<entry lang="KAZ" hint="Тип операции">Тип операции</entry>
 		<entry lang="ENG" hint="Тип операции">Тип операции</entry>
 		<entry lang="BG" hint="Тип операции">Тип операции</entry>
-	</sentence>
-	<sentence mode="on" keyword="disable_selection">
-		<entry lang="RUS" hint="Запретить выбор">Запретить выбор</entry>
-		<entry lang="KAZ" hint="Запретить выбор">Запретить выбор</entry>
-		<entry lang="ENG" hint="Запретить выбор">Запретить выбор</entry>
-		<entry lang="BG" hint="Запретить выбор">Запретить выбор</entry>
 	</sentence>
 	<sentence mode="on" keyword="require_document">
 		<entry lang="RUS" hint="Требовать подтверждающий документ">Требовать подтверждающий документ</entry>
