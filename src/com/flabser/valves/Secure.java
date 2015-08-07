@@ -43,22 +43,23 @@ public class Secure extends ValveBase {
 						AppEnv env = Environment.getApplication(appType);
 						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
 						if (hh != null) {
-							Server.logger.warningLogEntry("application initializing ...");
-							us.init(appID);
+							Server.logger.verboseLogEntry("start application initializing ...");
 							try {
+								us.init(appID);
 								Server.webServerInst.addApplication(appID, env);
-								Server.logger.warningLogEntry("application ready on: " + ru.getUrl());
+								Server.logger.verboseLogEntry("application ready on: " + ru.getUrl());
 								((HttpServletResponse) response).sendRedirect(ru.getUrl());
 							} catch (Exception e) {
-								Server.logger.errorLogEntry(e);
-								getNext().invoke(request, response);
+								Server.logger.errorLogEntry(e.getMessage());
+								response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+								response.getWriter().println(e.getMessage());
 							}
-
 						} else {
-							String msg = "\"" + env.appType + "\" has not set";
+							String msg = "\"" + env.appType + "\" has not set for " + us.currentUser.getLogin();
 							response.sendError(HttpServletResponse.SC_BAD_REQUEST, msg);
 							Server.logger.warningLogEntry(msg);
-							getNext().invoke(request, response);
+							response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+							response.getWriter().println(msg);
 						}
 					} else {
 						getNext().invoke(request, response);
