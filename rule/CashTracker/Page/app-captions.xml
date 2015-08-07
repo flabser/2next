@@ -50,7 +50,6 @@
 	<caption name="password" />
 	<caption name="name" />
 	<caption name="amount_control" />
-	<caption name="observers" />
 	<caption name="moderator" />
 	<caption name="category_refers_to" />
 	<caption name="typeoperation" />
