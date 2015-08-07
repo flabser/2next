@@ -19,7 +19,8 @@ import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
 public class Unsecure extends ValveBase {
-	RequestURL ru;
+	private RequestURL ru;
+	private HttpServletRequest http;
 
 	public void invoke(Request request, Response response, RequestURL ru) throws IOException, ServletException {
 		this.ru = ru;
@@ -28,25 +29,17 @@ public class Unsecure extends ValveBase {
 
 	@Override
 	public void invoke(Request request, Response response) throws IOException, ServletException {
-		HttpServletRequest http = request;
-		String requestURI = http.getRequestURI();
-		String params = http.getQueryString();
-		if (params != null) {
-			requestURI = requestURI + "?" + http.getQueryString();
-		}
-		RequestURL ru = new RequestURL(requestURI);
+		http = request;
 
 		if ((!ru.isProtected()) || ru.isAuthRequest()) {
-			HttpSession jses = http.getSession(true);
-			jses.setAttribute(UserSession.SESSION_ATTR, new UserSession(new User()));
+			gettingSession(request, response);
 			getNext().getNext().invoke(request, response);
 		} else {
 			if (ru.isPage()) {
 				AppTemplate aTemplate = Environment.getApplication(ru.getAppType());
 				try {
 					if (aTemplate.ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
-						HttpSession jses = http.getSession(true);
-						jses.setAttribute(UserSession.SESSION_ATTR, new UserSession(new User()));
+						gettingSession(request, response);
 						getNext().getNext().invoke(request, response);
 					} else {
 						((Secure) getNext()).invoke(request, response, ru);
@@ -62,5 +55,10 @@ public class Unsecure extends ValveBase {
 				((Secure) getNext()).invoke(request, response, ru);
 			}
 		}
+	}
+
+	private void gettingSession(Request request, Response response) {
+		HttpSession jses = http.getSession(true);
+		jses.setAttribute(UserSession.SESSION_ATTR, new UserSession(new User()));
 	}
 }

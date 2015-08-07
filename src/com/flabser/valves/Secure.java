@@ -41,7 +41,7 @@ public class Secure extends ValveBase {
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 				if (us != null) {
-					if (!us.isBootstrapped(appID)) {
+					if (!us.isBootstrapped(appID) && !appType.equalsIgnoreCase(AppTemplate.WORKSPACE_APP_NAME)) {
 						AppTemplate env = Environment.getApplication(appType);
 						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
 						if (hh != null) {
@@ -58,7 +58,6 @@ public class Secure extends ValveBase {
 							}
 						} else {
 							String msg = "\"" + env.appType + "\" has not set for " + us.currentUser.getLogin();
-							response.sendError(HttpServletResponse.SC_BAD_REQUEST, msg);
 							Server.logger.warningLogEntry(msg);
 							response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 							response.getWriter().println(msg);
@@ -67,10 +66,10 @@ public class Secure extends ValveBase {
 						getNext().invoke(request, response);
 					}
 				} else {
-					restoreSession(request, response);
+					gettingSession(request, response);
 				}
 			} else {
-				restoreSession(request, response);
+				gettingSession(request, response);
 			}
 		} else {
 			getNext().invoke(request, response);
@@ -78,7 +77,7 @@ public class Secure extends ValveBase {
 
 	}
 
-	private void restoreSession(Request request, Response response) throws IOException, ServletException {
+	private void gettingSession(Request request, Response response) throws IOException, ServletException {
 		HttpServletRequest http = request;
 		Cookies appCookies = new Cookies(http);
 		String token = appCookies.auth;
