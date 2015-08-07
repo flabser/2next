@@ -2,70 +2,81 @@ package com.flabser.servlets;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.saxon.s9api.SaxonApiException;
+
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.exception.TransformatorException;
 import com.flabser.server.Server;
 
-import net.sf.saxon.s9api.SaxonApiException;
+public class Error extends HttpServlet {
+	private static final long serialVersionUID = 1207733369437122383L;
+	private AppTemplate env;
+	private ServletContext context;
 
-public class Error extends HttpServlet{
-	private static final long serialVersionUID = 1207733369437122383L;	
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		try {
+			context = config.getServletContext();
+			env = (AppTemplate) context.getAttribute(AppTemplate.TEMPLATE_ATTR);
+		} catch (Exception e) {
+			Server.logger.errorLogEntry(e);
+		}
+	}
 
-	protected void  doPost(HttpServletRequest request, HttpServletResponse response){
-		String type = request.getParameter("type");	
-		String msg = request.getParameter("msg");	
-		String xslt = "xsl" + File.separator + "error.xsl";
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		String type = request.getParameter("type");
+		if (type == null) {
+			type = "";
+		}
+		String msg = request.getParameter("msg");
+		if (msg == null) {
+			msg = "";
+		}
+		String xslt = "webapps" + File.separator + env.appType + File.separator + "xsl" + File.separator + "errors" + File.separator + "error.xsl";
 		try {
 			request.setCharacterEncoding("utf-8");
 			String outputContent = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 
-			if(type.equals("auth_error")){
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				xslt = "xsl" + File.separator + "authfailed.xsl";
-				outputContent = outputContent + "<request><error type=\"authfailed\">" +
-						"<message>" + msg + "</message><version>" +  Server.serverVersion + "</version></error></request>";
-			}else if(type.equals("default_url_not_defined")){
+			if (type.equals("default_url_not_defined")) {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				msg = "default URL has not defined in global setting";
-				outputContent = outputContent + "<request><error type=\"" + type + "\">" +
-						"<message>" + msg + "</message><version>" +  Server.serverVersion + "</version></error></request>";
+				outputContent = outputContent + "<request><error type=\"" + type + "\">" + "<message>" + msg + "</message><version>" + Server.serverVersion
+						+ "</version></error></request>";
 
-			}else{
+			} else {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				outputContent = outputContent + "<request><error type=\"" + type + "\">" +
-						"<message>" + msg + "</message><version>" +  Server.serverVersion + "</version></error></request>";
+				outputContent = outputContent + "<request><error type=\"" + type + "\">" + "<message>" + msg + "</message><version>" + Server.serverVersion
+						+ "</version></error></request>";
 			}
 
-			if (request.getParameter("onlyxml") != null){
-				response.setContentType("text/xml;charset=utf-8");		
-				PrintWriter out = response.getWriter();
-				out.println(outputContent);
-				out.close();
-			}else{			
-				response.setContentType("text/html");
-				File errorXslt = new File(xslt);
-				new SaxonTransformator().toTrans(response, errorXslt, outputContent);
-			}
+			response.setContentType("text/html");
+			File errorXslt = new File(xslt);
+			new SaxonTransformator().toTrans(response, errorXslt, outputContent);
+
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-		} catch (IOException e) {		
+		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (SaxonApiException e) {	
+		} catch (SaxonApiException e) {
 			e.printStackTrace();
-		} catch (TransformatorException e) {	
+		} catch (TransformatorException e) {
 			e.printStackTrace();
 		}
 	}
 
-	protected void  doGet(HttpServletRequest request, HttpServletResponse response){
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		doPost(request, response);
 	}
-
 
 }
