@@ -22,13 +22,13 @@ public class Account implements _IObject {
 
 	private BigDecimal amountControl;
 
-	private User owner;
-
-	private List <User> observers;
-
 	private boolean includeInTotals;
 
 	private String note;
+
+	private List <User> writers;
+
+	private List <User> readers;
 
 	private int sortOrder;
 
@@ -48,13 +48,6 @@ public class Account implements _IObject {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	/*public int getType() {
-	 return type;
-	 }
-	 public void setType(int type) {
-	 this.type = type;
-	 }*/
 
 	public String getCurrencyCode() {
 		return currencyCode;
@@ -80,20 +73,20 @@ public class Account implements _IObject {
 		this.amountControl = amountControl;
 	}
 
-	public String getOwner() {
-		return owner;
+	public String getWriters() {
+		return null; // writers;
 	}
 
-	public void setOwner(User user) {
-		this.owner = user;
+	public void setWriters(List <User> writers) {
+		this.writers = writers;
 	}
 
-	public List <User> getObservers() {
-		return observers;
+	public List <User> getReaders() {
+		return null; //readers;
 	}
 
-	public void setObservers(List <User> observers) {
-		this.observers = observers;
+	public void setReaders(List <User> readers) {
+		this.readers = readers;
 	}
 
 	public boolean isIncludeInTotals() {
@@ -128,11 +121,11 @@ public class Account implements _IObject {
 	public void init(ResultSet rs) {
 		setId(rs.getInt("id"));
 		setName(rs.getString("name"));
-		// setType(rs.getInt("type"));
 		setCurrencyCode(rs.getString("currency_code"));
 		setOpeningBalance(rs.getBigDecimal("opening_balance"));
 		setAmountControl(rs.getBigDecimal("amount_control"));
-		setOwner(null);
+		setWriters(null);
+		setReaders(null);
 		// setObservers(rs.getString("observers"));
 		setIncludeInTotals(rs.getBoolean("include_in_totals"));
 		setNote(rs.getString("note"));

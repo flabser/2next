@@ -50,7 +50,6 @@
 	<caption name="password" />
 	<caption name="name" />
 	<caption name="amount_control" />
-	<caption name="observers" />
 	<caption name="moderator" />
 	<caption name="category_refers_to" />
 	<caption name="typeoperation" />
@@ -76,7 +75,11 @@
 	<caption name="opening_balance" />
 	<caption name="amount" />
 	<caption name="cost_center" />
-	<caption name="owner" />
+	<caption name="permissions" />
+	<caption name="writers" />
+	<caption name="writers_hint" />
+	<caption name="readers" />
+	<caption name="readers_hint" />
 	<caption name="color" />
 	<caption name="note" />
 </rule>

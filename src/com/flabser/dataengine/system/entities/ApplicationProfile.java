@@ -125,7 +125,7 @@ public class ApplicationProfile implements _IContent {
 
 	@JsonIgnore
 	public String getDbInitializerClass() {
-		return appType.toLowerCase() + ".init.DDEScripts";
+		return appType.toLowerCase() + ".init.FirstAction";
 		// TODO Need to write a class resolver that is implementation of
 		// IAppDatabaseInit
 	}

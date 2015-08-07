@@ -30,7 +30,7 @@
                     contentBinding="accounts"
                     optionValuePath="content.id"
                     optionLabelPath="content.name"
-                    value=transaction.account
+                    selectionBinding="transaction.account"
                     prompt='- Select -'}}
                 {{tn-error-message}}
             </div>
@@ -45,7 +45,7 @@
                     contentBinding="categories"
                     optionValuePath="content.id"
                     optionLabelPath="content.name"
-                    value=transaction.category
+                    selectionBinding="transaction.category"
                     prompt='- Select -'}}
                 {{tn-error-message}}
             </div>
@@ -70,7 +70,7 @@
                     contentBinding="costCenters"
                     optionValuePath="content.id"
                     optionLabelPath="content.name"
-                    value=transaction.costCenter
+                    selectionBinding="transaction.costCenter"
                     prompt='- Select -'}}
                 {{tn-error-message}}
             </div>

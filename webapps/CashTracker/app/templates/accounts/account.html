@@ -58,36 +58,45 @@
             </div>
         {{/tn-form-group}}
 
-        {{#tn-form-group property="owner"}}
-            <div class="control-label">
-                {{t "owner"}}
-            </div>
-            <div class="controls">
-                {{view "select"
-                    contentBinding="users"
-                    optionValuePath="content.id"
-                    optionLabelPath="content.login"
-                    value=account.owner
-                    prompt='- Select -'}}
-                {{tn-error-message}}
-            </div>
-        {{/tn-form-group}}
+        <fieldset>
+            <legend>{{t "permissions"}}</legend>
+            {{#tn-form-group property="writers"}}
+                <div class="control-label">
+                    {{t "writers"}}
+                </div>
+                <div class="controls">
+                    {{view "select"
+                        contentBinding="users"
+                        optionValuePath="content.id"
+                        optionLabelPath="content.login"
+                        selectionBinding="account.writers"
+                        prompt="- Select -"}}
+                    {{tn-error-message}}
+                    <p class="hint">
+                        {{t "writers_hint"}}
+                    </p>
+                </div>
+            {{/tn-form-group}}
 
-        {{#tn-form-group property="observers"}}
-            <div class="control-label">
-                {{t "observers"}}
-            </div>
-            <div class="controls">
-                {{view "select"
-                    contentBinding="users"
-                    optionValuePath="content.id"
-                    optionLabelPath="content.login"
-                    value=account.observers
-                    multiple=true
-                    prompt=''}}
-                {{tn-error-message}}
-            </div>
-        {{/tn-form-group}}
+            {{#tn-form-group property="readers"}}
+                <div class="control-label">
+                    {{t "readers"}}
+                </div>
+                <div class="controls">
+                    {{view "select"
+                        contentBinding="users"
+                        optionValuePath="content.id"
+                        optionLabelPath="content.login"
+                        selectionBinding="account.readers"
+                        multiple=true
+                        prompt="-"}}
+                    {{tn-error-message}}
+                    <p class="hint">
+                        {{t "readers_hint"}}
+                    </p>
+                </div>
+            {{/tn-form-group}}
+        </fieldset>
     </div>
 </section>
 {{/tn-form}}
