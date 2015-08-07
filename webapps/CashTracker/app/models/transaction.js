@@ -12,7 +12,7 @@ export default DS.Model.extend(EmberValidations.Mixin, {
         async: false
     }),
     amount: DS.attr('number'),
-    regDate: DS.attr('date'),
+    date: DS.attr('date'),
     category: DS.belongsTo('category', {
         async: false
     }),
