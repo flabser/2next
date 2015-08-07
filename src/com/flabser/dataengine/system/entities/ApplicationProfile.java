@@ -26,6 +26,7 @@ public class ApplicationProfile implements _IContent {
 	public String appType;
 	public String appID;
 	public String appName;
+
 	public String owner;
 	@JsonIgnore
 	public DatabaseType dbType;
@@ -42,6 +43,7 @@ public class ApplicationProfile implements _IContent {
 	private Date statusDate;
 	private VisibiltyType visibilty;
 	private ArrayList<UserRole> roles = new ArrayList<UserRole>();
+	private String desciption;
 
 	public ApplicationProfile() {
 	}
@@ -201,6 +203,14 @@ public class ApplicationProfile implements _IContent {
 
 	public ArrayList<UserRole> getRoles() {
 		return roles;
+	}
+
+	public String getDesciption() {
+		return desciption;
+	}
+
+	public void setDesciption(String desciption) {
+		this.desciption = desciption;
 	}
 
 }

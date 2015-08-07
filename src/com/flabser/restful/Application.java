@@ -9,6 +9,7 @@ import com.flabser.users.VisibiltyType;
 public class Application implements _IContent {
 	private String appID;
 	private String appName;
+	private String description;
 	private String owner;
 	private String defaultURL;
 	private VisibiltyType visibilty;
@@ -89,6 +90,14 @@ public class Application implements _IContent {
 	public void addRole(String name, String descr) {
 		applicationProfile.addRole(name, descr);
 
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

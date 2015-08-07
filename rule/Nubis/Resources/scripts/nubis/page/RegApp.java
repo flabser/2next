@@ -22,6 +22,7 @@ public class RegApp extends _DoScript {
 		String appType = formData.getValueSilently("apptype");
 		String appName = formData.getValueSilently("appname");
 		String visibilty = formData.getValueSilently("visibilty");
+		String descr = formData.getValueSilently("descr");
 		if (visibilty.equalsIgnoreCase("public")) {
 			vis = VisibiltyType.PUBLIC;
 		}
@@ -31,6 +32,7 @@ public class RegApp extends _DoScript {
 			ap.appType = appType;
 			ap.appName = appName;
 			ap.setVisibilty(vis);
+			ap.setDesciption(descr);
 			ap.owner = user.getLogin();
 			ap.dbLogin = (user.getLogin().replace("@", "_").replace(".", "_").replace("-", "_")).toLowerCase();
 			ap.dbType = DatabaseType.POSTGRESQL;
