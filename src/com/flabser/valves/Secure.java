@@ -18,6 +18,8 @@ import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.server.Server;
 import com.flabser.servlets.Cookies;
+import com.flabser.users.AuthFailedException;
+import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.UserSession;
 
 public class Secure extends ValveBase {
@@ -34,7 +36,7 @@ public class Secure extends ValveBase {
 		String appType = ru.getAppType();
 		String appID = ru.getAppID();
 
-		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(AppTemplate.ADMIN_APP_NAME) && !appType.equalsIgnoreCase(AppTemplate.WORKSPACE_APP_NAME)) {
+		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(AppTemplate.ADMIN_APP_NAME)) {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
@@ -88,18 +90,12 @@ public class Secure extends ValveBase {
 				Server.logger.verboseLogEntry(userSession.toString() + "\" got from session pool " + jses.getServletContext().getContextPath());
 				invoke(request, response);
 			} else {
-				String msg = "there is no user session ";
-				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
-				Server.logger.warningLogEntry(msg);
-				// exception(request, response, new
-				// AuthFailedException(msg));
-				getNext().invoke(request, response);
+				Server.logger.warningLogEntry("there is no associated user session for the token");
+				new AuthFailedException(AuthFailedExceptionType.NO_ASSOCIATED_SESSION_FOR_THE_TOKEN, response, ru.getAppType());
 			}
 		} else {
-			String msg = "user session was expired";
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
-			Server.logger.warningLogEntry(msg);
-			getNext().invoke(request, response);
+			Server.logger.warningLogEntry("user session was expired");
+			new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, response, ru.getAppType());
 		}
 	}
 }
