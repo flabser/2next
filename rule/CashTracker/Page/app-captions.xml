@@ -82,4 +82,8 @@
 	<caption name="readers_hint" />
 	<caption name="color" />
 	<caption name="note" />
+
+	<caption name="active" />
+	<caption name="account_active_hint" />
+	<caption name="category_active_hint" />
 </rule>
