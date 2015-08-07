@@ -19,6 +19,8 @@ public class RequestURL {
 			appID = matcher.group(2) == null ? "" : matcher.group(2).substring(1);
 		}
 
+        if (!isPage())  return;
+        
         for (String pageIdRegex : new String[]{ "^.*/page/([\\w-~\\.]+)", "^.*/Provider\\?[\\w-~\\.=&]*id=([\\w-~\\.]+[\\w-~\\.=&]*)" }) {
             if (urlVal.matches(pageIdRegex)) {
                 pageID = urlVal.replaceAll(pageIdRegex, "$1");
