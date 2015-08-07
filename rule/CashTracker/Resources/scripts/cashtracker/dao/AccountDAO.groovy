@@ -19,13 +19,13 @@ public class AccountDAO {
 
 	public String getSelectQuery() {
 		return """SELECT id, name, currency_code, opening_balance, amount_control,
-					owner, observers, include_in_totals, note, sort_order FROM accounts"""
+					writers, readers, note, include_in_totals, sort_order FROM accounts"""
 	}
 
 	public String getCreateQuery() {
 		return """INSERT INTO accounts
 					(name, currency_code, opening_balance, amount_control,
-					 owner, observers, include_in_totals, note, sort_order)
+					 writers, readers, note, include_in_totals, sort_order)
 				  VALUES
 					(?, ?, ?, ?, ?, ?, ?, ?, ?)"""
 	}
@@ -37,10 +37,10 @@ public class AccountDAO {
 						currency_code = ?,
 						opening_balance = ?,
 						amount_control = ?,
-						owner = ?,
-						observers = ?,
-						include_in_totals = ?,
+						writers = ?,
+						readers = ?,
 						note = ?,
+						include_in_totals = ?,
 						sort_order = ?
 					WHERE id = ?"""
 	}
@@ -63,10 +63,10 @@ public class AccountDAO {
 	public int add(Account a) {
 		String sql = """INSERT INTO accounts
 							(name, currency_code, opening_balance, amount_control,
-							owner, observers, include_in_totals, note, sort_order)
+							writers, readers, note, include_in_totals, sort_order)
 						VALUES
 							('${a.name}', '${a.currencyCode}', ${a.openingBalance}, ${a.amountControl},
-							${a.owner}, ${a.observers}, ${a.includeInTotals}, '${a.note}', ${a.sortOrder})"""
+							${a.writers}, ${a.readers}, '${a.note}', ${a.includeInTotals}, ${a.sortOrder})"""
 		return db.insert(sql, user)
 	}
 
@@ -77,10 +77,10 @@ public class AccountDAO {
 							currency_code = '${a.currencyCode}',
 							opening_balance = ${a.openingBalance},
 							amount_control = ${a.amountControl},
-							owner = ${a.owner},
-							observers = ${a.observers},
-							include_in_totals = ${a.includeInTotals},
+							writers = ${a.writers},
+							readers = ${a.readers},
 							note = '${a.note}',
+							include_in_totals = ${a.includeInTotals},
 							sort_order = ${a.sortOrder}
 						WHERE id = ${a.id}"""
 		db.update(sql, user)

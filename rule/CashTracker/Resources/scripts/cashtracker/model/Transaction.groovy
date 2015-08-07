@@ -21,7 +21,7 @@ public class Transaction implements _IObject {
 
 	private TransactionState transactionState;
 
-	private Date regDate = new Date();
+	private Date date = new Date();
 
 	private Account accountFrom;
 
@@ -86,12 +86,12 @@ public class Transaction implements _IObject {
 		this.transactionState = transactionState;
 	}
 
-	public Date getRegDate() {
-		return regDate;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public Category getCategory() {
@@ -216,7 +216,7 @@ public class Transaction implements _IObject {
 
 	@Override
 	public String toString() {
-		return "Transaction[$id, $user, $regDate, $startDate, $endDate, $category, $accountFrom, $amount, $costCenter]";
+		return "Transaction[$id, $user, $date, $startDate, $endDate, $category, $accountFrom, $amount, $costCenter]";
 	}
 
 	public void init(ResultSet rs) {
@@ -224,7 +224,7 @@ public class Transaction implements _IObject {
 		setUser(null);
 		setTransactionType(TransactionType.typeOf(rs.getInt("t.transaction_type")))
 		setTransactionState(TransactionState.stateOf(rs.getInt("t.transaction_state")))
-		setRegDate(rs.getDate("t.reg_date"));
+		setDate(rs.getDate("t.date"));
 		setAccountFrom(null);
 		setAccountTo(null);
 		setAmount(rs.getBigDecimal("t.amount"));
@@ -237,8 +237,8 @@ public class Transaction implements _IObject {
 		setRepeatStep(rs.getInt("t.repeat_step"));
 		setStartDate(rs.getDate("t.start_date"));
 		setEndDate(rs.getDate("t.end_date"));
-		setBasis(rs.getString("t.basis"));
 		setNote(rs.getString("t.note"));
-		setIncludeInReports(rs.getBoolean("t.include_in_reports"))
+		setIncludeInReports(rs.getBoolean("t.include_in_reports"));
+		setBasis(rs.getString("t.basis"));
 	}
 }
