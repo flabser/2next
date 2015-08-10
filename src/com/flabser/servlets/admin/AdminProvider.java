@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.env.Environment;
@@ -37,13 +37,13 @@ public class AdminProvider extends HttpServlet{
 	public static final int pageSize = 30;
 
 	private static final long serialVersionUID = 2352885167311108325L;
-	private AppEnv env;
+	private AppTemplate env;
 	private ServletContext context;
 	
 	public void init (ServletConfig config)throws ServletException{
 		try{
 			context = config.getServletContext();
-			env = (AppEnv) context.getAttribute("portalenv");			
+			env = (AppTemplate) context.getAttribute("portalenv");			
 		}catch (Exception e) {
 			Server.logger.errorLogEntry(e);			
 		}	
@@ -173,7 +173,7 @@ public class AdminProvider extends HttpServlet{
 		result.publishAs = PublishAsType.HTML;	
 		ServiceHandler sh = null;
 		String content = "";
-		AppEnv env = null;
+		AppTemplate env = null;
 		IDatabase db = null;
 		if (app != null && !"".equalsIgnoreCase(app)){
 			env = Environment.getApplication(app);

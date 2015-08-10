@@ -3,11 +3,10 @@ import TransactionRoute from './transaction';
 export default TransactionRoute.extend({
     model: function() {
         return this.store.createRecord('transaction', {
-            author: null,
-            regDate: null,
-            date: null,
-            endDate: null,
             parentCategory: null,
+            date: null,
+            startDate: null,
+            endDate: null,
             category: null,
             account: null,
             costCenter: null,
@@ -15,16 +14,8 @@ export default TransactionRoute.extend({
             repeat: false,
             every: 0,
             repeatStep: 0,
-            basis: '',
-            observers: null,
-            comment: ''
+            note: '',
+            basis: ''
         });
-    },
-
-    deactivate: function() {
-        var model = this.currentModel;
-        if (model.get('isNew') && model.get('isSaving') == false) {
-            model.rollbackAttributes();
-        }
     }
 });

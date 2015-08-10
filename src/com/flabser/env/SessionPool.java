@@ -27,8 +27,12 @@ public class SessionPool {
 
 		}
 		UserSession us = userSessions.get(key);
-		us.setAuthMode(AuthModeType.LOGIN_THROUGH_TOKEN);
-		return us;
+		if (us != null) {
+			us.setAuthMode(AuthModeType.LOGIN_THROUGH_TOKEN);
+			return us;
+		} else {
+			return null;
+		}
 	}
 
 	public static void remove(UserSession us) {

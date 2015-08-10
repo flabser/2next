@@ -12,7 +12,7 @@ export default DS.Model.extend(EmberValidations.Mixin, {
         async: false
     }),
     amount: DS.attr('number'),
-    regDate: DS.attr('date'),
+    date: DS.attr('date'),
     category: DS.belongsTo('category', {
         async: false
     }),
@@ -28,13 +28,14 @@ export default DS.Model.extend(EmberValidations.Mixin, {
     repeatStep: DS.attr('number'),
     startDate: DS.attr('date'),
     endDate: DS.attr('date'),
-    basis: DS.attr('string'),
     note: DS.attr('string'),
+    basis: DS.attr('string'),
     includeInReports: DS.attr('boolean'),
 
     validations: {
         amount: {
-            presence: true
+            presence: true,
+            numericality: true
         }
     }
 });

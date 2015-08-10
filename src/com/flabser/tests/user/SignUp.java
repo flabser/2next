@@ -1,4 +1,4 @@
-package com.flabser.dataengine.system.tests;
+package com.flabser.tests.user;
 
 import java.io.BufferedReader;
 import java.io.IOException;

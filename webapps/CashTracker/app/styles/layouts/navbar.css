@@ -1,0 +1,42 @@
+.navbar {
+	background: #FFF;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+.navbar-header {
+	display: inline-block;
+	float: left;
+}
+
+.navbar-brand {
+	color: #494949;
+	display: inline-block;
+	font-size: 1.6em;
+	height: 69px;
+	line-height: 70px;
+	margin-left: 10px;
+	padding: 0 1em;
+	text-decoration: none;
+	vertical-align: middle;
+}
+
+.navbar-right {
+	float: right;
+}
+
+.navbar-nav {
+	display: inline-block;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+.navbar-nav>li {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+}

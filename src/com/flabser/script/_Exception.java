@@ -3,7 +3,7 @@ package com.flabser.script;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 
 public class _Exception extends Exception {
 	private static final long serialVersionUID = -6047450542781990205L;

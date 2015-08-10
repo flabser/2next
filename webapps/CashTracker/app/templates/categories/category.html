@@ -1,6 +1,6 @@
 {{#tn-form model=category onSubmit="submit" action="save"}}
 <header class="form-header">
-    <h1 class="header-title">{{t "category"}} / {{category.name}}</h1>
+    <h1 class="header-title">{{t "category"}}</h1>
     <div class="action-bar">
         <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
         <button type="submit" class="btn btn-primary">{{t "save"}}</button>
@@ -14,6 +14,63 @@
             </div>
             <div class="controls">
                 {{input value=category.name}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="enabled"}}
+            <div class="controls">
+                <label>
+                    {{input type="checkbox" checked=category.enabled }}
+                    {{t "active"}}
+                </label>
+                <p class="hint">
+                    {{t "category_active_hint"}}
+                </p>
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="transactionType"}}
+            <div class="control-label">
+                {{t "transaction_type"}}
+            </div>
+            <div class="controls">
+                {{input value=category.transactionType}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="parentCategory"}}
+            <div class="control-label">
+                {{t "parent_category"}}
+            </div>
+            <div class="controls">
+                {{view "select"
+                    contentBinding="categories"
+                    optionValuePath="content.id"
+                    optionLabelPath="content.name"
+                    selectionBinding="category.parentCategory"
+                    prompt='- Select -'}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="note"}}
+            <div class="control-label">
+                {{t "note"}}
+            </div>
+            <div class="controls">
+                {{textarea value=category.note}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="color"}}
+            <div class="control-label">
+                {{t "color"}}
+            </div>
+            <div class="controls">
+                {{input value=category.color}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}

@@ -1,7 +1,6 @@
-package com.flabser.appenv;
+package com.flabser.apptemplate;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +20,7 @@ import com.flabser.script._IContent;
 import com.flabser.script._Page;
 import com.flabser.server.Server;
 
-public class AppEnv implements ICache, _IContent {
+public class AppTemplate implements ICache, _IContent {
 	public boolean isValid;
 	public String appType = "undefined";
 	public RuleProvider ruleProvider;
@@ -29,24 +28,24 @@ public class AppEnv implements ICache, _IContent {
 	public String adminXSLTPath;
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
-	public final static String APP_ATTR = "appenv";
+	public final static String TEMPLATE_ATTR = "template";
 	public final static String ADMIN_APP_NAME = "administrator";
+	public final static String WORKSPACE_APP_NAME = "nubis";
 
-	private ArrayList<String> unsecuredPage = new ArrayList<String>();
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 	private String docBase;
 
-	public AppEnv(String at) {
+	public AppTemplate(String at) {
 		isValid = true;
 		appType = ADMIN_APP_NAME;
 	}
 
-	public AppEnv(String appType, String globalFileName) {
+	public AppTemplate(String appType, String globalFileName) {
 		this.appType = appType;
 		try {
-			Server.logger.normalLogEntry("# start application \"" + appType + "\"");
+			Server.logger.normalLogEntry("# init application template \"" + appType + "\"");
 			ruleProvider = new RuleProvider(this);
-			ruleProvider.initApp(globalFileName);
+			ruleProvider.initAppTemplate(globalFileName);
 			globalSetting = ruleProvider.global;
 			docBase = new File(Environment.primaryAppDir + "webapps/" + appType).getAbsolutePath();
 			if (globalSetting.isOn == RunMode.ON) {
@@ -115,14 +114,6 @@ public class AppEnv implements ICache, _IContent {
 
 	public String getDocBase() {
 		return docBase;
-	}
-
-	public void addUnsecurePage(String id) {
-		unsecuredPage.add(id);
-	}
-
-	public void isPageUnsecure(String id) {
-		unsecuredPage.add(id);
 	}
 
 }

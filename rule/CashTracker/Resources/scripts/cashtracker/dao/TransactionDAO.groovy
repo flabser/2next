@@ -18,7 +18,7 @@ public class TransactionDAO {
 		  t."USER"                   AS "t.USER",
 		  t.transaction_type         AS "t.transaction_type",
 		  t.transaction_state        AS "t.transaction_state",
-		  t.reg_date                 AS "t.reg_date",
+		  t.date                     AS "t.date",
 		  t.account_from             AS "t.account_from",
 		  t.account_to               AS "t.account_to",
 		  t.amount                   AS "t.amount",
@@ -40,7 +40,8 @@ public class TransactionDAO {
 		  af.currency_code           AS "af.currency_code",
 		  af.opening_balance         AS "af.opening_balance",
 		  af.amount_control          AS "af.amount_control",
-		  af.observers               AS "af.observers",
+		  af.writers                 AS "af.writers",
+		  af.readers                 AS "af.readers",
 		  af.include_in_totals       AS "af.include_in_totals",
 		  af.note                    AS "af.note",
 
@@ -49,7 +50,8 @@ public class TransactionDAO {
 		  at.currency_code           AS "at.currency_code",
 		  at.opening_balance         AS "at.opening_balance",
 		  at.amount_control          AS "at.amount_control",
-		  at.observers               AS "at.observers",
+		  at.writers                 AS "at.writers",
+		  at.readers                 AS "at.readers",
 		  at.include_in_totals       AS "at.include_in_totals",
 		  at.note                    AS "at.note",
 
@@ -72,7 +74,7 @@ public class TransactionDAO {
 
 	public TransactionDAO(_Session session) {
 		this.db = session.getDatabase()
-		this.user = session.getUser()
+		this.user = session.getAppUser()
 	}
 
 	public String getSelectQuery() {
@@ -82,10 +84,10 @@ public class TransactionDAO {
 	public String getCreateQuery() {
 		return """INSERT INTO transactions
 						("USER", transaction_type, transaction_state,
-						reg_date, account_from, account_to,
+						date, account_from, account_to,
 						amount, exchange_rate, category, cost_center,
 						tags, repeat, every, repeat_step, start_date, end_date,
-						basis, note, include_in_reports)
+						note, include_in_reports, basis)
 					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
 	}
 
@@ -95,7 +97,7 @@ public class TransactionDAO {
 						"USER" = ?,
 						transaction_type = ?,
 						transaction_state = ?,
-						reg_date = ?,
+						date = ?,
 						account_from = ?,
 						account_to = ?,
 						amount = ?,
@@ -108,9 +110,9 @@ public class TransactionDAO {
 						repeat_step = ?,
 						start_date = ?,
 						end_date = ?,
-						basis = ?,
 						note = ?,
-						include_in_reports = ?
+						include_in_reports = ?,
+						basis = ?
 					WHERE id = ?"""
 	}
 
@@ -152,27 +154,27 @@ public class TransactionDAO {
 	}
 
 	public int add(Transaction m) {
+		m.setUser(user)
 		String sql = """INSERT INTO transactions
 							("USER", transaction_type, transaction_state,
-							reg_date, account_from, account_to,
+							date, account_from, account_to,
 							amount, exchange_rate, category, cost_center,
 							tags, repeat, every, repeat_step, start_date, end_date,
-							basis, note, include_in_reports)
+							note, include_in_reports, basis)
 						VALUES ('${m.user.login}', ${m.transactionType.code}, ${m.transactionState.code},
-								'${m.regDate}', ${m.accountFrom.id}, ${m.accountTo.id},
+								'${m.date}', ${m.accountFrom.id}, ${m.accountTo.id},
 								${m.amount}, ${m.exchangeRate}, ${m.category}, ${m.costCenter},
 								${m.tags}, ${m.repeat}, ${m.every}, ${m.repeatStep}, ${m.startDate}, ${m.endDate},
-								${m.basis}, ${m.note}, ${m.includeInReports})"""
+								${m.note}, ${m.includeInReports}, ${m.basis})"""
 		return db.insert(sql, user)
 	}
 
 	public void update(Transaction m) {
 		String sql = """UPDATE transactions
 						SET
-							"USER" = '${m.user.login}',
 							transaction_type = ${m.transactionType.code},
 							transaction_state = ${m.transactionState.code},
-							reg_date = '${m.regDate}',
+							date = '${m.date}',
 							account_from = ${m.accountFrom.id},
 							account_to = ${m.accountTo.id},
 							amount = ${m.amount},
@@ -185,9 +187,9 @@ public class TransactionDAO {
 							repeat_step = ${m.repeatStep},
 							start_date = '${m.startDate}',
 							end_date = ${m.endDate},
-							basis = '${m.basis}',
 							note = '${m.note}',
-							include_in_reports = ${m.includeInReports}
+							include_in_reports = ${m.includeInReports},
+							basis = '${m.basis}'
 						WHERE id = ${m.id}"""
 		db.update(sql, user)
 	}

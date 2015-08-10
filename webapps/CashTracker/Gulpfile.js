@@ -119,12 +119,25 @@ gulp.task('dist_ct', function() {
 });
 
 
+
+// css
+var app_css_files = ['./app/styles/**/*.css'];
+
+gulp.task('minify_app_css', function() {
+    gulp.src(app_css_files)
+        .pipe(concat('app.css'))
+        .pipe(csso())
+        .pipe(gulp.dest('./assets'));
+});
+
+
+
 // run
 gulp.task('default', function() {
     // gulp.run('em_minify_js_babel');
 
     // gulp.run('lint', 'em_lint', 'em_templates_compile', 'em_minify_js', 'minify_js', 'minify_css');
-    gulp.run('minify_css');
+    gulp.run('minify_css', 'minify_app_css');
 
     // gulp.watch(em_templates, function(event) {
     //    gulp.run('em_templates_trim');

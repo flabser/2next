@@ -16,7 +16,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
@@ -52,7 +52,7 @@ public abstract class Rule implements IElement, IRule {
 
 	private boolean allowAnonymousAccess;
 
-	protected Rule(AppEnv env, File docFile) throws RuleException {
+	protected Rule(AppTemplate env, File docFile) throws RuleException {
 		try {
 			DocumentBuilderFactory pageFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder pageBuilder = pageFactory.newDocumentBuilder();

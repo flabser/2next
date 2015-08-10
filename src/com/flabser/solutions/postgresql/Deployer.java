@@ -1,6 +1,11 @@
 package com.flabser.solutions.postgresql;
 
-import static com.flabser.dataengine.DatabaseUtil.SQLExceptionPrintDebug;
+import com.flabser.dataengine.DatabaseCore;
+import com.flabser.dataengine.IAppDatabaseInit;
+import com.flabser.dataengine.IDeployer;
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.server.Server;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -10,20 +15,19 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import com.flabser.dataengine.DatabaseCore;
-import com.flabser.dataengine.IAppDatabaseInit;
-import com.flabser.dataengine.IDeployer;
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.server.Server;
+import static com.flabser.dataengine.DatabaseUtil.SQLExceptionPrintDebug;
+
 
 public class Deployer extends DatabaseCore implements IDeployer {
 
 	ApplicationProfile appProfile;
 
 	@Override
-	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException, DatabasePoolException {
 		this.appProfile = appProfile;
 		pool = getPool(Database.driver, appProfile);
 	}
@@ -44,18 +48,15 @@ public class Deployer extends DatabaseCore implements IDeployer {
 				}
 			}
 
-			dbInit.getTablesDDE().forEach((tableName, query) -> {
-				if (!tables.contains(tableName.toLowerCase())) {
-					try {
-						stmt.executeUpdate(query);
-					} catch (SQLException e) {
-						Server.logger.errorLogEntry("Unable to create table \"" + tableName + "\"");
-						Server.logger.errorLogEntry(e);
-					}
-				} else {
-					Server.logger.errorLogEntry("Table \"" + tableName + "\" already exist");
-				}
-			});
+			dbInit.getTablesDDE().stream().filter( q -> !tables.contains(getTableName(q).toLowerCase())).forEach(query -> {
+                try {
+                    stmt.executeUpdate(query);
+                } catch (SQLException e) {
+                    System.out.println(getTableName(query));
+                    Server.logger.errorLogEntry("Unable to create table \"" + getTableName(query) + "\"");
+                    Server.logger.errorLogEntry(e);
+                }
+            });
 
 			conn.commit();
 			return 0;
@@ -63,9 +64,18 @@ public class Deployer extends DatabaseCore implements IDeployer {
 			SQLExceptionPrintDebug(e);
 			return -1;
 		} finally {
-			pool.returnConnection(conn);
+            pool.returnConnection(conn);
 		}
 	}
+
+    private String getTableName(String query){
+        Pattern pattern = Pattern.compile("^\\s*CREATE\\s+TABLE\\s+([\\w-]+)\\s+");
+        Matcher matcher = pattern.matcher(query);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return "";
+    }
 
 	@Override
 	public int remove() {

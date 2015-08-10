@@ -14,7 +14,7 @@ public class RequestURITest extends Assert {
 		String v[] = { "/Nubis/Provider", "/Nubis", "/Nubis/", "/CashTracker", "/CashTracker//", "" };
 		for (String url : v) {
 			RequestURL ru = new RequestURL(url);
-			assertNotNull(ru.getAppName());
+			assertNotNull(ru.getAppType());
 			assertNotNull(ru.getAppID());
 			assertEquals(ru.getAppID(), "");
 			assertFalse(ru.isProtected());
@@ -25,7 +25,7 @@ public class RequestURITest extends Assert {
 				"/index.htm", "/CashTracker/css/all.min.css" };
 		for (String url : v1) {
 			RequestURL ru = new RequestURL(url);
-			assertNotNull(ru.getAppName());
+			assertNotNull(ru.getAppType());
 			assertNotNull(ru.getAppID());
 			assertEquals(ru.getAppID(), "");
 			assertFalse(ru.isProtected());
@@ -43,8 +43,8 @@ public class RequestURITest extends Assert {
 		String v3[] = { "/Nubis/rest/session", "/CashTracker/rest/session" };
 		for (String url : v3) {
 			RequestURL ru = new RequestURL(url);
-			assertNotNull(ru.getAppName());
-			assertNotEquals(ru.getAppName(), "");
+			assertNotNull(ru.getAppType());
+			assertNotEquals(ru.getAppType(), "");
 			assertTrue(ru.isAuthRequest());
 		}
 
@@ -53,8 +53,8 @@ public class RequestURITest extends Assert {
 		String v4[] = { "/CashTracker/gu2l161ce0cfi00f/favicon.png", "/CashTracker/fu2l161ce0cfi0bf/rest/session", "/CashTracker/fu2l161ce0cfi00f" };
 		for (String url : v4) {
 			RequestURL ru = new RequestURL(url);
-			assertNotNull(ru.getAppName());
-			assertNotEquals(ru.getAppName(), "");
+			assertNotNull(ru.getAppType());
+			assertNotEquals(ru.getAppType(), "");
 			assertNotNull(ru.getAppID());
 			assertNotEquals(ru.getAppID(), "");
 			assertTrue(ru.isProtected());
@@ -66,10 +66,12 @@ public class RequestURITest extends Assert {
 				"/CashTracker/fzu2l161ce0cfi00bf/rest/page/ws", "/Nubis/fzu2l161ce0cfi00bf/rest/page/welcome" };
 		for (String url : v5) {
 			RequestURL ru = new RequestURL(url);
-			assertNotNull(ru.getAppName());
-			assertNotEquals(ru.getAppName(), "");
+			assertNotNull(ru.getAppType());
+			assertNotEquals(ru.getAppType(), "");
 			assertNotNull(ru.getAppID());
 			assertTrue(ru.isPage());
+			assertNotNull(ru.getPageID());
+			assertNotEquals(ru.getPageID(), "");
 		}
 
 	}

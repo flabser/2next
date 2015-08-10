@@ -1,14 +1,13 @@
 package com.flabser.dataengine;
 
 import java.util.ArrayList;
-import java.util.Map;
 
-import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.restful.Application;
 
 public interface IAppDatabaseInit {
-	void setApplicationProfile(ApplicationProfile ap);
+	void setApplicationProfile(Application application);
 
-	Map<String, String> getTablesDDE();
+	ArrayList<String> getTablesDDE();
 
 	ArrayList<String> getInitActions();
 }

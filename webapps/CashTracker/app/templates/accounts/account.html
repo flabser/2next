@@ -1,19 +1,41 @@
 {{#tn-form model=account onSubmit="submit" action="save"}}
 <header class="form-header">
-    <h1 class="header-title">{{t "account"}} / {{account.name}}</h1>
+    <h1 class="header-title">{{t "account"}}</h1>
     <div class="action-bar">
         <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
         <button type="submit" class="btn btn-primary">{{t "save"}}</button>
     </div>
 </header>
 <section class="form-content">
-    <div class="fieldset">
+    <fieldset class="fieldset">
         {{#tn-form-group property="name"}}
             <div class="control-label">
                 {{t "name"}}
             </div>
             <div class="controls">
                 {{input value=account.name}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="enabled"}}
+            <div class="controls">
+                <label>
+                    {{input type="checkbox" checked=account.enabled }}
+                    {{t "active"}}
+                </label>
+                <p class="hint">
+                    {{t "account_active_hint"}}
+                </p>
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="openingBalance"}}
+            <div class="control-label">
+                {{t "opening_balance"}}
+            </div>
+            <div class="controls">
+                {{input value=account.openingBalance}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}
@@ -28,22 +50,12 @@
             </div>
         {{/tn-form-group}}
 
-        {{#tn-form-group property="owner"}}
+        {{#tn-form-group property="currencyCode"}}
             <div class="control-label">
-                {{t "owner"}}
+                {{t "currency"}}
             </div>
             <div class="controls">
-                {{input value=account.owner}}
-                {{tn-error-message}}
-            </div>
-        {{/tn-form-group}}
-
-        {{#tn-form-group property="observers"}}
-            <div class="control-label">
-                {{t "observers"}}
-            </div>
-            <div class="controls">
-                {{input value=account.observers}}
+                {{input value=account.currencyCode}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}
@@ -53,10 +65,50 @@
                 {{t "note"}}
             </div>
             <div class="controls">
-                {{input value=account.note}}
+                {{textarea value=account.note}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}
-    </div>
+
+        <fieldset>
+            <legend>{{t "permissions"}}</legend>
+            {{#tn-form-group property="writers"}}
+                <div class="control-label">
+                    {{t "writers"}}
+                </div>
+                <div class="controls">
+                    {{view "select"
+                        contentBinding="users"
+                        optionValuePath="content.id"
+                        optionLabelPath="content.login"
+                        selectionBinding="account.writers"
+                        prompt="- Select -"}}
+                    {{tn-error-message}}
+                    <p class="hint">
+                        {{t "writers_hint"}}
+                    </p>
+                </div>
+            {{/tn-form-group}}
+
+            {{#tn-form-group property="readers"}}
+                <div class="control-label">
+                    {{t "readers"}}
+                </div>
+                <div class="controls">
+                    {{view "select"
+                        contentBinding="users"
+                        optionValuePath="content.id"
+                        optionLabelPath="content.login"
+                        selectionBinding="account.readers"
+                        multiple=true
+                        prompt="-"}}
+                    {{tn-error-message}}
+                    <p class="hint">
+                        {{t "readers_hint"}}
+                    </p>
+                </div>
+            {{/tn-form-group}}
+        </fieldset>
+    </fieldset>
 </section>
 {{/tn-form}}

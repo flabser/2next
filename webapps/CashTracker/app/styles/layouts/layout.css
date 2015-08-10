@@ -1,0 +1,83 @@
+.layout {
+    background: #FFF;
+    margin: 0px auto;
+    max-width: 1366px;
+    min-height: 100%;
+    min-width: 320px;
+    position: relative;
+    width: 100%;
+    z-index: 3;
+}
+
+.tablet .layout,
+.phone .layout,
+.layout_wide .layout {
+    max-width: 100%;
+}
+
+.header {
+    border: none;
+    box-shadow: 0 0 3px #999;
+    display: block;
+    height: 60px;
+    line-height: 60px;
+    max-width: inherit;
+    position: fixed;
+    width: 100%;
+    z-index: 5;
+}
+
+.tablet .header,
+.phone .header {
+    height: 50px;
+    line-height: 50px;
+    position: fixed;
+    top: 0;
+}
+
+.aside {
+    background-color: #FFF;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: fixed;
+    top: 60px;
+    transition: all .15s;
+    z-index: 4;
+}
+
+.tablet .aside,
+.phone .aside {
+    background: #FFF url(../img/yellow_background.png) 0 0 no-repeat;
+    border: none;
+    top: 0;
+    z-index: 99;
+}
+
+.content {
+    border: none;
+    height: auto;
+    margin: 0 0 10px 230px;
+    padding: 0;
+    padding-top: 60px;
+    position: relative;
+}
+
+.tablet .content,
+.phone .content {
+    margin: 0 0 10px 0px;
+    padding-top: 50px;
+}
+
+.content-overlay {
+    background: rgba(0, 0, 0, .3);
+    display: none;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 6;
+}
+
+.page-loading {}

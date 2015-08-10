@@ -1,6 +1,6 @@
 package com.flabser.servlets.admin;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.Environment;
 import com.flabser.server.Server;
 
@@ -18,7 +18,7 @@ public class AdminOutline {
 
 		XMLText += "<currentview title=\"" + getTitle(service) + "\" service=\"" + service + "\" " + app + dbid + page + " >" + serviceID +  "</currentview>";		
 		XMLText += "<outline>";				
-		for(AppEnv appEnv: Environment.getApplications()){
+		for(AppTemplate appEnv: Environment.getApplications()){
 			String dbID = "";			
 			XMLText += "<application appid= \"" + appEnv.appType.replace("\"", "'") + "\" dbid= \"\">";				
 			XMLText += "</application>";		
@@ -29,7 +29,7 @@ public class AdminOutline {
 	AdminOutline(){
 	
 		XMLText += "<outline>";				
-		for(AppEnv appEnv: Environment.getApplications()){
+		for(AppTemplate appEnv: Environment.getApplications()){
 
 			XMLText += "<application appid= \"" + appEnv.appType.replace("\"", "'") + "\" dbid= \"\">";				
 			XMLText += "</application>";		

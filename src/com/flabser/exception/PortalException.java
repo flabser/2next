@@ -15,17 +15,16 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.server.Server;
 import com.flabser.servlets.ProviderExceptionType;
 import com.flabser.servlets.PublishAsType;
 import com.flabser.util.XMLUtil;
 
+@SuppressWarnings("serial")
 public class PortalException extends Exception {
 	private Enum<?> type = ProviderExceptionType.INTERNAL;
-	private AppEnv env;
-
-	private static final long serialVersionUID = 3214292820186296427L;
+	private AppTemplate env;
 	private Source xsltSource;
 
 	public PortalException(Exception e, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
@@ -33,11 +32,12 @@ public class PortalException extends Exception {
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		response.setContentType("text/xml;charset=utf-8");
 		this.type = type;
-		xsltSource = new StreamSource(new File("xsl" + File.separator + "error.xsl"));
+		xsltSource = new StreamSource(new File("webapps" + File.separator + env.appType + File.separator + "xsl" + File.separator + "errors" + File.separator
+				+ "error.xsl"));
 		message(errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response, PublishAsType publishAs) {
+	public PortalException(Exception e, AppTemplate env, HttpServletResponse response, PublishAsType publishAs) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -46,7 +46,7 @@ public class PortalException extends Exception {
 		message(errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(String text, Exception e, AppEnv env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
+	public PortalException(String text, Exception e, AppTemplate env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -56,7 +56,7 @@ public class PortalException extends Exception {
 		message("<errorcontex>" + text + "</errorcontext>" + errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response, Enum<?> type) {
+	public PortalException(Exception e, AppTemplate env, HttpServletResponse response, Enum<?> type) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -65,7 +65,7 @@ public class PortalException extends Exception {
 		message(errorMessage(e), response, PublishAsType.XML);
 	}
 
-	public PortalException(Exception e, AppEnv env, HttpServletResponse response, Enum<?> type, PublishAsType publishAs) {
+	public PortalException(Exception e, AppTemplate env, HttpServletResponse response, Enum<?> type, PublishAsType publishAs) {
 		super(e);
 		this.env = env;
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -75,7 +75,7 @@ public class PortalException extends Exception {
 		message(errorMessage(e), response, publishAs);
 	}
 
-	public PortalException(String text, AppEnv env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
+	public PortalException(String text, AppTemplate env, HttpServletResponse response, ProviderExceptionType type, PublishAsType publishAs) {
 		super(text);
 		this.env = env;
 		this.type = type;
@@ -112,14 +112,11 @@ public class PortalException extends Exception {
 				out.println(xmlText);
 			}
 		} catch (IOException ioe) {
-			System.out.println(ioe);
-			ioe.printStackTrace();
+			Server.logger.errorLogEntry(ioe);
 		} catch (TransformerConfigurationException tce) {
-			System.out.println(tce);
-			tce.printStackTrace();
+			Server.logger.errorLogEntry(tce);
 		} catch (TransformerException te) {
-			System.out.println(te);
-			te.printStackTrace();
+			Server.logger.errorLogEntry(te);
 		}
 	}
 
@@ -150,16 +147,9 @@ public class PortalException extends Exception {
 
 	private Source getXSLT() {
 		Source xsltSource = null;
-		if (env.appType.equalsIgnoreCase("administrator")) {
-			xsltSource = new StreamSource(new File("xsl" + File.separator + "error.xsl"));
-		} else {
-			xsltSource = new StreamSource(new File("xsl" + File.separator + "error.xsl"));
-			/*
-			 * Skin skin = env.globalSetting.skinsMap.get(currentSkin); if (skin
-			 * == null){ skin = env.globalSetting.defaultSkin; } xsltSource =
-			 * new StreamSource(new File(skin.errorPagePath));
-			 */
-		}
+		xsltSource = new StreamSource(new File("webapps" + File.separator + env.appType + File.separator + "xsl" + File.separator + "errors" + File.separator
+				+ "error.xsl"));
+
 		return xsltSource;
 	}
 }

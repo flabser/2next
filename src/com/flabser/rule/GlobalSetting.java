@@ -10,7 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.Environment;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.server.Server;
@@ -35,7 +35,7 @@ public class GlobalSetting {
 
 	}
 
-	public GlobalSetting(String path, AppEnv env) {
+	public GlobalSetting(String path, AppTemplate env) {
 		rulePath = "rule" + File.separator + env.appType;
 		primaryRulePath = Environment.primaryAppDir + rulePath;
 

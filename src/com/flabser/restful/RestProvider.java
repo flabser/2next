@@ -21,7 +21,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.rule.IRule;
@@ -45,17 +45,14 @@ public class RestProvider {
 	@Context
 	protected HttpServletResponse response;
 
-	public AppEnv getAppEnv() {
-		return (AppEnv) context.getAttribute(AppEnv.APP_ATTR);
+	public AppTemplate getAppEnv() {
+		return (AppTemplate) context.getAttribute(AppTemplate.TEMPLATE_ATTR);
 
 	}
 
 	public UserSession getUserSession() {
-		HttpSession jses = request.getSession(true);
+		HttpSession jses = request.getSession(false);
 		UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
-		if (us == null) {
-			us = new UserSession(new com.flabser.users.User());
-		}
 		return us;
 
 	}
@@ -76,13 +73,14 @@ public class RestProvider {
 			ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
 		MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
-		AppEnv env = getAppEnv();
+		AppTemplate env = getAppEnv();
 		IRule rule = env.ruleProvider.getRule(id);
 		_Page result = null;
 
 		if (rule != null) {
 			try {
 				try {
+
 					result = page(env, (Map) queryParams, request, rule, getUserSession());
 				} catch (WebFormValueException e) {
 					return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(result).build();
@@ -106,7 +104,7 @@ public class RestProvider {
 	public Response proPage(@PathParam("id") String id, MultivaluedMap<String, String> formParams) throws RuleException, AuthFailedException, UserException,
 			ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
-		AppEnv env = getAppEnv();
+		AppTemplate env = getAppEnv();
 		IRule rule = env.ruleProvider.getRule(id);
 		_Page result = null;
 
@@ -130,13 +128,13 @@ public class RestProvider {
 		throw new WebApplicationException(msg, HttpServletResponse.SC_NOT_FOUND);
 	}
 
-	private _Page page(AppEnv env, Map<String, String[]> parMap, HttpServletRequest request, IRule rule, UserSession userSession) throws RuleException,
+	private _Page page(AppTemplate env, Map<String, String[]> parMap, HttpServletRequest request, IRule rule, UserSession userSession) throws RuleException,
 			UnsupportedEncodingException, ClassNotFoundException, _Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		return new Page(env, userSession, pageRule, request.getMethod()).process(parMap);
 	}
 
-	private _Page page(AppEnv env, MultivaluedMap<String, String> formParams, HttpServletRequest request2, IRule rule, UserSession userSession)
+	private _Page page(AppTemplate env, MultivaluedMap<String, String> formParams, HttpServletRequest request2, IRule rule, UserSession userSession)
 			throws ClassNotFoundException, RuleException, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		Map<String, String[]> parMap = new HashMap<String, String[]>();

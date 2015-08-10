@@ -5,7 +5,6 @@ import java.util.HashSet;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.AuthModeType;
@@ -88,17 +87,8 @@ public class AuthUser {
 		return applications;
 	}
 
-	public void setApplications(HashMap<String, ApplicationProfile> apps) {
-		for (ApplicationProfile ap : apps.values()) {
-			Application a = new Application();
-			a.appID = ap.appID;
-			a.appName = ap.appName;
-			a.appType = ap.appType;
-			a.owner = ap.owner;
-			a.visibilty = ap.getVisibilty();
-			this.applications.put(ap.appID, a);
-		}
-
+	public void setApplications(HashMap<String, Application> applications) {
+		this.applications = applications;
 	}
 
 	public String getDefaultApp() {

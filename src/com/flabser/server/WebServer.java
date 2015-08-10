@@ -15,10 +15,12 @@ import org.apache.catalina.core.AprLifecycleListener;
 import org.apache.catalina.core.StandardServer;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.descriptor.web.ErrorPage;
+import org.apache.tomcat.util.descriptor.web.FilterDef;
+import org.apache.tomcat.util.descriptor.web.FilterMap;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.Environment;
 import com.flabser.restful.ResourceLoader;
 import com.flabser.valves.Logging;
@@ -41,6 +43,10 @@ public class WebServer implements IWebServer {
 		tomcat.setPort(Environment.httpPort);
 		tomcat.setHostname(defaultHostName);
 		tomcat.setBaseDir("webserver");
+		tomcat.getHost().setAutoDeploy(false);
+
+		// System.setProperty("org.apache.coyote.USE_CUSTOM_STATUS_MSG_IN_HEADER",
+		// "true");
 
 		StandardServer server = (StandardServer) WebServer.tomcat.getServer();
 
@@ -78,6 +84,17 @@ public class WebServer implements IWebServer {
 		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
 		context.setDisplayName("Administrator");
 
+		FilterDef filterAccessGuard = new FilterDef();
+		filterAccessGuard.setFilterName("AccessGuard");
+		filterAccessGuard.setFilterClass("com.flabser.valves.AccessGuard");
+
+		FilterMap filterAccessGuardMapping = new FilterMap();
+		filterAccessGuardMapping.setFilterName("AccessGuard");
+		filterAccessGuardMapping.addServletName("Provider");
+
+		context.addFilterDef(filterAccessGuard);
+		context.addFilterMap(filterAccessGuardMapping);
+
 		initErrorPages(context);
 
 		for (int i = 0; i < defaultWelcomeList.length; i++) {
@@ -113,7 +130,7 @@ public class WebServer implements IWebServer {
 	}
 
 	@Override
-	public Context addApplication(String appID, AppEnv env) throws ServletException {
+	public Context addApplication(String appID, AppTemplate env) throws ServletException {
 		Context context = null;
 
 		Server.logger.normalLogEntry("add context \"" + env.appType + "/" + appID + "\" application...");
@@ -145,8 +162,8 @@ public class WebServer implements IWebServer {
 			context.addMimeMapping("css", "text/css");
 			context.addMimeMapping("js", "text/javascript");
 
-			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
-					new ServletContainer(new ResourceConfig(new ResourceLoader(env.appType).getClasses())));
+			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(
+					new ResourceConfig(new ResourceLoader(env.appType).getClasses())));
 			w1.setLoadOnStartup(1);
 			w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 			context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -155,7 +172,7 @@ public class WebServer implements IWebServer {
 			Server.logger.warningLogEntry("Context \"" + URLPath + "\" has not been initialized");
 			throw new ServletException("Context \"" + URLPath + "\" has not been initialized");
 		}
-		context.getServletContext().setAttribute(AppEnv.APP_ATTR, env);
+		context.getServletContext().setAttribute(AppTemplate.TEMPLATE_ATTR, env);
 		return context;
 	}
 
@@ -187,9 +204,6 @@ public class WebServer implements IWebServer {
 
 		context.addServletMapping("/PortalInit", "PortalInit");
 
-		Tomcat.addServlet(context, "Uploader", "com.flabser.servlets.Uploader");
-		context.addServletMapping("/Uploader", "Uploader");
-
 		Tomcat.addServlet(context, "Error", "com.flabser.servlets.Error");
 		context.addServletMapping("/Error", "Error");
 
@@ -200,8 +214,6 @@ public class WebServer implements IWebServer {
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
-		// filterAccessGuardMapping.addServletName("Jersey REST Service");
-
 		context.setTldValidation(false);
 
 		return null;
@@ -284,16 +296,17 @@ public class WebServer implements IWebServer {
 	private void initErrorPages(Context context) {
 		ErrorPage er = new ErrorPage();
 		er.setErrorCode(HttpServletResponse.SC_NOT_FOUND);
-		er.setLocation("/error_404.html");
+		er.setLocation("/Error?code=" + er.getErrorCode() + "&location=" + er.getLocation() + "&type=" + er.getExceptionType() + "&name" + er.getName());
 		context.addErrorPage(er);
 		ErrorPage er401 = new ErrorPage();
 		er401.setErrorCode(HttpServletResponse.SC_UNAUTHORIZED);
-		er401.setLocation("/error_401.html");
+		er401.setLocation("/Error?code=" + er.getErrorCode() + "&location=" + er.getLocation() + "&type=" + er.getExceptionType() + "&name" + er.getName());
 		context.addErrorPage(er401);
 		ErrorPage er400 = new ErrorPage();
 		er400.setErrorCode(HttpServletResponse.SC_BAD_REQUEST);
-		er400.setLocation("/error_400.html");
+		er400.setLocation("/Error?code=" + er.getErrorCode() + "&location=" + er.getLocation() + "&type=" + er.getExceptionType() + "&name" + er.getName());
 		context.addErrorPage(er);
+
 	}
 
 }

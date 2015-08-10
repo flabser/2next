@@ -2,6 +2,7 @@ package com.flabser.dataengine.system.entities;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,7 +12,9 @@ import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.restful.Application;
+import com.flabser.rule.constants.RunMode;
 import com.flabser.script._IContent;
+import com.flabser.server.Server;
 import com.flabser.solutions.DatabaseType;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.VisibiltyType;
@@ -23,6 +26,7 @@ public class ApplicationProfile implements _IContent {
 	public String appType;
 	public String appID;
 	public String appName;
+
 	public String owner;
 	@JsonIgnore
 	public DatabaseType dbType;
@@ -37,7 +41,9 @@ public class ApplicationProfile implements _IContent {
 	public String defaultURL;
 	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
 	private Date statusDate;
-	private VisibiltyType visibilty;;
+	private VisibiltyType visibilty;
+	private ArrayList<UserRole> roles = new ArrayList<UserRole>();
+	private String desciption;
 
 	public ApplicationProfile() {
 	}
@@ -85,6 +91,7 @@ public class ApplicationProfile implements _IContent {
 			IDatabase db = new com.flabser.solutions.postgresql.Database();
 			try {
 				db.init(this);
+				return db;
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -92,9 +99,9 @@ public class ApplicationProfile implements _IContent {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (DatabasePoolException e) {
-				e.printStackTrace();
+				Server.logger.errorLogEntry(e.getMessage());
 			}
-			return db;
+
 		default:
 			return null;
 		}
@@ -118,7 +125,7 @@ public class ApplicationProfile implements _IContent {
 
 	@JsonIgnore
 	public String getDbInitializerClass() {
-		return appType.toLowerCase() + ".init.DDEScripts";
+		return appType.toLowerCase() + ".init.FirstAction";
 		// TODO Need to write a class resolver that is implementation of
 		// IAppDatabaseInit
 	}
@@ -183,11 +190,27 @@ public class ApplicationProfile implements _IContent {
 	}
 
 	public Application getPOJO() {
-		Application app = new Application();
-		app.appType = appType;
+		Application app = new Application(this);
+		app.setAppType(appType);
 
 		return app;
 
+	}
+
+	public void addRole(String name, String descr) {
+		roles.add(new UserRole(name, descr, RunMode.ON));
+	}
+
+	public ArrayList<UserRole> getRoles() {
+		return roles;
+	}
+
+	public String getDesciption() {
+		return desciption;
+	}
+
+	public void setDesciption(String desciption) {
+		this.desciption = desciption;
 	}
 
 }

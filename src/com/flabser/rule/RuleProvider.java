@@ -12,7 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXParseException;
 
-import com.flabser.appenv.AppEnv;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.exception.RuleException;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.rule.page.PageRule;
@@ -22,10 +22,10 @@ public class RuleProvider {
 	public GlobalSetting global;
 
 	private HashMap<String, PageRule> pageRuleMap = new HashMap<String, PageRule>();
-	private AppEnv env;
+	private AppTemplate env;
 	private Element root;
 
-	public RuleProvider(AppEnv env) {
+	public RuleProvider(AppTemplate env) {
 		try {
 			this.env = env;
 		} catch (Exception ne) {
@@ -33,7 +33,7 @@ public class RuleProvider {
 		}
 	}
 
-	public void initApp(String globalFileName) {
+	public void initAppTemplate(String globalFileName) {
 		loadGlobal(globalFileName);
 	}
 
@@ -106,8 +106,7 @@ public class RuleProvider {
 					try {
 						doc = db.parse(file.toString());
 					} catch (SAXParseException e) {
-						Server.logger.errorLogEntry("xml file structure error  file=" + file.getAbsolutePath()
-								+ ", rule has not loaded");
+						Server.logger.errorLogEntry("xml file structure error  file=" + file.getAbsolutePath() + ", rule has not loaded");
 					}
 					root = doc.getDocumentElement();
 					String attr = root.getAttribute("type");
@@ -120,8 +119,7 @@ public class RuleProvider {
 						pageRuleMap.put(ruleObj.id.toLowerCase(), ruleObj);
 					}
 				} catch (SAXParseException spe) {
-					Server.logger.errorLogEntry("xml file structure error  file=" + file.getAbsolutePath()
-							+ ", rule has not loaded");
+					Server.logger.errorLogEntry("xml file structure error  file=" + file.getAbsolutePath() + ", rule has not loaded");
 					Server.logger.errorLogEntry(spe);
 				} finally {
 					n++;

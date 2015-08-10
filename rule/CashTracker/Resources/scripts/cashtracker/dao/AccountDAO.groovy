@@ -14,18 +14,18 @@ public class AccountDAO {
 
 	public AccountDAO(_Session session) {
 		this.db = session.getDatabase()
-		this.user = session.getUser()
+		this.user = session.getAppUser()
 	}
 
 	public String getSelectQuery() {
-		return """SELECT id, name, type, currency_code, opening_balance, amount_control,
-					owner, observers, include_in_totals, note, sort_order FROM accounts"""
+		return """SELECT id, name, currency_code, opening_balance, amount_control, enabled,
+					writers, readers, note, include_in_totals, sort_order FROM accounts"""
 	}
 
 	public String getCreateQuery() {
 		return """INSERT INTO accounts
-					(name, type, currency_code, opening_balance, amount_control,
-					 owner, observers, include_in_totals, note, sort_order)
+					(name, currency_code, opening_balance, amount_control, enabled,
+					 writers, readers, note, include_in_totals, sort_order)
 				  VALUES
 					(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
 	}
@@ -34,14 +34,14 @@ public class AccountDAO {
 		return """UPDATE accounts
 					SET
 						name = ?,
-						type = ?,
 						currency_code = ?,
 						opening_balance = ?,
 						amount_control = ?,
-						owner = ?,
-						observers = ?,
-						include_in_totals = ?,
+						enabled = ?,
+						writers = ?,
+						readers = ?,
 						note = ?,
+						include_in_totals = ?,
 						sort_order = ?
 					WHERE id = ?"""
 	}
@@ -61,35 +61,35 @@ public class AccountDAO {
 		return result
 	}
 
-	public int add(Account a) {
+	public int add(Account m) {
 		String sql = """INSERT INTO accounts
-							(name, type, currency_code, opening_balance, amount_control,
-							owner, observers, include_in_totals, note, sort_order)
+							(name, currency_code, opening_balance, amount_control, enabled,
+							writers, readers, note, include_in_totals, sort_order)
 						VALUES
-							('${a.name}', ${a.type}, '${a.currencyCode}', ${a.openingBalance}, ${a.amountControl},
-							'${a.owner}', '${a.observers}', ${a.includeInTotals}, '${a.note}', ${a.sortOrder})"""
+							('${m.name}', '${m.currencyCode}', ${m.openingBalance}, ${m.amountControl}, ${m.enabled},
+							${m.writers}, ${m.readers}, '${m.note}', ${m.includeInTotals}, ${m.sortOrder})"""
 		return db.insert(sql, user)
 	}
 
-	public void update(Account a) {
+	public void update(Account m) {
 		String sql = """UPDATE accounts
 						SET
-							name = '${a.name}',
-							type = ${a.type},
-							currency_code = '${a.currencyCode}',
-							opening_balance = ${a.openingBalance},
-							amount_control = ${a.amountControl},
-							owner = '${a.owner}',
-							observers = '${a.observers}',
-							include_in_totals = ${a.includeInTotals},
-							note = '${a.note}',
-							sort_order = ${a.sortOrder}
-						WHERE id = ${a.id}"""
+							name = '${m.name}',
+							currency_code = '${m.currencyCode}',
+							opening_balance = ${m.openingBalance},
+							amount_control = ${m.amountControl},
+							enabled = ${m.enabled},
+							writers = ${m.writers},
+							readers = ${m.readers},
+							note = '${m.note}',
+							include_in_totals = ${m.includeInTotals},
+							sort_order = ${m.sortOrder}
+						WHERE id = ${m.id}"""
 		db.update(sql, user)
 	}
 
-	public void delete(Account a) {
-		String sql = getDeleteQuery() + a.id
+	public void delete(Account m) {
+		String sql = getDeleteQuery() + m.id
 		db.delete(sql, user)
 	}
 }
