@@ -61,7 +61,7 @@ public class CategoryDAO {
 							(transaction_type, parent_id,
 							name, enabled, note, color, sort_order)
 						VALUES
-							(${m.transactionType}, ${parentId},
+							(null, ${parentId},
 							'${m.name}', ${m.enabled}, '${m.note}', ${m.color}, ${m.sortOrder})""";
 		return db.insert(sql, user);
 	}
@@ -70,7 +70,7 @@ public class CategoryDAO {
 		def parentId = m.parentCategory?.id?:null
 		String sql = """UPDATE categories
 						SET
-							transaction_type = ${m.transactionType},
+							transaction_type = null,
 							parent_id = ${parentId},
 							name = '${m.name}',
 							enabled = ${m.enabled},

@@ -35,13 +35,14 @@ public class CostCenter implements _IObject {
 		return "CostCenter[" + name + "]";
 	}
 
+	@Override
+	public String getTableName() {
+		return "costcenters";
+	}
+
+	@Override
 	public void init(ResultSet rs) {
 		setId(rs.getInt("id"));
 		setName(rs.getString("name"));
 	}
-
-    @Override
-    public String getTableName() {
-        return "costcenters";
-    }
 }
