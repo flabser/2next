@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.saxon.s9api.SaxonApiException;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.env.EnvConst;
+import com.flabser.exception.ExceptionXML;
 import com.flabser.exception.TransformatorException;
 import com.flabser.server.Server;
 
@@ -34,44 +37,41 @@ public class Error extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		String type = request.getParameter("type");
-		if (type == null) {
-			type = "";
+		String errorMessage = "", location = "", type = "", servletName = "", exception = "";
+		Integer statusCode = 0;
+
+		if (request.getAttribute("errorType") == null) {
+			errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
+			statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+			location = (String) request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI);
+			type = (String) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION_TYPE);
+			servletName = (String) request.getAttribute(RequestDispatcher.ERROR_SERVLET_NAME);
+			exception = (String) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+		} else {
+
 		}
-		String msg = request.getParameter("msg");
-		if (msg == null) {
-			msg = "";
-		}
-		String xslt = "webapps" + File.separator + env.appType + File.separator + "xsl" + File.separator + "errors" + File.separator + "error.xsl";
+
+		ExceptionXML xml = new ExceptionXML(errorMessage, statusCode, location, type, servletName, exception);
+		String xslt = "webapps" + File.separator + env.appType + File.separator + "xsl" + File.separator + "errors" + File.separator
+				+ "error.xsl";
+
 		try {
-			request.setCharacterEncoding("utf-8");
-			String outputContent = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-
-			if (type.equals("default_url_not_defined")) {
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				msg = "default URL has not defined in global setting";
-				outputContent = outputContent + "<request><error type=\"" + type + "\">" + "<message>" + msg + "</message><version>" + Server.serverVersion
-						+ "</version></error></request>";
-
-			} else {
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				outputContent = outputContent + "<request><error type=\"" + type + "\">" + "<message>" + msg + "</message><version>" + Server.serverVersion
-						+ "</version></error></request>";
-			}
-
+			request.setCharacterEncoding(EnvConst.supposedCodePage);
+			String outputContent = xml.toXML();
+			// System.out.println(outputContent);
 			response.setContentType("text/html");
 			File errorXslt = new File(xslt);
 			new SaxonTransformator().toTrans(response, errorXslt, outputContent);
-
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			Server.logger.errorLogEntry(e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Server.logger.errorLogEntry(e);
 		} catch (SaxonApiException e) {
-			e.printStackTrace();
+			Server.logger.errorLogEntry(e);
 		} catch (TransformatorException e) {
-			e.printStackTrace();
+			Server.logger.errorLogEntry(e);
 		}
+
 	}
 
 	@Override

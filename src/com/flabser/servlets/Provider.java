@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import net.sf.saxon.s9api.SaxonApiException;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.env.EnvConst;
 import com.flabser.exception.PortalException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.ServerException;
@@ -63,7 +64,7 @@ public class Provider extends HttpServlet {
 		AttachmentHandler attachHandler = null;
 
 		try {
-			request.setCharacterEncoding("utf-8");
+			request.setCharacterEncoding(EnvConst.supposedCodePage);
 			String type = request.getParameter("type");
 			String id = request.getParameter("id");
 			String key = request.getParameter("key");
@@ -181,8 +182,8 @@ public class Provider extends HttpServlet {
 		}
 	}
 
-	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule, UserSession userSession) throws RuleException,
-			UnsupportedEncodingException, ClassNotFoundException, _Exception, WebFormValueException {
+	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule, UserSession userSession)
+			throws RuleException, UnsupportedEncodingException, ClassNotFoundException, _Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		result.addHistory = pageRule.addToHistory;

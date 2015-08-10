@@ -120,7 +120,8 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
+				new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -162,8 +163,8 @@ public class WebServer implements IWebServer {
 			context.addMimeMapping("css", "text/css");
 			context.addMimeMapping("js", "text/javascript");
 
-			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(
-					new ResourceConfig(new ResourceLoader(env.appType).getClasses())));
+			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(new ResourceLoader(
+					env.appType).getClasses())));
 			w1.setLoadOnStartup(1);
 			w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 			context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -210,7 +211,8 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
+				new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -296,15 +298,15 @@ public class WebServer implements IWebServer {
 	private void initErrorPages(Context context) {
 		ErrorPage er = new ErrorPage();
 		er.setErrorCode(HttpServletResponse.SC_NOT_FOUND);
-		er.setLocation("/Error?code=" + er.getErrorCode() + "&location=" + er.getLocation() + "&type=" + er.getExceptionType() + "&name" + er.getName());
+		er.setLocation("/Error");
 		context.addErrorPage(er);
 		ErrorPage er401 = new ErrorPage();
 		er401.setErrorCode(HttpServletResponse.SC_UNAUTHORIZED);
-		er401.setLocation("/Error?code=" + er.getErrorCode() + "&location=" + er.getLocation() + "&type=" + er.getExceptionType() + "&name" + er.getName());
+		er401.setLocation("/Error");
 		context.addErrorPage(er401);
 		ErrorPage er400 = new ErrorPage();
 		er400.setErrorCode(HttpServletResponse.SC_BAD_REQUEST);
-		er400.setLocation("/Error?code=" + er.getErrorCode() + "&location=" + er.getLocation() + "&type=" + er.getExceptionType() + "&name" + er.getName());
+		er400.setLocation("/Error");
 		context.addErrorPage(er);
 
 	}

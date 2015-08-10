@@ -6,7 +6,7 @@ import java.util.HashSet;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.system.entities.UserRole;
-import com.flabser.users.AuthFailedExceptionType;
+import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.users.AuthModeType;
 import com.flabser.users.UserStatusType;
 

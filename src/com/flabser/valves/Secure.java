@@ -16,10 +16,10 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
+import com.flabser.exception.AuthFailedException;
+import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.server.Server;
 import com.flabser.servlets.Cookies;
-import com.flabser.users.AuthFailedException;
-import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.UserSession;
 
 public class Secure extends ValveBase {

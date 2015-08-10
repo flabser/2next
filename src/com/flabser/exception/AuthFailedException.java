@@ -1,4 +1,4 @@
-package com.flabser.users;
+package com.flabser.exception;
 
 import java.io.File;
 import java.io.IOException;
