@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <vocabulary>
 	<sentence mode="on" keyword="copyright">
-		<entry lang="RUS" hint="@copyright">@copyright</entry>
-		<entry lang="KAZ" hint="@copyright">@copyright</entry>
-		<entry lang="ENG" hint="@copyright">@copyright</entry>
-		<entry lang="BG" hint="@copyright">@copyright</entry>
+		<entry lang="RUS">@copyright</entry>
+		<entry lang="KAZ">@copyright</entry>
+		<entry lang="ENG">@copyright</entry>
+		<entry lang="BG">@copyright</entry>
 	</sentence>
 
 	<!-- promo -->
 	<sentence mode="on" keyword="promo_line1">
-		<entry lang="RUS" hint="Сервис для учета и планирования">Сервис для учета и планирования</entry>
-		<entry lang="KAZ" hint="Сервис для учета и планирования">Сервис для учета и планирования</entry>
-		<entry lang="ENG" hint="Service for accounting and planning ">Service for accounting and planning </entry>
-		<entry lang="BG" hint="Услугата за счетоводство и планиране">Услугата за счетоводство и планиране</entry>
+		<entry lang="RUS">Сервис для учета и планирования</entry>
+		<entry lang="KAZ">Сервис для учета и планирования</entry>
+		<entry lang="ENG">Service for accounting and planning </entry>
+		<entry lang="BG">Услугата за счетоводство и планиране</entry>
 	</sentence>
 	<sentence mode="on" keyword="promo_line2">
-		<entry lang="RUS" hint="корпоративных и семейных финансов">корпоративных и семейных финансов</entry>
-		<entry lang="KAZ" hint="корпоративных и семейных финансов">корпоративных и семейных финансов</entry>
-		<entry lang="ENG" hint="corporate and family finances">corporate and family finances</entry>
-		<entry lang="BG" hint="фирмени и семейни финанси">фирмени и семейни финанси</entry>
+		<entry lang="RUS">корпоративных и семейных финансов</entry>
+		<entry lang="KAZ">корпоративных и семейных финансов</entry>
+		<entry lang="ENG">corporate and family finances</entry>
+		<entry lang="BG">фирмени и семейни финанси</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="dashboard">
@@ -28,10 +28,10 @@
 		<entry lang="BG">Обзор</entry>
 	</sentence>
 	<sentence mode="on" keyword="transactions">
-		<entry lang="RUS" hint="Операции">Операции</entry>
-		<entry lang="KAZ" hint="Операции">Операции</entry>
-		<entry lang="ENG" hint="Transactions">Transactions</entry>
-		<entry lang="BG" hint="Сделки">Сделки</entry>
+		<entry lang="RUS">Операции</entry>
+		<entry lang="KAZ">Операции</entry>
+		<entry lang="ENG">Transactions</entry>
+		<entry lang="BG">Сделки</entry>
 	</sentence>
 	<sentence mode="on" keyword="incomes">
 		<entry lang="RUS">Доходы</entry>
@@ -137,503 +137,508 @@
 		<entry lang="BG">Примечание</entry>
 	</sentence>
 	<sentence mode="on" keyword="user_profile">
-		<entry lang="RUS" hint="Профиль">Профиль</entry>
-		<entry lang="KAZ" hint="Профиль">Профиль</entry>
-		<entry lang="ENG" hint="User Profile">User Profile</entry>
-		<entry lang="BG" hint="Потребителски профил">Потребителски профил</entry>
+		<entry lang="RUS">Профиль</entry>
+		<entry lang="KAZ">Профиль</entry>
+		<entry lang="ENG">User Profile</entry>
+		<entry lang="BG">Потребителски профил</entry>
 	</sentence>
 
 	<!-- pages -->
 	<sentence mode="on" keyword="privacy">
-		<entry lang="RUS" hint="Соглашение о конфиденциальности">Соглашение о конфиденциальности</entry>
-		<entry lang="KAZ" hint="Соглашение о конфиденциальности">Соглашение о конфиденциальности</entry>
-		<entry lang="ENG" hint="Privacy agreement">Privacy agreement</entry>
-		<entry lang="BG" hint="Споразумение за конфиденциалност">Споразумение за конфиденциалност</entry>
+		<entry lang="RUS">Соглашение о конфиденциальности</entry>
+		<entry lang="KAZ">Соглашение о конфиденциальности</entry>
+		<entry lang="ENG">Privacy agreement</entry>
+		<entry lang="BG">Споразумение за конфиденциалност</entry>
 	</sentence>
 	<sentence mode="on" keyword="terms">
-		<entry lang="RUS" hint="Условия использования">Условия использования</entry>
-		<entry lang="KAZ" hint="Условия использования">Условия использования</entry>
-		<entry lang="ENG" hint="Terms of Use">Terms of Use</entry>
-		<entry lang="BG" hint="Условия за ползване">Условия за ползване</entry>
+		<entry lang="RUS">Условия использования</entry>
+		<entry lang="KAZ">Условия использования</entry>
+		<entry lang="ENG">Terms of Use</entry>
+		<entry lang="BG">Условия за ползване</entry>
 	</sentence>
 	<sentence mode="on" keyword="about">
-		<entry lang="RUS" hint="О проекте">О проекте</entry>
-		<entry lang="KAZ" hint="О проекте">О проекте</entry>
-		<entry lang="ENG" hint="About">About</entry>
-		<entry lang="BG" hint="За проекта">За проекта</entry>
+		<entry lang="RUS">О проекте</entry>
+		<entry lang="KAZ">О проекте</entry>
+		<entry lang="ENG">About</entry>
+		<entry lang="BG">За проекта</entry>
 	</sentence>
 	<sentence mode="on" keyword="help">
-		<entry lang="RUS" hint="Помощь">Помощь</entry>
-		<entry lang="KAZ" hint="Помощь">Помощь</entry>
-		<entry lang="ENG" hint="Help">Help</entry>
-		<entry lang="BG" hint="Помощ">Помощ</entry>
+		<entry lang="RUS">Помощь</entry>
+		<entry lang="KAZ">Помощь</entry>
+		<entry lang="ENG">Help</entry>
+		<entry lang="BG">Помощ</entry>
 	</sentence>
 	<sentence mode="on" keyword="setup">
-		<entry lang="RUS" hint="Начальная настройка">Начальная настройка</entry>
-		<entry lang="KAZ" hint="Начальная настройка">Начальная настройка</entry>
-		<entry lang="ENG" hint="Начальная настройка">Начальная настройка</entry>
-		<entry lang="BG" hint="Начальная настройка">Начальная настройка</entry>
+		<entry lang="RUS">Начальная настройка</entry>
+		<entry lang="KAZ">Начальная настройка</entry>
+		<entry lang="ENG">Начальная настройка</entry>
+		<entry lang="BG">Начальная настройка</entry>
 	</sentence>
 
 	<!-- help -->
 	<sentence mode="on" keyword="lost_password">
-		<entry lang="RUS" hint="Забыл пароль">Забыл пароль</entry>
-		<entry lang="KAZ" hint="Забыл пароль">Забыл пароль</entry>
-		<entry lang="ENG" hint="Have you forgotten your password?">Have you forgotten your password?</entry>
-		<entry lang="BG" hint="Забравихте ли паролата си?">Забравихте ли паролата си?</entry>
+		<entry lang="RUS">Забыл пароль</entry>
+		<entry lang="KAZ">Забыл пароль</entry>
+		<entry lang="ENG">Have you forgotten your password?</entry>
+		<entry lang="BG">Забравихте ли паролата си?</entry>
 	</sentence>
 	<sentence mode="on" keyword="no_verify_mail">
-		<entry lang="RUS" hint="Не получили письмо подтверждения e-mail?">Не получили письмо подтверждения e-mail?</entry>
-		<entry lang="KAZ" hint="Не получил письмо подтверждения e-mail">Не получил письмо подтверждения e-mail</entry>
-		<entry lang="ENG" hint="Have you not received the e-mail?">Have you not received the e-mail?</entry>
-		<entry lang="BG" hint="Не сте ли получили имейла?">Не сте ли получили имейла?</entry>
+		<entry lang="RUS">Не получили письмо подтверждения e-mail?</entry>
+		<entry lang="KAZ">Не получил письмо подтверждения e-mail</entry>
+		<entry lang="ENG">Have you not received the e-mail?</entry>
+		<entry lang="BG">Не сте ли получили имейла?</entry>
 	</sentence>
 
 	<!-- login -->
 	<sentence mode="on" keyword="login">
-		<entry lang="RUS" hint="Вход">Вход</entry>
-		<entry lang="KAZ" hint="Кіру">Кіру</entry>
-		<entry lang="ENG" hint="Sign In">Sign In</entry>
-		<entry lang="BG" hint="Вход">Вход</entry>
+		<entry lang="RUS">Вход</entry>
+		<entry lang="KAZ">Кіру</entry>
+		<entry lang="ENG">Sign In</entry>
+		<entry lang="BG">Вход</entry>
 	</sentence>
 	<sentence mode="on" keyword="logout">
-		<entry lang="RUS" hint="Завершить работу">Выход</entry>
-		<entry lang="KAZ" hint="Жұмысты аяқтау">Шығу</entry>
-		<entry lang="ENG" hint="Sign out">Sign out</entry>
-		<entry lang="BG" hint="Изход">Изход</entry>
+		<entry lang="RUS">Выход</entry>
+		<entry lang="KAZ">Шығу</entry>
+		<entry lang="ENG">Sign out</entry>
+		<entry lang="BG">Изход</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_title">
-		<entry lang="RUS" hint="Авторизация">Авторизация</entry>
-		<entry lang="KAZ" hint="Авторизация">Авторизация</entry>
-		<entry lang="ENG" hint="Authorization">Authorization</entry>
-		<entry lang="BG" hint="Упълномощаване">Упълномощаване</entry>
+		<entry lang="RUS">Авторизация</entry>
+		<entry lang="KAZ">Авторизация</entry>
+		<entry lang="ENG">Authorization</entry>
+		<entry lang="BG">Упълномощаване</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_login">
-		<entry lang="RUS" hint="E-mail">E-mail</entry>
-		<entry lang="KAZ" hint="E-mail">E-mail</entry>
-		<entry lang="ENG" hint="E-mail">E-mail</entry>
-		<entry lang="BG" hint="E-mail">E-mail</entry>
+		<entry lang="RUS">E-mail</entry>
+		<entry lang="KAZ">E-mail</entry>
+		<entry lang="ENG">E-mail</entry>
+		<entry lang="BG">E-mail</entry>
 	</sentence>
 	<sentence mode="on" keyword="password">
-		<entry lang="RUS" hint="Пароль">Пароль</entry>
-		<entry lang="KAZ" hint="Пароль">Пароль</entry>
-		<entry lang="ENG" hint="Password">Password</entry>
-		<entry lang="BG" hint="Парола">Парола</entry>
+		<entry lang="RUS">Пароль</entry>
+		<entry lang="KAZ">Пароль</entry>
+		<entry lang="ENG">Password</entry>
+		<entry lang="BG">Парола</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_alien_device">
-		<entry lang="RUS" hint="Не запоминать меня">Не запоминать меня</entry>
-		<entry lang="KAZ" hint="Не запоминать меня">Не запоминать меня</entry>
-		<entry lang="ENG" hint="Do not remember me">Do not remember me</entry>
-		<entry lang="BG" hint="Не ме помниш">Не ме помниш</entry>
+		<entry lang="RUS">Не запоминать меня</entry>
+		<entry lang="KAZ">Не запоминать меня</entry>
+		<entry lang="ENG">Do not remember me</entry>
+		<entry lang="BG">Не ме помниш</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_button">
-		<entry lang="RUS" hint="Войти">Войти</entry>
-		<entry lang="KAZ" hint="Войти">Войти</entry>
-		<entry lang="ENG" hint="Log In">Log In</entry>
-		<entry lang="BG" hint="Влизане">Влизане</entry>
+		<entry lang="RUS">Войти</entry>
+		<entry lang="KAZ">Войти</entry>
+		<entry lang="ENG">Log In</entry>
+		<entry lang="BG">Влизане</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_data_incorrect">
-		<entry lang="RUS" hint="Не верное имя пользователя или пароль">Не верное имя пользователя или пароль</entry>
-		<entry lang="KAZ" hint="Не верное имя пользователя или пароль">Не верное имя пользователя или пароль</entry>
-		<entry lang="ENG" hint="Password or login is incorrect">Password or login is incorrect</entry>
-		<entry lang="BG" hint="Не верное имя пользователя или пароль">Не верное имя пользователя или пароль</entry>
+		<entry lang="RUS">Не верное имя пользователя или пароль</entry>
+		<entry lang="KAZ">Не верное имя пользователя или пароль</entry>
+		<entry lang="ENG">Password or login is incorrect</entry>
+		<entry lang="BG">Не верное имя пользователя или пароль</entry>
 	</sentence>
 
 	<!-- reg -->
 	<sentence mode="on" keyword="reg">
-		<entry lang="RUS" hint="Регистрация">Регистрация</entry>
-		<entry lang="KAZ" hint="Тіркелу">Тіркелу</entry>
+		<entry lang="RUS">Регистрация</entry>
+		<entry lang="KAZ">Тіркелу</entry>
 		<entry lang="ENG">Sign up</entry>
-		<entry lang="BG" hint="Регистрация">Регистрация</entry>
+		<entry lang="BG">Регистрация</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_email">
-		<entry lang="RUS" hint="E-mail">E-mail</entry>
-		<entry lang="KAZ" hint="E-mail">E-mail</entry>
-		<entry lang="ENG" hint="E-mail">E-mail</entry>
-		<entry lang="BG" hint="E-mail">E-mail</entry>
+		<entry lang="RUS">E-mail</entry>
+		<entry lang="KAZ">E-mail</entry>
+		<entry lang="ENG">E-mail</entry>
+		<entry lang="BG">E-mail</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_email_inf">
-		<entry lang="RUS" hint="На этот e-mail будет отправлено письмо подтверждения">На этот e-mail будет отправлено письмо подтверждения</entry>
-		<entry lang="KAZ" hint="На этот e-mail будет отправлено письмо подтверждения">На этот e-mail будет отправлено письмо подтверждения</entry>
-		<entry lang="ENG" hint="The confirmation letter will be sent to this e-mail">The confirmation letter will be sent to this e-mail</entry>
-		<entry lang="BG" hint="Писмото за потвърждение ще бъде изпратен на този имейл">Писмото за потвърждение ще бъде изпратен на този имейл</entry>
+		<entry lang="RUS">На этот e-mail будет отправлено письмо подтверждения</entry>
+		<entry lang="KAZ">На этот e-mail будет отправлено письмо подтверждения</entry>
+		<entry lang="ENG">The confirmation letter will be sent to this e-mail</entry>
+		<entry lang="BG">Писмото за потвърждение ще бъде изпратен на този имейл</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_email_invalid">
-		<entry lang="RUS" hint="Не корректный">Не корректный</entry>
-		<entry lang="KAZ" hint="Не корректный">Не корректный</entry>
-		<entry lang="ENG" hint="Incorrect">Incorrect</entry>
-		<entry lang="BG" hint="Неправилен">Неправилен</entry>
+		<entry lang="RUS">Не корректный</entry>
+		<entry lang="KAZ">Не корректный</entry>
+		<entry lang="ENG">Incorrect</entry>
+		<entry lang="BG">Неправилен</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_email_exists">
-		<entry lang="RUS" hint="Пользователь с таким e-mail существует">Пользователь с таким e-mail существует</entry>
-		<entry lang="KAZ" hint="Пользователь с таким e-mail существует">Пользователь с таким e-mail существует</entry>
-		<entry lang="ENG" hint="The user with this e-mail is exist">The user with this e-mail is exist</entry>
-		<entry lang="BG" hint="Потребителят с този имейл е налице">Потребителят с този имейл е налице</entry>
+		<entry lang="RUS">Пользователь с таким e-mail существует</entry>
+		<entry lang="KAZ">Пользователь с таким e-mail существует</entry>
+		<entry lang="ENG">The user with this e-mail is exist</entry>
+		<entry lang="BG">Потребителят с този имейл е налице</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_pwd">
-		<entry lang="RUS" hint="Придумайте пароль">Придумайте пароль</entry>
-		<entry lang="KAZ" hint="Придумайте пароль">Придумайте пароль</entry>
-		<entry lang="ENG" hint="Create password">Create password</entry>
-		<entry lang="BG" hint="Създай парола">Създай парола</entry>
+		<entry lang="RUS">Придумайте пароль</entry>
+		<entry lang="KAZ">Придумайте пароль</entry>
+		<entry lang="ENG">Create password</entry>
+		<entry lang="BG">Създай парола</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_pwd_inf">
-		<entry lang="RUS" hint="В пароле минимум 8 символов, используйте буквы и цифры">В пароле минимум 8 символов, используйте буквы и цифры</entry>
-		<entry lang="KAZ" hint="В пароле минимум 8 символов, используйте буквы и цифры">В пароле минимум 8 символов, используйте буквы и цифры</entry>
-		<entry lang="ENG" hint="В пароле минимум 8 символов, используйте буквы и цифры">В пароле минимум 8 символов, используйте буквы и цифры</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">В пароле минимум 8 символов, используйте буквы и цифры</entry>
+		<entry lang="KAZ">В пароле минимум 8 символов, используйте буквы и цифры</entry>
+		<entry lang="ENG">В пароле минимум 8 символов, используйте буквы и цифры</entry>
+		<entry lang="BG"></entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_pwd_weak">
-		<entry lang="RUS" hint="Слабый пароль">Слабый пароль</entry>
-		<entry lang="KAZ" hint="Слабый пароль">Слабый пароль</entry>
-		<entry lang="ENG" hint="Weak password">Weak password</entry>
-		<entry lang="BG" hint="Слаба парола">Слаба парола</entry>
+		<entry lang="RUS">Слабый пароль</entry>
+		<entry lang="KAZ">Слабый пароль</entry>
+		<entry lang="ENG">Weak password</entry>
+		<entry lang="BG">Слаба парола</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_button">
-		<entry lang="RUS" hint="Зарегистрироваться">Зарегистрироваться</entry>
-		<entry lang="KAZ" hint="Зарегистрироваться">Зарегистрироваться</entry>
+		<entry lang="RUS">Зарегистрироваться</entry>
+		<entry lang="KAZ">Зарегистрироваться</entry>
 		<entry lang="ENG">Sign up</entry>
-		<entry lang="BG" hint="Регистрирайте се">Регистрирайте се</entry>
+		<entry lang="BG">Регистрирайте се</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_confirm_mail">
-		<entry lang="RUS" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
-		<entry lang="KAZ" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
-		<entry lang="ENG" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
-		<entry lang="BG" hint="">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+		<entry lang="RUS">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+		<entry lang="KAZ">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+		<entry lang="ENG">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+		<entry lang="BG">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_terms">
-		<entry lang="RUS" hint="Пользуясь сервисом вы соглащаетесь с условиями использования">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>
-		<entry lang="KAZ" hint="Пользуясь сервисом вы соглащаетесь с условиями использования">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>
-		<entry lang="ENG" hint="If you use the service, you agree to the terms of use">If you use the service, you agree to the terms of use</entry>
-		<entry lang="BG" hint="Ако използвате услугата, вие се съгласявате с условията за ползване">Ако използвате услугата, вие се съгласявате с условията за ползване</entry>
+		<entry lang="RUS">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>
+		<entry lang="KAZ">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>
+		<entry lang="ENG">If you use the service, you agree to the terms of use</entry>
+		<entry lang="BG">Ако използвате услугата, вие се съгласявате с условията за ползване</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_or">
-		<entry lang="RUS" hint="также">также</entry>
-		<entry lang="KAZ" hint="также">также</entry>
-		<entry lang="ENG" hint="also">also</entry>
-		<entry lang="BG" hint="също">също</entry>
+		<entry lang="RUS">также</entry>
+		<entry lang="KAZ">также</entry>
+		<entry lang="ENG">also</entry>
+		<entry lang="BG">също</entry>
 	</sentence>
 	<sentence mode="on" keyword="use_oauth">
-		<entry lang="RUS" hint="можно использовать соц.сети">можно использовать соц.сети</entry>
-		<entry lang="KAZ" hint="можно использовать соц.сети">можно использовать соц.сети</entry>
-		<entry lang="ENG" hint="you can use some social networks ">you can use some social networks </entry>
-		<entry lang="BG" hint="Можете да използвате някои социални мрежи">Можете да използвате някои социални мрежи
+		<entry lang="RUS">можно использовать соц.сети</entry>
+		<entry lang="KAZ">можно использовать соц.сети</entry>
+		<entry lang="ENG">you can use some social networks </entry>
+		<entry lang="BG">Можете да използвате някои социални мрежи
 		</entry>
 	</sentence>
 
 	<!-- pwd_recovery -->
 	<sentence mode="on" keyword="pwd_recovery_title">
-		<entry lang="RUS" hint="Восстановление доступа">Восстановление доступа</entry>
-		<entry lang="KAZ" hint="Восстановление доступа">Восстановление доступа</entry>
-		<entry lang="ENG" hint="Access recovery">Access recovery</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">Восстановление доступа</entry>
+		<entry lang="KAZ">Восстановление доступа</entry>
+		<entry lang="ENG">Access recovery</entry>
+		<entry lang="BG">Восстановление доступа</entry>
 	</sentence>
 	<sentence mode="on" keyword="pwd_recovery_description">
-		<entry lang="RUS" hint="На зарегистрированный e-mail будет отправлена ссылка для сброса пароля">На зарегистрированный e-mail будет отправлена ссылка для сброса пароля</entry>
-		<entry lang="KAZ" hint="На зарегистрированный e-mail будет отправлена ссылка для сброса пароля">На зарегистрированный e-mail будет отправлена ссылка для сброса пароля</entry>
-		<entry lang="ENG" hint="На зарегистрированный e-mail будет отправлена ссылка для сброса пароля">На зарегистрированный e-mail будет отправлена ссылка для сброса пароля</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">На зарегистрированный e-mail будет отправлена ссылка для сброса пароля</entry>
+		<entry lang="KAZ">На зарегистрированный e-mail будет отправлена ссылка для сброса пароля</entry>
+		<entry lang="ENG">На зарегистрированный e-mail будет отправлена ссылка для сброса пароля</entry>
+		<entry lang="BG">На зарегистрированный e-mail будет отправлена ссылка для сброса пароля</entry>
 	</sentence>
 	<sentence mode="on" keyword="pwd_recovery_new_pwd">
-		<entry lang="RUS" hint="Введите новый пароль">Введите новый пароль</entry>
-		<entry lang="KAZ" hint="Введите новый пароль">Введите новый пароль</entry>
-		<entry lang="ENG" hint="Введите новый пароль">Введите новый пароль</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">Введите новый пароль</entry>
+		<entry lang="KAZ">Введите новый пароль</entry>
+		<entry lang="ENG">Введите новый пароль</entry>
+		<entry lang="BG">Введите новый пароль</entry>
 	</sentence>
 	<sentence mode="on" keyword="pwd_recovery_btn_send">
-		<entry lang="RUS" hint="Отправить">Отправить</entry>
-		<entry lang="KAZ" hint="Отправить">Отправить</entry>
-		<entry lang="ENG" hint="Отправить">Отправить</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">Отправить</entry>
+		<entry lang="KAZ">Отправить</entry>
+		<entry lang="ENG">Отправить</entry>
+		<entry lang="BG">Отправить</entry>
 	</sentence>
 	<sentence mode="on" keyword="pwd_recovery_btn_ok">
-		<entry lang="RUS" hint="OK">OK</entry>
-		<entry lang="KAZ" hint="OK">OK</entry>
-		<entry lang="ENG" hint="OK">OK</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">OK</entry>
+		<entry lang="KAZ">OK</entry>
+		<entry lang="ENG">OK</entry>
+		<entry lang="BG">OK</entry>
 	</sentence>
 
 	<!-- verify_email -->
 	<sentence mode="on" keyword="verify_email_title">
-		<entry lang="RUS" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
-		<entry lang="KAZ" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
-		<entry lang="ENG" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
+		<entry lang="RUS">Подтверждение E-mail</entry>
+		<entry lang="KAZ">Подтверждение E-mail</entry>
+		<entry lang="ENG">Подтверждение E-mail</entry>
 		<entry lang="BG">Подтверждение E-mail</entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_error">
-		<entry lang="RUS" hint="Не верные данные">Не верные данные</entry>
-		<entry lang="KAZ" hint="Не верные данные">Не верные данные</entry>
-		<entry lang="ENG" hint="Не верные данные">Не верные данные</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">Не верные данные</entry>
+		<entry lang="KAZ">Не верные данные</entry>
+		<entry lang="ENG">Не верные данные</entry>
+		<entry lang="BG">Не верные данные</entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_done">
-		<entry lang="RUS" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
-		<entry lang="KAZ" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
-		<entry lang="ENG" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">Проверка прошла успешно. Теперь вы можете войти.</entry>
+		<entry lang="KAZ">Проверка прошла успешно. Теперь вы можете войти.</entry>
+		<entry lang="ENG">Проверка прошла успешно. Теперь вы можете войти.</entry>
+		<entry lang="BG">Проверка прошла успешно. Теперь вы можете войти.</entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_already">
-		<entry lang="RUS" hint="Вы уже зарегистрированы">Вы уже зарегистрированы</entry>
-		<entry lang="KAZ" hint="Вы уже зарегистрированы">Вы уже зарегистрированы</entry>
-		<entry lang="ENG" hint="You are already registered">You are already registered</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">Вы уже зарегистрированы</entry>
+		<entry lang="KAZ">Вы уже зарегистрированы</entry>
+		<entry lang="ENG">You are already registered</entry>
+		<entry lang="BG">Вы уже зарегистрированы</entry>
 	</sentence>
 
 	<!-- retry_send_verify_email -->
 	<sentence mode="on" keyword="retry_send_verify_email_title">
-		<entry lang="RUS" hint="Повторная отправка письма для удостоверения e-mail">Повторная отправка письма для удостоверения e-mail</entry>
-		<entry lang="KAZ" hint="Повторная отправка письма для удостоверения e-mail">Повторная отправка письма для удостоверения e-mail</entry>
-		<entry lang="ENG" hint="Повторная отправка письма для удостоверения e-mail">Повторная отправка письма для удостоверения e-mail</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">Повторная отправка письма для удостоверения e-mail</entry>
+		<entry lang="KAZ">Повторная отправка письма для удостоверения e-mail</entry>
+		<entry lang="ENG">Повторная отправка письма для удостоверения e-mail</entry>
+		<entry lang="BG">Повторная отправка письма для удостоверения e-mail</entry>
 	</sentence>
 	<sentence mode="on" keyword="retry_send_verify_email_btn_send">
-		<entry lang="RUS" hint="Отправить">Отправить</entry>
-		<entry lang="KAZ" hint="Отправить">Отправить</entry>
-		<entry lang="ENG" hint="Отправить">Отправить</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">Отправить</entry>
+		<entry lang="KAZ">Отправить</entry>
+		<entry lang="ENG">Отправить</entry>
+		<entry lang="BG">Отправить</entry>
 	</sentence>
 	<sentence mode="on" keyword="retry_send_verify_email_send_ok">
-		<entry lang="RUS" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
-		<entry lang="KAZ" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
-		<entry lang="ENG" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
-		<entry lang="BG" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
+		<entry lang="RUS">Письмо отправлено, проверьте почту.</entry>
+		<entry lang="KAZ">Письмо отправлено, проверьте почту.</entry>
+		<entry lang="ENG">Письмо отправлено, проверьте почту.</entry>
+		<entry lang="BG">Письмо отправлено, проверьте почту.</entry>
 	</sentence>
 	<sentence mode="on" keyword="no_user">
-		<entry lang="RUS" hint="Пользователь не найден">Пользователь не найден</entry>
-		<entry lang="KAZ" hint="Пользователь не найден">Пользователь не найден</entry>
-		<entry lang="ENG" hint="Пользователь не найден">Пользователь не найден</entry>
-		<entry lang="BG" hint="Пользователь не найден">Пользователь не найден</entry>
+		<entry lang="RUS">Пользователь не найден</entry>
+		<entry lang="KAZ">Пользователь не найден</entry>
+		<entry lang="ENG">Пользователь не найден</entry>
+		<entry lang="BG">Пользователь не найден</entry>
 	</sentence>
 	<sentence mode="on" keyword="invalid_email">
-		<entry lang="RUS" hint="Не корректный e-mail">Не корректный e-mail</entry>
-		<entry lang="KAZ" hint="Не корректный e-mail">Не корректный e-mail</entry>
-		<entry lang="ENG" hint="Не корректный e-mail">Не корректный e-mail</entry>
-		<entry lang="BG" hint="Не корректный e-mail">Не корректный e-mail</entry>
+		<entry lang="RUS">Не корректный e-mail</entry>
+		<entry lang="KAZ">Не корректный e-mail</entry>
+		<entry lang="ENG">Не корректный e-mail</entry>
+		<entry lang="BG">Не корректный e-mail</entry>
 	</sentence>
 	<sentence mode="on" keyword="user_already_verified">
-		<entry lang="RUS" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
-		<entry lang="KAZ" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
-		<entry lang="ENG" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
-		<entry lang="BG" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
+		<entry lang="RUS">E-mail адресс ранее верифицирован</entry>
+		<entry lang="KAZ">E-mail адресс ранее верифицирован</entry>
+		<entry lang="ENG">E-mail адресс ранее верифицирован</entry>
+		<entry lang="BG">E-mail адресс ранее верифицирован</entry>
 	</sentence>
 	<sentence mode="on" keyword="error_verify_email">
-		<entry lang="RUS" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
-		<entry lang="KAZ" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
-		<entry lang="ENG" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
-		<entry lang="BG" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
+		<entry lang="RUS">Не удалось отправить письмо верификации</entry>
+		<entry lang="KAZ">Не удалось отправить письмо верификации</entry>
+		<entry lang="ENG">Не удалось отправить письмо верификации</entry>
+		<entry lang="BG">Не удалось отправить письмо верификации</entry>
 	</sentence>
 
 	<!-- -->
-	<sentence mode="on" keyword="btn.add">
+	<sentence mode="on" keyword="add">
 		<entry lang="RUS">Добавить</entry>
 		<entry lang="KAZ">Жаңа</entry>
 		<entry lang="ENG">Add</entry>
 		<entry lang="BG">Добави</entry>
 	</sentence>
 	<sentence mode="on" keyword="save_close">
-		<entry lang="RUS" hint="Сохранить и закрыть">Сохранить и закрыть</entry>
-		<entry lang="KAZ" hint="Сохранить и закрыть">Сохранить и закрыть</entry>
-		<entry lang="ENG" hint="Save then close">Save then close</entry>
-		<entry lang="BG" hint="Запиши и затвори">Запиши и затвори</entry>
+		<entry lang="RUS">Сохранить и закрыть</entry>
+		<entry lang="KAZ">Сохранить и закрыть</entry>
+		<entry lang="ENG">Save then close</entry>
+		<entry lang="BG">Запиши и затвори</entry>
 	</sentence>
 	<sentence mode="on" keyword="save">
-		<entry lang="RUS" hint="Сохранить">Сохранить</entry>
-		<entry lang="KAZ" hint="Сақтау">Сақтау</entry>
-		<entry lang="ENG" hint="Save">Save</entry>
-		<entry lang="BG" hint="Запиши">Запиши</entry>
+		<entry lang="RUS">Сохранить</entry>
+		<entry lang="KAZ">Сақтау</entry>
+		<entry lang="ENG">Save</entry>
+		<entry lang="BG">Запиши</entry>
+	</sentence>
+	<sentence mode="on" keyword="cancel">
+		<entry lang="RUS">Отмена</entry>
+		<entry lang="KAZ">Отмена</entry>
+		<entry lang="ENG">Cancel</entry>
+		<entry lang="BG">Отмена</entry>
 	</sentence>
 	<sentence mode="on" keyword="close">
-		<entry lang="RUS" hint="Закрыть">Закрыть</entry>
-		<entry lang="KAZ" hint="Закрыть">Закрыть</entry>
-		<entry lang="ENG" hint="Close">Close</entry>
-		<entry lang="BG" hint="Затвори">Затвори</entry>
+		<entry lang="RUS">Закрыть</entry>
+		<entry lang="KAZ">Закрыть</entry>
+		<entry lang="ENG">Close</entry>
+		<entry lang="BG">Затвори</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="members">
-		<entry lang="RUS" hint="Участники">Участники</entry>
-		<entry lang="KAZ" hint="Участники">Участники</entry>
-		<entry lang="ENG" hint="Members">Members</entry>
-		<entry lang="BG" hint="Потребители">Потребители</entry>
+		<entry lang="RUS">Участники</entry>
+		<entry lang="KAZ">Участники</entry>
+		<entry lang="ENG">Members</entry>
+		<entry lang="BG">Потребители</entry>
 	</sentence>
 	<sentence mode="on" keyword="settings">
-		<entry lang="RUS" hint="Настройки">Настройки</entry>
-		<entry lang="KAZ" hint="Настройки">Настройки</entry>
-		<entry lang="ENG" hint="Settings">Settings</entry>
-		<entry lang="BG" hint="Настройки">Настройки</entry>
+		<entry lang="RUS">Настройки</entry>
+		<entry lang="KAZ">Настройки</entry>
+		<entry lang="ENG">Settings</entry>
+		<entry lang="BG">Настройки</entry>
 	</sentence>
 	<sentence mode="on" keyword="account">
-		<entry lang="RUS" hint="Счет">Счет</entry>
-		<entry lang="KAZ" hint="Счет">Счет</entry>
-		<entry lang="ENG" hint="Account">Account</entry>
-		<entry lang="BG" hint="Счет">Счет</entry>
+		<entry lang="RUS">Счет</entry>
+		<entry lang="KAZ">Счет</entry>
+		<entry lang="ENG">Account</entry>
+		<entry lang="BG">Счет</entry>
 	</sentence>
 	<sentence mode="on" keyword="transaction_type">
-		<entry lang="RUS" hint="Тип операции">Тип операции</entry>
-		<entry lang="KAZ" hint="Тип операции">Тип операции</entry>
-		<entry lang="ENG" hint="Transaction type">Transaction type</entry>
-		<entry lang="BG" hint="Тип на транзакция">Tип на транзакция</entry>
+		<entry lang="RUS">Тип операции</entry>
+		<entry lang="KAZ">Тип операции</entry>
+		<entry lang="ENG">Transaction type</entry>
+		<entry lang="BG">Tип на транзакция</entry>
 	</sentence>
 	<sentence mode="on" keyword="all">
-		<entry lang="RUS" hint="Все">Все</entry>
-		<entry lang="KAZ" hint="Все">Все</entry>
-		<entry lang="ENG" hint="All">All</entry>
-		<entry lang="BG" hint="Всички">Всички</entry>
+		<entry lang="RUS">Все</entry>
+		<entry lang="KAZ">Все</entry>
+		<entry lang="ENG">All</entry>
+		<entry lang="BG">Всички</entry>
 	</sentence>
 
 	<!-- ______________ app captions ______________ -->
-	<sentence mode="on" keyword="close">
-		<entry lang="RUS" hint="Закрыть">Закрыть</entry>
-		<entry lang="KAZ" hint="Закрыть">Закрыть</entry>
-		<entry lang="ENG" hint="Close">Close</entry>
-		<entry lang="BG" hint="Закрыть">Закрыть</entry>
-	</sentence>
-	<sentence mode="on" keyword="cancel">
-		<entry lang="RUS" hint="Отмена">Отмена</entry>
-		<entry lang="KAZ" hint="Отмена">Отмена</entry>
-		<entry lang="ENG" hint="Cancel">Cancel</entry>
-		<entry lang="BG" hint="Отмена">Отмена</entry>
-	</sentence>
-
 	<sentence mode="on" keyword="saved">
-		<entry lang="RUS" hint="Сохраненный">Сохраненный</entry>
-		<entry lang="KAZ" hint="Сохраненный">Сохраненный</entry>
-		<entry lang="ENG" hint="Сохраненный">Сохраненный</entry>
-		<entry lang="BG" hint="Сохраненный">Сохраненный</entry>
+		<entry lang="RUS">Сохраненный</entry>
+		<entry lang="KAZ">Сохраненный</entry>
+		<entry lang="ENG">Сохраненный</entry>
+		<entry lang="BG">Сохраненный</entry>
 	</sentence>
 	<sentence mode="on" keyword="newdoc">
-		<entry lang="RUS" hint="Новый документ">Новый документ</entry>
-		<entry lang="KAZ" hint="Новый документ">Новый документ</entry>
-		<entry lang="ENG" hint="Новый документ">Новый документ</entry>
-		<entry lang="BG" hint="Новый документ">Новый документ</entry>
+		<entry lang="RUS">Новый документ</entry>
+		<entry lang="KAZ">Новый документ</entry>
+		<entry lang="ENG">Новый документ</entry>
+		<entry lang="BG">Новый документ</entry>
 	</sentence>
 	<sentence mode="on" keyword="editing">
-		<entry lang="RUS" hint="Редактирование">Редактирование</entry>
-		<entry lang="KAZ" hint="Редактирование">Редактирование</entry>
-		<entry lang="ENG" hint="Редактирование">Редактирование</entry>
-		<entry lang="BG" hint="Редактирование">Редактирование</entry>
+		<entry lang="RUS">Редактирование</entry>
+		<entry lang="KAZ">Редактирование</entry>
+		<entry lang="ENG">Редактирование</entry>
+		<entry lang="BG">Редактирование</entry>
 	</sentence>
 	<sentence mode="on" keyword="readonly">
-		<entry lang="RUS" hint="Только для чтения">Только для чтения</entry>
-		<entry lang="KAZ" hint="Только для чтения">Только для чтения</entry>
-		<entry lang="ENG" hint="Только для чтения">Только для чтения</entry>
-		<entry lang="BG" hint="Только для чтения">Только для чтения</entry>
+		<entry lang="RUS">Только для чтения</entry>
+		<entry lang="KAZ">Только для чтения</entry>
+		<entry lang="ENG">Только для чтения</entry>
+		<entry lang="BG">Только для чтения</entry>
 	</sentence>
 	<sentence mode="on" keyword="modenotdefined">
-		<entry lang="RUS" hint="Режим не определен">Режим не определен</entry>
-		<entry lang="KAZ" hint="Режим не определен">Режим не определен</entry>
-		<entry lang="ENG" hint="Режим не определен">Режим не определен</entry>
-		<entry lang="BG" hint="Режим не определен">Режим не определен</entry>
+		<entry lang="RUS">Режим не определен</entry>
+		<entry lang="KAZ">Режим не определен</entry>
+		<entry lang="ENG">Режим не определен</entry>
+		<entry lang="BG">Режим не определен</entry>
 	</sentence>
 	<sentence mode="on" keyword="author">
-		<entry lang="RUS" hint="Автор">Автор</entry>
-		<entry lang="KAZ" hint="Автор">Автор</entry>
-		<entry lang="ENG" hint="Автор">Автор</entry>
-		<entry lang="BG" hint="Автор">Автор</entry>
+		<entry lang="RUS">Автор</entry>
+		<entry lang="KAZ">Автор</entry>
+		<entry lang="ENG">Автор</entry>
+		<entry lang="BG">Автор</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="properties">
-		<entry lang="RUS" hint="Свойства">Свойства</entry>
-		<entry lang="KAZ" hint="Свойства">Свойства</entry>
-		<entry lang="ENG" hint="Свойства">Свойства</entry>
-		<entry lang="BG" hint="Свойства">Свойства</entry>
+		<entry lang="RUS">Свойства</entry>
+		<entry lang="KAZ">Свойства</entry>
+		<entry lang="ENG">Свойства</entry>
+		<entry lang="BG">Свойства</entry>
 	</sentence>
 	<sentence mode="on" keyword="attachments">
-		<entry lang="RUS" hint="Вложения">Вложения</entry>
-		<entry lang="KAZ" hint="Вложения">Вложения</entry>
-		<entry lang="ENG" hint="Вложения">Вложения</entry>
-		<entry lang="BG" hint="Вложения">Вложения</entry>
+		<entry lang="RUS">Вложения</entry>
+		<entry lang="KAZ">Вложения</entry>
+		<entry lang="ENG">Вложения</entry>
+		<entry lang="BG">Вложения</entry>
 	</sentence>
 	<sentence mode="on" keyword="additional">
-		<entry lang="RUS" hint="Дополнительно">Дополнительно</entry>
-		<entry lang="KAZ" hint="Дополнительно">Дополнительно</entry>
-		<entry lang="ENG" hint="Дополнительно">Дополнительно</entry>
-		<entry lang="BG" hint="Дополнительно">Дополнительно</entry>
+		<entry lang="RUS">Дополнительно</entry>
+		<entry lang="KAZ">Дополнительно</entry>
+		<entry lang="ENG">Дополнительно</entry>
+		<entry lang="BG">Дополнительно</entry>
 	</sentence>
 	<sentence mode="on" keyword="info_status_doc">
-		<entry lang="RUS" hint="Состояние документа">Состояние документа</entry>
-		<entry lang="KAZ" hint="Состояние документа">Состояние документа</entry>
-		<entry lang="ENG" hint="Состояние документа">Состояние документа</entry>
-		<entry lang="BG" hint="Состояние документа">Состояние документа</entry>
+		<entry lang="RUS">Состояние документа</entry>
+		<entry lang="KAZ">Состояние документа</entry>
+		<entry lang="ENG">Состояние документа</entry>
+		<entry lang="BG">Состояние документа</entry>
 	</sentence>
 	<sentence mode="on" keyword="info_permissions">
-		<entry lang="RUS" hint="Права доступа">Права доступа</entry>
-		<entry lang="KAZ" hint="Права доступа">Права доступа</entry>
-		<entry lang="ENG" hint="Права доступа">Права доступа</entry>
-		<entry lang="BG" hint="Права доступа">Права доступа</entry>
+		<entry lang="RUS">Права доступа</entry>
+		<entry lang="KAZ">Права доступа</entry>
+		<entry lang="ENG">Права доступа</entry>
+		<entry lang="BG">Права доступа</entry>
 	</sentence>
 	<sentence mode="on" keyword="info_read">
-		<entry lang="RUS" hint="Информация о прочтении">Информация о прочтении</entry>
-		<entry lang="KAZ" hint="Информация о прочтении">Информация о прочтении</entry>
-		<entry lang="ENG" hint="Информация о прочтении">Информация о прочтении</entry>
-		<entry lang="BG" hint="Информация о прочтении">Информация о прочтении</entry>
+		<entry lang="RUS">Информация о прочтении</entry>
+		<entry lang="KAZ">Информация о прочтении</entry>
+		<entry lang="ENG">Информация о прочтении</entry>
+		<entry lang="BG">Информация о прочтении</entry>
 	</sentence>
 	<sentence mode="on" keyword="info_readers">
-		<entry lang="RUS" hint="Кем прочтен">Кем прочтен</entry>
-		<entry lang="KAZ" hint="Кем прочтен">Кем прочтен</entry>
-		<entry lang="ENG" hint="Кем прочтен">Кем прочтен</entry>
-		<entry lang="BG" hint="Кем прочтен">Кем прочтен</entry>
+		<entry lang="RUS">Кем прочтен</entry>
+		<entry lang="KAZ">Кем прочтен</entry>
+		<entry lang="ENG">Кем прочтен</entry>
+		<entry lang="BG">Кем прочтен</entry>
 	</sentence>
 	<sentence mode="on" keyword="info_read_time">
-		<entry lang="RUS" hint="Время прочтения">Время прочтения</entry>
-		<entry lang="KAZ" hint="Время прочтения">Время прочтения</entry>
-		<entry lang="ENG" hint="Время прочтения">Время прочтения</entry>
-		<entry lang="BG" hint="Время прочтения">Время прочтения</entry>
-	</sentence>
-	<sentence mode="on" keyword="info_ds">
-		<entry lang="RUS" hint="ЭЦП">ЭЦП</entry>
-		<entry lang="KAZ" hint="ЭЦП">ЭЦП</entry>
-		<entry lang="ENG" hint="ЭЦП">ЭЦП</entry>
-		<entry lang="BG" hint="ЭЦП">ЭЦП</entry>
+		<entry lang="RUS">Время прочтения</entry>
+		<entry lang="KAZ">Время прочтения</entry>
+		<entry lang="ENG">Время прочтения</entry>
+		<entry lang="BG">Время прочтения</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="attach">
-		<entry lang="RUS" hint="Прикрепить">Прикрепить</entry>
-		<entry lang="KAZ" hint="Прикрепить">Прикрепить</entry>
-		<entry lang="ENG" hint="Прикрепить">Прикрепить</entry>
-		<entry lang="BG" hint="Прикрепить">Прикрепить</entry>
+		<entry lang="RUS">Прикрепить</entry>
+		<entry lang="KAZ">Прикрепить</entry>
+		<entry lang="ENG">Прикрепить</entry>
+		<entry lang="BG">Прикрепить</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_delete">
-		<entry lang="RUS" hint="Удалить">Удалить</entry>
-		<entry lang="KAZ" hint="Удалить">Удалить</entry>
-		<entry lang="ENG" hint="Удалить">Удалить</entry>
-		<entry lang="BG" hint="Удалить">Удалить</entry>
+		<entry lang="RUS">Удалить</entry>
+		<entry lang="KAZ">Удалить</entry>
+		<entry lang="ENG">Удалить</entry>
+		<entry lang="BG">Удалить</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_open">
-		<entry lang="RUS" hint="Открыть">Открыть</entry>
-		<entry lang="KAZ" hint="Открыть">Открыть</entry>
-		<entry lang="ENG" hint="Открыть">Открыть</entry>
-		<entry lang="BG" hint="Открыть">Открыть</entry>
+		<entry lang="RUS">Открыть</entry>
+		<entry lang="KAZ">Открыть</entry>
+		<entry lang="ENG">Открыть</entry>
+		<entry lang="BG">Открыть</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_preview">
-		<entry lang="RUS" hint="Просмотр">Просмотр</entry>
-		<entry lang="KAZ" hint="Просмотр">Просмотр</entry>
-		<entry lang="ENG" hint="Просмотр">Просмотр</entry>
-		<entry lang="BG" hint="Просмотр">Просмотр</entry>
+		<entry lang="RUS">Просмотр</entry>
+		<entry lang="KAZ">Просмотр</entry>
+		<entry lang="ENG">Просмотр</entry>
+		<entry lang="BG">Просмотр</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_add_comment">
-		<entry lang="RUS" hint="Добавить комментарий">Добавить комментарий</entry>
-		<entry lang="KAZ" hint="Добавить комментарий">Добавить комментарий</entry>
-		<entry lang="ENG" hint="Добавить комментарий">Добавить комментарий</entry>
-		<entry lang="BG" hint="Добавить комментарий">Добавить комментарий</entry>
+		<entry lang="RUS">Добавить комментарий</entry>
+		<entry lang="KAZ">Добавить комментарий</entry>
+		<entry lang="ENG">Добавить комментарий</entry>
+		<entry lang="BG">Добавить комментарий</entry>
 	</sentence>
 
 	<!-- form fields -->
+	<sentence mode="on" keyword="active">
+		<entry lang="RUS">Активный</entry>
+		<entry lang="KAZ">Активный</entry>
+		<entry lang="ENG">Активный</entry>
+		<entry lang="BG">Активный</entry>
+	</sentence>
 	<sentence mode="on" keyword="budget">
-		<entry lang="RUS" hint="Бюджет">Бюджет</entry>
-		<entry lang="KAZ" hint="Бюджет">Бюджет</entry>
-		<entry lang="ENG" hint="Бюджет">Бюджет</entry>
-		<entry lang="BG" hint="Бюджет">Бюджет</entry>
+		<entry lang="RUS">Бюджет</entry>
+		<entry lang="KAZ">Бюджет</entry>
+		<entry lang="ENG">Бюджет</entry>
+		<entry lang="BG">Бюджет</entry>
 	</sentence>
 	<sentence mode="on" keyword="category">
-		<entry lang="RUS" hint="Категория">Категория</entry>
-		<entry lang="KAZ" hint="Категория">Категория</entry>
-		<entry lang="ENG" hint="Категория">Категория</entry>
-		<entry lang="BG" hint="Категория">Категория</entry>
+		<entry lang="RUS">Категория</entry>
+		<entry lang="KAZ">Категория</entry>
+		<entry lang="ENG">Категория</entry>
+		<entry lang="BG">Категория</entry>
 	</sentence>
 	<sentence mode="on" keyword="parent_category">
 		<entry lang="RUS">Родительская категория</entry>
 		<entry lang="KAZ">Категория</entry>
 		<entry lang="ENG">Parent category</entry>
 		<entry lang="BG">Категория</entry>
+	</sentence>
+	<sentence mode="on" keyword="category_active_hint">
+		<entry lang="RUS">Неактивные категории скрыты</entry>
+		<entry lang="KAZ">Неактивные категории скрыты</entry>
+		<entry lang="ENG">Неактивные категории скрыты</entry>
+		<entry lang="BG">Неактивные категории скрыты</entry>
+	</sentence>
+	<sentence mode="on" keyword="account_active_hint">
+		<entry lang="RUS">Неактивные счета скрыты</entry>
+		<entry lang="KAZ">Неактивные счета скрыты</entry>
+		<entry lang="ENG">Неактивные счета скрыты</entry>
+		<entry lang="BG">Неактивные счета скрыты</entry>
 	</sentence>
 	<sentence mode="on" keyword="tag">
 		<entry lang="RUS">Метка</entry>
@@ -642,22 +647,22 @@
 		<entry lang="BG">Метка</entry>
 	</sentence>
 	<sentence mode="on" keyword="costcenter">
-		<entry lang="RUS" hint="Место возникновения">Место возникновения</entry>
-		<entry lang="KAZ" hint="Место возникновения">Место возникновения</entry>
-		<entry lang="ENG" hint="Место возникновения">Место возникновения</entry>
-		<entry lang="BG" hint="Место возникновения">Место возникновения</entry>
+		<entry lang="RUS">Место возникновения</entry>
+		<entry lang="KAZ">Место возникновения</entry>
+		<entry lang="ENG">Место возникновения</entry>
+		<entry lang="BG">Место возникновения</entry>
 	</sentence>
 	<sentence mode="on" keyword="user">
-		<entry lang="RUS" hint="Пользователь">Пользователь</entry>
-		<entry lang="KAZ" hint="Пользователь">Пользователь</entry>
-		<entry lang="ENG" hint="User">User</entry>
-		<entry lang="BG" hint="Пользователь">Пользователь</entry>
+		<entry lang="RUS">Пользователь</entry>
+		<entry lang="KAZ">Пользователь</entry>
+		<entry lang="ENG">User</entry>
+		<entry lang="BG">Пользователь</entry>
 	</sentence>
 	<sentence mode="on" keyword="transaction">
-		<entry lang="RUS" hint="Операция">Операция</entry>
-		<entry lang="KAZ" hint="Операция">Операция</entry>
-		<entry lang="ENG" hint="Операция">Операция</entry>
-		<entry lang="BG" hint="Операция">Операция</entry>
+		<entry lang="RUS">Операция</entry>
+		<entry lang="KAZ">Операция</entry>
+		<entry lang="ENG">Операция</entry>
+		<entry lang="BG">Операция</entry>
 	</sentence>
 	<sentence mode="on" keyword="permissions">
 		<entry lang="RUS">Права доступа</entry>
@@ -666,16 +671,16 @@
 		<entry lang="BG">Права доступа</entry>
 	</sentence>
 	<sentence mode="on" keyword="name">
-		<entry lang="RUS" hint="Название">Название</entry>
-		<entry lang="KAZ" hint="Название">Название</entry>
-		<entry lang="ENG" hint="Название">Название</entry>
-		<entry lang="BG" hint="Название">Название</entry>
+		<entry lang="RUS">Название</entry>
+		<entry lang="KAZ">Название</entry>
+		<entry lang="ENG">Название</entry>
+		<entry lang="BG">Название</entry>
 	</sentence>
 	<sentence mode="on" keyword="amount_control">
-		<entry lang="RUS" hint="Сумма контроля">Сумма контроля</entry>
-		<entry lang="KAZ" hint="Сумма контроля">Сумма контроля</entry>
-		<entry lang="ENG" hint="Сумма контроля">Сумма контроля</entry>
-		<entry lang="BG" hint="Сумма контроля">Сумма контроля</entry>
+		<entry lang="RUS">Сумма контроля</entry>
+		<entry lang="KAZ">Сумма контроля</entry>
+		<entry lang="ENG">Сумма контроля</entry>
+		<entry lang="BG">Сумма контроля</entry>
 	</sentence>
 	<sentence mode="on" keyword="opening_balance">
 		<entry lang="RUS">Начальный балланс</entry>
@@ -683,124 +688,70 @@
 		<entry lang="ENG">Initial</entry>
 		<entry lang="BG">Начальный балланс</entry>
 	</sentence>
-	<sentence mode="on" keyword="currency_code">
+	<sentence mode="on" keyword="currency">
 		<entry lang="RUS">Валюта</entry>
 		<entry lang="KAZ">Валюта</entry>
 		<entry lang="ENG">Валюта</entry>
 		<entry lang="BG">Валюта</entry>
 	</sentence>
-	<sentence mode="on" keyword="moderator">
-		<entry lang="RUS" hint="Модератор">Модератор</entry>
-		<entry lang="KAZ" hint="Модератор">Модератор</entry>
-		<entry lang="ENG" hint="Модератор">Модератор</entry>
-		<entry lang="BG" hint="Модератор">Модератор</entry>
-	</sentence>
-	<sentence mode="on" keyword="category_refers_to">
-		<entry lang="RUS" hint="Разрешить для операции по">Разрешить для операции по</entry>
-		<entry lang="KAZ" hint="Разрешить для операции по">Разрешить для операции по</entry>
-		<entry lang="ENG" hint="Разрешить для операции по">Разрешить для операции по</entry>
-		<entry lang="BG" hint="Разрешить для операции по">Разрешить для операции по</entry>
-	</sentence>
-	<sentence mode="on" keyword="typeoperation">
-		<entry lang="RUS" hint="Тип операции">Тип операции</entry>
-		<entry lang="KAZ" hint="Тип операции">Тип операции</entry>
-		<entry lang="ENG" hint="Тип операции">Тип операции</entry>
-		<entry lang="BG" hint="Тип операции">Тип операции</entry>
-	</sentence>
-	<sentence mode="on" keyword="disable_selection">
-		<entry lang="RUS" hint="Запретить выбор">Запретить выбор</entry>
-		<entry lang="KAZ" hint="Запретить выбор">Запретить выбор</entry>
-		<entry lang="ENG" hint="Запретить выбор">Запретить выбор</entry>
-		<entry lang="BG" hint="Запретить выбор">Запретить выбор</entry>
-	</sentence>
 	<sentence mode="on" keyword="require_document">
-		<entry lang="RUS" hint="Требовать подтверждающий документ">Требовать подтверждающий документ</entry>
-		<entry lang="KAZ" hint="Требовать подтверждающий документ">Требовать подтверждающий документ</entry>
-		<entry lang="ENG" hint="Требовать подтверждающий документ">Требовать подтверждающий документ</entry>
-		<entry lang="BG" hint="Требовать подтверждающий документ">Требовать подтверждающий документ</entry>
+		<entry lang="RUS">Требовать подтверждающий документ</entry>
+		<entry lang="KAZ">Требовать подтверждающий документ</entry>
+		<entry lang="ENG">Требовать подтверждающий документ</entry>
+		<entry lang="BG">Требовать подтверждающий документ</entry>
 	</sentence>
 	<sentence mode="on" keyword="require_costcenter">
-		<entry lang="RUS" hint="Требовать заполнения места возникновения затрат">Требовать заполнения места возникновения затрат</entry>
-		<entry lang="KAZ" hint="Требовать заполнения места возникновения затрат">Требовать заполнения места возникновения затрат</entry>
-		<entry lang="ENG" hint="Требовать заполнения места возникновения затрат">Требовать заполнения места возникновения затрат</entry>
-		<entry lang="BG" hint="Требовать заполнения места возникновения затрат">Требовать заполнения места возникновения затрат</entry>
-	</sentence>
-	<sentence mode="on" keyword="access_roles">
-		<entry lang="RUS" hint="Доступ по роли">Доступ по роли</entry>
-		<entry lang="KAZ" hint="Доступ по роли">Доступ по роли</entry>
-		<entry lang="ENG" hint="Доступ по роли">Доступ по роли</entry>
-		<entry lang="BG" hint="Доступ по роли">Доступ по роли</entry>
-	</sentence>
-	<sentence mode="on" keyword="comment">
-		<entry lang="RUS" hint="Комментарий">Комментарий</entry>
-		<entry lang="KAZ" hint="Комментарий">Комментарий</entry>
-		<entry lang="ENG" hint="Комментарий">Комментарий</entry>
-		<entry lang="BG" hint="Комментарий">Комментарий</entry>
+		<entry lang="RUS">Требовать заполнения места возникновения затрат</entry>
+		<entry lang="KAZ">Требовать заполнения места возникновения затрат</entry>
+		<entry lang="ENG">Требовать заполнения места возникновения затрат</entry>
+		<entry lang="BG">Требовать заполнения места возникновения затрат</entry>
 	</sentence>
 	<sentence mode="on" keyword="user_name">
-		<entry lang="RUS" hint="Имя пользователя">Имя пользователя</entry>
-		<entry lang="KAZ" hint="Имя пользователя">Имя пользователя</entry>
-		<entry lang="ENG" hint="Имя пользователя">Имя пользователя</entry>
-		<entry lang="BG" hint="Имя пользователя">Имя пользователя</entry>
+		<entry lang="RUS">Имя пользователя</entry>
+		<entry lang="KAZ">Имя пользователя</entry>
+		<entry lang="ENG">Имя пользователя</entry>
+		<entry lang="BG">Имя пользователя</entry>
 	</sentence>
 	<sentence mode="on" keyword="email">
-		<entry lang="RUS" hint="E-mail">E-mail</entry>
-		<entry lang="KAZ" hint="E-mail">E-mail</entry>
-		<entry lang="ENG" hint="E-mail">E-mail</entry>
-		<entry lang="BG" hint="E-mail">E-mail</entry>
-	</sentence>
-	<sentence mode="on" keyword="has_access_to_account">
-		<entry lang="RUS" hint="Имеет доступ к счетам">Имеет доступ к счетам</entry>
-		<entry lang="KAZ" hint="Имеет доступ к счетам">Имеет доступ к счетам</entry>
-		<entry lang="ENG" hint="Имеет доступ к счетам">Имеет доступ к счетам</entry>
-		<entry lang="BG" hint="Имеет доступ к счетам">Имеет доступ к счетам</entry>
+		<entry lang="RUS">E-mail</entry>
+		<entry lang="KAZ">E-mail</entry>
+		<entry lang="ENG">E-mail</entry>
+		<entry lang="BG">E-mail</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_date">
-		<entry lang="RUS" hint="Дата регистрации">Дата регистрации</entry>
-		<entry lang="KAZ" hint="Дата регистрации">Дата регистрации</entry>
-		<entry lang="ENG" hint="Дата регистрации">Дата регистрации</entry>
-		<entry lang="BG" hint="Дата регистрации">Дата регистрации</entry>
+		<entry lang="RUS">Дата регистрации</entry>
+		<entry lang="KAZ">Дата регистрации</entry>
+		<entry lang="ENG">Дата регистрации</entry>
+		<entry lang="BG">Дата регистрации</entry>
 	</sentence>
 	<sentence mode="on" keyword="date">
-		<entry lang="RUS" hint="Дата">Дата</entry>
-		<entry lang="KAZ" hint="Дата">Дата</entry>
-		<entry lang="ENG" hint="Дата">Дата</entry>
-		<entry lang="BG" hint="Дата">Дата</entry>
-	</sentence>
-	<sentence mode="on" keyword="targetcash">
-		<entry lang="RUS" hint="Целевая касса">Целевая касса</entry>
-		<entry lang="KAZ" hint="Целевая касса">Целевая касса</entry>
-		<entry lang="ENG" hint="Целевая касса">Целевая касса</entry>
-		<entry lang="BG" hint="Целевая касса">Целевая касса</entry>
-	</sentence>
-	<sentence mode="on" keyword="summa">
-		<entry lang="RUS" hint="Сумма">Сумма</entry>
-		<entry lang="KAZ" hint="Сумма">Сумма</entry>
-		<entry lang="ENG" hint="Сумма">Сумма</entry>
-		<entry lang="BG" hint="Сумма">Сумма</entry>
+		<entry lang="RUS">Дата</entry>
+		<entry lang="KAZ">Дата</entry>
+		<entry lang="ENG">Дата</entry>
+		<entry lang="BG">Дата</entry>
 	</sentence>
 	<sentence mode="on" keyword="month">
-		<entry lang="RUS" hint="Месяц">Месяц</entry>
-		<entry lang="KAZ" hint="Месяц">Месяц</entry>
-		<entry lang="ENG" hint="Месяц">Месяц</entry>
-		<entry lang="BG" hint="Месяц">Месяц</entry>
+		<entry lang="RUS">Месяц</entry>
+		<entry lang="KAZ">Месяц</entry>
+		<entry lang="ENG">Месяц</entry>
+		<entry lang="BG">Месяц</entry>
 	</sentence>
 	<sentence mode="on" keyword="basis">
-		<entry lang="RUS" hint="Основание">Основание</entry>
-		<entry lang="KAZ" hint="Основание">Основание</entry>
-		<entry lang="ENG" hint="Основание">Основание</entry>
-		<entry lang="BG" hint="Основание">Основание</entry>
+		<entry lang="RUS">Основание</entry>
+		<entry lang="KAZ">Основание</entry>
+		<entry lang="ENG">Основание</entry>
+		<entry lang="BG">Основание</entry>
 	</sentence>
 	<sentence mode="on" keyword="documented">
-		<entry lang="RUS" hint="Подтверждено документом">Подтверждено документом</entry>
-		<entry lang="KAZ" hint="Подтверждено документом">Подтверждено документом</entry>
-		<entry lang="ENG" hint="Подтверждено документом">Подтверждено документом</entry>
-		<entry lang="BG" hint="Подтверждено документом">Подтверждено документом</entry>
+		<entry lang="RUS">Подтверждено документом</entry>
+		<entry lang="KAZ">Подтверждено документом</entry>
+		<entry lang="ENG">Подтверждено документом</entry>
+		<entry lang="BG">Подтверждено документом</entry>
 	</sentence>
 	<sentence mode="on" keyword="btn_send_invite">
-		<entry lang="RUS" hint="Отправить приглашение">Отправить приглашение</entry>
-		<entry lang="KAZ" hint="Отправить приглашение">Отправить приглашение</entry>
-		<entry lang="ENG" hint="Отправить приглашение">Отправить приглашение</entry>
-		<entry lang="BG" hint="Отправить приглашение">Отправить приглашение</entry>
+		<entry lang="RUS">Отправить приглашение</entry>
+		<entry lang="KAZ">Отправить приглашение</entry>
+		<entry lang="ENG">Отправить приглашение</entry>
+		<entry lang="BG">Отправить приглашение</entry>
 	</sentence>
 </vocabulary>

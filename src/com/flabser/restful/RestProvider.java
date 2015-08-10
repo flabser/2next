@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.rule.IRule;
@@ -31,7 +32,6 @@ import com.flabser.script._Exception;
 import com.flabser.script._Page;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
-import com.flabser.users.AuthFailedException;
 import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
 
@@ -51,11 +51,8 @@ public class RestProvider {
 	}
 
 	public UserSession getUserSession() {
-		HttpSession jses = request.getSession(true);
+		HttpSession jses = request.getSession(false);
 		UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
-		if (us == null) {
-			us = new UserSession(new com.flabser.users.User());
-		}
 		return us;
 
 	}

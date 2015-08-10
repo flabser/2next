@@ -19,6 +19,8 @@ public class Category implements _IObject {
 
 	private String name;
 
+	private boolean enabled;
+
 	private String note;
 
 	private int color;
@@ -58,6 +60,14 @@ public class Category implements _IObject {
 		this.name = name;
 	}
 
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	public String getNote() {
 		return note;
 	}
@@ -92,6 +102,7 @@ public class Category implements _IObject {
 		setTransactionType(TransactionType.typeOf(rs.getInt("transaction_type")));
 		setParentCategory(null);
 		setName(rs.getString("name"));
+		setEnabled(rs.getBoolean("enabled"));
 		setNote(rs.getString("note"));
 		setColor(rs.getInt("color"));
 		setSortOrder(rs.getInt("sort_order"));

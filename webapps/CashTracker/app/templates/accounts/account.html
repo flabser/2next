@@ -7,7 +7,7 @@
     </div>
 </header>
 <section class="form-content">
-    <div class="fieldset">
+    <fieldset class="fieldset">
         {{#tn-form-group property="name"}}
             <div class="control-label">
                 {{t "name"}}
@@ -15,6 +15,18 @@
             <div class="controls">
                 {{input value=account.name}}
                 {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="enabled"}}
+            <div class="controls">
+                <label>
+                    {{input type="checkbox" checked=account.enabled }}
+                    {{t "active"}}
+                </label>
+                <p class="hint">
+                    {{t "account_active_hint"}}
+                </p>
             </div>
         {{/tn-form-group}}
 
@@ -40,7 +52,7 @@
 
         {{#tn-form-group property="currencyCode"}}
             <div class="control-label">
-                {{t "currency_code"}}
+                {{t "currency"}}
             </div>
             <div class="controls">
                 {{input value=account.currencyCode}}
@@ -53,7 +65,7 @@
                 {{t "note"}}
             </div>
             <div class="controls">
-                {{input value=account.note}}
+                {{textarea value=account.note}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}
@@ -97,6 +109,6 @@
                 </div>
             {{/tn-form-group}}
         </fieldset>
-    </div>
+    </fieldset>
 </section>
 {{/tn-form}}

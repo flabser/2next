@@ -34,7 +34,8 @@ export default DS.Model.extend(EmberValidations.Mixin, {
 
     validations: {
         amount: {
-            presence: true
+            presence: true,
+            numericality: true
         }
     }
 });

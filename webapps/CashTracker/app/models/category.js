@@ -7,6 +7,7 @@ export default DS.Model.extend(EmberValidations.Mixin, {
         async: false
     }),
     name: DS.attr('string'),
+    enabled: DS.attr('boolean'),
     note: DS.attr('string'),
     color: DS.attr('number'),
     sortOrder: DS.attr('number'),

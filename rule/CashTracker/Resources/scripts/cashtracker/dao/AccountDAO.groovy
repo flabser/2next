@@ -18,16 +18,16 @@ public class AccountDAO {
 	}
 
 	public String getSelectQuery() {
-		return """SELECT id, name, currency_code, opening_balance, amount_control,
+		return """SELECT id, name, currency_code, opening_balance, amount_control, enabled,
 					writers, readers, note, include_in_totals, sort_order FROM accounts"""
 	}
 
 	public String getCreateQuery() {
 		return """INSERT INTO accounts
-					(name, currency_code, opening_balance, amount_control,
+					(name, currency_code, opening_balance, amount_control, enabled,
 					 writers, readers, note, include_in_totals, sort_order)
 				  VALUES
-					(?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+					(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
 	}
 
 	public String getUpdateQuery() {
@@ -37,6 +37,7 @@ public class AccountDAO {
 						currency_code = ?,
 						opening_balance = ?,
 						amount_control = ?,
+						enabled = ?,
 						writers = ?,
 						readers = ?,
 						note = ?,
@@ -60,34 +61,35 @@ public class AccountDAO {
 		return result
 	}
 
-	public int add(Account a) {
+	public int add(Account m) {
 		String sql = """INSERT INTO accounts
-							(name, currency_code, opening_balance, amount_control,
+							(name, currency_code, opening_balance, amount_control, enabled,
 							writers, readers, note, include_in_totals, sort_order)
 						VALUES
-							('${a.name}', '${a.currencyCode}', ${a.openingBalance}, ${a.amountControl},
-							${a.writers}, ${a.readers}, '${a.note}', ${a.includeInTotals}, ${a.sortOrder})"""
+							('${m.name}', '${m.currencyCode}', ${m.openingBalance}, ${m.amountControl}, ${m.enabled},
+							${m.writers}, ${m.readers}, '${m.note}', ${m.includeInTotals}, ${m.sortOrder})"""
 		return db.insert(sql, user)
 	}
 
-	public void update(Account a) {
+	public void update(Account m) {
 		String sql = """UPDATE accounts
 						SET
-							name = '${a.name}',
-							currency_code = '${a.currencyCode}',
-							opening_balance = ${a.openingBalance},
-							amount_control = ${a.amountControl},
-							writers = ${a.writers},
-							readers = ${a.readers},
-							note = '${a.note}',
-							include_in_totals = ${a.includeInTotals},
-							sort_order = ${a.sortOrder}
-						WHERE id = ${a.id}"""
+							name = '${m.name}',
+							currency_code = '${m.currencyCode}',
+							opening_balance = ${m.openingBalance},
+							amount_control = ${m.amountControl},
+							enabled = ${m.enabled},
+							writers = ${m.writers},
+							readers = ${m.readers},
+							note = '${m.note}',
+							include_in_totals = ${m.includeInTotals},
+							sort_order = ${m.sortOrder}
+						WHERE id = ${m.id}"""
 		db.update(sql, user)
 	}
 
-	public void delete(Account a) {
-		String sql = getDeleteQuery() + a.id
+	public void delete(Account m) {
+		String sql = getDeleteQuery() + m.id
 		db.delete(sql, user)
 	}
 }

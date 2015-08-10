@@ -25,10 +25,10 @@ import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.SessionPool;
+import com.flabser.exception.AuthFailedException;
+import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.server.Server;
 import com.flabser.servlets.ServletUtil;
-import com.flabser.users.AuthFailedException;
-import com.flabser.users.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.users.UserStatusType;
@@ -47,16 +47,12 @@ public class SessionService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public AuthUser getSession() {
-		HttpSession jses = request.getSession(true);
-
-		AuthUser user = new AuthUser();
+		HttpSession jses = request.getSession(false);
 		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 		if (userSession == null) {
-			return user;
+			return new AuthUser();
 		}
-
-		user.setLogin(userSession.currentUser.getLogin());
-		return user;
+		return userSession.getUserPOJO();
 	}
 
 	@POST

@@ -8,6 +8,28 @@
 </header>
 <section class="form-content">
     <fieldset class="fieldset">
+        {{#tn-form-group property="name"}}
+            <div class="control-label">
+                {{t "name"}}
+            </div>
+            <div class="controls">
+                {{input value=category.name}}
+                {{tn-error-message}}
+            </div>
+        {{/tn-form-group}}
+
+        {{#tn-form-group property="enabled"}}
+            <div class="controls">
+                <label>
+                    {{input type="checkbox" checked=category.enabled }}
+                    {{t "active"}}
+                </label>
+                <p class="hint">
+                    {{t "category_active_hint"}}
+                </p>
+            </div>
+        {{/tn-form-group}}
+
         {{#tn-form-group property="transactionType"}}
             <div class="control-label">
                 {{t "transaction_type"}}
@@ -33,22 +55,12 @@
             </div>
         {{/tn-form-group}}
 
-        {{#tn-form-group property="name"}}
-            <div class="control-label">
-                {{t "name"}}
-            </div>
-            <div class="controls">
-                {{input value=category.name}}
-                {{tn-error-message}}
-            </div>
-        {{/tn-form-group}}
-
         {{#tn-form-group property="note"}}
             <div class="control-label">
                 {{t "note"}}
             </div>
             <div class="controls">
-                {{input value=category.note}}
+                {{textarea value=category.note}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}

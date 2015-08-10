@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import net.sf.saxon.s9api.SaxonApiException;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.env.EnvConst;
 import com.flabser.exception.PortalException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.ServerException;
@@ -31,7 +32,6 @@ import com.flabser.script._Exception;
 import com.flabser.server.Server;
 import com.flabser.servlets.sitefiles.AttachmentHandler;
 import com.flabser.servlets.sitefiles.AttachmentHandlerException;
-import com.flabser.users.AuthFailedException;
 import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
 
@@ -57,7 +57,6 @@ public class Provider extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		// long start_time = System.currentTimeMillis();
 		HttpSession jses = null;
 		UserSession userSession = null;
 		ProviderResult result = null;
@@ -65,7 +64,7 @@ public class Provider extends HttpServlet {
 		AttachmentHandler attachHandler = null;
 
 		try {
-			request.setCharacterEncoding("utf-8");
+			request.setCharacterEncoding(EnvConst.supposedCodePage);
 			String type = request.getParameter("type");
 			String id = request.getParameter("id");
 			String key = request.getParameter("key");
@@ -76,22 +75,9 @@ public class Provider extends HttpServlet {
 					IRule rule = env.ruleProvider.getRule(id);
 
 					if (rule != null) {
-						boolean isNewSession = false;
+
 						jses = request.getSession(false);
-						if (jses == null) {
-							jses = request.getSession(true);
-							isNewSession = true;
-						}
-
 						userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
-						if (userSession == null) {
-							userSession = new UserSession(new com.flabser.users.User());
-							if (isNewSession) {
-								Cookies c = new Cookies(request);
-								userSession.setLang(c.currentLang);
-							}
-
-						}
 
 						if (type == null || type.equalsIgnoreCase("page")) {
 							result = page(response, request, rule, userSession);
@@ -125,15 +111,7 @@ public class Provider extends HttpServlet {
 
 							if (po.prepareXSLT(env, result.xslt)) {
 								String outputContent = po.getStandartOutput();
-								// long start_time = System.currentTimeMillis();
-								// //
-								// for speed debuging
 								new SaxonTransformator().toTrans(response, po.xslFile, outputContent);
-								// System.out.println(getClass().getSimpleName()
-								// +
-								// " transformation  >>> " +
-								// Util.getTimeDiffInMilSec(start_time)); // for
-								// speed debuging
 							} else {
 								String outputContent = po.getStandartOutput();
 								response.setContentType("text/xml;charset=utf-8");
@@ -148,7 +126,6 @@ public class Provider extends HttpServlet {
 							response.setContentType("text/xml;charset=utf-8");
 							ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses, result.addHistory);
 							String outputContent = po.getStandartOutput();
-							// System.out.println(outputContent);
 							PrintWriter out = response.getWriter();
 							out.println(outputContent);
 							out.close();
@@ -163,21 +140,16 @@ public class Provider extends HttpServlet {
 							response.sendRedirect(result.forwardTo);
 							return;
 						}
-						// System.out.println(type + " " +
-						// Util.getTimeDiffInMilSec(start_time));
 					} else {
-						// response.sendRedirect(env.globalSetting.defaultRedirectURL);
 						return;
 					}
 				} else {
 					throw new RuleException("parameter \"id\" is not defined in request");
 				}
 			} else {
-				throw new ServerException(ServerExceptionType.APPENV_HAS_NOT_INITIALIZED, "context=" + context.getServletContextName());
+				throw new ServerException(ServerExceptionType.APPTEMPLATE_HAS_NOT_INITIALIZED, "context=" + context.getServletContextName());
 			}
-		} catch (AuthFailedException rnf) {
-			// TODO Need to more informative handler in this case
-			new AuthFailedException(rnf.getMessage(), response, true);
+
 		} catch (RuleException rnf) {
 			new PortalException(rnf, env, response, ProviderExceptionType.RULENOTFOUND, PublishAsType.HTML);
 		} catch (XSLTFileNotFoundException xfnf) {
@@ -204,11 +176,14 @@ public class Provider extends HttpServlet {
 		} catch (WebFormValueException e) {
 			// TODO Need to more informative handler in this case
 			new PortalException(e, env, response, ProviderExceptionType.APPLICATION_ERROR, PublishAsType.HTML);
+		} catch (Exception e) {
+			// TODO Need to more informative handler in this case
+			new PortalException(e, env, response, ProviderExceptionType.APPLICATION_ERROR, PublishAsType.HTML);
 		}
 	}
 
-	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule, UserSession userSession) throws RuleException,
-			UnsupportedEncodingException, ClassNotFoundException, _Exception, WebFormValueException {
+	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule, UserSession userSession)
+			throws RuleException, UnsupportedEncodingException, ClassNotFoundException, _Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		result.addHistory = pageRule.addToHistory;

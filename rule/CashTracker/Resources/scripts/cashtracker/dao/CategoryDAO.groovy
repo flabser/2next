@@ -18,13 +18,13 @@ public class CategoryDAO {
 	}
 
 	public String getSelectQuery() {
-		return "SELECT id, transaction_type, parent_id, name, note, color, sort_order FROM categories";
+		return "SELECT id, transaction_type, parent_id, name, enabled, note, color, sort_order FROM categories";
 	}
 
 	public String getCreateQuery() {
 		return """INSERT INTO categories
-					(transaction_type, parent_id, name, note, color, sort_order)
-				  VALUES (?, ?, ?, ?, ?, ?)"""
+					(transaction_type, parent_id, name, enabled, note, color, sort_order)
+				  VALUES (?, ?, ?, ?, ?, ?, ?)"""
 	}
 
 	public String getUpdateQuery() {
@@ -33,6 +33,7 @@ public class CategoryDAO {
 						transaction_type = ?,
 						parent_id = ?,
 						name = ?,
+						enabled = ?,
 						note = ?,
 						color = ?,
 						sort_order = ?
@@ -58,19 +59,21 @@ public class CategoryDAO {
 		def parentId = m.parentCategory?.id?:null
 		String sql = """INSERT INTO categories
 							(transaction_type, parent_id,
-							name, note, color, sort_order)
+							name, enabled, note, color, sort_order)
 						VALUES
 							(${m.transactionType}, ${parentId},
-							'${m.name}', '${m.note}', ${m.color}, ${m.sortOrder})""";
+							'${m.name}', ${m.enabled}, '${m.note}', ${m.color}, ${m.sortOrder})""";
 		return db.insert(sql, user);
 	}
 
 	public void update(Category m) {
+		def parentId = m.parentCategory?.id?:null
 		String sql = """UPDATE categories
 						SET
 							transaction_type = ${m.transactionType},
-							parent_id = ${m.parentCategory.id},
+							parent_id = ${parentId},
 							name = '${m.name}',
+							enabled = ${m.enabled},
 							note = '${m.note}',
 							color = ${m.color},
 							sort_order = ${m.sortOrder}

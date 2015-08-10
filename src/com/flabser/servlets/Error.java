@@ -2,70 +2,81 @@ package com.flabser.servlets;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.saxon.s9api.SaxonApiException;
+
+import com.flabser.apptemplate.AppTemplate;
+import com.flabser.env.EnvConst;
+import com.flabser.exception.ExceptionXML;
 import com.flabser.exception.TransformatorException;
 import com.flabser.server.Server;
 
-import net.sf.saxon.s9api.SaxonApiException;
+public class Error extends HttpServlet {
+	private static final long serialVersionUID = 1207733369437122383L;
+	private AppTemplate env;
+	private ServletContext context;
 
-public class Error extends HttpServlet{
-	private static final long serialVersionUID = 1207733369437122383L;	
-
-	protected void  doPost(HttpServletRequest request, HttpServletResponse response){
-		String type = request.getParameter("type");	
-		String msg = request.getParameter("msg");	
-		String xslt = "xsl" + File.separator + "error.xsl";
+	@Override
+	public void init(ServletConfig config) throws ServletException {
 		try {
-			request.setCharacterEncoding("utf-8");
-			String outputContent = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-
-			if(type.equals("auth_error")){
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				xslt = "xsl" + File.separator + "authfailed.xsl";
-				outputContent = outputContent + "<request><error type=\"authfailed\">" +
-						"<message>" + msg + "</message><version>" +  Server.serverVersion + "</version></error></request>";
-			}else if(type.equals("default_url_not_defined")){
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				msg = "default URL has not defined in global setting";
-				outputContent = outputContent + "<request><error type=\"" + type + "\">" +
-						"<message>" + msg + "</message><version>" +  Server.serverVersion + "</version></error></request>";
-
-			}else{
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				outputContent = outputContent + "<request><error type=\"" + type + "\">" +
-						"<message>" + msg + "</message><version>" +  Server.serverVersion + "</version></error></request>";
-			}
-
-			if (request.getParameter("onlyxml") != null){
-				response.setContentType("text/xml;charset=utf-8");		
-				PrintWriter out = response.getWriter();
-				out.println(outputContent);
-				out.close();
-			}else{			
-				response.setContentType("text/html");
-				File errorXslt = new File(xslt);
-				new SaxonTransformator().toTrans(response, errorXslt, outputContent);
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {		
-			e.printStackTrace();
-		} catch (SaxonApiException e) {	
-			e.printStackTrace();
-		} catch (TransformatorException e) {	
-			e.printStackTrace();
+			context = config.getServletContext();
+			env = (AppTemplate) context.getAttribute(AppTemplate.TEMPLATE_ATTR);
+		} catch (Exception e) {
+			Server.logger.errorLogEntry(e);
 		}
 	}
 
-	protected void  doGet(HttpServletRequest request, HttpServletResponse response){
-		doPost(request, response);
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		String errorMessage = "", location = "", type = "", servletName = "", exception = "";
+		Integer statusCode = 0;
+
+		if (request.getAttribute("errorType") == null) {
+			errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
+			statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+			location = (String) request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI);
+			type = (String) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION_TYPE);
+			servletName = (String) request.getAttribute(RequestDispatcher.ERROR_SERVLET_NAME);
+			exception = (String) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+		} else {
+
+		}
+
+		ExceptionXML xml = new ExceptionXML(errorMessage, statusCode, location, type, servletName, exception);
+		String xslt = "webapps" + File.separator + env.appType + File.separator + "xsl" + File.separator + "errors" + File.separator
+				+ "error.xsl";
+
+		try {
+			request.setCharacterEncoding(EnvConst.supposedCodePage);
+			String outputContent = xml.toXML();
+			// System.out.println(outputContent);
+			response.setContentType("text/html");
+			File errorXslt = new File(xslt);
+			new SaxonTransformator().toTrans(response, errorXslt, outputContent);
+		} catch (UnsupportedEncodingException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (IOException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (SaxonApiException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (TransformatorException e) {
+			Server.logger.errorLogEntry(e);
+		}
+
 	}
 
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+		doPost(request, response);
+	}
 
 }
