@@ -75,4 +75,9 @@ public class Budget implements _IObject {
 		setOwner((User) null);
 		setStatus(BudgetState.stateOf(rs.getInt("type")));
 	}
+
+    @Override
+    public String getTableName() {
+        return "budget";
+    }
 }

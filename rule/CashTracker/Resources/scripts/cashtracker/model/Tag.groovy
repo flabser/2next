@@ -39,4 +39,9 @@ public class Tag implements _IObject {
 		setId(rs.getInt("id"));
 		setName(rs.getString("name"));
 	}
+
+    @Override
+    public String getTableName() {
+        return "tags";
+    }
 }

@@ -96,4 +96,9 @@ public class Category implements _IObject {
 		setColor(rs.getInt("color"));
 		setSortOrder(rs.getInt("sort_order"));
 	}
+
+    @Override
+    public String getTableName() {
+        return "category";
+    }
 }

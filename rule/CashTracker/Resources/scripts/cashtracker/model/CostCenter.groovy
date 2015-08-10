@@ -39,4 +39,9 @@ public class CostCenter implements _IObject {
 		setId(rs.getInt("id"));
 		setName(rs.getString("name"));
 	}
+
+    @Override
+    public String getTableName() {
+        return "costcenters";
+    }
 }

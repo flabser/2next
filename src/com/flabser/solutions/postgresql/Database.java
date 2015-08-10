@@ -1,15 +1,5 @@
 package com.flabser.solutions.postgresql;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IDatabase;
@@ -19,6 +9,21 @@ import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.script._IObject;
 import com.flabser.users.User;
+
+import java.sql.Array;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Database extends DatabaseCore implements IDatabase {
 
@@ -91,25 +96,42 @@ public class Database extends DatabaseCore implements IDatabase {
 		return l;
 	}
 
-	@Override
-	public ArrayList<_IObject> select(String condition, Class<_IObject> objClass, User user) {
-		ArrayList<_IObject> o = new ArrayList<_IObject>();
+	@SuppressWarnings({"SqlNoDataSourceInspection", "SqlDialectInspection"})
+    @Override
+	public ArrayList<_IObject> select(String condition, Class<? extends _IObject> objClass, User user) {
+		ArrayList<_IObject> iObjectList = new ArrayList<>();
 		Connection conn = pool.getConnection();
-		try {
-			conn.setAutoCommit(false);
-			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
-			String sql = condition;
-			ResultSet rs = s.executeQuery(sql);
+		try (Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY)){
 
-			while (rs.next()) {
-				_IObject grObj = objClass.newInstance();
-				grObj.init(rs);
-				o.add(grObj);
-			}
-			conn.commit();
-			s.close();
-			rs.close();
+            conn.setAutoCommit(true);
+			try(ResultSet rs = stmt.executeQuery(condition)) {
+                while (rs.next()) {
+                    _IObject grObj = objClass.newInstance();
+                    grObj.init(rs);
+                    iObjectList.add(grObj);
+                }
+            }
+
+            if(iObjectList.size() == 0) return iObjectList;
+
+            String tableName = iObjectList.get(0).getTableName();
+            String sql =
+                    "select array( " +
+                    "    select " + tableName + ".id from " + tableName +
+                    "    inner join ( " +
+                    "        select unnest(array [" +  iObjectList.stream().map(ob -> String.valueOf(ob.getId())).collect(Collectors.joining(", ")) + "])::integer as id " +
+                    "    ) as ids on " + tableName + ".id = ids.id where " + tableName + ".readers_engine_field @> ARRAY['" + user.getLogin() + "']::character varying[] " +
+                    ")::integer[] as ids";
+
+            try(ResultSet rs = stmt.executeQuery(sql)) {
+                if (!rs.next()) return new ArrayList<>();
+
+                Array ids = rs.getArray("ids");
+                List<Integer> idsList = ids != null ? Arrays.asList((Integer[]) ids.getArray()) : Collections.EMPTY_LIST;
+                List<_IObject> result = iObjectList.stream().filter(obj -> idsList.contains((int) obj.getId())).collect(Collectors.toList());
+                return new ArrayList<>(result);
+            }
 
 		} catch (SQLException e) {
 			DatabaseUtil.errorPrint(dbURI, e);
@@ -118,8 +140,8 @@ public class Database extends DatabaseCore implements IDatabase {
 		} finally {
 			pool.returnConnection(conn);
 		}
-		return o;
 
+		return iObjectList;
 	}
 
 	@Override

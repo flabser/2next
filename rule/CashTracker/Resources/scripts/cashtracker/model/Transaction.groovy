@@ -241,4 +241,9 @@ public class Transaction implements _IObject {
 		setIncludeInReports(rs.getBoolean("t.include_in_reports"));
 		setBasis(rs.getString("t.basis"));
 	}
+
+    @Override
+    public String getTableName() {
+        return "transaction";
+    }
 }

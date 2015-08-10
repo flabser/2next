@@ -131,4 +131,9 @@ public class Account implements _IObject {
 		setNote(rs.getString("note"));
 		setSortOrder(rs.getInt("sort_order"));
 	}
+
+    @Override
+    public String getTableName() {
+        return "account";
+    }
 }
