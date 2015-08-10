@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.log.Log4jLogger;
 import com.flabser.rule.GlobalSetting;
@@ -54,7 +55,7 @@ public class PortalInit extends HttpServlet {
 		}
 
 		if (isValid) {
-			context.setAttribute(AppTemplate.TEMPLATE_ATTR, env);
+			context.setAttribute(EnvConst.TEMPLATE_ATTR, env);
 		}
 
 	}

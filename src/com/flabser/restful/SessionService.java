@@ -19,11 +19,11 @@ import javax.ws.rs.core.Response;
 
 import org.omg.CORBA.UserException;
 
-import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.env.EnvConst;
 import com.flabser.env.SessionPool;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
@@ -58,12 +58,12 @@ public class SessionService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException, UserException,
-			IllegalAccessException, SQLException {
+	public Response createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException,
+			UserException, IllegalAccessException, SQLException {
 		UserSession userSession = null;
 		HttpSession jses;
 		String appID = authUser.getDefaultApp();
-		context.getAttribute(AppTemplate.TEMPLATE_ATTR);
+		context.getAttribute(EnvConst.TEMPLATE_ATTR);
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		String login = authUser.getLogin();
 		Server.logger.normalLogEntry(login + " is attempting to signin");
@@ -108,7 +108,7 @@ public class SessionService {
 	}
 
 	@DELETE
-	public void destroySession() {
+	public Response destroySession() {
 		HttpSession jses = request.getSession(true);
 		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 		if (userSession != null) {
@@ -117,5 +117,8 @@ public class SessionService {
 			userSession = null;
 			// jses.invalidate();
 		}
+		NewCookie cookie = new NewCookie(AUTH_COOKIE_NAME, "", "/", null, null, 0, false);
+		return Response.status(HttpServletResponse.SC_OK).cookie(cookie).build();
+
 	}
 }

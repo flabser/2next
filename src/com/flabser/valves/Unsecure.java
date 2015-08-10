@@ -31,7 +31,7 @@ public class Unsecure extends ValveBase {
 	public void invoke(Request request, Response response) throws IOException, ServletException {
 		http = request;
 
-		if ((!ru.isProtected()) || ru.isAuthRequest()) {
+		if ((!ru.isProtected()) || (ru.isAuthRequest() && !http.getMethod().equalsIgnoreCase("DELETE"))) {
 			gettingSession(request, response);
 			getNext().getNext().invoke(request, response);
 		} else {

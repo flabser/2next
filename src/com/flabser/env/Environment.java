@@ -75,7 +75,7 @@ public class Environment implements ICache {
 			factory.setValidating(true);
 			SAXParser saxParser = factory.newSAXParser();
 			SAXHandler cfgXMLhandler = new SAXHandler();
-			File file = new File(EnvConst.cfgFileName);
+			File file = new File(EnvConst.CFG_FILE);
 			saxParser.parse(file, cfgXMLhandler);
 			Document xmlDocument = getDocument();
 

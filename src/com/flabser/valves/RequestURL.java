@@ -11,7 +11,7 @@ public class RequestURL {
 
 	public RequestURL(String url) {
 		this.url = url;
-        String urlVal = url != null ? url.trim() : "";
+		String urlVal = url != null ? url.trim() : "";
 		Pattern pattern = Pattern.compile("^/(\\p{Alpha}+)(/[\\p{Lower}0-9]{16})?.*$");
 		Matcher matcher = pattern.matcher(urlVal);
 		if (matcher.matches()) {
@@ -19,14 +19,17 @@ public class RequestURL {
 			appID = matcher.group(2) == null ? "" : matcher.group(2).substring(1);
 		}
 
-        if (!isPage())  return;
+		if (!isPage()) {
+			return;
+		}
 
-        for (String pageIdRegex : new String[]{ "^.*/page/([\\w\\-~\\.]+)", "^.*/Provider\\?[\\w\\-~\\.=&]*id=([\\w\\-~\\.]+)[\\w\\-~\\.=&]*" }) {
-            if (urlVal.matches(pageIdRegex)) {
-                pageID = urlVal.replaceAll(pageIdRegex, "$1");
-                break;
-            }
-        }
+		for (String pageIdRegex : new String[] { "^.*/page/([\\w\\-~\\.]+)",
+				"^.*/Provider\\?[\\w\\-~\\.=&]*id=([\\w\\-~\\.]+)[\\w\\-~\\.=&]*" }) {
+			if (urlVal.matches(pageIdRegex)) {
+				pageID = urlVal.replaceAll(pageIdRegex, "$1");
+				break;
+			}
+		}
 
 	}
 
@@ -63,7 +66,8 @@ public class RequestURL {
 	}
 
 	public boolean isProtected() {
-		return !appType.equals("") && !appID.equals("") || !(isDefault() || url.matches(".*/[\\w\\.-]+$") || appType.equalsIgnoreCase("SharedResources"));
+		return !appType.equals("") && !appID.equals("")
+				|| !(isDefault() || url.matches(".*/[\\w\\.-]+$") || appType.equalsIgnoreCase("SharedResources"));
 	}
 
 	@Override

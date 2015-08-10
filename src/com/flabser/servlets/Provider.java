@@ -44,7 +44,7 @@ public class Provider extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		try {
 			context = config.getServletContext();
-			env = (AppTemplate) context.getAttribute(AppTemplate.TEMPLATE_ATTR);
+			env = (AppTemplate) context.getAttribute(EnvConst.TEMPLATE_ATTR);
 		} catch (Exception e) {
 			Server.logger.errorLogEntry(e);
 		}
@@ -64,7 +64,7 @@ public class Provider extends HttpServlet {
 		AttachmentHandler attachHandler = null;
 
 		try {
-			request.setCharacterEncoding(EnvConst.supposedCodePage);
+			request.setCharacterEncoding(EnvConst.SUPPOSED_CODE_PAGE);
 			String type = request.getParameter("type");
 			String id = request.getParameter("id");
 			String key = request.getParameter("key");

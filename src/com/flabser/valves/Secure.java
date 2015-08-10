@@ -14,6 +14,7 @@ import org.apache.catalina.valves.ValveBase;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.exception.AuthFailedException;
@@ -36,12 +37,12 @@ public class Secure extends ValveBase {
 		String appType = ru.getAppType();
 		String appID = ru.getAppID();
 
-		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(AppTemplate.ADMIN_APP_NAME)) {
+		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(EnvConst.ADMIN_APP_NAME)) {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 				if (us != null) {
-					if (!us.isBootstrapped(appID) && !appType.equalsIgnoreCase(AppTemplate.WORKSPACE_APP_NAME)) {
+					if (!us.isBootstrapped(appID) && !appType.equalsIgnoreCase(EnvConst.WORKSPACE_APP_NAME)) {
 						AppTemplate env = Environment.getApplication(appType);
 						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
 						if (hh != null) {
@@ -86,7 +87,8 @@ public class Secure extends ValveBase {
 			if (userSession != null) {
 				HttpSession jses = http.getSession(true);
 				jses.setAttribute(UserSession.SESSION_ATTR, userSession);
-				Server.logger.verboseLogEntry(userSession.toString() + "\" got from session pool " + jses.getServletContext().getContextPath());
+				Server.logger.verboseLogEntry(userSession.toString() + "\" got from session pool "
+						+ jses.getServletContext().getContextPath());
 				invoke(request, response);
 			} else {
 				Server.logger.warningLogEntry("there is no associated user session for the token");

@@ -21,6 +21,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.restful.ResourceLoader;
 import com.flabser.valves.Logging;
@@ -143,7 +144,7 @@ public class WebServer implements IWebServer {
 
 			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 
-			// initErrorPages(context);
+			initErrorPages(context);
 
 			for (int i = 0; i < defaultWelcomeList.length; i++) {
 				context.addWelcomeFile(defaultWelcomeList[i]);
@@ -173,7 +174,7 @@ public class WebServer implements IWebServer {
 			Server.logger.warningLogEntry("Context \"" + URLPath + "\" has not been initialized");
 			throw new ServletException("Context \"" + URLPath + "\" has not been initialized");
 		}
-		context.getServletContext().setAttribute(AppTemplate.TEMPLATE_ATTR, env);
+		context.getServletContext().setAttribute(EnvConst.TEMPLATE_ATTR, env);
 		return context;
 	}
 
@@ -307,6 +308,10 @@ public class WebServer implements IWebServer {
 		ErrorPage er400 = new ErrorPage();
 		er400.setErrorCode(HttpServletResponse.SC_BAD_REQUEST);
 		er400.setLocation("/Error");
+		context.addErrorPage(er);
+		ErrorPage er500 = new ErrorPage();
+		er500.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		er500.setLocation("/Error");
 		context.addErrorPage(er);
 
 	}

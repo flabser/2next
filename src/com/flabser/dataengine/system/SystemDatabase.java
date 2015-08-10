@@ -1,18 +1,5 @@
 package com.flabser.dataengine.system;
 
-import com.flabser.dataengine.DatabaseUtil;
-import com.flabser.dataengine.activity.Activity;
-import com.flabser.dataengine.activity.IActivity;
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.pool.IDBConnectionPool;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.dataengine.system.entities.UserGroup;
-import com.flabser.dataengine.system.entities.UserRole;
-import com.flabser.server.Server;
-import com.flabser.users.User;
-import com.flabser.users.UserStatusType;
-import org.apache.catalina.realm.RealmBase;
-
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -30,19 +17,31 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.catalina.realm.RealmBase;
+
+import com.flabser.dataengine.DatabaseUtil;
+import com.flabser.dataengine.activity.Activity;
+import com.flabser.dataengine.activity.IActivity;
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.pool.IDBConnectionPool;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.UserGroup;
+import com.flabser.dataengine.system.entities.UserRole;
+import com.flabser.env.EnvConst;
+import com.flabser.server.Server;
+import com.flabser.users.User;
+import com.flabser.users.UserStatusType;
+
 @SuppressWarnings({ "SqlDialectInspection", "SqlNoDataSourceInspection" })
 public class SystemDatabase implements ISystemDatabase {
 	public static final String jdbcDriver = "org.postgresql.Driver";
 	private IDBConnectionPool dbPool;
-	static String connectionURL = "jdbc:postgresql://localhost/2Next";
-	static String dbUser = "postgres";
-	static String dbUserPwd = "smartdoc";
 
 	// TODO Need to bring the setting out
 
 	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		dbPool = new com.flabser.dataengine.pool.DBConnectionPool();
-		dbPool.initConnectionPool(jdbcDriver, connectionURL, dbUser, dbUserPwd);
+		dbPool.initConnectionPool(jdbcDriver, EnvConst.CONN_URI, EnvConst.DB_USER, EnvConst.DB_PWD);
 
 		HashMap<String, String> queries = new HashMap<>();
 		queries.put("USERS", DDEScripts.getUsersDDE());
@@ -72,7 +71,9 @@ public class SystemDatabase implements ISystemDatabase {
 			return user;
 		}
 
-		if(pwd == null) pwd = "";
+		if (pwd == null) {
+			pwd = "";
+		}
 		if (user.getPasswordHash() != null && user.getPasswordHash().trim().length() > 0) {
 			String pwdHash = user.getPasswordHash().length() < 11 ? String.valueOf(pwd.hashCode()) : RealmBase.Digest(pwd, "MD5", "UTF-8");
 			if (user.getPasswordHash().equals(pwdHash)) {
@@ -114,7 +115,7 @@ public class SystemDatabase implements ISystemDatabase {
 		try (PreparedStatement getUser = conn.prepareStatement("select ID from users where login = ? limit 1;")) {
 
 			getUser.setString(1, login);
-			try(ResultSet rs = getUser.executeQuery()) {
+			try (ResultSet rs = getUser.executeQuery()) {
 				if (rs.next()) {
 					return getUser(rs.getInt("ID"));
 				}
@@ -138,7 +139,8 @@ public class SystemDatabase implements ISystemDatabase {
 						+ ids.stream().collect(Collectors.toList()) + "::integer[]) as g_id) as ids inner join roles on ids.g_id = ID ")) {
 
 			while (rs.next()) {
-				result.add(new UserRole(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("app_id"), rs.getBoolean("is_on")));
+				result.add(new UserRole(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("app_id"), rs
+						.getBoolean("is_on")));
 			}
 
 			conn.commit();
@@ -159,8 +161,8 @@ public class SystemDatabase implements ISystemDatabase {
 						+ ids.stream().collect(Collectors.toList()) + "::integer[]) as g_id) as ids inner join groups on ids.g_id = ID ")) {
 
 			while (rs.next()) {
-				result.add(new UserGroup(rs.getInt("id"), rs.getString("name"), rs.getString("description"),
-						new HashSet<>(getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("roles_id")))))));
+				result.add(new UserGroup(rs.getInt("id"), rs.getString("name"), rs.getString("description"), new HashSet<>(
+						getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("roles_id")))))));
 			}
 
 			conn.commit();
@@ -183,13 +185,14 @@ public class SystemDatabase implements ISystemDatabase {
 		try (Statement getApps = conn.createStatement();
 				ResultSet rs = getApps
 						.executeQuery("select ID, APPTYPE, APPID, APPNAME, OWNER, DBTYPE, DBHOST, DBNAME, DBLOGIN, DBPWD, STATUS, STATUSDATE from "
-								+ "(select unnest(ARRAY" + ids.stream().collect(Collectors.toList())
+								+ "(select unnest(ARRAY"
+								+ ids.stream().collect(Collectors.toList())
 								+ "::integer[]) as app_id) as ids inner join apps on ids.app_id = ID ")) {
 
 			while (rs.next()) {
-				result.add(new ApplicationProfile(rs.getInt("ID"), rs.getString("APPTYPE"), rs.getString("APPID"), rs.getString("APPNAME"), rs
-						.getString("OWNER"), rs.getInt("DBTYPE"), rs.getString("DBHOST"), rs.getString("DBNAME"), rs.getString("DBLOGIN"), rs
-						.getString("DBPWD"), rs.getInt("STATUS"), rs.getDate("STATUSDATE")));
+				result.add(new ApplicationProfile(rs.getInt("ID"), rs.getString("APPTYPE"), rs.getString("APPID"), rs.getString("APPNAME"),
+						rs.getString("OWNER"), rs.getInt("DBTYPE"), rs.getString("DBHOST"), rs.getString("DBNAME"),
+						rs.getString("DBLOGIN"), rs.getString("DBPWD"), rs.getInt("STATUS"), rs.getDate("STATUSDATE")));
 			}
 
 			conn.commit();
@@ -203,18 +206,21 @@ public class SystemDatabase implements ISystemDatabase {
 
 	}
 
-	//risk of sql injection
+	// risk of sql injection
 	@Override
 	public int getAllUsersCount(String condition) {
 		int count = 0;
 		String wherePiece = "";
-		if (!condition.equals("")) wherePiece = "WHERE " + condition;
+		if (!condition.equals("")) {
+			wherePiece = "WHERE " + condition;
+		}
 
 		Connection conn = dbPool.getConnection();
-		try (Statement s = conn.createStatement();
-			 ResultSet rs = s.executeQuery("select count(*) from USERS " + wherePiece)) {
+		try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery("select count(*) from USERS " + wherePiece)) {
 
-			if (rs.next())  count = rs.getInt(1);
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
 			conn.commit();
 			return count;
 		} catch (SQLException e) {
@@ -225,8 +231,8 @@ public class SystemDatabase implements ISystemDatabase {
 		}
 	}
 
-	//risk of sql injection
-	//identical to getAllUsersCount(String condition)
+	// risk of sql injection
+	// identical to getAllUsersCount(String condition)
 	@Override
 	public int getUsersCount(String condition) {
 		return getAllUsersCount(condition);
@@ -238,10 +244,10 @@ public class SystemDatabase implements ISystemDatabase {
 		Connection conn = dbPool.getConnection();
 
 		try (Statement s = conn.createStatement();
-			 ResultSet rs = s.executeQuery("SELECT ARRAY(SELECT ID FROM USERS WHERE ISSUPERVISOR = TRUE) as IDS")){
+				ResultSet rs = s.executeQuery("SELECT ARRAY(SELECT ID FROM USERS WHERE ISSUPERVISOR = TRUE) as IDS")) {
 
 			if (rs.next()) {
-				List<User> userList = getUsers((Integer[])getObjectArray(rs.getArray("IDS")));
+				List<User> userList = getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
 				userList.forEach(u -> users.put(u.getLogin(), u));
 			}
 
@@ -259,12 +265,12 @@ public class SystemDatabase implements ISystemDatabase {
 	@Override
 	public User getUserByVerifyCode(String code) {
 		Connection conn = dbPool.getConnection();
-		try (PreparedStatement pstmt = conn.prepareStatement("select ID from USERS where USERS.VERIFYCODE = ?")){
+		try (PreparedStatement pstmt = conn.prepareStatement("select ID from USERS where USERS.VERIFYCODE = ?")) {
 
 			conn.setAutoCommit(true);
 			pstmt.setString(1, code);
-			try(ResultSet rs = pstmt.executeQuery()) {
-				if(rs.next()) {
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
 					return getUser(rs.getInt("ID"));
 				}
 			}
@@ -278,15 +284,14 @@ public class SystemDatabase implements ISystemDatabase {
 		return null;
 	}
 
-
 	@SuppressWarnings("unused")
 	public User getUserByEmail(String email) {
 
 		Connection conn = dbPool.getConnection();
-		try (PreparedStatement pstmt = conn.prepareStatement("select ID from USERS where USERS.EMAIL = ?")){
+		try (PreparedStatement pstmt = conn.prepareStatement("select ID from USERS where USERS.EMAIL = ?")) {
 			pstmt.setString(1, email);
 
-			try(ResultSet rs = pstmt.executeQuery()) {
+			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
 					return getUser(rs.getInt("ID"));
 				}
@@ -302,24 +307,29 @@ public class SystemDatabase implements ISystemDatabase {
 		return null;
 	}
 
-	private List<User> getUsers( Integer... ids ){
+	private List<User> getUsers(Integer... ids) {
 
 		Connection conn = dbPool.getConnection();
 		List<User> result = new ArrayList<>();
-		if(ids == null) return result;
+		if (ids == null) {
+			return result;
+		}
 
 		try (Statement stmt = conn.createStatement();
-			 ResultSet rs = stmt.executeQuery("select ID, USERNAME, PRIMARYREGDATE, REGDATE, LOGIN, EMAIL, ISSUPERVISOR, PWD, PWDHASH, DEFAULTDBPWD, LOGINHASH, VERIFYCODE, STATUS, APPS, ROLES, GROUPS " +
-					 "FROM (SELECT unnest(ARRAY" + Arrays.toString(ids) + "::integer[]) as u_id) as ids inner join users on ids.u_id = ID" )){
+				ResultSet rs = stmt
+						.executeQuery("select ID, USERNAME, PRIMARYREGDATE, REGDATE, LOGIN, EMAIL, ISSUPERVISOR, PWD, PWDHASH, DEFAULTDBPWD, LOGINHASH, VERIFYCODE, STATUS, APPS, ROLES, GROUPS "
+								+ "FROM (SELECT unnest(ARRAY"
+								+ Arrays.toString(ids)
+								+ "::integer[]) as u_id) as ids inner join users on ids.u_id = ID")) {
 
 			while (rs.next()) {
-				result.add(new User(rs.getInt("ID"), rs.getString("USERNAME"), rs.getDate("PRIMARYREGDATE"), rs.getDate("REGDATE"), rs.getString("LOGIN"),
-						rs.getString("EMAIL"), rs.getBoolean("ISSUPERVISOR"), rs.getString("PWD"), rs.getString("PWDHASH"), rs.getString("DEFAULTDBPWD"),
-						rs.getInt("LOGINHASH"), rs.getString("VERIFYCODE"), UserStatusType.getType(rs.getInt("STATUS")),
-						new HashSet<>(getUserGroups(Arrays.asList((Integer[]) getObjectArray(rs.getArray("GROUPS"))))),
-						new HashSet<>(getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))),
-						getApplicationProfiles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true)
-				);
+				result.add(new User(rs.getInt("ID"), rs.getString("USERNAME"), rs.getDate("PRIMARYREGDATE"), rs.getDate("REGDATE"), rs
+						.getString("LOGIN"), rs.getString("EMAIL"), rs.getBoolean("ISSUPERVISOR"), rs.getString("PWD"), rs
+						.getString("PWDHASH"), rs.getString("DEFAULTDBPWD"), rs.getInt("LOGINHASH"), rs.getString("VERIFYCODE"),
+						UserStatusType.getType(rs.getInt("STATUS")), new HashSet<>(getUserGroups(Arrays
+								.asList((Integer[]) getObjectArray(rs.getArray("GROUPS"))))), new HashSet<>(getUserRoles(Arrays
+								.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))), getApplicationProfiles(Arrays
+								.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true));
 			}
 
 			conn.commit();
@@ -335,11 +345,13 @@ public class SystemDatabase implements ISystemDatabase {
 	@Override
 	public User getUser(int id) {
 		List<User> users = getUsers(id);
-		if (users.size() == 0) return null;
+		if (users.size() == 0) {
+			return null;
+		}
 		return users.get(0);
 	}
 
-	//identical to initUser(String login)
+	// identical to initUser(String login)
 	@Override
 	public User getUser(String id) {
 		return initUser(id);
@@ -403,7 +415,8 @@ public class SystemDatabase implements ISystemDatabase {
 	public int insert(User user) {
 		Connection conn = dbPool.getConnection();
 
-		try (PreparedStatement insertUser = conn.prepareStatement(
+		try (PreparedStatement insertUser = conn
+				.prepareStatement(
 						"insert into USERS(USERNAME, LOGIN, EMAIL, PWD, ISSUPERVISOR, PRIMARYREGDATE, REGDATE, LOGINHASH, PWDHASH, LASTDEFAULTURL, STATUS, VERIFYCODE, APPS, ROLES, GROUPS, DEFAULTDBPWD) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 						PreparedStatement.RETURN_GENERATED_KEYS)) {
 
@@ -447,9 +460,10 @@ public class SystemDatabase implements ISystemDatabase {
 	public int update(User user) {
 		Connection conn = dbPool.getConnection();
 
-		try (PreparedStatement updateUser = conn.prepareStatement("update USERS set " + "USERNAME = ?, " + "LOGIN = ?, " + "EMAIL = ?, " + "PWD = ?, "
-				+ "ISSUPERVISOR = ?, " + "PRIMARYREGDATE = ?, " + "REGDATE = ?, " + "LOGINHASH = ?, " + "PWDHASH = ?, " + "LASTDEFAULTURL = ?, "
-				+ "STATUS = ?, " + "VERIFYCODE = ?, " + "APPS = ?, " + "ROLES = ?, " + "GROUPS = ?, DEFAULTDBPWD = ? " + "where id = ?")) {
+		try (PreparedStatement updateUser = conn.prepareStatement("update USERS set " + "USERNAME = ?, " + "LOGIN = ?, " + "EMAIL = ?, "
+				+ "PWD = ?, " + "ISSUPERVISOR = ?, " + "PRIMARYREGDATE = ?, " + "REGDATE = ?, " + "LOGINHASH = ?, " + "PWDHASH = ?, "
+				+ "LASTDEFAULTURL = ?, " + "STATUS = ?, " + "VERIFYCODE = ?, " + "APPS = ?, " + "ROLES = ?, "
+				+ "GROUPS = ?, DEFAULTDBPWD = ? " + "where id = ?")) {
 
 			updateUser.setString(1, user.getUserName());
 			updateUser.setString(2, user.getLogin());
@@ -486,12 +500,12 @@ public class SystemDatabase implements ISystemDatabase {
 		ArrayList<User> users = new ArrayList<>();
 
 		Connection conn = dbPool.getConnection();
-		try (PreparedStatement pst = conn.prepareStatement("select ARRAY(SELECT ID from USERS where USERS.LOGIN LIKE ?) AS IDS")){
+		try (PreparedStatement pst = conn.prepareStatement("select ARRAY(SELECT ID from USERS where USERS.LOGIN LIKE ?) AS IDS")) {
 			conn.setAutoCommit(true);
 			pst.setString(1, keyWord + "%");
-			try(ResultSet rs = pst.executeQuery()){
-				if(rs.next()) {
-					return (ArrayList<User>)getUsers((Integer[])getObjectArray(rs.getArray("IDS")));
+			try (ResultSet rs = pst.executeQuery()) {
+				if (rs.next()) {
+					return (ArrayList<User>) getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
 				}
 			}
 		} catch (SQLException e) {
@@ -506,23 +520,29 @@ public class SystemDatabase implements ISystemDatabase {
 	private boolean checkHash(String hashAsString, int hash) {
 		try {
 			return (Integer.parseInt(hashAsString) == hash);
-		} catch (NumberFormatException ignored) {}
+		} catch (NumberFormatException ignored) {
+		}
 		return false;
 	}
 
-	//risk of sql injection
+	// risk of sql injection
 	@Override
 	public ArrayList<User> getAllUsers(String condition, int calcStartEntry, int pageSize) {
 
 		ArrayList<User> users = null;
 		String wherePiece = "";
-		if (!condition.equals("")) wherePiece = "WHERE " + condition;
+		if (!condition.equals("")) {
+			wherePiece = "WHERE " + condition;
+		}
 
 		Connection conn = dbPool.getConnection();
 		try (Statement s = conn.createStatement();
-			 ResultSet rs = s.executeQuery("select ARRAY(select ID from USERS " + wherePiece + " LIMIT " + pageSize + " OFFSET " + calcStartEntry + ") as IDS;")){
+				ResultSet rs = s.executeQuery("select ARRAY(select ID from USERS " + wherePiece + " LIMIT " + pageSize + " OFFSET "
+						+ calcStartEntry + ") as IDS;")) {
 
-			if (rs.next()) users = (ArrayList<User>)getUsers((Integer[])getObjectArray(rs.getArray("IDS")));
+			if (rs.next()) {
+				users = (ArrayList<User>) getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
+			}
 
 			conn.commit();
 		} catch (SQLException e) {
@@ -614,16 +634,18 @@ public class SystemDatabase implements ISystemDatabase {
 		return 0;
 	}
 
-	//risk of sql injection
+	// risk of sql injection
 	@Override
 	public ArrayList<ApplicationProfile> getAllApps(String condition, int calcStartEntry, int pageSize) {
 		ArrayList<ApplicationProfile> apps = new ArrayList<>();
 		String wherePiece = "";
-		if (!condition.equals("")) wherePiece = "WHERE " + condition;
+		if (!condition.equals("")) {
+			wherePiece = "WHERE " + condition;
+		}
 
 		Connection conn = dbPool.getConnection();
 		try (Statement s = conn.createStatement();
-			 ResultSet rs = s.executeQuery("select * from APPS " + wherePiece + " LIMIT " + pageSize + " OFFSET " + calcStartEntry)){
+				ResultSet rs = s.executeQuery("select * from APPS " + wherePiece + " LIMIT " + pageSize + " OFFSET " + calcStartEntry)) {
 
 			while (rs.next()) {
 				apps.add(new ApplicationProfile(rs));

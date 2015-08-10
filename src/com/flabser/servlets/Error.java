@@ -18,6 +18,7 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.EnvConst;
 import com.flabser.exception.ExceptionXML;
 import com.flabser.exception.TransformatorException;
+import com.flabser.script._WebFormData;
 import com.flabser.server.Server;
 
 public class Error extends HttpServlet {
@@ -29,7 +30,7 @@ public class Error extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		try {
 			context = config.getServletContext();
-			env = (AppTemplate) context.getAttribute(AppTemplate.TEMPLATE_ATTR);
+			env = (AppTemplate) context.getAttribute(EnvConst.TEMPLATE_ATTR);
 		} catch (Exception e) {
 			Server.logger.errorLogEntry(e);
 		}
@@ -37,29 +38,34 @@ public class Error extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		String errorMessage = "", location = "", type = "", servletName = "", exception = "";
+		String servletName = (String) request.getAttribute(RequestDispatcher.ERROR_SERVLET_NAME);
+		String errorMessage = "", location = "", type = "", exception = "";
 		Integer statusCode = 0;
 
-		if (request.getAttribute("errorType") == null) {
+		if (servletName != null) {
 			errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
 			statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 			location = (String) request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI);
 			type = (String) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION_TYPE);
-			servletName = (String) request.getAttribute(RequestDispatcher.ERROR_SERVLET_NAME);
 			exception = (String) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
 		} else {
-
+			_WebFormData wfd = new _WebFormData(request.getParameterMap());
+			errorMessage = wfd.getValueSilently("message", "unknown error");
+			statusCode = wfd.getNumberValueSilently("code", HttpServletResponse.SC_BAD_REQUEST);
+			location = wfd.getValueSilently("location");
+			type = wfd.getValueSilently("type");
+			exception = wfd.getValueSilently("exception");
 		}
 
 		ExceptionXML xml = new ExceptionXML(errorMessage, statusCode, location, type, servletName, exception);
-		String xslt = "webapps" + File.separator + env.appType + File.separator + "xsl" + File.separator + "errors" + File.separator
-				+ "error.xsl";
+		String xslt = "webapps" + File.separator + env.appType + File.separator + EnvConst.ERROR_XSLT;
 
 		try {
-			request.setCharacterEncoding(EnvConst.supposedCodePage);
+			request.setCharacterEncoding(EnvConst.SUPPOSED_CODE_PAGE);
 			String outputContent = xml.toXML();
 			// System.out.println(outputContent);
 			response.setContentType("text/html");
+			response.setStatus(statusCode);
 			File errorXslt = new File(xslt);
 			new SaxonTransformator().toTrans(response, errorXslt, outputContent);
 		} catch (UnsupportedEncodingException e) {

@@ -10,6 +10,7 @@ import java.util.Properties;
 import org.postgresql.util.PSQLException;
 
 import com.flabser.dataengine.DatabaseUtil;
+import com.flabser.env.EnvConst;
 import com.flabser.server.Server;
 
 public class ApplicationDatabase implements IApplicationDatabase {
@@ -17,9 +18,9 @@ public class ApplicationDatabase implements IApplicationDatabase {
 	private String dbURL;
 
 	ApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		props.setProperty("user", SystemDatabase.dbUser);
-		props.setProperty("password", SystemDatabase.dbUserPwd);
-		dbURL = SystemDatabase.connectionURL;
+		props.setProperty("user", EnvConst.DB_USER);
+		props.setProperty("password", EnvConst.DB_PWD);
+		dbURL = EnvConst.CONN_URI;
 		Class.forName(SystemDatabase.jdbcDriver).newInstance();
 	}
 

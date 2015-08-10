@@ -1,7 +1,6 @@
 package com.flabser.exception;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 
@@ -23,49 +22,43 @@ public class ApplicationException extends Exception {
 
 	public ApplicationException(String error) {
 		super(error);
-
-		realException = this;
 	}
 
 	public ApplicationException(AuthFailedExceptionType err, HttpServletResponse response, String dir) {
-		message(err, response, dir);
+		// message(err, response, dir);
 	}
 
 	public Exception getException() {
 		return realException;
 	}
 
-	protected void message(AuthFailedExceptionType err, HttpServletResponse response, String dir) {
+	public String toXML() {
 		PrintWriter out;
-		String xmlText;
+		String xmlText = null;
 		try {
-
+			// ExceptionXML xml = new ExceptionXML(getMessage(), statusCode,
+			// location, type, servletName, exception);
 			// ExceptionXML xml = new ExceptionXML(400, xmlText, xmlText,
 			// xmlText);
-			xmlText = "<?xml version = \"1.0\" encoding=\"utf-8\"?><request><error><type>login: " + err.name() + "</type><version>"
-					+ Server.serverVersion + "</version></error></request>";
-			response.setHeader("Cache-Control", "no-cache, must-revalidate, private, no-store, s-maxage=0, max-age=0");
-			response.setHeader("Pragma", "no-cache");
-			response.setDateHeader("Expires", 0);
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			xmlText = "<?xml version = \"1.0\" encoding=\"utf-8\"?><request><error><type></type><version>" + Server.serverVersion
+					+ "</version></error></request>";
 
-			response.setContentType("text/html;charset=utf-8");
-			out = response.getWriter();
 			Source xmlSource = new StreamSource(new StringReader(xmlText));
-			Source xsltSource = new StreamSource(new File("webapps" + File.separator + dir + File.separator + "xsl" + File.separator
-					+ "errors" + File.separator + "authfailed.xsl"));
-			Result result = new StreamResult(out);
+			Source xsltSource = new StreamSource(new File("webapps" + File.separator + File.separator + "xsl" + File.separator + "errors"
+					+ File.separator + "authfailed.xsl"));
+			Result result = new StreamResult();
 
 			TransformerFactory transFact = TransformerFactory.newInstance();
 			Transformer trans = transFact.newTransformer(xsltSource);
 			trans.transform(xmlSource, result);
 
-		} catch (IOException ioe) {
-			Server.logger.errorLogEntry(ioe);
+			// } catch (IOException ioe) {
+			// Server.logger.errorLogEntry(ioe);
 		} catch (TransformerConfigurationException tce) {
 			Server.logger.errorLogEntry(tce);
 		} catch (TransformerException te) {
 			Server.logger.errorLogEntry(te);
 		}
+		return xmlText;
 	}
 }
