@@ -17,6 +17,7 @@
 					&#169; F dev team 2015
 				</font>
 				<br />
+				<xsl:value-of select="error/apptype" /><br/>
 
 <h1>
 				<xsl:choose>

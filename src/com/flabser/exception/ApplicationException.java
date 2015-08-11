@@ -2,6 +2,8 @@ package com.flabser.exception;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.WebApplicationException;
@@ -25,6 +27,14 @@ public class ApplicationException extends WebApplicationException {
 	public ApplicationException(String appType, String error) {
 		super(error);
 		this.appType = appType;
+	}
+
+	public ApplicationException(String appType, String error, Exception exp) {
+		super(error);
+		this.appType = appType;
+		StringWriter errors = new StringWriter();
+		exp.printStackTrace(new PrintWriter(errors));
+		exception = errors.toString();
 	}
 
 	public ApplicationException(Response r) {

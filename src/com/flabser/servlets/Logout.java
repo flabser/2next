@@ -1,5 +1,7 @@
 package com.flabser.servlets;
 
+import java.io.IOException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -12,7 +14,7 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.env.EnvConst;
-import com.flabser.exception.PortalException;
+import com.flabser.exception.ApplicationException;
 import com.flabser.server.Server;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
@@ -28,12 +30,12 @@ public class Logout extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		doPost(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		UserSession userSession = null;
 
 		String mode = request.getParameter("mode");
@@ -56,7 +58,9 @@ public class Logout extends HttpServlet {
 			}
 			response.sendRedirect(getRedirect());
 		} catch (Exception e) {
-			new PortalException(e, env, response, ProviderExceptionType.LOGOUTERROR);
+			ApplicationException ae = new ApplicationException(env.appType, e.toString(), e);
+			response.setStatus(ae.getCode());
+			response.getWriter().println(ae.getHTMLMessage());
 		}
 
 	}

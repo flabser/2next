@@ -18,14 +18,12 @@ import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
-import com.flabser.exception.PortalException;
+import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
-import com.flabser.exception.XSLTFileNotFoundException;
 import com.flabser.localization.LocalizatorException;
 import com.flabser.log.LogFiles;
 import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.server.Server;
-import com.flabser.servlets.ProviderExceptionType;
 import com.flabser.servlets.ProviderResult;
 import com.flabser.servlets.PublishAsType;
 import com.flabser.servlets.SaxonTransformator;
@@ -51,12 +49,12 @@ public class AdminProvider extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		doPost(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		AttachmentHandler attachHandler = null;
 		ProviderResult result = null;
 
@@ -102,9 +100,9 @@ public class AdminProvider extends HttpServlet {
 					result = service(request, app, id, key);
 				}
 			} else {
-				throw new PortalException("Request is incorrect(type=null)", env, response, ProviderExceptionType.PROVIDERERROR,
-						PublishAsType.HTML);
-				// return;
+				ApplicationException ae = new ApplicationException(env.appType, "Request is incorrect(type=null)");
+				response.setStatus(ae.getCode());
+				response.getWriter().println(ae.getHTMLMessage());
 			}
 
 			if (disableClientCache) {
@@ -162,12 +160,10 @@ public class AdminProvider extends HttpServlet {
 				return;
 			}
 
-		} catch (XSLTFileNotFoundException xfnf) {
-			new PortalException(xfnf, env, response, PublishAsType.HTML);
-		} catch (IOException ioe) {
-			new PortalException(ioe, env, response, PublishAsType.HTML);
 		} catch (Exception e) {
-			new PortalException(e, env, response, PublishAsType.HTML);
+			ApplicationException ae = new ApplicationException(env.appType, e.toString(), e);
+			response.setStatus(ae.getCode());
+			response.getWriter().println(ae.getHTMLMessage());
 		}
 	}
 
