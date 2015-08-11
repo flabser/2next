@@ -5,14 +5,11 @@
 	<xsl:template match="/">
 		<html>
 			<head>
-				<title>2Next - Error  - <xsl:value-of select="error/apptype" /></title>
-				<link rel="stylesheet" href="css/main.css" />
-				<link rel="stylesheet" href="css/actionbar.css" />
+				<title>2Next - Error  - <xsl:value-of select="error/apptype" /></title>			
 
 			</head>
 			<body>
 
-				<font style="font-size:1.9em;"><xsl:value-of select="error/message" /></font>
 				<div style="clear:both; height:10px" />
 				<font style="font-size:1.1em;">
 					version
@@ -25,20 +22,20 @@
 				<xsl:choose>
 					<xsl:when test="error/type = 'APPLICATION'">
 						<font style="font-size:2em;">Application error</font><br/>
-							code=<xsl:value-of select="error/code" /><br/>
+						code=<xsl:value-of select="error/code" /><br/>
 						message=<xsl:value-of select="error/message" /><br/>
-						location=<xsl:value-of select="error/loaction" /><br/>
 						type=<xsl:value-of select="error/type" /><br/>
+						location=<xsl:value-of select="error/loaction" /><br/>						
 						name=<xsl:value-of select="error/name" /><br/>
 						exception=<xsl:value-of select="error/exception" /><br/>
 
 					</xsl:when>
 					<xsl:when test="error/type = 'AUTHFAIL'">
 						<font style="font-size:2em;">Authorization failed</font><br/>
-							code=<xsl:value-of select="error/code" /><br/>
+						code=<xsl:value-of select="error/code" /><br/>
 						message=<xsl:value-of select="error/message" /><br/>
-						location=<xsl:value-of select="error/loaction" /><br/>
 						type=<xsl:value-of select="error/type" /><br/>
+						location=<xsl:value-of select="error/loaction" /><br/>						
 						name=<xsl:value-of select="error/name" /><br/>
 						exception=<xsl:value-of select="error/exception" /><br/>
 					</xsl:when>
@@ -46,8 +43,8 @@
 						<font style="font-size:2em;">Internal server error</font><br/>
 						code=<xsl:value-of select="error/code" /><br/>
 						message=<xsl:value-of select="error/message" /><br/>
-						location=<xsl:value-of select="error/loaction" /><br/>
 						type=<xsl:value-of select="error/type" /><br/>
+						location=<xsl:value-of select="error/loaction" /><br/>						
 						name=<xsl:value-of select="error/name" /><br/>
 						exception=<xsl:value-of select="error/exception" /><br/>
 					</xsl:otherwise>

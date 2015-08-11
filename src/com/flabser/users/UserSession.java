@@ -25,7 +25,6 @@ public class UserSession implements ICache {
 	public User currentUser;
 	public HistoryEntryCollection history;
 	public int pageSize;
-	public String host = "localhost";
 
 	private AuthModeType authMode;
 	private HashMap<String, ActiveApplication> acitveApps = new HashMap<String, ActiveApplication>();

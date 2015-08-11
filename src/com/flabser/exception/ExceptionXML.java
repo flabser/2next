@@ -23,7 +23,7 @@ public class ExceptionXML {
 	}
 
 	public void setAppType(String t) {
-		type = t;
+		appType = t;
 	}
 
 	public String toXML() {
