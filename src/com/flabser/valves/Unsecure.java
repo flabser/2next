@@ -12,6 +12,7 @@ import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.server.Server;
@@ -61,7 +62,7 @@ public class Unsecure extends ValveBase {
 		HttpSession jses = request.getSession(false);
 		if (jses == null) {
 			jses = http.getSession(true);
-			jses.setAttribute(UserSession.SESSION_ATTR, new UserSession(new User()));
+			jses.setAttribute(EnvConst.SESSION_ATTR, new UserSession(new User()));
 		}
 	}
 }

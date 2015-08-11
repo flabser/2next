@@ -1,64 +1,60 @@
 package com.flabser.exception;
 
 import java.io.File;
-import java.io.PrintWriter;
-import java.io.StringReader;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
+import net.sf.saxon.s9api.SaxonApiException;
+
+import com.flabser.env.EnvConst;
 import com.flabser.server.Server;
+import com.flabser.servlets.SaxonTransformator;
 
-public class ApplicationException extends Exception {
+public class ApplicationException extends WebApplicationException {
 	private static final long serialVersionUID = 1L;
-	private Exception realException;
+	private int code = HttpServletResponse.SC_BAD_REQUEST;
+	private String location;
+	private String type = "APPLICATION";
+	private String servletName = "";
+	private String exception;
+	private String appType;
 
-	public ApplicationException(String error) {
+	public ApplicationException(String appType, String error) {
 		super(error);
+		this.appType = appType;
 	}
 
-	public ApplicationException(AuthFailedExceptionType err, HttpServletResponse response, String dir) {
-		// message(err, response, dir);
+	public ApplicationException(Response r) {
+		super(r);
 	}
 
-	public Exception getException() {
-		return realException;
-	}
-
-	public String toXML() {
-		PrintWriter out;
+	public String getHTMLMessage() {
 		String xmlText = null;
+
+		ExceptionXML xml = new ExceptionXML(getMessage(), code, location, type, servletName, exception);
+		String xslt = "webapps" + File.separator + appType + File.separator + EnvConst.ERROR_XSLT;
+		File errorXslt = new File(xslt);
 		try {
-			// ExceptionXML xml = new ExceptionXML(getMessage(), statusCode,
-			// location, type, servletName, exception);
-			// ExceptionXML xml = new ExceptionXML(400, xmlText, xmlText,
-			// xmlText);
-			xmlText = "<?xml version = \"1.0\" encoding=\"utf-8\"?><request><error><type></type><version>" + Server.serverVersion
-					+ "</version></error></request>";
-
-			Source xmlSource = new StreamSource(new StringReader(xmlText));
-			Source xsltSource = new StreamSource(new File("webapps" + File.separator + File.separator + "xsl" + File.separator + "errors"
-					+ File.separator + "authfailed.xsl"));
-			Result result = new StreamResult();
-
-			TransformerFactory transFact = TransformerFactory.newInstance();
-			Transformer trans = transFact.newTransformer(xsltSource);
-			trans.transform(xmlSource, result);
-
-			// } catch (IOException ioe) {
-			// Server.logger.errorLogEntry(ioe);
-		} catch (TransformerConfigurationException tce) {
-			Server.logger.errorLogEntry(tce);
-		} catch (TransformerException te) {
-			Server.logger.errorLogEntry(te);
+			xmlText = new SaxonTransformator().toTrans(errorXslt, xml.toXML());
+		} catch (IOException | SaxonApiException e) {
+			Server.logger.errorLogEntry(e);
 		}
+
 		return xmlText;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import org.omg.CORBA.UserException;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.env.EnvConst;
 import com.flabser.env.SessionPool;
 import com.flabser.users.UserSession;
 
@@ -37,7 +38,7 @@ public class ApplicationService {
 		HttpSession jses = request.getSession(true);
 
 		AuthUser user = new AuthUser();
-		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
+		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 		if (userSession == null) {
 			return user;
 		}
@@ -49,8 +50,8 @@ public class ApplicationService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public AuthUser createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException, UserException,
-			IllegalAccessException, SQLException {
+	public AuthUser createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException,
+			UserException, IllegalAccessException, SQLException {
 
 		return authUser;
 	}
@@ -58,9 +59,9 @@ public class ApplicationService {
 	@DELETE
 	public void destroySession() {
 		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
+		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 		if (userSession != null) {
-			jses.removeAttribute(UserSession.SESSION_ATTR);
+			jses.removeAttribute(EnvConst.SESSION_ATTR);
 			SessionPool.remove(userSession);
 			userSession = null;
 			// jses.invalidate();

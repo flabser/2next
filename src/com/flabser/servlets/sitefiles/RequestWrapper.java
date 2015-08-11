@@ -15,7 +15,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import com.flabser.users.UserSession;
+import com.flabser.env.EnvConst;
 
 public class RequestWrapper extends HttpServletRequestWrapper {
 	public ArrayList<UploadedFile> uploadedFiles = new ArrayList<>();
@@ -26,12 +26,9 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 	private File tempDir;
 	private Integer maxSizeInMemory = 2000;
 
-	DiskFileItemFactory factory = new DiskFileItemFactory(maxSizeInMemory,
-			tempDir);
+	DiskFileItemFactory factory = new DiskFileItemFactory(maxSizeInMemory, tempDir);
 
-	public RequestWrapper(HttpServletRequest hreq)
-			throws AttachmentHandlerException, FileUploadException,
-			UnsupportedEncodingException {
+	public RequestWrapper(HttpServletRequest hreq) throws AttachmentHandlerException, FileUploadException, UnsupportedEncodingException {
 		super(hreq);
 		final String usedCharset = hreq.getCharacterEncoding();
 
@@ -55,8 +52,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 			FileItem item = iter.next();
 			if (item.isFormField()) {
 				if (item.getFieldName().equalsIgnoreCase("type")) {
-					richTextUpload = item.getString(usedCharset)
-							.equalsIgnoreCase("richtextupload");
+					richTextUpload = item.getString(usedCharset).equalsIgnoreCase("richtextupload");
 				} else if (item.getFieldName().equalsIgnoreCase("formsesid")) {
 					formSesID = item.getString(usedCharset);
 				} else if (item.getFieldName().equalsIgnoreCase("info")) {
@@ -69,7 +65,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 			}
 		}
 
-		session.getAttribute(UserSession.SESSION_ATTR);
+		session.getAttribute(EnvConst.SESSION_ATTR);
 	}
 
 	public UploadedFile[] getFilesArray() {

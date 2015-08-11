@@ -6,8 +6,8 @@
 		<html>
 			<head>
 				<title>2Next - Error</title>
-				<link rel="stylesheet" href="classic/css/main.css" />
-				<link rel="stylesheet" href="classic/css/actionbar.css" />
+				<link rel="stylesheet" href="css/main.css" />
+				<link rel="stylesheet" href="css/actionbar.css" />
 
 			</head>
 			<body>
@@ -24,32 +24,32 @@
 <h1>
 				<xsl:choose>
 					<xsl:when test="error/type = 'APPLICATION'">
-						<font style="font-size:2em;">Application error</font>
-						<xsl:value-of select="error/code" /><br/>
-						<xsl:value-of select="error/message" /><br/>
-						<xsl:value-of select="error/loaction" /><br/>
-						<xsl:value-of select="error/type" /><br/>
-						<xsl:value-of select="error/name" /><br/>
-						<xsl:value-of select="error/exception" /><br/>
+						<font style="font-size:2em;">Application error</font><br/>
+							code=<xsl:value-of select="error/code" /><br/>
+						message=<xsl:value-of select="error/message" /><br/>
+						location=<xsl:value-of select="error/loaction" /><br/>
+						type=<xsl:value-of select="error/type" /><br/>
+						name=<xsl:value-of select="error/name" /><br/>
+						exception=<xsl:value-of select="error/exception" /><br/>
 
 					</xsl:when>
 					<xsl:when test="error/type = 'AUTHFAIL'">
-						<font style="font-size:2em;">Authorization failed</font>
-						<xsl:value-of select="error/code" /><br/>
-						<xsl:value-of select="error/message" /><br/>
-						<xsl:value-of select="error/loaction" /><br/>
-						<xsl:value-of select="error/type" /><br/>
-						<xsl:value-of select="error/name" /><br/>
-						<xsl:value-of select="error/exception" /><br/>
+						<font style="font-size:2em;">Authorization failed</font><br/>
+							code=<xsl:value-of select="error/code" /><br/>
+						message=<xsl:value-of select="error/message" /><br/>
+						location=<xsl:value-of select="error/loaction" /><br/>
+						type=<xsl:value-of select="error/type" /><br/>
+						name=<xsl:value-of select="error/name" /><br/>
+						exception=<xsl:value-of select="error/exception" /><br/>
 					</xsl:when>
 					<xsl:otherwise>
-						<font style="font-size:1em;">Internal server error</font><br/>
-						<xsl:value-of select="error/code" /><br/>
-						<xsl:value-of select="error/message" /><br/>
-						<xsl:value-of select="error/loaction" /><br/>
-						<xsl:value-of select="error/type" /><br/>
-						<xsl:value-of select="error/name" /><br/>
-						<xsl:value-of select="error/exception" /><br/>
+						<font style="font-size:2em;">Internal server error</font><br/>
+						code=<xsl:value-of select="error/code" /><br/>
+						message=<xsl:value-of select="error/message" /><br/>
+						location=<xsl:value-of select="error/loaction" /><br/>
+						type=<xsl:value-of select="error/type" /><br/>
+						name=<xsl:value-of select="error/name" /><br/>
+						exception=<xsl:value-of select="error/exception" /><br/>
 					</xsl:otherwise>
 				</xsl:choose>
 

@@ -77,7 +77,7 @@ public class Provider extends HttpServlet {
 					if (rule != null) {
 
 						jses = request.getSession(false);
-						userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
+						userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 
 						if (type == null || type.equalsIgnoreCase("page")) {
 							result = page(response, request, rule, userSession);
