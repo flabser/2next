@@ -11,6 +11,29 @@
 </header>
 <section class="form-content">
     <fieldset class="fieldset">
+        {{#tn-form-group property="transactionType"}}
+            <div class="controls">
+                <label>
+                    {{tn-input-radio
+                        value="1"
+                        groupValue=transaction.transactionType}}
+                    {{t "expense"}}
+                </label>
+                <label>
+                    {{tn-input-radio
+                        value="2"
+                        groupValue=transaction.transactionType}}
+                    {{t "income"}}
+                </label>
+                <label>
+                    {{tn-input-radio
+                        value="3"
+                        groupValue=transaction.transactionType}}
+                    {{t "transfer"}}
+                </label>
+            </div>
+        {{/tn-form-group}}
+
         {{#tn-form-group property="date"}}
             <div class="control-label">
                 {{t "date"}}

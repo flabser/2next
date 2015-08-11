@@ -57,6 +57,7 @@ Router.map(function() {
     this.route('dashboard');
     this.route('reports');
     this.route('login');
+    this.route('budget');
 
     this.route('user_profile', {
         path: 'user-profile'

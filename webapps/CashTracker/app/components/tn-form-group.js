@@ -4,7 +4,7 @@ import ModelFormPropertyMixin from '../mixins/m-form-property';
 
 export default Em.Component.extend(ModelFormMixin, ModelFormPropertyMixin, {
     tagName: 'div',
-    classNames: ['form-group', 'control-group'],
+    classNames: ['form-group'],
     classNameBindings: ['status'],
 
     init: function() {
