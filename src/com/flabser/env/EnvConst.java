@@ -12,6 +12,8 @@ public class EnvConst {
 	public static final String DB_USER = "postgres";
 	public static final String DB_PWD = "smartdoc";
 	public static final String TEMPLATE_ATTR = "template";
-	public final static String ADMIN_APP_NAME = "administrator";
-	public final static String WORKSPACE_APP_NAME = "nubis";
+	public final static String SESSION_ATTR = "usersession";
+	public final static String ADMIN_APP_NAME = "Administrator";
+	public final static String WORKSPACE_APP_NAME = "Nubis";
+	public static final String AUTH_COOKIE_NAME = "2nses";
 }

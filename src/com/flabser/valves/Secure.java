@@ -17,6 +17,7 @@ import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
+import com.flabser.exception.ApplicationException;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.server.Server;
@@ -40,7 +41,7 @@ public class Secure extends ValveBase {
 		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(EnvConst.ADMIN_APP_NAME)) {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
-				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
+				UserSession us = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 				if (us != null) {
 					if (!us.isBootstrapped(appID) && !appType.equalsIgnoreCase(EnvConst.WORKSPACE_APP_NAME)) {
 						AppTemplate env = Environment.getAppTemplate(appType);
@@ -52,16 +53,17 @@ public class Secure extends ValveBase {
 								Server.webServerInst.addApplication(appID, env);
 								Server.logger.verboseLogEntry("application ready on: " + ru.getUrl());
 								((HttpServletResponse) response).sendRedirect(ru.getUrl());
-							} catch (Exception e) {
+							} catch (ApplicationException e) {
 								Server.logger.errorLogEntry(e.getMessage());
-								response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-								response.getWriter().println(e.getMessage());
+								response.setStatus(e.getCode());
+								response.getWriter().println(e.getHTMLMessage());
 							}
 						} else {
 							String msg = "\"" + env.appType + "\" has not set for " + us.currentUser.getLogin() + " " + ru;
 							Server.logger.warningLogEntry(msg);
-							response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-							response.getWriter().println(msg);
+							ApplicationException e = new ApplicationException(ru.getAppType(), msg);
+							response.setStatus(e.getCode());
+							response.getWriter().println(e.getHTMLMessage());
 						}
 					} else {
 						getNext().invoke(request, response);
@@ -86,17 +88,22 @@ public class Secure extends ValveBase {
 			UserSession userSession = SessionPool.getLoggeedUser(token);
 			if (userSession != null) {
 				HttpSession jses = http.getSession(true);
-				jses.setAttribute(UserSession.SESSION_ATTR, userSession);
+				jses.setAttribute(EnvConst.SESSION_ATTR, userSession);
 				Server.logger.verboseLogEntry(userSession.toString() + "\" got from session pool "
 						+ jses.getServletContext().getContextPath());
 				invoke(request, response);
 			} else {
 				Server.logger.warningLogEntry("there is no associated user session for the token");
-				new AuthFailedException(AuthFailedExceptionType.NO_ASSOCIATED_SESSION_FOR_THE_TOKEN, response, ru.getAppType());
+				AuthFailedException e = new AuthFailedException(AuthFailedExceptionType.NO_ASSOCIATED_SESSION_FOR_THE_TOKEN,
+						ru.getAppType());
+				response.setStatus(e.getCode());
+				response.getWriter().println(e.getHTMLMessage());
 			}
 		} else {
 			Server.logger.warningLogEntry("user session was expired");
-			new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, response, ru.getAppType());
+			AuthFailedException e = new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, ru.getAppType());
+			response.setStatus(e.getCode());
+			response.getWriter().println(e.getHTMLMessage());
 		}
 	}
 }

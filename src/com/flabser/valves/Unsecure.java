@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.connector.Request;
@@ -12,7 +11,9 @@ import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
+import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
 import com.flabser.server.Server;
 import com.flabser.users.User;
@@ -47,8 +48,9 @@ public class Unsecure extends ValveBase {
 
 				} catch (RuleException e) {
 					Server.logger.errorLogEntry(e.getMessage());
-					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-					response.getWriter().println(e.getMessage());
+					ApplicationException ae = new ApplicationException(ru.getAppType(), e.getMessage());
+					response.setStatus(ae.getCode());
+					response.getWriter().println(ae.getHTMLMessage());
 				}
 
 			} else {
@@ -61,7 +63,7 @@ public class Unsecure extends ValveBase {
 		HttpSession jses = request.getSession(false);
 		if (jses == null) {
 			jses = http.getSession(true);
-			jses.setAttribute(UserSession.SESSION_ATTR, new UserSession(new User()));
+			jses.setAttribute(EnvConst.SESSION_ATTR, new UserSession(new User()));
 		}
 	}
 }

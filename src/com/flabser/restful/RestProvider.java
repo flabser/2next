@@ -53,7 +53,7 @@ public class RestProvider {
 
 	public UserSession getUserSession() {
 		HttpSession jses = request.getSession(false);
-		UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
+		UserSession us = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 		return us;
 
 	}
