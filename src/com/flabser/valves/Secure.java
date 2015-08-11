@@ -43,7 +43,7 @@ public class Secure extends ValveBase {
 				UserSession us = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
 				if (us != null) {
 					if (!us.isBootstrapped(appID) && !appType.equalsIgnoreCase(EnvConst.WORKSPACE_APP_NAME)) {
-						AppTemplate env = Environment.getApplication(appType);
+						AppTemplate env = Environment.getAppTemplate(appType);
 						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
 						if (hh != null) {
 							Server.logger.verboseLogEntry("start application initializing ...");

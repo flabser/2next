@@ -176,7 +176,7 @@ public class AdminProvider extends HttpServlet{
 		AppTemplate env = null;
 		IDatabase db = null;
 		if (app != null && !"".equalsIgnoreCase(app)){
-			env = Environment.getApplication(app);
+			env = Environment.getAppTemplate(app);
 			
 			sh = new ServiceHandler(dbID);
 		}else if(dbID != null && !"".equalsIgnoreCase(dbID)){

@@ -36,7 +36,7 @@ public class Unsecure extends ValveBase {
 			getNext().getNext().invoke(request, response);
 		} else {
 			if (ru.isPage()) {
-				AppTemplate aTemplate = Environment.getApplication(ru.getAppType());
+				AppTemplate aTemplate = Environment.getAppTemplate(ru.getAppType());
 				try {
 					if (aTemplate.ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
 						gettingSession(request, response);
