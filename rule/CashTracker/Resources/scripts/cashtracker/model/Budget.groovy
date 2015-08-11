@@ -65,7 +65,7 @@ public class Budget implements _IObject {
 
 	@Override
 	public String toString() {
-		return """{
+		return """Budget: {
 					"id": $id,
 					"name": "$name",
 					"regDate": "$regDate",
