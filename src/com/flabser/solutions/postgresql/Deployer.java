@@ -52,7 +52,6 @@ public class Deployer extends DatabaseCore implements IDeployer {
 			dbInit.getTablesDDE().stream().filter( q -> !tables.contains(getTableName(q).toLowerCase())).forEach(query -> {
                 try {
                     stmt.addBatch(query);
-                    stmt.addBatch("ALTER TABLE " + getTableName(query) + " ADD readers_engine_field VARCHAR[]");
                     stmt.executeBatch();
                 } catch (SQLException e) {
                     System.out.println(getTableName(query));

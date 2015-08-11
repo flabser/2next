@@ -220,11 +220,6 @@ public class Transaction implements _IObject {
 	}
 
 	@Override
-	public String getTableName() {
-		return "transactions";
-	}
-
-	@Override
 	public void init(ResultSet rs) {
 		setId(rs.getInt("t.id"));
 		setUser(null);

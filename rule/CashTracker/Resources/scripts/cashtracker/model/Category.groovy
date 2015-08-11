@@ -135,11 +135,6 @@ public class Category implements _IObject {
 	}
 
 	@Override
-	public String getTableName() {
-		return "categories";
-	}
-
-	@Override
 	public void init(ResultSet rs) {
 		setId(rs.getInt("id"));
 		// setTransactionTypes(rs.getArray("transaction_type"));

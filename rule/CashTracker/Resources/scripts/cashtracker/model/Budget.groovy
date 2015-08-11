@@ -75,11 +75,6 @@ public class Budget implements _IObject {
 	}
 
 	@Override
-	public String getTableName() {
-		return "budgets";
-	}
-
-	@Override
 	public void init(ResultSet rs) {
 		setId(rs.getInt("id"));
 		setName(rs.getString("name"));

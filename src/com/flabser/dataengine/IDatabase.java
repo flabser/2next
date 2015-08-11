@@ -22,7 +22,7 @@ public interface IDatabase {
 
 	ArrayList <Object[]> select(String condition, User user);
 
-	ArrayList <_IObject> select(String condition, Class<? extends _IObject> objClass, User user);
+	ArrayList <_IObject> select(String condition, Class<_IObject> objClass, User user);
 
 	int insert(String condition, User user);
 
