@@ -59,10 +59,7 @@ public class Secure extends ValveBase {
 								response.getWriter().println(e.getHTMLMessage());
 							}
 						} else {
-							// String msg = "\"" + env.appType +
-							// "\" has not set for " + us.currentUser.getLogin()
-							// + " " + ru;
-							String msg = "has not set for " + us.currentUser.getLogin() + " " + ru;
+							String msg = "\"" + env.appType + "\" has not set for " + us.currentUser.getLogin() + " " + ru;
 							Server.logger.warningLogEntry(msg);
 							ApplicationException e = new ApplicationException(ru.getAppType(), msg);
 							response.setStatus(e.getCode());
