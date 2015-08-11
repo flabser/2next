@@ -5,14 +5,14 @@
 	<xsl:template match="/">
 		<html>
 			<head>
-				<title>2Next - Error</title>
+				<title>2Next - Error  - <xsl:value-of select="error/apptype" /></title>
 				<link rel="stylesheet" href="css/main.css" />
 				<link rel="stylesheet" href="css/actionbar.css" />
 
 			</head>
 			<body>
 
-				<font style="font-size:1.9em;">Nubis</font>
+				<font style="font-size:1.9em;"><xsl:value-of select="error/message" /></font>
 				<div style="clear:both; height:10px" />
 				<font style="font-size:1.1em;">
 					version

@@ -42,7 +42,7 @@ public class UserSession implements ICache {
 	public void init(String appID) throws ApplicationException {
 		ApplicationProfile appProfile = currentUser.getApplicationProfile(appID);
 		if (appProfile != null) {
-			if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
+			if (appProfile.getStatus() == ApplicationStatusType.ON_LINE) {
 				IDatabase db = appProfile.getDatabase();
 				if (db != null) {
 					ActiveApplication aa = new ActiveApplication(appProfile, db);

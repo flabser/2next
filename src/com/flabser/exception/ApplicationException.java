@@ -34,11 +34,12 @@ public class ApplicationException extends WebApplicationException {
 	public String getHTMLMessage() {
 		String xmlText = null;
 
-		ExceptionXML xml = new ExceptionXML(getMessage(), code, location, type, servletName, exception);
+		ExceptionXML document = new ExceptionXML(getMessage(), code, location, type, servletName, exception);
+		document.setAppType(appType);
 		String xslt = "webapps" + File.separator + appType + File.separator + EnvConst.ERROR_XSLT;
 		File errorXslt = new File(xslt);
 		try {
-			xmlText = new SaxonTransformator().toTrans(errorXslt, xml.toXML());
+			xmlText = new SaxonTransformator().toTrans(errorXslt, document.toXML());
 		} catch (IOException | SaxonApiException e) {
 			Server.logger.errorLogEntry(e);
 		}
