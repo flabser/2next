@@ -65,9 +65,21 @@ public class Budget implements _IObject {
 
 	@Override
 	public String toString() {
-		return "Budget[" + name + "]";
+		return """{
+					"id": $id,
+					"name": "$name",
+					"regDate": "$regDate",
+					"owner": $owner,
+					"status": $status
+				}""";
 	}
 
+	@Override
+	public String getTableName() {
+		return "budgets";
+	}
+
+	@Override
 	public void init(ResultSet rs) {
 		setId(rs.getInt("id"));
 		setName(rs.getString("name"));

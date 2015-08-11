@@ -35,6 +35,12 @@ public class Tag implements _IObject {
 		return "Tag[" + name + "]";
 	}
 
+	@Override
+	public String getTableName() {
+		return "tags";
+	}
+
+	@Override
 	public void init(ResultSet rs) {
 		setId(rs.getInt("id"));
 		setName(rs.getString("name"));

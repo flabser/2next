@@ -4,7 +4,9 @@ import java.sql.ResultSet
 
 import cashtracker.model.constants.TransactionType
 
+import com.fasterxml.jackson.annotation.JsonGetter
 import com.fasterxml.jackson.annotation.JsonRootName
+import com.fasterxml.jackson.annotation.JsonSetter
 import com.flabser.script._IObject
 
 
@@ -13,7 +15,7 @@ public class Category implements _IObject {
 
 	private long id;
 
-	private TransactionType transactionType;
+	private List<TransactionType> transactionTypes;
 
 	private Category parentCategory;
 
@@ -36,12 +38,28 @@ public class Category implements _IObject {
 		this.id = id;
 	}
 
-	public TransactionType getTransactionType() {
-		return transactionType;
+	public List<TransactionType> getTransactionTypes() {
+		return transactionTypes;
 	}
 
-	public void setTransactionType(TransactionType transactionType) {
-		this.transactionType = transactionType;
+	public void setTransactionTypes(List<TransactionType> transactionTypes) {
+		this.transactionTypes = transactionTypes;
+	}
+
+	@JsonGetter("transactionTypes")
+	public List<Integer> getTransactionTypesCode() {
+		return null;
+	}
+
+	@JsonSetter("transactionTypes")
+	public void setTransactionTypesByIds(List<Integer> ids) {
+		List<TransactionType> transactionTypes = new ArrayList<TransactionType>();
+		if (ids != null) {
+			ids.each {
+				transactionTypes.add(TransactionType.typeOf(it));
+			}
+		}
+		setTransactionTypes(transactionTypes);
 	}
 
 	public Category getParentCategory() {
@@ -50,6 +68,25 @@ public class Category implements _IObject {
 
 	public void setParentCategory(Category parentCategory) {
 		this.parentCategory = parentCategory;
+	}
+
+	@JsonGetter("parentCategory")
+	public Long getParentCategoryId() {
+		if (parentCategory != null) {
+			return parentCategory.id;
+		}
+		return null;
+	}
+
+	@JsonSetter("parentCategory")
+	public void setParentCategoryById(Long id) {
+		Category parentCategory = null;
+		if (id != null) {
+			parentCategory = new Category();
+			parentCategory.setId(id);
+			parentCategory.setName("name $id");
+		}
+		setParentCategory(parentCategory)
 	}
 
 	public String getName() {
@@ -94,12 +131,18 @@ public class Category implements _IObject {
 
 	@Override
 	public String toString() {
-		return "Category[" + name + "]";
+		return "Category[$id, $name, $transactionTypes, $enabled, $parentCategory]";
 	}
 
+	@Override
+	public String getTableName() {
+		return "categories";
+	}
+
+	@Override
 	public void init(ResultSet rs) {
 		setId(rs.getInt("id"));
-		setTransactionType(TransactionType.typeOf(rs.getInt("transaction_type")));
+		// setTransactionTypes(rs.getArray("transaction_type"));
 		setParentCategory(null);
 		setName(rs.getString("name"));
 		setEnabled(rs.getBoolean("enabled"));

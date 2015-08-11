@@ -10,6 +10,7 @@ import org.omg.CORBA.UserException;
 
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.env.EnvConst;
 import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
@@ -54,7 +55,8 @@ public class UserSession implements ICache {
 					appProfile.save();
 				}
 			} else {
-				throw new ApplicationException("application \"" + appProfile.appType + "/" + appProfile.getAppID() + "\" cannot init its database");
+				throw new ApplicationException("application \"" + appProfile.appType + "/" + appProfile.getAppID()
+						+ "\" cannot init its database");
 			}
 		}
 	}
@@ -72,7 +74,9 @@ public class UserSession implements ICache {
 		} else {
 			Object o = currentUser.getPesistentValue("lang");
 			if (o == null) {
-				return lang;
+				// TODO it uncomment when cookies will be realised
+				// return lang;
+				return "ENG";
 			} else {
 				return (String) o;
 			}
@@ -167,14 +171,16 @@ public class UserSession implements ICache {
 		aUser.setRoles(currentUser.getUserRoles().toArray(new String[currentUser.getUserRoles().size()]));
 		HashMap<String, Application> applications = new HashMap<String, Application>();
 		for (ApplicationProfile ap : (currentUser.getApplicationProfiles().values())) {
-			Application a = new Application(ap);
-			a.setAppID(ap.appID);
-			a.setAppName(ap.appName);
-			a.setAppType(ap.appType);
-			a.setOwner(ap.owner);
-			a.setVisibilty(ap.getVisibilty());
-			a.setStatus(ap.status);
-			applications.put(ap.appID, a);
+			if (!ap.appType.equalsIgnoreCase(EnvConst.WORKSPACE_APP_NAME)) {
+				Application a = new Application(ap);
+				a.setAppID(ap.appID);
+				a.setAppName(ap.appName);
+				a.setAppType(ap.appType);
+				a.setOwner(ap.owner);
+				a.setVisibilty(ap.getVisibilty());
+				a.setStatus(ap.status);
+				applications.put(ap.appID, a);
+			}
 		}
 		aUser.setApplications(applications);
 		aUser.setRoles(currentUser.getUserRoles());

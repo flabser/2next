@@ -21,6 +21,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.restful.ResourceLoader;
 import com.flabser.valves.Logging;
@@ -120,7 +121,8 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
+				new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -142,7 +144,7 @@ public class WebServer implements IWebServer {
 
 			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 
-			// initErrorPages(context);
+			initErrorPages(context);
 
 			for (int i = 0; i < defaultWelcomeList.length; i++) {
 				context.addWelcomeFile(defaultWelcomeList[i]);
@@ -162,8 +164,8 @@ public class WebServer implements IWebServer {
 			context.addMimeMapping("css", "text/css");
 			context.addMimeMapping("js", "text/javascript");
 
-			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(
-					new ResourceConfig(new ResourceLoader(env.appType).getClasses())));
+			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(new ResourceLoader(
+					env.appType).getClasses())));
 			w1.setLoadOnStartup(1);
 			w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 			context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -172,7 +174,7 @@ public class WebServer implements IWebServer {
 			Server.logger.warningLogEntry("Context \"" + URLPath + "\" has not been initialized");
 			throw new ServletException("Context \"" + URLPath + "\" has not been initialized");
 		}
-		context.getServletContext().setAttribute(AppTemplate.TEMPLATE_ATTR, env);
+		context.getServletContext().setAttribute(EnvConst.TEMPLATE_ATTR, env);
 		return context;
 	}
 
@@ -210,7 +212,8 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
+				new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -296,15 +299,19 @@ public class WebServer implements IWebServer {
 	private void initErrorPages(Context context) {
 		ErrorPage er = new ErrorPage();
 		er.setErrorCode(HttpServletResponse.SC_NOT_FOUND);
-		er.setLocation("/Error?code=" + er.getErrorCode() + "&location=" + er.getLocation() + "&type=" + er.getExceptionType() + "&name" + er.getName());
+		er.setLocation("/Error");
 		context.addErrorPage(er);
 		ErrorPage er401 = new ErrorPage();
 		er401.setErrorCode(HttpServletResponse.SC_UNAUTHORIZED);
-		er401.setLocation("/Error?code=" + er.getErrorCode() + "&location=" + er.getLocation() + "&type=" + er.getExceptionType() + "&name" + er.getName());
+		er401.setLocation("/Error");
 		context.addErrorPage(er401);
 		ErrorPage er400 = new ErrorPage();
 		er400.setErrorCode(HttpServletResponse.SC_BAD_REQUEST);
-		er400.setLocation("/Error?code=" + er.getErrorCode() + "&location=" + er.getLocation() + "&type=" + er.getExceptionType() + "&name" + er.getName());
+		er400.setLocation("/Error");
+		context.addErrorPage(er);
+		ErrorPage er500 = new ErrorPage();
+		er500.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		er500.setLocation("/Error");
 		context.addErrorPage(er);
 
 	}

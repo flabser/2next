@@ -3,14 +3,14 @@ package cashtracker.model.constants;
 public enum TransactionType {
 	UNKNOWN(0), EXPENSE(1), INCOME(2), TRANSFER(3);
 
-	private final int value;
+	private final int code;
 
-	private TransactionType(int value) {
-		this.value = value;
+	private TransactionType(int code) {
+		this.code = code;
 	}
 
-	public static TransactionType typeOf(int value) {
-		switch (value) {
+	public static TransactionType typeOf(int code) {
+		switch (code) {
 		case 1:
 			return EXPENSE;
 
@@ -26,6 +26,6 @@ public enum TransactionType {
 	}
 
 	public int getCode() {
-		return value;
+		return code;
 	}
 }

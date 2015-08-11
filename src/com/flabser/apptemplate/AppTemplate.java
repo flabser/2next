@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
@@ -28,16 +29,13 @@ public class AppTemplate implements ICache, _IContent {
 	public String adminXSLTPath;
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
-	public final static String TEMPLATE_ATTR = "template";
-	public final static String ADMIN_APP_NAME = "administrator";
-	public final static String WORKSPACE_APP_NAME = "nubis";
 
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 	private String docBase;
 
 	public AppTemplate(String at) {
 		isValid = true;
-		appType = ADMIN_APP_NAME;
+		appType = EnvConst.ADMIN_APP_NAME;
 	}
 
 	public AppTemplate(String appType, String globalFileName) {

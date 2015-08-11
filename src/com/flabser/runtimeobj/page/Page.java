@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.Environment;
+import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.SentenceCaption;
@@ -17,7 +18,6 @@ import com.flabser.script._URL;
 import com.flabser.scriptprocessor.page.DoProcessor;
 import com.flabser.scriptprocessor.page.IQuerySaveTransaction;
 import com.flabser.supplier.SourceSupplier;
-import com.flabser.users.AuthFailedException;
 import com.flabser.users.UserSession;
 import com.flabser.util.ScriptResponse;
 import com.flabser.util.Util;
@@ -100,10 +100,13 @@ public class Page {
 					switch (elementRule.doClassName.getType()) {
 					case GROOVY_FILE:
 						scriptResp = sProcessor.processGroovyScript(elementRule.doClassName.getClassName(), httpMethod);
+						break;
 					case FILE:
 						scriptResp = sProcessor.processGroovyScript(elementRule.doClassName.getClassName(), httpMethod);
+						break;
 					case JAVA_CLASS:
 						scriptResp = sProcessor.processJava(elementRule.doClassName.getClassName(), httpMethod);
+						break;
 					case UNKNOWN:
 						break;
 					default:

@@ -3,14 +3,14 @@ package cashtracker.model.constants;
 public enum TransactionState {
 	UNKNOWN(0), CONFIRMED(1), PENDING(2);
 
-	private final int value;
+	private final int code;
 
-	private TransactionState(int value) {
-		this.value = value;
+	private TransactionState(int code) {
+		this.code = code;
 	}
 
-	public static TransactionState stateOf(int value) {
-		switch (value) {
+	public static TransactionState stateOf(int code) {
+		switch (code) {
 		case 1:
 			return CONFIRMED;
 
@@ -23,6 +23,6 @@ public enum TransactionState {
 	}
 
 	public int getCode() {
-		return value;
+		return code;
 	}
 }

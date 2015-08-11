@@ -219,6 +219,12 @@ public class Transaction implements _IObject {
 		return "Transaction[$id, $user, $date, $startDate, $endDate, $category, $accountFrom, $amount, $costCenter]";
 	}
 
+	@Override
+	public String getTableName() {
+		return "transactions";
+	}
+
+	@Override
 	public void init(ResultSet rs) {
 		setId(rs.getInt("t.id"));
 		setUser(null);

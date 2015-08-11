@@ -75,7 +75,7 @@ public class Environment implements ICache {
 			factory.setValidating(true);
 			SAXParser saxParser = factory.newSAXParser();
 			SAXHandler cfgXMLhandler = new SAXHandler();
-			File file = new File("cfg.xml");
+			File file = new File(EnvConst.CFG_FILE);
 			saxParser.parse(file, cfgXMLhandler);
 			Document xmlDocument = getDocument();
 
@@ -101,7 +101,7 @@ public class Environment implements ICache {
 				primaryAppDir = primaryAppDir + File.separator;
 			}
 
-			defaultRedirectURL = "/" + XMLUtil.getTextContent(xmlDocument, "/tn/applications/@default", false, "Workspace", true);
+			defaultRedirectURL = "/" + XMLUtil.getTextContent(xmlDocument, "/tn/applications/@default", false, "Nibis", true);
 
 			Site site = new Site();
 			site.appBase = "Nubis";

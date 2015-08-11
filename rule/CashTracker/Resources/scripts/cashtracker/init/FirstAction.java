@@ -76,7 +76,7 @@ public class FirstAction implements IAppDatabaseInit {
 		sql.append("CREATE TABLE CATEGORIES ");
 		sql.append("(");
 		sql.append("  ID                 SERIAL NOT NULL,\n");
-		sql.append("  TRANSACTION_TYPE   SMALLINT,\n");
+		sql.append("  TRANSACTION_TYPE   SMALLINT,\n"); // TODO change to TRANSACTION_TYPES SMALLINT[]
 		sql.append("  PARENT_ID          BIGINT,\n");
 		sql.append("  ENABLED            BOOLEAN,\n");
 		sql.append("  NAME               CHARACTER VARYING(128),\n");
