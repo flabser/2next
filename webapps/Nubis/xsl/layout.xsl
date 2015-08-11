@@ -78,7 +78,7 @@
 					<xsl:if test="//@userid != 'anonymous'">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								{{username}}
+								<xsl:value-of select="//@userid" />
 								<i class="fa fa-caret-down"></i>
 							</a>
 							<ul class="dropdown-menu">
