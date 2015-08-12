@@ -60,88 +60,86 @@ public class Provider extends HttpServlet {
 		try {
 			request.setCharacterEncoding(EnvConst.SUPPOSED_CODE_PAGE);
 			String type = request.getParameter("type");
-			String id = request.getParameter("id");
 			String key = request.getParameter("key");
 			String onlyXML = request.getParameter("onlyxml");
+			String id = request.getParameter("id");
+			if (id == null) {
+				id = EnvConst.DEFAULT_PAGE;
+			}
 
 			if (env != null) {
-				if (id != null) {
-					IRule rule = env.ruleProvider.getRule(id);
+				IRule rule = env.ruleProvider.getRule(id);
+				if (rule != null) {
+					jses = request.getSession(false);
+					userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 
-					if (rule != null) {
-
-						jses = request.getSession(false);
-						userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
-
-						if (type == null || type.equalsIgnoreCase("page")) {
-							result = page(response, request, rule, userSession);
-							if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
-								attachHandler = new AttachmentHandler(request, response, true);
-							}
-						} else if (type.equalsIgnoreCase("search")) {
-							result = search(request, userSession);
-						} else if (type.equalsIgnoreCase("getattach")) {
-							result = getAttach(request, userSession, key);
+					if (type == null || type.equalsIgnoreCase("page")) {
+						result = page(response, request, rule, userSession);
+						if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
 							attachHandler = new AttachmentHandler(request, response, true);
-						} else {
-							String reqEnc = request.getCharacterEncoding();
-							type = new String(type.getBytes("ISO-8859-1"), reqEnc);
-							ApplicationException ae = new ApplicationException(env.appType, "Request has been undefined, type=" + type
-									+ ", id=" + id + ", key=" + key);
-							response.setStatus(ae.getCode());
-							response.getWriter().println(ae.getHTMLMessage());
-							return;
 						}
+					} else if (type.equalsIgnoreCase("search")) {
+						result = search(request, userSession);
+					} else if (type.equalsIgnoreCase("getattach")) {
+						result = getAttach(request, userSession, key);
+						attachHandler = new AttachmentHandler(request, response, true);
+					} else {
+						String reqEnc = request.getCharacterEncoding();
+						type = new String(type.getBytes("ISO-8859-1"), reqEnc);
+						ApplicationException ae = new ApplicationException(env.appType, "Request has been undefined, type=" + type
+								+ ", id=" + id + ", key=" + key);
+						response.setStatus(ae.getCode());
+						response.getWriter().println(ae.getHTMLMessage());
+						return;
+					}
 
-						if (result.publishAs == PublishAsType.XML || onlyXML != null) {
-							result.publishAs = PublishAsType.XML;
-							result.addHistory = false;
+					if (result.publishAs == PublishAsType.XML || onlyXML != null) {
+						result.publishAs = PublishAsType.XML;
+						result.addHistory = false;
+					}
+
+					if (result.publishAs == PublishAsType.HTML) {
+						if (result.disableClientCache) {
+							disableCash(response);
 						}
+						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses, result.addHistory);
+						response.setContentType("text/html");
 
-						if (result.publishAs == PublishAsType.HTML) {
-							if (result.disableClientCache) {
-								disableCash(response);
-							}
-							ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses, result.addHistory);
-							response.setContentType("text/html");
-
-							if (po.prepareXSLT(env, result.xslt)) {
-								String outputContent = po.getStandartOutput();
-								new SaxonTransformator().toTrans(response, po.xslFile, outputContent);
-							} else {
-								String outputContent = po.getStandartOutput();
-								response.setContentType("text/xml;charset=utf-8");
-								PrintWriter out = response.getWriter();
-								out.println(outputContent);
-								out.close();
-							}
-						} else if (result.publishAs == PublishAsType.XML) {
-							if (result.disableClientCache) {
-								disableCash(response);
-							}
-							response.setContentType("text/xml;charset=utf-8");
-							ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses, result.addHistory);
+						if (po.prepareXSLT(env, result.xslt)) {
 							String outputContent = po.getStandartOutput();
+							new SaxonTransformator().toTrans(response, po.xslFile, outputContent);
+						} else {
+							String outputContent = po.getStandartOutput();
+							response.setContentType("text/xml;charset=utf-8");
 							PrintWriter out = response.getWriter();
 							out.println(outputContent);
 							out.close();
-						} else if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
-							if (request.getParameter("disposition") != null) {
-								disposition = request.getParameter("disposition");
-							} else {
-								disposition = "attachment";
-							}
-							attachHandler.publish(result.filePath, result.originalAttachName, disposition);
-						} else if (result.publishAs == PublishAsType.FORWARD) {
-							response.sendRedirect(result.forwardTo);
-							return;
 						}
-					} else {
+					} else if (result.publishAs == PublishAsType.XML) {
+						if (result.disableClientCache) {
+							disableCash(response);
+						}
+						response.setContentType("text/xml;charset=utf-8");
+						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses, result.addHistory);
+						String outputContent = po.getStandartOutput();
+						PrintWriter out = response.getWriter();
+						out.println(outputContent);
+						out.close();
+					} else if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
+						if (request.getParameter("disposition") != null) {
+							disposition = request.getParameter("disposition");
+						} else {
+							disposition = "attachment";
+						}
+						attachHandler.publish(result.filePath, result.originalAttachName, disposition);
+					} else if (result.publishAs == PublishAsType.FORWARD) {
+						response.sendRedirect(result.forwardTo);
 						return;
 					}
 				} else {
-					throw new RuleException("parameter \"id\" is not defined in request");
+					return;
 				}
+
 			} else {
 				throw new ServerException(ServerExceptionType.APPTEMPLATE_HAS_NOT_INITIALIZED, "context=" + context.getServletContextName());
 			}
