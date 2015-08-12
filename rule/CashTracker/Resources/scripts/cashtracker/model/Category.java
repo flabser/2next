@@ -8,14 +8,16 @@ import java.util.List;
 import cashtracker.model.constants.TransactionType;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.ApplicationEntity;
 
+
 @JsonRootName("category")
 public class Category extends ApplicationEntity {
 
-	private List<TransactionType> transactionTypes;
+	private List <TransactionType> transactionTypes;
 
 	private Category parentCategory;
 
@@ -29,30 +31,30 @@ public class Category extends ApplicationEntity {
 
 	private int sortOrder;
 
-	public List<TransactionType> getTransactionTypes() {
+	public List <TransactionType> getTransactionTypes() {
 		return transactionTypes;
 	}
 
-	public void setTransactionTypes(List<TransactionType> transactionTypes) {
+	public void setTransactionTypes(List <TransactionType> transactionTypes) {
 		this.transactionTypes = transactionTypes;
 	}
 
 	@JsonGetter("transactionTypes")
-	public List<Integer> getTransactionTypesCode() {
-		List<Integer> transactionTypesCode = new ArrayList<Integer>();
+	public List <Integer> getTransactionTypesCode() {
+		List <Integer> tTypes = new ArrayList <Integer>();
 		if (transactionTypes != null) {
-			transactionTypes.forEach(type -> transactionTypesCode.add(type.getCode()));
+			transactionTypes.forEach(type -> tTypes.add(type.getCode()));
 		}
-		return transactionTypesCode;
+		return tTypes;
 	}
 
 	@JsonSetter("transactionTypes")
-	public void setTransactionTypesByIds(List<Integer> ids) {
-		List<TransactionType> transactionTypes = new ArrayList<TransactionType>();
+	public void setTransactionTypesByIds(List <Integer> ids) {
+		List <TransactionType> tTypes = new ArrayList <TransactionType>();
 		if (ids != null) {
-			ids.forEach(id -> transactionTypes.add(TransactionType.typeOf(id)));
+			ids.forEach(id -> tTypes.add(TransactionType.typeOf(id)));
 		}
-		setTransactionTypes(transactionTypes);
+		setTransactionTypes(tTypes);
 	}
 
 	public Category getParentCategory() {
@@ -65,7 +67,7 @@ public class Category extends ApplicationEntity {
 
 	@JsonGetter("parentCategory")
 	public Long getParentCategoryId() {
-		if (parentCategory != null) {
+		if (parentCategory != null && parentCategory.id != 0) {
 			return parentCategory.id;
 		}
 		return null;
@@ -139,6 +141,7 @@ public class Category extends ApplicationEntity {
 	}
 
 	@Override
+	@JsonIgnore
 	public String getTableName() {
 		return "categories";
 	}

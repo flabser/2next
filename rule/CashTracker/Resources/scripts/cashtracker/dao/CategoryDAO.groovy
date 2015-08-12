@@ -58,10 +58,10 @@ public class CategoryDAO {
 	public int add(Category m) {
 		def parentId = m.parentCategory?.id?:null
 		String sql = """INSERT INTO categories
-							(transaction_type, parent_id,
+							(parent_id, transaction_type,
 							name, enabled, note, color, sort_order)
 						VALUES
-							(null, ${parentId},
+							(${parentId}, null,
 							'${m.name}', ${m.enabled}, '${m.note}', ${m.color}, ${m.sortOrder})""";
 		return db.insert(sql, user);
 	}
@@ -70,8 +70,8 @@ public class CategoryDAO {
 		def parentId = m.parentCategory?.id?:null
 		String sql = """UPDATE categories
 						SET
-							transaction_type = null,
 							parent_id = ${parentId},
+							transaction_type = null,
 							name = '${m.name}',
 							enabled = ${m.enabled},
 							note = '${m.note}',

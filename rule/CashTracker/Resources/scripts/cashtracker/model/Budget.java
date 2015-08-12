@@ -6,8 +6,10 @@ import java.util.Date;
 
 import cashtracker.model.constants.BudgetState;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.ApplicationEntity;
+
 
 @JsonRootName("budget")
 public class Budget extends ApplicationEntity {
@@ -67,6 +69,7 @@ public class Budget extends ApplicationEntity {
 	}
 
 	@Override
+	@JsonIgnore
 	public String getTableName() {
 		return "budgets";
 	}

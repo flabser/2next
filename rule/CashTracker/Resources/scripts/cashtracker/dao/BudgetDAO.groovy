@@ -18,11 +18,11 @@ public class BudgetDAO {
 	}
 
 	public String getSelectQuery() {
-		return "SELECT id, name, regdate, owner, status FROM budgets";
+		return "SELECT id, name, reg_date, owner, status FROM budgets";
 	}
 
 	public String getCreateQuery() {
-		return "INSERT INTO budgets (name, regdate, owner, status) VALUES (?, ?, ?, ?)"
+		return "INSERT INTO budgets (name, reg_date, owner, status) VALUES (?, ?, ?, ?)"
 	}
 
 	public String getUpdateQuery() {
@@ -51,7 +51,7 @@ public class BudgetDAO {
 	}
 
 	public int add(Budget m) {
-		String sql = """INSERT INTO budgets (name, regdate, owner, status)
+		String sql = """INSERT INTO budgets (name, reg_date, owner, status)
 							VALUES ('${m.name}', '${m.regDate}', '${m.owner}', ${m.status.code})"""
 		return db.insert(sql, user)
 	}

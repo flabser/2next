@@ -161,9 +161,9 @@ public class TransactionDAO {
 							amount, exchange_rate, category, cost_center,
 							tags, repeat, every, repeat_step, start_date, end_date,
 							note, include_in_reports, basis)
-						VALUES ('${m.user.login}', ${m.transactionType.code}, ${m.transactionState.code},
+						VALUES (${m.user}, ${m.transactionType.code}, ${m.transactionState.code},
 								'${m.date}', ${m.accountFrom.id}, ${m.accountTo.id},
-								${m.amount}, ${m.exchangeRate}, ${m.category}, ${m.costCenter},
+								${m.amount}, ${m.exchangeRate}, ${m.category.id}, ${m.costCenter.id},
 								${m.tags}, ${m.repeat}, ${m.every}, ${m.repeatStep}, ${m.startDate}, ${m.endDate},
 								${m.note}, ${m.includeInReports}, ${m.basis})"""
 		return db.insert(sql, user)
@@ -179,8 +179,8 @@ public class TransactionDAO {
 							account_to = ${m.accountTo.id},
 							amount = ${m.amount},
 							exchange_rate = ${m.exchangeRate},
-							category = ${m.category},
-							cost_center = ${m.costCenter},
+							category = ${m.category.id},
+							cost_center = ${m.costCenter.id},
 							tags = ${m.tags},
 							repeat = ${m.repeat},
 							every = ${m.every},

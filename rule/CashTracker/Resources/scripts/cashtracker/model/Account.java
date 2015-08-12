@@ -3,10 +3,13 @@ package cashtracker.model;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.ApplicationEntity;
+
 
 @JsonRootName("account")
 public class Account extends ApplicationEntity {
@@ -27,9 +30,9 @@ public class Account extends ApplicationEntity {
 
 	private String note;
 
-	private List<Long> writers;
+	private List <Long> writers;
 
-	private List<Long> readers;
+	private List <Long> readers;
 
 	private int sortOrder;
 
@@ -65,19 +68,19 @@ public class Account extends ApplicationEntity {
 		this.amountControl = amountControl;
 	}
 
-	public List<Long> getWriters() {
+	public List <Long> getWriters() {
 		return writers;
 	}
 
-	public void setWriters(List<Long> writers) {
+	public void setWriters(List <Long> writers) {
 		this.writers = writers;
 	}
 
-	public List<Long> getReaders() {
+	public List <Long> getReaders() {
 		return readers;
 	}
 
-	public void setReaders(List<Long> readers) {
+	public void setReaders(List <Long> readers) {
 		this.readers = readers;
 	}
 
@@ -126,14 +129,20 @@ public class Account extends ApplicationEntity {
 		setOpeningBalance(rs.getBigDecimal("opening_balance"));
 		setAmountControl(rs.getBigDecimal("amount_control"));
 		setEnabled(rs.getBoolean("enabled"));
-		// setWriters(Arrays.asList(rs.getArray("writers")));
-		setReaders(null);
+
+		Long[] _writers = (Long[]) rs.getArray("writers").getArray();
+		setWriters(Arrays.asList(_writers));
+
+		Long[] _readers = (Long[]) rs.getArray("readers").getArray();
+		setReaders(Arrays.asList(_readers));
+
 		setIncludeInTotals(rs.getBoolean("include_in_totals"));
 		setNote(rs.getString("note"));
 		setSortOrder(rs.getInt("sort_order"));
 	}
 
 	@Override
+	@JsonIgnore
 	public String getTableName() {
 		return "accounts";
 	}

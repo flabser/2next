@@ -67,7 +67,9 @@ public class AccountDAO {
 							writers, readers, note, include_in_totals, sort_order)
 						VALUES
 							('${m.name}', '${m.currencyCode}', ${m.openingBalance}, ${m.amountControl}, ${m.enabled},
-							${m.writers}, ${m.readers}, '${m.note}', ${m.includeInTotals}, ${m.sortOrder})"""
+							'{${m.writers?.join(",")}}',
+							'{${m.readers?.join(",")}}',
+							'${m.note}', ${m.includeInTotals}, ${m.sortOrder})"""
 		return db.insert(sql, user)
 	}
 
@@ -79,8 +81,8 @@ public class AccountDAO {
 							opening_balance = ${m.openingBalance},
 							amount_control = ${m.amountControl},
 							enabled = ${m.enabled},
-							writers = ${m.writers},
-							readers = ${m.readers},
+							writers = '{${m.writers?.join(",")}}',
+							readers = '{${m.readers?.join(",")}}',
 							note = '${m.note}',
 							include_in_totals = ${m.includeInTotals},
 							sort_order = ${m.sortOrder}

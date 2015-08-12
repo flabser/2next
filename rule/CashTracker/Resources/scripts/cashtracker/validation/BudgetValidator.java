@@ -1,6 +1,6 @@
-package cashtracker.validation
+package cashtracker.validation;
 
-import cashtracker.model.Budget
+import cashtracker.model.Budget;
 
 
 public class BudgetValidator {
@@ -9,12 +9,12 @@ public class BudgetValidator {
 	}
 
 	public ValidationError validate(Budget m) {
-		ValidationError ve = new ValidationError()
+		ValidationError ve = new ValidationError();
 
 		if (m.getName() == null || m.getName().isEmpty()) {
-			ve.addError("name", "required", "required")
+			ve.addError("name", "required", "required");
 		}
 
-		ve
+		return ve;
 	}
 }

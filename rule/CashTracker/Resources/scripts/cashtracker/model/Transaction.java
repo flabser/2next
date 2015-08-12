@@ -3,16 +3,20 @@ package cashtracker.model;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import cashtracker.model.constants.TransactionState;
 import cashtracker.model.constants.TransactionType;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.ApplicationEntity;
+
 
 @JsonRootName("transaction")
 public class Transaction extends ApplicationEntity {
@@ -31,7 +35,7 @@ public class Transaction extends ApplicationEntity {
 
 	private CostCenter costCenter;
 
-	private List<Tag> tags;
+	private List <Tag> tags;
 
 	private Date date = new Date();
 
@@ -203,26 +207,32 @@ public class Transaction extends ApplicationEntity {
 		setCostCenter(costCenter);
 	}
 
-	public List<Tag> getTags() {
+	public List <Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<Tag> tags) {
+	public void setTags(List <Tag> tags) {
 		this.tags = tags;
 	}
 
 	@JsonGetter("tags")
-	public Long getTagsId() {
-		return null;
+	public List <Long> getTagsId() {
+		return tags.stream().map(Tag::getId).collect(Collectors.toList());
 	}
 
 	@JsonSetter("tags")
-	public void setTagsById(Long id) {
-		List<Tag> tags = null;
-		if (id != null) {
-
+	public void setTagsId(List <Long> ids) {
+		if (ids != null) {
+			List <Tag> _tags = new ArrayList <Tag>();
+			ids.forEach(id -> {
+				Tag tag = new Tag();
+				tag.setId(id);
+				_tags.add(tag);
+			});
+			setTags(_tags);
+		} else {
+			setTags(null);
 		}
-		setTags(tags);
 	}
 
 	public Date getDate() {
@@ -343,11 +353,13 @@ public class Transaction extends ApplicationEntity {
 	}
 
 	@Override
+	@JsonIgnore
 	public String getTableName() {
 		return "transactions";
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isPermissionsStrict() {
 		return true;
 	}
