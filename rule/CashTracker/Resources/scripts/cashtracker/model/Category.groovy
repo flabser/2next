@@ -7,11 +7,11 @@ import cashtracker.model.constants.TransactionType
 import com.fasterxml.jackson.annotation.JsonGetter
 import com.fasterxml.jackson.annotation.JsonRootName
 import com.fasterxml.jackson.annotation.JsonSetter
-import com.flabser.script._IObject
+import com.flabser.restful.data.AppEntity
 
 
 @JsonRootName("category")
-public class Category implements _IObject {
+public class Category  extends AppEntity {
 
 	private long id;
 

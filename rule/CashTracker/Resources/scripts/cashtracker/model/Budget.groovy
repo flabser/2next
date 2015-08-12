@@ -5,12 +5,12 @@ import java.sql.ResultSet
 import cashtracker.model.constants.BudgetState
 
 import com.fasterxml.jackson.annotation.JsonRootName
-import com.flabser.script._IObject
+import com.flabser.restful.data.AppEntity
 import com.flabser.users.User
 
 
 @JsonRootName("budget")
-public class Budget implements _IObject {
+public class Budget  extends AppEntity {
 
 	private long id;
 

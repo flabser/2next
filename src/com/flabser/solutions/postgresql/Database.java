@@ -7,7 +7,7 @@ import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.script._IObject;
+import com.flabser.restful.data.IAppEntity;
 import com.flabser.users.User;
 
 import java.sql.Connection;
@@ -92,8 +92,8 @@ public class Database extends DatabaseCore implements IDatabase {
 	}
 
     @Override
-    public ArrayList<_IObject> select(String condition, Class<_IObject> objClass, User user) {
-        ArrayList<_IObject> o = new ArrayList<>();
+    public ArrayList<IAppEntity> select(String condition, Class<IAppEntity> objClass, User user) {
+        ArrayList<IAppEntity> o = new ArrayList<>();
         Connection conn = pool.getConnection();
         try {
             conn.setAutoCommit(false);
@@ -103,7 +103,7 @@ public class Database extends DatabaseCore implements IDatabase {
             ResultSet rs = s.executeQuery(sql);
 
             while (rs.next()) {
-                _IObject grObj = objClass.newInstance();
+                IAppEntity grObj = objClass.newInstance();
                 grObj.init(rs);
                 o.add(grObj);
             }

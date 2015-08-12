@@ -3,7 +3,7 @@ package com.flabser.dataengine;
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.script._IObject;
+import com.flabser.restful.data.IAppEntity;
 import com.flabser.users.User;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public interface IDatabase {
 
 	ArrayList <Object[]> select(String condition, User user);
 
-	ArrayList <_IObject> select(String condition, Class<_IObject> objClass, User user);
+	ArrayList <IAppEntity> select(String condition, Class<IAppEntity> objClass, User user);
 
 	int insert(String condition, User user);
 

@@ -3,11 +3,11 @@ package cashtracker.model;
 import java.sql.ResultSet
 
 import com.fasterxml.jackson.annotation.JsonRootName
-import com.flabser.script._IObject
+import com.flabser.restful.data.AppEntity
 
 
 @JsonRootName("costCenter")
-public class CostCenter implements _IObject {
+public class CostCenter extends AppEntity {
 
 	private long id;
 

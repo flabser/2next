@@ -3,11 +3,11 @@ package cashtracker.model;
 import java.sql.ResultSet
 
 import com.fasterxml.jackson.annotation.JsonRootName
-import com.flabser.script._IObject
+import com.flabser.restful.data.AppEntity
 
 
 @JsonRootName("tag")
-public class Tag implements _IObject {
+public class Tag  extends AppEntity{
 
 	private long id;
 

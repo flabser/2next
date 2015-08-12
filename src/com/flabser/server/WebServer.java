@@ -88,7 +88,7 @@ public class WebServer implements IWebServer {
 
 		FilterMap filterAccessGuardMapping = new FilterMap();
 		filterAccessGuardMapping.setFilterName("AccessGuard");
-		filterAccessGuardMapping.addServletName("Provider");
+		filterAccessGuardMapping.addURLPattern("/*");
 
 		context.addFilterDef(filterAccessGuard);
 		context.addFilterMap(filterAccessGuardMapping);

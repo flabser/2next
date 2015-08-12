@@ -8,12 +8,12 @@ import cashtracker.model.constants.TransactionType
 import com.fasterxml.jackson.annotation.JsonGetter
 import com.fasterxml.jackson.annotation.JsonRootName
 import com.fasterxml.jackson.annotation.JsonSetter
-import com.flabser.restful.Attachments
+import com.flabser.restful.data.AppEntity;
 import com.flabser.users.User
 
 
 @JsonRootName("transaction")
-public class Transaction extends Attachments {
+public class Transaction extends AppEntity {
 
 	private long id;
 

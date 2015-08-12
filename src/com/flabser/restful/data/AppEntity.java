@@ -1,11 +1,10 @@
-package com.flabser.restful;
+package com.flabser.restful.data;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.flabser.script._IObject;
-
-public abstract class Attachments implements _IObject {
+public abstract class AppEntity implements IAppEntity {
+	private long id;
 	private ArrayList<AttachedFile> attachments = new ArrayList<AttachedFile>();
 
 	public ArrayList<AttachedFile> getAttachments() {
@@ -20,5 +19,21 @@ public abstract class Attachments implements _IObject {
 
 	@Override
 	public abstract void init(ResultSet rs);
+
+	@Override
+	public String getName() {
+		return null;
+
+	}
+
+	@Override
+	public long getID() {
+		return id;
+	}
+
+	@Override
+	public boolean isPermissionsStrict() {
+		return false;
+	}
 
 }
