@@ -37,8 +37,11 @@
 
 	<caption name="dashboard" />
 	<caption name="transactions" />
+	<caption name="income" />
 	<caption name="incomes" />
+	<caption name="expense" />
 	<caption name="expenses" />
+	<caption name="transfer" />
 	<caption name="transfers" />
 	<caption name="reports" />
 	<caption name="accounts" />
@@ -50,6 +53,7 @@
 	<caption name="password" />
 	<caption name="name" />
 	<caption name="amount_control" />
+	<caption name="amount_control_hint" />
 	<caption name="require_document" />
 	<caption name="require_costcenter" />
 	<caption name="user_name" />
@@ -78,4 +82,5 @@
 	<caption name="active" />
 	<caption name="account_active_hint" />
 	<caption name="category_active_hint" />
+	<caption name="category_transaction_type_hint" />
 </rule>

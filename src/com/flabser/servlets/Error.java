@@ -67,7 +67,12 @@ public class Error extends HttpServlet {
 			response.setContentType("text/html");
 			response.setStatus(statusCode);
 			File errorXslt = new File(xslt);
+			if (!errorXslt.exists()) {
+				errorXslt = new File("webapps" + File.separator + EnvConst.WORKSPACE_APP_NAME + File.separator + EnvConst.ERROR_XSLT);
+			}
+
 			new SaxonTransformator().toTrans(response, errorXslt, outputContent);
+
 		} catch (UnsupportedEncodingException e) {
 			Server.logger.errorLogEntry(e);
 		} catch (IOException e) {

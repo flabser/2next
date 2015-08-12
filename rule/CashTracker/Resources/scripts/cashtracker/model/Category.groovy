@@ -48,7 +48,13 @@ public class Category implements _IObject {
 
 	@JsonGetter("transactionTypes")
 	public List<Integer> getTransactionTypesCode() {
-		return null;
+		List<Integer> transactionTypesCode = new ArrayList<Integer>();
+		if (transactionTypes != null) {
+			transactionTypes.each {
+				transactionTypesCode.add(it.code);
+			}
+		}
+		return transactionTypesCode;
 	}
 
 	@JsonSetter("transactionTypes")
@@ -84,7 +90,6 @@ public class Category implements _IObject {
 		if (id != null) {
 			parentCategory = new Category();
 			parentCategory.setId(id);
-			parentCategory.setName("name $id");
 		}
 		setParentCategory(parentCategory)
 	}
@@ -132,11 +137,6 @@ public class Category implements _IObject {
 	@Override
 	public String toString() {
 		return "Category[$id, $name, $transactionTypes, $enabled, $parentCategory]";
-	}
-
-	@Override
-	public String getTableName() {
-		return "categories";
 	}
 
 	@Override

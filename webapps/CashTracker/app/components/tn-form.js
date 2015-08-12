@@ -14,6 +14,7 @@ export default Em.Component.extend({
     submit: function(e) {
         if (e) {
             e.preventDefault();
+            e.stopPropagation();
         }
 
         if (Em.isNone(this.get('model.validate'))) {

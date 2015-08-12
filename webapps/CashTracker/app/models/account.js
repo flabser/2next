@@ -7,10 +7,14 @@ export default DS.Model.extend(EmberValidations.Mixin, {
     currencyCode: DS.attr('string'),
     openingBalance: DS.attr('number'),
     amountControl: DS.attr('number'),
-    enabled: DS.attr('boolean'),
-    includeInTotals: DS.attr('boolean'),
+    enabled: DS.attr('boolean', {
+        defaultValue: true
+    }),
+    includeInTotals: DS.attr('boolean', {
+        defaultValue: true
+    }),
     note: DS.attr('string'),
-    writers: DS.belongsTo('user', {
+    writers: DS.hasMany('user', {
         async: false
     }),
     readers: DS.hasMany('user', {

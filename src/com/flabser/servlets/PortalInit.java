@@ -50,7 +50,7 @@ public class PortalInit extends HttpServlet {
 
 			String global = Environment.webAppToStart.get(app).global;
 			env = new AppTemplate(app, global);
-			Environment.addApplication(env);
+			Environment.addAppTemplate(env);
 			isValid = true;
 		}
 

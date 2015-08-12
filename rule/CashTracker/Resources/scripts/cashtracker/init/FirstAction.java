@@ -60,10 +60,10 @@ public class FirstAction implements IAppDatabaseInit {
 		sql.append("  CURRENCY_CODE       CHARACTER VARYING(3),\n");
 		sql.append("  OPENING_BALANCE     NUMERIC,\n");
 		sql.append("  AMOUNT_CONTROL      NUMERIC,\n");
-		sql.append("  ENABLED             BOOLEAN,\n");
 		sql.append("  WRITERS             BIGINT[],\n");
 		sql.append("  READERS             BIGINT[],\n");
 		sql.append("  NOTE                CHARACTER VARYING(256),\n");
+		sql.append("  ENABLED             BOOLEAN,\n");
 		sql.append("  INCLUDE_IN_TOTALS   BOOLEAN,\n");
 		sql.append("  SORT_ORDER          SMALLINT,\n");
 		sql.append(" CONSTRAINT ACCOUNT_ID_PK PRIMARY KEY (ID)");
@@ -76,9 +76,9 @@ public class FirstAction implements IAppDatabaseInit {
 		sql.append("CREATE TABLE CATEGORIES ");
 		sql.append("(");
 		sql.append("  ID                 SERIAL NOT NULL,\n");
-		sql.append("  TRANSACTION_TYPE   SMALLINT,\n"); // TODO change to TRANSACTION_TYPES SMALLINT[]
 		sql.append("  PARENT_ID          BIGINT,\n");
 		sql.append("  ENABLED            BOOLEAN,\n");
+		sql.append("  TRANSACTION_TYPE   SMALLINT,\n"); // TODO change to TRANSACTION_TYPES SMALLINT[]
 		sql.append("  NAME               CHARACTER VARYING(128),\n");
 		sql.append("  NOTE               CHARACTER VARYING(256),\n");
 		sql.append("  COLOR              SMALLINT,\n");

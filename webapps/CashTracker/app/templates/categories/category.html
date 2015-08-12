@@ -8,6 +8,38 @@
 </header>
 <section class="form-content">
     <fieldset class="fieldset">
+        {{#tn-form-group property="transactionType"}}
+            <div class="controls">
+                {{multiselect-checkboxes
+                    options=transactionTypes
+                    labelProperty="name"
+                    valueProperty="code"
+                    valueBinding="category.transactionType"}}
+
+                <!-- <label>
+                    {{tn-input-checkbox
+                        value=1
+                        groupValue=category.transactionType}}
+                    {{t "expense"}}
+                </label>
+                <label>
+                    {{tn-input-checkbox
+                        value=2
+                        groupValue=category.transactionType}}
+                    {{t "income"}}
+                </label>
+                <label>
+                    {{tn-input-checkbox
+                        value=3
+                        groupValue=category.transactionType}}
+                    {{t "transfer"}}
+                </label> -->
+                <p class="hint">
+                    {{t "category_transaction_type_hint"}}
+                </p>
+            </div>
+        {{/tn-form-group}}
+
         {{#tn-form-group property="name"}}
             <div class="control-label">
                 {{t "name"}}
@@ -27,16 +59,6 @@
                 <p class="hint">
                     {{t "category_active_hint"}}
                 </p>
-            </div>
-        {{/tn-form-group}}
-
-        {{#tn-form-group property="transactionType"}}
-            <div class="control-label">
-                {{t "transaction_type"}}
-            </div>
-            <div class="controls">
-                {{input value=category.transactionType}}
-                {{tn-error-message}}
             </div>
         {{/tn-form-group}}
 

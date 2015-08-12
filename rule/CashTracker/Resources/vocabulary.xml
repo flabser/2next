@@ -33,17 +33,35 @@
 		<entry lang="ENG">Transactions</entry>
 		<entry lang="BG">Сделки</entry>
 	</sentence>
+	<sentence mode="on" keyword="income">
+		<entry lang="RUS">Доход</entry>
+		<entry lang="KAZ">Кіріс</entry>
+		<entry lang="ENG">Income</entry>
+		<entry lang="BG">Доход</entry>
+	</sentence>
 	<sentence mode="on" keyword="incomes">
 		<entry lang="RUS">Доходы</entry>
 		<entry lang="KAZ">Кіріс</entry>
 		<entry lang="ENG">Incomes</entry>
 		<entry lang="BG">Доходы</entry>
 	</sentence>
+	<sentence mode="on" keyword="expense">
+		<entry lang="RUS">Расход</entry>
+		<entry lang="KAZ">Шығыс</entry>
+		<entry lang="ENG">Expense</entry>
+		<entry lang="BG">Расход</entry>
+	</sentence>
 	<sentence mode="on" keyword="expenses">
 		<entry lang="RUS">Расходы</entry>
 		<entry lang="KAZ">Шығыс</entry>
 		<entry lang="ENG">Expenses</entry>
 		<entry lang="BG">Расходы</entry>
+	</sentence>
+	<sentence mode="on" keyword="transfer">
+		<entry lang="RUS">Перевод</entry>
+		<entry lang="KAZ">Аударым</entry>
+		<entry lang="ENG">Transfer</entry>
+		<entry lang="BG">Перевод</entry>
 	</sentence>
 	<sentence mode="on" keyword="transfers">
 		<entry lang="RUS">Переводы</entry>
@@ -628,6 +646,12 @@
 		<entry lang="ENG">Parent category</entry>
 		<entry lang="BG">Категория</entry>
 	</sentence>
+	<sentence mode="on" keyword="category_transaction_type_hint">
+		<entry lang="RUS">Использовать в операциях</entry>
+		<entry lang="KAZ">Использовать в операциях</entry>
+		<entry lang="ENG">Использовать в операциях</entry>
+		<entry lang="BG">Использовать в операциях</entry>
+	</sentence>
 	<sentence mode="on" keyword="category_active_hint">
 		<entry lang="RUS">Неактивные категории скрыты</entry>
 		<entry lang="KAZ">Неактивные категории скрыты</entry>
@@ -681,6 +705,12 @@
 		<entry lang="KAZ">Сумма контроля</entry>
 		<entry lang="ENG">Сумма контроля</entry>
 		<entry lang="BG">Сумма контроля</entry>
+	</sentence>
+	<sentence mode="on" keyword="amount_control_hint">
+		<entry lang="RUS">при превышении суммы опреации трололо</entry>
+		<entry lang="KAZ">при превышении суммы опреации трололо</entry>
+		<entry lang="ENG">при превышении суммы опреации трололо</entry>
+		<entry lang="BG">при превышении суммы опреации трололо</entry>
 	</sentence>
 	<sentence mode="on" keyword="opening_balance">
 		<entry lang="RUS">Начальный балланс</entry>

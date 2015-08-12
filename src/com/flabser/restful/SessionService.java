@@ -36,7 +36,6 @@ import com.flabser.users.UserStatusType;
 @Path("/session")
 public class SessionService {
 
-	private static final String AUTH_COOKIE_NAME = "2nses";
 	@Context
 	ServletContext context;
 	@Context
@@ -48,7 +47,7 @@ public class SessionService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public AuthUser getSession() {
 		HttpSession jses = request.getSession(false);
-		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
+		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 		if (userSession == null) {
 			return new AuthUser();
 		}
@@ -99,10 +98,10 @@ public class SessionService {
 		}
 
 		String token = SessionPool.put(userSession);
-		jses.setAttribute(UserSession.SESSION_ATTR, userSession);
+		jses.setAttribute(EnvConst.SESSION_ATTR, userSession);
 		int maxAge = -1;
 
-		NewCookie cookie = new NewCookie(AUTH_COOKIE_NAME, token, "/", null, null, maxAge, false);
+		NewCookie cookie = new NewCookie(EnvConst.AUTH_COOKIE_NAME, token, "/", null, null, maxAge, false);
 
 		return Response.status(HttpServletResponse.SC_OK).entity(authUser).cookie(cookie).build();
 	}
@@ -110,14 +109,14 @@ public class SessionService {
 	@DELETE
 	public Response destroySession() {
 		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
+		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 		if (userSession != null) {
-			jses.removeAttribute(UserSession.SESSION_ATTR);
+			jses.removeAttribute(EnvConst.SESSION_ATTR);
 			SessionPool.remove(userSession);
 			userSession = null;
 			// jses.invalidate();
 		}
-		NewCookie cookie = new NewCookie(AUTH_COOKIE_NAME, "", "/", null, null, 0, false);
+		NewCookie cookie = new NewCookie(EnvConst.AUTH_COOKIE_NAME, "", "/", null, null, 0, false);
 		return Response.status(HttpServletResponse.SC_OK).cookie(cookie).build();
 
 	}

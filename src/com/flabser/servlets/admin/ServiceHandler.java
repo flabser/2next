@@ -31,35 +31,26 @@ public class ServiceHandler {
 		xmlFragment += "<host>" + Environment.hostName + "</host>";
 		xmlFragment += "<port>" + Environment.httpPort + "</port>";
 		xmlFragment += "<sslenable>" + Environment.isTLSEnable + "</sslenable>";
-		xmlFragment += "<certkeyfile>" + Environment.certKeyFile
-				+ "</certkeyfile>";
+		xmlFragment += "<certkeyfile>" + Environment.certKeyFile + "</certkeyfile>";
 		xmlFragment += "<certfile>" + Environment.certFile + "</certfile>";
 
 		xmlFragment += "<tmpdir>" + Environment.tmpDir + "</tmpdir>";
 		xmlFragment += "<smtphost>" + Environment.SMTPHost + "</smtphost>";
-		xmlFragment += "<defaultsender>" + Environment.defaultSender
-				+ "</defaultsender>";
+		xmlFragment += "<defaultsender>" + Environment.defaultSender + "</defaultsender>";
 
 		xmlFragment += "<applications>";
-		for (AppTemplate env : Environment.getApplications()) {
-			xmlFragment += "<entry>";
-			xmlFragment += "<apptype>" + env.appType + "</apptype>";
-			xmlFragment += "</entry>";
-		}
+
 		xmlFragment += "</applications>";
 
-		xmlFragment = "<document doctype = \"system\"" + " viewtext=\""
-				+ viewText + "\" >" + xmlFragment + "</document>";
+		xmlFragment = "<document doctype = \"system\"" + " viewtext=\"" + viewText + "\" >" + xmlFragment + "</document>";
 		return xmlFragment;
 	}
 
 	String getSettings(AppTemplate env) {
 		StringBuffer xmlFragment = new StringBuffer(1000);
-		xmlFragment.append("<application>" + env.globalSetting.appName
-				+ "</application>");
+		xmlFragment.append("<application>" + env.globalSetting.appName + "</application>");
 		xmlFragment.append("<mode>" + env.globalSetting.isOn + "</mode>");
-		xmlFragment.append("<description>" + env.globalSetting.description
-				+ "</description>");
+		xmlFragment.append("<description>" + env.globalSetting.description + "</description>");
 		xmlFragment.append("<availablelangs>");
 		for (Lang lang : env.globalSetting.langsList) {
 			xmlFragment.append("<entry>" + lang.toXML() + "</entry>");
@@ -67,16 +58,14 @@ public class ServiceHandler {
 		xmlFragment.append("</availablelangs>");
 
 		xmlFragment.append("<roles>");
-		for (Role role : env.globalSetting.roleCollection.getRolesMap()
-				.values()) {
+		for (Role role : env.globalSetting.roleCollection.getRolesMap().values()) {
 			// xmlFragment.append("<entry>" + role.toXML() + "</entry>");
 		}
 		xmlFragment.append("</roles>");
 
 		xmlFragment.append("<xslt>");
 		for (Entry<String, File> entry : env.xsltFileMap.entrySet()) {
-			xmlFragment.append("<entry><key>" + entry.getKey() + "</key><file>"
-					+ entry.getValue().getPath() + "</file></entry>");
+			xmlFragment.append("<entry><key>" + entry.getKey() + "</key><file>" + entry.getValue().getPath() + "</file></entry>");
 		}
 		xmlFragment.append("</xslt>");
 
@@ -105,10 +94,8 @@ public class ServiceHandler {
 		Iterator<File> it = fl.iterator();
 		while (it.hasNext()) {
 			File logFile = it.next();
-			fieldsAsXML += "<entry><name>" + logFile.getName() + "</name>"
-					+ "<length>" + logFile.length() + "</length>"
-					+ "<lastmodified>" + logFile.lastModified()
-					+ "</lastmodified>" + "</entry>";
+			fieldsAsXML += "<entry><name>" + logFile.getName() + "</name>" + "<length>" + logFile.length() + "</length>" + "<lastmodified>"
+					+ logFile.lastModified() + "</lastmodified>" + "</entry>";
 		}
 
 		int maxPage = length / pageSize;
@@ -117,8 +104,7 @@ public class ServiceHandler {
 		}
 
 		LogFiles logs = new LogFiles();
-		return "<view count=\"" + fl.size() + "\" currentpage=\"" + pageNum
-				+ "\" maxpage=\"" + maxPage + "\" path=\"" + logs.logDir
+		return "<view count=\"" + fl.size() + "\" currentpage=\"" + pageNum + "\" maxpage=\"" + maxPage + "\" path=\"" + logs.logDir
 				+ "\">" + fieldsAsXML + "</view>";
 	}
 
@@ -129,10 +115,8 @@ public class ServiceHandler {
 		Iterator<File> it = fl.iterator();
 		while (it.hasNext()) {
 			File logFile = it.next();
-			fieldsAsXML += "<entry><name>" + logFile.getName() + "</name>"
-					+ "<length>" + logFile.length() + "</length>"
-					+ "<lastmodified>" + logFile.lastModified()
-					+ "</lastmodified>" + "</entry>";
+			fieldsAsXML += "<entry><name>" + logFile.getName() + "</name>" + "<length>" + logFile.length() + "</length>" + "<lastmodified>"
+					+ logFile.lastModified() + "</lastmodified>" + "</entry>";
 		}
 
 		return fieldsAsXML;

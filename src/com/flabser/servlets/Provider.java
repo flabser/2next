@@ -14,25 +14,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.saxon.s9api.SaxonApiException;
-
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.EnvConst;
-import com.flabser.exception.PortalException;
+import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.ServerException;
 import com.flabser.exception.ServerExceptionType;
-import com.flabser.exception.TransformatorException;
 import com.flabser.exception.WebFormValueException;
-import com.flabser.exception.XSLTFileNotFoundException;
 import com.flabser.rule.IRule;
 import com.flabser.rule.page.PageRule;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Exception;
 import com.flabser.server.Server;
 import com.flabser.servlets.sitefiles.AttachmentHandler;
-import com.flabser.servlets.sitefiles.AttachmentHandlerException;
-import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
 
 public class Provider extends HttpServlet {
@@ -51,12 +45,12 @@ public class Provider extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		doPost(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession jses = null;
 		UserSession userSession = null;
 		ProviderResult result = null;
@@ -77,7 +71,7 @@ public class Provider extends HttpServlet {
 					if (rule != null) {
 
 						jses = request.getSession(false);
-						userSession = (UserSession) jses.getAttribute(UserSession.SESSION_ATTR);
+						userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 
 						if (type == null || type.equalsIgnoreCase("page")) {
 							result = page(response, request, rule, userSession);
@@ -92,8 +86,10 @@ public class Provider extends HttpServlet {
 						} else {
 							String reqEnc = request.getCharacterEncoding();
 							type = new String(type.getBytes("ISO-8859-1"), reqEnc);
-							new PortalException("Request has been undefined, type=" + type + ", id=" + id + ", key=" + key, env, response,
-									ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML);
+							ApplicationException ae = new ApplicationException(env.appType, "Request has been undefined, type=" + type
+									+ ", id=" + id + ", key=" + key);
+							response.setStatus(ae.getCode());
+							response.getWriter().println(ae.getHTMLMessage());
 							return;
 						}
 
@@ -149,36 +145,10 @@ public class Provider extends HttpServlet {
 			} else {
 				throw new ServerException(ServerExceptionType.APPTEMPLATE_HAS_NOT_INITIALIZED, "context=" + context.getServletContextName());
 			}
-
-		} catch (RuleException rnf) {
-			new PortalException(rnf, env, response, ProviderExceptionType.RULENOTFOUND, PublishAsType.HTML);
-		} catch (XSLTFileNotFoundException xfnf) {
-			new PortalException(xfnf, env, response, ProviderExceptionType.XSLTNOTFOUND, PublishAsType.HTML);
-		} catch (IOException ioe) {
-			new PortalException(ioe, env, response, PublishAsType.HTML);
-		} catch (IllegalStateException ise) {
-			new PortalException(ise, env, response, PublishAsType.HTML);
-		} catch (AttachmentHandlerException e) {
-			new PortalException(e, env, response, ProviderExceptionType.PROVIDERERROR, PublishAsType.HTML);
-		} catch (UserException e) {
-			new PortalException(e, env, response, ProviderExceptionType.INTERNAL, PublishAsType.HTML);
-		} catch (SaxonApiException e) {
-			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML);
-		} catch (TransformatorException e) {
-			new PortalException(e, env, response, ProviderExceptionType.XSLT_TRANSFORMATOR_ERROR, PublishAsType.HTML);
-		} catch (ClassNotFoundException e) {
-			new PortalException(e, env, response, ProviderExceptionType.CLASS_NOT_FOUND_EXCEPTION, PublishAsType.HTML);
-		} catch (ServerException e) {
-			new PortalException(e, response, ProviderExceptionType.SERVER, PublishAsType.HTML);
-		} catch (_Exception e) {
-			// TODO Need to more informative handler in this case
-			new PortalException(e, env, response, ProviderExceptionType.APPLICATION_ERROR, PublishAsType.HTML);
-		} catch (WebFormValueException e) {
-			// TODO Need to more informative handler in this case
-			new PortalException(e, env, response, ProviderExceptionType.APPLICATION_ERROR, PublishAsType.HTML);
 		} catch (Exception e) {
-			// TODO Need to more informative handler in this case
-			new PortalException(e, env, response, ProviderExceptionType.APPLICATION_ERROR, PublishAsType.HTML);
+			ApplicationException ae = new ApplicationException(env.appType, e.toString(), e);
+			response.setStatus(ae.getCode());
+			response.getWriter().println(ae.getHTMLMessage());
 		}
 	}
 

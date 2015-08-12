@@ -2,21 +2,20 @@ import DS from 'ember-data';
 import EmberValidations from 'ember-validations';
 
 export default DS.Model.extend(EmberValidations.Mixin, {
-    transactionType: DS.attr('number'),
+    transactionTypes: DS.attr(),
     parentCategory: DS.belongsTo('category', {
         async: false
     }),
     name: DS.attr('string'),
-    enabled: DS.attr('boolean'),
+    enabled: DS.attr('boolean', {
+        defaultValue: true
+    }),
     note: DS.attr('string'),
     color: DS.attr('number'),
     sortOrder: DS.attr('number'),
 
     validations: {
         name: {
-            presence: true
-        },
-        note: {
             presence: true
         },
         color: {

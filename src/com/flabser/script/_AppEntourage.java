@@ -2,9 +2,11 @@ package com.flabser.script;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.rule.Lang;
 import com.flabser.server.Server;
@@ -53,8 +55,10 @@ public class _AppEntourage {
 	}
 
 	public Collection<AppTemplate> getAvailableTemplates() {
-		Collection<AppTemplate> apps = Environment.getApplications();
-		return apps;
+		@SuppressWarnings("unchecked")
+		HashMap<String, AppTemplate> at = (HashMap<String, AppTemplate>) Environment.getAppTemplates().clone();
+		at.remove(EnvConst.WORKSPACE_APP_NAME);
+		return at.values();
 	}
 
 }

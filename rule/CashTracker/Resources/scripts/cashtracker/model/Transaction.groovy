@@ -5,13 +5,15 @@ import java.sql.ResultSet
 import cashtracker.model.constants.TransactionState
 import cashtracker.model.constants.TransactionType
 
+import com.fasterxml.jackson.annotation.JsonGetter
 import com.fasterxml.jackson.annotation.JsonRootName
-import com.flabser.script._IObject
+import com.fasterxml.jackson.annotation.JsonSetter
+import com.flabser.restful.Attachments
 import com.flabser.users.User
 
 
 @JsonRootName("transaction")
-public class Transaction implements _IObject {
+public class Transaction extends Attachments {
 
 	private long id;
 
@@ -78,12 +80,44 @@ public class Transaction implements _IObject {
 		this.transactionType = transactionType;
 	}
 
+	@JsonGetter("transactionType")
+	public Integer getTransactionTypeCode() {
+		if (transactionType != null) {
+			return transactionType.code;
+		}
+		return null;
+	}
+
+	@JsonSetter("transactionType")
+	public void setTransactionTypeById(Integer id) {
+		if (id != null) {
+			setTransactionType(TransactionType.typeOf(id));
+		}
+		setTransactionType(null);
+	}
+
 	public TransactionState getTransactionState() {
 		return transactionState;
 	}
 
 	public void setTransactionState(TransactionState transactionState) {
 		this.transactionState = transactionState;
+	}
+
+	@JsonGetter("transactionState")
+	public Integer getTransactionStateCode() {
+		if (transactionState != null) {
+			return transactionState.code;
+		}
+		return null;
+	}
+
+	@JsonSetter("transactionState")
+	public void setTransactionStateById(Integer id) {
+		if (id != null) {
+			setTransactionState(TransactionState.stateOf(id));
+		}
+		setTransactionState(null);
 	}
 
 	public Date getDate() {
@@ -110,12 +144,48 @@ public class Transaction implements _IObject {
 		this.accountFrom = account;
 	}
 
+	@JsonGetter("accountFrom")
+	public Long getAccountFromId() {
+		if (accountFrom != null) {
+			return accountFrom.id;
+		}
+		return null;
+	}
+
+	@JsonSetter("accountFrom")
+	public void setAccountFromById(Long id) {
+		Account accountFrom = null;
+		if (id != null) {
+			accountFrom = new Account();
+			accountFrom.setId(id);
+		}
+		setAccountFrom(accountFrom)
+	}
+
 	public Account getAccountTo() {
 		return accountTo;
 	}
 
 	public void setAccountTo(Account account) {
 		this.accountTo = account;
+	}
+
+	@JsonGetter("accountTo")
+	public Long getAccountToId() {
+		if (accountTo != null) {
+			return accountTo.id;
+		}
+		return null;
+	}
+
+	@JsonSetter("accountTo")
+	public void setAccountToById(Long id) {
+		Account accountTo = null;
+		if (id != null) {
+			accountTo = new Account();
+			accountTo.setId(id);
+		}
+		setAccountTo(accountTo)
 	}
 
 	public Date getStartDate() {
@@ -158,12 +228,44 @@ public class Transaction implements _IObject {
 		this.costCenter = costCenter;
 	}
 
+	@JsonGetter("costCenter")
+	public Long getCostCenterId() {
+		if (costCenter != null) {
+			return costCenter.id;
+		}
+		return null;
+	}
+
+	@JsonSetter("costCenter")
+	public void setCostCenterById(Long id) {
+		CostCenter costCenter = null;
+		if (id != null) {
+			costCenter = new CostCenter();
+			costCenter.setId(id);
+		}
+		setCostCenter(costCenter)
+	}
+
 	public List <Tag> getTags() {
 		return tags;
 	}
 
 	public void setTags(List <Tag> tags) {
 		this.tags = tags;
+	}
+
+	@JsonGetter("tags")
+	public Long getTagsId() {
+		return null;
+	}
+
+	@JsonSetter("tags")
+	public void setTagsById(Long id) {
+		List <Tag> tags = null;
+		if (id != null) {
+
+		}
+		setTags(tags)
 	}
 
 	public String getNote() {
@@ -217,11 +319,6 @@ public class Transaction implements _IObject {
 	@Override
 	public String toString() {
 		return "Transaction[$id, $user, $date, $startDate, $endDate, $category, $accountFrom, $amount, $costCenter]";
-	}
-
-	@Override
-	public String getTableName() {
-		return "transactions";
 	}
 
 	@Override

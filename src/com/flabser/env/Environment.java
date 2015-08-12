@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +61,7 @@ public class Environment implements ICache {
 	public static String smtpPassword;
 	public static Boolean mailEnable = false;
 	private static String defaultRedirectURL;
-	private static HashMap<String, AppTemplate> applications = new HashMap<String, AppTemplate>();
+	private static HashMap<String, AppTemplate> appTemplates = new HashMap<String, AppTemplate>();
 	private static HashMap<String, Object> cache = new HashMap<String, Object>();
 
 	public static void init() {
@@ -193,16 +192,16 @@ public class Environment implements ICache {
 		}
 	}
 
-	public static void addApplication(AppTemplate env) {
-		applications.put(env.appType, env);
+	public static void addAppTemplate(AppTemplate env) {
+		appTemplates.put(env.appType, env);
 	}
 
-	public static AppTemplate getApplication(String appID) {
-		return applications.get(appID);
+	public static AppTemplate getAppTemplate(String appID) {
+		return appTemplates.get(appID);
 	}
 
-	public static Collection<AppTemplate> getApplications() {
-		return applications.values();
+	public static HashMap<String, AppTemplate> getAppTemplates() {
+		return appTemplates;
 	}
 
 	public static String getFullHostName() {

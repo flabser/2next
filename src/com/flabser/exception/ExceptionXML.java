@@ -10,6 +10,7 @@ public class ExceptionXML {
 	private String type = "";
 	private String servletName = "";
 	private String exception = "";
+	private String appType = "";
 
 	public ExceptionXML(String errorMessage, int code, String location, String type, String servletName, String exception) {
 		this.errorMessage = errorMessage;
@@ -21,9 +22,13 @@ public class ExceptionXML {
 
 	}
 
+	public void setAppType(String t) {
+		appType = t;
+	}
+
 	public String toXML() {
-		return "<?xml version = \"1.0\" encoding=\"" + EnvConst.DEFAULT_XML_ENC + "\"?><error><message>" + errorMessage + "</message><code>" + code
-				+ "</code><location>" + location + "</location><type>" + type + "</type><name>" + servletName + "</name><exception>"
-				+ exception + "</exception><server>" + Server.serverTitle + "</server></error>";
+		return "<?xml version = \"1.0\" encoding=\"" + EnvConst.DEFAULT_XML_ENC + "\"?><error><apptype>" + appType + "</apptype><message>"
+				+ errorMessage + "</message><code>" + code + "</code><location>" + location + "</location><type>" + type + "</type><name>"
+				+ servletName + "</name><exception>" + exception + "</exception><server>" + Server.serverTitle + "</server></error>";
 	}
 }

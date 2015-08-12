@@ -151,11 +151,6 @@ public class Account implements _IObject {
 	}
 
 	@Override
-	public String getTableName() {
-		return "accounts";
-	}
-
-	@Override
 	public void init(ResultSet rs) {
 		setId(rs.getInt("id"));
 		setName(rs.getString("name"));

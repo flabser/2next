@@ -3,7 +3,8 @@ import EmberValidations from 'ember-validations';
 
 export default DS.Model.extend(EmberValidations.Mixin, {
     user: DS.belongsTo('user', {
-        async: false
+        async: false,
+        readOnly: true
     }),
     accountFrom: DS.belongsTo('account', {
         async: false
@@ -30,12 +31,20 @@ export default DS.Model.extend(EmberValidations.Mixin, {
     endDate: DS.attr('date'),
     note: DS.attr('string'),
     basis: DS.attr('string'),
-    includeInReports: DS.attr('boolean'),
+    includeInReports: DS.attr('boolean', {
+        defaultValue: true
+    }),
 
     validations: {
+        date: {
+            presence: true
+        },
         amount: {
             presence: true,
             numericality: true
+        },
+        transactionType: {
+            presence: true
         }
     }
 });
