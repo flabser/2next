@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface EntityGetteField {
+@Target(ElementType.FIELD)
+public @interface EntityField {
 	Class<?> type() default String.class;
 
 	String value() default "";

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public abstract class Entity implements IEntity {
+	@EntityField()
 	protected long id;
 	protected ArrayList<AttachedFile> attachments = new ArrayList<AttachedFile>();
 
@@ -13,12 +14,11 @@ public abstract class Entity implements IEntity {
 
 	@Override
 	public String getTableName() {
-		return getClass().getSimpleName();
+		return getClass().getSimpleName() + "s";
 
 	}
 
 	@Override
-	@EntitySetterField()
 	public void setId(long id) {
 		this.id = id;
 	}

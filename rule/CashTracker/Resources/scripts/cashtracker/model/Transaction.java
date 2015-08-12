@@ -16,8 +16,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.Entity;
-import com.flabser.restful.data.EntitySetterField;
-
 
 @JsonRootName("transaction")
 public class Transaction extends Entity {
@@ -36,7 +34,7 @@ public class Transaction extends Entity {
 
 	private CostCenter costCenter;
 
-	private List <Tag> tags;
+	private List<Tag> tags;
 
 	private Date date = new Date();
 
@@ -72,7 +70,6 @@ public class Transaction extends Entity {
 		return transactionType;
 	}
 
-	@EntitySetterField
 	public void setTransactionType(TransactionType transactionType) {
 		this.transactionType = transactionType;
 	}
@@ -218,16 +215,16 @@ public class Transaction extends Entity {
 		setCostCenter(costCenter);
 	}
 
-	public List <Tag> getTags() {
+	public List<Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(List <Tag> tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 
 	@JsonGetter("tags")
-	public List <Long> getTagsId() {
+	public List<Long> getTagsId() {
 		if (tags != null) {
 			return tags.stream().map(Tag::getId).collect(Collectors.toList());
 		}
@@ -235,9 +232,9 @@ public class Transaction extends Entity {
 	}
 
 	@JsonSetter("tags")
-	public void setTagsId(List <Long> ids) {
+	public void setTagsId(List<Long> ids) {
 		if (ids != null) {
-			List <Tag> _tags = new ArrayList <Tag>();
+			List<Tag> _tags = new ArrayList<Tag>();
 			ids.forEach(id -> {
 				Tag tag = new Tag();
 				tag.setId(id);
@@ -364,12 +361,6 @@ public class Transaction extends Entity {
 		setNote(rs.getString("t.note"));
 		setIncludeInReports(rs.getBoolean("t.include_in_reports"));
 		setBasis(rs.getString("t.basis"));
-	}
-
-	@Override
-	@JsonIgnore
-	public String getTableName() {
-		return "transactions";
 	}
 
 	@Override

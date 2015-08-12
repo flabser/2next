@@ -386,4 +386,12 @@ public class Util {
 
 	}
 
+	public static String fieldToGetter(String name) {
+		return "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
+	}
+
+	public static String fieldToSetter(String name) {
+		return "set" + name.substring(0, 1).toUpperCase() + name.substring(1);
+	}
+
 }

@@ -6,41 +6,46 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.Entity;
-import com.flabser.restful.data.EntitySetterField;
+import com.flabser.restful.data.EntityField;
 
 @JsonRootName("account")
 public class Account extends Entity {
 
 	// private int type;
-
+	@EntityField()
 	private String name;
 
+	@EntityField("currency_code")
 	private String currencyCode;
 
+	@EntityField("opening_balance")
 	private BigDecimal openingBalance;
 
+	@EntityField("amount_control")
 	private BigDecimal amountControl;
 
+	@EntityField()
 	private boolean enabled;
 
+	@EntityField("include_in_totals")
 	private boolean includeInTotals;
 
+	@EntityField()
 	private String note;
 
 	private List<Long> writers;
 
 	private List<Long> readers;
 
+	@EntityField("sort_order")
 	private int sortOrder;
 
 	public String getName() {
 		return name;
 	}
 
-	@EntitySetterField()
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -49,7 +54,6 @@ public class Account extends Entity {
 		return currencyCode;
 	}
 
-	@EntitySetterField("currency_code")
 	public void setCurrencyCode(String currencyCode) {
 		this.currencyCode = currencyCode;
 	}
@@ -58,7 +62,6 @@ public class Account extends Entity {
 		return openingBalance;
 	}
 
-	@EntitySetterField("opening_balance")
 	public void setOpeningBalance(BigDecimal openingBalance) {
 		this.openingBalance = openingBalance;
 	}
@@ -67,7 +70,6 @@ public class Account extends Entity {
 		return amountControl;
 	}
 
-	@EntitySetterField("amount_control")
 	public void setAmountControl(BigDecimal amountControl) {
 		this.amountControl = amountControl;
 	}
@@ -92,7 +94,6 @@ public class Account extends Entity {
 		return enabled;
 	}
 
-	@EntitySetterField()
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
@@ -101,7 +102,6 @@ public class Account extends Entity {
 		return includeInTotals;
 	}
 
-	@EntitySetterField("include_in_totals")
 	public void setIncludeInTotals(boolean includeInTotals) {
 		this.includeInTotals = includeInTotals;
 	}
@@ -110,7 +110,6 @@ public class Account extends Entity {
 		return note;
 	}
 
-	@EntitySetterField()
 	public void setNote(String note) {
 		this.note = note;
 	}
@@ -119,14 +118,13 @@ public class Account extends Entity {
 		return sortOrder;
 	}
 
-	@EntitySetterField("sort_order")
 	public void setSortOrder(int sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 
 	@Override
 	public String toString() {
-		return "Account[" + name + ", " + currencyCode + ", " + openingBalance + "]";
+		return "Account[" + id + "," + name + ", " + currencyCode + ", " + openingBalance + "]";
 	}
 
 	@Override
@@ -149,9 +147,4 @@ public class Account extends Entity {
 		setSortOrder(rs.getInt("sort_order"));
 	}
 
-	@Override
-	@JsonIgnore
-	public String getTableName() {
-		return "accounts";
-	}
 }

@@ -1,5 +1,6 @@
 package com.flabser.solutions.postgresql;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +10,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import org.apache.commons.lang3.text.WordUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
@@ -18,10 +19,11 @@ import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.restful.data.EntitySetterField;
+import com.flabser.restful.data.EntityField;
 import com.flabser.restful.data.IEntity;
 import com.flabser.server.Server;
 import com.flabser.users.User;
+import com.flabser.util.Util;
 
 public class Database extends DatabaseCore implements IDatabase {
 
@@ -64,16 +66,16 @@ public class Database extends DatabaseCore implements IDatabase {
 
 			while (rs.next()) {
 				IEntity grObj = objClass.newInstance();
-				for (Method method : objClass.getMethods()) {
-					if (method.isAnnotationPresent(EntitySetterField.class)) {
-						EntitySetterField anottation = method.getAnnotation(EntitySetterField.class);
+				for (Field field : FieldUtils.getAllFields(objClass)) {
+					if (field.isAnnotationPresent(EntityField.class)) {
+						EntityField anottation = field.getAnnotation(EntityField.class);
 						String dfn = anottation.value();
 						if (dfn.equalsIgnoreCase("")) {
-							dfn = method.getName().substring(3);
+							dfn = field.getName();
 						}
-						Method rsMethod = ResultSet.class.getMethod(
-								"get" + WordUtils.capitalize(method.getParameterTypes()[0].getSimpleName()), String.class);
-						method.invoke(grObj, rsMethod.invoke(rs, dfn));
+						Method entityMethod = grObj.getClass().getMethod(Util.fieldToSetter(field.getName()), field.getType());
+						Method rsMethod = ResultSet.class.getMethod(Util.fieldToGetter(field.getType().getSimpleName()), String.class);
+						entityMethod.invoke(grObj, rsMethod.invoke(rs, dfn));
 					}
 				}
 				o.add(grObj);
@@ -165,4 +167,5 @@ public class Database extends DatabaseCore implements IDatabase {
 	public IDeployer getDeployer() {
 		return new Deployer();
 	}
+
 }

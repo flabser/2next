@@ -6,20 +6,22 @@ import java.util.Date;
 
 import cashtracker.model.constants.BudgetState;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.Entity;
-
+import com.flabser.restful.data.EntityField;
 
 @JsonRootName("budget")
 public class Budget extends Entity {
 
+	@EntityField()
 	private String name;
 
+	@EntityField("reg_date")
 	private Date regDate;
 
 	private Long owner;
 
+	@EntityField("type")
 	private BudgetState status;
 
 	public String getName() {
@@ -68,9 +70,4 @@ public class Budget extends Entity {
 		setStatus(BudgetState.stateOf(rs.getInt("type")));
 	}
 
-	@Override
-	@JsonIgnore
-	public String getTableName() {
-		return "budgets";
-	}
 }
