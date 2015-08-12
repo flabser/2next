@@ -44,20 +44,41 @@
             </div>
         {{/tn-form-group}}
 
-        {{#tn-form-group property="account"}}
+        {{#tn-form-group property="accountFrom"}}
             <div class="control-label">
-                {{t "account"}}
+                {{#if isTransfer}}
+                    {{t "account_from"}}
+                {{else}}
+                    {{t "account"}}
+                {{/if}}
             </div>
             <div class="controls">
                 {{view "select"
                     contentBinding="accounts"
                     optionValuePath="content.id"
                     optionLabelPath="content.name"
-                    selectionBinding="transaction.account"
+                    selectionBinding="transaction.accountFrom"
                     prompt='- Select -'}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}
+
+        {{#if isTransfer}}
+            {{#tn-form-group property="accountTo"}}
+                <div class="control-label">
+                    {{t "account_to"}}
+                </div>
+                <div class="controls">
+                    {{view "select"
+                        contentBinding="accounts"
+                        optionValuePath="content.id"
+                        optionLabelPath="content.name"
+                        selectionBinding="transaction.accountTo"
+                        prompt='- Select -'}}
+                    {{tn-error-message}}
+                </div>
+            {{/tn-form-group}}
+        {{/if}}
 
         {{#tn-form-group property="category"}}
             <div class="control-label">

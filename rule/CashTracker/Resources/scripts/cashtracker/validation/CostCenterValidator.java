@@ -1,6 +1,6 @@
-package cashtracker.validation
+package cashtracker.validation;
 
-import cashtracker.model.CostCenter
+import cashtracker.model.CostCenter;
 
 
 public class CostCenterValidator {
@@ -9,12 +9,12 @@ public class CostCenterValidator {
 	}
 
 	public ValidationError validate(CostCenter m) {
-		ValidationError ve = new ValidationError()
+		ValidationError ve = new ValidationError();
 
 		if (m.getName() == null || m.getName().isEmpty()) {
-			ve.addError("name", "required", "required")
+			ve.addError("name", "required", "required");
 		}
 
-		ve
+		return ve;
 	}
 }

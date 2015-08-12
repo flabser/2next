@@ -1,1 +1,37 @@
-budget
+<div class="view view_budget">
+    <header class="view-header">
+        <h1 class="header-title">
+            {{t "budget"}}
+        </h1>
+    </header>
+    <section class="budget_form">
+        {{#if isEditMode}}
+            {{#tn-form model=budget onSubmit="submit" action="save"}}
+                <section class="form-content">
+                    <fieldset class="fieldset">
+                        {{#tn-form-group property="name"}}
+                            <div class="control-label">
+                                {{t "name"}}
+                            </div>
+                            <div class="controls">
+                                <input type="text" name="budget_name" {{bind-attr value=budgetName}} />
+                                {{tn-error-message}}
+                            </div>
+                        {{/tn-form-group}}
+                    </fieldset>
+                    <footer>
+                        <button class="btn" {{action "cancel"}}>{{t "cancel"}}</button>
+                        <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+                    </footer>
+                </section>
+            {{/tn-form}}
+        {{else}}
+            {{t "name"}}{{budgetName}}
+            <button class="btn" {{action "edit"}}>
+                <i class="fa fa-edit"></i>
+            </button>
+        {{/if}}
+    </section>
+    <section class="view-content">
+    </section>
+</div>

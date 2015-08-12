@@ -3,22 +3,26 @@ package cashtracker.model;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import cashtracker.model.constants.TransactionState;
 import cashtracker.model.constants.TransactionType;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.ApplicationEntity;
 import com.flabser.restful.data.ApplicationEntityField;
 
+
 @JsonRootName("transaction")
 public class Transaction extends ApplicationEntity {
 
-	private long user;
+	private Long user;
 
 	private TransactionType transactionType = TransactionType.EXPENSE;
 
@@ -32,7 +36,7 @@ public class Transaction extends ApplicationEntity {
 
 	private CostCenter costCenter;
 
-	private List<Tag> tags;
+	private List <Tag> tags;
 
 	private Date date = new Date();
 
@@ -56,11 +60,11 @@ public class Transaction extends ApplicationEntity {
 
 	private boolean includeInReports;
 
-	public long getUser() {
+	public Long getUser() {
 		return user;
 	}
 
-	public void setUser(long user) {
+	public void setUser(Long user) {
 		this.user = user;
 	}
 
@@ -118,7 +122,7 @@ public class Transaction extends ApplicationEntity {
 	}
 
 	@JsonSetter("category")
-	public void setCategoryId(Long id) {
+	public void setCategoryById(Long id) {
 		Category category = null;
 		if (id != null) {
 			category = new Category();
@@ -128,6 +132,9 @@ public class Transaction extends ApplicationEntity {
 	}
 
 	public Account getAccountFrom() {
+		if (accountFrom == null || accountFrom.getId() == 0) {
+			return null;
+		}
 		return accountFrom;
 	}
 
@@ -154,6 +161,9 @@ public class Transaction extends ApplicationEntity {
 	}
 
 	public Account getAccountTo() {
+		if (accountTo == null || accountTo.getId() == 0) {
+			return null;
+		}
 		return accountTo;
 	}
 
@@ -180,6 +190,9 @@ public class Transaction extends ApplicationEntity {
 	}
 
 	public CostCenter getCostCenter() {
+		if (costCenter == null || costCenter.getId() == 0) {
+			return null;
+		}
 		return costCenter;
 	}
 
@@ -205,26 +218,35 @@ public class Transaction extends ApplicationEntity {
 		setCostCenter(costCenter);
 	}
 
-	public List<Tag> getTags() {
+	public List <Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<Tag> tags) {
+	public void setTags(List <Tag> tags) {
 		this.tags = tags;
 	}
 
 	@JsonGetter("tags")
-	public Long getTagsId() {
+	public List <Long> getTagsId() {
+		if (tags != null) {
+			return tags.stream().map(Tag::getId).collect(Collectors.toList());
+		}
 		return null;
 	}
 
 	@JsonSetter("tags")
-	public void setTagsById(Long id) {
-		List<Tag> tags = null;
-		if (id != null) {
-
+	public void setTagsId(List <Long> ids) {
+		if (ids != null) {
+			List <Tag> _tags = new ArrayList <Tag>();
+			ids.forEach(id -> {
+				Tag tag = new Tag();
+				tag.setId(id);
+				_tags.add(tag);
+			});
+			setTags(_tags);
+		} else {
+			setTags(null);
 		}
-		setTags(tags);
 	}
 
 	public Date getDate() {
@@ -323,17 +345,17 @@ public class Transaction extends ApplicationEntity {
 	@Override
 	public void init(ResultSet rs) throws SQLException {
 		setId(rs.getInt("t.id"));
-		// setUser(null);
+		setUser(rs.getLong("t.USER"));
 		setTransactionType(TransactionType.typeOf(rs.getInt("t.transaction_type")));
 		setTransactionState(TransactionState.stateOf(rs.getInt("t.transaction_state")));
+		setAccountFromById(rs.getLong("t.account_from"));
+		setAccountToById(rs.getLong("t.account_to"));
+		setCategoryById(rs.getLong("t.category"));
+		setCostCenterById(rs.getLong("t.cost_center"));
+		// setTags(rs.getArray("t.tags"));
 		setDate(rs.getDate("t.date"));
-		setAccountFrom(null);
-		setAccountTo(null);
 		setAmount(rs.getBigDecimal("t.amount"));
 		setExchangeRate(rs.getFloat("t.exchange_rate"));
-		setCategory(null);
-		setCostCenter(null);
-		// setTags(rs.getArray("t.tags"));
 		setRepeat(rs.getBoolean("t.repeat"));
 		setEvery(rs.getInt("t.every"));
 		setRepeatStep(rs.getInt("t.repeat_step"));
@@ -345,11 +367,13 @@ public class Transaction extends ApplicationEntity {
 	}
 
 	@Override
+	@JsonIgnore
 	public String getTableName() {
 		return "transactions";
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isPermissionsStrict() {
 		return true;
 	}

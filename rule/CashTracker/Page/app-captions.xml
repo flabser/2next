@@ -27,6 +27,8 @@
 	<caption name="attach_add_comment" />
 
 	<caption name="account" />
+	<caption name="account_from" />
+	<caption name="account_to" />
 	<caption name="budget" />
 	<caption name="category" />
 	<caption name="tag" />

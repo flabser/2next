@@ -1,6 +1,6 @@
-package cashtracker.validation
+package cashtracker.validation;
 
-import cashtracker.model.Account
+import cashtracker.model.Account;
 
 
 public class AccountValidator {
@@ -9,12 +9,12 @@ public class AccountValidator {
 	}
 
 	public ValidationError validate(Account m) {
-		ValidationError ve = new ValidationError()
+		ValidationError ve = new ValidationError();
 
 		if (m.getName() == null || m.getName().isEmpty()) {
-			ve.addError("name", "required", "required")
+			ve.addError("name", "required", "required");
 		}
 
-		ve
+		return ve;
 	}
 }
