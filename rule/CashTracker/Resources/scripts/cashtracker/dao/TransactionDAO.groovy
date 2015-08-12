@@ -126,35 +126,35 @@ public class TransactionDAO {
 	}
 
 	public Transaction findById(long id) {
-		String sql = "${getSelectQuery()} WHERE id = $id"
+		String sql = "${getSelectQuery()} WHERE t.id = $id"
 		List <Transaction> list = db.select(sql, Transaction.class, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
 	public List <Transaction> findAllByAccount(Account m) {
-		String sql ="${getSelectQuery()} WHERE account_id = ${m.id}"
+		String sql ="${getSelectQuery()} WHERE t.account = ${m.id}"
 		List <Transaction> list = db.select(sql, Transaction.class, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
 	public List <Transaction> findAllByCostCenter(CostCenter m) {
-		String sql ="${getSelectQuery()} WHERE cost_center_id = ${m.id}"
+		String sql ="${getSelectQuery()} WHERE t.cost_center = ${m.id}"
 		List <Transaction> list = db.select(sql, Transaction.class, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
 	public List <Transaction> findAllByCategory(Category m) {
-		String sql ="${getSelectQuery()} WHERE category_id = ${m.id}"
+		String sql ="${getSelectQuery()} WHERE t.category = ${m.id}"
 		List <Transaction> list = db.select(sql, Transaction.class, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
 	public int add(Transaction m) {
-		m.setUser(user)
+		m.setUser(user.id)
 		String sql = """INSERT INTO transactions
 							("USER", transaction_type, transaction_state,
 							date, account_from, account_to,
@@ -162,10 +162,10 @@ public class TransactionDAO {
 							tags, repeat, every, repeat_step, start_date, end_date,
 							note, include_in_reports, basis)
 						VALUES (${m.user}, ${m.transactionType.code}, ${m.transactionState.code},
-								'${m.date}', ${m.accountFrom.id}, ${m.accountTo.id},
-								${m.amount}, ${m.exchangeRate}, ${m.category.id}, ${m.costCenter.id},
-								${m.tags}, ${m.repeat}, ${m.every}, ${m.repeatStep}, ${m.startDate}, ${m.endDate},
-								${m.note}, ${m.includeInReports}, ${m.basis})"""
+								${m.date}, ${m.accountFrom?.id}, ${m.accountTo?.id},
+								${m.amount}, ${m.exchangeRate}, ${m.category?.id}, ${m.costCenter?.id},
+								'{${m.tagsId?.join(",")}}', ${m.repeat}, ${m.every}, ${m.repeatStep}, ${m.startDate}, ${m.endDate},
+								'${m.note}', ${m.includeInReports}, '${m.basis}')"""
 		return db.insert(sql, user)
 	}
 
@@ -174,18 +174,18 @@ public class TransactionDAO {
 						SET
 							transaction_type = ${m.transactionType.code},
 							transaction_state = ${m.transactionState.code},
-							date = '${m.date}',
-							account_from = ${m.accountFrom.id},
-							account_to = ${m.accountTo.id},
+							date = ${m.date},
+							account_from = ${m.accountFrom?.id},
+							account_to = ${m.accountTo?.id},
 							amount = ${m.amount},
 							exchange_rate = ${m.exchangeRate},
-							category = ${m.category.id},
-							cost_center = ${m.costCenter.id},
-							tags = ${m.tags},
+							category = ${m.category?.id},
+							cost_center = ${m.costCenter?.id},
+							tags = '{${m.tags?.join(",")}}',
 							repeat = ${m.repeat},
 							every = ${m.every},
 							repeat_step = ${m.repeatStep},
-							start_date = '${m.startDate}',
+							start_date = ${m.startDate},
 							end_date = ${m.endDate},
 							note = '${m.note}',
 							include_in_reports = ${m.includeInReports},

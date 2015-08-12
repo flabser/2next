@@ -21,7 +21,7 @@ import com.flabser.restful.data.ApplicationEntity;
 @JsonRootName("transaction")
 public class Transaction extends ApplicationEntity {
 
-	private long user;
+	private Long user;
 
 	private TransactionType transactionType = TransactionType.EXPENSE;
 
@@ -59,11 +59,11 @@ public class Transaction extends ApplicationEntity {
 
 	private boolean includeInReports;
 
-	public long getUser() {
+	public Long getUser() {
 		return user;
 	}
 
-	public void setUser(long user) {
+	public void setUser(Long user) {
 		this.user = user;
 	}
 
@@ -120,7 +120,7 @@ public class Transaction extends ApplicationEntity {
 	}
 
 	@JsonSetter("category")
-	public void setCategoryId(Long id) {
+	public void setCategoryById(Long id) {
 		Category category = null;
 		if (id != null) {
 			category = new Category();
@@ -130,6 +130,9 @@ public class Transaction extends ApplicationEntity {
 	}
 
 	public Account getAccountFrom() {
+		if (accountFrom == null || accountFrom.getId() == 0) {
+			return null;
+		}
 		return accountFrom;
 	}
 
@@ -156,6 +159,9 @@ public class Transaction extends ApplicationEntity {
 	}
 
 	public Account getAccountTo() {
+		if (accountTo == null || accountTo.getId() == 0) {
+			return null;
+		}
 		return accountTo;
 	}
 
@@ -182,6 +188,9 @@ public class Transaction extends ApplicationEntity {
 	}
 
 	public CostCenter getCostCenter() {
+		if (costCenter == null || costCenter.getId() == 0) {
+			return null;
+		}
 		return costCenter;
 	}
 
@@ -217,7 +226,10 @@ public class Transaction extends ApplicationEntity {
 
 	@JsonGetter("tags")
 	public List <Long> getTagsId() {
-		return tags.stream().map(Tag::getId).collect(Collectors.toList());
+		if (tags != null) {
+			return tags.stream().map(Tag::getId).collect(Collectors.toList());
+		}
+		return null;
 	}
 
 	@JsonSetter("tags")
@@ -331,17 +343,17 @@ public class Transaction extends ApplicationEntity {
 	@Override
 	public void init(ResultSet rs) throws SQLException {
 		setId(rs.getInt("t.id"));
-		// setUser(null);
+		setUser(rs.getLong("t.USER"));
 		setTransactionType(TransactionType.typeOf(rs.getInt("t.transaction_type")));
 		setTransactionState(TransactionState.stateOf(rs.getInt("t.transaction_state")));
+		setAccountFromById(rs.getLong("t.account_from"));
+		setAccountToById(rs.getLong("t.account_to"));
+		setCategoryById(rs.getLong("t.category"));
+		setCostCenterById(rs.getLong("t.cost_center"));
+		// setTags(rs.getArray("t.tags"));
 		setDate(rs.getDate("t.date"));
-		setAccountFrom(null);
-		setAccountTo(null);
 		setAmount(rs.getBigDecimal("t.amount"));
 		setExchangeRate(rs.getFloat("t.exchange_rate"));
-		setCategory(null);
-		setCostCenter(null);
-		// setTags(rs.getArray("t.tags"));
 		setRepeat(rs.getBoolean("t.repeat"));
 		setEvery(rs.getInt("t.every"));
 		setRepeatStep(rs.getInt("t.repeat_step"));
