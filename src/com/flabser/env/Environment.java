@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,8 +44,7 @@ public class Environment implements ICache {
 	public static HashMap<String, Site> webAppToStart = new HashMap<String, Site>();
 	public static String tmpDir;
 	public static String libsDir;
-	public static ArrayList<String> fileToDelete = new ArrayList<String>();
-	// public static ILogger logger;
+
 	public static PeriodicalServices periodicalServices;
 
 	public static Boolean isTLSEnable = false;
