@@ -18,6 +18,7 @@ public abstract class ApplicationEntity implements IApplicationEntity {
 	}
 
 	@Override
+	@ApplicationEntityField()
 	public void setId(long id) {
 		this.id = id;
 	}

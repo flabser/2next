@@ -23,14 +23,14 @@ public class Util {
 	public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
 	public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 	private static final SimpleDateFormat providerDateTimeFormat = new SimpleDateFormat("dd-MM-yyyy kk:mm:ss");
-	public static final Pattern pEntity = Pattern.compile("\\G&(#\\d+|\\w+);");//Pattern.compile("\\G&(#\\d+|\\w+);");
+	public static final Pattern pEntity = Pattern.compile("\\G&(#\\d+|\\w+);");// Pattern.compile("\\G&(#\\d+|\\w+);");
 	public static final Pattern pTag = Pattern.compile("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>");
 	public static final Pattern pAtEnd = Pattern.compile("\\G\\z");
 	public static final Pattern pWord = Pattern.compile("\\G(\\w|\\pL)+");
 	public static final Pattern pNonHtml = Pattern.compile("\\G([^(\\w|\\p{L})]|\\p{Ps}|\\p{Pe}|\\p{Pi}|\\p{Pf}|\\p{P}|\\p{S})+");
 	public static final int dayInMs = 1000 * 60 * 60 * 24;
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static HashMap cloneMap(HashMap sourceMap) {
 		HashMap map = new HashMap();
 		for (Object key : sourceMap.keySet()) {
@@ -45,8 +45,9 @@ public class Util {
 		try {
 			return dateTimeFormat.format(date);
 		} catch (Exception e) {
-			//AppEnv.logger.errorLogEntry("Util, Не удалось преобразовать время в текст " + date);
-			//AppEnv.logger.errorLogEntry(e);
+			// AppEnv.logger.errorLogEntry("Util, Не удалось преобразовать время в текст "
+			// + date);
+			// AppEnv.logger.errorLogEntry(e);
 			return "null";
 		}
 	}
@@ -64,7 +65,7 @@ public class Util {
 			return providerDateTimeFormat.format(date);
 		} catch (Exception e) {
 			Server.logger.errorLogEntry("Util, Не удалось преобразовать время в текст " + date);
-			//AppEnv.logger.errorLogEntry(e);
+			// AppEnv.logger.errorLogEntry(e);
 			return "null";
 		}
 	}
@@ -74,7 +75,7 @@ public class Util {
 			return timeFormat.format(date);
 		} catch (Exception e) {
 			Server.logger.errorLogEntry("Util, Не удалось преобразовать время в текст " + date);
-			//AppEnv.logger.errorLogEntry(e);
+			// AppEnv.logger.errorLogEntry(e);
 			return "null";
 		}
 	}
@@ -83,7 +84,8 @@ public class Util {
 		try {
 			return dateTimeFormat.parse(date);
 		} catch (Exception e) {
-			Server.logger.errorLogEntry("Util, Unbale to convert text to date " + date + ", expected format: " + dateTimeFormat.toPattern());
+			Server.logger
+					.errorLogEntry("Util, Unbale to convert text to date " + date + ", expected format: " + dateTimeFormat.toPattern());
 			return null;
 		}
 	}
@@ -109,7 +111,7 @@ public class Util {
 			return dateFormat.format(date);
 		} catch (Exception e) {
 			Server.logger.errorLogEntry("Util, Не удалось преобразовать дату в текст " + date);
-			//AppEnv.logger.errorLogEntry(e);
+			// AppEnv.logger.errorLogEntry(e);
 			return "err date";
 		}
 	}
@@ -119,7 +121,7 @@ public class Util {
 			return simpleDateFormat.format(date.getTime());
 		} catch (Exception e) {
 			Server.logger.errorLogEntry("Util, Не удалось преобразовать дату в текст " + date);
-			//Server.logger.errorLogEntry(e);
+			// Server.logger.errorLogEntry(e);
 			return "err date";
 		}
 	}
@@ -128,8 +130,9 @@ public class Util {
 		try {
 			return dateFormat.parse(date);
 		} catch (Exception e) {
-			Server.logger.errorLogEntry("Util, Не удалось преобразовать текст в дату " + date + ", ожидался формат: " + dateFormat.toPattern());
-			//Server.logger.errorLogEntry(e);
+			Server.logger.errorLogEntry("Util, Не удалось преобразовать текст в дату " + date + ", ожидался формат: "
+					+ dateFormat.toPattern());
+			// Server.logger.errorLogEntry(e);
 			return null;
 		}
 	}
@@ -138,19 +141,16 @@ public class Util {
 		try {
 			return simpleDateFormat.parse(date);
 		} catch (Exception e) {
-			Server.logger.errorLogEntry("Util, Не удалось преобразовать текст в дату " + date + ", ожидался формат: " + dateFormat.toPattern());
-			//Server.logger.errorLogEntry(e);
+			Server.logger.errorLogEntry("Util, Не удалось преобразовать текст в дату " + date + ", ожидался формат: "
+					+ dateFormat.toPattern());
+			// Server.logger.errorLogEntry(e);
 			return null;
 		}
 	}
 
-	public static int getRandomNumber(int anyNumber) {
-		if (anyNumber > 0) {
-			Random random = new Random();
-			return Math.abs(random.nextInt()) % anyNumber;
-		} else {
-			return 0;
-		}
+	public static boolean getRandomBoolean() {
+		Random random = new Random();
+		return random.nextBoolean();
 	}
 
 	public static int generateRandom() {
@@ -255,7 +255,8 @@ public class Util {
 	public static File getExistFile(String fn, String tmpFolder) {
 		int folderNum = 1;
 		File file = null;
-		//File file = new File(tmpFolder + File.separator + Integer.toString(folderNum) + File.separator + fn);
+		// File file = new File(tmpFolder + File.separator +
+		// Integer.toString(folderNum) + File.separator + fn);
 		do {
 			file = new File(tmpFolder + File.separator + Integer.toString(folderNum) + File.separator + fn);
 			folderNum++;
@@ -272,20 +273,24 @@ public class Util {
 			if (date != null) {
 				Server.logger.errorLogEntry("Util, Не удалось преобразовать время в текст " + date);
 			}
-			//Server.logger.errorLogEntry(e);
+			// Server.logger.errorLogEntry(e);
 			return "";
 		}
 	}
 
 	public static void main(String[] args) {
-		System.out.println(removeHTMLTags("<p1><p></p1>I-4979: Берг П. П. -> (Берг П. П.)<p><p> <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>").length());
-		System.out.println(removeHTMLTags("I-4979: Берг П. П. -> (Берг П. П.) <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>"));
+		System.out
+				.println(removeHTMLTags(
+						"<p1><p></p1>I-4979: Берг П. П. -> (Берг П. П.)<p><p> <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>")
+						.length());
+		System.out
+				.println(removeHTMLTags("I-4979: Берг П. П. -> (Берг П. П.) <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>"));
 	}
 
 	public static String removeHTMLTags(String text) {
-		//Pattern pImgTag  = Pattern.compile("\\G(?i)<img\\s+([^>]+)>");
-		//Pattern pLink    = Pattern.compile("\\G(?i)<A\\s+([^>]+)>");
-		//Pattern pLinkX   = Pattern.compile("\\G(?i)</A>");
+		// Pattern pImgTag = Pattern.compile("\\G(?i)<img\\s+([^>]+)>");
+		// Pattern pLink = Pattern.compile("\\G(?i)<A\\s+([^>]+)>");
+		// Pattern pLinkX = Pattern.compile("\\G(?i)</A>");
 		if (text == null) {
 			return "";
 		}
@@ -314,7 +319,7 @@ public class Util {
 				}
 			} else if (m.usePattern(pNonHtml).find()) {
 			} else {
-				if(m.usePattern(Pattern.compile("\\G(?s).{1,12}")).find()) {
+				if (m.usePattern(Pattern.compile("\\G(?s).{1,12}")).find()) {
 					Server.logger.errorLogEntry("Bad char before '" + m.group() + "'");
 				}
 				return text.trim();
@@ -323,8 +328,8 @@ public class Util {
 		return text.trim();
 	}
 
-	public static double convertBytesToKilobytes(long a){
-		double k = Math.round(a/1024.0*100000.0)/100000.0;
+	public static double convertBytesToKilobytes(long a) {
+		double k = Math.round(a / 1024.0 * 100000.0) / 100000.0;
 		return k;
 
 	}
@@ -354,8 +359,7 @@ public class Util {
 	}
 
 	public static boolean addrIsCorrect(String email) {
-		String validate = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		String validate = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 		Pattern pattern = Pattern.compile(validate);
 		Matcher matcher = pattern.matcher(email);
@@ -365,8 +369,8 @@ public class Util {
 
 	public static String getTimeDiffInMilSec(long start_time) {
 		long time = System.currentTimeMillis() - start_time;
-		//       int sec = (int) time / 1000;//find seconds
-		//       int msec = (int) time % 1000;//find milliseconds
+		// int sec = (int) time / 1000;//find seconds
+		// int msec = (int) time % 1000;//find milliseconds
 		return Long.toString(time);
 	}
 
