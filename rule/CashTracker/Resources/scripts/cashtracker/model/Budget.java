@@ -1,12 +1,13 @@
 package cashtracker.model;
 
-import java.sql.ResultSet
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
 
-import cashtracker.model.constants.BudgetState
+import cashtracker.model.constants.BudgetState;
 
-import com.fasterxml.jackson.annotation.JsonRootName
-import com.flabser.script._IObject
-import com.flabser.users.User
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.flabser.script._IObject;
 
 
 @JsonRootName("budget")
@@ -18,7 +19,7 @@ public class Budget implements _IObject {
 
 	private Date regDate;
 
-	private User owner;
+	private Long owner;
 
 	private BudgetState status;
 
@@ -47,11 +48,11 @@ public class Budget implements _IObject {
 		this.regDate = regDate;
 	}
 
-	public User getOwner() {
+	public Long getOwner() {
 		return owner;
 	}
 
-	public void setOwner(User user) {
+	public void setOwner(Long user) {
 		this.owner = user;
 	}
 
@@ -65,21 +66,15 @@ public class Budget implements _IObject {
 
 	@Override
 	public String toString() {
-		return """Budget: {
-					"id": $id,
-					"name": "$name",
-					"regDate": "$regDate",
-					"owner": $owner,
-					"status": $status
-				}""";
+		return "Budget[" + id + ", " + name + ", " + regDate + ", " + owner + ", " + status + "]";
 	}
 
 	@Override
-	public void init(ResultSet rs) {
-		setId(rs.getInt("id"));
+	public void init(ResultSet rs) throws SQLException {
+		setId(rs.getLong("id"));
 		setName(rs.getString("name"));
 		setRegDate(rs.getDate("reg_date"));
-		setOwner((User) null);
+		setOwner(null);
 		setStatus(BudgetState.stateOf(rs.getInt("type")));
 	}
 }

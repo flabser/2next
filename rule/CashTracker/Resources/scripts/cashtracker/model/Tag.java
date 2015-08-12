@@ -1,13 +1,14 @@
 package cashtracker.model;
 
-import java.sql.ResultSet
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import com.fasterxml.jackson.annotation.JsonRootName
-import com.flabser.script._IObject
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.flabser.script._IObject;
 
 
-@JsonRootName("costCenter")
-public class CostCenter implements _IObject {
+@JsonRootName("tag")
+public class Tag implements _IObject {
 
 	private long id;
 
@@ -32,12 +33,12 @@ public class CostCenter implements _IObject {
 
 	@Override
 	public String toString() {
-		return "CostCenter[" + name + "]";
+		return "Tag[" + name + "]";
 	}
 
 	@Override
-	public void init(ResultSet rs) {
-		setId(rs.getInt("id"));
+	public void init(ResultSet rs) throws SQLException {
+		setId(rs.getLong("id"));
 		setName(rs.getString("name"));
 	}
 }

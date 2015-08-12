@@ -1,12 +1,12 @@
 package cashtracker.model;
 
-import java.sql.ResultSet
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonGetter
-import com.fasterxml.jackson.annotation.JsonRootName
-import com.fasterxml.jackson.annotation.JsonSetter
-import com.flabser.script._IObject
-import com.flabser.users.User
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.flabser.script._IObject;
 
 
 @JsonRootName("account")
@@ -30,9 +30,9 @@ public class Account implements _IObject {
 
 	private String note;
 
-	private List <User> writers;
+	private List <Long> writers;
 
-	private List <User> readers;
+	private List <Long> readers;
 
 	private int sortOrder;
 
@@ -77,39 +77,19 @@ public class Account implements _IObject {
 		this.amountControl = amountControl;
 	}
 
-	public List<User> getWriters() {
+	public List <Long> getWriters() {
 		return writers;
 	}
 
-	public void setWriters(List <User> writers) {
+	public void setWriters(List <Long> writers) {
 		this.writers = writers;
 	}
 
-	@JsonGetter("writers")
-	public List <Long> getWritersId() {
-		return null;
-	}
-
-	@JsonSetter("writers")
-	public void setWritersByIds(List <Long> writers) {
-		this.writers = writers;
-	}
-
-	public List <User> getReaders() {
+	public List <Long> getReaders() {
 		return readers;
 	}
 
-	public void setReaders(List <User> readers) {
-		this.readers = readers;
-	}
-
-	@JsonGetter("readers")
-	public List <Long> getReadersId() {
-		return null;
-	}
-
-	@JsonSetter("readers")
-	public void setReadersByIds(List <Long> readers) {
+	public void setReaders(List <Long> readers) {
 		this.readers = readers;
 	}
 
@@ -151,14 +131,14 @@ public class Account implements _IObject {
 	}
 
 	@Override
-	public void init(ResultSet rs) {
-		setId(rs.getInt("id"));
+	public void init(ResultSet rs) throws SQLException {
+		setId(rs.getLong("id"));
 		setName(rs.getString("name"));
 		setCurrencyCode(rs.getString("currency_code"));
 		setOpeningBalance(rs.getBigDecimal("opening_balance"));
 		setAmountControl(rs.getBigDecimal("amount_control"));
 		setEnabled(rs.getBoolean("enabled"));
-		setWriters(null);
+		// setWriters(Arrays.asList(rs.getArray("writers")));
 		setReaders(null);
 		setIncludeInTotals(rs.getBoolean("include_in_totals"));
 		setNote(rs.getString("note"));
