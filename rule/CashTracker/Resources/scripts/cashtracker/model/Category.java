@@ -11,11 +11,11 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.flabser.restful.data.ApplicationEntity;
+import com.flabser.restful.data.Entity;
 
 
 @JsonRootName("category")
-public class Category extends ApplicationEntity {
+public class Category extends Entity {
 
 	private List <TransactionType> transactionTypes;
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.restful.data.IApplicationEntity;
+import com.flabser.restful.data.IEntity;
 import com.flabser.users.User;
 
 public interface IDatabase {
@@ -19,7 +19,7 @@ public interface IDatabase {
 
 	IFTIndexEngine getFTSearchEngine() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException;
 
-	ArrayList<IApplicationEntity> select(String condition, Class<IApplicationEntity> objClass, User user);
+	ArrayList<IEntity> select(String condition, Class<IEntity> objClass, User user);
 
 	int insert(String condition, User user);
 

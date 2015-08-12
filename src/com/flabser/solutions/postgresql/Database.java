@@ -18,8 +18,8 @@ import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.restful.data.ApplicationEntityField;
-import com.flabser.restful.data.IApplicationEntity;
+import com.flabser.restful.data.EntitySetterField;
+import com.flabser.restful.data.IEntity;
 import com.flabser.server.Server;
 import com.flabser.users.User;
 
@@ -52,8 +52,8 @@ public class Database extends DatabaseCore implements IDatabase {
 	}
 
 	@Override
-	public ArrayList<IApplicationEntity> select(String condition, Class<IApplicationEntity> objClass, User user) {
-		ArrayList<IApplicationEntity> o = new ArrayList<>();
+	public ArrayList<IEntity> select(String condition, Class<IEntity> objClass, User user) {
+		ArrayList<IEntity> o = new ArrayList<>();
 		Connection conn = pool.getConnection();
 		try {
 			conn.setAutoCommit(false);
@@ -63,10 +63,10 @@ public class Database extends DatabaseCore implements IDatabase {
 			ResultSet rs = s.executeQuery(sql);
 
 			while (rs.next()) {
-				IApplicationEntity grObj = objClass.newInstance();
+				IEntity grObj = objClass.newInstance();
 				for (Method method : objClass.getMethods()) {
-					if (method.isAnnotationPresent(ApplicationEntityField.class)) {
-						ApplicationEntityField anottation = method.getAnnotation(ApplicationEntityField.class);
+					if (method.isAnnotationPresent(EntitySetterField.class)) {
+						EntitySetterField anottation = method.getAnnotation(EntitySetterField.class);
 						String dfn = anottation.value();
 						if (dfn.equalsIgnoreCase("")) {
 							dfn = method.getName().substring(3);

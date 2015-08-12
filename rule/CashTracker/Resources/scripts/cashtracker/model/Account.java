@@ -8,11 +8,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.restful.data.ApplicationEntity;
-import com.flabser.restful.data.ApplicationEntityField;
+import com.flabser.restful.data.Entity;
+import com.flabser.restful.data.EntitySetterField;
 
 @JsonRootName("account")
-public class Account extends ApplicationEntity {
+public class Account extends Entity {
 
 	// private int type;
 
@@ -40,7 +40,7 @@ public class Account extends ApplicationEntity {
 		return name;
 	}
 
-	@ApplicationEntityField()
+	@EntitySetterField()
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -49,7 +49,7 @@ public class Account extends ApplicationEntity {
 		return currencyCode;
 	}
 
-	@ApplicationEntityField("currency_code")
+	@EntitySetterField("currency_code")
 	public void setCurrencyCode(String currencyCode) {
 		this.currencyCode = currencyCode;
 	}
@@ -58,7 +58,7 @@ public class Account extends ApplicationEntity {
 		return openingBalance;
 	}
 
-	@ApplicationEntityField("opening_balance")
+	@EntitySetterField("opening_balance")
 	public void setOpeningBalance(BigDecimal openingBalance) {
 		this.openingBalance = openingBalance;
 	}
@@ -67,7 +67,7 @@ public class Account extends ApplicationEntity {
 		return amountControl;
 	}
 
-	@ApplicationEntityField("amount_control")
+	@EntitySetterField("amount_control")
 	public void setAmountControl(BigDecimal amountControl) {
 		this.amountControl = amountControl;
 	}
@@ -92,7 +92,7 @@ public class Account extends ApplicationEntity {
 		return enabled;
 	}
 
-	@ApplicationEntityField()
+	@EntitySetterField()
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
@@ -101,7 +101,7 @@ public class Account extends ApplicationEntity {
 		return includeInTotals;
 	}
 
-	@ApplicationEntityField("include_in_totals")
+	@EntitySetterField("include_in_totals")
 	public void setIncludeInTotals(boolean includeInTotals) {
 		this.includeInTotals = includeInTotals;
 	}
@@ -110,7 +110,7 @@ public class Account extends ApplicationEntity {
 		return note;
 	}
 
-	@ApplicationEntityField()
+	@EntitySetterField()
 	public void setNote(String note) {
 		this.note = note;
 	}
@@ -119,7 +119,7 @@ public class Account extends ApplicationEntity {
 		return sortOrder;
 	}
 
-	@ApplicationEntityField("sort_order")
+	@EntitySetterField("sort_order")
 	public void setSortOrder(int sortOrder) {
 		this.sortOrder = sortOrder;
 	}

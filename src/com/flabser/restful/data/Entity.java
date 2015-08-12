@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public abstract class ApplicationEntity implements IApplicationEntity {
+public abstract class Entity implements IEntity {
 	protected long id;
 	protected ArrayList<AttachedFile> attachments = new ArrayList<AttachedFile>();
 
@@ -18,7 +18,7 @@ public abstract class ApplicationEntity implements IApplicationEntity {
 	}
 
 	@Override
-	@ApplicationEntityField()
+	@EntitySetterField()
 	public void setId(long id) {
 		this.id = id;
 	}

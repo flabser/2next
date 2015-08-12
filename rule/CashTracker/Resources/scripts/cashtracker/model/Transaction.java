@@ -15,12 +15,12 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.flabser.restful.data.ApplicationEntity;
-import com.flabser.restful.data.ApplicationEntityField;
+import com.flabser.restful.data.Entity;
+import com.flabser.restful.data.EntitySetterField;
 
 
 @JsonRootName("transaction")
-public class Transaction extends ApplicationEntity {
+public class Transaction extends Entity {
 
 	private Long user;
 
@@ -72,7 +72,7 @@ public class Transaction extends ApplicationEntity {
 		return transactionType;
 	}
 
-	@ApplicationEntityField
+	@EntitySetterField
 	public void setTransactionType(TransactionType transactionType) {
 		this.transactionType = transactionType;
 	}
