@@ -9,7 +9,7 @@ import org.junit.Test;
 import cashtracker.dao.AccountDAO;
 import cashtracker.model.Account;
 
-public class SelectEntityTest extends InitEnv {
+public class SelectAccountTest extends InitEnv {
 
 	@Test
 	public void test() {

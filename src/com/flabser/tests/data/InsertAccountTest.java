@@ -12,7 +12,7 @@ import cashtracker.model.Account;
 
 import com.flabser.util.Util;
 
-public class InsertEntityTest extends InitEnv {
+public class InsertAccountTest extends InitEnv {
 	int iteration = 100;
 
 	@Test

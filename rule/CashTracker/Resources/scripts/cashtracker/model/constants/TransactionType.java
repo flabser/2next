@@ -28,4 +28,8 @@ public enum TransactionType {
 	public int getCode() {
 		return code;
 	}
+
+	public static TransactionType getRandom() {
+		return values()[(int) (Math.random() * values().length)];
+	}
 }
