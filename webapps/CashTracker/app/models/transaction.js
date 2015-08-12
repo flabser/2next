@@ -3,22 +3,22 @@ import EmberValidations from 'ember-validations';
 
 export default DS.Model.extend(EmberValidations.Mixin, {
     user: DS.belongsTo('user', {
-        async: false,
+        async: true,
         readOnly: true
     }),
     accountFrom: DS.belongsTo('account', {
-        async: false
+        async: true
     }),
     accountTo: DS.belongsTo('account', {
-        async: false
+        async: true
     }),
     amount: DS.attr('number'),
     date: DS.attr('date'),
     category: DS.belongsTo('category', {
-        async: false
+        async: true
     }),
     costCenter: DS.belongsTo('costCenter', {
-        async: false
+        async: true
     }),
     tags: DS.hasMany('tag'),
     transactionState: DS.attr('number'),
