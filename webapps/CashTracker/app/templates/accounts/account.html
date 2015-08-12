@@ -35,7 +35,7 @@
                 {{t "opening_balance"}}
             </div>
             <div class="controls">
-                {{input value=account.openingBalance}}
+                {{input type="number" value=account.openingBalance}}
                 {{tn-error-message}}
             </div>
         {{/tn-form-group}}
@@ -45,7 +45,7 @@
                 {{t "amount_control"}}
             </div>
             <div class="controls">
-                {{input value=account.amountControl}}
+                {{input type="number" value=account.amountControl}}
                 {{tn-error-message}}
                 <p class="hint">
                     {{t "amount_control_hint"}}
@@ -85,6 +85,7 @@
                         optionValuePath="content.id"
                         optionLabelPath="content.login"
                         selectionBinding="account.writers"
+                        multiple=true
                         prompt="- Select -"}}
                     {{tn-error-message}}
                     <p class="hint">

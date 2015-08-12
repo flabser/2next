@@ -15,12 +15,11 @@ export default DS.Model.extend(EmberValidations.Mixin, {
     }),
     note: DS.attr('string'),
     writers: DS.hasMany('user', {
-        async: false
+        async: true
     }),
     readers: DS.hasMany('user', {
-        async: false
+        async: true
     }),
-    sortOrder: DS.attr('number'),
 
     validations: {
         name: {
