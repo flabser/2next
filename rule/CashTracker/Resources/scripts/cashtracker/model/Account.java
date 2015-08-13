@@ -47,10 +47,6 @@ public class Account extends AppEntity {
 	@EntityField()
 	private String note;
 
-	// private List<Long> writers;
-
-	// private List<Long> readers;
-
 	@EntityField("sort_order")
 	@Column(name = "sort_order")
 	private int sortOrder;
@@ -86,16 +82,6 @@ public class Account extends AppEntity {
 	public void setAmountControl(BigDecimal amountControl) {
 		this.amountControl = amountControl;
 	}
-
-	/*
-	 * public List<Long> getWriters() { return writers; }
-	 * 
-	 * public void setWriters(List<Long> writers) { this.writers = writers; }
-	 * 
-	 * public List<Long> getReaders() { return readers; }
-	 * 
-	 * public void setReaders(List<Long> readers) { this.readers = readers; }
-	 */
 
 	public boolean isEnabled() {
 		return enabled;

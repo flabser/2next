@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.AppEntity;
 import com.flabser.restful.data.EntityField;
 
+
 @JsonRootName("budget")
 public class Budget extends AppEntity {
 
@@ -21,8 +22,8 @@ public class Budget extends AppEntity {
 
 	private Long owner;
 
-	@EntityField("type")
-	private BudgetState status;
+	//@EntityField("status")
+	//private BudgetState status;
 
 	public String getName() {
 		return name;
@@ -48,7 +49,7 @@ public class Budget extends AppEntity {
 		this.owner = user;
 	}
 
-	public BudgetState getStatus() {
+	/*public BudgetState getStatus() {
 		return status;
 	}
 
@@ -56,9 +57,17 @@ public class Budget extends AppEntity {
 		this.status = status;
 	}
 
+	public String getBudgetState() {
+		return "";
+	}
+
+	public void setBudgetState(String status) {
+		// this.status = status;
+	}*/
+
 	@Override
 	public String toString() {
-		return "Budget[" + id + ", " + name + ", " + regDate + ", " + owner + ", " + status + "]";
+		return "Budget[" + id + ", " + name + ", " + regDate + ", " + owner + "]";
 	}
 
 	@Override
@@ -67,7 +76,6 @@ public class Budget extends AppEntity {
 		setName(rs.getString("name"));
 		setRegDate(rs.getDate("reg_date"));
 		setOwner(null);
-		setStatus(BudgetState.stateOf(rs.getInt("type")));
+		// setStatus(BudgetState.stateOf(rs.getInt("type")));
 	}
-
 }

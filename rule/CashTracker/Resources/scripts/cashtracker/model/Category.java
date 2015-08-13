@@ -12,15 +12,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.AppEntity;
-
+import com.flabser.restful.data.EntityField;
 
 @JsonRootName("category")
 public class Category extends AppEntity {
 
-	private List <TransactionType> transactionTypes;
+	private List<TransactionType> transactionTypes;
 
 	private Category parentCategory;
 
+	@EntityField("name")
 	private String name;
 
 	private boolean enabled;
@@ -31,17 +32,17 @@ public class Category extends AppEntity {
 
 	private int sortOrder;
 
-	public List <TransactionType> getTransactionTypes() {
+	public List<TransactionType> getTransactionTypes() {
 		return transactionTypes;
 	}
 
-	public void setTransactionTypes(List <TransactionType> transactionTypes) {
+	public void setTransactionTypes(List<TransactionType> transactionTypes) {
 		this.transactionTypes = transactionTypes;
 	}
 
 	@JsonGetter("transactionTypes")
-	public List <Integer> getTransactionTypesCode() {
-		List <Integer> tTypes = new ArrayList <Integer>();
+	public List<Integer> getTransactionTypesCode() {
+		List<Integer> tTypes = new ArrayList<Integer>();
 		if (transactionTypes != null) {
 			transactionTypes.forEach(type -> tTypes.add(type.getCode()));
 		}
@@ -49,8 +50,8 @@ public class Category extends AppEntity {
 	}
 
 	@JsonSetter("transactionTypes")
-	public void setTransactionTypesByIds(List <Integer> ids) {
-		List <TransactionType> tTypes = new ArrayList <TransactionType>();
+	public void setTransactionTypesByIds(List<Integer> ids) {
+		List<TransactionType> tTypes = new ArrayList<TransactionType>();
 		if (ids != null) {
 			ids.forEach(id -> tTypes.add(TransactionType.typeOf(id)));
 		}

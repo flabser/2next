@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.AppEntity;
 
+
 @JsonRootName("transaction")
 @Entity
 @Table(name = "App.Transactions")
@@ -39,7 +40,7 @@ public class Transaction extends AppEntity {
 
 	private CostCenter costCenter;
 
-	private List<Tag> tags;
+	private List <Tag> tags;
 
 	private Date date = new Date();
 
@@ -220,16 +221,16 @@ public class Transaction extends AppEntity {
 		setCostCenter(costCenter);
 	}
 
-	public List<Tag> getTags() {
+	public List <Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<Tag> tags) {
+	public void setTags(List <Tag> tags) {
 		this.tags = tags;
 	}
 
 	@JsonGetter("tags")
-	public List<Long> getTagsId() {
+	public List <Long> getTagsId() {
 		if (tags != null) {
 			return tags.stream().map(Tag::getId).collect(Collectors.toList());
 		}
@@ -237,9 +238,9 @@ public class Transaction extends AppEntity {
 	}
 
 	@JsonSetter("tags")
-	public void setTagsId(List<Long> ids) {
+	public void setTagsId(List <Long> ids) {
 		if (ids != null) {
-			List<Tag> _tags = new ArrayList<Tag>();
+			List <Tag> _tags = new ArrayList <Tag>();
 			ids.forEach(id -> {
 				Tag tag = new Tag();
 				tag.setId(id);
@@ -346,7 +347,7 @@ public class Transaction extends AppEntity {
 
 	@Override
 	public void init(ResultSet rs) throws SQLException {
-		setId(rs.getInt("t.id"));
+		setId(rs.getInt("id"));
 		setUser(rs.getLong("t.USER"));
 		setTransactionType(TransactionType.typeOf(rs.getInt("t.transaction_type")));
 		setTransactionState(TransactionState.stateOf(rs.getInt("t.transaction_state")));
