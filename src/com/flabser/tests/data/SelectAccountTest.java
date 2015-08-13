@@ -2,6 +2,7 @@ package com.flabser.tests.data;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -14,11 +15,11 @@ public class SelectAccountTest extends InitEnv {
 	@Test
 	public void test() {
 		assertNotNull(db);
+		long lStartTime = new Date().getTime();
 		AccountDAO dao = new AccountDAO(ses);
 		List<Account> list = dao.findAll();
-		assertNotNull(list);
 		for (Account a : list) {
-			System.out.println(a);
+			// System.out.println(a);
 			assertNotNull(a.getAmountControl());
 			assertNotNull(a.getCurrencyCode());
 			assertNotNull(a.getId());
@@ -31,7 +32,11 @@ public class SelectAccountTest extends InitEnv {
 			assertNotNull(a.isIncludeInTotals());
 
 		}
-		System.out.println(list.size());
+		long lEndTime = new Date().getTime();
+		long difference = lEndTime - lStartTime;
+		System.out.println(" 1 Elapsed milliseconds: " + difference);
+		System.out.println("------------------" + list.size());
+
 	}
 
 }

@@ -13,7 +13,7 @@ import cashtracker.model.Account;
 import com.flabser.util.Util;
 
 public class InsertAccountTest extends InitEnv {
-	int iteration = 100;
+	int iteration = 100000;
 
 	@Test
 	public void test() {
@@ -32,6 +32,7 @@ public class InsertAccountTest extends InitEnv {
 			AccountDAO dao = new AccountDAO(ses);
 			assertTrue(dao.add(a) > 0);
 		}
+		System.out.println("done " + iteration);
 	}
 
 }

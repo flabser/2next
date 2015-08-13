@@ -2,6 +2,10 @@ package com.flabser.tests.data;
 
 import java.util.HashMap;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.junit.Before;
 
 import com.flabser.apptemplate.AppTemplate;
@@ -23,9 +27,15 @@ public class InitEnv {
 	AppTemplate at;
 	_Session ses;
 	IDatabase db;
+	EntityManagerFactory factory;
+	EntityManager em;
 
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+		factory = Persistence.createEntityManagerFactory("JPA");
+		em = factory.createEntityManager();
+		System.out.println(factory.getProperties());
+
 		Server.logger = new SimpleLogger();
 		Environment.systemBase = new com.flabser.dataengine.system.SystemDatabase();
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
@@ -37,5 +47,6 @@ public class InitEnv {
 		AppTemplate at = new AppTemplate(appType, "global.xml");
 		ses = new _Session(at, us);
 		db = us.getDataBase(appType);
+
 	}
 }

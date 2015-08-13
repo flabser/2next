@@ -1,5 +1,7 @@
 package cashtracker.dao
 
+import java.sql.Timestamp
+
 import cashtracker.model.Account
 import cashtracker.model.Category
 import cashtracker.model.CostCenter
@@ -162,9 +164,9 @@ public class TransactionDAO {
 							tags, repeat, every, repeat_step, start_date, end_date,
 							note, include_in_reports, basis)
 						VALUES (${m.user}, ${m.transactionType.code}, ${m.transactionState.code},
-								${m.date}, ${m.accountFrom?.id}, ${m.accountTo?.id},
+								'${new java.sql.Date(m.date.getTime())}', ${m.accountFrom?.id}, ${m.accountTo?.id},
 								${m.amount}, ${m.exchangeRate}, ${m.category?.id}, ${m.costCenter?.id},
-								'{${m.tagsId?.join(",")}}', ${m.repeat}, ${m.every}, ${m.repeatStep}, ${m.startDate}, ${m.endDate},
+								'{${m.tagsId?.join(",")}}', ${m.repeat}, ${m.every}, ${m.repeatStep}, '${new Timestamp(m.startDate.getTime())}', '${new Timestamp(m.endDate.getTime())}',
 								'${m.note}', ${m.includeInReports}, '${m.basis}')"""
 		return db.insert(sql, user)
 	}

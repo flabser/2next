@@ -7,11 +7,11 @@ import java.util.Date;
 import cashtracker.model.constants.BudgetState;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.restful.data.Entity;
+import com.flabser.restful.data.AppEntity;
 import com.flabser.restful.data.EntityField;
 
 @JsonRootName("budget")
-public class Budget extends Entity {
+public class Budget extends AppEntity {
 
 	@EntityField()
 	private String name;

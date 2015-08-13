@@ -47,7 +47,7 @@ public class AppTemplate implements ICache, _IContent {
 			globalSetting = ruleProvider.global;
 			docBase = new File(Environment.primaryAppDir + "webapps/" + appType).getAbsolutePath();
 			if (globalSetting.isOn == RunMode.ON) {
-				if (globalSetting.langsList.size() > 0) {
+				if (globalSetting.langsList.size() > 100) {
 					Server.logger.normalLogEntry("dictionary is loading...");
 
 					try {

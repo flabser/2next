@@ -5,11 +5,11 @@ import java.sql.SQLException;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.restful.data.Entity;
+import com.flabser.restful.data.AppEntity;
 
 
 @JsonRootName("costCenter")
-public class CostCenter extends Entity {
+public class CostCenter extends AppEntity {
 
 	private String name;
 

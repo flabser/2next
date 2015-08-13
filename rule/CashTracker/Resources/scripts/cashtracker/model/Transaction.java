@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import cashtracker.model.constants.TransactionState;
 import cashtracker.model.constants.TransactionType;
 
@@ -15,10 +18,12 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.flabser.restful.data.Entity;
+import com.flabser.restful.data.AppEntity;
 
 @JsonRootName("transaction")
-public class Transaction extends Entity {
+@Entity
+@Table(name = "App.Transactions")
+public class Transaction extends AppEntity {
 
 	private Long user;
 
