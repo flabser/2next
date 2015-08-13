@@ -11,6 +11,8 @@ export default DS.RESTAdapter.extend({
         switch (type) {
             case 'category':
                 return 'categories';
+            case 'budget':
+                return 'budget';
             default:
                 return type + 's';
         }

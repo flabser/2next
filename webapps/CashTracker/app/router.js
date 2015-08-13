@@ -6,8 +6,15 @@ var Router = Em.Router.extend({
 });
 
 Router.map(function() {
-    this.route('index', {
+
+    this.route('dashboard', {
         path: '/'
+    });
+    this.route('reports');
+    this.route('budget');
+    this.route('login');
+    this.route('user_profile', {
+        path: 'user-profile'
     });
 
     this.route('transactions', function() {
@@ -54,26 +61,9 @@ Router.map(function() {
         });
     });
 
-    this.route('dashboard');
-    this.route('reports');
-    this.route('login');
-    this.route('budget');
-
-    this.route('user_profile', {
-        path: 'user-profile'
-    });
-
     this.route('error404', {
         path: '/*path'
     });
-});
-
-Em.Route.reopen({
-    redirect: function() {
-        if (this.routeName === 'index') {
-            this.transitionTo('dashboard');
-        }
-    }
 });
 
 export default Router;

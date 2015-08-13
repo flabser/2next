@@ -14,8 +14,11 @@
                                 {{t "name"}}
                             </div>
                             <div class="controls">
-                                <input type="text" name="budget_name" {{bind-attr value=budgetName}} />
+                                {{input value=budget.name}}
                                 {{tn-error-message}}
+                                <p class="hint">
+                                    {{t "budget_name_hint"}}
+                                </p>
                             </div>
                         {{/tn-form-group}}
                     </fieldset>
@@ -26,7 +29,7 @@
                 </section>
             {{/tn-form}}
         {{else}}
-            {{t "name"}}{{budgetName}}
+            <h1 class="pull-left">{{budget.name}}</h1>
             <button class="btn" {{action "edit"}}>
                 <i class="fa fa-edit"></i>
             </button>

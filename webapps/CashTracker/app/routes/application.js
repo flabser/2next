@@ -34,6 +34,13 @@ export default Route.extend({
         if (!this.get('session').isAuthenticated()) {
             // window.location.href = 'Provider?id=login';
         } else {
+            if (this.get('session').get('user.redirect') === 'setup') {
+                this.controllerFor('budget').set('isEditMode', true);
+                this.transitionTo('budget');
+            } else {
+                this.controllerFor('budget').send('check');
+            }
+
             $('.page-loading').hide();
         }
     },
