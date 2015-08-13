@@ -55,9 +55,14 @@ export default Route.extend({
     actions: {
         logout: function() {
             // var route = this;
+            var authMode = this.get('session.user.authMode');
             this.get('session').logout().then(function() {
                 // route.transitionTo('index');
-                window.location.href = 'Provider?id=welcome';
+                if (authMode === 'DIRECT_LOGIN') {
+                    window.location.href = '/CashTracker/Provider?id=welcome';
+                } else {
+                    window.location.href = '/Nubis/Provider?id=login';
+                }
             });
         },
 
@@ -97,7 +102,7 @@ export default Route.extend({
             }
 
             if (_error.status === 401 || (!this.get('session').isAuthenticated() && this.routeName !== 'login')) {
-                // window.location.href = 'Provider?id=login';
+                window.location.href = '/CashTracker/Provider?id=login';
 
                 /*this.controllerFor('login').setProperties({
                     transition: transition
