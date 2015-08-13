@@ -15,6 +15,10 @@ export default Em.Controller.extend({
         return this.store.findAll('costCenter');
     }.property(),
 
+    isTransfer: Em.computed('transaction.transactionType', function() {
+        return this.get('transaction.transactionType') == 3;
+    }),
+
     actions: {
         save: function() {
             var _this = this;

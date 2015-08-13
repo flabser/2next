@@ -490,6 +490,18 @@
 		<entry lang="ENG">Account</entry>
 		<entry lang="BG">Счет</entry>
 	</sentence>
+	<sentence mode="on" keyword="account_from">
+		<entry lang="RUS">Из счета</entry>
+		<entry lang="KAZ">Из счета</entry>
+		<entry lang="ENG">From</entry>
+		<entry lang="BG">Из счета</entry>
+	</sentence>
+	<sentence mode="on" keyword="account_to">
+		<entry lang="RUS">в счет</entry>
+		<entry lang="KAZ">в счет</entry>
+		<entry lang="ENG">To</entry>
+		<entry lang="BG">в счет</entry>
+	</sentence>
 	<sentence mode="on" keyword="transaction_type">
 		<entry lang="RUS">Тип операции</entry>
 		<entry lang="KAZ">Тип операции</entry>

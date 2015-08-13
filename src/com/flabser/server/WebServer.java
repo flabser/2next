@@ -46,9 +46,6 @@ public class WebServer implements IWebServer {
 		tomcat.setBaseDir("webserver");
 		tomcat.getHost().setAutoDeploy(false);
 
-		// System.setProperty("org.apache.coyote.USE_CUSTOM_STATUS_MSG_IN_HEADER",
-		// "true");
-
 		StandardServer server = (StandardServer) WebServer.tomcat.getServer();
 
 		AprLifecycleListener listener = new AprLifecycleListener();
@@ -76,14 +73,14 @@ public class WebServer implements IWebServer {
 	public Context initAdministartor() {
 		Context context = null;
 
-		String docBase = "Administrator";
+		String docBase = EnvConst.ADMIN_APP_NAME;
 		String URLPath = "/" + docBase;
 
 		String db = new File(Environment.primaryAppDir + "webapps/" + docBase).getAbsolutePath();
 		context = tomcat.addContext(URLPath, db);
 
 		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
-		context.setDisplayName("Administrator");
+		context.setDisplayName(EnvConst.ADMIN_APP_NAME);
 
 		FilterDef filterAccessGuard = new FilterDef();
 		filterAccessGuard.setFilterName("AccessGuard");
@@ -91,7 +88,7 @@ public class WebServer implements IWebServer {
 
 		FilterMap filterAccessGuardMapping = new FilterMap();
 		filterAccessGuardMapping.setFilterName("AccessGuard");
-		filterAccessGuardMapping.addServletName("Provider");
+		filterAccessGuardMapping.addURLPattern("/*");
 
 		context.addFilterDef(filterAccessGuard);
 		context.addFilterMap(filterAccessGuardMapping);
@@ -200,6 +197,7 @@ public class WebServer implements IWebServer {
 		context.addServletMapping("/", "default");
 
 		context.addServletMapping("/Provider", "Provider");
+		context.addServletMapping("/info.html", "Provider");
 
 		Wrapper w = Tomcat.addServlet(context, "PortalInit", "com.flabser.servlets.PortalInit");
 		w.setLoadOnStartup(1);

@@ -1,5 +1,17 @@
 package com.flabser.solutions.postgresql;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import org.apache.commons.lang3.reflect.FieldUtils;
+
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IDatabase;
@@ -7,18 +19,11 @@ import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.script._IObject;
+import com.flabser.restful.data.EntityField;
+import com.flabser.restful.data.IEntity;
+import com.flabser.server.Server;
 import com.flabser.users.User;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import com.flabser.util.Util;
 
 public class Database extends DatabaseCore implements IDatabase {
 
@@ -28,7 +33,8 @@ public class Database extends DatabaseCore implements IDatabase {
 	private ApplicationProfile appProfile;
 
 	@Override
-	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
+			DatabasePoolException {
 		this.appProfile = appProfile;
 		dbURI = appProfile.getURI();
 		pool = getPool(driver, appProfile);
@@ -40,42 +46,39 @@ public class Database extends DatabaseCore implements IDatabase {
 	}
 
 	@Override
-	public IFTIndexEngine getFTSearchEngine() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+	public IFTIndexEngine getFTSearchEngine() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
+			DatabasePoolException {
 		IFTIndexEngine ftEng = new FTIndexEngine();
 		ftEng.init(appProfile);
 		return ftEng;
 	}
 
 	@Override
-	public ArrayList<Object[]> select(String condition, User user) {
-		ResultSet rs = null;
-		ArrayList<Object[]> l = new ArrayList<Object[]>();
+	public ArrayList<IEntity> select(String condition, Class<IEntity> objClass, User user) {
+		ArrayList<IEntity> o = new ArrayList<>();
 		Connection conn = pool.getConnection();
 		try {
 			conn.setAutoCommit(false);
 			Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
 			String sql = condition;
-			rs = s.executeQuery(sql);
-			ResultSetMetaData md = rs.getMetaData();
-			int cc = md.getColumnCount();
+			ResultSet rs = s.executeQuery(sql);
 
 			while (rs.next()) {
-				Object[] e = new Object[cc];
-				for (int i = 0; i < cc; i++) {
-					int columnIndex = i + 1;
-					int type = md.getColumnType(columnIndex);
-					if (type == Types.VARCHAR || type == Types.CHAR) {
-						e[i] = rs.getString(columnIndex);
-					} else if (type == Types.NUMERIC || type == Types.INTEGER || type == Types.SMALLINT) {
-						e[i] = rs.getLong(columnIndex);
-					} else if (type == Types.ARRAY) {
-						e[i] = rs.getArray(i + 1).getArray();
-					} else {
-						e[i] = rs.getString(columnIndex);
+				IEntity grObj = objClass.newInstance();
+				for (Field field : FieldUtils.getAllFields(objClass)) {
+					if (field.isAnnotationPresent(EntityField.class)) {
+						EntityField anottation = field.getAnnotation(EntityField.class);
+						String dfn = anottation.value();
+						if (dfn.equalsIgnoreCase("")) {
+							dfn = field.getName();
+						}
+						Method entityMethod = grObj.getClass().getMethod(Util.fieldToSetter(field.getName()), field.getType());
+						Method rsMethod = ResultSet.class.getMethod(Util.fieldToGetter(field.getType().getSimpleName()), String.class);
+						entityMethod.invoke(grObj, rsMethod.invoke(rs, dfn));
 					}
 				}
-				l.add(e);
+				o.add(grObj);
 			}
 			conn.commit();
 			s.close();
@@ -84,43 +87,13 @@ public class Database extends DatabaseCore implements IDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.errorPrint(dbURI, e);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Server.logger.errorLogEntry(e);
 		} finally {
 			pool.returnConnection(conn);
 		}
-		return l;
+		return o;
+
 	}
-
-    @Override
-    public ArrayList<_IObject> select(String condition, Class<_IObject> objClass, User user) {
-        ArrayList<_IObject> o = new ArrayList<>();
-        Connection conn = pool.getConnection();
-        try {
-            conn.setAutoCommit(false);
-            Statement s = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-
-            String sql = condition;
-            ResultSet rs = s.executeQuery(sql);
-
-            while (rs.next()) {
-                _IObject grObj = objClass.newInstance();
-                grObj.init(rs);
-                o.add(grObj);
-            }
-            conn.commit();
-            s.close();
-            rs.close();
-
-        } catch (SQLException e) {
-            DatabaseUtil.errorPrint(dbURI, e);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            pool.returnConnection(conn);
-        }
-        return o;
-
-    }
 
 	@Override
 	public int insert(String condition, User user) {
@@ -194,4 +167,5 @@ public class Database extends DatabaseCore implements IDatabase {
 	public IDeployer getDeployer() {
 		return new Deployer();
 	}
+
 }

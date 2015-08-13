@@ -15,8 +15,11 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import com.flabser.env.Environment;
+import com.flabser.users.UserSession;
+
 @Path("/file")
-public class UploadFileService {
+public class UploadFileService extends RestProvider {
 
 	@POST
 	@Path("/upload")
@@ -24,7 +27,15 @@ public class UploadFileService {
 	public Response uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) {
 
-		String uploadedFileLocation = "c://tmp/" + fileDetail.getFileName();
+		UserSession us = getUserSession();
+		String login = us.currentUser.getLogin();
+
+		File userTmpDir = new File(Environment.tmpDir + File.separator + login);
+		if (!userTmpDir.exists()) {
+			userTmpDir.mkdir();
+		}
+
+		String uploadedFileLocation = userTmpDir + File.separator + fileDetail.getFileName();
 
 		writeToFile(uploadedInputStream, uploadedFileLocation);
 

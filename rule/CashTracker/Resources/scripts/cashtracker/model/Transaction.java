@@ -1,43 +1,46 @@
 package cashtracker.model;
 
-import java.sql.ResultSet
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import cashtracker.model.constants.TransactionState
-import cashtracker.model.constants.TransactionType
+import cashtracker.model.constants.TransactionState;
+import cashtracker.model.constants.TransactionType;
 
-import com.fasterxml.jackson.annotation.JsonGetter
-import com.fasterxml.jackson.annotation.JsonRootName
-import com.fasterxml.jackson.annotation.JsonSetter
-import com.flabser.restful.Attachments
-import com.flabser.users.User
-
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.flabser.restful.data.Entity;
 
 @JsonRootName("transaction")
-public class Transaction extends Attachments {
+public class Transaction extends Entity {
 
-	private long id;
+	private Long user;
 
-	private User user;
+	private TransactionType transactionType = TransactionType.EXPENSE;
 
-	private TransactionType transactionType;
-
-	private TransactionState transactionState;
-
-	private Date date = new Date();
+	private TransactionState transactionState = TransactionState.UNKNOWN;
 
 	private Account accountFrom;
 
 	private Account accountTo;
 
-	private BigDecimal amount;
-
-	private float exchangeRate;
-
 	private Category category;
 
 	private CostCenter costCenter;
 
-	private List <Tag> tags;
+	private List<Tag> tags;
+
+	private Date date = new Date();
+
+	private BigDecimal amount;
+
+	private float exchangeRate;
 
 	private boolean repeat;
 
@@ -55,20 +58,11 @@ public class Transaction extends Attachments {
 
 	private boolean includeInReports;
 
-	//
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public User getUser() {
+	public Long getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Long user) {
 		this.user = user;
 	}
 
@@ -82,18 +76,12 @@ public class Transaction extends Attachments {
 
 	@JsonGetter("transactionType")
 	public Integer getTransactionTypeCode() {
-		if (transactionType != null) {
-			return transactionType.code;
-		}
-		return null;
+		return transactionType.getCode();
 	}
 
 	@JsonSetter("transactionType")
-	public void setTransactionTypeById(Integer id) {
-		if (id != null) {
-			setTransactionType(TransactionType.typeOf(id));
-		}
-		setTransactionType(null);
+	public void setTransactionTypeById(int id) {
+		setTransactionType(TransactionType.typeOf(id));
 	}
 
 	public TransactionState getTransactionState() {
@@ -106,26 +94,12 @@ public class Transaction extends Attachments {
 
 	@JsonGetter("transactionState")
 	public Integer getTransactionStateCode() {
-		if (transactionState != null) {
-			return transactionState.code;
-		}
-		return null;
+		return transactionState.getCode();
 	}
 
 	@JsonSetter("transactionState")
-	public void setTransactionStateById(Integer id) {
-		if (id != null) {
-			setTransactionState(TransactionState.stateOf(id));
-		}
-		setTransactionState(null);
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
+	public void setTransactionStateById(int id) {
+		setTransactionState(TransactionState.stateOf(id));
 	}
 
 	public Category getCategory() {
@@ -136,7 +110,28 @@ public class Transaction extends Attachments {
 		this.category = category;
 	}
 
+	@JsonGetter("category")
+	public Long getCategoryId() {
+		if (category != null) {
+			return category.getId();
+		}
+		return null;
+	}
+
+	@JsonSetter("category")
+	public void setCategoryById(Long id) {
+		Category category = null;
+		if (id != null) {
+			category = new Category();
+			category.setId(id);
+		}
+		setCategory(category);
+	}
+
 	public Account getAccountFrom() {
+		if (accountFrom == null || accountFrom.getId() == 0) {
+			return null;
+		}
 		return accountFrom;
 	}
 
@@ -147,7 +142,7 @@ public class Transaction extends Attachments {
 	@JsonGetter("accountFrom")
 	public Long getAccountFromId() {
 		if (accountFrom != null) {
-			return accountFrom.id;
+			return accountFrom.getId();
 		}
 		return null;
 	}
@@ -159,10 +154,13 @@ public class Transaction extends Attachments {
 			accountFrom = new Account();
 			accountFrom.setId(id);
 		}
-		setAccountFrom(accountFrom)
+		setAccountFrom(accountFrom);
 	}
 
 	public Account getAccountTo() {
+		if (accountTo == null || accountTo.getId() == 0) {
+			return null;
+		}
 		return accountTo;
 	}
 
@@ -173,7 +171,7 @@ public class Transaction extends Attachments {
 	@JsonGetter("accountTo")
 	public Long getAccountToId() {
 		if (accountTo != null) {
-			return accountTo.id;
+			return accountTo.getId();
 		}
 		return null;
 	}
@@ -185,7 +183,75 @@ public class Transaction extends Attachments {
 			accountTo = new Account();
 			accountTo.setId(id);
 		}
-		setAccountTo(accountTo)
+		setAccountTo(accountTo);
+	}
+
+	public CostCenter getCostCenter() {
+		if (costCenter == null || costCenter.getId() == 0) {
+			return null;
+		}
+		return costCenter;
+	}
+
+	public void setCostCenter(CostCenter costCenter) {
+		this.costCenter = costCenter;
+	}
+
+	@JsonGetter("costCenter")
+	public Long getCostCenterId() {
+		if (costCenter != null) {
+			return costCenter.getId();
+		}
+		return null;
+	}
+
+	@JsonSetter("costCenter")
+	public void setCostCenterById(Long id) {
+		CostCenter costCenter = null;
+		if (id != null) {
+			costCenter = new CostCenter();
+			costCenter.setId(id);
+		}
+		setCostCenter(costCenter);
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	@JsonGetter("tags")
+	public List<Long> getTagsId() {
+		if (tags != null) {
+			return tags.stream().map(Tag::getId).collect(Collectors.toList());
+		}
+		return null;
+	}
+
+	@JsonSetter("tags")
+	public void setTagsId(List<Long> ids) {
+		if (ids != null) {
+			List<Tag> _tags = new ArrayList<Tag>();
+			ids.forEach(id -> {
+				Tag tag = new Tag();
+				tag.setId(id);
+				_tags.add(tag);
+			});
+			setTags(_tags);
+		} else {
+			setTags(null);
+		}
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public Date getStartDate() {
@@ -218,54 +284,6 @@ public class Transaction extends Attachments {
 
 	public void setExchangeRate(float exchangeRate) {
 		this.exchangeRate = exchangeRate;
-	}
-
-	public CostCenter getCostCenter() {
-		return costCenter;
-	}
-
-	public void setCostCenter(CostCenter costCenter) {
-		this.costCenter = costCenter;
-	}
-
-	@JsonGetter("costCenter")
-	public Long getCostCenterId() {
-		if (costCenter != null) {
-			return costCenter.id;
-		}
-		return null;
-	}
-
-	@JsonSetter("costCenter")
-	public void setCostCenterById(Long id) {
-		CostCenter costCenter = null;
-		if (id != null) {
-			costCenter = new CostCenter();
-			costCenter.setId(id);
-		}
-		setCostCenter(costCenter)
-	}
-
-	public List <Tag> getTags() {
-		return tags;
-	}
-
-	public void setTags(List <Tag> tags) {
-		this.tags = tags;
-	}
-
-	@JsonGetter("tags")
-	public Long getTagsId() {
-		return null;
-	}
-
-	@JsonSetter("tags")
-	public void setTagsById(Long id) {
-		List <Tag> tags = null;
-		if (id != null) {
-
-		}
-		setTags(tags)
 	}
 
 	public String getNote() {
@@ -322,19 +340,19 @@ public class Transaction extends Attachments {
 	}
 
 	@Override
-	public void init(ResultSet rs) {
+	public void init(ResultSet rs) throws SQLException {
 		setId(rs.getInt("t.id"));
-		setUser(null);
-		setTransactionType(TransactionType.typeOf(rs.getInt("t.transaction_type")))
-		setTransactionState(TransactionState.stateOf(rs.getInt("t.transaction_state")))
+		setUser(rs.getLong("t.USER"));
+		setTransactionType(TransactionType.typeOf(rs.getInt("t.transaction_type")));
+		setTransactionState(TransactionState.stateOf(rs.getInt("t.transaction_state")));
+		setAccountFromById(rs.getLong("t.account_from"));
+		setAccountToById(rs.getLong("t.account_to"));
+		setCategoryById(rs.getLong("t.category"));
+		setCostCenterById(rs.getLong("t.cost_center"));
+		// setTags(rs.getArray("t.tags"));
 		setDate(rs.getDate("t.date"));
-		setAccountFrom(null);
-		setAccountTo(null);
 		setAmount(rs.getBigDecimal("t.amount"));
 		setExchangeRate(rs.getFloat("t.exchange_rate"));
-		setCategory(null);
-		setCostCenter(null);
-		setTags(rs.getArray("t.tags"));
 		setRepeat(rs.getBoolean("t.repeat"));
 		setEvery(rs.getInt("t.every"));
 		setRepeatStep(rs.getInt("t.repeat_step"));
@@ -343,5 +361,11 @@ public class Transaction extends Attachments {
 		setNote(rs.getString("t.note"));
 		setIncludeInReports(rs.getBoolean("t.include_in_reports"));
 		setBasis(rs.getString("t.basis"));
+	}
+
+	@Override
+	@JsonIgnore
+	public boolean isPermissionsStrict() {
+		return true;
 	}
 }

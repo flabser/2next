@@ -16,4 +16,5 @@ public class EnvConst {
 	public final static String ADMIN_APP_NAME = "Administrator";
 	public final static String WORKSPACE_APP_NAME = "Nubis";
 	public static final String AUTH_COOKIE_NAME = "2nses";
+	public static final String DEFAULT_PAGE = "about";
 }

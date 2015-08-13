@@ -25,4 +25,8 @@ public enum TransactionState {
 	public int getCode() {
 		return code;
 	}
+
+	public static TransactionState getRandom() {
+		return values()[(int) (Math.random() * values().length)];
+	}
 }

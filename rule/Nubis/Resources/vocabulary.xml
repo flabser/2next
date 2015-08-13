@@ -116,4 +116,11 @@
 		<entry lang="BG" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
 	</sentence>
 
+
+	<sentence mode="on" keyword="about">
+		<entry lang="RUS">Добро пожаловать в Nubis. Для начала работы необходимо авторизоваться</entry>
+		<entry lang="KAZ">Добро пожаловать в Nubis. Для начала работы необходимо авторизоваться</entry>
+		<entry lang="ENG"> Welcome to Nubis cloud to order to work you have to authorize.</entry>
+		<entry lang="BG">Добро пожаловать в Nubis. Для начала работы необходимо авторизоваться</entry>
+	</sentence>
 </vocabulary>

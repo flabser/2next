@@ -1,49 +1,46 @@
 package cashtracker.model;
 
-import java.sql.ResultSet
+import java.math.BigDecimal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonGetter
-import com.fasterxml.jackson.annotation.JsonRootName
-import com.fasterxml.jackson.annotation.JsonSetter
-import com.flabser.script._IObject
-import com.flabser.users.User
-
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.flabser.restful.data.Entity;
+import com.flabser.restful.data.EntityField;
 
 @JsonRootName("account")
-public class Account implements _IObject {
-
-	private long id;
+public class Account extends Entity {
 
 	// private int type;
-
+	@EntityField()
 	private String name;
 
+	@EntityField("currency_code")
 	private String currencyCode;
 
+	@EntityField("opening_balance")
 	private BigDecimal openingBalance;
 
+	@EntityField("amount_control")
 	private BigDecimal amountControl;
 
+	@EntityField()
 	private boolean enabled;
 
+	@EntityField("include_in_totals")
 	private boolean includeInTotals;
 
+	@EntityField()
 	private String note;
 
-	private List <User> writers;
+	private List<Long> writers;
 
-	private List <User> readers;
+	private List<Long> readers;
 
+	@EntityField("sort_order")
 	private int sortOrder;
-
-	//
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -77,39 +74,19 @@ public class Account implements _IObject {
 		this.amountControl = amountControl;
 	}
 
-	public List<User> getWriters() {
+	public List<Long> getWriters() {
 		return writers;
 	}
 
-	public void setWriters(List <User> writers) {
+	public void setWriters(List<Long> writers) {
 		this.writers = writers;
 	}
 
-	@JsonGetter("writers")
-	public List <Long> getWritersId() {
-		return null;
-	}
-
-	@JsonSetter("writers")
-	public void setWritersByIds(List <Long> writers) {
-		this.writers = writers;
-	}
-
-	public List <User> getReaders() {
+	public List<Long> getReaders() {
 		return readers;
 	}
 
-	public void setReaders(List <User> readers) {
-		this.readers = readers;
-	}
-
-	@JsonGetter("readers")
-	public List <Long> getReadersId() {
-		return null;
-	}
-
-	@JsonSetter("readers")
-	public void setReadersByIds(List <Long> readers) {
+	public void setReaders(List<Long> readers) {
 		this.readers = readers;
 	}
 
@@ -147,21 +124,27 @@ public class Account implements _IObject {
 
 	@Override
 	public String toString() {
-		return "Account[" + name + ", " + currencyCode + ", " + openingBalance + "]";
+		return "Account[" + id + "," + name + ", " + currencyCode + ", " + openingBalance + "]";
 	}
 
 	@Override
-	public void init(ResultSet rs) {
-		setId(rs.getInt("id"));
+	public void init(ResultSet rs) throws SQLException {
+		setId(rs.getLong("id"));
 		setName(rs.getString("name"));
 		setCurrencyCode(rs.getString("currency_code"));
 		setOpeningBalance(rs.getBigDecimal("opening_balance"));
 		setAmountControl(rs.getBigDecimal("amount_control"));
 		setEnabled(rs.getBoolean("enabled"));
-		setWriters(null);
-		setReaders(null);
+
+		Long[] _writers = (Long[]) rs.getArray("writers").getArray();
+		setWriters(Arrays.asList(_writers));
+
+		Long[] _readers = (Long[]) rs.getArray("readers").getArray();
+		setReaders(Arrays.asList(_readers));
+
 		setIncludeInTotals(rs.getBoolean("include_in_totals"));
 		setNote(rs.getString("note"));
 		setSortOrder(rs.getInt("sort_order"));
 	}
+
 }
