@@ -5,11 +5,11 @@ import static org.junit.Assert.assertNotNull;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.junit.Test;
 
 import cashtracker.model.Account;
+
+import com.flabser.restful.data.IAppEntity;
 
 public class SelectAccountTestJPA extends InitEnv {
 
@@ -18,10 +18,9 @@ public class SelectAccountTestJPA extends InitEnv {
 		assertNotNull(db);
 
 		long lStartTime = new Date().getTime();
-		Query q = em.createQuery("SELECT a FROM Account  a");
-		@SuppressWarnings("unchecked")
-		List<Account> al = q.getResultList();
-		for (Account a : al) {
+		List<IAppEntity> al = db.select("SELECT a FROM Account  a", user);
+		for (IAppEntity ia : al) {
+			Account a = (Account) ia;
 			// System.out.println(a);
 			assertNotNull(a.getAmountControl());
 			assertNotNull(a.getCurrencyCode());
@@ -30,13 +29,12 @@ public class SelectAccountTestJPA extends InitEnv {
 			assertNotNull(a.getNote());
 			assertNotNull(a.getOpeningBalance());
 			assertNotNull(a.getSortOrder());
-			assertNotNull(a.getTableName());
 			assertNotNull(a.isEnabled());
 			assertNotNull(a.isIncludeInTotals());
 		}
 		long lEndTime = new Date().getTime();
 		long difference = lEndTime - lStartTime;
-		System.out.println(" 2 Elapsed milliseconds: " + difference);
+		System.out.println("Elapsed milliseconds: " + difference);
 		System.out.println("Size: " + al.size());
 
 	}

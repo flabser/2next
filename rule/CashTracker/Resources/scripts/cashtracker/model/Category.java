@@ -8,7 +8,6 @@ import java.util.List;
 import cashtracker.model.constants.TransactionType;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.AppEntity;
@@ -129,7 +128,6 @@ public class Category extends AppEntity {
 		return "Category[" + id + ", " + name + ", " + transactionTypes + ", " + enabled + ", " + parentCategory + "]";
 	}
 
-	@Override
 	public void init(ResultSet rs) throws SQLException {
 		setId(rs.getInt("id"));
 		// setTransactionTypes(rs.getArray("transaction_type"));
@@ -141,9 +139,4 @@ public class Category extends AppEntity {
 		setSortOrder(rs.getInt("sort_order"));
 	}
 
-	@Override
-	@JsonIgnore
-	public String getTableName() {
-		return "categories";
-	}
 }

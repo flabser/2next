@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Query;
 
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
@@ -24,14 +27,13 @@ public class Database extends DatabaseCore implements IDatabase {
 	public static final SimpleDateFormat sqlDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final String driver = "org.postgresql.Driver";
 	private String dbURI;
-	private ApplicationProfile appProfile;
 
 	@Override
 	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
 			DatabasePoolException {
-		this.appProfile = appProfile;
+		super.appProfile = appProfile;
 		dbURI = appProfile.getURI();
-		pool = getPool(driver, appProfile);
+		initConnectivity(driver, appProfile);
 	}
 
 	@Override
@@ -45,6 +47,13 @@ public class Database extends DatabaseCore implements IDatabase {
 		IFTIndexEngine ftEng = new FTIndexEngine();
 		ftEng.init(appProfile);
 		return ftEng;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<IAppEntity> select(String condition, User user) {
+		Query q = entityManager.createQuery(condition);
+		return q.getResultList();
 	}
 
 	@Override
@@ -77,7 +86,7 @@ public class Database extends DatabaseCore implements IDatabase {
 				 * (field.getType().getSimpleName()), String.class);
 				 * entityMethod.invoke(grObj, rsMethod.invoke(rs, dfn)); } }
 				 */
-				grObj.init(rs);
+				// grObj.init(rs);
 				o.add(grObj);
 
 			}
@@ -167,6 +176,14 @@ public class Database extends DatabaseCore implements IDatabase {
 	@Override
 	public IDeployer getDeployer() {
 		return new Deployer();
+	}
+
+	@Override
+	public void insert(IAppEntity a, User user) {
+		entityManager.getTransaction().begin();
+		entityManager.persist(a);
+		entityManager.getTransaction().commit();
+
 	}
 
 }

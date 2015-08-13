@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -17,9 +16,6 @@ import com.flabser.restful.data.EntityField;
 @Entity
 @Table(name = "Accounts")
 public class Account extends AppEntity {
-
-	@Id
-	protected long id;
 
 	// private int type;
 	@EntityField()
@@ -120,7 +116,6 @@ public class Account extends AppEntity {
 		return "Account[" + id + "," + name + ", " + currencyCode + ", " + openingBalance + "]";
 	}
 
-	@Override
 	public void init(ResultSet rs) throws SQLException {
 		setId(rs.getLong("id"));
 		setName(rs.getString("name"));

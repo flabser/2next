@@ -3,7 +3,6 @@ package cashtracker.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.AppEntity;
 import com.flabser.restful.data.EntityField;
@@ -27,15 +26,9 @@ public class Tag extends AppEntity {
 		return "Tag[" + name + "]";
 	}
 
-	@Override
 	public void init(ResultSet rs) throws SQLException {
 		setId(rs.getLong("id"));
 		setName(rs.getString("name"));
 	}
 
-	@Override
-	@JsonIgnore
-	public String getTableName() {
-		return "tags";
-	}
 }

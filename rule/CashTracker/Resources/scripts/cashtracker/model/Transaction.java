@@ -15,16 +15,14 @@ import cashtracker.model.constants.TransactionState;
 import cashtracker.model.constants.TransactionType;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.flabser.restful.data.AppEntity;
-
+import com.flabser.restful.data.SecureAppEntity;
 
 @JsonRootName("transaction")
 @Entity
 @Table(name = "App.Transactions")
-public class Transaction extends AppEntity {
+public class Transaction extends SecureAppEntity {
 
 	private Long user;
 
@@ -40,7 +38,7 @@ public class Transaction extends AppEntity {
 
 	private CostCenter costCenter;
 
-	private List <Tag> tags;
+	private List<Tag> tags;
 
 	private Date date = new Date();
 
@@ -221,16 +219,16 @@ public class Transaction extends AppEntity {
 		setCostCenter(costCenter);
 	}
 
-	public List <Tag> getTags() {
+	public List<Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(List <Tag> tags) {
+	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
 
 	@JsonGetter("tags")
-	public List <Long> getTagsId() {
+	public List<Long> getTagsId() {
 		if (tags != null) {
 			return tags.stream().map(Tag::getId).collect(Collectors.toList());
 		}
@@ -238,9 +236,9 @@ public class Transaction extends AppEntity {
 	}
 
 	@JsonSetter("tags")
-	public void setTagsId(List <Long> ids) {
+	public void setTagsId(List<Long> ids) {
 		if (ids != null) {
-			List <Tag> _tags = new ArrayList <Tag>();
+			List<Tag> _tags = new ArrayList<Tag>();
 			ids.forEach(id -> {
 				Tag tag = new Tag();
 				tag.setId(id);
@@ -345,7 +343,6 @@ public class Transaction extends AppEntity {
 		return "Transaction[$id, $user, $date, $startDate, $endDate, $category, $accountFrom, $amount, $costCenter]";
 	}
 
-	@Override
 	public void init(ResultSet rs) throws SQLException {
 		setId(rs.getInt("id"));
 		setUser(rs.getLong("t.USER"));
@@ -369,9 +366,4 @@ public class Transaction extends AppEntity {
 		setBasis(rs.getString("t.basis"));
 	}
 
-	@Override
-	@JsonIgnore
-	public boolean isPermissionsStrict() {
-		return true;
-	}
 }

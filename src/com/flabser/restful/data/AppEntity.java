@@ -1,25 +1,22 @@
 package com.flabser.restful.data;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
+@MappedSuperclass
 public abstract class AppEntity implements IAppEntity {
-	// @EntityField()
+
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
+
+	@Transient
 	protected ArrayList<AttachedFile> attachments = new ArrayList<AttachedFile>();
-
-	@Override
-	public abstract void init(ResultSet rs) throws SQLException;
-
-	@Override
-	public String getTableName() {
-		return getClass().getSimpleName() + "s";
-
-	}
 
 	@Override
 	public void setId(long id) {
@@ -29,11 +26,6 @@ public abstract class AppEntity implements IAppEntity {
 	@Override
 	public long getId() {
 		return id;
-	}
-
-	@Override
-	public boolean isPermissionsStrict() {
-		return false;
 	}
 
 	class AttachedFile {

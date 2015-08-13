@@ -19,6 +19,7 @@ public interface IDatabase {
 
 	IFTIndexEngine getFTSearchEngine() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException;
 
+	@Deprecated
 	ArrayList<IAppEntity> select(String condition, Class<IAppEntity> objClass, User user);
 
 	int insert(String condition, User user);
@@ -28,5 +29,9 @@ public interface IDatabase {
 	int delete(String condition, User user);
 
 	void shutdown();
+
+	void insert(IAppEntity a, User user);
+
+	java.util.List<IAppEntity> select(String condition, User user);
 
 }

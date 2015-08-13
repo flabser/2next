@@ -27,7 +27,6 @@ public class SelectAccountTest extends InitEnv {
 			assertNotNull(a.getNote());
 			assertNotNull(a.getOpeningBalance());
 			assertNotNull(a.getSortOrder());
-			assertNotNull(a.getTableName());
 			assertNotNull(a.isEnabled());
 			assertNotNull(a.isIncludeInTotals());
 
