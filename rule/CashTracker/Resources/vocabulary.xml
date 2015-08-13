@@ -472,6 +472,12 @@
 		<entry lang="BG">Затвори</entry>
 	</sentence>
 
+	<sentence mode="on" keyword="budget_name_hint">
+		<entry lang="RUS">Название вашего проекта бюджета</entry>
+		<entry lang="KAZ">Название вашего проекта бюджета</entry>
+		<entry lang="ENG">Название вашего проекта бюджета</entry>
+		<entry lang="BG">Название вашего проекта бюджета</entry>
+	</sentence>
 	<sentence mode="on" keyword="members">
 		<entry lang="RUS">Участники</entry>
 		<entry lang="KAZ">Участники</entry>
