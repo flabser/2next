@@ -14,7 +14,7 @@ public class TransactionDAO {
 
 	private final static String selectAll = """
 		SELECT
-		  t.id                       AS "t.id",
+		  t.id                       AS "id",
 		  t."USER"                   AS "t.USER",
 		  t.transaction_type         AS "t.transaction_type",
 		  t.transaction_state        AS "t.transaction_state",
@@ -126,7 +126,7 @@ public class TransactionDAO {
 	}
 
 	public Transaction findById(long id) {
-		String sql = "${getSelectQuery()} WHERE t.id = $id"
+		String sql = "${getSelectQuery()} WHERE id = $id"
 		List <Transaction> list = db.select(sql, Transaction.class, user)
 		Transaction result = list.size() ? list[0] : null
 		return result

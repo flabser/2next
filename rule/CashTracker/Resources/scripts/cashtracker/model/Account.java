@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.Entity;
 import com.flabser.restful.data.EntityField;
 
+
 @JsonRootName("account")
 public class Account extends Entity {
 
@@ -35,9 +36,9 @@ public class Account extends Entity {
 	@EntityField()
 	private String note;
 
-	private List<Long> writers;
+	private List <Long> writers;
 
-	private List<Long> readers;
+	private List <Long> readers;
 
 	@EntityField("sort_order")
 	private int sortOrder;
@@ -74,19 +75,19 @@ public class Account extends Entity {
 		this.amountControl = amountControl;
 	}
 
-	public List<Long> getWriters() {
+	public List <Long> getWriters() {
 		return writers;
 	}
 
-	public void setWriters(List<Long> writers) {
+	public void setWriters(List <Long> writers) {
 		this.writers = writers;
 	}
 
-	public List<Long> getReaders() {
+	public List <Long> getReaders() {
 		return readers;
 	}
 
-	public void setReaders(List<Long> readers) {
+	public void setReaders(List <Long> readers) {
 		this.readers = readers;
 	}
 

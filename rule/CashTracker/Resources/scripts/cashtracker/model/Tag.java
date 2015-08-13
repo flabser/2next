@@ -6,11 +6,13 @@ import java.sql.SQLException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.Entity;
+import com.flabser.restful.data.EntityField;
 
 
 @JsonRootName("tag")
 public class Tag extends Entity {
 
+	@EntityField("name")
 	private String name;
 
 	public String getName() {

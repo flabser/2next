@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.Entity;
+import com.flabser.restful.data.EntityField;
 
 
 @JsonRootName("category")
@@ -21,6 +22,7 @@ public class Category extends Entity {
 
 	private Category parentCategory;
 
+	@EntityField("name")
 	private String name;
 
 	private boolean enabled;
