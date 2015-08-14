@@ -22,8 +22,8 @@ public class InitEnv {
 	String appType = "CashTracker";
 	AppTemplate at;
 	_Session ses;
-	IDatabase db;
-	User user;
+	protected IDatabase db;
+	protected User user;
 
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
