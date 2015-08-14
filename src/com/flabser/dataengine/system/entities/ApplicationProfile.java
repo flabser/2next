@@ -1,10 +1,5 @@
 package com.flabser.dataengine.system.entities;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
@@ -19,6 +14,11 @@ import com.flabser.solutions.DatabaseType;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.VisibiltyType;
 import com.flabser.util.Util;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 
 @JsonRootName("applicationProfile")
 public class ApplicationProfile implements _IContent {
@@ -42,14 +42,14 @@ public class ApplicationProfile implements _IContent {
 	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
 	private Date statusDate;
 	private VisibiltyType visibilty;
-	private ArrayList<UserRole> roles = new ArrayList<UserRole>();
+	private ArrayList<UserRole> roles = new ArrayList<>();
 	private String desciption;
 
 	public ApplicationProfile() {
 	}
 
 	public ApplicationProfile(int id, String appType, String appID, String appName, String owner, int dbType, String dbHost, String dbName, String dbLogin,
-			String dbPwd, int status, Date statusDate) {
+			String dbPwd, int status, Date statusDate, ArrayList<UserRole> roles) {
 		this.id = id;
 		this.appType = appType;
 		this.appID = appID;
@@ -62,7 +62,8 @@ public class ApplicationProfile implements _IContent {
 		this.dbPwd = dbPwd;
 		this.status = ApplicationStatusType.getType(status);
 		this.statusDate = statusDate;
-	}
+        this.setRoles(roles);
+    }
 
 	public ApplicationProfile(ResultSet rs) throws SQLException {
 		fill(rs);
@@ -200,6 +201,10 @@ public class ApplicationProfile implements _IContent {
 	public void addRole(String name, String descr) {
 		roles.add(new UserRole(name, descr, RunMode.ON));
 	}
+
+    public void setRoles(ArrayList<UserRole> roles) {
+        this.roles = roles;
+    }
 
 	public ArrayList<UserRole> getRoles() {
 		return roles;

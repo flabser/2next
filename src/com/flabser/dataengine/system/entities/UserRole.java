@@ -11,12 +11,12 @@ public class UserRole {
 	private int appId;
 	private RunMode isOn;
 
-	public UserRole(int id, String name, String description, int appId, boolean isOn) {
+	public UserRole(int id, String name, String description, int appId, RunMode isOn) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.appId = appId;
-		this.setIsOn(RunMode.ON);
+		this.setIsOn(isOn);
 	}
 
 	public UserRole(String name, String description, RunMode on) {
