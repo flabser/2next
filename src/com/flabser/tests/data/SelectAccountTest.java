@@ -7,18 +7,20 @@ import java.util.List;
 
 import org.junit.Test;
 
-import cashtracker.dao.AccountDAO;
 import cashtracker.model.Account;
+
+import com.flabser.restful.data.IAppEntity;
 
 public class SelectAccountTest extends InitEnv {
 
 	@Test
 	public void test() {
 		assertNotNull(db);
+
 		long lStartTime = new Date().getTime();
-		AccountDAO dao = new AccountDAO(ses);
-		List<Account> list = dao.findAll();
-		for (Account a : list) {
+		List<IAppEntity> al = db.select("SELECT a FROM Account  a", user);
+		for (IAppEntity ia : al) {
+			Account a = (Account) ia;
 			// System.out.println(a);
 			assertNotNull(a.getAmountControl());
 			assertNotNull(a.getCurrencyCode());
@@ -29,12 +31,11 @@ public class SelectAccountTest extends InitEnv {
 			assertNotNull(a.getSortOrder());
 			assertNotNull(a.isEnabled());
 			assertNotNull(a.isIncludeInTotals());
-
 		}
 		long lEndTime = new Date().getTime();
 		long difference = lEndTime - lStartTime;
-		System.out.println(" 1 Elapsed milliseconds: " + difference);
-		System.out.println("------------------" + list.size());
+		System.out.println("Elapsed milliseconds: " + difference);
+		System.out.println("Size: " + al.size());
 
 	}
 
