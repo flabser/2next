@@ -158,6 +158,11 @@ public class Util {
 		return Math.abs(random.nextInt());
 	}
 
+	public static int generateRandomShort() {
+		Random random = new Random();
+		return (short) random.nextInt(Short.MAX_VALUE + 1);
+	}
+
 	public static String generateRandomAsText() {
 		return Integer.toString(generateRandom());
 	}

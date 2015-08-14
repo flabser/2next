@@ -6,7 +6,7 @@ export default DS.Model.extend(EmberValidations.Mixin, {
     date: DS.attr('date', {
         readOnly: true
     }),
-    user: DS.belongsTo('user', {
+    owner: DS.belongsTo('user', {
         async: false,
         readOnly: true
     }),

@@ -3,43 +3,48 @@ package cashtracker.model;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.restful.data.Entity;
+import com.flabser.restful.data.AppEntity;
 import com.flabser.restful.data.EntityField;
 
 @JsonRootName("account")
-public class Account extends Entity {
+@Entity
+@Table(name = "Accounts")
+public class Account extends AppEntity {
 
 	// private int type;
 	@EntityField()
 	private String name;
 
 	@EntityField("currency_code")
+	@Column(name = "currency_code")
 	private String currencyCode;
 
 	@EntityField("opening_balance")
+	@Column(name = "opening_balance")
 	private BigDecimal openingBalance;
 
 	@EntityField("amount_control")
+	@Column(name = "amount_control")
 	private BigDecimal amountControl;
 
 	@EntityField()
 	private boolean enabled;
 
 	@EntityField("include_in_totals")
+	@Column(name = "include_in_totals")
 	private boolean includeInTotals;
 
 	@EntityField()
 	private String note;
 
-	private List<Long> writers;
-
-	private List<Long> readers;
-
 	@EntityField("sort_order")
+	@Column(name = "sort_order")
 	private int sortOrder;
 
 	public String getName() {
@@ -72,22 +77,6 @@ public class Account extends Entity {
 
 	public void setAmountControl(BigDecimal amountControl) {
 		this.amountControl = amountControl;
-	}
-
-	public List<Long> getWriters() {
-		return writers;
-	}
-
-	public void setWriters(List<Long> writers) {
-		this.writers = writers;
-	}
-
-	public List<Long> getReaders() {
-		return readers;
-	}
-
-	public void setReaders(List<Long> readers) {
-		this.readers = readers;
 	}
 
 	public boolean isEnabled() {
@@ -127,7 +116,6 @@ public class Account extends Entity {
 		return "Account[" + id + "," + name + ", " + currencyCode + ", " + openingBalance + "]";
 	}
 
-	@Override
 	public void init(ResultSet rs) throws SQLException {
 		setId(rs.getLong("id"));
 		setName(rs.getString("name"));
@@ -136,11 +124,13 @@ public class Account extends Entity {
 		setAmountControl(rs.getBigDecimal("amount_control"));
 		setEnabled(rs.getBoolean("enabled"));
 
-		Long[] _writers = (Long[]) rs.getArray("writers").getArray();
-		setWriters(Arrays.asList(_writers));
-
-		Long[] _readers = (Long[]) rs.getArray("readers").getArray();
-		setReaders(Arrays.asList(_readers));
+		/*
+		 * Long[] _writers = (Long[]) rs.getArray("writers").getArray();
+		 * setWriters(Arrays.asList(_writers));
+		 * 
+		 * Long[] _readers = (Long[]) rs.getArray("readers").getArray();
+		 * setReaders(Arrays.asList(_readers));
+		 */
 
 		setIncludeInTotals(rs.getBoolean("include_in_totals"));
 		setNote(rs.getString("note"));

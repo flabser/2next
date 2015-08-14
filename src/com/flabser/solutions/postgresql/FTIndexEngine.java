@@ -9,10 +9,10 @@ public class FTIndexEngine extends DatabaseCore implements IFTIndexEngine {
 	ApplicationProfile appProfile;
 
 	@Override
-	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
-	ClassNotFoundException, DatabasePoolException {
+	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
+			DatabasePoolException {
 		this.appProfile = appProfile;
-		pool = getPool(Database.driver, appProfile);
+		initConnectivity(Database.driver, appProfile);
 	}
 
 }

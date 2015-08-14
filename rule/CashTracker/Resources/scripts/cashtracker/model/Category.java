@@ -8,19 +8,19 @@ import java.util.List;
 import cashtracker.model.constants.TransactionType;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.flabser.restful.data.Entity;
-
+import com.flabser.restful.data.AppEntity;
+import com.flabser.restful.data.EntityField;
 
 @JsonRootName("category")
-public class Category extends Entity {
+public class Category extends AppEntity {
 
-	private List <TransactionType> transactionTypes;
+	private List<TransactionType> transactionTypes;
 
 	private Category parentCategory;
 
+	@EntityField("name")
 	private String name;
 
 	private boolean enabled;
@@ -31,17 +31,17 @@ public class Category extends Entity {
 
 	private int sortOrder;
 
-	public List <TransactionType> getTransactionTypes() {
+	public List<TransactionType> getTransactionTypes() {
 		return transactionTypes;
 	}
 
-	public void setTransactionTypes(List <TransactionType> transactionTypes) {
+	public void setTransactionTypes(List<TransactionType> transactionTypes) {
 		this.transactionTypes = transactionTypes;
 	}
 
 	@JsonGetter("transactionTypes")
-	public List <Integer> getTransactionTypesCode() {
-		List <Integer> tTypes = new ArrayList <Integer>();
+	public List<Integer> getTransactionTypesCode() {
+		List<Integer> tTypes = new ArrayList<Integer>();
 		if (transactionTypes != null) {
 			transactionTypes.forEach(type -> tTypes.add(type.getCode()));
 		}
@@ -49,8 +49,8 @@ public class Category extends Entity {
 	}
 
 	@JsonSetter("transactionTypes")
-	public void setTransactionTypesByIds(List <Integer> ids) {
-		List <TransactionType> tTypes = new ArrayList <TransactionType>();
+	public void setTransactionTypesByIds(List<Integer> ids) {
+		List<TransactionType> tTypes = new ArrayList<TransactionType>();
 		if (ids != null) {
 			ids.forEach(id -> tTypes.add(TransactionType.typeOf(id)));
 		}
@@ -128,7 +128,6 @@ public class Category extends Entity {
 		return "Category[" + id + ", " + name + ", " + transactionTypes + ", " + enabled + ", " + parentCategory + "]";
 	}
 
-	@Override
 	public void init(ResultSet rs) throws SQLException {
 		setId(rs.getInt("id"));
 		// setTransactionTypes(rs.getArray("transaction_type"));
@@ -140,9 +139,4 @@ public class Category extends Entity {
 		setSortOrder(rs.getInt("sort_order"));
 	}
 
-	@Override
-	@JsonIgnore
-	public String getTableName() {
-		return "categories";
-	}
 }

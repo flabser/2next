@@ -4,14 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-import cashtracker.model.constants.BudgetState;
-
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.restful.data.Entity;
+import com.flabser.restful.data.AppEntity;
 import com.flabser.restful.data.EntityField;
 
 @JsonRootName("budget")
-public class Budget extends Entity {
+public class Budget extends AppEntity {
 
 	@EntityField()
 	private String name;
@@ -21,8 +19,8 @@ public class Budget extends Entity {
 
 	private Long owner;
 
-	@EntityField("type")
-	private BudgetState status;
+	// @EntityField("status")
+	// private BudgetState status;
 
 	public String getName() {
 		return name;
@@ -48,26 +46,26 @@ public class Budget extends Entity {
 		this.owner = user;
 	}
 
-	public BudgetState getStatus() {
-		return status;
-	}
-
-	public void setStatus(BudgetState status) {
-		this.status = status;
-	}
+	/*
+	 * public BudgetState getStatus() { return status; }
+	 * 
+	 * public void setStatus(BudgetState status) { this.status = status; }
+	 * 
+	 * public String getBudgetState() { return ""; }
+	 * 
+	 * public void setBudgetState(String status) { // this.status = status; }
+	 */
 
 	@Override
 	public String toString() {
-		return "Budget[" + id + ", " + name + ", " + regDate + ", " + owner + ", " + status + "]";
+		return "Budget[" + id + ", " + name + ", " + regDate + ", " + owner + "]";
 	}
 
-	@Override
 	public void init(ResultSet rs) throws SQLException {
 		setId(rs.getLong("id"));
 		setName(rs.getString("name"));
 		setRegDate(rs.getDate("reg_date"));
 		setOwner(null);
-		setStatus(BudgetState.stateOf(rs.getInt("type")));
+		// setStatus(BudgetState.stateOf(rs.getInt("type")));
 	}
-
 }

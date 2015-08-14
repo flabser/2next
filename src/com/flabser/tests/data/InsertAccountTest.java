@@ -1,19 +1,17 @@
 package com.flabser.tests.data;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import cashtracker.dao.AccountDAO;
 import cashtracker.model.Account;
 
 import com.flabser.util.Util;
 
 public class InsertAccountTest extends InitEnv {
-	int iteration = 100;
+	int iteration = 100000;
 
 	@Test
 	public void test() {
@@ -29,9 +27,11 @@ public class InsertAccountTest extends InitEnv {
 			a.setNote(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 256));
 			a.setSortOrder(0);
 
-			AccountDAO dao = new AccountDAO(ses);
-			assertTrue(dao.add(a) > 0);
+			System.out.println(i);
+			db.insert(a, user);
+
 		}
+		System.out.println("done " + iteration);
 	}
 
 }

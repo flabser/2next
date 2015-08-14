@@ -1,7 +1,5 @@
 package com.flabser.solutions.postgresql;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.commons.lang3.reflect.FieldUtils;
+import javax.persistence.Query;
 
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
@@ -19,25 +18,22 @@ import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.restful.data.EntityField;
-import com.flabser.restful.data.IEntity;
+import com.flabser.restful.data.IAppEntity;
 import com.flabser.server.Server;
 import com.flabser.users.User;
-import com.flabser.util.Util;
 
 public class Database extends DatabaseCore implements IDatabase {
 
 	public static final SimpleDateFormat sqlDateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final String driver = "org.postgresql.Driver";
 	private String dbURI;
-	private ApplicationProfile appProfile;
 
 	@Override
 	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
 			DatabasePoolException {
-		this.appProfile = appProfile;
+		super.appProfile = appProfile;
 		dbURI = appProfile.getURI();
-		pool = getPool(driver, appProfile);
+		initConnectivity(driver, appProfile);
 	}
 
 	@Override
@@ -53,9 +49,16 @@ public class Database extends DatabaseCore implements IDatabase {
 		return ftEng;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<IEntity> select(String condition, Class<IEntity> objClass, User user) {
-		ArrayList<IEntity> o = new ArrayList<>();
+	public List<IAppEntity> select(String condition, User user) {
+		Query q = entityManager.createQuery(condition);
+		return q.getResultList();
+	}
+
+	@Override
+	public ArrayList<IAppEntity> select(String condition, Class<IAppEntity> objClass, User user) {
+		ArrayList<IAppEntity> o = new ArrayList<>();
 		Connection conn = pool.getConnection();
 		try {
 			conn.setAutoCommit(false);
@@ -65,20 +68,27 @@ public class Database extends DatabaseCore implements IDatabase {
 			ResultSet rs = s.executeQuery(sql);
 
 			while (rs.next()) {
-				IEntity grObj = objClass.newInstance();
-				for (Field field : FieldUtils.getAllFields(objClass)) {
-					if (field.isAnnotationPresent(EntityField.class)) {
-						EntityField anottation = field.getAnnotation(EntityField.class);
-						String dfn = anottation.value();
-						if (dfn.equalsIgnoreCase("")) {
-							dfn = field.getName();
-						}
-						Method entityMethod = grObj.getClass().getMethod(Util.fieldToSetter(field.getName()), field.getType());
-						Method rsMethod = ResultSet.class.getMethod(Util.fieldToGetter(field.getType().getSimpleName()), String.class);
-						entityMethod.invoke(grObj, rsMethod.invoke(rs, dfn));
-					}
-				}
+				IAppEntity grObj = objClass.newInstance();
+
+				/*
+				 * Field[] f = FieldUtils.getAllFields(objClass);
+				 * 
+				 * 
+				 * for (Field field : f) { if
+				 * (field.isAnnotationPresent(EntityField.class)) { EntityField
+				 * anottation = field.getAnnotation(EntityField.class); String
+				 * dfn = anottation.value(); if (dfn.equalsIgnoreCase("")) { dfn
+				 * = field.getName(); } Method entityMethod =
+				 * grObj.getClass().getMethod
+				 * (Util.fieldToSetter(field.getName()), field.getType());
+				 * Method rsMethod =
+				 * ResultSet.class.getMethod(Util.fieldToGetter
+				 * (field.getType().getSimpleName()), String.class);
+				 * entityMethod.invoke(grObj, rsMethod.invoke(rs, dfn)); } }
+				 */
+				// grObj.init(rs);
 				o.add(grObj);
+
 			}
 			conn.commit();
 			s.close();
@@ -166,6 +176,14 @@ public class Database extends DatabaseCore implements IDatabase {
 	@Override
 	public IDeployer getDeployer() {
 		return new Deployer();
+	}
+
+	@Override
+	public void insert(IAppEntity a, User user) {
+		entityManager.getTransaction().begin();
+		entityManager.persist(a);
+		entityManager.getTransaction().commit();
+
 	}
 
 }

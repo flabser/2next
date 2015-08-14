@@ -1,5 +1,7 @@
 package cashtracker.dao
 
+import java.sql.Timestamp
+
 import cashtracker.model.Account
 import cashtracker.model.Category
 import cashtracker.model.CostCenter
@@ -14,7 +16,7 @@ public class TransactionDAO {
 
 	private final static String selectAll = """
 		SELECT
-		  t.id                       AS "t.id",
+		  t.id                       AS "id",
 		  t."USER"                   AS "t.USER",
 		  t.transaction_type         AS "t.transaction_type",
 		  t.transaction_state        AS "t.transaction_state",
@@ -126,7 +128,7 @@ public class TransactionDAO {
 	}
 
 	public Transaction findById(long id) {
-		String sql = "${getSelectQuery()} WHERE t.id = $id"
+		String sql = "${getSelectQuery()} WHERE id = $id"
 		List <Transaction> list = db.select(sql, Transaction.class, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
@@ -162,9 +164,9 @@ public class TransactionDAO {
 							tags, repeat, every, repeat_step, start_date, end_date,
 							note, include_in_reports, basis)
 						VALUES (${m.user}, ${m.transactionType.code}, ${m.transactionState.code},
-								${m.date}, ${m.accountFrom?.id}, ${m.accountTo?.id},
+								'${new java.sql.Date(m.date.getTime())}', ${m.accountFrom?.id}, ${m.accountTo?.id},
 								${m.amount}, ${m.exchangeRate}, ${m.category?.id}, ${m.costCenter?.id},
-								'{${m.tagsId?.join(",")}}', ${m.repeat}, ${m.every}, ${m.repeatStep}, ${m.startDate}, ${m.endDate},
+								'{${m.tagsId?.join(",")}}', ${m.repeat}, ${m.every}, ${m.repeatStep}, '${new Timestamp(m.startDate.getTime())}', '${new Timestamp(m.endDate.getTime())}',
 								'${m.note}', ${m.includeInReports}, '${m.basis}')"""
 		return db.insert(sql, user)
 	}

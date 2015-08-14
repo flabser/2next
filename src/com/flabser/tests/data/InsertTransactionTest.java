@@ -4,7 +4,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -29,25 +28,25 @@ public class InsertTransactionTest extends InitEnv {
 			t.setUser(new Long(Util.generateRandom()));
 			t.setTransactionType(TransactionType.getRandom());
 			t.setTransactionState(TransactionState.getRandom());
-			t.setAccountFromById(new Long(Util.generateRandom()));
-			t.setAccountToById(new Long(Util.generateRandom()));
-			t.setCategoryById(new Long(Util.generateRandom()));
-			t.setCostCenterById(new Long(Util.generateRandom()));
-			t.setDate(new Timestamp(new Date().getTime()));
+			t.setAccountFromById(new Long(1));
+			t.setAccountToById(new Long(2));
+			t.setCategoryById(new Long(1));
+			t.setCostCenterById(new Long(1));
+			t.setDate(new Date());
 			t.setAmount(new BigDecimal(Util.generateRandom()));
 			t.setExchangeRate(new Float(Util.generateRandom()));
 			t.setRepeat(Util.getRandomBoolean());
 			t.setEvery(Util.generateRandom());
-			t.setRepeatStep(Util.generateRandom());
-			t.setStartDate(new Timestamp(new Date().getTime()));
-			t.setEndDate(new Timestamp(new Date().getTime()));
+			t.setRepeatStep(1);
+			t.setStartDate(new Date());
+			t.setEndDate(new Date());
 			t.setNote(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 256));
 			t.setIncludeInReports(Util.getRandomBoolean());
 			t.setBasis(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 256));
-			;
 
 			TransactionDAO dao = new TransactionDAO(ses);
 			assertTrue(dao.add(t) > 0);
+			System.out.println(t);
 		}
 	}
 

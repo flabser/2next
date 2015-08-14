@@ -23,13 +23,14 @@ public class InitEnv {
 	AppTemplate at;
 	_Session ses;
 	IDatabase db;
+	User user;
 
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
 		Server.logger = new SimpleLogger();
 		Environment.systemBase = new com.flabser.dataengine.system.SystemDatabase();
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
-		User user = systemDatabase.checkUserHash(Settings.login, Settings.pwd, null);
+		user = systemDatabase.checkUserHash(Settings.login, Settings.pwd, null);
 		us = new UserSession(user);
 		HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(appType);
 		ApplicationProfile ap = (ApplicationProfile) hh.values().toArray()[0];
@@ -37,5 +38,6 @@ public class InitEnv {
 		AppTemplate at = new AppTemplate(appType, "global.xml");
 		ses = new _Session(at, us);
 		db = us.getDataBase(appType);
+
 	}
 }

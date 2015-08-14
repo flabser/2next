@@ -8,17 +8,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import cashtracker.model.constants.TransactionState;
 import cashtracker.model.constants.TransactionType;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.flabser.restful.data.Entity;
+import com.flabser.restful.data.SecureAppEntity;
 
 @JsonRootName("transaction")
-public class Transaction extends Entity {
+@Entity
+@Table(name = "App.Transactions")
+public class Transaction extends SecureAppEntity {
 
 	private Long user;
 
@@ -339,9 +343,8 @@ public class Transaction extends Entity {
 		return "Transaction[$id, $user, $date, $startDate, $endDate, $category, $accountFrom, $amount, $costCenter]";
 	}
 
-	@Override
 	public void init(ResultSet rs) throws SQLException {
-		setId(rs.getInt("t.id"));
+		setId(rs.getInt("id"));
 		setUser(rs.getLong("t.USER"));
 		setTransactionType(TransactionType.typeOf(rs.getInt("t.transaction_type")));
 		setTransactionState(TransactionState.stateOf(rs.getInt("t.transaction_state")));
@@ -363,9 +366,4 @@ public class Transaction extends Entity {
 		setBasis(rs.getString("t.basis"));
 	}
 
-	@Override
-	@JsonIgnore
-	public boolean isPermissionsStrict() {
-		return true;
-	}
 }

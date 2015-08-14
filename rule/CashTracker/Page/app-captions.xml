@@ -52,6 +52,8 @@
 	<caption name="tags" />
 	<caption name="users" />
 
+	<caption name="budget_name_hint" />
+
 	<caption name="password" />
 	<caption name="name" />
 	<caption name="amount_control" />
