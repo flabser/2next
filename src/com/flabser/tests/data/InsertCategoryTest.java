@@ -11,6 +11,7 @@ import cashtracker.dao.CategoryDAO;
 import cashtracker.model.Category;
 import cashtracker.model.constants.TransactionType;
 
+import com.flabser.tests.InitEnv;
 import com.flabser.util.Util;
 
 public class InsertCategoryTest extends InitEnv {

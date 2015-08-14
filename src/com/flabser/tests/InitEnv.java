@@ -1,4 +1,4 @@
-package com.flabser.tests.data;
+package com.flabser.tests;
 
 import java.util.HashMap;
 
@@ -16,14 +16,17 @@ import com.flabser.script._Session;
 import com.flabser.server.Server;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
+import com.flabser.users.UserSession.ActiveApplication;
 
 public class InitEnv {
-	UserSession us;
-	String appType = "CashTracker";
-	AppTemplate at;
-	_Session ses;
+	protected UserSession us;
+	protected AppTemplate at;
+	protected _Session ses;
+	protected ApplicationProfile ap;
+	protected ActiveApplication aa;
 	protected IDatabase db;
 	protected User user;
+	private String appType = "CashTracker";
 
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
@@ -33,11 +36,12 @@ public class InitEnv {
 		user = systemDatabase.checkUserHash(Settings.login, Settings.pwd, null);
 		us = new UserSession(user);
 		HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(appType);
-		ApplicationProfile ap = (ApplicationProfile) hh.values().toArray()[0];
+		ap = (ApplicationProfile) hh.values().toArray()[0];
 		us.init(ap.appID);
 		AppTemplate at = new AppTemplate(appType, "global.xml");
 		ses = new _Session(at, us);
-		db = us.getDataBase(appType);
+		aa = us.getActiveApplication(appType);
+		db = aa.getDataBase();
 
 	}
 }

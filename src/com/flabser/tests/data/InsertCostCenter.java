@@ -8,6 +8,7 @@ import org.junit.Test;
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
 
+import com.flabser.tests.InitEnv;
 import com.flabser.util.Util;
 
 public class InsertCostCenter extends InitEnv {

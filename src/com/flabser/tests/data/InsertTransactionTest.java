@@ -14,6 +14,7 @@ import cashtracker.model.Transaction;
 import cashtracker.model.constants.TransactionState;
 import cashtracker.model.constants.TransactionType;
 
+import com.flabser.tests.InitEnv;
 import com.flabser.util.Util;
 
 public class InsertTransactionTest extends InitEnv {

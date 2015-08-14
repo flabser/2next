@@ -1,11 +1,17 @@
 package com.flabser.dataengine.system.entities;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.env.EnvConst;
 import com.flabser.restful.Application;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.script._IContent;
@@ -14,11 +20,6 @@ import com.flabser.solutions.DatabaseType;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.VisibiltyType;
 import com.flabser.util.Util;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 
 @JsonRootName("applicationProfile")
 public class ApplicationProfile implements _IContent {
@@ -29,13 +30,10 @@ public class ApplicationProfile implements _IContent {
 
 	public String owner;
 	@JsonIgnore
-	public DatabaseType dbType;
+	public DatabaseType dbType = DatabaseType.POSTGRESQL;
 	@JsonIgnore
-	public String dbHost = "localhost";
-	@JsonIgnore
-	public String dbLogin;
-	@JsonIgnore
-	public String dbPwd;
+	public String dbHost = EnvConst.DATABASE_HOST;
+
 	@JsonIgnore
 	public String dbName;
 	public String defaultURL;
@@ -48,8 +46,8 @@ public class ApplicationProfile implements _IContent {
 	public ApplicationProfile() {
 	}
 
-	public ApplicationProfile(int id, String appType, String appID, String appName, String owner, int dbType, String dbHost, String dbName, String dbLogin,
-			String dbPwd, int status, Date statusDate, ArrayList<UserRole> roles) {
+	public ApplicationProfile(int id, String appType, String appID, String appName, String owner, int dbType, String dbHost, String dbName,
+			int status, Date statusDate, ArrayList<UserRole> roles) {
 		this.id = id;
 		this.appType = appType;
 		this.appID = appID;
@@ -58,12 +56,10 @@ public class ApplicationProfile implements _IContent {
 		this.dbType = DatabaseType.getType(dbType);
 		this.dbHost = dbHost;
 		this.dbName = dbName;
-		this.dbLogin = dbLogin;
-		this.dbPwd = dbPwd;
 		this.status = ApplicationStatusType.getType(status);
 		this.statusDate = statusDate;
-        this.setRoles(roles);
-    }
+		this.setRoles(roles);
+	}
 
 	public ApplicationProfile(ResultSet rs) throws SQLException {
 		fill(rs);
@@ -72,8 +68,8 @@ public class ApplicationProfile implements _IContent {
 	@Override
 	public StringBuffer toXML() {
 		StringBuffer output = new StringBuffer(1000);
-		return output.append("<entry><appname>" + appName + "</appname><owner>" + owner + "</owner>" + "<dbhost>" + dbHost + "</dbhost><dbname>" + dbName
-				+ "</dbname><dblogin>" + dbLogin + "</dblogin></entry>");
+		return output.append("<entry><appname>" + appName + "</appname><owner>" + owner + "</owner><dbhost>" + dbHost + "</dbhost><dbname>"
+				+ dbName + "</dbname></entry>");
 	}
 
 	public String getDbName() {
@@ -141,8 +137,6 @@ public class ApplicationProfile implements _IContent {
 		dbType = DatabaseType.getType(rs.getInt("DBTYPE"));
 		dbHost = rs.getString("DBHOST");
 		dbName = rs.getString("DBNAME");
-		dbLogin = rs.getString("DBLOGIN");
-		dbPwd = rs.getString("DBPWD");
 	}
 
 	@JsonIgnore
@@ -202,9 +196,9 @@ public class ApplicationProfile implements _IContent {
 		roles.add(new UserRole(name, descr, RunMode.ON));
 	}
 
-    public void setRoles(ArrayList<UserRole> roles) {
-        this.roles = roles;
-    }
+	public void setRoles(ArrayList<UserRole> roles) {
+		this.roles = roles;
+	}
 
 	public ArrayList<UserRole> getRoles() {
 		return roles;

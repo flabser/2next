@@ -101,14 +101,9 @@ public class UserSession implements ICache {
 		}
 	}
 
-	public IDatabase getDataBase(String appType) {
+	public ActiveApplication getActiveApplication(String appType) {
 		ActiveApplication aa = acitveApps.get(appType);
-		if (aa == null) {
-			return null;
-		} else {
-			return aa.db;
-		}
-
+		return aa;
 	}
 
 	public AuthModeType getAuthMode() {
@@ -239,13 +234,22 @@ public class UserSession implements ICache {
 
 	}
 
-	class ActiveApplication {
-		IDatabase db;
-		ApplicationProfile appProfile;
+	public class ActiveApplication {
+		private IDatabase db;
+		private ApplicationProfile appProfile;
 
 		ActiveApplication(ApplicationProfile appProfile, IDatabase db) {
 			this.appProfile = appProfile;
 			this.db = db;
+
+		}
+
+		public IDatabase getDataBase() {
+			return db;
+		}
+
+		public ApplicationProfile getParent() {
+			return appProfile;
 
 		}
 
@@ -285,6 +289,12 @@ public class UserSession implements ICache {
 
 		private boolean isPage(String url) {
 			return url.indexOf("type=page") > (-1);
+		}
+	}
+
+	public void destroy() {
+		for (ActiveApplication aa : acitveApps.values()) {
+			aa = null;
 		}
 	}
 

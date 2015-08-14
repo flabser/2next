@@ -10,6 +10,7 @@ import org.junit.Test;
 import cashtracker.model.Account;
 
 import com.flabser.restful.data.IAppEntity;
+import com.flabser.tests.InitEnv;
 
 public class SelectAccountTest extends InitEnv {
 

@@ -12,7 +12,7 @@ public class DDEScripts {
 				+ "ISSUPERVISOR boolean, "
 				+ "loginhash integer, "
 				+ "pwdhash character varying(64), "
-				+ "defaultDbPwd character varying(32), "
+				+ "dbPwd character varying(32), "
 				+ "lastDefaultURL varchar(128), "
 				+ "status integer,"
 				+ "verifycode character varying(64),"
@@ -33,8 +33,6 @@ public class DDEScripts {
 				+ "DBTYPE integer, "
 				+ "dbhost varchar(64), "
 				+ "dbname varchar(64), "
-				+ "dblogin varchar(64), "
-				+ "dbpwd varchar(32), "
 				+ "status integer, "
 				+ "statusdate timestamp without time zone, "
 				+ "CONSTRAINT apps_pkey PRIMARY KEY (ID))";

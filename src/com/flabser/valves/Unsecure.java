@@ -32,30 +32,38 @@ public class Unsecure extends ValveBase {
 	public void invoke(Request request, Response response) throws IOException, ServletException {
 		http = request;
 
-		if ((!ru.isProtected()) || (ru.isAuthRequest() && !http.getMethod().equalsIgnoreCase("DELETE"))) {
-			gettingSession(request, response);
-			getNext().getNext().invoke(request, response);
-		} else {
-			if (ru.isPage()) {
-				AppTemplate aTemplate = Environment.getAppTemplate(ru.getAppType());
-				try {
-					if (aTemplate.ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
-						gettingSession(request, response);
-						getNext().getNext().invoke(request, response);
-					} else {
-						((Secure) getNext()).invoke(request, response, ru);
+		if (Environment.getAppTemplates().containsKey(ru.getAppType()) || ru.getAppType().equals(EnvConst.SHARED_RESOURCES_NAME)) {
+			if ((!ru.isProtected()) || (ru.isAuthRequest() && !http.getMethod().equalsIgnoreCase("DELETE"))) {
+				gettingSession(request, response);
+				getNext().getNext().invoke(request, response);
+			} else {
+				if (ru.isPage()) {
+					AppTemplate aTemplate = Environment.getAppTemplate(ru.getAppType());
+					try {
+						if (aTemplate.ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
+							gettingSession(request, response);
+							getNext().getNext().invoke(request, response);
+						} else {
+							((Secure) getNext()).invoke(request, response, ru);
+						}
+
+					} catch (RuleException e) {
+						Server.logger.errorLogEntry(e.getMessage());
+						ApplicationException ae = new ApplicationException(ru.getAppType(), e.getMessage());
+						response.setStatus(ae.getCode());
+						response.getWriter().println(ae.getHTMLMessage());
 					}
 
-				} catch (RuleException e) {
-					Server.logger.errorLogEntry(e.getMessage());
-					ApplicationException ae = new ApplicationException(ru.getAppType(), e.getMessage());
-					response.setStatus(ae.getCode());
-					response.getWriter().println(ae.getHTMLMessage());
+				} else {
+					((Secure) getNext()).invoke(request, response, ru);
 				}
-
-			} else {
-				((Secure) getNext()).invoke(request, response, ru);
 			}
+		} else {
+			String msg = "Unknown application type \"" + ru.getAppType() + "\"";
+			Server.logger.warningLogEntry(msg);
+			ApplicationException ae = new ApplicationException(ru.getAppType(), msg);
+			response.setStatus(ae.getCode());
+			response.getWriter().println(ae.getHTMLMessage());
 		}
 	}
 

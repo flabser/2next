@@ -51,14 +51,15 @@ public class WebServer implements IWebServer {
 		AprLifecycleListener listener = new AprLifecycleListener();
 		server.addLifecycleListener(listener);
 
-		initSharedResources("/SharedResources");
+		initSharedResources();
 
 	}
 
-	public Context initSharedResources(String URLPath) throws LifecycleException, MalformedURLException {
-		String db = new File("webapps/SharedResources").getAbsolutePath();
+	public Context initSharedResources() throws LifecycleException, MalformedURLException {
+		String URLPath = "/" + EnvConst.SHARED_RESOURCES_NAME;
+		String db = new File("webapps/" + EnvConst.SHARED_RESOURCES_NAME).getAbsolutePath();
 		Context sharedResContext = tomcat.addContext(URLPath, db);
-		sharedResContext.setDisplayName("sharedresources");
+		sharedResContext.setDisplayName(EnvConst.SHARED_RESOURCES_NAME);
 
 		Tomcat.addServlet(sharedResContext, "default", "org.apache.catalina.servlets.DefaultServlet");
 		sharedResContext.addServletMapping("/", "default");

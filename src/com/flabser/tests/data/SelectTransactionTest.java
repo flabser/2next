@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.flabser.tests.InitEnv;
+
 import cashtracker.dao.TransactionDAO;
 import cashtracker.model.Transaction;
 

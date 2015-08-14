@@ -1,0 +1,21 @@
+package com.flabser.tests.system;
+
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.tests.InitEnv;
+
+public class AppRolesTest extends InitEnv {
+
+	@Test
+	public void test() {
+		ApplicationProfile appProfile = aa.getParent();
+		appProfile.addRole("role1", "it is role1 desciption");
+		appProfile.addRole("role2", "it is role2 desciption");
+		appProfile.addRole("role3333333333333333333333", "it is role300 desciption");
+		assertTrue(appProfile.save());
+
+	}
+}

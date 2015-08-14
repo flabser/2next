@@ -12,6 +12,7 @@ import com.flabser.script.actions._ActionBar;
 import com.flabser.script.mail._MailAgent;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
+import com.flabser.users.UserSession.ActiveApplication;
 
 public class _Session {
 	private IDatabase dataBase;
@@ -20,7 +21,10 @@ public class _Session {
 
 	public _Session(AppTemplate env, UserSession userSession) {
 		this.env = env;
-		dataBase = userSession.getDataBase(env.appType);
+		ActiveApplication aa = userSession.getActiveApplication(env.appType);
+		if (aa != null) {
+			dataBase = aa.getDataBase();
+		}
 		this.userSession = userSession;
 	}
 

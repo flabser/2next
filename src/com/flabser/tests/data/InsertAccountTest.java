@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import cashtracker.model.Account;
 
+import com.flabser.tests.InitEnv;
 import com.flabser.util.Util;
 
 public class InsertAccountTest extends InitEnv {
