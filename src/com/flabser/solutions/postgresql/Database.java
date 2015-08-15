@@ -179,11 +179,25 @@ public class Database extends DatabaseCore implements IDatabase {
 	}
 
 	@Override
-	public void insert(IAppEntity a, User user) {
+	public IAppEntity insert(IAppEntity e, User user) {
 		entityManager.getTransaction().begin();
-		entityManager.persist(a);
+		entityManager.persist(e);
 		entityManager.getTransaction().commit();
-
+		return e;
 	}
 
+	@Override
+	public IAppEntity update(IAppEntity e, User user) {
+		entityManager.getTransaction().begin();
+		entityManager.merge(e);
+		entityManager.getTransaction().commit();
+		return e;
+	}
+
+	@Override
+	public void delete(IAppEntity a, User user) {
+		entityManager.getTransaction().begin();
+		entityManager.remove(a);
+		entityManager.getTransaction().commit();
+	}
 }
