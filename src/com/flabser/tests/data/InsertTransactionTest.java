@@ -46,7 +46,7 @@ public class InsertTransactionTest extends InitEnv {
 			t.setBasis(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 256));
 
 			TransactionDAO dao = new TransactionDAO(ses);
-			assertTrue(dao.add(t) > 0);
+			assertTrue(dao.add(t).getId() > 0);
 			System.out.println(t);
 		}
 	}
