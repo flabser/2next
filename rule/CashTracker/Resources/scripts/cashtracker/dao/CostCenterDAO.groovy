@@ -18,10 +18,10 @@ public class CostCenterDAO {
 	}
 
 	public String getSelectQuery() {
-		return "SELECT id, name FROM costcenters"
+		return "SELECT cc FROM CostCenter AS cc"
 	}
 
-	public String getCreateQuery() {
+	/*public String getCreateQuery() {
 		return "INSERT INTO costcenters (name) VALUES (?)"
 	}
 
@@ -31,31 +31,31 @@ public class CostCenterDAO {
 
 	public String getDeleteQuery() {
 		return "DELETE FROM costcenters WHERE id = "
-	}
+	}*/
 
 	public List <CostCenter> findAll() {
-		List <CostCenter> result = db.select(getSelectQuery(), CostCenter.class, user)
+		List <CostCenter> result = db.select(getSelectQuery(), user)
 		return result
 	}
 
 	public CostCenter findById(long id) {
-		List <CostCenter> list = db.select(getSelectQuery() + " WHERE id = $id", CostCenter.class, user)
+		List <CostCenter> list = db.select(getSelectQuery() + " WHERE cc.id = $id", user)
 		CostCenter result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int add(CostCenter m) {
-		String sql = "INSERT INTO costcenters (name) VALUES ('${m.name}')"
-		return db.insert(sql, user)
+	public CostCenter add(CostCenter m) {
+		// String sql = "INSERT INTO costcenters (name) VALUES ('${m.name}')"
+		return db.insert(m, user)
 	}
 
-	public void update(CostCenter m) {
-		String sql = "UPDATE costcenters SET name = '${m.name}' WHERE id = ${m.id}"
-		db.update(sql, user)
+	public CostCenter update(CostCenter m) {
+		// String sql = "UPDATE costcenters SET name = '${m.name}' WHERE id = ${m.id}"
+		return db.update(m, user)
 	}
 
 	public void delete(CostCenter m) {
-		String sql = getDeleteQuery() + m.id
-		db.delete(sql, user)
+		// String sql = getDeleteQuery() + m.id
+		db.delete(m, user)
 	}
 }

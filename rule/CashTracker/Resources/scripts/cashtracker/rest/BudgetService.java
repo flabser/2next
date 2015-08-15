@@ -56,7 +56,7 @@ public class BudgetService extends RestProvider {
 			return Response.ok(budgets.get(0)).build();
 		}
 
-		m.setId(dao.add(m));
+		dao.add(m);
 		return Response.ok(m).build();
 	}
 

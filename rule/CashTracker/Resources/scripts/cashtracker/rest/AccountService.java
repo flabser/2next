@@ -55,7 +55,7 @@ public class AccountService extends RestProvider {
 		}
 
 		AccountDAO dao = new AccountDAO(getSession());
-		m.setId(dao.add(m));
+		dao.add(m);
 		return Response.ok(m).build();
 	}
 

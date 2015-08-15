@@ -18,10 +18,10 @@ public class CategoryDAO {
 	}
 
 	public String getSelectQuery() {
-		return "SELECT id, transaction_type, parent_id, name, enabled, note, color, sort_order FROM categories";
+		return "SELECT c FROM Category AS c";
 	}
 
-	public String getCreateQuery() {
+	/*public String getCreateQuery() {
 		return """INSERT INTO categories
 					(transaction_type, parent_id, name, enabled, note, color, sort_order)
 				  VALUES (?, ?, ?, ?, ?, ?, ?)"""
@@ -42,32 +42,32 @@ public class CategoryDAO {
 
 	public String getDeleteQuery() {
 		return "DELETE FROM categories WHERE id = ";
-	}
+	}*/
 
 	public List <Category> findAll() {
-		List <Category> result = db.select(getSelectQuery(), Category.class, user);
+		List <Category> result = db.select(getSelectQuery(), user);
 		return result;
 	}
 
 	public Category findById(long id) {
-		List <Category> list = db.select(getSelectQuery() + " WHERE id = $id", Category.class, user)
+		List <Category> list = db.select(getSelectQuery() + " WHERE c.id = $id", user)
 		Category result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int add(Category m) {
-		def parentId = m.parentCategory?.id?:null
+	public Category add(Category m) {
+		/*def parentId = m.parentCategory?.id?:null
 		String sql = """INSERT INTO categories
 							(parent_id, transaction_type,
 							name, enabled, note, color, sort_order)
 						VALUES
 							(${parentId}, null,
-							'${m.name}', ${m.enabled}, '${m.note}', ${m.color}, ${m.sortOrder})""";
-		return db.insert(sql, user);
+							'${m.name}', ${m.enabled}, '${m.note}', ${m.color}, ${m.sortOrder})""";*/
+		return db.insert(m, user);
 	}
 
-	public void update(Category m) {
-		def parentId = m.parentCategory?.id?:null
+	public Category update(Category m) {
+		/*def parentId = m.parentCategory?.id?:null
 		String sql = """UPDATE categories
 						SET
 							parent_id = ${parentId},
@@ -77,12 +77,12 @@ public class CategoryDAO {
 							note = '${m.note}',
 							color = ${m.color},
 							sort_order = ${m.sortOrder}
-						WHERE id = ${m.id}"""
-		db.update(sql, user);
+						WHERE id = ${m.id}"""*/
+		return db.update(m, user);
 	}
 
 	public void delete(Category m) {
-		String sql = getDeleteQuery() + m.id
-		db.delete(sql, user)
+		// String sql = getDeleteQuery() + m.id
+		db.delete(m, user)
 	}
 }

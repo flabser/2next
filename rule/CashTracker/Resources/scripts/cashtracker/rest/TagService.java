@@ -55,7 +55,7 @@ public class TagService extends RestProvider {
 		}
 
 		TagDAO dao = new TagDAO(getSession());
-		m.setId(dao.add(m));
+		dao.add(m);
 		return Response.ok(m).build();
 	}
 

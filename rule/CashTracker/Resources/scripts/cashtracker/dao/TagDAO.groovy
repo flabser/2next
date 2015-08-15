@@ -18,10 +18,10 @@ public class TagDAO {
 	}
 
 	public String getSelectQuery() {
-		return "SELECT id, name FROM tags"
+		return "SELECT t FROM Tag AS t"
 	}
 
-	public String getCreateQuery() {
+	/*public String getCreateQuery() {
 		return "INSERT INTO tags (name) VALUES (?)"
 	}
 
@@ -31,31 +31,31 @@ public class TagDAO {
 
 	public String getDeleteQuery() {
 		return "DELETE FROM tags WHERE id = ";
-	}
+	}*/
 
 	public List <Tag> findAll() {
-		List <Tag> result = db.select(getSelectQuery(), Tag.class, user)
+		List <Tag> result = db.select(getSelectQuery(), user)
 		return result
 	}
 
 	public Tag findById(long id) {
-		List <Tag> list = db.select(getSelectQuery() + " WHERE id = $id", Tag.class, user)
+		List <Tag> list = db.select(getSelectQuery() + " WHERE t.id = $id", user)
 		Tag result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int add(Tag m) {
-		String sql = "INSERT INTO tags (name) VALUES ('${m.name}')"
-		return db.insert(sql, user)
+	public Tag add(Tag m) {
+		//String sql = "INSERT INTO tags (name) VALUES ('${m.name}')"
+		return db.insert(m, user)
 	}
 
-	public void update(Tag m) {
-		String sql = "UPDATE tags SET name = '${m.name}' WHERE id = ${m.id}"
-		db.update(sql, user)
+	public Tag update(Tag m) {
+		//String sql = "UPDATE tags SET name = '${m.name}' WHERE id = ${m.id}"
+		return db.update(m, user)
 	}
 
 	public void delete(Tag m) {
-		String sql = getDeleteQuery() + m.id
-		db.delete(sql, user)
+		//String sql = getDeleteQuery() + m.id
+		db.delete(m, user)
 	}
 }

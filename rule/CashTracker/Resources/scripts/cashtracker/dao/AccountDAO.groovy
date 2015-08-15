@@ -18,19 +18,18 @@ public class AccountDAO {
 	}
 
 	public String getSelectQuery() {
-		return """SELECT id, name, currency_code, opening_balance, amount_control, enabled,
-					writers, readers, note, include_in_totals, sort_order FROM accounts"""
+		return """SELECT a FROM Account AS a"""
 	}
 
-	public String getCreateQuery() {
+	/*public String getCreateQuery() {
 		return """INSERT INTO accounts
 					(name, currency_code, opening_balance, amount_control, enabled,
 					 writers, readers, note, include_in_totals, sort_order)
 				  VALUES
 					(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
-	}
+	}*/
 
-	public String getUpdateQuery() {
+	/*public String getUpdateQuery() {
 		return """UPDATE accounts
 					SET
 						name = ?,
@@ -44,37 +43,37 @@ public class AccountDAO {
 						include_in_totals = ?,
 						sort_order = ?
 					WHERE id = ?"""
-	}
+	}*/
 
 	public String getDeleteQuery() {
 		return "DELETE FROM accounts WHERE id = ";
 	}
 
 	public List <Account> findAll() {
-		List <Account> result = db.select(getSelectQuery(), Account.class, user)
+		List <Account> result = db.select(getSelectQuery(), user)
 		return result
 	}
 
 	public Account findById(long id) {
-		List <Account> list = db.select(getSelectQuery() + " WHERE id = $id", Account.class, user)
+		List <Account> list = db.select(getSelectQuery() + " WHERE a.id = $id", user)
 		Account result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int add(Account m) {
-		String sql = """INSERT INTO accounts
+	public Account add(Account m) {
+		/*String sql = """INSERT INTO accounts
 							(name, currency_code, opening_balance, amount_control, enabled,
 							writers, readers, note, include_in_totals, sort_order)
 						VALUES
 							('${m.name}', '${m.currencyCode}', ${m.openingBalance}, ${m.amountControl}, ${m.enabled},
 							'{${m.writers?.join(",")}}',
 							'{${m.readers?.join(",")}}',
-							'${m.note}', ${m.includeInTotals}, ${m.sortOrder})"""
-		return db.insert(sql, user)
+							'${m.note}', ${m.includeInTotals}, ${m.sortOrder})"""*/
+		return db.insert(m, user)
 	}
 
-	public void update(Account m) {
-		String sql = """UPDATE accounts
+	public Account update(Account m) {
+		/*String sql = """UPDATE accounts
 						SET
 							name = '${m.name}',
 							currency_code = '${m.currencyCode}',
@@ -86,12 +85,12 @@ public class AccountDAO {
 							note = '${m.note}',
 							include_in_totals = ${m.includeInTotals},
 							sort_order = ${m.sortOrder}
-						WHERE id = ${m.id}"""
-		db.update(sql, user)
+						WHERE id = ${m.id}"""*/
+		return db.update(m, user)
 	}
 
 	public void delete(Account m) {
-		String sql = getDeleteQuery() + m.id
-		db.delete(sql, user)
+		// String sql = getDeleteQuery() + m.id
+		db.delete(m, user)
 	}
 }
