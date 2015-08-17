@@ -35,7 +35,16 @@ public abstract class DatabaseCore {
 			properties.put(PersistenceUnitProperties.JDBC_USER, user.getDBLogin());
 			properties.put(PersistenceUnitProperties.JDBC_PASSWORD, user.getDbPwd());
 			properties.put(PersistenceUnitProperties.JDBC_URL, appProfile.getURI());
-			properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "off");
+			// properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "");
+			// properties.put(PersistenceUnitProperties.DDL_GENERATION,
+			// "drop-and-create-tables");
+			// properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE,
+			// "createDDL.jdbc");
+			// properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE,
+			// "dropDDL.jdbc");
+			// properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE,
+			// "both");
+
 			PersistenceProvider pp = new PersistenceProvider();
 			EntityManagerFactory factory = pp.createEntityManagerFactory("JPA", properties);
 			entityManager = factory.createEntityManager();
@@ -44,5 +53,4 @@ public abstract class DatabaseCore {
 					+ appProfile.getURI() + "\"");
 		}
 	}
-
 }

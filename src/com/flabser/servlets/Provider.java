@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +34,7 @@ public class Provider extends HttpServlet {
 	private static final long serialVersionUID = 2352885167311108325L;
 	private AppTemplate env;
 	private ServletContext context;
+	private static final int MONTH_TIME = 60 * 60 * 24 * 365;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -70,6 +72,7 @@ public class Provider extends HttpServlet {
 			if (env != null) {
 				IRule rule = env.ruleProvider.getRule(id);
 				if (rule != null) {
+					SessionCooksValues cooks = new SessionCooksValues(request);
 					jses = request.getSession(false);
 					userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 
@@ -95,14 +98,20 @@ public class Provider extends HttpServlet {
 
 					if (result.publishAs == PublishAsType.XML || onlyXML != null) {
 						result.publishAs = PublishAsType.XML;
-						result.addHistory = false;
+					}
+
+					if (cooks.currentLang.equalsIgnoreCase(userSession.getLang())) {
+						Cookie c = new Cookie(EnvConst.LANG_COOKIE_NAME, userSession.getLang());
+						c.setMaxAge(MONTH_TIME);
+						c.setDomain("/");
+						response.addCookie(c);
 					}
 
 					if (result.publishAs == PublishAsType.HTML) {
 						if (result.disableClientCache) {
 							disableCash(response);
 						}
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses, result.addHistory);
+						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses);
 						response.setContentType("text/html");
 
 						if (po.prepareXSLT(env, result.xslt)) {
@@ -120,7 +129,7 @@ public class Provider extends HttpServlet {
 							disableCash(response);
 						}
 						response.setContentType("text/xml;charset=utf-8");
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses, result.addHistory);
+						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses);
 						String outputContent = po.getStandartOutput();
 						PrintWriter out = response.getWriter();
 						out.println(outputContent);
@@ -154,7 +163,6 @@ public class Provider extends HttpServlet {
 			throws RuleException, UnsupportedEncodingException, ClassNotFoundException, _Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
-		result.addHistory = pageRule.addToHistory;
 		HashMap<String, String[]> fields = new HashMap<String, String[]>();
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
@@ -181,7 +189,6 @@ public class Provider extends HttpServlet {
 		// userSession.currentUser.getUserID(), keyWord, page,
 		// userSession.pageSize);
 		// result.output.append(ftRequest.getDataAsXML());
-		result.addHistory = true;
 		return result;
 	}
 

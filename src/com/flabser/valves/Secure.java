@@ -21,7 +21,7 @@ import com.flabser.exception.ApplicationException;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.server.Server;
-import com.flabser.servlets.Cookies;
+import com.flabser.servlets.SessionCooksValues;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
@@ -88,7 +88,7 @@ public class Secure extends ValveBase {
 
 	private void gettingSession(Request request, Response response) throws IOException, ServletException {
 		HttpServletRequest http = request;
-		Cookies appCookies = new Cookies(http);
+		SessionCooksValues appCookies = new SessionCooksValues(http);
 		String token = appCookies.auth;
 		if (token != null) {
 			UserSession userSession = SessionPool.getLoggeedUser(token);
