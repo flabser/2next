@@ -26,7 +26,6 @@ public class AddDatabaseUserTest extends InitEnv {
 			a.setEnabled(Util.getRandomBoolean());
 			a.setIncludeInTotals(Util.getRandomBoolean());
 			a.setNote(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 256));
-			a.setSortOrder(0);
 
 			System.out.println(i);
 			db.insert(a, user);

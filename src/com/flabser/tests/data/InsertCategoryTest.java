@@ -23,8 +23,8 @@ public class InsertCategoryTest extends InitEnv {
 		for (int i = 0; i < iteration; i++) {
 			Category e = new Category();
 			ArrayList<TransactionType> type = new ArrayList<TransactionType>();
-			type.add(TransactionType.getRandom());
-			type.add(TransactionType.getRandom());
+			type.add(TransactionType.EXPENSE);
+			type.add(TransactionType.INCOME);
 			//e.setTransactionTypes(type);
 			e.setName(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 128));
 			e.setEnabled(Util.getRandomBoolean());

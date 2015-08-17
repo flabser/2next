@@ -27,8 +27,8 @@ public class InsertTransactionTest extends InitEnv {
 		for (int i = 0; i < iteration; i++) {
 			Transaction t = new Transaction();
 			t.setUser(new Long(Util.generateRandom()));
-			t.setTransactionType(TransactionType.getRandom());
-			t.setTransactionState(TransactionState.getRandom());
+			t.setTransactionType(TransactionType.EXPENSE);
+			t.setTransactionState(TransactionState.PENDING);
 			t.setAccountFromById(new Long(1));
 			t.setAccountToById(new Long(2));
 			t.setCategoryById(new Long(1));
@@ -43,7 +43,6 @@ public class InsertTransactionTest extends InitEnv {
 			t.setEndDate(new Date());
 			t.setNote(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 256));
 			t.setIncludeInReports(Util.getRandomBoolean());
-			t.setBasis(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 256));
 
 			TransactionDAO dao = new TransactionDAO(ses);
 			assertTrue(dao.add(t).getId() > 0);
