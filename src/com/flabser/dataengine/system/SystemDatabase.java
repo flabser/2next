@@ -1,20 +1,5 @@
 package com.flabser.dataengine.system;
 
-import com.flabser.dataengine.DatabaseUtil;
-import com.flabser.dataengine.activity.Activity;
-import com.flabser.dataengine.activity.IActivity;
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.pool.IDBConnectionPool;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.dataengine.system.entities.UserGroup;
-import com.flabser.dataengine.system.entities.UserRole;
-import com.flabser.env.EnvConst;
-import com.flabser.rule.constants.RunMode;
-import com.flabser.server.Server;
-import com.flabser.users.User;
-import com.flabser.users.UserStatusType;
-import org.apache.catalina.realm.RealmBase;
-
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -31,6 +16,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.apache.catalina.realm.RealmBase;
+
+import com.flabser.dataengine.DatabaseUtil;
+import com.flabser.dataengine.activity.Activity;
+import com.flabser.dataengine.activity.IActivity;
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.pool.IDBConnectionPool;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.UserGroup;
+import com.flabser.dataengine.system.entities.UserRole;
+import com.flabser.env.EnvConst;
+import com.flabser.rule.constants.RunMode;
+import com.flabser.server.Server;
+import com.flabser.users.User;
+import com.flabser.users.UserStatusType;
 
 @SuppressWarnings({ "SqlDialectInspection", "SqlNoDataSourceInspection" })
 public class SystemDatabase implements ISystemDatabase {
@@ -85,6 +86,9 @@ public class SystemDatabase implements ISystemDatabase {
 			}
 		}
 
+		if (user.isAuthorized == false) {
+			user = new User();
+		}
 		return user;
 	}
 
@@ -182,8 +186,8 @@ public class SystemDatabase implements ISystemDatabase {
 		Connection conn = dbPool.getConnection();
 		try (Statement getApps = conn.createStatement();
 				ResultSet rs = getApps.executeQuery("select ID, APPTYPE, APPID, APPNAME, OWNER, DBTYPE, DBHOST, DBNAME, STATUS, STATUSDATE"
-                        + ", ARRAY(select id FROM roles where app_id = apps.ID) as roles_id from " + "(select unnest(ARRAY"
-                        + ids.stream().collect(Collectors.toList()) + "::integer[]) as app_id) as ids inner join apps on ids.app_id = ID ")) {
+						+ ", ARRAY(select id FROM roles where app_id = apps.ID) as roles_id from " + "(select unnest(ARRAY"
+						+ ids.stream().collect(Collectors.toList()) + "::integer[]) as app_id) as ids inner join apps on ids.app_id = ID ")) {
 
 			while (rs.next()) {
 				result.add(new ApplicationProfile(rs.getInt("ID"), rs.getString("APPTYPE"), rs.getString("APPID"), rs.getString("APPNAME"),
@@ -323,7 +327,7 @@ public class SystemDatabase implements ISystemDatabase {
 						.getString("LOGIN"), rs.getString("EMAIL"), rs.getBoolean("ISSUPERVISOR"), rs.getString("PWD"), rs
 						.getString("PWDHASH"), rs.getString("DBPWD"), rs.getInt("LOGINHASH"), rs.getString("VERIFYCODE"), UserStatusType
 						.getType(rs.getInt("STATUS")), new HashSet<>(getUserGroups(Arrays.asList((Integer[]) getObjectArray(rs
-                        .getArray("GROUPS"))))), new HashSet<>(
+						.getArray("GROUPS"))))), new HashSet<>(
 						getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))), getApplicationProfiles(Arrays
 						.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true));
 			}
@@ -561,16 +565,10 @@ public class SystemDatabase implements ISystemDatabase {
 
 		Connection conn = dbPool.getConnection();
 
-		try (PreparedStatement pstmt = conn.prepareStatement("" +
-                "with sel as ( select id from roles where name = ? and app_id = ?), " +
-                " ins as ( insert into roles (name, description, app_id, is_on) " +
-                "    select ?, ?, ?, ? " +
-                "    where not exists (select id from roles where name = ? and app_id = ?) " +
-                "    returning id " +
-                ") " +
-                "select id from ins " +
-                "union all " +
-                "select id from sel")) {
+		try (PreparedStatement pstmt = conn.prepareStatement("" + "with sel as ( select id from roles where name = ? and app_id = ?), "
+				+ " ins as ( insert into roles (name, description, app_id, is_on) " + "    select ?, ?, ?, ? "
+				+ "    where not exists (select id from roles where name = ? and app_id = ?) " + "    returning id " + ") "
+				+ "select id from ins " + "union all " + "select id from sel")) {
 
 			for (UserRole role : roles) {
 				if (role.getId() > 0) {
@@ -578,26 +576,26 @@ public class SystemDatabase implements ISystemDatabase {
 				}
 
 				pstmt.setString(1, role.getName());
-                pstmt.setInt(2, role.getAppId());
+				pstmt.setInt(2, role.getAppId());
 
-                pstmt.setString(3, role.getName());
+				pstmt.setString(3, role.getName());
 				pstmt.setString(4, role.getDescription());
 				pstmt.setInt(5, role.getAppId());
 				pstmt.setInt(6, role.getIsOn().getCode());
 
-                pstmt.setString(7, role.getName());
-                pstmt.setInt(8, role.getAppId());
+				pstmt.setString(7, role.getName());
+				pstmt.setInt(8, role.getAppId());
 
-                try (ResultSet rs = pstmt.executeQuery()) {
-                    if (rs.next()) {
-                        role.setId(rs.getInt(1));
-                    }
-                }
-            }
+				try (ResultSet rs = pstmt.executeQuery()) {
+					if (rs.next()) {
+						role.setId(rs.getInt(1));
+					}
+				}
+			}
 
 			conn.commit();
 		} catch (SQLException e) {
-            e.printStackTrace();
+			e.printStackTrace();
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
 			dbPool.returnConnection(conn);
@@ -610,8 +608,8 @@ public class SystemDatabase implements ISystemDatabase {
 
 		try (PreparedStatement pst = conn
 				.prepareStatement(
-                        "insert into APPS(APPNAME, OWNER, DBHOST, DBNAME, APPTYPE, APPID, DBTYPE, STATUS, STATUSDATE) values(?, ?, ?, ?, ?, ?, ?, ?, ?);",
-                        PreparedStatement.RETURN_GENERATED_KEYS)) {
+						"insert into APPS(APPNAME, OWNER, DBHOST, DBNAME, APPTYPE, APPID, DBTYPE, STATUS, STATUSDATE) values(?, ?, ?, ?, ?, ?, ?, ?, ?);",
+						PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			pst.setString(1, ap.appName);
 			pst.setString(2, ap.owner);
@@ -623,16 +621,15 @@ public class SystemDatabase implements ISystemDatabase {
 			pst.setInt(8, ap.status.getCode());
 			pst.setDate(9, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
 
-
 			pst.executeUpdate();
 			try (ResultSet rs = pst.getGeneratedKeys()) {
 				if (rs.next()) {
 					ap.id = rs.getInt(1);
-                    ap.getRoles().stream().forEach(r -> r.setAppId(ap.id));
+					ap.getRoles().stream().forEach(r -> r.setAppId(ap.id));
 				}
 			}
 
-            insert(ap.getRoles());
+			insert(ap.getRoles());
 
 			conn.commit();
 			return ap.id;
@@ -656,14 +653,14 @@ public class SystemDatabase implements ISystemDatabase {
 			pst.setString(3, ap.dbHost);
 			pst.setString(4, ap.dbName);
 			pst.setString(5, ap.appType);
-            pst.setString(6, ap.appID);
+			pst.setString(6, ap.appID);
 			pst.setInt(7, ap.dbType.getCode());
-            pst.setInt(8, ap.status.getCode());
-            pst.setDate(9, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
+			pst.setInt(8, ap.status.getCode());
+			pst.setDate(9, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
 			pst.setInt(10, ap.id);
 
 			pst.executeUpdate();
-            insert(ap.getRoles());
+			insert(ap.getRoles());
 
 			conn.commit();
 			return ap.id;
