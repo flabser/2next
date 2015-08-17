@@ -43,6 +43,7 @@ public class ApplicationDatabase implements IApplicationDatabase {
 		}
 	}
 
+	@Override
 	public int registerUser(String dbUser, String dbPwd) throws SQLException {
 
 		Connection conn = DriverManager.getConnection(dbURL, props);
@@ -50,6 +51,7 @@ public class ApplicationDatabase implements IApplicationDatabase {
 			Statement st = conn.createStatement();
 			try {
 				st.executeUpdate("CREATE USER  " + dbUser + " WITH password '" + dbPwd + "'");
+				// st.executeUpdate("CREATE ROLE  " + dbUser);
 				return 0;
 			} catch (PSQLException sqle) {
 				Server.logger.warningLogEntry(sqle.getMessage());
