@@ -11,7 +11,6 @@ import org.postgresql.util.PSQLException;
 
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.env.EnvConst;
-import com.flabser.server.Server;
 
 public class ApplicationDatabase implements IApplicationDatabase {
 	private Properties props = new Properties();
@@ -43,6 +42,7 @@ public class ApplicationDatabase implements IApplicationDatabase {
 		}
 	}
 
+	@Override
 	public int registerUser(String dbUser, String dbPwd) throws SQLException {
 
 		Connection conn = DriverManager.getConnection(dbURL, props);
@@ -52,7 +52,7 @@ public class ApplicationDatabase implements IApplicationDatabase {
 				st.executeUpdate("CREATE USER  " + dbUser + " WITH password '" + dbPwd + "'");
 				return 0;
 			} catch (PSQLException sqle) {
-				Server.logger.warningLogEntry(sqle.getMessage());
+				// Server.logger.warningLogEntry(sqle.getMessage());
 				return 1;
 			}
 		} catch (Throwable e) {

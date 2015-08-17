@@ -22,13 +22,11 @@ public class Util {
 	public static final SimpleDateFormat timeFormat = new SimpleDateFormat("kk:mm");
 	public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
 	public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-	private static final SimpleDateFormat providerDateTimeFormat = new SimpleDateFormat("dd-MM-yyyy kk:mm:ss");
-	public static final Pattern pEntity = Pattern.compile("\\G&(#\\d+|\\w+);");// Pattern.compile("\\G&(#\\d+|\\w+);");
+	public static final Pattern pEntity = Pattern.compile("\\G&(#\\d+|\\w+);");
 	public static final Pattern pTag = Pattern.compile("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>");
 	public static final Pattern pAtEnd = Pattern.compile("\\G\\z");
 	public static final Pattern pWord = Pattern.compile("\\G(\\w|\\pL)+");
 	public static final Pattern pNonHtml = Pattern.compile("\\G([^(\\w|\\p{L})]|\\p{Ps}|\\p{Pe}|\\p{Pi}|\\p{Pf}|\\p{P}|\\p{S})+");
-	public static final int dayInMs = 1000 * 60 * 60 * 24;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static HashMap cloneMap(HashMap sourceMap) {
@@ -45,9 +43,6 @@ public class Util {
 		try {
 			return dateTimeFormat.format(date);
 		} catch (Exception e) {
-			// AppEnv.logger.errorLogEntry("Util, Не удалось преобразовать время в текст "
-			// + date);
-			// AppEnv.logger.errorLogEntry(e);
 			return "null";
 		}
 	}
@@ -60,22 +55,11 @@ public class Util {
 		}
 	}
 
-	public static String convertDataTimeToProvider(Date date) {
-		try {
-			return providerDateTimeFormat.format(date);
-		} catch (Exception e) {
-			Server.logger.errorLogEntry("Util, Не удалось преобразовать время в текст " + date);
-			// AppEnv.logger.errorLogEntry(e);
-			return "null";
-		}
-	}
-
 	public static String convertDataTimeToTimeString(Date date) {
 		try {
 			return timeFormat.format(date);
 		} catch (Exception e) {
 			Server.logger.errorLogEntry("Util, Не удалось преобразовать время в текст " + date);
-			// AppEnv.logger.errorLogEntry(e);
 			return "null";
 		}
 	}
@@ -293,9 +277,6 @@ public class Util {
 	}
 
 	public static String removeHTMLTags(String text) {
-		// Pattern pImgTag = Pattern.compile("\\G(?i)<img\\s+([^>]+)>");
-		// Pattern pLink = Pattern.compile("\\G(?i)<A\\s+([^>]+)>");
-		// Pattern pLinkX = Pattern.compile("\\G(?i)</A>");
 		if (text == null) {
 			return "";
 		}
@@ -374,8 +355,6 @@ public class Util {
 
 	public static String getTimeDiffInMilSec(long start_time) {
 		long time = System.currentTimeMillis() - start_time;
-		// int sec = (int) time / 1000;//find seconds
-		// int msec = (int) time % 1000;//find milliseconds
 		return Long.toString(time);
 	}
 
@@ -389,14 +368,6 @@ public class Util {
 
 		return true;
 
-	}
-
-	public static String fieldToGetter(String name) {
-		return "get" + name.substring(0, 1).toUpperCase() + name.substring(1);
-	}
-
-	public static String fieldToSetter(String name) {
-		return "set" + name.substring(0, 1).toUpperCase() + name.substring(1);
 	}
 
 }

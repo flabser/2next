@@ -9,7 +9,7 @@ import com.flabser.restful.Application;
 public class FirstAction implements IAppDatabaseInit {
 
 	@Override
-	public void setApplicationProfile(Application app) {
+	public void initApplication(Application app) {
 		app.addRole("operations", "can add transactions");
 		app.addRole("rn_amount_control", "a receiver notifying about exceeding a sum of the cash transaction");
 		app.addRole("dailymailing", "a receiver notifying about a day transactions");

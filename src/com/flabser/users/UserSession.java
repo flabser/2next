@@ -1,12 +1,7 @@
 package com.flabser.users;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.concurrent.LinkedBlockingDeque;
-
-import org.omg.CORBA.UserException;
 
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
@@ -23,7 +18,6 @@ import com.flabser.script._Page;
 public class UserSession implements ICache {
 
 	public User currentUser;
-	public HistoryEntryCollection history;
 	public int pageSize;
 
 	private AuthModeType authMode;
@@ -35,7 +29,6 @@ public class UserSession implements ICache {
 	public UserSession(User user) {
 		currentUser = user;
 		authMode = AuthModeType.DIRECT_LOGIN;
-		initHistory();
 	}
 
 	public void init(String appID) throws ApplicationException {
@@ -71,18 +64,11 @@ public class UserSession implements ICache {
 		} else {
 			Object o = currentUser.getPesistentValue("lang");
 			if (o == null) {
-				// TODO it uncomment when cookies will be realised
-				// return lang;
 				return "ENG";
 			} else {
 				return (String) o;
 			}
 		}
-	}
-
-	public void addHistoryEntry(String type, String url) throws UserException {
-		HistoryEntry entry = new HistoryEntry(type, url);
-		history.add(entry);
 	}
 
 	public boolean isBootstrapped(String appID) {
@@ -112,10 +98,6 @@ public class UserSession implements ICache {
 
 	public void setAuthMode(AuthModeType authMode) {
 		this.authMode = authMode;
-	}
-
-	private void initHistory() {
-		history = new HistoryEntryCollection();
 	}
 
 	@Override
@@ -186,54 +168,6 @@ public class UserSession implements ICache {
 		return currentUser + ", authMode=" + authMode.name() + ", lang=" + lang;
 	}
 
-	public class HistoryEntryCollection {
-
-		// type of collection has been changed from linked list to
-		// LinkedBlockingDeque for better thread safe
-		private LinkedBlockingDeque<HistoryEntry> history = new LinkedBlockingDeque<HistoryEntry>();
-		private LinkedBlockingDeque<HistoryEntry> pageHistory = new LinkedBlockingDeque<HistoryEntry>();
-
-		public void add(HistoryEntry entry) throws UserException {
-			if (history.size() == 0 || (!history.getLast().equals(entry))) {
-				history.add(entry);
-				if (entry.isPageURL) {
-					pageHistory.add(entry);
-				}
-			}
-
-			if (history.size() > 10) {
-				history.removeFirst();
-				try {
-					pageHistory.removeFirst();
-				} catch (NoSuchElementException e) {
-
-				}
-			}
-
-		}
-
-		@Override
-		public String toString() {
-			String v = "";
-			for (HistoryEntry entry : history) {
-				v += entry.toString() + "\n";
-			}
-			return v;
-		}
-
-		public HistoryEntry getLastEntry() {
-			try {
-				return history.getLast();
-			} catch (Exception e) {
-				// return new HistoryEntry("view",
-				// currentUser.getAppEnv().globalSetting.defaultRedirectURL,
-				// "");
-			}
-			return null;
-		}
-
-	}
-
 	public class ActiveApplication {
 		private IDatabase db;
 		private ApplicationProfile appProfile;
@@ -253,49 +187,6 @@ public class UserSession implements ICache {
 
 		}
 
-	}
-
-	public class HistoryEntry {
-
-		public String URL;
-		public String URLforXML;
-		public String type;
-		public Date time;
-		public boolean isPageURL;
-
-		HistoryEntry(String type, String url) {
-			URL = url;
-			URLforXML = url;
-			this.type = type;
-			time = new Date();
-			isPageURL = isPage(url);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			HistoryEntry entry = (HistoryEntry) obj;
-			return entry.URLforXML.equalsIgnoreCase(URLforXML);
-		}
-
-		@Override
-		public int hashCode() {
-			return this.URLforXML.hashCode();
-		}
-
-		@Override
-		public String toString() {
-			return URLforXML;
-		}
-
-		private boolean isPage(String url) {
-			return url.indexOf("type=page") > (-1);
-		}
-	}
-
-	public void destroy() {
-		for (ActiveApplication aa : acitveApps.values()) {
-			aa = null;
-		}
 	}
 
 }

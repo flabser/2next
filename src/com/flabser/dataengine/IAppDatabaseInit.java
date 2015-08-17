@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.flabser.restful.Application;
 
 public interface IAppDatabaseInit {
-	void setApplicationProfile(Application application);
+	void initApplication(Application application);
 
 	ArrayList<String> getTablesDDE();
 

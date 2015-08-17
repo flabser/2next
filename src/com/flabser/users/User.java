@@ -16,7 +16,6 @@ import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
-import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
@@ -195,22 +194,28 @@ public class User {
 
 				for (HashMap<String, ApplicationProfile> apps : getEnabledApps().values()) {
 					for (ApplicationProfile appProfile : apps.values()) {
-						if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
-							int res = appDb.createDatabase(appProfile.getDbName(), getDBLogin());
-							if (res == 0 || res == 1) {
-								IDatabase dataBase = appProfile.getDatabase();
-								IDeployer ad = dataBase.getDeployer();
-								ad.init(appProfile);
-								Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
-								IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
-								dbInitializer.setApplicationProfile(appProfile.getPOJO());
-								if (ad.deploy(dbInitializer) == 0) {
-									appProfile.setStatus(ApplicationStatusType.ON_LINE);
+						if (appProfile.getStatus() == ApplicationStatusType.READY_TO_DEPLOY) {
+							try {
+								int res = appDb.createDatabase(appProfile.getDbName(), getDBLogin());
+								if (res == 0 || res == 1) {
+									IDatabase dataBase = appProfile.getDatabase();
+									IDeployer ad = dataBase.getDeployer();
+									ad.init(appProfile);
+									Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
+									IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
+									dbInitializer.initApplication(appProfile.getPOJO());
+									if (ad.deploy(dbInitializer) == 0) {
+										appProfile.setStatus(ApplicationStatusType.ON_LINE);
+									} else {
+										appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+									}
+									appProfile.save();
 								} else {
-									appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+									appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
+									appProfile.save();
+									return false;
 								}
-								appProfile.save();
-							} else {
+							} catch (Exception e) {
 								appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 								appProfile.save();
 								return false;
@@ -220,10 +225,12 @@ public class User {
 				}
 			}
 			return true;
-		} catch (InstantiationException | DatabasePoolException | IllegalAccessException | ClassNotFoundException e) {
+		} catch (InstantiationException | ClassNotFoundException e) {
 			Server.logger.errorLogEntry(e);
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
+		} catch (IllegalAccessException e1) {
+			Server.logger.errorLogEntry(e1);
 		}
 		return false;
 

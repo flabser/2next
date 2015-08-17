@@ -38,8 +38,6 @@ public class SystemDatabase implements ISystemDatabase {
 	public static final String jdbcDriver = "org.postgresql.Driver";
 	private IDBConnectionPool dbPool;
 
-	// TODO Need to bring the setting out
-
 	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		dbPool = new com.flabser.dataengine.pool.DBConnectionPool();
 		dbPool.initConnectionPool(jdbcDriver, EnvConst.CONN_URI, EnvConst.DB_USER, EnvConst.DB_PWD);
@@ -88,6 +86,9 @@ public class SystemDatabase implements ISystemDatabase {
 			}
 		}
 
+		if (user.isAuthorized == false) {
+			user = new User();
+		}
 		return user;
 	}
 
@@ -561,9 +562,13 @@ public class SystemDatabase implements ISystemDatabase {
 	}
 
 	public void insert(Collection<UserRole> roles) {
+
 		Connection conn = dbPool.getConnection();
 
-		try (PreparedStatement pstmt = conn.prepareStatement("insert into roles(name, description, app_id, is_on) values (?, ?, ?, ?); ")) {
+		try (PreparedStatement pstmt = conn.prepareStatement("" + "with sel as ( select id from roles where name = ? and app_id = ?), "
+				+ " ins as ( insert into roles (name, description, app_id, is_on) " + "    select ?, ?, ?, ? "
+				+ "    where not exists (select id from roles where name = ? and app_id = ?) " + "    returning id " + ") "
+				+ "select id from ins " + "union all " + "select id from sel")) {
 
 			for (UserRole role : roles) {
 				if (role.getId() > 0) {
@@ -571,16 +576,26 @@ public class SystemDatabase implements ISystemDatabase {
 				}
 
 				pstmt.setString(1, role.getName());
-				pstmt.setString(2, role.getDescription());
-				pstmt.setInt(3, role.getAppId());
-				pstmt.setInt(4, role.getIsOn().getCode());
-				pstmt.addBatch();
-				pstmt.execute();
+				pstmt.setInt(2, role.getAppId());
+
+				pstmt.setString(3, role.getName());
+				pstmt.setString(4, role.getDescription());
+				pstmt.setInt(5, role.getAppId());
+				pstmt.setInt(6, role.getIsOn().getCode());
+
+				pstmt.setString(7, role.getName());
+				pstmt.setInt(8, role.getAppId());
+
+				try (ResultSet rs = pstmt.executeQuery()) {
+					if (rs.next()) {
+						role.setId(rs.getInt(1));
+					}
+				}
 			}
 
 			conn.commit();
-
 		} catch (SQLException e) {
+			e.printStackTrace();
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
 			dbPool.returnConnection(conn);
@@ -606,14 +621,15 @@ public class SystemDatabase implements ISystemDatabase {
 			pst.setInt(8, ap.status.getCode());
 			pst.setDate(9, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
 
-			insert(ap.getRoles());
-
 			pst.executeUpdate();
 			try (ResultSet rs = pst.getGeneratedKeys()) {
 				if (rs.next()) {
 					ap.id = rs.getInt(1);
+					ap.getRoles().stream().forEach(r -> r.setAppId(ap.id));
 				}
 			}
+
+			insert(ap.getRoles());
 
 			conn.commit();
 			return ap.id;
@@ -644,6 +660,7 @@ public class SystemDatabase implements ISystemDatabase {
 			pst.setInt(10, ap.id);
 
 			pst.executeUpdate();
+			insert(ap.getRoles());
 
 			conn.commit();
 			return ap.id;
