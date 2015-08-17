@@ -55,7 +55,8 @@ public class DDEScripts {
 					"description character varying, " +
 					"app_id integer, " +
 					"is_on integer, " +
-					"CONSTRAINT roles_pkey PRIMARY KEY (id)" +
+					"CONSTRAINT roles_pkey PRIMARY KEY (id), " +
+                    "CONSTRAINT unique_roles_name_app_id UNIQUE (name, app_id)" +
 					");";
 
 	public static final String GROUPS_DDE =

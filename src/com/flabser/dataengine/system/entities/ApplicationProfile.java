@@ -1,10 +1,5 @@
 package com.flabser.dataengine.system.entities;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
@@ -20,6 +15,11 @@ import com.flabser.solutions.DatabaseType;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.VisibiltyType;
 import com.flabser.util.Util;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 
 @JsonRootName("applicationProfile")
 public class ApplicationProfile implements _IContent {
@@ -189,11 +189,10 @@ public class ApplicationProfile implements _IContent {
 		app.setAppType(appType);
 
 		return app;
-
 	}
 
 	public void addRole(String name, String descr) {
-		roles.add(new UserRole(name, descr, RunMode.ON));
+		roles.add(new UserRole(0, name, descr, this.id, RunMode.ON));
 	}
 
 	public void setRoles(ArrayList<UserRole> roles) {
