@@ -1,20 +1,24 @@
 package cashtracker.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.AppEntity;
-import com.flabser.restful.data.EntityField;
+
 
 @JsonRootName("budget")
+@Entity
+@Table(name = "budgets")
 public class Budget extends AppEntity {
 
-	@EntityField()
+	@Column(nullable = false)
 	private String name;
 
-	@EntityField("reg_date")
+	@Column(name = "reg_date")
 	private Date regDate;
 
 	private Long owner;
@@ -59,13 +63,5 @@ public class Budget extends AppEntity {
 	@Override
 	public String toString() {
 		return "Budget[" + id + ", " + name + ", " + regDate + ", " + owner + "]";
-	}
-
-	public void init(ResultSet rs) throws SQLException {
-		setId(rs.getLong("id"));
-		setName(rs.getString("name"));
-		setRegDate(rs.getDate("reg_date"));
-		setOwner(null);
-		// setStatus(BudgetState.stateOf(rs.getInt("type")));
 	}
 }

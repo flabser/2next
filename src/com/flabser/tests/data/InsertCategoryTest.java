@@ -25,7 +25,7 @@ public class InsertCategoryTest extends InitEnv {
 			ArrayList<TransactionType> type = new ArrayList<TransactionType>();
 			type.add(TransactionType.getRandom());
 			type.add(TransactionType.getRandom());
-			e.setTransactionTypes(type);
+			//e.setTransactionTypes(type);
 			e.setName(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 128));
 			e.setEnabled(Util.getRandomBoolean());
 			e.setNote(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 256));
@@ -33,7 +33,7 @@ public class InsertCategoryTest extends InitEnv {
 			e.setSortOrder(Util.generateRandomShort());
 
 			CategoryDAO dao = new CategoryDAO(ses);
-			assertTrue(dao.add(e) > 0);
+			assertTrue(dao.add(e).getId() > 0);
 		}
 	}
 

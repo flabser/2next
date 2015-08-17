@@ -14,7 +14,7 @@ import com.flabser.users.User
 
 public class TransactionDAO {
 
-	private final static String selectAll = """
+	/*private final static String selectAll = """
 		SELECT
 		  t.id                       AS "id",
 		  t."USER"                   AS "t.USER",
@@ -69,7 +69,7 @@ public class TransactionDAO {
 		  left join accounts      AS at  on at.id = t.account_to
 		  left join categories    AS c   on c.id = t.category
 		  left join costcenters   AS cc  on cc.id = t.cost_center
-		"""
+		"""*/
 
 	private IDatabase db
 	private User user
@@ -80,10 +80,10 @@ public class TransactionDAO {
 	}
 
 	public String getSelectQuery() {
-		return selectAll;
+		return "SELECT tr FROM Transaction AS tr";
 	}
 
-	public String getCreateQuery() {
+	/*public String getCreateQuery() {
 		return """INSERT INTO transactions
 						("USER", transaction_type, transaction_state,
 						date, account_from, account_to,
@@ -120,44 +120,44 @@ public class TransactionDAO {
 
 	public String getDeleteQuery() {
 		return "DELETE FROM transactions WHERE id = ";
-	}
+	}*/
 
 	public List <Transaction> findAll() {
-		List <Transaction> result = db.select(getSelectQuery(), Transaction.class, user)
+		List <Transaction> result = db.select(getSelectQuery(), user)
 		return result
 	}
 
 	public Transaction findById(long id) {
 		String sql = "${getSelectQuery()} WHERE id = $id"
-		List <Transaction> list = db.select(sql, Transaction.class, user)
+		List <Transaction> list = db.select(sql, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
 	public List <Transaction> findAllByAccount(Account m) {
 		String sql ="${getSelectQuery()} WHERE t.account = ${m.id}"
-		List <Transaction> list = db.select(sql, Transaction.class, user)
+		List <Transaction> list = db.select(sql, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
 	public List <Transaction> findAllByCostCenter(CostCenter m) {
 		String sql ="${getSelectQuery()} WHERE t.cost_center = ${m.id}"
-		List <Transaction> list = db.select(sql, Transaction.class, user)
+		List <Transaction> list = db.select(sql, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
 	public List <Transaction> findAllByCategory(Category m) {
 		String sql ="${getSelectQuery()} WHERE t.category = ${m.id}"
-		List <Transaction> list = db.select(sql, Transaction.class, user)
+		List <Transaction> list = db.select(sql, user)
 		Transaction result = list.size() ? list[0] : null
 		return result
 	}
 
-	public int add(Transaction m) {
+	public Transaction add(Transaction m) {
 		m.setUser(user.id)
-		String sql = """INSERT INTO transactions
+		/*String sql = """INSERT INTO transactions
 							("USER", transaction_type, transaction_state,
 							date, account_from, account_to,
 							amount, exchange_rate, category, cost_center,
@@ -167,12 +167,12 @@ public class TransactionDAO {
 								'${new java.sql.Date(m.date.getTime())}', ${m.accountFrom?.id}, ${m.accountTo?.id},
 								${m.amount}, ${m.exchangeRate}, ${m.category?.id}, ${m.costCenter?.id},
 								'{${m.tagsId?.join(",")}}', ${m.repeat}, ${m.every}, ${m.repeatStep}, '${new Timestamp(m.startDate.getTime())}', '${new Timestamp(m.endDate.getTime())}',
-								'${m.note}', ${m.includeInReports}, '${m.basis}')"""
-		return db.insert(sql, user)
+								'${m.note}', ${m.includeInReports}, '${m.basis}')"""*/
+		return db.insert(m, user)
 	}
 
-	public void update(Transaction m) {
-		String sql = """UPDATE transactions
+	public Transaction update(Transaction m) {
+		/*String sql = """UPDATE transactions
 						SET
 							transaction_type = ${m.transactionType.code},
 							transaction_state = ${m.transactionState.code},
@@ -192,12 +192,12 @@ public class TransactionDAO {
 							note = '${m.note}',
 							include_in_reports = ${m.includeInReports},
 							basis = '${m.basis}'
-						WHERE id = ${m.id}"""
-		db.update(sql, user)
+						WHERE id = ${m.id}"""*/
+		return db.update(m, user)
 	}
 
 	public void delete(Transaction m) {
-		String sql = getDeleteQuery() + m.id
-		db.delete(sql, user)
+		//String sql = getDeleteQuery() + m.id
+		db.delete(m, user)
 	}
 }
