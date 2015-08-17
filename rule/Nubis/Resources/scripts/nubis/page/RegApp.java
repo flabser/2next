@@ -4,6 +4,7 @@ import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
+import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.User;
 import com.flabser.users.VisibiltyType;
 
@@ -34,6 +35,7 @@ public class RegApp extends _DoScript {
 			ap.setDesciption(descr);
 			ap.owner = user.getLogin();
 			ap.dbName = ap.appType.toLowerCase() + ap.appId();
+			ap.status = ApplicationStatusType.READY_TO_DEPLOY;
 			if (ap.save()) {
 				user.addApplication(ap);
 				if (user.save()) {

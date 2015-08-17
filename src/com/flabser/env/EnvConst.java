@@ -9,7 +9,8 @@ public class EnvConst {
 	public static final String SUPPOSED_CODE_PAGE = "utf-8";
 	public static final String ERROR_XSLT = "xsl" + File.separator + "errors" + File.separator + "error.xsl";
 	public static final String DATABASE_HOST = "localhost";
-	public static final String CONN_URI = "jdbc:postgresql://" + DATABASE_HOST + "/2Next";
+	public static final String CONN_PORT = "5432";
+	public static final String CONN_URI = "jdbc:postgresql://" + DATABASE_HOST + ":" + CONN_PORT + "/2Next";
 	public static final String DB_USER = "postgres";
 	public static final String DB_PWD = "smartdoc";
 	public static final String TEMPLATE_ATTR = "template";

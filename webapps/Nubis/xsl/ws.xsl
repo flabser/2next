@@ -23,9 +23,9 @@
 	<xsl:template match="entry" mode="app">
 		<div>
 			<a href="/{apptype}/{appid}">
-				<xsl:value-of select="appname" />
+				<xsl:value-of select="status" />-<xsl:value-of select="appname" />
 				<small>
-					<xsl:value-of select="concat('(', apptype, ')')" />
+					-<xsl:value-of select="concat('(', apptype, ')')" />
 				</small>
 			</a>
 		</div>

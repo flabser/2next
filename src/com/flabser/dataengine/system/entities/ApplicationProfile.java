@@ -32,7 +32,7 @@ public class ApplicationProfile implements _IContent {
 	@JsonIgnore
 	public DatabaseType dbType = DatabaseType.POSTGRESQL;
 	@JsonIgnore
-	public String dbHost = EnvConst.DATABASE_HOST;
+	public String dbHost = EnvConst.DATABASE_HOST + ":" + EnvConst.CONN_PORT;
 
 	@JsonIgnore
 	public String dbName;

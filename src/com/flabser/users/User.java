@@ -194,7 +194,7 @@ public class User {
 
 				for (HashMap<String, ApplicationProfile> apps : getEnabledApps().values()) {
 					for (ApplicationProfile appProfile : apps.values()) {
-						if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
+						if (appProfile.getStatus() == ApplicationStatusType.READY_TO_DEPLOY) {
 							try {
 								int res = appDb.createDatabase(appProfile.getDbName(), getDBLogin());
 								if (res == 0 || res == 1) {
