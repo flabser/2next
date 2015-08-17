@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import cashtracker.model.constants.TransactionType;
+import cashtracker.model.constants.TransactionTypesConverter;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -26,11 +25,6 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "categories")
 public class Category extends AppEntity {
 
-	/*@ElementCollection(targetClass = TransactionType.class)
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "transaction_type")
-	private List <TransactionType> transactionTypes;*/
-
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
 	private Category parentCategory;
@@ -40,6 +34,10 @@ public class Category extends AppEntity {
 
 	@Column(nullable = false)
 	private String name;
+
+	@Convert(converter = TransactionTypesConverter.class)
+	@Column(name = "transaction_types")
+	private List <TransactionType> transactionTypes;
 
 	private boolean enabled;
 
@@ -51,7 +49,7 @@ public class Category extends AppEntity {
 	private int sortOrder;
 
 	//
-	/*public List <TransactionType> getTransactionTypes() {
+	public List <TransactionType> getTransactionTypes() {
 		return transactionTypes;
 	}
 
@@ -60,22 +58,22 @@ public class Category extends AppEntity {
 	}
 
 	@JsonGetter("transactionTypes")
-	public List <Integer> getTransactionTypesCode() {
-		List <Integer> tTypes = new ArrayList <Integer>();
+	public List <String> getTransactionTypesCode() {
+		List <String> tTypes = new ArrayList <String>();
 		if (transactionTypes != null) {
-			transactionTypes.forEach(type -> tTypes.add(type.getCode()));
+			transactionTypes.forEach(type -> tTypes.add(type.name()));
 		}
 		return tTypes;
 	}
 
 	@JsonSetter("transactionTypes")
-	public void setTransactionTypesByIds(List <Integer> ids) {
+	public void setTransactionTypesByIds(List <String> names) {
 		List <TransactionType> tTypes = new ArrayList <TransactionType>();
-		if (ids != null) {
-			ids.forEach(id -> tTypes.add(TransactionType.typeOf(id)));
+		if (names != null) {
+			names.forEach(name -> tTypes.add(TransactionType.valueOf(name)));
 		}
 		setTransactionTypes(tTypes);
-	}*/
+	}
 
 	public Category getParentCategory() {
 		return parentCategory;
@@ -145,6 +143,6 @@ public class Category extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "Category[" + id + ", " + name + ", " + enabled + ", " + parentCategory + "]";
+		return "Category[" + id + ", " + name + ", " + enabled + ", " + parentCategory + ", " + transactionTypes + "]";
 	}
 }

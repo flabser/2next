@@ -1,7 +1,10 @@
 package cashtracker.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -16,9 +19,10 @@ public class Tag extends AppEntity {
 	@Column(nullable = false)
 	private String name;
 
-	// @OneToMany(mappedBy = "tags")
-	// private List <Transaction> transactions;
+	@ManyToMany(mappedBy = "tags")
+	private List <Transaction> transactions;
 
+	//
 	public String getName() {
 		return name;
 	}

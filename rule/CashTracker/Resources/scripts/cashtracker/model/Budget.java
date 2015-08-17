@@ -3,8 +3,12 @@ package cashtracker.model;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import cashtracker.model.constants.BudgetState;
+import cashtracker.model.constants.BudgetStateConverter;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.AppEntity;
@@ -23,9 +27,10 @@ public class Budget extends AppEntity {
 
 	private Long owner;
 
-	// @EntityField("status")
-	// private BudgetState status;
+	@Convert(converter = BudgetStateConverter.class)
+	private BudgetState status;
 
+	//
 	public String getName() {
 		return name;
 	}
@@ -50,18 +55,16 @@ public class Budget extends AppEntity {
 		this.owner = user;
 	}
 
-	/*
-	 * public BudgetState getStatus() { return status; }
-	 * 
-	 * public void setStatus(BudgetState status) { this.status = status; }
-	 * 
-	 * public String getBudgetState() { return ""; }
-	 * 
-	 * public void setBudgetState(String status) { // this.status = status; }
-	 */
+	public BudgetState getStatus() {
+		return status;
+	}
+
+	public void setStatus(BudgetState status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
-		return "Budget[" + id + ", " + name + ", " + regDate + ", " + owner + "]";
+		return "Budget[" + id + ", " + name + ", " + regDate + ", " + owner + ", " + status + "]";
 	}
 }

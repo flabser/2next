@@ -22,6 +22,7 @@ public class CostCenter extends AppEntity {
 	@OneToMany(mappedBy = "costCenter")
 	private List <Transaction> transactions;
 
+	//
 	public String getName() {
 		return name;
 	}

@@ -36,9 +36,7 @@ public class Account extends AppEntity {
 
 	private String note;
 
-	@Column(name = "sort_order")
-	private int sortOrder;
-
+	//
 	public String getName() {
 		return name;
 	}
@@ -93,14 +91,6 @@ public class Account extends AppEntity {
 
 	public void setNote(String note) {
 		this.note = note;
-	}
-
-	public int getSortOrder() {
-		return sortOrder;
-	}
-
-	public void setSortOrder(int sortOrder) {
-		this.sortOrder = sortOrder;
 	}
 
 	@Override

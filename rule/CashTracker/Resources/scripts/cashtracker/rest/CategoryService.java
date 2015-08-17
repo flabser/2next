@@ -22,6 +22,7 @@ import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
+import com.flabser.restful.data.IAppEntity;
 
 
 @Path("categories")
@@ -55,7 +56,7 @@ public class CategoryService extends RestProvider {
 		}
 
 		CategoryDAO dao = new CategoryDAO(getSession());
-		//m.setId(dao.add(m));
+		// m.setId(dao.add(m));
 		dao.add(m);
 		return Response.ok(m).build();
 	}
@@ -89,11 +90,11 @@ public class CategoryService extends RestProvider {
 	}
 
 	@JsonRootName("categories")
-	class Categories extends ArrayList <Category> {
+	class Categories extends ArrayList <IAppEntity> {
 
 		private static final long serialVersionUID = 1L;
 
-		public Categories(Collection <? extends Category> m) {
+		public Categories(Collection <? extends IAppEntity> m) {
 			addAll(m);
 		}
 	}

@@ -22,6 +22,7 @@ import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
+import com.flabser.restful.data.IAppEntity;
 
 
 @Path("tags")
@@ -41,7 +42,8 @@ public class TagService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") long id) {
 		TagDAO dao = new TagDAO(getSession());
-		Tag m = dao.findById(id);
+		IAppEntity m = dao.findById(id);
+		System.out.println(((Tag) m).getName());
 		return Response.ok(m).build();
 	}
 
@@ -88,11 +90,11 @@ public class TagService extends RestProvider {
 	}
 
 	@JsonRootName("tags")
-	class Tags extends ArrayList <Tag> {
+	class Tags extends ArrayList <IAppEntity> {
 
 		private static final long serialVersionUID = 1L;
 
-		public Tags(Collection <? extends Tag> m) {
+		public Tags(Collection <? extends IAppEntity> m) {
 			addAll(m);
 		}
 	}

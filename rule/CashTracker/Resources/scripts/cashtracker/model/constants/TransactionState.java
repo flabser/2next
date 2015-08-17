@@ -1,32 +1,27 @@
 package cashtracker.model.constants;
 
 public enum TransactionState {
-	UNKNOWN(0), CONFIRMED(1), PENDING(2);
+	CONFIRMED("C"), PENDING("P");
 
-	private final int code;
+	private final String value;
 
-	private TransactionState(int code) {
-		this.code = code;
+	private TransactionState(String value) {
+		this.value = value;
 	}
 
-	public static TransactionState stateOf(int code) {
-		switch (code) {
-		case 1:
-			return CONFIRMED;
-
-		case 2:
-			return PENDING;
-
-		default:
-			return UNKNOWN;
+	public static TransactionState stateOf(String value) {
+		if (value != null) {
+			for (TransactionState state : values()) {
+				if (state.value.equals(value)) {
+					return state;
+				}
+			}
 		}
+
+		return null;
 	}
 
-	public int getCode() {
-		return code;
-	}
-
-	public static TransactionState getRandom() {
-		return values()[(int) (Math.random() * values().length)];
+	public String toValue() {
+		return value;
 	}
 }

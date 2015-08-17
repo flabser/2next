@@ -2,12 +2,15 @@ package cashtracker.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,18 +26,18 @@ import com.flabser.restful.data.AppEntity;
 @JsonRootName("transaction")
 @Entity
 @Table(name = "transactions")
-public class Transaction extends AppEntity /*SecureAppEntity*/ {
+public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@Column(nullable = false)
 	private Long user;
 
 	@Column(name = "transaction_type")
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private TransactionType transactionType = TransactionType.EXPENSE;
 
 	@Column(name = "transaction_state")
-	@Enumerated(EnumType.ORDINAL)
-	private TransactionState transactionState = TransactionState.UNKNOWN;
+	@Enumerated(EnumType.STRING)
+	private TransactionState transactionState;
 
 	@ManyToOne
 	@JoinColumn(name = "account_from", nullable = false)
@@ -52,9 +55,11 @@ public class Transaction extends AppEntity /*SecureAppEntity*/ {
 	@JoinColumn(name = "cost_center")
 	private CostCenter costCenter;
 
-	// @ManyToMany
-	// @JoinColumn(name = "tags")
-	// private List <Tag> tags;
+	@ManyToMany
+	@JoinTable(name = "transaction_tags",
+		joinColumns = { @JoinColumn(name = "TRASACTION_ID", referencedColumnName = "ID") },
+		inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
+	private List <Tag> tags;
 
 	@Column(nullable = false)
 	private Date date = new Date();
@@ -77,8 +82,6 @@ public class Transaction extends AppEntity /*SecureAppEntity*/ {
 
 	@Column(name = "end_date")
 	private Date endDate = new Date();
-
-	private String basis;
 
 	private String note;
 
@@ -103,13 +106,16 @@ public class Transaction extends AppEntity /*SecureAppEntity*/ {
 	}
 
 	@JsonGetter("transactionType")
-	public Integer getTransactionTypeCode() {
-		return transactionType.getCode();
+	public String getTransactionTypeName() {
+		if (transactionType == null) {
+			return null;
+		}
+		return transactionType.name();
 	}
 
 	@JsonSetter("transactionType")
-	public void setTransactionTypeById(int id) {
-		setTransactionType(TransactionType.typeOf(id));
+	public void setTransactionTypeByName(String name) {
+		setTransactionType(TransactionType.typeOf(name));
 	}
 
 	public TransactionState getTransactionState() {
@@ -121,13 +127,16 @@ public class Transaction extends AppEntity /*SecureAppEntity*/ {
 	}
 
 	@JsonGetter("transactionState")
-	public Integer getTransactionStateCode() {
-		return transactionState.getCode();
+	public String getTransactionStateName() {
+		if (transactionState == null) {
+			return null;
+		}
+		return transactionState.name();
 	}
 
 	@JsonSetter("transactionState")
-	public void setTransactionStateById(int id) {
-		setTransactionState(TransactionState.stateOf(id));
+	public void setTransactionStateByName(String name) {
+		setTransactionState(TransactionState.stateOf(name));
 	}
 
 	public Category getCategory() {
@@ -243,7 +252,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/ {
 		setCostCenter(costCenter);
 	}
 
-	/*public List <Tag> getTags() {
+	public List <Tag> getTags() {
 		return tags;
 	}
 
@@ -251,7 +260,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/ {
 		this.tags = tags;
 	}
 
-	@JsonGetter("tags")
+	/*@JsonGetter("tags")
 	public List <Long> getTagsId() {
 		if (tags != null) {
 			return tags.stream().map(Tag::getId).collect(Collectors.toList());
@@ -320,14 +329,6 @@ public class Transaction extends AppEntity /*SecureAppEntity*/ {
 
 	public void setNote(String note) {
 		this.note = note;
-	}
-
-	public String getBasis() {
-		return basis;
-	}
-
-	public void setBasis(String basis) {
-		this.basis = basis;
 	}
 
 	public boolean isRepeat() {
