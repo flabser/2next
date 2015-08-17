@@ -11,7 +11,6 @@ import org.postgresql.util.PSQLException;
 
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.env.EnvConst;
-import com.flabser.server.Server;
 
 public class ApplicationDatabase implements IApplicationDatabase {
 	private Properties props = new Properties();
@@ -51,10 +50,9 @@ public class ApplicationDatabase implements IApplicationDatabase {
 			Statement st = conn.createStatement();
 			try {
 				st.executeUpdate("CREATE USER  " + dbUser + " WITH password '" + dbPwd + "'");
-				// st.executeUpdate("CREATE ROLE  " + dbUser);
 				return 0;
 			} catch (PSQLException sqle) {
-				Server.logger.warningLogEntry(sqle.getMessage());
+				// Server.logger.warningLogEntry(sqle.getMessage());
 				return 1;
 			}
 		} catch (Throwable e) {
