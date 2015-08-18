@@ -1,5 +1,9 @@
 package com.flabser.servlets.admin;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
@@ -12,10 +16,6 @@ import com.flabser.localization.LocalizatorException;
 import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.users.User;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 public class UserServices {
 	private ISystemDatabase sysDatabase;
 	private int count;
@@ -24,8 +24,7 @@ public class UserServices {
 		sysDatabase = DatabaseFactory.getSysDatabase();
 	}
 
-	public String getUserAsXML(String id) throws RuleException,
-			LocalizatorException {
+	public String getUserAsXML(String id) throws RuleException, LocalizatorException {
 		String xmlContent = "", ea = "";
 		User user = sysDatabase.getUser(Integer.parseInt(id));
 
@@ -34,21 +33,16 @@ public class UserServices {
 		}
 
 		if (user.getLogin() != null) {
-			xmlContent += "<login>" + user.getLogin() + "</login><id>"
-					+ user.id + "</id>" + "<username>" + user.getUserName()
-					+ "</username><email>" + user.getEmail() + "</email>"
-					+ "<password>" + user.getPwd() + "</password><isadmin>"
-					+ user.isSupervisor() + "</isadmin>" + "<hash>"
-					+ user.getLoginHash() + "</hash><enabledapps>" + ea
-					+ "</enabledapps>";
+			xmlContent += "<login>" + user.getLogin() + "</login><id>" + user.id + "</id>" + "<username>" + user.getUserName()
+					+ "</username><email>" + user.getEmail() + "</email>" + "<password>" + user.getPwd() + "</password><isadmin>"
+					+ user.isSupervisor() + "</isadmin>" + "<hash>" + user.getLoginHash() + "</hash><enabledapps>" + ea + "</enabledapps>";
 
 		}
 
 		return xmlContent;
 	}
 
-	public String getBlankUserAsXML() throws RuleException,
-			LocalizatorException {
+	public String getBlankUserAsXML() throws RuleException, LocalizatorException {
 		String xmlContent = "";
 		return xmlContent;
 	}
@@ -64,17 +58,13 @@ public class UserServices {
 			condition = "USERID LIKE '" + keyWord + "%'";
 		}
 		count = sysDatabase.getAllUsersCount(condition);
-		ArrayList<User> fl = sysDatabase.getAllUsers(condition,
-				RuntimeObjUtil.calcStartEntry(pageNum, pageSize), pageSize);
+		ArrayList<User> fl = sysDatabase.getAllUsers(condition, RuntimeObjUtil.calcStartEntry(pageNum, pageSize), pageSize);
 
 		Iterator<User> it = fl.iterator();
 		while (it.hasNext()) {
 			User user = it.next();
-			xmlFragment += "<entry id=\"" + user.id + "\" ><login>"
-					+ user.getLogin() + "</login>" + "<issupervisor>"
-					+ user.isSupervisor() + "</issupervisor><email>"
-					+ user.getEmail() + "</email><username>"
-					+ user.getUserName() + "</username></entry>";
+			xmlFragment += "<entry id=\"" + user.id + "\" ><login>" + user.getLogin() + "</login>" + "<issupervisor>" + user.isSupervisor()
+					+ "</issupervisor><email>" + user.getEmail() + "</email><username>" + user.getUserName() + "</username></entry>";
 		}
 
 		return xmlFragment;
@@ -84,15 +74,13 @@ public class UserServices {
 		return count;
 	}
 
-	public String deploy(String userID) throws SQLException,
-			InstantiationException, IllegalAccessException,
-			ClassNotFoundException, DatabasePoolException {
+	public String deploy(String userID) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException,
+			DatabasePoolException {
 		String result = "";
 		User user = sysDatabase.getUser(Integer.parseInt(userID));
 		IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
 		for (ApplicationProfile appProfile : user.getApplications()) {
-			int res = appDb.createDatabase(appProfile.dbHost,
-					appProfile.getDbName(), appProfile.owner, appProfile.dbPwd);
+			int res = appDb.createDatabase(appProfile.getDbName(), appProfile.owner);
 			if (res == 0 || res == 1) {
 				IDatabase dataBase = appProfile.getDatabase();
 				IDeployer ad = dataBase.getDeployer();
@@ -103,14 +91,13 @@ public class UserServices {
 		return result;
 	}
 
-	public String remove(String userID) throws SQLException,
-			InstantiationException, IllegalAccessException,
-			ClassNotFoundException, DatabasePoolException {
+	public String remove(String userID) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException,
+			DatabasePoolException {
 		String result = "";
 		User user = sysDatabase.getUser(Integer.parseInt(userID));
 		IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
 		for (ApplicationProfile appProfile : user.getApplications()) {
-			appDb.removeDatabase("localhost", appProfile.getDbName());
+			appDb.removeDatabase(appProfile.getDbName());
 
 		}
 		return result;

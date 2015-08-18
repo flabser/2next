@@ -8,6 +8,7 @@ import org.junit.Test;
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
 
+import com.flabser.tests.InitEnv;
 import com.flabser.util.Util;
 
 public class InsertCostCenter extends InitEnv {
@@ -21,7 +22,7 @@ public class InsertCostCenter extends InitEnv {
 			e.setName(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 128));
 
 			CostCenterDAO dao = new CostCenterDAO(ses);
-			assertTrue(dao.add(e) > 0);
+			assertTrue(dao.add(e).getId() > 0);
 		}
 	}
 

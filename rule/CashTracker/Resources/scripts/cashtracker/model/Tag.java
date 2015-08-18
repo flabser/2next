@@ -1,18 +1,28 @@
 package cashtracker.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.AppEntity;
-import com.flabser.restful.data.EntityField;
+
 
 @JsonRootName("tag")
+@Entity
+@Table(name = "tags")
 public class Tag extends AppEntity {
 
-	@EntityField("name")
+	@Column(nullable = false)
 	private String name;
 
+	@ManyToMany(mappedBy = "tags")
+	private List <Transaction> transactions;
+
+	//
 	public String getName() {
 		return name;
 	}
@@ -23,12 +33,6 @@ public class Tag extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "Tag[" + name + "]";
+		return "Tag[" + id + ", " + name + "]";
 	}
-
-	public void init(ResultSet rs) throws SQLException {
-		setId(rs.getLong("id"));
-		setName(rs.getString("name"));
-	}
-
 }

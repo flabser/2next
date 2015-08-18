@@ -10,21 +10,20 @@ import com.flabser.exception.XSLTFileNotFoundException;
 import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
 
-public class ProviderOutput{
+public class ProviderOutput {
 	public File xslFile;
 	public boolean isValid;
 	protected static final String xmlTextUTF8Header = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 	protected String type;
 	public BrowserType browser;
 	protected StringBuffer output;
-	protected String historyXML = "";
 	protected UserSession userSession;
 	protected HttpSession jses;
 	protected String id;
 	private HttpServletRequest request;
 
-
-	public ProviderOutput(String type, String id, StringBuffer output, HttpServletRequest request, UserSession userSession, HttpSession jses, boolean addHistory) throws UserException{
+	public ProviderOutput(String type, String id, StringBuffer output, HttpServletRequest request, UserSession userSession, HttpSession jses)
+			throws UserException {
 		this.type = type;
 		this.id = id;
 		this.output = output;
@@ -32,65 +31,39 @@ public class ProviderOutput{
 		this.jses = jses;
 
 		browser = ServletUtil.getBrowserType(request);
-
 		this.userSession = userSession;
-
-
-		if (addHistory) {
-			addHistory();
-		}
-		if (userSession.history != null) {
-			/*	for(UserSession.HistoryEntry entry: userSession.history.getEntries()){
-				historyXML += "<entry type=\"" + entry.type + "\" title=\"" + entry.title + "\">" + XMLUtil.getAsTagValue(entry.URLforXML) + "</entry>";
-			}*/
-		}
 
 	}
 
-
-
-	public boolean prepareXSLT(AppTemplate env, String xsltFile) throws XSLTFileNotFoundException{
+	public boolean prepareXSLT(AppTemplate env, String xsltFile) throws XSLTFileNotFoundException {
 		boolean result;
 
 		xslFile = new File(xsltFile);
-		if (xslFile.exists()){
+		if (xslFile.exists()) {
 			env.xsltFileMap.put(xsltFile, xslFile);
 			result = true;
-		}else{
+		} else {
 			throw new XSLTFileNotFoundException(xslFile.getAbsolutePath());
 		}
-
 
 		return result;
 	}
 
-	public String getPlainText(){
+	public String getPlainText() {
 		return output.toString();
 	}
 
-	public String getStandartOutput(){
+	public String getStandartOutput() {
 
 		String queryString = request.getQueryString();
-		if (queryString != null){
-			queryString = "querystring=\"" + queryString.replace("&","&amp;") + "\"";
-		}else{
+		if (queryString != null) {
+			queryString = "querystring=\"" + queryString.replace("&", "&amp;") + "\"";
+		} else {
 			queryString = "";
 		}
 
-		return xmlTextUTF8Header + "<request " + queryString + " type=\"" + type + "\" lang=\"" + userSession.getLang() + "\" id=\"" + id + "\" " +
-		"useragent=\"" + browser + "\"  userid=\"" + userSession.currentUser.getLogin() + "\" >" +
-		"<history>" + historyXML + "</history>" + output + "</request>";
+		return xmlTextUTF8Header + "<request " + queryString + " type=\"" + type + "\" lang=\"" + userSession.getLang() + "\" id=\"" + id
+				+ "\" " + "useragent=\"" + browser + "\"  userid=\"" + userSession.currentUser.getLogin() + "\" >" + output + "</request>";
 	}
-
-	protected void addHistory() throws UserException{
-		String ref = request.getRequestURI() + "?" + request.getQueryString();
-		try {
-			userSession.addHistoryEntry(type, ref);
-		} catch (org.omg.CORBA.UserException e) {
-			e.printStackTrace();
-		}
-	}
-
-
 
 }

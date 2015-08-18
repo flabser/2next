@@ -1,35 +1,27 @@
 package cashtracker.model.constants;
 
 public enum TransactionType {
-	UNKNOWN(0), EXPENSE(1), INCOME(2), TRANSFER(3);
+	EXPENSE("E"), INCOME("I"), TRANSFER("T");
 
-	private final int code;
+	private final String value;
 
-	private TransactionType(int code) {
-		this.code = code;
+	private TransactionType(String value) {
+		this.value = value;
 	}
 
-	public static TransactionType typeOf(int code) {
-		switch (code) {
-		case 1:
-			return EXPENSE;
-
-		case 2:
-			return INCOME;
-
-		case 3:
-			return TRANSFER;
-
-		default:
-			return UNKNOWN;
+	public static TransactionType typeOf(String value) {
+		if (value != null) {
+			for (TransactionType type : values()) {
+				if (type.value.equals(value)) {
+					return type;
+				}
+			}
 		}
+
+		throw new IllegalArgumentException("Unknown value: " + value);
 	}
 
-	public int getCode() {
-		return code;
-	}
-
-	public static TransactionType getRandom() {
-		return values()[(int) (Math.random() * values().length)];
+	public String toValue() {
+		return value;
 	}
 }

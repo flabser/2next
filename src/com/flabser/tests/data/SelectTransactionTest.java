@@ -9,38 +9,41 @@ import org.junit.Test;
 import cashtracker.dao.TransactionDAO;
 import cashtracker.model.Transaction;
 
+import com.flabser.restful.data.IAppEntity;
+import com.flabser.tests.InitEnv;
+
+
 public class SelectTransactionTest extends InitEnv {
 
 	@Test
 	public void test() {
 		assertNotNull(db);
 		TransactionDAO dao = new TransactionDAO(ses);
-		List<Transaction> list = dao.findAll();
+		List <IAppEntity> list = dao.findAll();
 		assertNotNull(list);
-		for (Transaction entity : list) {
+		for (IAppEntity entity : list) {
+			Transaction t = (Transaction) entity;
 			System.out.println(entity);
-			assertNotNull(entity.getAccountFrom());
-			assertNotNull(entity.getAccountFromId());
-			assertNotNull(entity.getAccountTo());
-			assertNotNull(entity.getAmount());
-			assertNotNull(entity.getBasis());
-			assertNotNull(entity.getCategory());
-			assertNotNull(entity.getCategoryId());
-			assertNotNull(entity.getCostCenter());
-			assertNotNull(entity.getCostCenterId());
-			assertNotNull(entity.getDate());
-			assertNotNull(entity.getEndDate());
-			assertNotNull(entity.getEvery());
-			assertNotNull(entity.getExchangeRate());
-			assertNotNull(entity.getId());
-			assertNotNull(entity.getNote());
-			assertNotNull(entity.getRepeatStep());
-			assertNotNull(entity.getStartDate());
-			assertNotNull(entity.getTransactionState());
-			assertNotNull(entity.getTransactionStateCode());
-			assertNotNull(entity.getTransactionType());
-			assertNotNull(entity.getUser());
-
+			assertNotNull(t.getAccountFrom());
+			assertNotNull(t.getAccountFromId());
+			assertNotNull(t.getAccountTo());
+			assertNotNull(t.getAmount());
+			assertNotNull(t.getCategory());
+			assertNotNull(t.getCategoryId());
+			assertNotNull(t.getCostCenter());
+			assertNotNull(t.getCostCenterId());
+			assertNotNull(t.getDate());
+			assertNotNull(t.getEndDate());
+			assertNotNull(t.getEvery());
+			assertNotNull(t.getExchangeRate());
+			assertNotNull(t.getId());
+			assertNotNull(t.getNote());
+			assertNotNull(t.getRepeatStep());
+			assertNotNull(t.getStartDate());
+			assertNotNull(t.getTransactionState());
+			assertNotNull(t.getTransactionState());
+			assertNotNull(t.getTransactionType());
+			assertNotNull(t.getUser());
 		}
 		System.out.println(list.size());
 	}

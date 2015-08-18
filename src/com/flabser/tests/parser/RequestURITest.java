@@ -1,4 +1,4 @@
-package com.flabser.valves.tests;
+package com.flabser.tests.parser;
 
 import org.junit.Assert;
 import org.junit.Test;

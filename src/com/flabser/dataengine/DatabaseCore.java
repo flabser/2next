@@ -12,7 +12,10 @@ import org.eclipse.persistence.jpa.PersistenceProvider;
 import com.flabser.dataengine.pool.DBConnectionPool;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.pool.IDBConnectionPool;
+import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.exception.ApplicationException;
+import com.flabser.users.User;
 
 public abstract class DatabaseCore {
 	protected ApplicationProfile appProfile;
@@ -22,16 +25,32 @@ public abstract class DatabaseCore {
 	protected void initConnectivity(String driver, ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, DatabasePoolException {
 		pool = new DBConnectionPool();
-		pool.initConnectionPool(driver, appProfile.getURI(), appProfile.dbLogin, appProfile.dbPwd);
+		ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
+		User user = sysDb.getUser(appProfile.owner);
+		if (user != null) {
+			pool.initConnectionPool(driver, appProfile.getURI(), user.getDBLogin(), user.getDbPwd());
 
-		Map<String, String> properties = new HashMap<String, String>();
-		properties.put(PersistenceUnitProperties.JDBC_DRIVER, driver);
-		properties.put(PersistenceUnitProperties.JDBC_USER, appProfile.dbLogin);
-		properties.put(PersistenceUnitProperties.JDBC_PASSWORD, appProfile.dbPwd);
-		properties.put(PersistenceUnitProperties.JDBC_URL, appProfile.getURI());
-		PersistenceProvider pp = new PersistenceProvider();
-		EntityManagerFactory factory = pp.createEntityManagerFactory("JPA", properties);
-		entityManager = factory.createEntityManager();
+			Map<String, String> properties = new HashMap<String, String>();
+			properties.put(PersistenceUnitProperties.JDBC_DRIVER, driver);
+			properties.put(PersistenceUnitProperties.JDBC_USER, user.getDBLogin());
+			properties.put(PersistenceUnitProperties.JDBC_PASSWORD, user.getDbPwd());
+			properties.put(PersistenceUnitProperties.JDBC_URL, appProfile.getURI());
+			// properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "");
+			// properties.put(PersistenceUnitProperties.DDL_GENERATION,
+			// "drop-and-create-tables");
+			// properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE,
+			// "createDDL.jdbc");
+			// properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE,
+			// "dropDDL.jdbc");
+			// properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE,
+			// "both");
+
+			PersistenceProvider pp = new PersistenceProvider();
+			EntityManagerFactory factory = pp.createEntityManagerFactory("JPA", properties);
+			entityManager = factory.createEntityManager();
+		} else {
+			throw new ApplicationException(appProfile.appType, "Owner of the application cannot get access to database \""
+					+ appProfile.getURI() + "\"");
+		}
 	}
-
 }

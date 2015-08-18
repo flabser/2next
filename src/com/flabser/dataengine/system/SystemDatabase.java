@@ -28,6 +28,7 @@ import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.EnvConst;
+import com.flabser.rule.constants.RunMode;
 import com.flabser.server.Server;
 import com.flabser.users.User;
 import com.flabser.users.UserStatusType;
@@ -37,17 +38,15 @@ public class SystemDatabase implements ISystemDatabase {
 	public static final String jdbcDriver = "org.postgresql.Driver";
 	private IDBConnectionPool dbPool;
 
-	// TODO Need to bring the setting out
-
 	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		dbPool = new com.flabser.dataengine.pool.DBConnectionPool();
 		dbPool.initConnectionPool(jdbcDriver, EnvConst.CONN_URI, EnvConst.DB_USER, EnvConst.DB_PWD);
 
 		HashMap<String, String> queries = new HashMap<>();
-		queries.put("USERS", DDEScripts.getUsersDDE());
-		queries.put("APPS", DDEScripts.getAppsDDE());
-		queries.put("USERSACTIVITY", DDEScripts.getUsersActivityDDE());
-		queries.put("HOLIDAYS", DDEScripts.getHolidaysDDE());
+		queries.put("USERS", DDEScripts.USERS_DDE);
+		queries.put("APPS", DDEScripts.APPS_DDE);
+		queries.put("USERSACTIVITY", DDEScripts.USERS_ACTIVITY_DDE);
+		queries.put("HOLIDAYS", DDEScripts.HOLIDAYS_DDE);
 		queries.put("GROUPS", DDEScripts.GROUPS_DDE);
 		queries.put("ROLES", DDEScripts.ROLES_DDE);
 
@@ -87,6 +86,9 @@ public class SystemDatabase implements ISystemDatabase {
 			}
 		}
 
+		if (user.isAuthorized == false) {
+			user = new User();
+		}
 		return user;
 	}
 
@@ -131,16 +133,16 @@ public class SystemDatabase implements ISystemDatabase {
 		return null;
 	}
 
-	public List<UserRole> getUserRoles(Collection<Integer> ids) {
-		List<UserRole> result = new ArrayList<>();
+	public ArrayList<UserRole> getUserRoles(Collection<Integer> ids) {
+		ArrayList<UserRole> result = new ArrayList<>();
 		Connection conn = dbPool.getConnection();
 		try (Statement getApps = conn.createStatement();
 				ResultSet rs = getApps.executeQuery("select id, name, description, app_id, is_on from " + "(select unnest(ARRAY"
 						+ ids.stream().collect(Collectors.toList()) + "::integer[]) as g_id) as ids inner join roles on ids.g_id = ID ")) {
 
 			while (rs.next()) {
-				result.add(new UserRole(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("app_id"), rs
-						.getBoolean("is_on")));
+				result.add(new UserRole(rs.getInt("id"), rs.getString("name"), rs.getString("description"), rs.getInt("app_id"), RunMode
+						.getType(rs.getInt("is_on"))));
 			}
 
 			conn.commit();
@@ -183,16 +185,14 @@ public class SystemDatabase implements ISystemDatabase {
 		List<ApplicationProfile> result = new ArrayList<>();
 		Connection conn = dbPool.getConnection();
 		try (Statement getApps = conn.createStatement();
-				ResultSet rs = getApps
-						.executeQuery("select ID, APPTYPE, APPID, APPNAME, OWNER, DBTYPE, DBHOST, DBNAME, DBLOGIN, DBPWD, STATUS, STATUSDATE from "
-								+ "(select unnest(ARRAY"
-								+ ids.stream().collect(Collectors.toList())
-								+ "::integer[]) as app_id) as ids inner join apps on ids.app_id = ID ")) {
+				ResultSet rs = getApps.executeQuery("select ID, APPTYPE, APPID, APPNAME, OWNER, DBTYPE, DBHOST, DBNAME, STATUS, STATUSDATE"
+						+ ", ARRAY(select id FROM roles where app_id = apps.ID) as roles_id from " + "(select unnest(ARRAY"
+						+ ids.stream().collect(Collectors.toList()) + "::integer[]) as app_id) as ids inner join apps on ids.app_id = ID ")) {
 
 			while (rs.next()) {
 				result.add(new ApplicationProfile(rs.getInt("ID"), rs.getString("APPTYPE"), rs.getString("APPID"), rs.getString("APPNAME"),
-						rs.getString("OWNER"), rs.getInt("DBTYPE"), rs.getString("DBHOST"), rs.getString("DBNAME"),
-						rs.getString("DBLOGIN"), rs.getString("DBPWD"), rs.getInt("STATUS"), rs.getDate("STATUSDATE")));
+						rs.getString("OWNER"), rs.getInt("DBTYPE"), rs.getString("DBHOST"), rs.getString("DBNAME"), rs.getInt("STATUS"), rs
+								.getDate("STATUSDATE"), getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("roles_id"))))));
 			}
 
 			conn.commit();
@@ -317,7 +317,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 		try (Statement stmt = conn.createStatement();
 				ResultSet rs = stmt
-						.executeQuery("select ID, USERNAME, PRIMARYREGDATE, REGDATE, LOGIN, EMAIL, ISSUPERVISOR, PWD, PWDHASH, DEFAULTDBPWD, LOGINHASH, VERIFYCODE, STATUS, APPS, ROLES, GROUPS "
+						.executeQuery("select ID, USERNAME, PRIMARYREGDATE, REGDATE, LOGIN, EMAIL, ISSUPERVISOR, PWD, PWDHASH, DBPWD, LOGINHASH, VERIFYCODE, STATUS, APPS, ROLES, GROUPS "
 								+ "FROM (SELECT unnest(ARRAY"
 								+ Arrays.toString(ids)
 								+ "::integer[]) as u_id) as ids inner join users on ids.u_id = ID")) {
@@ -325,11 +325,11 @@ public class SystemDatabase implements ISystemDatabase {
 			while (rs.next()) {
 				result.add(new User(rs.getInt("ID"), rs.getString("USERNAME"), rs.getDate("PRIMARYREGDATE"), rs.getDate("REGDATE"), rs
 						.getString("LOGIN"), rs.getString("EMAIL"), rs.getBoolean("ISSUPERVISOR"), rs.getString("PWD"), rs
-						.getString("PWDHASH"), rs.getString("DEFAULTDBPWD"), rs.getInt("LOGINHASH"), rs.getString("VERIFYCODE"),
-						UserStatusType.getType(rs.getInt("STATUS")), new HashSet<>(getUserGroups(Arrays
-								.asList((Integer[]) getObjectArray(rs.getArray("GROUPS"))))), new HashSet<>(getUserRoles(Arrays
-								.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))), getApplicationProfiles(Arrays
-								.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true));
+						.getString("PWDHASH"), rs.getString("DBPWD"), rs.getInt("LOGINHASH"), rs.getString("VERIFYCODE"), UserStatusType
+						.getType(rs.getInt("STATUS")), new HashSet<>(getUserGroups(Arrays.asList((Integer[]) getObjectArray(rs
+						.getArray("GROUPS"))))), new HashSet<>(
+						getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))), getApplicationProfiles(Arrays
+						.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true));
 			}
 
 			conn.commit();
@@ -417,7 +417,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 		try (PreparedStatement insertUser = conn
 				.prepareStatement(
-						"insert into USERS(USERNAME, LOGIN, EMAIL, PWD, ISSUPERVISOR, PRIMARYREGDATE, REGDATE, LOGINHASH, PWDHASH, LASTDEFAULTURL, STATUS, VERIFYCODE, APPS, ROLES, GROUPS, DEFAULTDBPWD) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+						"insert into USERS(USERNAME, LOGIN, EMAIL, PWD, ISSUPERVISOR, PRIMARYREGDATE, REGDATE, LOGINHASH, PWDHASH, LASTDEFAULTURL, STATUS, VERIFYCODE, APPS, ROLES, GROUPS, DBPWD) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 						PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			insertUser.setString(1, user.getUserName());
@@ -435,7 +435,9 @@ public class SystemDatabase implements ISystemDatabase {
 			insertUser.setArray(13, conn.createArrayOf("integer", user.getApplications().stream().map(a -> a.id).toArray()));
 			insertUser.setArray(14, conn.createArrayOf("integer", user.getUserRoles().stream().map(UserRole::getId).toArray()));
 			insertUser.setArray(15, conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
-			insertUser.setString(16, user.getDefaultDbPwd());
+			insertUser.setString(16, user.getDbPwd());
+
+			insert(user.getUserRoles());
 
 			int key = 0;
 
@@ -462,8 +464,8 @@ public class SystemDatabase implements ISystemDatabase {
 
 		try (PreparedStatement updateUser = conn.prepareStatement("update USERS set " + "USERNAME = ?, " + "LOGIN = ?, " + "EMAIL = ?, "
 				+ "PWD = ?, " + "ISSUPERVISOR = ?, " + "PRIMARYREGDATE = ?, " + "REGDATE = ?, " + "LOGINHASH = ?, " + "PWDHASH = ?, "
-				+ "LASTDEFAULTURL = ?, " + "STATUS = ?, " + "VERIFYCODE = ?, " + "APPS = ?, " + "ROLES = ?, "
-				+ "GROUPS = ?, DEFAULTDBPWD = ? " + "where id = ?")) {
+				+ "LASTDEFAULTURL = ?, " + "STATUS = ?, " + "VERIFYCODE = ?, " + "APPS = ?, " + "ROLES = ?, " + "GROUPS = ?, DBPWD = ? "
+				+ "where id = ?")) {
 
 			updateUser.setString(1, user.getUserName());
 			updateUser.setString(2, user.getLogin());
@@ -480,7 +482,7 @@ public class SystemDatabase implements ISystemDatabase {
 			updateUser.setArray(13, conn.createArrayOf("integer", user.getApplications().stream().map(a -> a.id).toArray()));
 			updateUser.setArray(14, conn.createArrayOf("integer", user.getUserRoles().stream().map(UserRole::getId).toArray()));
 			updateUser.setArray(15, conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
-			updateUser.setString(16, user.getDefaultDbPwd());
+			updateUser.setString(16, user.getDbPwd());
 			updateUser.setInt(17, user.id);
 
 			updateUser.executeUpdate();
@@ -559,33 +561,75 @@ public class SystemDatabase implements ISystemDatabase {
 		return new ApplicationDatabase();
 	}
 
+	public void insert(Collection<UserRole> roles) {
+
+		Connection conn = dbPool.getConnection();
+
+		try (PreparedStatement pstmt = conn.prepareStatement("" + "with sel as ( select id from roles where name = ? and app_id = ?), "
+				+ " ins as ( insert into roles (name, description, app_id, is_on) " + "    select ?, ?, ?, ? "
+				+ "    where not exists (select id from roles where name = ? and app_id = ?) " + "    returning id " + ") "
+				+ "select id from ins " + "union all " + "select id from sel")) {
+
+			for (UserRole role : roles) {
+				if (role.getId() > 0) {
+					continue;
+				}
+
+				pstmt.setString(1, role.getName());
+				pstmt.setInt(2, role.getAppId());
+
+				pstmt.setString(3, role.getName());
+				pstmt.setString(4, role.getDescription());
+				pstmt.setInt(5, role.getAppId());
+				pstmt.setInt(6, role.getIsOn().getCode());
+
+				pstmt.setString(7, role.getName());
+				pstmt.setInt(8, role.getAppId());
+
+				try (ResultSet rs = pstmt.executeQuery()) {
+					if (rs.next()) {
+						role.setId(rs.getInt(1));
+					}
+				}
+			}
+
+			conn.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			DatabaseUtil.debugErrorPrint(e);
+		} finally {
+			dbPool.returnConnection(conn);
+		}
+	}
+
 	@Override
 	public int insert(ApplicationProfile ap) {
 		Connection conn = dbPool.getConnection();
 
 		try (PreparedStatement pst = conn
 				.prepareStatement(
-						"insert into APPS(APPNAME, OWNER, DBHOST, DBNAME, DBLOGIN, DBPWD, APPTYPE, APPID, DBTYPE, STATUS, STATUSDATE) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+						"insert into APPS(APPNAME, OWNER, DBHOST, DBNAME, APPTYPE, APPID, DBTYPE, STATUS, STATUSDATE) values(?, ?, ?, ?, ?, ?, ?, ?, ?);",
 						PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			pst.setString(1, ap.appName);
 			pst.setString(2, ap.owner);
 			pst.setString(3, ap.dbHost);
 			pst.setString(4, ap.dbName);
-			pst.setString(5, ap.dbLogin);
-			pst.setString(6, ap.dbPwd);
-			pst.setString(7, ap.appType);
-			pst.setString(8, ap.appID);
-			pst.setInt(9, ap.dbType.getCode());
-			pst.setInt(10, ap.status.getCode());
-			pst.setDate(11, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
+			pst.setString(5, ap.appType);
+			pst.setString(6, ap.appID);
+			pst.setInt(7, ap.dbType.getCode());
+			pst.setInt(8, ap.status.getCode());
+			pst.setDate(9, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
 
 			pst.executeUpdate();
 			try (ResultSet rs = pst.getGeneratedKeys()) {
 				if (rs.next()) {
 					ap.id = rs.getInt(1);
+					ap.getRoles().stream().forEach(r -> r.setAppId(ap.id));
 				}
 			}
+
+			insert(ap.getRoles());
 
 			conn.commit();
 			return ap.id;
@@ -602,22 +646,21 @@ public class SystemDatabase implements ISystemDatabase {
 		Connection conn = dbPool.getConnection();
 
 		try (PreparedStatement pst = conn
-				.prepareStatement("UPDATE APPS SET APPNAME = ?, OWNER = ?, DBHOST = ?, DBNAME = ?, DBLOGIN = ?, DBPWD = ?, APPTYPE = ?, APPID = ?, DBTYPE = ?, STATUS = ?, STATUSDATE = ? WHERE ID = ?;")) {
+				.prepareStatement("UPDATE APPS SET APPNAME = ?, OWNER = ?, DBHOST = ?, DBNAME = ?,  APPTYPE = ?, APPID = ?, DBTYPE = ?, STATUS = ?, STATUSDATE = ? WHERE ID = ?;")) {
 
 			pst.setString(1, ap.appName);
 			pst.setString(2, ap.owner);
 			pst.setString(3, ap.dbHost);
 			pst.setString(4, ap.dbName);
-			pst.setString(5, ap.dbLogin);
-			pst.setString(6, ap.dbPwd);
-			pst.setString(7, ap.appType);
-			pst.setString(8, ap.appID);
-			pst.setInt(9, ap.dbType.getCode());
-			pst.setInt(10, ap.status.getCode());
-			pst.setDate(11, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
-			pst.setInt(12, ap.id);
+			pst.setString(5, ap.appType);
+			pst.setString(6, ap.appID);
+			pst.setInt(7, ap.dbType.getCode());
+			pst.setInt(8, ap.status.getCode());
+			pst.setDate(9, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
+			pst.setInt(10, ap.id);
 
 			pst.executeUpdate();
+			insert(ap.getRoles());
 
 			conn.commit();
 			return ap.id;

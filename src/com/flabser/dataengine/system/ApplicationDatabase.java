@@ -11,7 +11,6 @@ import org.postgresql.util.PSQLException;
 
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.env.EnvConst;
-import com.flabser.server.Server;
 
 public class ApplicationDatabase implements IApplicationDatabase {
 	private Properties props = new Properties();
@@ -25,16 +24,11 @@ public class ApplicationDatabase implements IApplicationDatabase {
 	}
 
 	@Override
-	public int createDatabase(String host, String name, String dbUser, String dbPwd) throws SQLException {
+	public int createDatabase(String name, String dbUser) throws SQLException {
 		if (!hasDatabase(name)) {
 			Connection conn = DriverManager.getConnection(dbURL, props);
 			try {
 				Statement st = conn.createStatement();
-				try {
-					st.executeUpdate("CREATE USER  " + dbUser + " WITH password '" + dbPwd + "'");
-				} catch (PSQLException sqle) {
-					Server.logger.warningLogEntry(sqle.getMessage());
-				}
 				st.executeUpdate("CREATE DATABASE " + name + " WITH OWNER = " + dbUser + " ENCODING = 'UTF8'");
 				st.executeUpdate("GRANT ALL privileges ON DATABASE " + name + " TO " + dbUser);
 				st.close();
@@ -49,7 +43,27 @@ public class ApplicationDatabase implements IApplicationDatabase {
 	}
 
 	@Override
-	public int removeDatabase(String host, String name) throws SQLException {
+	public int registerUser(String dbUser, String dbPwd) throws SQLException {
+
+		Connection conn = DriverManager.getConnection(dbURL, props);
+		try {
+			Statement st = conn.createStatement();
+			try {
+				st.executeUpdate("CREATE USER  " + dbUser + " WITH password '" + dbPwd + "'");
+				return 0;
+			} catch (PSQLException sqle) {
+				// Server.logger.warningLogEntry(sqle.getMessage());
+				return 1;
+			}
+		} catch (Throwable e) {
+			DatabaseUtil.debugErrorPrint(e);
+			return -1;
+		}
+
+	}
+
+	@Override
+	public int removeDatabase(String name) throws SQLException {
 		if (hasDatabase(name)) {
 			Connection conn = DriverManager.getConnection(dbURL, props);
 			try {

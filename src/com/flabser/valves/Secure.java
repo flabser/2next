@@ -21,7 +21,8 @@ import com.flabser.exception.ApplicationException;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.server.Server;
-import com.flabser.servlets.Cookies;
+import com.flabser.servlets.SessionCooksValues;
+import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
 public class Secure extends ValveBase {
@@ -42,7 +43,7 @@ public class Secure extends ValveBase {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
-				if (us != null) {
+				if (us != null && (!us.currentUser.getLogin().equals(User.ANONYMOUS_USER))) {
 					if (!us.isBootstrapped(appID) && !appType.equalsIgnoreCase(EnvConst.WORKSPACE_APP_NAME)) {
 						AppTemplate env = Environment.getAppTemplate(appType);
 						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
@@ -57,9 +58,14 @@ public class Secure extends ValveBase {
 								Server.logger.errorLogEntry(e.getMessage());
 								response.setStatus(e.getCode());
 								response.getWriter().println(e.getHTMLMessage());
+							} catch (Exception e) {
+								Server.logger.errorLogEntry(e.getMessage());
+								ApplicationException ae = new ApplicationException(ru.getAppType(), e.getMessage());
+								response.setStatus(ae.getCode());
+								response.getWriter().println(ae.getHTMLMessage());
 							}
 						} else {
-							String msg = "\"" + env.appType + "\" has not set for " + us.currentUser.getLogin() + " " + ru;
+							String msg = "\"" + env.appType + "\" has not set for \"" + us.currentUser.getLogin() + "\" (" + ru + ")";
 							Server.logger.warningLogEntry(msg);
 							ApplicationException e = new ApplicationException(ru.getAppType(), msg);
 							response.setStatus(e.getCode());
@@ -82,7 +88,7 @@ public class Secure extends ValveBase {
 
 	private void gettingSession(Request request, Response response) throws IOException, ServletException {
 		HttpServletRequest http = request;
-		Cookies appCookies = new Cookies(http);
+		SessionCooksValues appCookies = new SessionCooksValues(http);
 		String token = appCookies.auth;
 		if (token != null) {
 			UserSession userSession = SessionPool.getLoggeedUser(token);

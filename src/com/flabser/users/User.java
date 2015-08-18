@@ -16,7 +16,6 @@ import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
-import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
@@ -55,7 +54,7 @@ public class User {
 	private int loginHash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
-	private String defaultDbPwd;
+	private String dbPwd;
 	public final static String ANONYMOUS_USER = "anonymous";
 
 	public User() {
@@ -63,9 +62,9 @@ public class User {
 		login = ANONYMOUS_USER;
 	}
 
-	public User(int id, String userName, Date primaryRegDate, Date regDate, String login, String email, boolean isSupervisor, String password,
-			String passwordHash, String defaultDbPwd, int loginHash, String verifyCode, UserStatusType status, HashSet<UserGroup> groups,
-			HashSet<UserRole> roles, List<ApplicationProfile> applications, boolean isValid) {
+	public User(int id, String userName, Date primaryRegDate, Date regDate, String login, String email, boolean isSupervisor,
+			String password, String passwordHash, String defaultDbPwd, int loginHash, String verifyCode, UserStatusType status,
+			HashSet<UserGroup> groups, HashSet<UserRole> roles, List<ApplicationProfile> applications, boolean isValid) {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
 		this.id = id;
 		this.userName = userName;
@@ -76,7 +75,7 @@ public class User {
 		this.isSupervisor = isSupervisor;
 		this.password = password;
 		this.passwordHash = passwordHash;
-		this.defaultDbPwd = defaultDbPwd;
+		this.dbPwd = defaultDbPwd;
 		this.loginHash = loginHash;
 		this.verifyCode = verifyCode;
 		this.status = status;
@@ -105,13 +104,13 @@ public class User {
 	}
 
 	@JsonIgnore
-	public String getDefaultDbPwd() {
-		return defaultDbPwd;
+	public String getDbPwd() {
+		return dbPwd;
 	}
 
 	@JsonIgnore
 	public void setDefaultDbPwd(String defaultDbPwd) {
-		this.defaultDbPwd = defaultDbPwd;
+		this.dbPwd = defaultDbPwd;
 	}
 
 	public boolean isSupervisor() {
@@ -179,8 +178,8 @@ public class User {
 			if (id == 0) {
 				primaryRegDate = new Date();
 				loginHash = (login + password).hashCode();
-				if (defaultDbPwd == null) {
-					defaultDbPwd = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
+				if (dbPwd == null) {
+					dbPwd = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
 				}
 				id = sysDatabase.insert(this);
 			} else {
@@ -190,25 +189,33 @@ public class User {
 			if (id < 0) {
 				return false;
 			} else {
+				IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
+				appDb.registerUser(getDBLogin(), dbPwd);
+
 				for (HashMap<String, ApplicationProfile> apps : getEnabledApps().values()) {
 					for (ApplicationProfile appProfile : apps.values()) {
-						if (appProfile.getStatus() != ApplicationStatusType.ON_LINE) {
-							IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
-							int res = appDb.createDatabase(appProfile.dbHost, appProfile.getDbName(), appProfile.dbLogin, appProfile.dbPwd);
-							if (res == 0 || res == 1) {
-								IDatabase dataBase = appProfile.getDatabase();
-								IDeployer ad = dataBase.getDeployer();
-								ad.init(appProfile);
-								Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
-								IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
-								dbInitializer.setApplicationProfile(appProfile.getPOJO());
-								if (ad.deploy(dbInitializer) == 0) {
-									appProfile.setStatus(ApplicationStatusType.ON_LINE);
+						if (appProfile.getStatus() == ApplicationStatusType.READY_TO_DEPLOY) {
+							try {
+								int res = appDb.createDatabase(appProfile.getDbName(), getDBLogin());
+								if (res == 0 || res == 1) {
+									IDatabase dataBase = appProfile.getDatabase();
+									IDeployer ad = dataBase.getDeployer();
+									ad.init(appProfile);
+									Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
+									IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
+									dbInitializer.initApplication(appProfile.getPOJO());
+									if (ad.deploy(dbInitializer) == 0) {
+										appProfile.setStatus(ApplicationStatusType.ON_LINE);
+									} else {
+										appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+									}
+									appProfile.save();
 								} else {
-									appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+									appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
+									appProfile.save();
+									return false;
 								}
-								appProfile.save();
-							} else {
+							} catch (Exception e) {
 								appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 								appProfile.save();
 								return false;
@@ -218,10 +225,12 @@ public class User {
 				}
 			}
 			return true;
-		} catch (InstantiationException | DatabasePoolException | IllegalAccessException | ClassNotFoundException e) {
+		} catch (InstantiationException | ClassNotFoundException e) {
 			Server.logger.errorLogEntry(e);
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
+		} catch (IllegalAccessException e1) {
+			Server.logger.errorLogEntry(e1);
 		}
 		return false;
 
@@ -238,6 +247,10 @@ public class User {
 
 	public String getLogin() {
 		return login;
+	}
+
+	public String getDBLogin() {
+		return login.replace("@", "__").replace(".", "_").replace("-", "_").toLowerCase();
 	}
 
 	public String getEmail() {
@@ -304,7 +317,8 @@ public class User {
 	}
 
 	public void setStatus(UserStatusType status) {
-		if ((this.status == UserStatusType.NOT_VERIFIED || this.status == UserStatusType.WAITING_FOR_VERIFYCODE) && status == UserStatusType.REGISTERED) {
+		if ((this.status == UserStatusType.NOT_VERIFIED || this.status == UserStatusType.WAITING_FOR_VERIFYCODE)
+				&& status == UserStatusType.REGISTERED) {
 			regDate = new Date();
 		}
 		this.status = status;

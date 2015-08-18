@@ -19,6 +19,7 @@ import cashtracker.validation.BudgetValidator;
 import cashtracker.validation.ValidationError;
 
 import com.flabser.restful.RestProvider;
+import com.flabser.restful.data.IAppEntity;
 
 
 @Path("budget")
@@ -31,7 +32,7 @@ public class BudgetService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get() {
 		BudgetDAO dao = new BudgetDAO(getSession());
-		List <Budget> budgets = dao.findAll();
+		List <IAppEntity> budgets = dao.findAll();
 		if (budgets.size() > 0) {
 			return Response.ok(budgets.get(0)).build();
 		}
@@ -50,13 +51,13 @@ public class BudgetService extends RestProvider {
 
 		BudgetDAO dao = new BudgetDAO(getSession());
 
-		List <Budget> budgets = dao.findAll();
+		List <IAppEntity> budgets = dao.findAll();
 		if (budgets.size() > 0) {
 			// return exists
-			return Response.ok(budgets.get(0)).build();
+			return Response.ok((Budget) budgets.get(0)).build();
 		}
 
-		m.setId(dao.add(m));
+		dao.add(m);
 		return Response.ok(m).build();
 	}
 

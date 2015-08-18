@@ -1,14 +1,17 @@
 package cashtracker.model;
 
 import java.math.BigDecimal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import cashtracker.model.constants.TransactionState;
@@ -17,51 +20,75 @@ import cashtracker.model.constants.TransactionType;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.flabser.restful.data.SecureAppEntity;
+import com.flabser.restful.data.AppEntity;
+
 
 @JsonRootName("transaction")
 @Entity
-@Table(name = "App.Transactions")
-public class Transaction extends SecureAppEntity {
+@Table(name = "transactions")
+public class Transaction extends AppEntity /*SecureAppEntity*/{
 
+	@Column(nullable = false)
 	private Long user;
 
+	@Column(name = "transaction_type")
+	@Enumerated(EnumType.STRING)
 	private TransactionType transactionType = TransactionType.EXPENSE;
 
-	private TransactionState transactionState = TransactionState.UNKNOWN;
+	@Column(name = "transaction_state")
+	@Enumerated(EnumType.STRING)
+	private TransactionState transactionState;
 
+	@ManyToOne
+	@JoinColumn(name = "account_from", nullable = false)
 	private Account accountFrom;
 
+	@ManyToOne
+	@JoinColumn(name = "account_to")
 	private Account accountTo;
 
+	@ManyToOne
+	@JoinColumn(name = "category")
 	private Category category;
 
+	@ManyToOne
+	@JoinColumn(name = "cost_center")
 	private CostCenter costCenter;
 
-	private List<Tag> tags;
+	@ManyToMany
+	@JoinTable(name = "transaction_tags",
+		joinColumns = { @JoinColumn(name = "TRASACTION_ID", referencedColumnName = "ID") },
+		inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
+	private List <Tag> tags;
 
+	@Column(nullable = false)
 	private Date date = new Date();
 
+	@Column(nullable = false)
 	private BigDecimal amount;
 
+	@Column(name = "exchange_rate")
 	private float exchangeRate;
 
 	private boolean repeat;
 
 	private int every;
 
+	@Column(name = "repeat_step")
 	private int repeatStep;
 
+	@Column(name = "start_date")
 	private Date startDate = new Date();
 
+	@Column(name = "end_date")
 	private Date endDate = new Date();
-
-	private String basis;
 
 	private String note;
 
+	@Column(name = "include_in_reports")
 	private boolean includeInReports;
 
+	//
 	public Long getUser() {
 		return user;
 	}
@@ -79,13 +106,16 @@ public class Transaction extends SecureAppEntity {
 	}
 
 	@JsonGetter("transactionType")
-	public Integer getTransactionTypeCode() {
-		return transactionType.getCode();
+	public String getTransactionTypeName() {
+		if (transactionType == null) {
+			return null;
+		}
+		return transactionType.name();
 	}
 
 	@JsonSetter("transactionType")
-	public void setTransactionTypeById(int id) {
-		setTransactionType(TransactionType.typeOf(id));
+	public void setTransactionTypeByName(String name) {
+		setTransactionType(TransactionType.typeOf(name));
 	}
 
 	public TransactionState getTransactionState() {
@@ -97,13 +127,16 @@ public class Transaction extends SecureAppEntity {
 	}
 
 	@JsonGetter("transactionState")
-	public Integer getTransactionStateCode() {
-		return transactionState.getCode();
+	public String getTransactionStateName() {
+		if (transactionState == null) {
+			return null;
+		}
+		return transactionState.name();
 	}
 
 	@JsonSetter("transactionState")
-	public void setTransactionStateById(int id) {
-		setTransactionState(TransactionState.stateOf(id));
+	public void setTransactionStateByName(String name) {
+		setTransactionState(TransactionState.stateOf(name));
 	}
 
 	public Category getCategory() {
@@ -219,16 +252,16 @@ public class Transaction extends SecureAppEntity {
 		setCostCenter(costCenter);
 	}
 
-	public List<Tag> getTags() {
+	public List <Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<Tag> tags) {
+	public void setTags(List <Tag> tags) {
 		this.tags = tags;
 	}
 
-	@JsonGetter("tags")
-	public List<Long> getTagsId() {
+	/*@JsonGetter("tags")
+	public List <Long> getTagsId() {
 		if (tags != null) {
 			return tags.stream().map(Tag::getId).collect(Collectors.toList());
 		}
@@ -236,9 +269,9 @@ public class Transaction extends SecureAppEntity {
 	}
 
 	@JsonSetter("tags")
-	public void setTagsId(List<Long> ids) {
+	public void setTagsId(List <Long> ids) {
 		if (ids != null) {
-			List<Tag> _tags = new ArrayList<Tag>();
+			List <Tag> _tags = new ArrayList <Tag>();
 			ids.forEach(id -> {
 				Tag tag = new Tag();
 				tag.setId(id);
@@ -248,7 +281,7 @@ public class Transaction extends SecureAppEntity {
 		} else {
 			setTags(null);
 		}
-	}
+	}*/
 
 	public Date getDate() {
 		return date;
@@ -298,14 +331,6 @@ public class Transaction extends SecureAppEntity {
 		this.note = note;
 	}
 
-	public String getBasis() {
-		return basis;
-	}
-
-	public void setBasis(String basis) {
-		this.basis = basis;
-	}
-
 	public boolean isRepeat() {
 		return repeat;
 	}
@@ -340,30 +365,7 @@ public class Transaction extends SecureAppEntity {
 
 	@Override
 	public String toString() {
-		return "Transaction[$id, $user, $date, $startDate, $endDate, $category, $accountFrom, $amount, $costCenter]";
+		return "Transaction[" + id + ", " + user + ", " + date + ", " + startDate + ", " + endDate + ", " + category
+				+ ", " + accountFrom + ", " + amount + ", " + costCenter + "]";
 	}
-
-	public void init(ResultSet rs) throws SQLException {
-		setId(rs.getInt("id"));
-		setUser(rs.getLong("t.USER"));
-		setTransactionType(TransactionType.typeOf(rs.getInt("t.transaction_type")));
-		setTransactionState(TransactionState.stateOf(rs.getInt("t.transaction_state")));
-		setAccountFromById(rs.getLong("t.account_from"));
-		setAccountToById(rs.getLong("t.account_to"));
-		setCategoryById(rs.getLong("t.category"));
-		setCostCenterById(rs.getLong("t.cost_center"));
-		// setTags(rs.getArray("t.tags"));
-		setDate(rs.getDate("t.date"));
-		setAmount(rs.getBigDecimal("t.amount"));
-		setExchangeRate(rs.getFloat("t.exchange_rate"));
-		setRepeat(rs.getBoolean("t.repeat"));
-		setEvery(rs.getInt("t.every"));
-		setRepeatStep(rs.getInt("t.repeat_step"));
-		setStartDate(rs.getDate("t.start_date"));
-		setEndDate(rs.getDate("t.end_date"));
-		setNote(rs.getString("t.note"));
-		setIncludeInReports(rs.getBoolean("t.include_in_reports"));
-		setBasis(rs.getString("t.basis"));
-	}
-
 }

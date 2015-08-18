@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import cashtracker.model.Account;
 
+import com.flabser.tests.InitEnv;
 import com.flabser.util.Util;
 
 public class InsertAccountTest extends InitEnv {
@@ -25,7 +26,6 @@ public class InsertAccountTest extends InitEnv {
 			a.setEnabled(Util.getRandomBoolean());
 			a.setIncludeInTotals(Util.getRandomBoolean());
 			a.setNote(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 256));
-			a.setSortOrder(0);
 
 			System.out.println(i);
 			db.insert(a, user);

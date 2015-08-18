@@ -1,24 +1,27 @@
 package cashtracker.model.constants;
 
 public enum BudgetState {
-	UNKNOWN(0), ACTIVE(653), DELETED(457);
+	ACTIVE("A"), DELETED("D");
 
-	private int code;
+	private final String value;
 
-	private BudgetState(int code) {
-		this.code = code;
+	private BudgetState(String value) {
+		this.value = value;
 	}
 
-	public static BudgetState stateOf(int code) {
-		for (BudgetState type : values()) {
-			if (type.code == code) {
-				return type;
+	public static BudgetState stateOf(String value) {
+		if (value != null) {
+			for (BudgetState state : values()) {
+				if (state.value.equals(value)) {
+					return state;
+				}
 			}
 		}
-		return UNKNOWN;
+
+		return null;
 	}
 
-	public int getCode() {
-		return code;
+	public String toValue() {
+		return value;
 	}
 }

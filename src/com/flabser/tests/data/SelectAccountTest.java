@@ -10,6 +10,7 @@ import org.junit.Test;
 import cashtracker.model.Account;
 
 import com.flabser.restful.data.IAppEntity;
+import com.flabser.tests.InitEnv;
 
 public class SelectAccountTest extends InitEnv {
 
@@ -28,7 +29,6 @@ public class SelectAccountTest extends InitEnv {
 			assertNotNull(a.getName());
 			assertNotNull(a.getNote());
 			assertNotNull(a.getOpeningBalance());
-			assertNotNull(a.getSortOrder());
 			assertNotNull(a.isEnabled());
 			assertNotNull(a.isIncludeInTotals());
 		}

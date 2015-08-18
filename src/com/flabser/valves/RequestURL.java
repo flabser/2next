@@ -66,8 +66,7 @@ public class RequestURL {
 	}
 
 	public boolean isProtected() {
-		return !appType.equals("") && !appID.equals("")
-				|| !(isDefault() || url.matches(".*/[\\w\\.-]+$") || appType.equalsIgnoreCase("SharedResources"));
+		return !appType.equals("") && !appID.equals("") || !(isDefault() || url.matches(".*/[\\w\\.-]+$"));
 	}
 
 	@Override

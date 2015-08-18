@@ -2,8 +2,7 @@ package com.flabser.dataengine.system;
 
 public class DDEScripts {
 
-	public static String getUsersDDE() {
-		String createTable = "CREATE TABLE users(ID serial NOT NULL, "
+	public static final String USERS_DDE = "CREATE TABLE users(ID serial NOT NULL, "
 				+ "username character varying(128),  "
 				+ "login character varying(32),  "
 				+ "email character varying(32),  "
@@ -13,7 +12,7 @@ public class DDEScripts {
 				+ "ISSUPERVISOR boolean, "
 				+ "loginhash integer, "
 				+ "pwdhash character varying(64), "
-				+ "defaultDbPwd character varying(32), "
+				+ "dbPwd character varying(32), "
 				+ "lastDefaultURL varchar(128), "
 				+ "status integer,"
 				+ "verifycode character varying(64),"
@@ -25,11 +24,8 @@ public class DDEScripts {
 				"" +
 				"create index users_login_hash on users using hash(login text_ops); ";
 
-		return createTable;
-	}
-
-	public static String getAppsDDE() {
-		String dde = "create table APPS(ID serial NOT NULL, "
+	public static final String APPS_DDE = "create table APPS("
+                + "ID serial NOT NULL, "
 				+ "APPTYPE varchar(32), "
 				+ "APPID varchar(16), "
 				+ "APPNAME varchar(64), "
@@ -37,30 +33,20 @@ public class DDEScripts {
 				+ "DBTYPE integer, "
 				+ "dbhost varchar(64), "
 				+ "dbname varchar(64), "
-				+ "dblogin varchar(64), "
-				+ "dbpwd varchar(32), "
 				+ "status integer, "
 				+ "statusdate timestamp without time zone, "
 				+ "CONSTRAINT apps_pkey PRIMARY KEY (ID))";
-		return dde;
-	}
 
-	public static String getUsersActivityDDE() {
-		String dde = "create table USERSACTIVITY(ID serial NOT NULL, "
+	public static final String USERS_ACTIVITY_DDE = "create table USERSACTIVITY(ID serial NOT NULL, "
 				+ " TYPE int NOT NULL," + " DBURI varchar(128), "
 				+ " USERID varchar(32), " + " CLIENTIP char(15), "
 				+ " EVENTTIME timestamp," + " VIEWTEXT varchar(1024))";
-		return dde;
-	}
 
-	public static String getHolidaysDDE() {
-		String dde = "CREATE TABLE HOLIDAYS (ID serial NOT NULL, "
+	public static final String HOLIDAYS_DDE = "CREATE TABLE HOLIDAYS (ID serial NOT NULL, "
 				+ " COUNTRY VARCHAR(10) , " + " TITLE VARCHAR(64), "
 				+ " REPEAT INT, " + " STARTDATE TIMESTAMP, "
 				+ " CONTINUING INT, " + " ENDDATE TIMESTAMP, "
 				+ " IFFALLSON INT, " + " COMMENT VARCHAR(64))";
-		return dde;
-	}
 
 	public static final String ROLES_DDE =
 			"create table roles (" +
@@ -68,8 +54,9 @@ public class DDEScripts {
 					"name character varying, " +
 					"description character varying, " +
 					"app_id integer, " +
-					"is_on boolean, " +
-					"CONSTRAINT roles_pkey PRIMARY KEY (id)" +
+					"is_on integer, " +
+					"CONSTRAINT roles_pkey PRIMARY KEY (id), " +
+                    "CONSTRAINT unique_roles_name_app_id UNIQUE (name, app_id)" +
 					");";
 
 	public static final String GROUPS_DDE =

@@ -3,9 +3,10 @@ package com.flabser.dataengine.system;
 import java.sql.SQLException;
 
 public interface IApplicationDatabase {
-	int removeDatabase(String host, String name) throws SQLException;
-	int createDatabase(String host, String name, String owner,  String dbPwd) throws SQLException;
 
+	int registerUser(String dbUser, String dbPwd) throws SQLException;
 
+	int createDatabase(String name, String owner) throws SQLException;
 
+	int removeDatabase(String name) throws SQLException;
 }
