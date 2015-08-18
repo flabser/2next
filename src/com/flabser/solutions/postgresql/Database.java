@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import com.flabser.dataengine.DatabaseCore;
@@ -34,6 +35,11 @@ public class Database extends DatabaseCore implements IDatabase {
 		super.appProfile = appProfile;
 		dbURI = appProfile.getURI();
 		initConnectivity(driver, appProfile);
+	}
+
+	@Override
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 
 	@Override
