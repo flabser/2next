@@ -12,19 +12,18 @@ import com.flabser.tests.InitEnv;
 
 public class CostCenterTest extends InitEnv {
 
-	int iteration = 1;
-
 	@Test
 	public void test() {
 		assertNotNull(db);
 
 		CostCenterDAO dao = new CostCenterDAO(ses);
 
-		int it = dao.findAll().size();
+		int size = dao.findAll().size();
+		int iteration = size + 1;
 
-		for (int i = 0; i < iteration; i++) {
+		for (int i = size; i < iteration; i++) {
 			CostCenter m = new CostCenter();
-			m.setName("cost center - " + it++);
+			m.setName("cost center - " + i);
 
 			dao.add(m);
 		}

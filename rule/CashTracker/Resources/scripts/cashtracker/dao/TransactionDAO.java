@@ -28,37 +28,37 @@ public class TransactionDAO {
 	}
 
 	public List <IAppEntity> findAll() {
-		List <IAppEntity> result = db.select(getSelectQuery(), user);
+		List <IAppEntity> result = db.select(getSelectQuery() + " ORDER BY t.date", user);
 		return result;
 	}
 
 	public Transaction findById(long id) {
-		String sql = getSelectQuery() + " WHERE t.id = " + id;
+		String sql = getSelectQuery() + " WHERE t.id = " + id + " ORDER BY t.date";
 		List <IAppEntity> list = db.select(sql, user);
 		Transaction result = list.size() > 0 ? (Transaction) list.get(0) : null;
 		return result;
 	}
 
 	public List <IAppEntity> findAllByAccount(Account m) {
-		String sql = getSelectQuery() + " WHERE t.account = " + m.getId();
+		String sql = getSelectQuery() + " WHERE t.account = " + m.getId() + " ORDER BY t.date";
 		List <IAppEntity> result = db.select(sql, user);
 		return result;
 	}
 
 	public List <IAppEntity> findAllByCostCenter(CostCenter m) {
-		String sql = getSelectQuery() + " WHERE t.cost_center = " + m.getId();
+		String sql = getSelectQuery() + " WHERE t.cost_center = " + m.getId() + " ORDER BY t.date";
 		List <IAppEntity> result = db.select(sql, user);
 		return result;
 	}
 
 	public List <IAppEntity> findAllByCategory(Category m) {
-		String sql = getSelectQuery() + " WHERE t.category = " + m.getId();
+		String sql = getSelectQuery() + " WHERE t.category = " + m.getId() + " ORDER BY t.date";
 		List <IAppEntity> result = db.select(sql, user);
 		return result;
 	}
 
 	public Transaction add(Transaction m) {
-		m.setUser((long) user.id);
+		m.setUserId((long) user.id);
 		return (Transaction) db.insert(m, user);
 	}
 

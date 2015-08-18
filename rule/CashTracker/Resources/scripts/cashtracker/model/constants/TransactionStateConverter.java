@@ -14,6 +14,9 @@ public class TransactionStateConverter implements AttributeConverter <Transactio
 
 	@Override
 	public String convertToDatabaseColumn(TransactionState type) {
+		if (type == null) {
+			return null;
+		}
 		return type.toValue();
 	}
 }

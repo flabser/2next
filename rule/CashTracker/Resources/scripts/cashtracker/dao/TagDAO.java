@@ -25,12 +25,12 @@ public class TagDAO {
 	}
 
 	public List <IAppEntity> findAll() {
-		List <IAppEntity> result = db.select(getSelectQuery(), user);
+		List <IAppEntity> result = db.select(getSelectQuery() + " ORDER BY t.name", user);
 		return result;
 	}
 
 	public Tag findById(long id) {
-		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE t.id = " + id, user);
+		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE t.id = " + id + " ORDER BY t.name", user);
 		Tag result = list.size() > 0 ? (Tag) list.get(0) : null;
 		return result;
 	}

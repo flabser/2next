@@ -15,27 +15,24 @@ import com.flabser.util.Util;
 
 public class AccountTest extends InitEnv {
 
-	int iteration = 1;
-
 	@Test
 	public void test() {
 		assertNotNull(db);
 
 		AccountDAO dao = new AccountDAO(ses);
 
-		int it = dao.findAll().size();
+		int size = dao.findAll().size();
+		int iteration = size + 1;
 
-		for (int i = 0; i < iteration; i++) {
+		for (int i = size; i < iteration; i++) {
 			Account m = new Account();
-			m.setName("Account - " + it);
+			m.setName("Account - " + i);
 			m.setCurrencyCode(Util.generateRandomAsText("QWERTYUIOP", 3));
 			m.setOpeningBalance(new BigDecimal(Util.generateRandom()));
 			m.setAmountControl(new BigDecimal(Util.generateRandom()));
 			m.setEnabled(Util.getRandomBoolean());
 			m.setIncludeInTotals(Util.getRandomBoolean());
-			m.setNote("note " + it);
-
-			it++;
+			m.setNote("note " + i);
 
 			dao.add(m);
 		}

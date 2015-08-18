@@ -56,7 +56,7 @@ public class FirstAction implements IAppDatabaseInit {
 		sql.append("CREATE TABLE ACCOUNTS ");
 		sql.append("(");
 		sql.append("  ID                  SERIAL NOT NULL,\n");
-		sql.append("  \"USER\"            BIGINT,\n");
+		sql.append("  USER_ID             BIGINT,\n");
 		sql.append("  NAME                CHARACTER VARYING(128),\n");
 		sql.append("  TYPE                SMALLINT,\n");
 		sql.append("  CURRENCY_CODE       CHARACTER VARYING(3),\n");
@@ -78,7 +78,7 @@ public class FirstAction implements IAppDatabaseInit {
 		sql.append("(");
 		sql.append("  ID                  SERIAL NOT NULL,\n");
 		sql.append("  PARENT_ID           BIGINT,\n");
-		sql.append("  \"USER\"            BIGINT,\n");
+		sql.append("  USER_ID             BIGINT,\n");
 		sql.append("  ENABLED             BOOLEAN,\n");
 		sql.append("  TRANSACTION_TYPES   CHARACTER VARYING(3)[],\n");
 		sql.append("  NAME                CHARACTER VARYING(128),\n");
@@ -98,7 +98,7 @@ public class FirstAction implements IAppDatabaseInit {
 		sql.append("CREATE TABLE COSTCENTERS ");
 		sql.append("(");
 		sql.append("  ID         SERIAL NOT NULL,\n");
-		sql.append("  \"USER\"   BIGINT,\n");
+		sql.append("  USER_ID    BIGINT,\n");
 		sql.append("  NAME       CHARACTER VARYING(128),\n");
 		sql.append(" CONSTRAINT COSTCENTER_ID_PK PRIMARY KEY (ID)");
 		sql.append(")");
@@ -110,7 +110,7 @@ public class FirstAction implements IAppDatabaseInit {
 		sql.append("CREATE TABLE TAGS ");
 		sql.append("(");
 		sql.append("  ID         SERIAL NOT NULL,\n");
-		sql.append("  \"USER\"   BIGINT,\n");
+		sql.append("  USER_ID    BIGINT,\n");
 		sql.append("  NAME       CHARACTER VARYING(32),\n");
 		sql.append(" CONSTRAINT TAG_ID_PK PRIMARY KEY (ID)");
 		sql.append(")");
@@ -122,7 +122,7 @@ public class FirstAction implements IAppDatabaseInit {
 		sql.append("CREATE TABLE TRANSACTIONS ");
 		sql.append("(");
 		sql.append("  ID                  BIGSERIAL NOT NULL,\n");
-		sql.append("  \"USER\"            BIGINT,\n");
+		sql.append("  USER_ID             BIGINT,\n");
 		sql.append("  TRANSACTION_TYPE    CHARACTER VARYING(3),\n");
 		sql.append("  TRANSACTION_STATE   CHARACTER VARYING(3),\n");
 		sql.append("  REG_DATE            TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),\n");
@@ -131,7 +131,7 @@ public class FirstAction implements IAppDatabaseInit {
 		sql.append("  ACCOUNT_TO          BIGINT,\n");
 		sql.append("  CATEGORY            BIGINT,\n");
 		sql.append("  COST_CENTER         BIGINT,\n");
-		sql.append("  TAGS                BIGINT[],\n");
+		// sql.append("  TAGS                BIGINT[],\n");
 		sql.append("  AMOUNT              NUMERIC,\n");
 		sql.append("  EXCHANGE_RATE       NUMERIC,\n");
 		sql.append("  REPEAT              BOOLEAN,\n");
