@@ -43,7 +43,7 @@ public class SelectTransactionTest extends InitEnv {
 			assertNotNull(t.getTransactionState());
 			assertNotNull(t.getTransactionState());
 			assertNotNull(t.getTransactionType());
-			assertNotNull(t.getUser());
+			assertNotNull(t.getUserId());
 		}
 		System.out.println(list.size());
 	}
