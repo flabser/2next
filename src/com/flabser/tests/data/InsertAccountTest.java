@@ -12,7 +12,7 @@ import com.flabser.tests.InitEnv;
 import com.flabser.util.Util;
 
 public class InsertAccountTest extends InitEnv {
-	int iteration = 100000;
+	int iteration = 10000;
 
 	@Test
 	public void test() {

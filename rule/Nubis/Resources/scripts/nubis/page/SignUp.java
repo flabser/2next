@@ -25,8 +25,6 @@ public class SignUp extends _DoScript {
 
 		publishElement("process-action", "reg");
 
-		System.out.println(formData);
-
 		RegWebForm regForm = new RegWebForm(formData);
 
 		if (!regForm.isValid()) {
