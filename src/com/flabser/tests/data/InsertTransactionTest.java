@@ -26,7 +26,7 @@ public class InsertTransactionTest extends InitEnv {
 		assertNotNull(db);
 		for (int i = 0; i < iteration; i++) {
 			Transaction t = new Transaction();
-			t.setUser(new Long(Util.generateRandom()));
+			t.setUserId(new Long(Util.generateRandom()));
 			t.setTransactionType(TransactionType.EXPENSE);
 			t.setTransactionState(TransactionState.PENDING);
 			t.setAccountFromById(new Long(1));
