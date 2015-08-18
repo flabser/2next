@@ -5,7 +5,7 @@
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.Welcome</doscript>
+			<doscript source="java_class">cashtracker.page.Welcome</doscript>
 		</events>
 	</element>
 

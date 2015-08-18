@@ -22,7 +22,7 @@ public class TagTest extends InitEnv {
 		TagDAO dao = new TagDAO(ses);
 
 		int size = dao.findAll().size();
-		int iteration = size + 2;
+		int iteration = size + 1;
 
 		for (int i = size; i < iteration; i++) {
 			Tag m = new Tag();
@@ -34,7 +34,7 @@ public class TagTest extends InitEnv {
 		List <IAppEntity> tags = dao.findAll();
 		for (IAppEntity itag : tags) {
 			Tag tag = (Tag) itag;
-			tag.getTransactions().stream().forEach(System.out::println);
+			tag.getTransactions().forEach(System.out::println);
 		}
 	}
 }

@@ -36,7 +36,7 @@ public class TransactionTest extends InitEnv {
 		TagDAO tagDAO = new TagDAO(ses);
 
 		int size = dao.findAll().size();
-		int iteration = size - 1;
+		int iteration = size + 1;
 
 		for (int i = size; i < iteration; i++) {
 			Transaction m = new Transaction();
@@ -74,7 +74,7 @@ public class TransactionTest extends InitEnv {
 		List <IAppEntity> ts = dao.findAll();
 		for (IAppEntity it : ts) {
 			Transaction t = (Transaction) it;
-			t.getTags().stream().forEach(System.out::println);
+			t.getTags().forEach(System.out::println);
 		}
 	}
 }
