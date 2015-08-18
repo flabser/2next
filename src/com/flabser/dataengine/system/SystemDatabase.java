@@ -674,7 +674,21 @@ public class SystemDatabase implements ISystemDatabase {
 
 	@Override
 	public int deleteApplicationProfile(int id) {
-		return 0;
+		Connection conn = dbPool.getConnection();
+
+		try {
+			PreparedStatement pst = conn.prepareStatement("DELETE FROM APPS WHERE ID = ?;");
+			pst.setInt(1, id);
+			pst.executeUpdate();
+
+			conn.commit();
+			return 0;
+		} catch (SQLException e) {
+			DatabaseUtil.debugErrorPrint(e);
+			return -1;
+		} finally {
+			dbPool.returnConnection(conn);
+		}
 	}
 
 	// risk of sql injection
