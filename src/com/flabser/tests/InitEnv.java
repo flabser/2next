@@ -37,17 +37,21 @@ public class InitEnv {
 		user = systemDatabase.checkUserHash(Settings.login, Settings.pwd, null);
 		us = new UserSession(user);
 		HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(appType);
-		for (ApplicationProfile app : hh.values()) {
-			if (app.status == ApplicationStatusType.ON_LINE) {
-				ap = app;
-				us.init(ap.appID);
-				break;
+		if (hh != null) {
+			for (ApplicationProfile app : hh.values()) {
+				if (app.status == ApplicationStatusType.ON_LINE) {
+					ap = app;
+					us.init(ap.appID);
+					break;
+				}
 			}
+			AppTemplate at = new AppTemplate(appType, "global.xml");
+			ses = new _Session(at, us);
+			aa = us.getActiveApplication(appType);
+			db = aa.getDataBase();
+		} else {
+			System.out.println("an application associated with the user has not been found");
 		}
-		AppTemplate at = new AppTemplate(appType, "global.xml");
-		ses = new _Session(at, us);
-		aa = us.getActiveApplication(appType);
-		db = aa.getDataBase();
 
 	}
 }

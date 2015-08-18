@@ -15,6 +15,7 @@ public class AppRolesTest extends InitEnv {
 	@Test
 	public void test() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException {
 		ApplicationProfile appProfile = aa.getParent();
+		System.out.println(appProfile.id);
 		int initSize = appProfile.getRoles().size();
 		appProfile.addRole("role1", "it is role1 desciption");
 		appProfile.addRole("role2", "it is role2 desciption");

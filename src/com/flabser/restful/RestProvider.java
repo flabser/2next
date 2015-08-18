@@ -69,7 +69,7 @@ public class RestProvider {
 
 	@GET
 	@Path("/page/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response producePage(@PathParam("id") String id, @Context UriInfo uriInfo) throws RuleException, AuthFailedException,
 			UserException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
@@ -101,7 +101,7 @@ public class RestProvider {
 	@POST
 	@Path("/page/{id}")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response proPage(@PathParam("id") String id, MultivaluedMap<String, String> formParams) throws RuleException,
 			AuthFailedException, UserException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);

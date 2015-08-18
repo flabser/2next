@@ -12,14 +12,13 @@ import cashtracker.model.Transaction;
 import com.flabser.restful.data.IAppEntity;
 import com.flabser.tests.InitEnv;
 
-
 public class SelectTransactionTest extends InitEnv {
 
 	@Test
 	public void test() {
 		assertNotNull(db);
 		TransactionDAO dao = new TransactionDAO(ses);
-		List <IAppEntity> list = dao.findAll();
+		List<IAppEntity> list = dao.findAll();
 		assertNotNull(list);
 		for (IAppEntity entity : list) {
 			Transaction t = (Transaction) entity;
@@ -43,7 +42,9 @@ public class SelectTransactionTest extends InitEnv {
 			assertNotNull(t.getTransactionState());
 			assertNotNull(t.getTransactionState());
 			assertNotNull(t.getTransactionType());
+
 			assertNotNull(t.getUserId());
+
 		}
 		System.out.println(list.size());
 	}
