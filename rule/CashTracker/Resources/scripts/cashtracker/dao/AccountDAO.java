@@ -25,12 +25,12 @@ public class AccountDAO {
 	}
 
 	public List <IAppEntity> findAll() {
-		List <IAppEntity> result = db.select(getSelectQuery(), user);
+		List <IAppEntity> result = db.select(getSelectQuery() + " ORDER BY a.name", user);
 		return result;
 	}
 
 	public Account findById(long id) {
-		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE a.id = " + id, user);
+		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE a.id = " + id + " ORDER BY a.name", user);
 		Account result = list.size() > 0 ? (Account) list.get(0) : null;
 		return result;
 	}

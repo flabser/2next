@@ -1,13 +1,14 @@
 package cashtracker.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -15,7 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import cashtracker.model.constants.TransactionState;
+import cashtracker.model.constants.TransactionStateConverter;
 import cashtracker.model.constants.TransactionType;
+import cashtracker.model.constants.TransactionTypeConverter;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -29,14 +32,14 @@ import com.flabser.restful.data.AppEntity;
 public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@Column(nullable = false)
-	private Long user;
+	private Long userId;
 
+	@Convert(converter = TransactionTypeConverter.class)
 	@Column(name = "transaction_type")
-	@Enumerated(EnumType.STRING)
 	private TransactionType transactionType = TransactionType.EXPENSE;
 
+	@Convert(converter = TransactionStateConverter.class)
 	@Column(name = "transaction_state")
-	@Enumerated(EnumType.STRING)
 	private TransactionState transactionState;
 
 	@ManyToOne
@@ -56,9 +59,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	private CostCenter costCenter;
 
 	@ManyToMany
-	@JoinTable(name = "transaction_tags",
-		joinColumns = { @JoinColumn(name = "TRASACTION_ID", referencedColumnName = "ID") },
-		inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
+	@JoinTable(name = "transaction_tags", joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
 	private List <Tag> tags;
 
 	@Column(nullable = false)
@@ -77,11 +78,11 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@Column(name = "repeat_step")
 	private int repeatStep;
 
-	@Column(name = "start_date")
-	private Date startDate = new Date();
+	@Column(name = "start_date", nullable = true)
+	private Date startDate;
 
-	@Column(name = "end_date")
-	private Date endDate = new Date();
+	@Column(name = "end_date", nullable = true)
+	private Date endDate;
 
 	private String note;
 
@@ -89,12 +90,12 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	private boolean includeInReports;
 
 	//
-	public Long getUser() {
-		return user;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setUser(Long user) {
-		this.user = user;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public TransactionType getTransactionType() {
@@ -260,7 +261,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.tags = tags;
 	}
 
-	/*@JsonGetter("tags")
+	@JsonGetter("tags")
 	public List <Long> getTagsId() {
 		if (tags != null) {
 			return tags.stream().map(Tag::getId).collect(Collectors.toList());
@@ -281,7 +282,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		} else {
 			setTags(null);
 		}
-	}*/
+	}
 
 	public Date getDate() {
 		return date;
@@ -365,7 +366,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@Override
 	public String toString() {
-		return "Transaction[" + id + ", " + user + ", " + date + ", " + startDate + ", " + endDate + ", " + category
-				+ ", " + accountFrom + ", " + amount + ", " + costCenter + "]";
+		return "Transaction[" + id + ", " + userId + ", " + date + ", " + category + ", " + accountFrom + ", " + amount
+				+ ", " + costCenter + "]";
 	}
 }

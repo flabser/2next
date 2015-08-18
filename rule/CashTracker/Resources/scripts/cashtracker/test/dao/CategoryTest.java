@@ -16,30 +16,33 @@ import com.flabser.tests.InitEnv;
 
 public class CategoryTest extends InitEnv {
 
-	int iteration = 1;
-
 	@Test
 	public void test() {
 		assertNotNull(db);
 
 		CategoryDAO dao = new CategoryDAO(ses);
 
-		int it = dao.findAll().size();
+		int size = dao.findAll().size();
+		int iteration = size + 2;
 
-		for (int i = 0; i < iteration; i++) {
+		for (int i = size; i < iteration; i++) {
 			Category m = new Category();
-			m.setName("category - " + it);
+			m.setName("category - " + i);
 			m.setParentCategory(null);
 
 			List <TransactionType> transactionTypes = new ArrayList <TransactionType>();
-			transactionTypes.add(TransactionType.EXPENSE);
-			transactionTypes.add(TransactionType.INCOME);
+
+			if (i % 2 == 1) {
+				transactionTypes.add(TransactionType.EXPENSE);
+				transactionTypes.add(TransactionType.INCOME);
+				m.setSortOrder(0);
+			} else {
+				transactionTypes.add(TransactionType.EXPENSE);
+				m.setSortOrder(i);
+			}
 			m.setTransactionTypes(transactionTypes);
 
-			m.setNote("note " + it);
-			m.setSortOrder(0);
-
-			it++;
+			m.setNote("note " + i);
 
 			System.out.println(i);
 			System.out.println(m);

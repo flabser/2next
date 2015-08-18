@@ -12,19 +12,18 @@ import com.flabser.tests.InitEnv;
 
 public class TagTest extends InitEnv {
 
-	int iteration = 2;
-
 	@Test
 	public void test() {
 		assertNotNull(db);
 
 		TagDAO dao = new TagDAO(ses);
 
-		int it = dao.findAll().size();
+		int size = dao.findAll().size();
+		int iteration = size + 2;
 
-		for (int i = 0; i < iteration; i++) {
+		for (int i = size; i < iteration; i++) {
 			Tag m = new Tag();
-			m.setName("tag - " + it++);
+			m.setName("tag - " + i);
 
 			dao.add(m);
 		}

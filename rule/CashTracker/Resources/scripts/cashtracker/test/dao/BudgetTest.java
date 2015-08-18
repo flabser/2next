@@ -13,8 +13,6 @@ import com.flabser.tests.InitEnv;
 
 public class BudgetTest extends InitEnv {
 
-	int iteration = 1;
-
 	@Test
 	public void test() {
 		assertNotNull(db);

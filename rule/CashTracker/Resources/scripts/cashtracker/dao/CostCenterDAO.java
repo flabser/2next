@@ -25,12 +25,12 @@ public class CostCenterDAO {
 	}
 
 	public List <IAppEntity> findAll() {
-		List <IAppEntity> result = db.select(getSelectQuery(), user);
+		List <IAppEntity> result = db.select(getSelectQuery() + " ORDER BY cc.name", user);
 		return result;
 	}
 
 	public CostCenter findById(long id) {
-		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE cc.id = " + id, user);
+		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE cc.id = " + id + " ORDER BY cc.name", user);
 		CostCenter result = list.size() > 0 ? (CostCenter) list.get(0) : null;
 		return result;
 	}

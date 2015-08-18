@@ -16,11 +16,11 @@ public class TransactionTypesConverter implements AttributeConverter <List <Tran
 			return null;
 		}
 
-		List <TransactionType> tt = new ArrayList <TransactionType>();
+		List <TransactionType> result = new ArrayList <TransactionType>();
 		for (String name : types) {
-			tt.add(TransactionType.typeOf(name));
+			result.add(TransactionType.typeOf(name));
 		}
-		return tt;
+		return result;
 	}
 
 	@Override

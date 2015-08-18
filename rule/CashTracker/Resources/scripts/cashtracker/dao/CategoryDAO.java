@@ -25,12 +25,13 @@ public class CategoryDAO {
 	}
 
 	public List <IAppEntity> findAll() {
-		List <IAppEntity> result = db.select(getSelectQuery(), user);
+		List <IAppEntity> result = db.select(getSelectQuery() + " ORDER BY c.sortOrder, c.name", user);
 		return result;
 	}
 
 	public Category findById(long id) {
-		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE c.id = " + id, user);
+		List <IAppEntity> list;
+		list = db.select(getSelectQuery() + " WHERE c.id = " + id + " ORDER BY c.sortOrder, c.name", user);
 		Category result = list.size() > 0 ? (Category) list.get(0) : null;
 		return result;
 	}
