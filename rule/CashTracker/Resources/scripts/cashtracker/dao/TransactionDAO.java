@@ -2,10 +2,15 @@ package cashtracker.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import cashtracker.helper.PageRequest;
 import cashtracker.model.Account;
 import cashtracker.model.Category;
 import cashtracker.model.CostCenter;
 import cashtracker.model.Transaction;
+import cashtracker.model.constants.TransactionType;
 
 import com.flabser.dataengine.IDatabase;
 import com.flabser.restful.data.IAppEntity;
@@ -29,6 +34,27 @@ public class TransactionDAO {
 
 	public List <IAppEntity> findAll() {
 		List <IAppEntity> result = db.select(getSelectQuery() + " ORDER BY t.date", user);
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List <IAppEntity> findAll(PageRequest pr, TransactionType type) {
+		String jpql;
+		if (type == null) {
+			jpql = getSelectQuery() + " ORDER BY t.date";
+		} else {
+			jpql = getSelectQuery() + " WHERE t.transactionType = :type ORDER BY t.date";
+		}
+
+		EntityManager em = db.getEntityManager();
+		Query q = em.createQuery(jpql);
+		if (type != null) {
+			q.setParameter("type", type);
+		}
+		q.setFirstResult(pr.getOffset());
+		q.setMaxResults(pr.getLimit());
+
+		List <IAppEntity> result = q.getResultList();
 		return result;
 	}
 
