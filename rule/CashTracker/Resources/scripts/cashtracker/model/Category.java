@@ -49,32 +49,6 @@ public class Category extends AppEntity {
 	private int sortOrder;
 
 	//
-	public List <TransactionType> getTransactionTypes() {
-		return transactionTypes;
-	}
-
-	public void setTransactionTypes(List <TransactionType> transactionTypes) {
-		this.transactionTypes = transactionTypes;
-	}
-
-	@JsonGetter("transactionTypes")
-	public List <String> getTransactionTypesCode() {
-		List <String> tTypes = new ArrayList <String>();
-		if (transactionTypes != null) {
-			transactionTypes.forEach(type -> tTypes.add(type.name()));
-		}
-		return tTypes;
-	}
-
-	@JsonSetter("transactionTypes")
-	public void setTransactionTypesByIds(List <String> names) {
-		List <TransactionType> tTypes = new ArrayList <TransactionType>();
-		if (names != null) {
-			names.forEach(name -> tTypes.add(TransactionType.valueOf(name)));
-		}
-		setTransactionTypes(tTypes);
-	}
-
 	public Category getParentCategory() {
 		return parentCategory;
 	}
@@ -107,6 +81,32 @@ public class Category extends AppEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List <TransactionType> getTransactionTypes() {
+		return transactionTypes;
+	}
+
+	public void setTransactionTypes(List <TransactionType> transactionTypes) {
+		this.transactionTypes = transactionTypes;
+	}
+
+	@JsonGetter("transactionTypes")
+	public List <String> getTransactionTypesCode() {
+		List <String> tTypes = new ArrayList <String>();
+		if (transactionTypes != null) {
+			transactionTypes.forEach(type -> tTypes.add(type.name()));
+		}
+		return tTypes;
+	}
+
+	@JsonSetter("transactionTypes")
+	public void setTransactionTypesByIds(List <String> names) {
+		List <TransactionType> tTypes = new ArrayList <TransactionType>();
+		if (names != null) {
+			names.forEach(name -> tTypes.add(TransactionType.valueOf(name)));
+		}
+		setTransactionTypes(tTypes);
 	}
 
 	public boolean isEnabled() {

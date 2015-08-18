@@ -131,7 +131,7 @@ public class FirstAction implements IAppDatabaseInit {
 		sql.append("  ACCOUNT_TO          BIGINT,\n");
 		sql.append("  CATEGORY            BIGINT,\n");
 		sql.append("  COST_CENTER         BIGINT,\n");
-		sql.append("  TAGS                BIGINT[],\n");
+		// sql.append("  TAGS                BIGINT[],\n");
 		sql.append("  AMOUNT              NUMERIC,\n");
 		sql.append("  EXCHANGE_RATE       NUMERIC,\n");
 		sql.append("  REPEAT              BOOLEAN,\n");

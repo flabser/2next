@@ -22,7 +22,9 @@ public class DatabaseRemover implements Job {
 	public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 		Server.logger.normalLogEntry("start database remover task");
 		ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
-		ArrayList<ApplicationProfile> dd = sysDb.getAllApps("", 0, 100);
+		ArrayList<ApplicationProfile> apps = sysDb.getAllApps("", 0, 100);
+		for (ApplicationProfile ap : apps) {
 
+		}
 	}
 }
