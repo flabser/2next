@@ -30,7 +30,6 @@ export default DS.Model.extend(EmberValidations.Mixin, {
     startDate: DS.attr('date'),
     endDate: DS.attr('date'),
     note: DS.attr('string'),
-    basis: DS.attr('string'),
     includeInReports: DS.attr('boolean', {
         defaultValue: true
     }),
