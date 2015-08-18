@@ -2,11 +2,14 @@ package cashtracker.test.dao;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import cashtracker.dao.TagDAO;
 import cashtracker.model.Tag;
 
+import com.flabser.restful.data.IAppEntity;
 import com.flabser.tests.InitEnv;
 
 
@@ -28,6 +31,10 @@ public class TagTest extends InitEnv {
 			dao.add(m);
 		}
 
-		System.out.println(dao.findAll());
+		List <IAppEntity> tags = dao.findAll();
+		for (IAppEntity itag : tags) {
+			Tag tag = (Tag) itag;
+			tag.getTransactions().stream().forEach(System.out::println);
+		}
 	}
 }

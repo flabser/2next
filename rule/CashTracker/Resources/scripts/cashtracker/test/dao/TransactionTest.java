@@ -36,13 +36,13 @@ public class TransactionTest extends InitEnv {
 		TagDAO tagDAO = new TagDAO(ses);
 
 		int size = dao.findAll().size();
-		int iteration = size + 5;
+		int iteration = size - 1;
 
 		for (int i = size; i < iteration; i++) {
 			Transaction m = new Transaction();
 
-			m.setDate(new Date());
-			m.setAmount(new BigDecimal(1000));
+			m.setDate(new Date(System.currentTimeMillis() + (3600 * i)));
+			m.setAmount(new BigDecimal(1000 + i));
 			m.setAccountFrom((Account) accountDAO.findAll().get(0));
 			m.setCostCenter((CostCenter) costCenterDAO.findAll().get(0));
 
@@ -69,6 +69,12 @@ public class TransactionTest extends InitEnv {
 			dao.add(m);
 		}
 
-		System.out.println(dao.findAll());
+		System.out.println(dao.findAll().size());
+
+		List <IAppEntity> ts = dao.findAll();
+		for (IAppEntity it : ts) {
+			Transaction t = (Transaction) it;
+			t.getTags().stream().forEach(System.out::println);
+		}
 	}
 }
