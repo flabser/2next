@@ -1,25 +1,35 @@
 package cashtracker.test.dao;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import cashtracker.dao.TagDAO;
 import cashtracker.model.Tag;
 
+import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.restful.data.IAppEntity;
 import com.flabser.tests.InitEnv;
 
 
 public class TagTest extends InitEnv {
 
-	@Test
-	public void test() {
-		assertNotNull(db);
+	TagDAO dao;
 
-		TagDAO dao = new TagDAO(ses);
+	@Before
+	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
+			DatabasePoolException {
+		super.init();
+		dao = new TagDAO(ses);
+	}
+
+	@Test
+	public void insertTest() {
+		assertNotNull(db);
 
 		int size = dao.findAll().size();
 		int iteration = size + 1;
@@ -30,11 +40,17 @@ public class TagTest extends InitEnv {
 
 			dao.add(m);
 		}
+	}
 
-		List <IAppEntity> tags = dao.findAll();
-		for (IAppEntity itag : tags) {
-			Tag tag = (Tag) itag;
-			tag.getTransactions().forEach(System.out::println);
-		}
+	@Test
+	public void selectTest() {
+		List <IAppEntity> list = dao.findAll();
+		assertTrue(list.size() > 0);
+
+		Tag mFirst = dao.findById(list.get(0).getId());
+		Tag mLast = dao.findById(list.get(list.size() - 1).getId());
+
+		assertNotNull(mFirst);
+		assertNotNull(mLast);
 	}
 }

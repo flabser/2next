@@ -1,25 +1,25 @@
-package cashtracker.model.constants;
+package cashtracker.model.constants.converter;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
+import cashtracker.model.constants.TransactionType;
 
 
 @Converter(autoApply = true)
 public class TransactionTypesConverter implements AttributeConverter <List <TransactionType>, String[]> {
 
 	@Override
-	public List <TransactionType> convertToEntityAttribute(String[] types) {
-		if (types == null) {
+	public List <TransactionType> convertToEntityAttribute(String[] values) {
+		if (values == null) {
 			return null;
 		}
 
-		List <TransactionType> result = new ArrayList <TransactionType>();
-		for (String name : types) {
-			result.add(TransactionType.typeOf(name));
-		}
+		List <TransactionType> result = Arrays.stream(values).map(TransactionType::typeOf).collect(Collectors.toList());
 		return result;
 	}
 

@@ -31,7 +31,5 @@ public class BudgetTest extends InitEnv {
 		}
 
 		dao.add(m);
-
-		System.out.println(dao.findAll());
 	}
 }

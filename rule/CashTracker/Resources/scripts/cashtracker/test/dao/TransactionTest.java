@@ -39,7 +39,7 @@ public class TransactionTest extends InitEnv {
 		dao = new TransactionDAO(ses);
 	}
 
-	// @Test
+	@Test
 	public void insertTest() {
 		assertNotNull(db);
 
@@ -72,7 +72,7 @@ public class TransactionTest extends InitEnv {
 			if (i % 2 == 1) {
 				m.setTransactionType(TransactionType.EXPENSE);
 				m.setTransactionState(TransactionState.CONFIRMED);
-			} else if (i % 2 == 0) {
+			} else if (i % 10 == 0) {
 				m.setTransactionType(TransactionType.TRANSFER);
 				m.setTransactionState(TransactionState.PENDING);
 			} else {
@@ -82,24 +82,17 @@ public class TransactionTest extends InitEnv {
 
 			dao.add(m);
 		}
-
-		System.out.println(dao.findAll().size());
 	}
 
 	@Test
 	public void selectTest() {
-		PageRequest pr = new PageRequest(0, 1, "", "");
-
-		List <IAppEntity> ts = dao.findAll(pr, TransactionType.EXPENSE);
-		System.out.println(NL + " tr expense count: " + ts.size() + NL);
+		List <IAppEntity> ts = dao.findAll(new PageRequest(50000, 20, "", ""), TransactionType.EXPENSE);
 		for (IAppEntity it : ts) {
 			Transaction t = (Transaction) it;
-			t.getTags().forEach(System.out::println);
+			t.getTags().forEach(Tag::getId);
 		}
 		//
-		ts = dao.findAll(pr, TransactionType.INCOME);
-		System.out.println(NL + " n tr income count: " + ts.size() + NL);
-		ts = dao.findAll(pr, TransactionType.TRANSFER);
-		System.out.println(NL + " tr transfer count: " + ts.size() + NL);
+		ts = dao.findAll(new PageRequest(10000, 20, "", ""), TransactionType.INCOME);
+		ts = dao.findAll(new PageRequest(20000, 20, "", ""), TransactionType.TRANSFER);
 	}
 }

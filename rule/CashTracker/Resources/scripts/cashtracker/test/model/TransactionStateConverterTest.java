@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import cashtracker.model.constants.TransactionState;
-import cashtracker.model.constants.TransactionStateConverter;
+import cashtracker.model.constants.converter.TransactionStateConverter;
 
 
 public class TransactionStateConverterTest extends Assert {

@@ -27,11 +27,11 @@ public class CategoryTest extends InitEnv {
 
 		for (int i = size; i < iteration; i++) {
 			Category m = new Category();
-			m.setName("category - " + i);
 			m.setParentCategory(null);
+			m.setName("category - " + i);
+			m.setNote("note " + i);
 
 			List <TransactionType> transactionTypes = new ArrayList <TransactionType>();
-
 			if (i % 2 == 1) {
 				transactionTypes.add(TransactionType.EXPENSE);
 				transactionTypes.add(TransactionType.INCOME);
@@ -42,14 +42,7 @@ public class CategoryTest extends InitEnv {
 			}
 			m.setTransactionTypes(transactionTypes);
 
-			m.setNote("note " + i);
-
-			System.out.println(i);
-			System.out.println(m);
-
 			dao.add(m);
 		}
-
-		System.out.println(dao.findAll());
 	}
 }

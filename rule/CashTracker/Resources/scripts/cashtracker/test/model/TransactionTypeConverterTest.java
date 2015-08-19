@@ -1,26 +1,22 @@
 package cashtracker.test.model;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import cashtracker.model.constants.TransactionType;
-import cashtracker.model.constants.TransactionTypesConverter;
+import cashtracker.model.constants.converter.TransactionTypeConverter;
 
 
 public class TransactionTypeConverterTest extends Assert {
 
 	@Test
 	public void test() throws Exception {
-		TransactionTypesConverter tpc = new TransactionTypesConverter();
+		TransactionTypeConverter tpc = new TransactionTypeConverter();
 
-		List <TransactionType> tt = tpc.convertToEntityAttribute(new String[] { "E", "I", "T" });
+		TransactionType tt = tpc.convertToEntityAttribute("E");
 		System.out.println(tt);
 
-		String[] ts = tpc.convertToDatabaseColumn(tt);
-		System.out.println(ts[0]);
-		System.out.println(ts[1]);
-		System.out.println(ts[2]);
+		String ts = tpc.convertToDatabaseColumn(tt);
+		System.out.println(ts);
 	}
 }
