@@ -65,12 +65,13 @@ public class AccountService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, Account m) {
+		m.setId(id);
+
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
-		m.setId(id);
 		AccountDAO dao = new AccountDAO(getSession());
 		dao.update(m);
 		return Response.ok(m).build();

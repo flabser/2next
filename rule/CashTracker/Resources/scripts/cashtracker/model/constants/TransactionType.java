@@ -18,7 +18,7 @@ public enum TransactionType {
 			}
 		}
 
-		throw new IllegalArgumentException("Unknown value: " + value);
+		return null;
 	}
 
 	public String toValue() {

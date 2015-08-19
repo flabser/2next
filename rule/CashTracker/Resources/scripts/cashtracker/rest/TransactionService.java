@@ -11,12 +11,15 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.TransactionDAO;
+import cashtracker.helper.PageRequest;
 import cashtracker.model.Transaction;
+import cashtracker.model.constants.TransactionType;
 import cashtracker.validation.TransactionValidator;
 import cashtracker.validation.ValidationError;
 
@@ -32,9 +35,17 @@ public class TransactionService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get() {
+	public Response get(@QueryParam("offset") int offset, @QueryParam("limit") int limit,
+			@QueryParam("order_by") String orderBy, @QueryParam("direction") String direction,
+			@QueryParam("type") String trType) {
+
+		PageRequest pr = new PageRequest(offset, limit, orderBy, direction);
 		TransactionDAO dao = new TransactionDAO(getSession());
-		return Response.ok(new Transactions(dao.findAll())).build();
+		TransactionType type = null;
+		if (trType != null && !trType.isEmpty()) {
+			type = TransactionType.typeOf(trType.substring(0, 1).toUpperCase());
+		}
+		return Response.ok(new Transactions(dao.findAll(pr, type))).build();
 	}
 
 	@GET
@@ -65,12 +76,12 @@ public class TransactionService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, Transaction m) {
+		m.setId(id);
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
-		m.setId(id);
 		TransactionDAO dao = new TransactionDAO(getSession());
 		dao.update(m);
 		return Response.ok(m).build();

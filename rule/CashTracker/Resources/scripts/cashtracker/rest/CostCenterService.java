@@ -65,12 +65,13 @@ public class CostCenterService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, CostCenter m) {
+		m.setId(id);
+
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
-		m.setId(id);
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		dao.update(m);
 		return Response.ok(m).build();

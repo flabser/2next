@@ -66,12 +66,13 @@ public class TagService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, Tag m) {
+		m.setId(id);
+
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.ok(ve).status(Status.BAD_REQUEST).build();
 		}
 
-		m.setId(id);
 		TagDAO dao = new TagDAO(getSession());
 		dao.update(m);
 		return Response.ok(m).build();
