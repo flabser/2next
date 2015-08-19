@@ -16,9 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import cashtracker.model.constants.TransactionState;
-import cashtracker.model.constants.TransactionStateConverter;
 import cashtracker.model.constants.TransactionType;
-import cashtracker.model.constants.TransactionTypeConverter;
+import cashtracker.model.constants.converter.TransactionStateConverter;
+import cashtracker.model.constants.converter.TransactionTypeConverter;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -107,16 +107,16 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	}
 
 	@JsonGetter("transactionType")
-	public String getTransactionTypeName() {
+	public String getTransactionTypeValue() {
 		if (transactionType == null) {
 			return null;
 		}
-		return transactionType.name();
+		return transactionType.toValue();
 	}
 
 	@JsonSetter("transactionType")
-	public void setTransactionTypeByName(String name) {
-		setTransactionType(TransactionType.typeOf(name));
+	public void setTransactionTypeByValue(String value) {
+		setTransactionType(TransactionType.typeOf(value));
 	}
 
 	public TransactionState getTransactionState() {
@@ -128,16 +128,16 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	}
 
 	@JsonGetter("transactionState")
-	public String getTransactionStateName() {
+	public String getTransactionStateValue() {
 		if (transactionState == null) {
 			return null;
 		}
-		return transactionState.name();
+		return transactionState.toValue();
 	}
 
 	@JsonSetter("transactionState")
-	public void setTransactionStateByName(String name) {
-		setTransactionState(TransactionState.stateOf(name));
+	public void setTransactionStateByValue(String value) {
+		setTransactionState(TransactionState.stateOf(value));
 	}
 
 	public Category getCategory() {

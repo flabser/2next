@@ -1,10 +1,12 @@
-package cashtracker.model.constants;
+package cashtracker.model.constants.converter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
+import cashtracker.model.constants.TransactionType;
 
 
 @Converter(autoApply = true)

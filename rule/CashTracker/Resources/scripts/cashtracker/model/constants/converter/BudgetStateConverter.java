@@ -1,7 +1,9 @@
-package cashtracker.model.constants;
+package cashtracker.model.constants.converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
+import cashtracker.model.constants.BudgetState;
 
 
 @Converter(autoApply = true)

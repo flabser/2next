@@ -31,10 +31,6 @@ public class Tag extends AppEntity {
 		this.name = name;
 	}
 
-	public List <Transaction> getTransactions() {
-		return transactions;
-	}
-
 	@Override
 	public String toString() {
 		return "Tag[" + id + ", " + name + "]";

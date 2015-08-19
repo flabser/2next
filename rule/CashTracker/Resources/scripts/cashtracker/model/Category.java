@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import cashtracker.model.constants.TransactionType;
-import cashtracker.model.constants.TransactionTypesConverter;
+import cashtracker.model.constants.converter.TransactionTypesConverter;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;

@@ -1,22 +1,35 @@
 package cashtracker.test.dao;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
 
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.restful.data.IAppEntity;
 import com.flabser.tests.InitEnv;
 
 
 public class CostCenterTest extends InitEnv {
 
+	CostCenterDAO dao;
+
+	@Before
+	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
+			DatabasePoolException {
+		super.init();
+		dao = new CostCenterDAO(ses);
+	}
+
 	@Test
 	public void test() {
 		assertNotNull(db);
-
-		CostCenterDAO dao = new CostCenterDAO(ses);
 
 		int size = dao.findAll().size();
 		int iteration = size + 1;
@@ -27,7 +40,17 @@ public class CostCenterTest extends InitEnv {
 
 			dao.add(m);
 		}
+	}
 
-		System.out.println(dao.findAll());
+	@Test
+	public void selectTest() {
+		List <IAppEntity> list = dao.findAll();
+		assertTrue(list.size() > 0);
+
+		CostCenter mFirst = dao.findById(list.get(0).getId());
+		CostCenter mLast = dao.findById(list.get(list.size() - 1).getId());
+
+		assertNotNull(mFirst);
+		assertNotNull(mLast);
 	}
 }

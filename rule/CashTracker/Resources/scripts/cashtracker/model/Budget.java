@@ -8,9 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import cashtracker.model.constants.BudgetState;
-import cashtracker.model.constants.BudgetStateConverter;
+import cashtracker.model.constants.converter.BudgetStateConverter;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.AppEntity;
 
 
@@ -61,6 +63,19 @@ public class Budget extends AppEntity {
 
 	public void setStatus(BudgetState status) {
 		this.status = status;
+	}
+
+	@JsonGetter("status")
+	public String getStatusValue() {
+		if (status == null) {
+			return null;
+		}
+		return status.toValue();
+	}
+
+	@JsonSetter("status")
+	public void setStatusByValue(String value) {
+		setStatus(BudgetState.stateOf(value));
 	}
 
 	@Override

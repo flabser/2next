@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import cashtracker.model.constants.TransactionType;
-import cashtracker.model.constants.TransactionTypesConverter;
+import cashtracker.model.constants.converter.TransactionTypesConverter;
 
 
 public class TransactionTypeConverterTest extends Assert {

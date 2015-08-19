@@ -45,7 +45,8 @@ public class TransactionService extends RestProvider {
 		if (trType != null && !trType.isEmpty()) {
 			type = TransactionType.typeOf(trType.substring(0, 1).toUpperCase());
 		}
-		return Response.ok(new Transactions(dao.findAll(pr, type))).build();
+		Collection <IAppEntity> list = dao.findAll(pr, type);
+		return Response.ok(new Transactions(list)).build();
 	}
 
 	@GET
