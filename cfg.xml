@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?> 
 <tn>
-	<hostname>localhost</hostname>
-	<port />
-
-	<applications>
+    <adminapp mode="on"/>
+    <hostname>172.16.250.9</hostname>
+    <port>38555</port>
+      
+    <applications default="CashTracker">
 		<app>
 			<name mode="on">CashTracker</name>
-		</app>
-		<app>
-			<name mode="on">Nubis</name>
+			<!--<authtype>BASIC</authtype>-->
 		</app>
 	</applications>
-
-	<tls mode="ON">
-		<port>38789</port>
-		<certfile>server.crt</certfile>
-		<certkeyfile>server.key</certkeyfile>
-	</tls>
-
-	<mailagent mode="on">
+		
+		
+    <tls mode="OFF">
+        <port>38789</port>
+    	<certfile>server.crt</certfile>
+    	<certkeyfile>server.key</certkeyfile>    	
+    </tls>
+   
+    <mailagent mode="off">
 		<smtphost>smtp.mail.ru</smtphost>
 		<defaultsender>mynameis.m@mail.ru</defaultsender>
 		<auth>true</auth>
@@ -26,4 +26,6 @@
 		<smtpuser>mynameis.m@mail.ru</smtpuser>
 		<smtppassword>mynameis.mmynameis.m</smtppassword>
 	</mailagent>
+       
+   
 </tn>
