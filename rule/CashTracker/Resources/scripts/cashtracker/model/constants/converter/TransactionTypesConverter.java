@@ -10,7 +10,7 @@ import javax.persistence.Converter;
 import cashtracker.model.constants.TransactionType;
 
 
-@Converter(autoApply = true)
+// @Converter(autoApply = true)
 public class TransactionTypesConverter implements AttributeConverter <List <TransactionType>, String[]> {
 
 	@Override

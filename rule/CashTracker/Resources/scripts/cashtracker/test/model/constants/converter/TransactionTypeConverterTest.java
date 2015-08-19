@@ -1,4 +1,4 @@
-package cashtracker.test.model;
+package cashtracker.test.model.constants.converter;
 
 import org.junit.Assert;
 import org.junit.Test;

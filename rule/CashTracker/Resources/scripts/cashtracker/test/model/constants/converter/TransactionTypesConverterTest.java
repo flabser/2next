@@ -1,4 +1,4 @@
-package cashtracker.test.model;
+package cashtracker.test.model.constants.converter;
 
 import java.util.Arrays;
 import java.util.List;

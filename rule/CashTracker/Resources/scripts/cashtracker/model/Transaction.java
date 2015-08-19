@@ -59,7 +59,9 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	private CostCenter costCenter;
 
 	@ManyToMany
-	@JoinTable(name = "transaction_tags", joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
+	@JoinTable(name = "transaction_tags",
+				joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") },
+				inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
 	private List <Tag> tags;
 
 	@Column(nullable = false)

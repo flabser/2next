@@ -23,6 +23,7 @@ public class FirstAction implements IAppDatabaseInit {
 		result.add(getBudgetDDE());
 		result.add(getAccountDDE());
 		result.add(getCategoryDDE());
+		result.add(getCategoryTransactionTypesDDE());
 		result.add(getCostCenterDDE());
 		result.add(getTagDDE());
 		result.add(getTransactionDDE());
@@ -87,6 +88,20 @@ public class FirstAction implements IAppDatabaseInit {
 		sql.append("  SORT_ORDER          SMALLINT,\n");
 		sql.append(" CONSTRAINT CATEGORY_ID_PK PRIMARY KEY (ID),");
 		sql.append(" CONSTRAINT CATEGORY_PARENT_ID_FK FOREIGN KEY (PARENT_ID)\n");
+		sql.append("   REFERENCES CATEGORIES (ID) MATCH SIMPLE\n");
+		sql.append("   ON UPDATE NO ACTION ON DELETE CASCADE");
+		sql.append(")");
+		return sql.toString();
+	}
+
+	private static String getCategoryTransactionTypesDDE() {
+		StringBuilder sql = new StringBuilder();
+		sql.append("CREATE TABLE CATEGORY_TRANSACTIONTYPES ");
+		sql.append("(");
+		sql.append("  CATEGORY_ID           BIGINT NOT NULL,\n");
+		sql.append("  TRANSACTION_TYPES     CHARACTER VARYING(1) NOT NULL,\n");
+		sql.append(" CONSTRAINT CATEGORY_TRANSACTIONTYPES_PK PRIMARY KEY (CATEGORY_ID, TRANSACTION_TYPES),\n");
+		sql.append(" CONSTRAINT CATEGORY_TRANSACTIONTYPES_CATEGORY_ID_FK FOREIGN KEY (CATEGORY_ID)\n");
 		sql.append("   REFERENCES CATEGORIES (ID) MATCH SIMPLE\n");
 		sql.append("   ON UPDATE NO ACTION ON DELETE CASCADE");
 		sql.append(")");

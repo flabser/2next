@@ -3,8 +3,10 @@ package cashtracker.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import cashtracker.model.constants.TransactionType;
-import cashtracker.model.constants.converter.TransactionTypesConverter;
+import cashtracker.model.constants.converter.TransactionTypeConverter;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -35,7 +37,9 @@ public class Category extends AppEntity {
 	@Column(nullable = false)
 	private String name;
 
-	@Convert(converter = TransactionTypesConverter.class)
+	@ElementCollection
+	@Convert(converter = TransactionTypeConverter.class)
+	@CollectionTable(name = "category_transactiontypes", joinColumns = @JoinColumn(name = "CATEGORY_ID"))
 	@Column(name = "transaction_types")
 	private List <TransactionType> transactionTypes;
 
@@ -59,20 +63,22 @@ public class Category extends AppEntity {
 
 	@JsonGetter("parentCategory")
 	public Long getParentCategoryId() {
-		if (parentCategory != null && parentCategory.id != 0) {
-			return parentCategory.id;
+		if (parentCategory == null || parentCategory.id == 0) {
+			return null;
 		}
-		return null;
+		return parentCategory.id;
 	}
 
 	@JsonSetter("parentCategory")
 	public void setParentCategoryId(Long id) {
-		Category parentCategory = null;
-		if (id != null) {
-			parentCategory = new Category();
-			parentCategory.setId(id);
+		if (id == null || id == 0) {
+			setParentCategory(null);
+			return;
 		}
-		setParentCategory(parentCategory);
+
+		Category parent = new Category();
+		parent.setId(id);
+		setParentCategory(parent);
 	}
 
 	public String getName() {
@@ -92,21 +98,21 @@ public class Category extends AppEntity {
 	}
 
 	@JsonGetter("transactionTypes")
-	public List <String> getTransactionTypesCode() {
-		List <String> tTypes = new ArrayList <String>();
+	public List <String> getTransactionTypesValue() {
+		List <String> values = new ArrayList <String>();
 		if (transactionTypes != null) {
-			transactionTypes.forEach(type -> tTypes.add(type.name()));
+			transactionTypes.forEach(type -> values.add(type.toValue()));
 		}
-		return tTypes;
+		return values;
 	}
 
 	@JsonSetter("transactionTypes")
-	public void setTransactionTypesByIds(List <String> names) {
-		List <TransactionType> tTypes = new ArrayList <TransactionType>();
-		if (names != null) {
-			names.forEach(name -> tTypes.add(TransactionType.valueOf(name)));
+	public void setTransactionTypesByValues(List <String> values) {
+		List <TransactionType> types = new ArrayList <TransactionType>();
+		if (values != null) {
+			values.forEach(value -> types.add(TransactionType.typeOf(value)));
 		}
-		setTransactionTypes(tTypes);
+		setTransactionTypes(types);
 	}
 
 	public boolean isEnabled() {
