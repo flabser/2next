@@ -8,6 +8,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import com.flabser.exception.TransformatorException;
 import com.flabser.script._WebFormData;
 import com.flabser.server.Server;
 
+@WebServlet("/Error")
 public class Error extends HttpServlet {
 	private static final long serialVersionUID = 1207733369437122383L;
 	private AppTemplate env;
