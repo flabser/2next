@@ -27,6 +27,28 @@ export default Service.extend({
         }
     },
 
+    saveUserProfile: function() {
+        let _this = this;
+
+        return $.ajax({
+            method: 'PUT',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: PATH,
+            data: JSON.stringify({
+                authUser: {
+                    name: _this.user.name,
+                    login: _this.user.email,
+                    pwd: _this.user.password
+                }
+            }),
+            success: function(result) {
+                _this.set('_isAuthenticated', true);
+                return result;
+            }
+        });
+    },
+
     login: function(userName, password) {
         const _this = this;
 
