@@ -24,7 +24,7 @@ export default Em.Controller.extend({
             var _this = this;
             var model = this.get('transaction');
             model.save().then(function() {
-                _this.transitionTo('transactions');
+                _this.transitionToRoute('transactions');
             });
         }
     }

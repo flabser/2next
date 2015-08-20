@@ -8,7 +8,7 @@ export default Em.Controller.extend({
             var _this = this;
             var model = this.get('costCenter');
             model.save().then(function() {
-                _this.transitionTo('cost_centers');
+                _this.transitionToRoute('cost_centers');
             });
         }
     }

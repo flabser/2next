@@ -9,9 +9,9 @@ export default Em.Controller.extend({
         check: function() {
             var budget = this.store.find('budget', 1);
             budget.then(function(m) {
-                if (!m.get('name')) {
+                if (m.get('id') == 0 || m.get('name') == null) {
                     this.set('isEditMode', true);
-                    this.transitionTo('budget');
+                    this.transitionToRoute('budget');
                 }
             }.bind(this));
         },

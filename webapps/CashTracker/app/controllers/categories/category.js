@@ -23,7 +23,7 @@ export default Em.Controller.extend({
             let _this = this;
             let model = this.get('category');
             model.save().then(function() {
-                _this.transitionTo('categories');
+                _this.transitionToRoute('categories');
             });
         }
     }

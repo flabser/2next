@@ -8,7 +8,7 @@ export default Em.Controller.extend({
             var _this = this;
             var model = this.get('user');
             model.save().then(function() {
-                _this.transitionTo('users');
+                _this.transitionToRoute('users');
             });
         }
     }
