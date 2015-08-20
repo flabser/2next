@@ -1,5 +1,10 @@
 package com.flabser.dataengine.system.entities;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
@@ -15,11 +20,6 @@ import com.flabser.solutions.DatabaseType;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.VisibiltyType;
 import com.flabser.util.Util;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 
 @JsonRootName("applicationProfile")
 public class ApplicationProfile implements _IContent {
@@ -58,6 +58,7 @@ public class ApplicationProfile implements _IContent {
 		this.dbName = dbName;
 		this.status = ApplicationStatusType.getType(status);
 		this.statusDate = statusDate;
+		// visibilty
 		this.setRoles(roles);
 	}
 
@@ -137,6 +138,7 @@ public class ApplicationProfile implements _IContent {
 		dbType = DatabaseType.getType(rs.getInt("DBTYPE"));
 		dbHost = rs.getString("DBHOST");
 		dbName = rs.getString("DBNAME");
+		// visibilty
 	}
 
 	@JsonIgnore

@@ -9,7 +9,9 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.Assert;
@@ -26,16 +28,23 @@ import com.flabser.util.Util;
 
 public class UpdateUserProfileTest extends Assert {
 	String url = "http://localhost:38779/Nubis/rest/session";
-	CloseableHttpClient client = HttpClientBuilder.create().build();
+	CloseableHttpClient client;
+	BasicCookieStore cookieStore;
+	HttpClientContext localContext;
 	ISystemDatabase systemDatabase;
 
 	@Before
 	public void initBrowserFake() throws ClientProtocolException, IOException {
 		systemDatabase = DatabaseFactory.getSysDatabase();
+		client = HttpClientBuilder.create().build();
+		localContext = HttpClientContext.create();
+		cookieStore = new BasicCookieStore();
+		localContext.setCookieStore(cookieStore);
 	}
 
 	@Test
 	public void test() throws ClientProtocolException, IOException {
+
 		System.out.println("Authentication...");
 		HttpPost post = new HttpPost(url);
 		String ajson = "{\"authUser\":{\"login\":\"k-zone@ya.ru\",\"pwd\":\"galant387\"}}";
@@ -44,7 +53,8 @@ public class UpdateUserProfileTest extends Assert {
 		post.setHeader("Accept", "application/json");
 		post.setHeader("Content-type", "application/json");
 
-		HttpResponse aresponse = client.execute(post);
+		HttpResponse aresponse = client.execute(post, localContext);
+
 		System.out.println("Result=" + aresponse.getStatusLine().getStatusCode());
 		assertTrue(aresponse.getStatusLine().getStatusCode() == 200);
 
@@ -64,7 +74,7 @@ public class UpdateUserProfileTest extends Assert {
 		put.setHeader("Accept", "application/json");
 		put.setHeader("Content-type", "application/json");
 
-		HttpResponse response = client.execute(put);
+		HttpResponse response = client.execute(put, localContext);
 		System.out.println("Result=" + response.getStatusLine().getStatusCode());
 		assertTrue(response.getStatusLine().getStatusCode() == 200);
 

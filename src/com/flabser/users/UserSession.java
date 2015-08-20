@@ -141,11 +141,10 @@ public class UserSession implements ICache {
 
 	public AuthUser getUserPOJO() {
 		AuthUser aUser = new AuthUser();
-		aUser.setSessionToken(sessionToken);
 		aUser.setLogin(currentUser.getLogin());
 		aUser.setName(currentUser.getUserName());
 		aUser.setEmail(currentUser.getEmail());
-		aUser.setRoles(currentUser.getUserRoles().toArray(new String[currentUser.getUserRoles().size()]));
+		aUser.setRoles(currentUser.getUserRoles());
 		HashMap<String, Application> applications = new HashMap<String, Application>();
 		for (ApplicationProfile ap : (currentUser.getApplicationProfiles().values())) {
 			if (!ap.appType.equalsIgnoreCase(EnvConst.WORKSPACE_APP_NAME)) {

@@ -1,10 +1,13 @@
 package com.flabser.restful;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.users.AuthModeType;
@@ -19,14 +22,10 @@ public class AuthUser {
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private AuthFailedExceptionType error;
 	private String redirect;
-	private String[] roles = new String[0];
-	private HashMap<String, Application> applications = new HashMap<String, Application>();
 	private String defaultApp;
 	private AuthModeType authMode;
-	private String sessionToken;
-
-	public AuthUser() {
-	}
+	private ArrayList<String> appRoles = new ArrayList<String>();
+	private HashMap<String, Application> applications = new HashMap<String, Application>();
 
 	public String getLogin() {
 		return login;
@@ -60,12 +59,17 @@ public class AuthUser {
 		this.pwd = pwd;
 	}
 
-	public String[] getRoles() {
-		return roles;
+	@JsonGetter("roles")
+	public ArrayList<String> getAppRoles() {
+		appRoles.add("test1");
+		appRoles.add("test2");
+
+		return appRoles;
 	}
 
-	public void setRoles(String[] roles) {
-		this.roles = roles;
+	@JsonSetter("roles")
+	public void setAppRoles(ArrayList<String> roles) {
+		this.appRoles = roles;
 	}
 
 	public UserStatusType getStatus() {
@@ -120,14 +124,6 @@ public class AuthUser {
 
 	public void setAuthMode(AuthModeType authMode) {
 		this.authMode = authMode;
-	}
-
-	public String getSessionToken() {
-		return sessionToken;
-	}
-
-	public void setSessionToken(String sessionToken) {
-		this.sessionToken = sessionToken;
 	}
 
 }

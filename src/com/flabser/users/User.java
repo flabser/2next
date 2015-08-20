@@ -178,6 +178,7 @@ public class User {
 		try {
 			if (id == 0) {
 				primaryRegDate = new Date();
+				lastUpdateDate = primaryRegDate;
 				loginHash = (login + password).hashCode();
 				if (dbPwd == null) {
 					dbPwd = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
