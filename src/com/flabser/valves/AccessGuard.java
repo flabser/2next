@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.flabser.env.EnvConst;
@@ -27,17 +26,10 @@ public class AccessGuard implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest http = (HttpServletRequest) request;
-		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String requestURI = http.getRequestURI();
 		String params = http.getQueryString();
 
-		if (params != null) {
-			requestURI = requestURI + "?" + http.getQueryString();
-		}
-
-		// TODO need to improve RequestURL for the Admin
-		RequestURL ru = new RequestURL(requestURI);
-		if (ru.isDefault() || (!ru.isProtected())) {
+		if (params == null) {
 			chain.doFilter(request, response);
 		} else {
 			HttpSession jses = http.getSession(false);
@@ -46,17 +38,13 @@ public class AccessGuard implements Filter {
 				if (us != null && us.currentUser.isSupervisor()) {
 					chain.doFilter(request, response);
 				} else {
-					AuthFailedException e = new AuthFailedException(AuthFailedExceptionType.ACCESS_DENIED, ru.getAppType());
-					httpResponse.setStatus(e.getCode());
-					httpResponse.getWriter().println(e.getHTMLMessage());
+					throw new AuthFailedException(AuthFailedExceptionType.ACCESS_DENIED, EnvConst.ADMIN_APP_NAME);
+
 				}
 			} else {
-				AuthFailedException e = new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, ru.getAppType());
-				httpResponse.setStatus(e.getCode());
-				httpResponse.getWriter().println(e.getHTMLMessage());
+				throw new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, EnvConst.ADMIN_APP_NAME);
 			}
 		}
-
 	}
 
 	@Override

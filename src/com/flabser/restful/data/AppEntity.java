@@ -15,6 +15,8 @@ public abstract class AppEntity implements IAppEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
 
+	protected long parentId;
+
 	@Transient
 	protected ArrayList<AttachedFile> attachments = new ArrayList<AttachedFile>();
 
@@ -26,6 +28,14 @@ public abstract class AppEntity implements IAppEntity {
 	@Override
 	public long getId() {
 		return id;
+	}
+
+	public long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(long parentId) {
+		this.parentId = parentId;
 	}
 
 	class AttachedFile {

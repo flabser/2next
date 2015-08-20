@@ -3,7 +3,9 @@ package com.flabser.server;
 import java.util.Collection;
 import java.util.Scanner;
 
+import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
+import com.flabser.scheduler.PeriodicalServices;
 import com.flabser.users.UserSession;
 
 public class Console implements Runnable {
@@ -27,6 +29,11 @@ public class Console implements Runnable {
 				} else {
 					System.out.println("No user session");
 				}
+			} else if (command.equalsIgnoreCase("job list") || command.equalsIgnoreCase("jl")) {
+				PeriodicalServices services = Environment.periodicalServices;
+
+				System.out.println(services.getCurrentJobs());
+
 			} else {
 				if (!command.trim().equalsIgnoreCase("")) {
 					System.err.println("command \"" + command + "\" is not recognized");

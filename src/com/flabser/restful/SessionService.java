@@ -10,6 +10,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -54,10 +55,62 @@ public class SessionService {
 		return userSession.getUserPOJO();
 	}
 
-	@POST
+	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException,
+			UserException, IllegalAccessException, SQLException {
+		UserSession userSession = null;
+		HttpSession jses;
+		String appID = authUser.getDefaultApp();
+		context.getAttribute(EnvConst.TEMPLATE_ATTR);
+		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
+		String login = authUser.getLogin();
+		Server.logger.normalLogEntry(login + " is attempting to signin");
+		User user = systemDatabase.checkUserHash(login, authUser.getPwd(), null);
+		authUser.setPwd(null);
+		if (!user.isAuthorized) {
+			Server.logger.warningLogEntry("signin of " + login + " was failed");
+			authUser.setError(AuthFailedExceptionType.PASSWORD_OR_LOGIN_INCORRECT);
+			throw new AuthFailedException(authUser);
+		}
+
+		String userID = user.getLogin();
+		jses = request.getSession(true);
+
+		Server.logger.normalLogEntry(userID + " has connected");
+		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
+		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
+		userSession = new UserSession(user);
+		if (user.getStatus() == UserStatusType.REGISTERED) {
+			authUser = userSession.getUserPOJO();
+			authUser.setDefaultApp(appID);
+		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
+			authUser.setRedirect("tochangepwd");
+		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED) {
+			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION);
+			throw new AuthFailedException(authUser);
+		} else if (user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
+			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION);
+			throw new AuthFailedException(authUser);
+		} else if (user.getStatus() == UserStatusType.DELETED) {
+			authUser.setError(AuthFailedExceptionType.NOT_FOUND);
+			throw new AuthFailedException(authUser);
+		}
+
+		String token = SessionPool.put(userSession);
+		jses.setAttribute(EnvConst.SESSION_ATTR, userSession);
+		int maxAge = -1;
+
+		NewCookie cookie = new NewCookie(EnvConst.AUTH_COOKIE_NAME, token, "/", null, null, maxAge, false);
+
+		return Response.status(HttpServletResponse.SC_OK).entity(authUser).cookie(cookie).build();
+	}
+
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updateSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException,
 			UserException, IllegalAccessException, SQLException {
 		UserSession userSession = null;
 		HttpSession jses;

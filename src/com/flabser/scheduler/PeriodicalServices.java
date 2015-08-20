@@ -5,8 +5,10 @@ import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 import java.util.Date;
+import java.util.List;
 
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
@@ -43,6 +45,22 @@ public class PeriodicalServices {
 		} catch (SchedulerException e) {
 			Server.logger.errorLogEntry(e);
 		}
+	}
+
+	public String getCurrentJobs() {
+		String result = "";
+
+		try {
+			List<JobExecutionContext> jobs = sched.getCurrentlyExecutingJobs();
+
+			for (JobExecutionContext j : jobs) {
+				result = result + j.toString();
+			}
+			return result;
+		} catch (SchedulerException e) {
+			Server.logger.errorLogEntry(e);
+		}
+		return result;
 	}
 
 	public void stop() {
