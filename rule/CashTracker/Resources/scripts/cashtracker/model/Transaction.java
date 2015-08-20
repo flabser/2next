@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -44,23 +45,23 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@Column(name = "transaction_state")
 	private TransactionState transactionState;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "account_from", nullable = false)
 	private Account accountFrom;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "account_to")
 	private Account accountTo;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category")
 	private Category category;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cost_center")
 	private CostCenter costCenter;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "transaction_tags", joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
 	private List <Tag> tags;
 

@@ -1,10 +1,7 @@
 package cashtracker.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,8 +21,8 @@ public class CostCenter extends AppEntity {
 	@Column(nullable = false)
 	private String name;
 
-	@OneToMany(mappedBy = "costCenter")
-	private List <Transaction> transactions;
+	// @OneToMany(mappedBy = "costCenter")
+	// private List <Transaction> transactions;
 
 	//
 	public Long getUserId() {
