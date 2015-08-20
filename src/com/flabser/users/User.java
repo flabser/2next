@@ -24,6 +24,7 @@ import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
+import com.flabser.restful.AuthUser;
 import com.flabser.server.Server;
 import com.flabser.util.Util;
 
@@ -34,6 +35,7 @@ public class User {
 	public boolean isAuthorized;
 	public String lastURL;
 	public LanguageType preferredLang = LanguageType.ENG;
+	public final static String ANONYMOUS_USER = "anonymous";
 
 	private HashMap<String, HashMap<String, ApplicationProfile>> applicationsMap = new HashMap<>();
 	private HashMap<String, ApplicationProfile> applications = new HashMap<>();
@@ -43,19 +45,18 @@ public class User {
 	private HashSet<UserRole> roles = new HashSet<>();
 	private HashSet<UserGroup> groups = new HashSet<>();
 	private HashMap<String, PersistentValue> persistentValues = new HashMap<>();
-
 	private Date primaryRegDate;
 	private Date regDate;
+	private Date lastUpdateDate;
 	private String password;
 	private String passwordHash = "";
 	private String email = "";
-
 	private boolean isSupervisor;
 	private int loginHash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private String dbPwd;
-	public final static String ANONYMOUS_USER = "anonymous";
+	private String defaultApp;
 
 	public User() {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
@@ -183,6 +184,7 @@ public class User {
 				}
 				id = sysDatabase.insert(this);
 			} else {
+				lastUpdateDate = new Date();
 				id = sysDatabase.update(this);
 			}
 
@@ -312,6 +314,10 @@ public class User {
 		this.regDate = regDate;
 	}
 
+	public Date getLastUpdateDate() {
+		return lastUpdateDate;
+	}
+
 	public UserStatusType getStatus() {
 		return status;
 	}
@@ -328,12 +334,12 @@ public class User {
 		this.isSupervisor = isSupervisor;
 	}
 
-	public void refresh(User u) {
-		login = u.getLogin();
-		userName = u.getUserName();
-		password = u.getPwd();
-		email = u.getEmail();
-		isSupervisor = u.isSupervisor;
+	public void refresh(AuthUser authUser) {
+		login = authUser.getLogin();
+		userName = authUser.getName();
+		password = authUser.getPwd();
+		email = authUser.getEmail();
+		defaultApp = authUser.getDefaultApp();
 
 	}
 

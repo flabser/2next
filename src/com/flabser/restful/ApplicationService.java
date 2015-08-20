@@ -43,8 +43,7 @@ public class ApplicationService {
 			return user;
 		}
 
-		user.setLogin(userSession.currentUser.getLogin());
-		return user;
+		return userSession.getUserPOJO();
 	}
 
 	@POST

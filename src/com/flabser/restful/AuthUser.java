@@ -12,9 +12,9 @@ import com.flabser.users.UserStatusType;
 
 @JsonRootName("authUser")
 public class AuthUser {
-
 	private String login;
 	private String name;
+	private String email;
 	private String pwd;
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private AuthFailedExceptionType error;
@@ -23,6 +23,7 @@ public class AuthUser {
 	private HashMap<String, Application> applications = new HashMap<String, Application>();
 	private String defaultApp;
 	private AuthModeType authMode;
+	private String sessionToken;
 
 	public AuthUser() {
 	}
@@ -41,6 +42,14 @@ public class AuthUser {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPwd() {
@@ -111,6 +120,14 @@ public class AuthUser {
 
 	public void setAuthMode(AuthModeType authMode) {
 		this.authMode = authMode;
+	}
+
+	public String getSessionToken() {
+		return sessionToken;
+	}
+
+	public void setSessionToken(String sessionToken) {
+		this.sessionToken = sessionToken;
 	}
 
 }

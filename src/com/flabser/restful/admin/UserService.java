@@ -34,7 +34,7 @@ public class UserService extends RestProvider {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public UsersList get() {
-		//	System.out.println("get users");
+		// System.out.println("get users");
 		_Session ses = getSession();
 		if (ses != null) {
 			ArrayList<User> users = sysDatabase.getAllUsers("", RuntimeObjUtil.calcStartEntry(1, pageSize), pageSize);
@@ -57,7 +57,8 @@ public class UserService extends RestProvider {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(User user) throws ClassNotFoundException, SQLException, InstantiationException, DatabasePoolException, IllegalAccessException {
+	public Response create(User user) throws ClassNotFoundException, SQLException, InstantiationException, DatabasePoolException,
+			IllegalAccessException {
 		System.out.println("POST " + user);
 		user.setRegDate(new Date());
 		user.lastURL = "";
@@ -74,7 +75,7 @@ public class UserService extends RestProvider {
 	public Response update(@PathParam("id") int id, User u) {
 		System.out.println("PUT " + u);
 		User user = sysDatabase.getUser(id);
-		user.refresh(u);
+		// user.refresh(u);
 		return Response.ok(user).build();
 	}
 
@@ -90,6 +91,7 @@ public class UserService extends RestProvider {
 	@JsonRootName("users")
 	class UsersList extends ArrayList<User> {
 		private static final long serialVersionUID = -9012621540375574267L;
+
 		public UsersList(Collection<? extends User> m) {
 			addAll(m);
 		}
