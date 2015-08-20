@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <tn>
     <adminapp mode="on"/>
-    <hostname>172.16.250.9</hostname>
-    <port>38555</port>
+    <hostname>localhost</hostname>
+    <port></port>
       
     <applications default="CashTracker">
 		<app>
