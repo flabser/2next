@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.flabser.env.EnvConst;
+import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
@@ -35,28 +36,22 @@ public class AccessGuard implements Filter {
 			gettingSession();
 			chain.doFilter(request, response);
 		} else {
+			HttpServletResponse resp = (HttpServletResponse) response;
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 				if (us != null && us.currentUser.isSupervisor()) {
 					chain.doFilter(request, response);
 				} else {
-					request.getRequestDispatcher(
-							"/Error?code=" + HttpServletResponse.SC_UNAUTHORIZED + "&message="
-									+ AuthFailedExceptionType.ACCESS_DENIED.name()).forward(request, response);
-					// throw new ServletException(new
-					// AuthFailedException(AuthFailedExceptionType.ACCESS_DENIED,
-					// EnvConst.ADMIN_APP_NAME));
+					AuthFailedException e = new AuthFailedException(AuthFailedExceptionType.ACCESS_DENIED, EnvConst.ADMIN_APP_NAME);
+					resp.setStatus(e.getCode());
+					resp.getWriter().println(e.getHTMLMessage());
 
 				}
 			} else {
-				request.getRequestDispatcher(
-						"/Error?code=" + HttpServletResponse.SC_UNAUTHORIZED + "&message=" + AuthFailedExceptionType.NO_USER_SESSION.name())
-						.forward(request, response);
-
-				// throw new ServletException(new
-				// AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION,
-				// EnvConst.ADMIN_APP_NAME));
+				AuthFailedException e = new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION, EnvConst.ADMIN_APP_NAME);
+				resp.setStatus(e.getCode());
+				resp.getWriter().println(e.getHTMLMessage());
 			}
 		}
 	}
