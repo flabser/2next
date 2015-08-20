@@ -56,8 +56,7 @@ public class CostCenterService extends RestProvider {
 		}
 
 		CostCenterDAO dao = new CostCenterDAO(getSession());
-		dao.add(m);
-		return Response.ok(m).build();
+		return Response.ok(dao.add(m)).build();
 	}
 
 	@PUT
@@ -73,8 +72,7 @@ public class CostCenterService extends RestProvider {
 		}
 
 		CostCenterDAO dao = new CostCenterDAO(getSession());
-		dao.update(m);
-		return Response.ok(m).build();
+		return Response.ok(dao.update(m)).build();
 	}
 
 	@DELETE

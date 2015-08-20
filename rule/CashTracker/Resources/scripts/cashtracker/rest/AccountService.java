@@ -56,8 +56,7 @@ public class AccountService extends RestProvider {
 		}
 
 		AccountDAO dao = new AccountDAO(getSession());
-		dao.add(m);
-		return Response.ok(m).build();
+		return Response.ok(dao.add(m)).build();
 	}
 
 	@PUT
@@ -73,8 +72,7 @@ public class AccountService extends RestProvider {
 		}
 
 		AccountDAO dao = new AccountDAO(getSession());
-		dao.update(m);
-		return Response.ok(m).build();
+		return Response.ok(dao.update(m)).build();
 	}
 
 	@DELETE

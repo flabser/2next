@@ -8,6 +8,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -57,24 +58,22 @@ public class BudgetService extends RestProvider {
 			return Response.ok((Budget) budgets.get(0)).build();
 		}
 
-		dao.add(m);
-		return Response.ok(m).build();
+		return Response.ok(dao.add(m)).build();
 	}
 
 	@PUT
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(Budget m) {
+	public Response update(@PathParam("id") long id, Budget m) {
+		m.setId(id);
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.ok(ve).status(Status.BAD_REQUEST).build();
 		}
 
 		BudgetDAO dao = new BudgetDAO(getSession());
-		m.setId((long) 1);
-		dao.update(m);
-		return Response.ok(m).build();
+		return Response.ok(dao.update(m)).build();
 	}
 
 	@DELETE

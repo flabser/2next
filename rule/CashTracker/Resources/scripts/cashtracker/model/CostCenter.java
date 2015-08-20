@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.AppEntity;
 
@@ -16,6 +17,10 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "costcenters")
 public class CostCenter extends AppEntity {
 
+	@JsonIgnore
+	@Column(name = "user_id", nullable = false)
+	private Long userId;
+
 	@Column(nullable = false)
 	private String name;
 
@@ -23,6 +28,14 @@ public class CostCenter extends AppEntity {
 	private List <Transaction> transactions;
 
 	//
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 	public String getName() {
 		return name;
 	}

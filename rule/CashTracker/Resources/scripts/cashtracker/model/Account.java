@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.AppEntity;
 
@@ -16,6 +17,10 @@ import com.flabser.restful.data.AppEntity;
 public class Account extends AppEntity {
 
 	// private int type;
+
+	@JsonIgnore
+	@Column(name = "user_id", nullable = false)
+	private Long userId;
 
 	@Column(nullable = false)
 	private String name;
@@ -37,6 +42,14 @@ public class Account extends AppEntity {
 	private String note;
 
 	//
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 	public String getName() {
 		return name;
 	}

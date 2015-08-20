@@ -11,6 +11,7 @@ import cashtracker.model.constants.BudgetState;
 import cashtracker.model.constants.converter.BudgetStateConverter;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.AppEntity;
@@ -20,6 +21,10 @@ import com.flabser.restful.data.AppEntity;
 @Entity
 @Table(name = "budgets")
 public class Budget extends AppEntity {
+
+	@JsonIgnore
+	@Column(name = "user_id", nullable = false)
+	private Long userId;
 
 	@Column(nullable = false)
 	private String name;
@@ -33,6 +38,14 @@ public class Budget extends AppEntity {
 	private BudgetState status;
 
 	//
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 	public String getName() {
 		return name;
 	}

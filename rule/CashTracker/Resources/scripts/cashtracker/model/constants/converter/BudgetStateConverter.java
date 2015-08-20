@@ -15,7 +15,10 @@ public class BudgetStateConverter implements AttributeConverter <BudgetState, St
 	}
 
 	@Override
-	public String convertToDatabaseColumn(BudgetState type) {
-		return type.toValue();
+	public String convertToDatabaseColumn(BudgetState state) {
+		if (state == null) {
+			return null;
+		}
+		return state.toValue();
 	}
 }

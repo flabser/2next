@@ -56,9 +56,7 @@ public class CategoryService extends RestProvider {
 		}
 
 		CategoryDAO dao = new CategoryDAO(getSession());
-		// m.setId(dao.add(m));
-		dao.add(m);
-		return Response.ok(m).build();
+		return Response.ok(dao.add(m)).build();
 	}
 
 	@PUT
@@ -74,8 +72,7 @@ public class CategoryService extends RestProvider {
 		}
 
 		CategoryDAO dao = new CategoryDAO(getSession());
-		dao.update(m);
-		return Response.ok(m).build();
+		return Response.ok(dao.update(m)).build();
 	}
 
 	@DELETE

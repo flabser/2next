@@ -57,8 +57,7 @@ public class TagService extends RestProvider {
 		}
 
 		TagDAO dao = new TagDAO(getSession());
-		dao.add(m);
-		return Response.ok(m).build();
+		return Response.ok(dao.add(m)).build();
 	}
 
 	@PUT
@@ -74,8 +73,7 @@ public class TagService extends RestProvider {
 		}
 
 		TagDAO dao = new TagDAO(getSession());
-		dao.update(m);
-		return Response.ok(m).build();
+		return Response.ok(dao.update(m)).build();
 	}
 
 	@DELETE

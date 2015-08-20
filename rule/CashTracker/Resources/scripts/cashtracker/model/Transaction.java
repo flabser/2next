@@ -21,6 +21,7 @@ import cashtracker.model.constants.converter.TransactionStateConverter;
 import cashtracker.model.constants.converter.TransactionTypeConverter;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.AppEntity;
@@ -31,7 +32,8 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "transactions")
 public class Transaction extends AppEntity /*SecureAppEntity*/{
 
-	@Column(nullable = false)
+	@JsonIgnore
+	@Column(name = "user_id", nullable = false)
 	private Long userId;
 
 	@Convert(converter = TransactionTypeConverter.class)
@@ -59,9 +61,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	private CostCenter costCenter;
 
 	@ManyToMany
-	@JoinTable(name = "transaction_tags",
-				joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") },
-				inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
+	@JoinTable(name = "transaction_tags", joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
 	private List <Tag> tags;
 
 	@Column(nullable = false)
