@@ -1,5 +1,15 @@
 import Em from 'ember';
 
 export default Em.Controller.extend({
-    queryParams: ['type', 'offset', 'limit', 'order_by']
+    transactions: Em.computed.alias('model'),
+
+    queryParams: ['type', 'offset', 'limit', 'order_by'],
+
+    hasAddAction: true,
+
+    actions: {
+        composeRecord() {
+            this.transitionTo('transactions.new');
+        }
+    }
 });

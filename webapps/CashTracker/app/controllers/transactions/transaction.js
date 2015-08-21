@@ -16,7 +16,7 @@ export default Em.Controller.extend({
     }.property(),
 
     isTransfer: Em.computed('transaction.transactionType', function() {
-        return this.get('transaction.transactionType') == 3;
+        return this.get('transaction.transactionType') == 'T';
     }),
 
     actions: {

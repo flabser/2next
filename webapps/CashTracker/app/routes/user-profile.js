@@ -11,9 +11,15 @@ export default Route.extend({
         return this.get('session.user');
     },
 
+    setupController: function(controller, model) {
+        this._super(controller, model);
+
+        controller.set('user', model);
+    },
+
     actions: {
         save: function() {
-        	this.session.saveUserProfile();
+            this.session.saveUserProfile();
 
             /*var _this = this;
             var model = this.get('user');

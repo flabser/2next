@@ -38,7 +38,7 @@ export default Route.extend({
                 this.controllerFor('budget').set('isEditMode', true);
                 this.transitionTo('budget');
             } else {
-                this.controllerFor('budget').send('check');
+                // this.controllerFor('budget').send('check');
             }
 
             $('.page-loading').hide();

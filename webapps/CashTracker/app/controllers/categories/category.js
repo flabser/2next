@@ -8,14 +8,14 @@ export default Em.Controller.extend({
     }.property(),
 
     transactionTypes: [{
-        "code": 1,
-        "name": "Expense"
+        'value': 'E',
+        'name': "Expense"
     }, {
-        "code": 2,
-        "name": "Income"
+        'value': 'I',
+        'name': "Income"
     }, {
-        "code": 3,
-        "name": "Transfer"
+        'value': 'T',
+        'name': "Transfer"
     }],
 
     actions: {

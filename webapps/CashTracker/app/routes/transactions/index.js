@@ -1,6 +1,7 @@
 import Em from 'ember';
+import ComposeRecordMixin from '../../mixins/m-compose-record';
 
-export default Em.Route.extend({
+export default Em.Route.extend(ComposeRecordMixin, {
     queryParams: {
         type: {
             refreshModel: true
@@ -44,11 +45,5 @@ export default Em.Route.extend({
         }
 
         this._super(transition);
-    },
-
-    actions: {
-        add() {
-            this.transitionTo('transactions.new');
-        }
     }
 });
