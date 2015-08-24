@@ -46,13 +46,17 @@ public class SessionService {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public AuthUser getSession() {
+	public Response getSession() {
 		HttpSession jses = request.getSession(false);
 		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
+		AuthUser au = null;
 		if (userSession == null) {
-			return new AuthUser();
+			au = new AuthUser();
+		} else {
+			au = userSession.getUserPOJO();
 		}
-		return userSession.getUserPOJO();
+		return Response.status(HttpServletResponse.SC_OK).entity(au).build();
+
 	}
 
 	@PUT

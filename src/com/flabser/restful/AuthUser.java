@@ -126,4 +126,9 @@ public class AuthUser {
 		this.authMode = authMode;
 	}
 
+	@Override
+	public String toString() {
+		return login + ", email=" + email;
+	}
+
 }
