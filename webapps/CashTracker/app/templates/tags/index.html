@@ -1,35 +1,38 @@
 <div class="view">
-    <div class="view-header">
+    <header class="view-header">
         <h1 class="header-title">{{t "tags"}}</h1>
-        <nav class="nav-action-bar">
-            <div class="-on-desktop">
-                <div class="action-bar">
-                    {{#link-to "tags.new" class="btn"}}
-                    <i class="fa fa-plus"></i>{{t "add"}} {{/link-to}}
-                </div>
+        <nav class="navbar-action on-desktop">
+            <div class="action-bar">
+                <button class="btn" {{action "composeRecord"}}>
+                    <i class="fa fa-plus"></i>{{t "add"}}
+                </button>
             </div>
         </nav>
-    </div>
-    <div class="view-content">
+    </header>
+    <section class="view-content">
         <header class="entries-head">
             <div class="head-wrap">
-                <label class="entry-select">
-                    <input type="checkbox" data-toggle="id" class="all" />
-                </label>
-                <div class="entry-captions"></div>
+                <div class="entry-captions">
+                    <label class="entry-select">
+                        <input type="checkbox" class="all" {{action "selectAll"}} />
+                    </label>
+                    <span>
+                        {{t "name"}}
+                    </span>
+                </div>
             </div>
         </header>
         <div class="entries">
             {{#each model as |tag|}}
             <div class="entry-wrap">
                 <div class="entry-actions">
-                    <a class="entry-action action-delete" href="#/tags/{{tag.id}}/delete" {{action "delete"}}>
+                    <button class="entry-action action-delete" {{action "delete"}}>
                         <i class="fa fa-trash" />
-                    </a>
+                    </button>
                 </div>
                 <div class="entry document js-swipe-entry">
                     <label class="entry-select">
-                        <input type="checkbox" name="id" value="{{tag.id}}" checked={{selectAll}} />
+                        <input type="checkbox" value="{{tag.id}}" {{action "selectOne"}} />
                     </label>
                     {{#link-to "tags.tag" tag class="entry-link"}}
                     <div class="entry-fields">
@@ -42,5 +45,5 @@
             </div>
             {{/each}}
         </div>
-    </div>
+    </section>
 </div>

@@ -1,16 +1,12 @@
 import Em from 'ember';
+import UnsavedModelRollbackMixin from '../mixins/m-unsaved-model-rollback';
 
-export default Em.Route.extend({
+export default Em.Route.extend(UnsavedModelRollbackMixin, {
     model: function() {
         return this.store.find('budget', 1);
     },
 
-    deactivate: function() {
-        let model = this.currentModel;
-        if ((model.get('isNew') && model.get('isSaving') == false) ||
-            (!model.get('isNew') && model.get('hasDirtyAttributes'))) {
-            model.rollbackAttributes();
-        }
+    setEditModeFalse: function() {
         this.controller.send('cancel');
-    }
+    }.on('deactivate')
 });

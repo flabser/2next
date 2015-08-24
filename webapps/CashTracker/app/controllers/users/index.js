@@ -6,7 +6,7 @@ export default Em.Controller.extend({
     hasAddAction: true,
 
     actions: {
-        add() {
+        composeRecord() {
             this.transitionTo('users.new');
         }
     }

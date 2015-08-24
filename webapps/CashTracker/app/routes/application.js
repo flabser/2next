@@ -7,6 +7,7 @@ const {
 export default Route.extend({
     tagName: '',
     navProfileIsExpanded: false,
+    hasAddAction: false,
 
     session: inject.service(),
 
@@ -29,7 +30,7 @@ export default Route.extend({
         return this.get('translationsFetcher').fetch();
     },
 
-    afterModel: function(user) {
+    afterModel: function( /*user*/ ) {
         // this.set('i18n.locale', user.get('locale'));
         if (!this.get('session').isAuthenticated()) {
             // window.location.href = 'Provider?id=login';
@@ -70,6 +71,14 @@ export default Route.extend({
             history.back(-1);
         },
 
+        showAddAction: function() {
+            this.set('hasAddAction', true);
+        },
+
+        hideAddAction: function() {
+            this.set('hasAddAction', false);
+        },
+
         navAppMenuToggle: function() {
             $('body').toggleClass('nav-app-open');
         },
@@ -90,11 +99,11 @@ export default Route.extend({
             $('.nav-profile').toggleClass('expanded');
         },
 
-        willTransition: function() {
+        willTransition: function(transition) {
             this.send('hideOpenedNav');
         },
 
-        error: function(_error, transition) {
+        error: function(_error /*, transition*/ ) {
             console.log(_error);
 
             if (_error.errors && _error.errors.length && _error.errors[0].status === '401') {

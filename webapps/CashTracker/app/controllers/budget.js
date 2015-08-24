@@ -9,7 +9,7 @@ export default Em.Controller.extend({
         check: function() {
             var budget = this.get('budget');
             budget.then(function(m) {
-                if (m.get('id') == 0 || m.get('name') == null) {
+                if (m.get('id') === 0 || m.get('name') === null) {
                     this.set('isEditMode', true);
                     this.transitionToRoute('budget');
                 }
@@ -21,6 +21,11 @@ export default Em.Controller.extend({
         },
 
         cancel: function() {
+            let model = this.get('budget');
+            if ((model.get('isNew') && model.get('isSaving') === false) ||
+                (!model.get('isNew') && model.get('hasDirtyAttributes'))) {
+                model.rollbackAttributes();
+            }
             this.set('isEditMode', false);
         },
 

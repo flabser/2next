@@ -68,6 +68,7 @@
     margin: 0 0 10px 230px;
     padding: 0;
     position: relative;
+    width: 100%;
 }
 
 .tablet .layout_content,

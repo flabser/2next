@@ -215,6 +215,7 @@
 }
 
 .entry-action {
+	border: none;
 	display: inline-block;
 	font-size: 14px;
 	height: 100%;
@@ -232,5 +233,9 @@
 
 .action-delete:hover {
 	background: red;
+	color: white;
+}
+
+.action-delete:hover .fa {
 	color: white;
 }

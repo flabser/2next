@@ -1,6 +1,7 @@
 import Em from 'ember';
+import UnsavedModelRollbackMixin from '../../mixins/m-unsaved-model-rollback';
 
-export default Em.Route.extend({
+export default Em.Route.extend(UnsavedModelRollbackMixin, {
     templateName: 'cost-centers/cost-center',
 
     model: function(params) {

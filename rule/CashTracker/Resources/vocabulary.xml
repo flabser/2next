@@ -471,6 +471,12 @@
 		<entry lang="ENG">Close</entry>
 		<entry lang="BG">Затвори</entry>
 	</sentence>
+	<sentence mode="on" keyword="invite_user">
+		<entry lang="RUS">Пригласить пользователя</entry>
+		<entry lang="KAZ">Пригласить пользователя</entry>
+		<entry lang="ENG">Invite</entry>
+		<entry lang="BG">Пригласить пользователя</entry>
+	</sentence>
 
 	<sentence mode="on" keyword="budget_name_hint">
 		<entry lang="RUS">Название вашего проекта бюджета</entry>

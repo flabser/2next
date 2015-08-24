@@ -7,12 +7,12 @@
 	width: 22%;
 }
 
-.vaccount-user {
+.vaccount-writers {
 	color: #666;
 	width: 22%;
 }
 
-.vaccount-observers {
+.vaccount-readers {
 	width: 22%;
 }
 
@@ -23,7 +23,7 @@
 }
 
 @media ( max-width : 570px) {
-	.view_accounts .entry-field.vaccount-observers {
+	.view_accounts .entry-field.vaccount-readers {
 		display: none;
 	}
 	.vaccount-amount-control {

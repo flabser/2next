@@ -42,7 +42,7 @@ export default Em.Component.extend({
 
         if (groupValue !== value) {
             this.set('groupValue', value); // violates DDAU
-            Ember.run.once(this, 'sendChangedAction');
+            Em.run.once(this, 'sendChangedAction');
         }
     }
 });

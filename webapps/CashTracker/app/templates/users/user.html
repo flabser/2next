@@ -2,31 +2,27 @@
 <header class="form-header">
     <h1 class="header-title">{{t "user"}}</h1>
     <div class="action-bar">
-        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
-        <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+        <button class="btn" {{action "goBack"}}>{{t "close"}}</button>
     </div>
 </header>
 <section class="form-content">
     <fieldset class="fieldset">
-        {{#tn-form-group property="login"}}
+        <div class="form-group">
             <div class="control-label">
-                {{t "name"}}
+                {{t "login"}}
             </div>
             <div class="controls">
-                {{input value=user.login}}
-                {{tn-error-message}}
+                {{user.login}}
             </div>
-        {{/tn-form-group}}
-
-        {{#tn-form-group property="email"}}
+        </div>
+        <div class="form-group">
             <div class="control-label">
                 {{t "email"}}
             </div>
             <div class="controls">
-                {{input value=user.email}}
-                {{tn-error-message}}
+                {{user.email}}
             </div>
-        {{/tn-form-group}}
+        </div>
     </fieldset>
 </section>
 {{/tn-form}}

@@ -8,6 +8,7 @@
 	<caption name="close" />
 	<caption name="cancel" />
 	<caption name="add" />
+	<caption name="invite_user" />
 
 	<caption name="saved" />
 	<caption name="newdoc" />

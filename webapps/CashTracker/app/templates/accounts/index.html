@@ -3,12 +3,11 @@
         <h1 class="header-title">
             {{t "accounts"}}
         </h1>
-        <nav class="nav-action-bar">
-            <div class="-on-desktop">
-                <div class="action-bar">
-                    {{#link-to "accounts.new" class="btn"}}
-                    <i class="fa fa-plus"></i>{{t "add"}} {{/link-to}}
-                </div>
+        <nav class="navbar-action on-desktop">
+            <div class="action-bar">
+                <button class="btn" {{action "composeRecord"}}>
+                    <i class="fa fa-plus"></i>{{t "add"}}
+                </button>
             </div>
         </nav>
     </header>
@@ -20,16 +19,16 @@
                 </label>
                 <div class="entry-captions">
                     <span class="vaccount-name">
-                        {{viewtext1}}
+                        {{t "name"}}
                     </span>
-                    <span class="vaccount-user">
-                        {{viewtext2}}
+                    <span class="vaccount-writers">
+                        {{t "writers"}}
                     </span>
-                    <span class="vaccount-observers">
-                        {{viewtext3}}
+                    <span class="vaccount-readers">
+                        {{t "readers"}}
                     </span>
                     <span class="vaccount-amount-control">
-                        {{viewnumber}}
+                        {{t "amount_control"}}
                     </span>
                 </div>
             </div>
@@ -38,9 +37,9 @@
             {{#each model as |account|}}
             <div class="entry-wrap">
                 <div class="entry-actions">
-                    <a class="entry-action action-delete" data-ddbid="{{account.id}}" href="#">
+                    <button class="entry-action action-delete" {{action "delete"}}>
                         <i class="fa fa-trash" />
-                    </a>
+                    </button>
                 </div>
                 <div class="entry document js-swipe-entry">
                     <label class="entry-select">
@@ -51,12 +50,12 @@
                         <span class="entry-field vaccount-name">
                             {{account.name}}
                         </span>
-                        <span class="entry-field vaccount-user">
-                            {{account.owner.name}}
+                        <span class="entry-field vaccount-writers">
+                            {{account.writers.name}}
                         </span>
-                        <span class="entry-field vaccount-observers">
+                        <span class="entry-field vaccount-readers">
                             <span>
-                                {{account.observers.name}}
+                                {{account.readers.name}}
                             </span>
                         </span>
                         <span class="entry-field vaccount-amount-control">
