@@ -10,16 +10,6 @@
         </nav>
     </header>
     <section class="view-content">
-        <header class="entries-head">
-            <div class="head-wrap">
-                <div class="entry-captions">
-                    <label class="entry-select">
-                        <input type="checkbox" class="all" {{action "selectAll"}} />
-                    </label>
-                    <span></span>
-                </div>
-            </div>
-        </header>
         <div class="entries">
             {{#each model as |user|}}
             <div class="entry-wrap">
@@ -28,17 +18,14 @@
                         <i class="fa fa-trash" />
                     </button>
                 </div>
-                <div class="entry document js-swipe-entry">
-                    <label class="entry-select">
-                        <input type="checkbox" value="{{user.id}}" {{action "selectOne"}} />
-                    </label>
-                    {{#link-to "users.user" user class="entry-link"}}
-                    <div class="entry-fields">
-                        <span class="entry-field">
+                <div class="entry document">
+                    <div class="entry-link">
+                        <div class="entry-fields">
+                            <span class="entry-field">
                             {{user.login}}
                         </span>
+                        </div>
                     </div>
-                    {{/link-to}}
                 </div>
             </div>
             {{/each}}

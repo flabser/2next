@@ -7,7 +7,7 @@ export default Em.Controller.extend({
 
     actions: {
         composeRecord() {
-            this.transitionTo('users.new');
+            this.transitionToRoute('users.invite');
         }
     }
 });

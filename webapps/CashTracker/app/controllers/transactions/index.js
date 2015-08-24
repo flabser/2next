@@ -9,7 +9,7 @@ export default Em.Controller.extend({
 
     actions: {
         composeRecord() {
-            this.transitionTo('transactions.new');
+            this.transitionToRoute('transactions.new');
         }
     }
 });

@@ -55,10 +55,7 @@ Router.map(function() {
     });
 
     this.route('users', function() {
-        this.route('new');
-        this.route('user', {
-            path: '/:user_id'
-        });
+        this.route('invite');
     });
 
     this.route('error404', {
