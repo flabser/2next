@@ -1,6 +1,6 @@
 {{#tn-form model=invite onSubmit="submit" action="sendInvite"}}
 <header class="form-header">
-    <h1 class="header-title">{{t "user"}}</h1>
+    <h1 class="header-title">{{t "invite_title"}}</h1>
 </header>
 <section class="form-content">
     <fieldset class="fieldset">
@@ -11,6 +11,9 @@
             <div class="controls">
                 {{input value=invite.email}}
                 {{tn-error-message}}
+                <p class="hint">
+                    {{t "invite_email_hint"}}
+                </p>
             </div>
         {{/tn-form-group}}
         {{#tn-form-group property="message"}}
@@ -20,13 +23,16 @@
             <div class="controls">
                 {{textarea value=invite.message}}
                 {{tn-error-message}}
+                <p class="hint">
+                    {{t "invite_message_hint"}}
+                </p>
             </div>
         {{/tn-form-group}}
     </fieldset>
-    <footer class="navbar-action">
-        <button class="btn" {{action "goBack"}}>{{t "close"}}</button>
+    <footer class="action-bar">
+        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
         <button class="btn" type="submit">
-            {{t "send_invite"}}
+            <i class="fa fa-send-o"></i>{{t "send_invite"}}
         </button>
     </footer>
 </section>

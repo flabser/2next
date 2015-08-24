@@ -1,45 +1,31 @@
 {{#tn-form model=user onSubmit="submit" action="save"}}
 <header class="form-header">
     <h1 class="header-title">{{t "user_profile"}}</h1>
-    <div class="action-bar">
-        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
-        <button type="submit" class="btn btn-primary">{{t "save"}}</button>
-    </div>
 </header>
 <section class="form-content">
     <div class="user_avatar">
         avatar
     </div>
-    <div class="fieldset">
+    <div class="fieldset" style="overflow:hidden">
         {{#tn-form-group property="name"}}
-            <div class="control-label">
-                {{t "user_name"}}
-            </div>
-            <div class="controls">
-                {{input value=user.name}}
-                {{tn-error-message}}
-            </div>
+            <div>{{t "user_name"}}</div>
+            {{input value=user.name}}
+            {{tn-error-message}}
         {{/tn-form-group}}
-
         {{#tn-form-group property="email"}}
-            <div class="control-label">
-                {{t "email"}}
-            </div>
-            <div class="controls">
-                {{input value=user.email}}
-                {{tn-error-message}}
-            </div>
+            <div>{{t "email"}}</div>
+            {{input value=user.email}}
+            {{tn-error-message}}
         {{/tn-form-group}}
-
         {{#tn-form-group property="password"}}
-            <div class="control-label">
-                {{t "password"}}
-            </div>
-            <div class="controls">
-                {{input type="password" value=user.password}}
-                {{tn-error-message}}
-            </div>
+            <div>{{t "password"}}</div>
+            {{input type="password" value=user.password}}
+            {{tn-error-message}}
         {{/tn-form-group}}
     </div>
 </section>
+<footer class="action-bar">
+    <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
+    <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+</footer>
 {{/tn-form}}

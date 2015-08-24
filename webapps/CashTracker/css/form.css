@@ -1,5 +1,6 @@
 .form-wrapper {
-	width: 520px;
+	min-width: 320px;
+	width: 100%;
 }
 
 .form-header {
@@ -81,13 +82,13 @@
 	width: 230px;
 }
 
-.control-group .control-label:before {
+/* .control-group .control-label:before {
 	color: #999;
 	content: ':';
 	float: right;
 	margin: 0 0 0 1px;
 	overflow: hidden;
-}
+} */
 
 .control-group .controls {
 	color: #000;
