@@ -1,5 +1,20 @@
 package com.flabser.dataengine.system;
 
+import com.flabser.dataengine.DatabaseUtil;
+import com.flabser.dataengine.activity.Activity;
+import com.flabser.dataengine.activity.IActivity;
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.pool.IDBConnectionPool;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.UserGroup;
+import com.flabser.dataengine.system.entities.UserRole;
+import com.flabser.env.EnvConst;
+import com.flabser.rule.constants.RunMode;
+import com.flabser.server.Server;
+import com.flabser.users.User;
+import com.flabser.users.UserStatusType;
+import org.apache.catalina.realm.RealmBase;
+
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -16,22 +31,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.apache.catalina.realm.RealmBase;
-
-import com.flabser.dataengine.DatabaseUtil;
-import com.flabser.dataengine.activity.Activity;
-import com.flabser.dataengine.activity.IActivity;
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.pool.IDBConnectionPool;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.dataengine.system.entities.UserGroup;
-import com.flabser.dataengine.system.entities.UserRole;
-import com.flabser.env.EnvConst;
-import com.flabser.rule.constants.RunMode;
-import com.flabser.server.Server;
-import com.flabser.users.User;
-import com.flabser.users.UserStatusType;
 
 @SuppressWarnings({ "SqlDialectInspection", "SqlNoDataSourceInspection" })
 public class SystemDatabase implements ISystemDatabase {
@@ -631,6 +630,14 @@ public class SystemDatabase implements ISystemDatabase {
 
 			insert(ap.getRoles());
 
+            try (Statement s = conn.createStatement()) {
+                s.executeUpdate("delete from roles where app_id = " + ap.id +
+                                (ap.getRoles().size() > 0
+                                        ? " and id not in " + ap.getRoles().stream().map(r -> String.valueOf(r.getId())).collect(Collectors.joining(", ", "(", ")"))
+                                        : "")
+                );
+            }
+
 			conn.commit();
 			return ap.id;
 		} catch (SQLException e) {
@@ -661,6 +668,14 @@ public class SystemDatabase implements ISystemDatabase {
 
 			pst.executeUpdate();
 			insert(ap.getRoles());
+
+            try (Statement s = conn.createStatement()) {
+                s.executeUpdate("delete from roles where app_id = " + ap.id +
+                        (ap.getRoles().size() > 0
+                                ? " and id not in " + ap.getRoles().stream().map(r -> String.valueOf(r.getId())).collect(Collectors.joining(", ", "(", ")"))
+                                : "")
+                );
+            }
 
 			conn.commit();
 			return ap.id;
