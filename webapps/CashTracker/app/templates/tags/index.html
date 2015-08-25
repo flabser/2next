@@ -24,25 +24,29 @@
         </header>
         <div class="entries">
             {{#each model as |tag|}}
-            <div class="entry-wrap">
-                <div class="entry-actions">
-                    <button class="entry-action action-delete" {{action "delete"}}>
-                        <i class="fa fa-trash" />
-                    </button>
-                </div>
-                <div class="entry document js-swipe-entry">
-                    <label class="entry-select">
-                        <input type="checkbox" value="{{tag.id}}" {{action "selectOne"}} />
-                    </label>
-                    {{#link-to "tags.tag" tag class="entry-link"}}
-                    <div class="entry-fields">
-                        <span class="entry-field">
-                            {{tag.name}}
-                        </span>
+                {{#unless tag.isNew}}
+                    {{#tn-model-controller}}
+                    <div class="entry-wrap">
+                        <div class="entry-actions">
+                            <button class="entry-action action-delete" {{action "deleteRecord" tag}}>
+                                <i class="fa fa-trash" />
+                            </button>
+                        </div>
+                        <div class="entry document">
+                            <label class="entry-select">
+                                <input type="checkbox" value="{{tag.id}}" {{action "selectOne"}} />
+                            </label>
+                            {{#link-to "tags.tag" tag class="entry-link"}}
+                            <div class="entry-fields">
+                                <span class="entry-field">
+                                    {{tag.name}}
+                                </span>
+                            </div>
+                            {{/link-to}}
+                        </div>
                     </div>
-                    {{/link-to}}
-                </div>
-            </div>
+                    {{/tn-model-controller}}
+                {{/unless}}
             {{/each}}
         </div>
     </section>

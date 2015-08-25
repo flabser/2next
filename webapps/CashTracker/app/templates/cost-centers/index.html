@@ -24,25 +24,27 @@
         </header>
         <div class="entries">
             {{#each model as |costCenter|}}
-            <div class="entry-wrap">
-                <div class="entry-actions">
-                    <button class="entry-action action-delete" {{action "delete"}}>
-                        <i class="fa fa-trash" />
-                    </button>
-                </div>
-                <div class="entry document js-swipe-entry">
-                    <label class="entry-select">
-                        <input type="checkbox" value="{{costCenter.id}}" {{action "selectOne"}} />
-                    </label>
-                    {{#link-to "cost_centers.cost_center" costCenter class="entry-link"}}
-                    <div class="entry-fields">
-                        <span class="entry-field">
-                            {{costCenter.name}}
-                        </span>
+                {{#unless costCenter.isNew}}
+                <div class="entry-wrap">
+                    <div class="entry-actions">
+                        <button class="entry-action action-delete" {{action "deleteRecord" costCenter}}>
+                            <i class="fa fa-trash" />
+                        </button>
                     </div>
-                    {{/link-to}}
+                    <div class="entry document js-swipe-entry">
+                        <label class="entry-select">
+                            <input type="checkbox" value="{{costCenter.id}}" {{action "selectOne"}} />
+                        </label>
+                        {{#link-to "cost_centers.cost_center" costCenter class="entry-link"}}
+                        <div class="entry-fields">
+                            <span class="entry-field">
+                                {{costCenter.name}}
+                            </span>
+                        </div>
+                        {{/link-to}}
+                    </div>
                 </div>
-            </div>
+                {{/unless}}
             {{/each}}
         </div>
     </section>

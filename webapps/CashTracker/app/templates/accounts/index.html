@@ -35,36 +35,38 @@
         </header>
         <div class="entries">
             {{#each model as |account|}}
-            <div class="entry-wrap">
-                <div class="entry-actions">
-                    <button class="entry-action action-delete" {{action "delete"}}>
-                        <i class="fa fa-trash" />
-                    </button>
-                </div>
-                <div class="entry document js-swipe-entry">
-                    <label class="entry-select">
-                        <input type="checkbox" value="{{account.id}}" {{action "selectOne"}} />
-                    </label>
-                    {{#link-to "accounts.account" account class="entry-link"}}
-                    <div class="entry-fields">
-                        <span class="entry-field vaccount-name">
-                            {{account.name}}
-                        </span>
-                        <span class="entry-field vaccount-writers">
-                            {{account.writers.name}}
-                        </span>
-                        <span class="entry-field vaccount-readers">
-                            <span>
-                                {{account.readers.name}}
-                            </span>
-                        </span>
-                        <span class="entry-field vaccount-amount-control">
-                            {{account.amountControl}}
-                        </span>
+                {{#unless account.isNew}}
+                <div class="entry-wrap">
+                    <div class="entry-actions">
+                        <button class="entry-action action-delete" {{action "deleteRecord" account}}>
+                            <i class="fa fa-trash" />
+                        </button>
                     </div>
-                    {{/link-to}}
+                    <div class="entry document js-swipe-entry">
+                        <label class="entry-select">
+                            <input type="checkbox" value="{{account.id}}" {{action "selectOne"}} />
+                        </label>
+                        {{#link-to "accounts.account" account class="entry-link"}}
+                        <div class="entry-fields">
+                            <span class="entry-field vaccount-name">
+                                {{account.name}}
+                            </span>
+                            <span class="entry-field vaccount-writers">
+                                {{account.writers.name}}
+                            </span>
+                            <span class="entry-field vaccount-readers">
+                                <span>
+                                    {{account.readers.name}}
+                                </span>
+                            </span>
+                            <span class="entry-field vaccount-amount-control">
+                                {{account.amountControl}}
+                            </span>
+                        </div>
+                        {{/link-to}}
+                    </div>
                 </div>
-            </div>
+                {{/unless}}
             {{/each}}
         </div>
     </section>

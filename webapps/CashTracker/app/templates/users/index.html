@@ -4,7 +4,7 @@
         <nav class="navbar-action on-desktop">
             <div class="action-bar">
                 <button class="btn" {{action "composeRecord"}}>
-                    {{t "invite_user"}}
+                    {{t "add_user"}}
                 </button>
             </div>
         </nav>
@@ -12,22 +12,24 @@
     <section class="view-content">
         <div class="entries">
             {{#each model as |user|}}
-            <div class="entry-wrap">
-                <div class="entry-actions">
-                    <button class="entry-action action-delete" {{action "delete"}}>
-                        <i class="fa fa-trash" />
-                    </button>
-                </div>
-                <div class="entry document">
-                    <div class="entry-link">
-                        <div class="entry-fields">
-                            <span class="entry-field">
-                            {{user.login}}
-                        </span>
+                {{#unless user.isNew}}
+                <div class="entry-wrap">
+                    <div class="entry-actions">
+                        <button class="entry-action action-delete" {{action "deleteRecord" user}}>
+                            <i class="fa fa-trash" />
+                        </button>
+                    </div>
+                    <div class="entry document">
+                        <div class="entry-link">
+                            <div class="entry-fields">
+                                <span class="entry-field">
+                                {{user.login}}
+                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                {{/unless}}
             {{/each}}
         </div>
     </section>

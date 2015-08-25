@@ -24,25 +24,27 @@
         </header>
         <div class="entries">
             {{#each model as |category|}}
-            <div class="entry-wrap">
-                <div class="entry-actions">
-                    <button class="entry-action action-delete" {{action "delete"}}>
-                        <i class="fa fa-trash" />
-                    </button>
-                </div>
-                <div class="entry document js-swipe-entry">
-                    <label class="entry-select">
-                        <input type="checkbox" value="{{category.id}}" {{action "selectOne"}} />
-                    </label>
-                    {{#link-to "categories.category" category class="entry-link"}}
-                    <div class="entry-fields">
-                        <span class="entry-field">
-                            {{category.name}}
-                        </span>
+                {{#unless category.isNew}}
+                <div class="entry-wrap">
+                    <div class="entry-actions">
+                        <button class="entry-action action-delete" {{action "deleteRecord" category}}>
+                            <i class="fa fa-trash" />
+                        </button>
                     </div>
-                    {{/link-to}}
+                    <div class="entry document js-swipe-entry">
+                        <label class="entry-select">
+                            <input type="checkbox" value="{{category.id}}" {{action "selectOne"}} />
+                        </label>
+                        {{#link-to "categories.category" category class="entry-link"}}
+                        <div class="entry-fields">
+                            <span class="entry-field">
+                                {{category.name}}
+                            </span>
+                        </div>
+                        {{/link-to}}
+                    </div>
                 </div>
-            </div>
+                {{/unless}}
             {{/each}}
         </div>
     </section>

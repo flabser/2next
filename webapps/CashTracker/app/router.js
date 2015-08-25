@@ -55,7 +55,7 @@ Router.map(function() {
     });
 
     this.route('users', function() {
-        this.route('invite');
+        this.route('invitation');
     });
 
     this.route('error404', {

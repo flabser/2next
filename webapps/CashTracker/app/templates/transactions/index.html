@@ -39,43 +39,45 @@
         </header>
         <div class="entries">
             {{#each model as |transaction|}}
-            <div class="entry-wrap">
-                <div class="entry-actions">
-                    <button class="entry-action action-delete" {{action "delete"}}>
-                        <i class="fa fa-trash" />
-                    </button>
-                </div>
-                <div class="entry document">
-                    <label class="entry-select">
-                        <input type="checkbox" value="{{transaction.id}}" {{action "selectOne"}} />
-                    </label>
-                    {{#link-to "transactions.transaction" transaction class="entry-link"}}
-                    <div class="entry-fields">
-                        <span class="entry-field op-icon-att" {{hasattach}}></span>
-                        <span class="entry-field op-account">
-                            {{transaction.account}}
-                        </span>
-                        <span class="entry-field op-date">
-                            {{transaction.date}}
-                        </span>
-                        <span class="entry-field op-amount">
-                            {{transaction.amount}}
-                        </span>
-                        <span class="entry-field vcategory-icon-type">
-                            <i class="operation-type-icon-{{transaction.type}}"></i>
-                        </span>
-                        <span class="entry-field op-costcenter">
-                            {{transaction.costCenter}}
-                        </span>
-                        <span class="entry-field op-vt">
-                            <span>
-                                {{transaction.comment}}
-                            </span>
-                        </span>
+                {{#unless transaction.isNew}}
+                <div class="entry-wrap">
+                    <div class="entry-actions">
+                        <button class="entry-action action-delete" {{action "deleteRecord" transaction}}>
+                            <i class="fa fa-trash" />
+                        </button>
                     </div>
-                    {{/link-to}}
+                    <div class="entry document">
+                        <label class="entry-select">
+                            <input type="checkbox" value="{{transaction.id}}" {{action "selectOne"}} />
+                        </label>
+                        {{#link-to "transactions.transaction" transaction class="entry-link"}}
+                        <div class="entry-fields">
+                            <span class="entry-field op-icon-att" {{hasattach}}></span>
+                            <span class="entry-field op-account">
+                                {{transaction.account}}
+                            </span>
+                            <span class="entry-field op-date">
+                                {{transaction.date}}
+                            </span>
+                            <span class="entry-field op-amount">
+                                {{transaction.amount}}
+                            </span>
+                            <span class="entry-field vcategory-icon-type">
+                                <i class="operation-type-icon-{{transaction.type}}"></i>
+                            </span>
+                            <span class="entry-field op-costcenter">
+                                {{transaction.costCenter}}
+                            </span>
+                            <span class="entry-field op-vt">
+                                <span>
+                                    {{transaction.comment}}
+                                </span>
+                            </span>
+                        </div>
+                        {{/link-to}}
+                    </div>
                 </div>
-            </div>
+                {{/unless}}
             {{/each}}
         </div>
     </section>
