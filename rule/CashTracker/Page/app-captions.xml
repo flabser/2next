@@ -8,7 +8,6 @@
 	<caption name="close" />
 	<caption name="cancel" />
 	<caption name="add" />
-	<caption name="invite_user" />
 
 	<caption name="saved" />
 	<caption name="newdoc" />
@@ -69,7 +68,6 @@
 	<caption name="month" />
 	<caption name="basis" />
 	<caption name="documented" />
-	<caption name="btn_send_invite" />
 
 	<caption name="transaction_type" />
 	<caption name="currency" />
@@ -88,4 +86,10 @@
 	<caption name="account_active_hint" />
 	<caption name="category_active_hint" />
 	<caption name="category_transaction_type_hint" />
+
+	<caption name="add_user" />
+	<caption name="invitation_title" />
+	<caption name="invitation_email_hint" />
+	<caption name="message" />
+	<caption name="send_invite" />
 </rule>

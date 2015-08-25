@@ -471,12 +471,6 @@
 		<entry lang="ENG">Close</entry>
 		<entry lang="BG">Затвори</entry>
 	</sentence>
-	<sentence mode="on" keyword="invite_user">
-		<entry lang="RUS">Пригласить пользователя</entry>
-		<entry lang="KAZ">Пригласить пользователя</entry>
-		<entry lang="ENG">Invite</entry>
-		<entry lang="BG">Пригласить пользователя</entry>
-	</sentence>
 
 	<sentence mode="on" keyword="budget_name_hint">
 		<entry lang="RUS">Название вашего проекта бюджета</entry>
@@ -802,10 +796,35 @@
 		<entry lang="ENG">Подтверждено документом</entry>
 		<entry lang="BG">Подтверждено документом</entry>
 	</sentence>
-	<sentence mode="on" keyword="btn_send_invite">
+
+	<sentence mode="on" keyword="add_user">
+		<entry lang="RUS">Пригласить пользователя</entry>
+		<entry lang="KAZ">Пригласить пользователя</entry>
+		<entry lang="ENG">Invite user</entry>
+		<entry lang="BG">Пригласить пользователя</entry>
+	</sentence>
+	<sentence mode="on" keyword="invitation_title">
+		<entry lang="RUS">Пригласить пользователя</entry>
+		<entry lang="KAZ">Пригласить пользователя</entry>
+		<entry lang="ENG">Пригласить пользователя</entry>
+		<entry lang="BG">Пригласить пользователя</entry>
+	</sentence>
+	<sentence mode="on" keyword="invitation_email_hint">
+		<entry lang="RUS">Адрес электронной почты приглашаемого пользователя</entry>
+		<entry lang="KAZ">Адрес электронной почты приглашаемого пользователя</entry>
+		<entry lang="ENG">Адрес электронной почты приглашаемого пользователя</entry>
+		<entry lang="BG">Адрес электронной почты приглашаемого пользователя</entry>
+	</sentence>
+	<sentence mode="on" keyword="message">
+		<entry lang="RUS">Сообщение</entry>
+		<entry lang="KAZ">Сообщение</entry>
+		<entry lang="ENG">Message</entry>
+		<entry lang="BG">Сообщение</entry>
+	</sentence>
+	<sentence mode="on" keyword="send_invite">
 		<entry lang="RUS">Отправить приглашение</entry>
 		<entry lang="KAZ">Отправить приглашение</entry>
-		<entry lang="ENG">Отправить приглашение</entry>
+		<entry lang="ENG">Send invite</entry>
 		<entry lang="BG">Отправить приглашение</entry>
 	</sentence>
 </vocabulary>
