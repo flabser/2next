@@ -11,7 +11,6 @@ import cashtracker.model.Category;
 import cashtracker.model.constants.TransactionType;
 
 import com.flabser.restful.data.IAppEntity;
-import com.flabser.tests.InitEnv;
 
 
 public class CategoryTest extends InitEnv {
