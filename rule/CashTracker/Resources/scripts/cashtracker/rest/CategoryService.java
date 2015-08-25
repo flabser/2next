@@ -77,14 +77,13 @@ public class CategoryService extends RestProvider {
 
 	@DELETE
 	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
 		CategoryDAO dao = new CategoryDAO(getSession());
 		Category m = dao.findById(id);
 		if (m != null) {
 			dao.delete(m);
 		}
-		return Response.ok().build();
+		return Response.status(Status.NO_CONTENT).build();
 	}
 
 	@JsonRootName("categories")

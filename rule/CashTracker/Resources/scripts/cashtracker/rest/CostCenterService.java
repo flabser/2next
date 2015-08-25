@@ -77,14 +77,13 @@ public class CostCenterService extends RestProvider {
 
 	@DELETE
 	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		CostCenter m = dao.findById(id);
 		if (m != null) {
 			dao.delete(m);
 		}
-		return Response.ok().build();
+		return Response.status(Status.NO_CONTENT).build();
 	}
 
 	@JsonRootName("cost-centers")

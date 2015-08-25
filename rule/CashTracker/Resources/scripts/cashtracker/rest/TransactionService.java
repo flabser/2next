@@ -88,14 +88,13 @@ public class TransactionService extends RestProvider {
 
 	@DELETE
 	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
 		TransactionDAO dao = new TransactionDAO(getSession());
 		Transaction m = dao.findById(id);
 		if (m != null) {
 			dao.delete(m);
 		}
-		return Response.ok().build();
+		return Response.status(Status.NO_CONTENT).build();
 	}
 
 	@JsonRootName("transactions")
