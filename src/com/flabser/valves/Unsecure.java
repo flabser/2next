@@ -33,29 +33,38 @@ public class Unsecure extends ValveBase {
 		http = request;
 
 		if (Environment.getAppTemplates().containsKey(ru.getAppType())) {
-			if ((!ru.isProtected()) || (ru.isAuthRequest() && !http.getMethod().equalsIgnoreCase("DELETE"))) {
-				gettingSession(request, response);
-				getNext().getNext().invoke(request, response);
-			} else {
-				if (ru.isPage()) {
-					AppTemplate aTemplate = Environment.getAppTemplate(ru.getAppType());
-					try {
-						if (aTemplate.ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
-							gettingSession(request, response);
-							getNext().getNext().invoke(request, response);
-						} else {
-							((Secure) getNext()).invoke(request, response, ru);
-						}
-
-					} catch (RuleException e) {
-						Server.logger.errorLogEntry(e.getMessage());
-						ApplicationException ae = new ApplicationException(ru.getAppType(), e.getMessage());
-						response.setStatus(ae.getCode());
-						response.getWriter().println(ae.getHTMLMessage());
-					}
-
+			if (ru.isAuthRequest()) {
+				if (http.getMethod().equalsIgnoreCase("POST")) {
+					HttpSession jses = http.getSession(true);
+					jses.setAttribute(EnvConst.SESSION_ATTR, new UserSession(new User()));
+					getNext().getNext().invoke(request, response);
 				} else {
 					((Secure) getNext()).invoke(request, response, ru);
+				}
+			} else {
+				if (ru.isProtected()) {
+					if (ru.isPage()) {
+						AppTemplate aTemplate = Environment.getAppTemplate(ru.getAppType());
+						try {
+							if (aTemplate.ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
+								gettingSession(request, response);
+								getNext().getNext().invoke(request, response);
+							} else {
+								((Secure) getNext()).invoke(request, response, ru);
+							}
+
+						} catch (RuleException e) {
+							Server.logger.errorLogEntry(e.getMessage());
+							ApplicationException ae = new ApplicationException(ru.getAppType(), e.getMessage());
+							response.setStatus(ae.getCode());
+							response.getWriter().println(ae.getHTMLMessage());
+						}
+					} else {
+						((Secure) getNext()).invoke(request, response, ru);
+					}
+				} else {
+					gettingSession(request, response);
+					getNext().getNext().invoke(request, response);
 				}
 			}
 		} else if (ru.getAppType().equals(EnvConst.SHARED_RESOURCES_NAME) || ru.getAppType().equals(EnvConst.ADMIN_APP_NAME)) {
