@@ -19,6 +19,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.server.Server;
 import com.sun.mail.smtp.SMTPSendFailedException;
@@ -80,7 +81,7 @@ public class Memo {
 				}
 
 				if (hasRecipients) {
-					msg.setSubject(subj, "utf-8");
+					msg.setSubject(subj, EnvConst.SUPPOSED_CODE_PAGE);
 					Multipart mp = new MimeMultipart();
 					BodyPart htmlPart = new MimeBodyPart();
 					htmlPart.setContent(body, "text/html; charset=utf-8");
@@ -116,6 +117,7 @@ public class Memo {
 		} catch (MessagingException e) {
 			Server.logger.errorLogEntry(e);
 		}
+		Server.logger.warningLogEntry("Mail agent is off or incorrect settings");
 		return false;
 	}
 

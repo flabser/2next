@@ -126,6 +126,9 @@ public class SessionService {
 		} else if (user.getStatus() == UserStatusType.DELETED) {
 			authUser.setError(AuthFailedExceptionType.NOT_FOUND);
 			throw new AuthFailedException(authUser);
+		} else{
+			authUser.setError(AuthFailedExceptionType.UNKNOWN_STATUS);
+			throw new AuthFailedException(authUser);
 		}
 
 		String token = SessionPool.put(userSession);

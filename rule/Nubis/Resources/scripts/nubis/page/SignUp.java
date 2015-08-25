@@ -11,6 +11,7 @@ import com.flabser.script._Helper;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
+import com.flabser.server.Server;
 import com.flabser.users.User;
 import com.flabser.users.UserStatusType;
 
@@ -44,6 +45,7 @@ public class SignUp extends _DoScript {
 		ISystemDatabase sdb = com.flabser.dataengine.DatabaseFactory.getSysDatabase();
 		User userExists = sdb.getUser(regForm.email);
 		if (userExists != null) {
+			Server.logger.verboseLogEntry("User \"" + regForm.email + "\" is exist");
 			publishElement("error", "user-exists");
 			return;
 		}
@@ -74,6 +76,8 @@ public class SignUp extends _DoScript {
 				publishElement("error", "save-error");
 			}
 		} else {
+			user.setStatus(UserStatusType.VERIFYCODE_NOT_SENT);
+			user.save();
 			publishElement("error", "verify-email-sending-error");
 		}
 	}
