@@ -7,7 +7,6 @@
     <applications default="CashTracker">
 		<app>
 			<name mode="on">CashTracker</name>
-			<!--<authtype>BASIC</authtype>-->
 		</app>
 	</applications>
 		
