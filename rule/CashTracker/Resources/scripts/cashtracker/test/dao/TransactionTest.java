@@ -24,7 +24,6 @@ import cashtracker.model.constants.TransactionType;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.restful.data.IAppEntity;
-import com.flabser.tests.InitEnv;
 
 
 public class TransactionTest extends InitEnv {
@@ -39,7 +38,7 @@ public class TransactionTest extends InitEnv {
 		dao = new TransactionDAO(ses);
 	}
 
-	@Test
+	// @Test
 	public void insertTest() {
 		assertNotNull(db);
 

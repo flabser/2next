@@ -8,8 +8,6 @@ import cashtracker.dao.BudgetDAO;
 import cashtracker.model.Budget;
 import cashtracker.model.constants.BudgetState;
 
-import com.flabser.tests.InitEnv;
-
 
 public class BudgetTest extends InitEnv {
 
