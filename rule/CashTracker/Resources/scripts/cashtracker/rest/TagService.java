@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.TagDAO;
+import cashtracker.model.Errors;
 import cashtracker.model.Tag;
 import cashtracker.validation.TagValidator;
 import cashtracker.validation.ValidationError;
@@ -43,7 +44,6 @@ public class TagService extends RestProvider {
 	public Response get(@PathParam("id") long id) {
 		TagDAO dao = new TagDAO(getSession());
 		IAppEntity m = dao.findById(id);
-		System.out.println(((Tag) m).getName());
 		return Response.ok(m).build();
 	}
 
@@ -78,11 +78,18 @@ public class TagService extends RestProvider {
 
 	@DELETE
 	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
 		TagDAO dao = new TagDAO(getSession());
 		Tag m = dao.findById(id);
 		if (m != null) {
-			dao.delete(m);
+			if (dao.existsTransactionByTag(m)) {
+				Errors msg = new Errors();
+				msg.setMessage("used");
+				return Response.ok(msg).status(Status.BAD_REQUEST).build();
+			} else {
+				dao.delete(m);
+			}
 		}
 		return Response.status(Status.NO_CONTENT).build();
 	}

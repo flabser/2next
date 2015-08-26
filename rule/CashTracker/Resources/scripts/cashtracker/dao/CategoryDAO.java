@@ -2,6 +2,9 @@ package cashtracker.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import cashtracker.model.Category;
 
 import com.flabser.dataengine.IDatabase;
@@ -34,6 +37,20 @@ public class CategoryDAO {
 		list = db.select(getSelectQuery() + " WHERE c.id = " + id + " ORDER BY c.sortOrder, c.name", user);
 		Category result = list.size() > 0 ? (Category) list.get(0) : null;
 		return result;
+	}
+
+	public boolean existsTransactionByCategory(Category m) {
+		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.category = :category";
+
+		EntityManager em = db.getEntityManager();
+		Query q = em.createQuery(jpql);
+		q.setParameter("category", m);
+		q.setMaxResults(1);
+		return q.getResultList().size() > 0;
+	}
+
+	public boolean existsChildCategory(Category m) {
+		return m.getChildren().size() > 0;
 	}
 
 	public Category add(Category m) {

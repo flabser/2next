@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.CategoryDAO;
 import cashtracker.model.Category;
+import cashtracker.model.Errors;
 import cashtracker.validation.CategoryValidator;
 import cashtracker.validation.ValidationError;
 
@@ -77,11 +78,22 @@ public class CategoryService extends RestProvider {
 
 	@DELETE
 	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
 		CategoryDAO dao = new CategoryDAO(getSession());
 		Category m = dao.findById(id);
 		if (m != null) {
-			dao.delete(m);
+			if (dao.existsTransactionByCategory(m)) {
+				Errors msg = new Errors();
+				msg.setMessage("exists_transaction");
+				return Response.ok(msg).status(Status.BAD_REQUEST).build();
+			} else if (dao.existsChildCategory(m)) {
+				Errors msg = new Errors();
+				msg.setMessage("exists_child");
+				return Response.ok(msg).status(Status.BAD_REQUEST).build();
+			} else {
+				dao.delete(m);
+			}
 		}
 		return Response.status(Status.NO_CONTENT).build();
 	}

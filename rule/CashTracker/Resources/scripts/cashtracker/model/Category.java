@@ -57,6 +57,10 @@ public class Category extends AppEntity {
 	@Column(name = "sort_order")
 	private int sortOrder;
 
+	public List <Category> getChildren() {
+		return children;
+	}
+
 	//
 	public Category getParentCategory() {
 		return parentCategory;

@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
+import cashtracker.model.Errors;
 import cashtracker.validation.CostCenterValidator;
 import cashtracker.validation.ValidationError;
 
@@ -77,11 +78,18 @@ public class CostCenterService extends RestProvider {
 
 	@DELETE
 	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		CostCenter m = dao.findById(id);
 		if (m != null) {
-			dao.delete(m);
+			if (dao.existsTransactionByCostCenter(m)) {
+				Errors msg = new Errors();
+				msg.setMessage("used");
+				return Response.ok(msg).status(Status.BAD_REQUEST).build();
+			} else {
+				dao.delete(m);
+			}
 		}
 		return Response.status(Status.NO_CONTENT).build();
 	}

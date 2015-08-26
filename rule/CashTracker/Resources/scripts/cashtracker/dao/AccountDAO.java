@@ -2,6 +2,9 @@ package cashtracker.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import cashtracker.model.Account;
 
 import com.flabser.dataengine.IDatabase;
@@ -33,6 +36,16 @@ public class AccountDAO {
 		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE a.id = " + id + " ORDER BY a.name", user);
 		Account result = list.size() > 0 ? (Account) list.get(0) : null;
 		return result;
+	}
+
+	public boolean existsTransactionByAccount(Account m) {
+		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.accountFrom = :account or t.accountTo = :account";
+
+		EntityManager em = db.getEntityManager();
+		Query q = em.createQuery(jpql);
+		q.setParameter("account", m);
+		q.setMaxResults(1);
+		return q.getResultList().size() > 0;
 	}
 
 	public Account add(Account m) {

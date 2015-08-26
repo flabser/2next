@@ -2,6 +2,9 @@ package cashtracker.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import cashtracker.model.Tag;
 
 import com.flabser.dataengine.IDatabase;
@@ -33,6 +36,16 @@ public class TagDAO {
 		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE t.id = " + id + " ORDER BY t.name", user);
 		Tag result = list.size() > 0 ? (Tag) list.get(0) : null;
 		return result;
+	}
+
+	public boolean existsTransactionByTag(Tag m) {
+		String jpql = "SELECT t.id FROM Transaction AS t WHERE :tag MEMBER OF t.tags";
+
+		EntityManager em = db.getEntityManager();
+		Query q = em.createQuery(jpql);
+		q.setParameter("tag", m);
+		q.setMaxResults(1);
+		return q.getResultList().size() > 0;
 	}
 
 	public Tag add(Tag m) {

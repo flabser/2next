@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import cashtracker.dao.AccountDAO;
 import cashtracker.dao.CostCenterDAO;
@@ -83,7 +82,7 @@ public class TransactionTest extends InitEnv {
 		}
 	}
 
-	@Test
+	// @Test
 	public void selectTest() {
 		List <IAppEntity> ts = dao.findAll(new PageRequest(50000, 20, "", ""), TransactionType.EXPENSE);
 		for (IAppEntity it : ts) {

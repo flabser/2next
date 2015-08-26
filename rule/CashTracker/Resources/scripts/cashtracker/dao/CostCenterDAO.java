@@ -2,6 +2,9 @@ package cashtracker.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import cashtracker.model.CostCenter;
 
 import com.flabser.dataengine.IDatabase;
@@ -33,6 +36,16 @@ public class CostCenterDAO {
 		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE cc.id = " + id + " ORDER BY cc.name", user);
 		CostCenter result = list.size() > 0 ? (CostCenter) list.get(0) : null;
 		return result;
+	}
+
+	public boolean existsTransactionByCostCenter(CostCenter m) {
+		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.costCenter = :costCenter";
+
+		EntityManager em = db.getEntityManager();
+		Query q = em.createQuery(jpql);
+		q.setParameter("costCenter", m);
+		q.setMaxResults(1);
+		return q.getResultList().size() > 0;
 	}
 
 	public CostCenter add(CostCenter m) {
