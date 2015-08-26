@@ -27,20 +27,26 @@ public interface IDatabase {
 	@Deprecated
 	ArrayList<IAppEntity> select(String condition, Class<IAppEntity> objClass, User user);
 
+	@Deprecated
 	int insert(String condition, User user);
 
+	@Deprecated
 	int update(String condition, User user);
 
+	@Deprecated
 	int delete(String condition, User user);
 
 	void shutdown();
 
+	@Deprecated
 	IAppEntity insert(IAppEntity a, User user);
 
+	@Deprecated
 	IAppEntity update(IAppEntity a, User user);
 
 	java.util.List<IAppEntity> select(String condition, User user);
 
+	@Deprecated
 	void delete(IAppEntity a, User user);
 
 	IDBConnectionPool getPool();

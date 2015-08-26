@@ -17,7 +17,6 @@ public class SessionPool {
 		int key = Base64.encodeBase64String(us.currentUser.getLogin().getBytes(Charset.forName("UTF-8"))).hashCode();
 		userSessions.put(key, us);
 		String token = sesID + "#" + key;
-		us.setSessionToken(token);
 		return token;
 	}
 
