@@ -85,7 +85,7 @@ public class AccountService extends RestProvider {
 			if (dao.existsTransactionByAccount(m)) {
 				Errors msg = new Errors();
 				msg.setMessage("used");
-				return Response.ok(msg).status(Status.BAD_REQUEST).build();
+				return Response.status(Status.BAD_REQUEST).entity(msg).build();
 			} else {
 				dao.delete(m);
 			}

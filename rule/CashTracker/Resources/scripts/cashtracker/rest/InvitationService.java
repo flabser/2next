@@ -26,7 +26,7 @@ public class InvitationService extends RestProvider {
 	public Response create(Invitation m) {
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
-			return Response.ok(ve).status(Status.BAD_REQUEST).build();
+			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
 		return Response.ok().build();

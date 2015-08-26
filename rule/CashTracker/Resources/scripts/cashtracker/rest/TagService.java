@@ -53,7 +53,7 @@ public class TagService extends RestProvider {
 	public Response create(Tag m) {
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
-			return Response.ok(ve).status(Status.BAD_REQUEST).build();
+			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
 		TagDAO dao = new TagDAO(getSession());
@@ -69,7 +69,7 @@ public class TagService extends RestProvider {
 
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
-			return Response.ok(ve).status(Status.BAD_REQUEST).build();
+			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
 		TagDAO dao = new TagDAO(getSession());
@@ -86,7 +86,7 @@ public class TagService extends RestProvider {
 			if (dao.existsTransactionByTag(m)) {
 				Errors msg = new Errors();
 				msg.setMessage("used");
-				return Response.ok(msg).status(Status.BAD_REQUEST).build();
+				return Response.status(Status.BAD_REQUEST).entity(msg).build();
 			} else {
 				dao.delete(m);
 			}

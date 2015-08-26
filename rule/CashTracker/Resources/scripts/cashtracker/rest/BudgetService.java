@@ -46,7 +46,7 @@ public class BudgetService extends RestProvider {
 	public Response create(Budget m) {
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
-			return Response.ok(ve).status(Status.BAD_REQUEST).build();
+			Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
 		BudgetDAO dao = new BudgetDAO(getSession());
@@ -68,7 +68,7 @@ public class BudgetService extends RestProvider {
 		m.setId(id);
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
-			return Response.ok(ve).status(Status.BAD_REQUEST).build();
+			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
 		BudgetDAO dao = new BudgetDAO(getSession());

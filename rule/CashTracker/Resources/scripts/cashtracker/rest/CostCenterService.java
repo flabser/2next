@@ -85,7 +85,7 @@ public class CostCenterService extends RestProvider {
 			if (dao.existsTransactionByCostCenter(m)) {
 				Errors msg = new Errors();
 				msg.setMessage("used");
-				return Response.ok(msg).status(Status.BAD_REQUEST).build();
+				return Response.status(Status.BAD_REQUEST).entity(msg).build();
 			} else {
 				dao.delete(m);
 			}

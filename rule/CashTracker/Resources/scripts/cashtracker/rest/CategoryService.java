@@ -85,11 +85,11 @@ public class CategoryService extends RestProvider {
 			if (dao.existsTransactionByCategory(m)) {
 				Errors msg = new Errors();
 				msg.setMessage("exists_transaction");
-				return Response.ok(msg).status(Status.BAD_REQUEST).build();
+				return Response.status(Status.BAD_REQUEST).entity(msg).build();
 			} else if (dao.existsChildCategory(m)) {
 				Errors msg = new Errors();
 				msg.setMessage("exists_child");
-				return Response.ok(msg).status(Status.BAD_REQUEST).build();
+				return Response.status(Status.BAD_REQUEST).entity(msg).build();
 			} else {
 				dao.delete(m);
 			}
