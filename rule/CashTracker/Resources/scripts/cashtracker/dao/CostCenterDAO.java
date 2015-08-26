@@ -40,7 +40,7 @@ public class CostCenterDAO {
 		Query q = em.createQuery(jpql);
 		q.setParameter("costCenter", m);
 		q.setMaxResults(1);
-		return q.getResultList().size() > 0;
+		return !q.getResultList().isEmpty();
 	}
 
 	public CostCenter add(CostCenter m) {

@@ -40,7 +40,7 @@ public class AccountDAO {
 		Query q = em.createQuery(jpql);
 		q.setParameter("account", m);
 		q.setMaxResults(1);
-		return q.getResultList().size() > 0;
+		return !q.getResultList().isEmpty();
 	}
 
 	public Account add(Account m) {

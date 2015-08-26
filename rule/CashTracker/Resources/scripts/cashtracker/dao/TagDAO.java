@@ -40,7 +40,7 @@ public class TagDAO {
 		Query q = em.createQuery(jpql);
 		q.setParameter("tag", m);
 		q.setMaxResults(1);
-		return q.getResultList().size() > 0;
+		return !q.getResultList().isEmpty();
 	}
 
 	public Tag add(Tag m) {

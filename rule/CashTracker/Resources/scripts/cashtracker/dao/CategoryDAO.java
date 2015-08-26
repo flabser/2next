@@ -40,7 +40,7 @@ public class CategoryDAO {
 		Query q = em.createQuery(jpql);
 		q.setParameter("category", m);
 		q.setMaxResults(1);
-		return q.getResultList().size() > 0;
+		return !q.getResultList().isEmpty();
 	}
 
 	public boolean existsChildCategory(Category m) {
