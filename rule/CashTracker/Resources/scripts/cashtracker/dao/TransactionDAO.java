@@ -27,13 +27,6 @@ public class TransactionDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List <Transaction> findAll() {
-		String jpql = "SELECT t FROM Transaction AS t ORDER BY t.date";
-		Query q = em.createQuery(jpql);
-		return q.getResultList();
-	}
-
-	@SuppressWarnings("unchecked")
 	public List <Transaction> findAll(PageRequest pr, TransactionType type) {
 		String jpql;
 		if (type == null) {
