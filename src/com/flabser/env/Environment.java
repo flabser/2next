@@ -193,7 +193,7 @@ public class Environment implements ICache {
 	}
 
 	public static void addAppTemplate(AppTemplate env) {
-		appTemplates.put(env.appType, env);
+		appTemplates.put(env.templateType, env);
 	}
 
 	public static AppTemplate getAppTemplate(String appID) {

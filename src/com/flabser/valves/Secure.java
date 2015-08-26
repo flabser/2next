@@ -43,10 +43,10 @@ public class Secure extends ValveBase {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
-				if (us != null && (!us.currentUser.getLogin().equals(User.ANONYMOUS_USER))) {
+				if (us != null && !us.currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
 					if (!us.isBootstrapped(appID) && !appType.equalsIgnoreCase(EnvConst.WORKSPACE_APP_NAME)) {
 						AppTemplate env = Environment.getAppTemplate(appType);
-						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.appType);
+						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.templateType);
 						if (hh != null) {
 							Server.logger.verboseLogEntry("start application initializing ...");
 							try {
@@ -65,7 +65,7 @@ public class Secure extends ValveBase {
 								response.getWriter().println(ae.getHTMLMessage());
 							}
 						} else {
-							String msg = "\"" + env.appType + "\" has not set for \"" + us.currentUser.getLogin() + "\" (" + ru + ")";
+							String msg = "\"" + env.templateType + "\" has not set for \"" + us.currentUser.getLogin() + "\" (" + ru + ")";
 							Server.logger.warningLogEntry(msg);
 							ApplicationException e = new ApplicationException(ru.getAppType(), msg);
 							response.setStatus(e.getCode());

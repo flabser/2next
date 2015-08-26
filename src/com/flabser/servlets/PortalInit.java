@@ -6,9 +6,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.apptemplate.WorkModeType;
+import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
+import com.flabser.dataengine.system.IApplicationDatabase;
+import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
@@ -35,19 +39,33 @@ public class PortalInit extends HttpServlet {
 		} else {
 			String global = Environment.availableTemplates.get(app).global;
 			template = new AppTemplate(app, global);
-			if (template.appType.equals(EnvConst.WORKSPACE_APP_NAME)) {
+			if (template.globalSetting.getWorkMode() == WorkModeType.COMMON) {
 				ApplicationProfile appProfile = new ApplicationProfile(template);
-				IDatabase db = appProfile.getDatabase();
-				IDeployer ad = db.getDeployer();
 				try {
-					Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
-					IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
-					dbInitializer.initApplication(appProfile.getPOJO());
-					if (ad.deploy(dbInitializer) == 0) {
-						appProfile.setStatus(ApplicationStatusType.ON_LINE);
-						Environment.addCommonApp(new ApplicationProfile(template));
+					ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
+					IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
+					int res = appDb.createDatabase(appProfile.getDbName(), EnvConst.DB_USER);
+					if (res == 0 || res == 1) {
+						IDatabase db = appProfile.getDatabase();
+						IDeployer ad = db.getDeployer();
+						try {
+							Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
+							IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass
+									.newInstance();
+							dbInitializer.initApplication(appProfile.getPOJO());
+							if (ad.deploy(dbInitializer) == 0) {
+								appProfile.setStatus(ApplicationStatusType.ON_LINE);
+								Environment.addCommonApp(new ApplicationProfile(template));
+							} else {
+								appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+							}
+						} catch (Exception e) {
+							Server.logger.errorLogEntry(e);
+							appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
+						}
 					} else {
-						appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+						Server.logger.errorLogEntry("database not created");
+						appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 					}
 				} catch (Exception e) {
 					Server.logger.errorLogEntry(e);

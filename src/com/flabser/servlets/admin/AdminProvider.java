@@ -100,7 +100,7 @@ public class AdminProvider extends HttpServlet {
 					result = service(request, app, id, key);
 				}
 			} else {
-				ApplicationException ae = new ApplicationException(env.appType, "Request is incorrect(type=null)");
+				ApplicationException ae = new ApplicationException(env.templateType, "Request is incorrect(type=null)");
 				response.setStatus(ae.getCode());
 				response.getWriter().println(ae.getHTMLMessage());
 			}
@@ -161,7 +161,7 @@ public class AdminProvider extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			ApplicationException ae = new ApplicationException(env.appType, e.toString(), e);
+			ApplicationException ae = new ApplicationException(env.templateType, e.toString(), e);
 			response.setStatus(ae.getCode());
 			response.getWriter().println(ae.getHTMLMessage());
 		}
@@ -271,7 +271,7 @@ public class AdminProvider extends HttpServlet {
 		ProviderResult result = new ProviderResult();
 		/*
 		 * XMLResponse xmlResp = new XMLResponse(ResponseType.SAVE_FORM,true);
-		 * 
+		 *
 		 * if (element.equalsIgnoreCase("document")){ //Map<String, String[]>
 		 * fields = ServletUtil.showParametersMap(request); Map<String,
 		 * String[]> fields = request.getParameterMap(); IDatabase db =
@@ -279,14 +279,14 @@ public class AdminProvider extends HttpServlet {
 		 * request.getParameter("docid"); BaseDocument baseDoc =
 		 * db.getDocumentByDdbID(docID, Const.supervisorGroupAsSet,
 		 * Const.sysUser); Document doc = (Document)baseDoc;
-		 * 
-		 * 
+		 *
+		 *
 		 * doc.clearReaders(); for(String r: fields.get("reader")){
 		 * doc.addReader(r); }
-		 * 
+		 *
 		 * doc.clearEditors(); for(String e: fields.get("editor")){
 		 * doc.addEditor(e); }
-		 * 
+		 *
 		 * doc.save(new User(Const.sysUser)); }else if
 		 * (element.equalsIgnoreCase("user_profile")) { UserServices us = new
 		 * UserServices(); result.output.append(new
@@ -295,9 +295,9 @@ public class AdminProvider extends HttpServlet {
 		 * if (element.equalsIgnoreCase("handler_rule")) { WebRuleProvider wrp =
 		 * Environment.getApplication(app).ruleProvider; HandlerRule rule =
 		 * (HandlerRule) wrp.getRule(HANDLER_RULE, id); if (rule != null){
-		 * 
+		 *
 		 * @SuppressWarnings("unchecked")
-		 * 
+		 *
 		 * Map<String, String[]> parMap =
 		 * ServletUtil.showParametersMap(request);
 		 * rule.setScript(parMap.get("script")[0].replace("&lt;",
@@ -309,7 +309,7 @@ public class AdminProvider extends HttpServlet {
 	}
 
 	private ProviderResult service(HttpServletRequest request, String app, String id, String key) throws ClassNotFoundException,
-			SQLException, InstantiationException, IllegalAccessException, DatabasePoolException {
+	SQLException, InstantiationException, IllegalAccessException, DatabasePoolException {
 		ProviderResult result = new ProviderResult();
 		String operation = request.getParameter("operation");
 		if (operation.equalsIgnoreCase("deploy")) {

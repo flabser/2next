@@ -89,7 +89,7 @@ public class Provider extends HttpServlet {
 					} else {
 						String reqEnc = request.getCharacterEncoding();
 						type = new String(type.getBytes("ISO-8859-1"), reqEnc);
-						ApplicationException ae = new ApplicationException(env.appType, "Request has been undefined, type=" + type
+						ApplicationException ae = new ApplicationException(env.templateType, "Request has been undefined, type=" + type
 								+ ", id=" + id + ", key=" + key);
 						response.setStatus(ae.getCode());
 						response.getWriter().println(ae.getHTMLMessage());
@@ -153,7 +153,7 @@ public class Provider extends HttpServlet {
 				throw new ServerException(ServerExceptionType.APPTEMPLATE_HAS_NOT_INITIALIZED, "context=" + context.getServletContextName());
 			}
 		} catch (Exception e) {
-			ApplicationException ae = new ApplicationException(env.appType, e.toString(), e);
+			ApplicationException ae = new ApplicationException(env.templateType, e.toString(), e);
 			response.setStatus(ae.getCode());
 			response.getWriter().println(ae.getHTMLMessage());
 		}
@@ -197,11 +197,11 @@ public class Provider extends HttpServlet {
 		/*
 		 * String fieldName = request.getParameter("field"); String attachName =
 		 * request.getParameter("file");
-		 * 
+		 *
 		 * String reqEnc = request.getCharacterEncoding();
 		 * result.originalAttachName = new
 		 * String(((String)attachName).getBytes("ISO-8859-1"),reqEnc);
-		 * 
+		 *
 		 * String formSesID = request.getParameter("formsesid"); if (formSesID
 		 * != null){ File file = Util.getExistFile(result.originalAttachName,
 		 * Environment.tmpDir + File.separator + formSesID + File.separator +

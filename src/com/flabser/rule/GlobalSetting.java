@@ -11,6 +11,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.apptemplate.WorkModeType;
 import com.flabser.env.Environment;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.server.Server;
@@ -30,13 +31,15 @@ public class GlobalSetting {
 	public boolean multiLangEnable;
 	public String vocabulary = "vocabulary.xml";
 	public UserRoleCollection roleCollection = new UserRoleCollection();
+	private WorkModeType workMode;
+
 
 	public GlobalSetting() {
 
 	}
 
 	public GlobalSetting(String path, AppTemplate env) {
-		rulePath = "rule" + File.separator + env.appType;
+		rulePath = "rule" + File.separator + env.templateType;
 		primaryRulePath = Environment.primaryAppDir + rulePath;
 
 		try {
@@ -54,8 +57,8 @@ public class GlobalSetting {
 			}
 
 			description = XMLUtil.getTextContent(doc, "/rule/description");
-			appName = XMLUtil.getTextContent(doc, "/rule/appname");
-
+			appName = XMLUtil.getTextContent(doc, "/rule/templatetype");
+			workMode =  WorkModeType.valueOf(XMLUtil.getTextContent(doc,"/rule/workmode", true, "CLOUD", true));
 			entryPoint = XMLUtil.getTextContent(doc, "/rule/entrypoint");
 
 			defaultRedirectURL = XMLUtil.getTextContent(doc,
@@ -85,7 +88,7 @@ public class GlobalSetting {
 						roleCollection.put(role);
 					} else {
 						Server.logger
-								.warningLogEntry("A role name \"supervisor\" is reserved name of system roles. The role has not added to application");
+						.warningLogEntry("A role name \"supervisor\" is reserved name of system roles. The role has not added to application");
 					}
 				}
 			}
@@ -96,4 +99,14 @@ public class GlobalSetting {
 			Server.logger.errorLogEntry(e);
 		}
 	}
+
+	public WorkModeType getWorkMode() {
+		return workMode;
+	}
+
+	public void setWorkMode(WorkModeType workMode) {
+		this.workMode = workMode;
+	}
+
+
 }

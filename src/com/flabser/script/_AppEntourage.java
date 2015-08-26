@@ -30,7 +30,7 @@ public class _AppEntourage {
 	}
 
 	public String getAppName() {
-		return env.appType;
+		return env.templateType;
 	}
 
 	public ArrayList<String[]> getAvailableLangs() throws _Exception {

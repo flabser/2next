@@ -81,7 +81,7 @@ public abstract class Rule implements IElement, IRule {
 			if (!xsltFile.equals("")) {
 				publishAs = PublishAsType.HTML;
 			}
-			xsltFile = "webapps" + File.separator + env.appType + File.separator + "xsl" + File.separator + xsltFile;
+			xsltFile = "webapps" + File.separator + env.templateType + File.separator + "xsl" + File.separator + xsltFile;
 			description = XMLUtil.getTextContent(doc, "/rule/description");
 
 			NodeList captionList = XMLUtil.getNodeList(doc, "/rule/caption");

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rule mode="on" type="global">
 	<description>Nubis</description>
-	<appname>Nubis</appname>
+	<templatetype>Nubis</templatetype>
+	<workmode>COMMON</workmode>
 	<entrypoint>Provider?id=login</entrypoint>
 	<defaultredirecturl>Provider?id=ws</defaultredirecturl>
 	<langs>

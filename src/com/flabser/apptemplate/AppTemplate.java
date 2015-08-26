@@ -23,24 +23,23 @@ import com.flabser.server.Server;
 
 public class AppTemplate implements ICache, _IContent {
 	public boolean isValid;
-	public String appType = "undefined";
+	public String templateType = "undefined";
 	public RuleProvider ruleProvider;
 	public HashMap<String, File> xsltFileMap = new HashMap<String, File>();
 	public String adminXSLTPath;
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
 
-
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 	private String docBase;
 
 	public AppTemplate(String at) {
 		isValid = true;
-		appType = EnvConst.ADMIN_APP_NAME;
+		templateType = EnvConst.ADMIN_APP_NAME;
 	}
 
 	public AppTemplate(String appType, String globalFileName) {
-		this.appType = appType;
+		this.templateType = appType;
 		try {
 			Server.logger.normalLogEntry("# init application template \"" + appType + "\"");
 			ruleProvider = new RuleProvider(this);
@@ -76,7 +75,7 @@ public class AppTemplate implements ICache, _IContent {
 
 	@Override
 	public String toString() {
-		return appType;
+		return templateType;
 	}
 
 	@Override
@@ -108,7 +107,7 @@ public class AppTemplate implements ICache, _IContent {
 	@Override
 	public StringBuffer toXML() throws _Exception {
 		StringBuffer output = new StringBuffer(1000);
-		return output.append("<entry><apptype>" + appType + "</apptype></entry>");
+		return output.append("<entry><apptype>" + templateType + "</apptype></entry>");
 	}
 
 	public String getDocBase() {

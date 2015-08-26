@@ -58,7 +58,7 @@ public class Logout extends HttpServlet {
 			}
 			response.sendRedirect(getRedirect());
 		} catch (Exception e) {
-			ApplicationException ae = new ApplicationException(env.appType, e.toString(), e);
+			ApplicationException ae = new ApplicationException(env.templateType, e.toString(), e);
 			response.setStatus(ae.getCode());
 			response.getWriter().println(ae.getHTMLMessage());
 		}

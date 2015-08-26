@@ -8,7 +8,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.apptemplate.AppTemplate;
-import com.flabser.apptemplate.ModeType;
+import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
@@ -41,7 +41,7 @@ public class ApplicationProfile implements _IContent {
 	public String dbName;
 	public String defaultURL;
 	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
-	private ModeType mode = ModeType.CLOUD;
+	private WorkModeType workingMode = WorkModeType.CLOUD;
 	private Date statusDate;
 	private VisibiltyType visibilty;
 	private ArrayList<UserRole> roles = new ArrayList<>();
@@ -51,13 +51,12 @@ public class ApplicationProfile implements _IContent {
 	}
 
 	public ApplicationProfile(AppTemplate template) {
-		this.appType = template.appType;
+		this.appType = template.templateType;
 		this.appID = "";
-		this.appName = template.appType;
-		dbType = DatabaseType.SYSTEM;
-		this.dbName = EnvConst.DATABASE_NAME;
+		this.appName = template.templateType;
+		this.dbName = template.templateType.toLowerCase();
 		this.status = ApplicationStatusType.READY_TO_DEPLOY;
-		mode = ModeType.COMMON;
+		workingMode = WorkModeType.COMMON;
 	}
 
 	public ApplicationProfile(int id, String appType, String appID, String appName, String owner, int dbType,
@@ -233,12 +232,12 @@ public class ApplicationProfile implements _IContent {
 		return roles;
 	}
 
-	public ModeType getMode() {
-		return mode;
+	public WorkModeType getMode() {
+		return workingMode;
 	}
 
-	public void setMode(ModeType mode) {
-		this.mode = mode;
+	public void setMode(WorkModeType mode) {
+		this.workingMode = mode;
 	}
 
 	public String getDesciption() {

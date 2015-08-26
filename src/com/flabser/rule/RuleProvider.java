@@ -84,7 +84,7 @@ public class RuleProvider {
 	}
 
 	private void loadGlobal(String globalFileName) {
-		String globalPath = "rule" + File.separator + env.appType + File.separator + globalFileName;
+		String globalPath = "rule" + File.separator + env.templateType + File.separator + globalFileName;
 		global = new GlobalSetting(globalPath, env);
 	}
 

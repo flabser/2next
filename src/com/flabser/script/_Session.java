@@ -21,7 +21,7 @@ public class _Session {
 
 	public _Session(AppTemplate env, UserSession userSession) {
 		this.env = env;
-		ActiveApplication aa = userSession.getActiveApplication(env.appType);
+		ActiveApplication aa = userSession.getActiveApplication(env.templateType);
 		if (aa != null) {
 			dataBase = aa.getDataBase();
 		}
@@ -43,7 +43,7 @@ public class _Session {
 	}
 
 	public String getFullAppURI() {
-		return Environment.getFullHostName() + "/" + env.appType;
+		return Environment.getFullHostName() + "/" + env.templateType;
 	}
 
 	public _ActionBar createActionBar() {
@@ -68,7 +68,7 @@ public class _Session {
 	}
 
 	public String getAppType() {
-		return env.appType;
+		return env.templateType;
 	}
 
 	@Override

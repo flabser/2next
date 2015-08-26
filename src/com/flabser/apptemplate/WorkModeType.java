@@ -1,12 +1,12 @@
 package com.flabser.apptemplate;
 
 
-public enum ModeType {
+public enum WorkModeType {
 	UNKNOWN(0), COMMON(205), CLOUD(206), MIXED(207);
 
 	private int code;
 
-	ModeType(int code) {
+	WorkModeType(int code) {
 		this.code = code;
 	}
 
@@ -14,8 +14,8 @@ public enum ModeType {
 		return code;
 	}
 
-	public static ModeType getType(int code) {
-		for (ModeType type : values()) {
+	public static WorkModeType getType(int code) {
+		for (WorkModeType type : values()) {
 			if (type.code == code) {
 				return type;
 			}

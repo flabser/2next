@@ -60,7 +60,7 @@ public class Error extends HttpServlet {
 		}
 
 		ExceptionXML xml = new ExceptionXML(errorMessage, statusCode, location, type, servletName, exception);
-		String xslt = "webapps" + File.separator + env.appType + File.separator + EnvConst.ERROR_XSLT;
+		String xslt = "webapps" + File.separator + env.templateType + File.separator + EnvConst.ERROR_XSLT;
 
 		try {
 			request.setCharacterEncoding(EnvConst.SUPPOSED_CODE_PAGE);

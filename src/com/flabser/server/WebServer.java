@@ -133,9 +133,9 @@ public class WebServer implements IWebServer {
 	public Context addApplication(String appID, AppTemplate env) throws ServletException {
 		Context context = null;
 
-		Server.logger.normalLogEntry("add context \"" + env.appType + "/" + appID + "\" application...");
+		Server.logger.normalLogEntry("add context \"" + env.templateType + "/" + appID + "\" application...");
 		String db = env.getDocBase();
-		String URLPath = "/" + env.appType + "/" + appID;
+		String URLPath = "/" + env.templateType + "/" + appID;
 		try {
 			context = tomcat.addContext(URLPath, db);
 			context.setDisplayName(URLPath.substring(1));
@@ -163,7 +163,7 @@ public class WebServer implements IWebServer {
 			context.addMimeMapping("js", "text/javascript");
 
 			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(new ResourceLoader(
-					env.appType).getClasses())));
+					env.templateType).getClasses())));
 			w1.setLoadOnStartup(1);
 			w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 			context.addServletMapping("/rest/*", "Jersey REST Service");
