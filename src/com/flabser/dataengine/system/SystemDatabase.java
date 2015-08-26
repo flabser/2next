@@ -791,55 +791,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase, IDa
 	}
 
 	@Override
-	public ArrayList<IAppEntity> select(String condition, Class<IAppEntity> objClass, User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int insert(String condition, User user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int update(String condition, User user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int delete(String condition, User user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public void shutdown() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public IAppEntity insert(IAppEntity a, User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IAppEntity update(IAppEntity a, User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<IAppEntity> select(String condition, User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void delete(IAppEntity a, User user) {
 		// TODO Auto-generated method stub
 
 	}
