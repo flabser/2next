@@ -18,6 +18,7 @@ import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.pool.IDBConnectionPool;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.restful.data.IAppEntity;
 import com.flabser.server.Server;
@@ -31,7 +32,7 @@ public class Database extends DatabaseCore implements IDatabase {
 
 	@Override
 	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException {
+	DatabasePoolException {
 		super.appProfile = appProfile;
 		dbURI = appProfile.getURI();
 		initConnectivity(driver, appProfile);
@@ -43,13 +44,20 @@ public class Database extends DatabaseCore implements IDatabase {
 	}
 
 	@Override
+	public IDeployer getDeployer() {
+		Deployer d = new Deployer();
+		d.init(this);
+		return d;
+	}
+
+	@Override
 	public int getVersion() {
 		return 1;
 	}
 
 	@Override
 	public IFTIndexEngine getFTSearchEngine() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException {
+	DatabasePoolException {
 		IFTIndexEngine ftEng = new FTIndexEngine();
 		ftEng.init(appProfile);
 		return ftEng;
@@ -78,8 +86,8 @@ public class Database extends DatabaseCore implements IDatabase {
 
 				/*
 				 * Field[] f = FieldUtils.getAllFields(objClass);
-				 * 
-				 * 
+				 *
+				 *
 				 * for (Field field : f) { if
 				 * (field.isAnnotationPresent(EntityField.class)) { EntityField
 				 * anottation = field.getAnnotation(EntityField.class); String
@@ -179,10 +187,7 @@ public class Database extends DatabaseCore implements IDatabase {
 		pool.closeAll();
 	}
 
-	@Override
-	public IDeployer getDeployer() {
-		return new Deployer();
-	}
+
 
 	@Override
 	public IAppEntity insert(IAppEntity e, User user) {
@@ -205,5 +210,10 @@ public class Database extends DatabaseCore implements IDatabase {
 		entityManager.getTransaction().begin();
 		entityManager.remove(a);
 		entityManager.getTransaction().commit();
+	}
+
+	@Override
+	public IDBConnectionPool getPool() {
+		return pool;
 	}
 }

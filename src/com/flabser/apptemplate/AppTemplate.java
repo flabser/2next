@@ -30,6 +30,7 @@ public class AppTemplate implements ICache, _IContent {
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
 
+
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 	private String docBase;
 

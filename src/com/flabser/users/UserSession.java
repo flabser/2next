@@ -25,7 +25,6 @@ public class UserSession implements ICache {
 
 	private String lang;
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
-	private String sessionToken;
 
 	public UserSession(User user) {
 		currentUser = user;
@@ -146,7 +145,7 @@ public class UserSession implements ICache {
 		aUser.setEmail(currentUser.getEmail());
 		aUser.setRoles(currentUser.getUserRoles());
 		HashMap<String, Application> applications = new HashMap<String, Application>();
-		for (ApplicationProfile ap : (currentUser.getApplicationProfiles().values())) {
+		for (ApplicationProfile ap : currentUser.getApplicationProfiles().values()) {
 			if (!ap.appType.equalsIgnoreCase(EnvConst.WORKSPACE_APP_NAME)) {
 				Application a = new Application(ap);
 				a.setAppID(ap.appID);
@@ -170,9 +169,7 @@ public class UserSession implements ICache {
 		return currentUser + ", authMode=" + authMode.name() + ", lang=" + lang;
 	}
 
-	public void setSessionToken(String sessionToken) {
-		this.sessionToken = sessionToken;
-	}
+
 
 	public class ActiveApplication {
 		private IDatabase db;

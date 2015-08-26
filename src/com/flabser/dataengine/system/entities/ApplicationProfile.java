@@ -7,6 +7,8 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.flabser.apptemplate.AppTemplate;
+import com.flabser.apptemplate.ModeType;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
@@ -25,6 +27,7 @@ import com.flabser.util.Util;
 public class ApplicationProfile implements _IContent {
 	public int id;
 	public String appType;
+
 	public String appID;
 	public String appName;
 
@@ -38,6 +41,7 @@ public class ApplicationProfile implements _IContent {
 	public String dbName;
 	public String defaultURL;
 	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
+	private ModeType mode = ModeType.CLOUD;
 	private Date statusDate;
 	private VisibiltyType visibilty;
 	private ArrayList<UserRole> roles = new ArrayList<>();
@@ -46,8 +50,18 @@ public class ApplicationProfile implements _IContent {
 	public ApplicationProfile() {
 	}
 
-	public ApplicationProfile(int id, String appType, String appID, String appName, String owner, int dbType, String dbHost, String dbName,
-			int status, Date statusDate, ArrayList<UserRole> roles) {
+	public ApplicationProfile(AppTemplate template) {
+		this.appType = template.appType;
+		this.appID = "";
+		this.appName = template.appType;
+		dbType = DatabaseType.SYSTEM;
+		this.dbName = EnvConst.DATABASE_NAME;
+		this.status = ApplicationStatusType.READY_TO_DEPLOY;
+		mode = ModeType.COMMON;
+	}
+
+	public ApplicationProfile(int id, String appType, String appID, String appName, String owner, int dbType,
+			String dbHost, String dbName, int status, Date statusDate, ArrayList<UserRole> roles) {
 		this.id = id;
 		this.appType = appType;
 		this.appID = appID;
@@ -69,8 +83,8 @@ public class ApplicationProfile implements _IContent {
 	@Override
 	public StringBuffer toXML() {
 		StringBuffer output = new StringBuffer(1000);
-		return output.append("<entry><appname>" + appName + "</appname><owner>" + owner + "</owner><dbhost>" + dbHost + "</dbhost><dbname>"
-				+ dbName + "</dbname></entry>");
+		return output.append("<entry><appname>" + appName + "</appname><owner>" + owner + "</owner><dbhost>" + dbHost
+				+ "</dbhost><dbname>" + dbName + "</dbname></entry>");
 	}
 
 	public String getDbName() {
@@ -84,9 +98,10 @@ public class ApplicationProfile implements _IContent {
 
 	@JsonIgnore
 	public IDatabase getDatabase() {
+		IDatabase db = null;
 		switch (dbType) {
 		case POSTGRESQL:
-			IDatabase db = new com.flabser.solutions.postgresql.Database();
+			db = new com.flabser.solutions.postgresql.Database();
 			try {
 				db.init(this);
 				return db;
@@ -99,10 +114,23 @@ public class ApplicationProfile implements _IContent {
 			} catch (DatabasePoolException e) {
 				Server.logger.errorLogEntry(e.getMessage());
 			}
-
-		default:
-			return null;
+			break;
+		case SYSTEM:
+			db = (IDatabase) DatabaseFactory.getSysDatabase();
+			try {
+				db.init(this);
+				return db;
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (DatabasePoolException e) {
+				Server.logger.errorLogEntry(e.getMessage());
+			}
 		}
+		return db;
 	}
 
 	public boolean save() {
@@ -203,6 +231,14 @@ public class ApplicationProfile implements _IContent {
 
 	public ArrayList<UserRole> getRoles() {
 		return roles;
+	}
+
+	public ModeType getMode() {
+		return mode;
+	}
+
+	public void setMode(ModeType mode) {
+		this.mode = mode;
 	}
 
 	public String getDesciption() {

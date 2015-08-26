@@ -3,7 +3,7 @@ package com.flabser.solutions;
 
 public enum DatabaseType {
 
-	UNKNOWN(0), POSTGRESQL(421);
+	UNKNOWN(0), SYSTEM(420), POSTGRESQL(421);
 
 	private int code;
 
@@ -18,6 +18,8 @@ public enum DatabaseType {
 	public String getJDBCPrefix(DatabaseType t) {
 		switch (t) {
 		case POSTGRESQL:
+			return "jdbc:postgresql://";
+		case SYSTEM:
 			return "jdbc:postgresql://";
 		default:
 			return "";

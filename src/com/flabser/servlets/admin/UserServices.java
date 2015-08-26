@@ -84,7 +84,7 @@ public class UserServices {
 			if (res == 0 || res == 1) {
 				IDatabase dataBase = appProfile.getDatabase();
 				IDeployer ad = dataBase.getDeployer();
-				ad.init(appProfile);
+				ad.init(null);
 				ad.deploy(null);
 			}
 		}
