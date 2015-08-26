@@ -17,12 +17,12 @@ import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
+import cashtracker.model.Errors;
 import cashtracker.validation.CostCenterValidator;
 import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
-import com.flabser.restful.data.IAppEntity;
 
 
 @Path("cost-centers")
@@ -77,21 +77,28 @@ public class CostCenterService extends RestProvider {
 
 	@DELETE
 	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		CostCenter m = dao.findById(id);
 		if (m != null) {
-			dao.delete(m);
+			if (dao.existsTransactionByCostCenter(m)) {
+				Errors msg = new Errors();
+				msg.setMessage("used");
+				return Response.status(Status.BAD_REQUEST).entity(msg).build();
+			} else {
+				dao.delete(m);
+			}
 		}
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
 	@JsonRootName("cost-centers")
-	class CostCenters extends ArrayList <IAppEntity> {
+	class CostCenters extends ArrayList <CostCenter> {
 
 		private static final long serialVersionUID = 1L;
 
-		public CostCenters(Collection <? extends IAppEntity> m) {
+		public CostCenters(Collection <? extends CostCenter> m) {
 			addAll(m);
 		}
 	}

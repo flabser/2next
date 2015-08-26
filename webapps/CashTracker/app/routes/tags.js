@@ -14,6 +14,10 @@ export default Em.Route.extend({
             var _this = this;
             tag.destroyRecord().then(function() {
                 _this.transitionTo('tags');
+            }, function(resp) {
+                tag.rollback();
+                tag.reload();
+                alert(resp.errors.message);
             });
         }
     }

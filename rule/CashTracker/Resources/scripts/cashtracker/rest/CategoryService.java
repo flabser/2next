@@ -17,12 +17,12 @@ import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.CategoryDAO;
 import cashtracker.model.Category;
+import cashtracker.model.Errors;
 import cashtracker.validation.CategoryValidator;
 import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
-import com.flabser.restful.data.IAppEntity;
 
 
 @Path("categories")
@@ -77,21 +77,32 @@ public class CategoryService extends RestProvider {
 
 	@DELETE
 	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
 		CategoryDAO dao = new CategoryDAO(getSession());
 		Category m = dao.findById(id);
 		if (m != null) {
-			dao.delete(m);
+			if (dao.existsTransactionByCategory(m)) {
+				Errors msg = new Errors();
+				msg.setMessage("exists_transaction");
+				return Response.status(Status.BAD_REQUEST).entity(msg).build();
+			} else if (dao.existsChildCategory(m)) {
+				Errors msg = new Errors();
+				msg.setMessage("exists_child");
+				return Response.status(Status.BAD_REQUEST).entity(msg).build();
+			} else {
+				dao.delete(m);
+			}
 		}
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
 	@JsonRootName("categories")
-	class Categories extends ArrayList <IAppEntity> {
+	class Categories extends ArrayList <Category> {
 
 		private static final long serialVersionUID = 1L;
 
-		public Categories(Collection <? extends IAppEntity> m) {
+		public Categories(Collection <? extends Category> m) {
 			addAll(m);
 		}
 	}

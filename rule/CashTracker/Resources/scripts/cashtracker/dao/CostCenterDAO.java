@@ -2,48 +2,64 @@ package cashtracker.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import cashtracker.model.CostCenter;
 
-import com.flabser.dataengine.IDatabase;
-import com.flabser.restful.data.IAppEntity;
 import com.flabser.script._Session;
 import com.flabser.users.User;
 
 
 public class CostCenterDAO {
 
-	private IDatabase db;
+	private EntityManager em;
 	private User user;
 
 	public CostCenterDAO(_Session session) {
-		this.db = session.getDatabase();
 		this.user = session.getAppUser();
+		this.em = session.getDatabase().getEntityManager();
 	}
 
-	public String getSelectQuery() {
-		return "SELECT cc FROM CostCenter AS cc";
-	}
-
-	public List <IAppEntity> findAll() {
-		List <IAppEntity> result = db.select(getSelectQuery() + " ORDER BY cc.name", user);
-		return result;
+	@SuppressWarnings("unchecked")
+	public List <CostCenter> findAll() {
+		String jpql = "SELECT cc FROM CostCenter AS cc ORDER BY cc.name";
+		Query q = em.createQuery(jpql);
+		return q.getResultList();
 	}
 
 	public CostCenter findById(long id) {
-		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE cc.id = " + id + " ORDER BY cc.name", user);
-		CostCenter result = list.size() > 0 ? (CostCenter) list.get(0) : null;
-		return result;
+		String jpql = "SELECT cc FROM CostCenter AS cc WHERE cc.id = :id";
+		Query q = em.createQuery(jpql);
+		q.setParameter("id", id);
+		return (CostCenter) q.getSingleResult();
+	}
+
+	public boolean existsTransactionByCostCenter(CostCenter m) {
+		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.costCenter = :costCenter";
+		Query q = em.createQuery(jpql);
+		q.setParameter("costCenter", m);
+		q.setMaxResults(1);
+		return !q.getResultList().isEmpty();
 	}
 
 	public CostCenter add(CostCenter m) {
-		return (CostCenter) db.insert(m, user);
+		em.getTransaction().begin();
+		em.persist(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public CostCenter update(CostCenter m) {
-		return (CostCenter) db.update(m, user);
+		em.getTransaction().begin();
+		em.merge(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public void delete(CostCenter m) {
-		db.delete(m, user);
+		em.getTransaction().begin();
+		em.remove(m);
+		em.getTransaction().commit();
 	}
 }

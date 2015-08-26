@@ -17,12 +17,12 @@ import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.AccountDAO;
 import cashtracker.model.Account;
+import cashtracker.model.Errors;
 import cashtracker.validation.AccountValidator;
 import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
-import com.flabser.restful.data.IAppEntity;
 
 
 @Path("accounts")
@@ -77,21 +77,28 @@ public class AccountService extends RestProvider {
 
 	@DELETE
 	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
 		AccountDAO dao = new AccountDAO(getSession());
 		Account m = dao.findById(id);
 		if (m != null) {
-			dao.delete(m);
+			if (dao.existsTransactionByAccount(m)) {
+				Errors msg = new Errors();
+				msg.setMessage("used");
+				return Response.status(Status.BAD_REQUEST).entity(msg).build();
+			} else {
+				dao.delete(m);
+			}
 		}
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
 	@JsonRootName("accounts")
-	class Accounts extends ArrayList <IAppEntity> {
+	class Accounts extends ArrayList <Account> {
 
 		private static final long serialVersionUID = 1L;
 
-		public Accounts(Collection <? extends IAppEntity> m) {
+		public Accounts(Collection <? extends Account> m) {
 			addAll(m);
 		}
 	}

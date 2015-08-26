@@ -11,7 +11,7 @@ import cashtracker.model.constants.BudgetState;
 
 public class BudgetTest extends InitEnv {
 
-	@Test
+	// @Test
 	public void test() {
 		assertNotNull(db);
 
@@ -29,5 +29,11 @@ public class BudgetTest extends InitEnv {
 		}
 
 		dao.add(m);
+	}
+
+	@Test
+	public void deleteTest() {
+		BudgetDAO dao = new BudgetDAO(ses);
+		dao.delete();
 	}
 }

@@ -2,48 +2,56 @@ package nubis.dao;
 
 import java.util.List;
 
-import cashtracker.model.Account;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
-import com.flabser.dataengine.IDatabase;
-import com.flabser.restful.data.IAppEntity;
+import nubis.model.Profile;
+
 import com.flabser.script._Session;
 import com.flabser.users.User;
 
 
 public class ProfileDAO {
 
-	private IDatabase db;
+	private EntityManager em;
 	private User user;
 
 	public ProfileDAO(_Session session) {
-		this.db = session.getDatabase();
 		this.user = session.getAppUser();
+		this.em = session.getDatabase().getEntityManager();
 	}
 
-	public String getSelectQuery() {
-		return "SELECT a FROM Account AS a";
+	@SuppressWarnings("unchecked")
+	public List <Profile> findAll() {
+		String jpql = "SELECT a FROM Profile AS a";
+		Query q = em.createQuery(jpql);
+		return q.getResultList();
 	}
 
-	public List <IAppEntity> findAll() {
-		List <IAppEntity> result = db.select(getSelectQuery() + " ORDER BY a.name", user);
-		return result;
+	public Profile findById(long id) {
+		String jpql = "SELECT a FROM Profile AS a WHERE a.id = :id";
+		Query q = em.createQuery(jpql);
+		q.setParameter("id", id);
+		return (Profile) q.getSingleResult();
 	}
 
-	public Account findById(long id) {
-		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE a.id = " + id + " ORDER BY a.name", user);
-		Account result = list.size() > 0 ? (Account) list.get(0) : null;
-		return result;
+	public Profile add(Profile m) {
+		em.getTransaction().begin();
+		em.persist(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
-	public Account add(Account m) {
-		return (Account) db.insert(m, user);
+	public Profile update(Profile m) {
+		em.getTransaction().begin();
+		em.merge(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
-	public Account update(Account m) {
-		return (Account) db.update(m, user);
-	}
-
-	public void delete(Account m) {
-		db.delete(m, user);
+	public void delete(Profile m) {
+		em.getTransaction().begin();
+		em.remove(m);
+		em.getTransaction().commit();
 	}
 }

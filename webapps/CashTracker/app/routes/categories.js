@@ -14,6 +14,9 @@ export default Em.Route.extend({
             var _this = this;
             category.destroyRecord().then(function() {
                 _this.transitionTo('categories');
+            }, function(resp) {
+                category.rollback();
+                alert(resp.errors.message);
             });
         }
     }

@@ -11,10 +11,11 @@ import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.restful.data.IAppEntity;
 import com.flabser.users.User;
 
+
 public interface IDatabase {
 
-	void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-	DatabasePoolException;
+	void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
+	ClassNotFoundException, DatabasePoolException;
 
 	int getVersion();
 
@@ -22,7 +23,6 @@ public interface IDatabase {
 
 	EntityManager getEntityManager();
 
-	IFTIndexEngine getFTSearchEngine() throws InstantiationException, IllegalAccessException, ClassNotFoundException, DatabasePoolException;
 
 	@Deprecated
 	ArrayList<IAppEntity> select(String condition, Class<IAppEntity> objClass, User user);
@@ -38,16 +38,9 @@ public interface IDatabase {
 
 	void shutdown();
 
-	@Deprecated
-	IAppEntity insert(IAppEntity a, User user);
-
-	@Deprecated
-	IAppEntity update(IAppEntity a, User user);
-
-	java.util.List<IAppEntity> select(String condition, User user);
-
-	@Deprecated
-	void delete(IAppEntity a, User user);
 
 	IDBConnectionPool getPool();
+
+	IFTIndexEngine getFTSearchEngine() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
+	DatabasePoolException;
 }

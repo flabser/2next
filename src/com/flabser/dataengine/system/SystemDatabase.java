@@ -13,39 +13,28 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-
 import org.apache.catalina.realm.RealmBase;
-import org.eclipse.persistence.config.PersistenceUnitProperties;
-import org.eclipse.persistence.jpa.PersistenceProvider;
 
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
-import com.flabser.dataengine.IDatabase;
-import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.activity.Activity;
 import com.flabser.dataengine.activity.IActivity;
-import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.pool.IDBConnectionPool;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.EnvConst;
-import com.flabser.restful.data.IAppEntity;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.server.Server;
-import com.flabser.solutions.postgresql.Deployer;
 import com.flabser.users.User;
 import com.flabser.users.UserStatusType;
 
 @SuppressWarnings({ "SqlDialectInspection", "SqlNoDataSourceInspection" })
-public class SystemDatabase extends DatabaseCore implements ISystemDatabase, IDatabase {
+public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 	public static final String jdbcDriver = "org.postgresql.Driver";
 
 	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -744,109 +733,5 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase, IDa
 		}
 	}
 
-	@Override
-	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
-	ClassNotFoundException, DatabasePoolException {
-		Map<String, String> properties = new HashMap<String, String>();
-		properties.put(PersistenceUnitProperties.JDBC_DRIVER, jdbcDriver);
-		properties.put(PersistenceUnitProperties.JDBC_USER, EnvConst.DB_USER);
-		properties.put(PersistenceUnitProperties.JDBC_PASSWORD, EnvConst.DB_PWD);
-		properties.put(PersistenceUnitProperties.JDBC_URL, appProfile.getURI());
-		// properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "");
-		// properties.put(PersistenceUnitProperties.DDL_GENERATION,
-		// "drop-and-create-tables");
-		// properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE,
-		// "createDDL.jdbc");
-		// properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE,
-		// "dropDDL.jdbc");
-		// properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE,
-		// "both");
-
-		PersistenceProvider pp = new PersistenceProvider();
-		//EntityManagerFactory factory = pp.createEntityManagerFactory("JPA", properties);
-		//	entityManager = factory.createEntityManager();
-	}
-
-	@Override
-	public int getVersion() {
-		return 0;
-	}
-
-	@Override
-	public IDeployer getDeployer() {
-		Deployer d = new Deployer();
-		d.init(this);
-		return d;
-	}
-
-	@Override
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
-
-	@Override
-	public IFTIndexEngine getFTSearchEngine()  {
-		return null;
-
-	}
-
-	@Override
-	public ArrayList<IAppEntity> select(String condition, Class<IAppEntity> objClass, User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int insert(String condition, User user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int update(String condition, User user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int delete(String condition, User user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void shutdown() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public IAppEntity insert(IAppEntity a, User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public IAppEntity update(IAppEntity a, User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<IAppEntity> select(String condition, User user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void delete(IAppEntity a, User user) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public IDBConnectionPool getPool() {
-		return pool;
-	}
 
 }
