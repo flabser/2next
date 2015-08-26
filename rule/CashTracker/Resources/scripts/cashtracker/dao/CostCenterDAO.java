@@ -15,12 +15,14 @@ import com.flabser.users.User;
 
 public class CostCenterDAO {
 
+	private EntityManager em;
 	private IDatabase db;
 	private User user;
 
 	public CostCenterDAO(_Session session) {
 		this.db = session.getDatabase();
 		this.user = session.getAppUser();
+		this.em = db.getEntityManager();
 	}
 
 	public String getSelectQuery() {
@@ -41,7 +43,6 @@ public class CostCenterDAO {
 	public boolean existsTransactionByCostCenter(CostCenter m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.costCenter = :costCenter";
 
-		EntityManager em = db.getEntityManager();
 		Query q = em.createQuery(jpql);
 		q.setParameter("costCenter", m);
 		q.setMaxResults(1);
@@ -49,14 +50,22 @@ public class CostCenterDAO {
 	}
 
 	public CostCenter add(CostCenter m) {
-		return (CostCenter) db.insert(m, user);
+		em.getTransaction().begin();
+		em.persist(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public CostCenter update(CostCenter m) {
-		return (CostCenter) db.update(m, user);
+		em.getTransaction().begin();
+		em.merge(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public void delete(CostCenter m) {
-		db.delete(m, user);
+		em.getTransaction().begin();
+		em.remove(m);
+		em.getTransaction().commit();
 	}
 }

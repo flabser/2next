@@ -15,12 +15,14 @@ import com.flabser.users.User;
 
 public class TagDAO {
 
+	private EntityManager em;
 	private IDatabase db;
 	private User user;
 
 	public TagDAO(_Session session) {
 		this.db = session.getDatabase();
 		this.user = session.getAppUser();
+		this.em = db.getEntityManager();
 	}
 
 	public String getSelectQuery() {
@@ -41,7 +43,6 @@ public class TagDAO {
 	public boolean existsTransactionByTag(Tag m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE :tag MEMBER OF t.tags";
 
-		EntityManager em = db.getEntityManager();
 		Query q = em.createQuery(jpql);
 		q.setParameter("tag", m);
 		q.setMaxResults(1);
@@ -49,14 +50,22 @@ public class TagDAO {
 	}
 
 	public Tag add(Tag m) {
-		return (Tag) db.insert(m, user);
+		em.getTransaction().begin();
+		em.persist(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public Tag update(Tag m) {
-		return (Tag) db.update(m, user);
+		em.getTransaction().begin();
+		em.merge(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public void delete(Tag m) {
-		db.delete(m, user);
+		em.getTransaction().begin();
+		em.remove(m);
+		em.getTransaction().commit();
 	}
 }

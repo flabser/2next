@@ -20,12 +20,14 @@ import com.flabser.users.User;
 
 public class TransactionDAO {
 
+	private EntityManager em;
 	private IDatabase db;
 	private User user;
 
 	public TransactionDAO(_Session session) {
 		this.db = session.getDatabase();
 		this.user = session.getAppUser();
+		this.em = db.getEntityManager();
 	}
 
 	public String getSelectQuery() {
@@ -46,7 +48,6 @@ public class TransactionDAO {
 			jpql = getSelectQuery() + " WHERE t.transactionType = :type ORDER BY t.date";
 		}
 
-		EntityManager em = db.getEntityManager();
 		Query q = em.createQuery(jpql);
 		if (type != null) {
 			q.setParameter("type", type);
@@ -85,14 +86,22 @@ public class TransactionDAO {
 
 	public Transaction add(Transaction m) {
 		m.setUserId((long) user.id);
-		return (Transaction) db.insert(m, user);
+		em.getTransaction().begin();
+		em.persist(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public Transaction update(Transaction m) {
-		return (Transaction) db.update(m, user);
+		em.getTransaction().begin();
+		em.merge(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public void delete(Transaction m) {
-		db.delete(m, user);
+		em.getTransaction().begin();
+		em.remove(m);
+		em.getTransaction().commit();
 	}
 }

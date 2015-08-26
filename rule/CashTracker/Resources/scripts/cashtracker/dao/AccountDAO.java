@@ -15,12 +15,14 @@ import com.flabser.users.User;
 
 public class AccountDAO {
 
+	private EntityManager em;
 	private IDatabase db;
 	private User user;
 
 	public AccountDAO(_Session session) {
 		this.db = session.getDatabase();
 		this.user = session.getAppUser();
+		this.em = db.getEntityManager();
 	}
 
 	public String getSelectQuery() {
@@ -41,7 +43,6 @@ public class AccountDAO {
 	public boolean existsTransactionByAccount(Account m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.accountFrom = :account or t.accountTo = :account";
 
-		EntityManager em = db.getEntityManager();
 		Query q = em.createQuery(jpql);
 		q.setParameter("account", m);
 		q.setMaxResults(1);
@@ -49,14 +50,22 @@ public class AccountDAO {
 	}
 
 	public Account add(Account m) {
-		return (Account) db.insert(m, user);
+		em.getTransaction().begin();
+		em.persist(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public Account update(Account m) {
-		return (Account) db.update(m, user);
+		em.getTransaction().begin();
+		em.merge(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public void delete(Account m) {
-		db.delete(m, user);
+		em.getTransaction().begin();
+		em.remove(m);
+		em.getTransaction().commit();
 	}
 }

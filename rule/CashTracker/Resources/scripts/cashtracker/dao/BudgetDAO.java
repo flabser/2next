@@ -2,6 +2,8 @@ package cashtracker.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import cashtracker.model.Budget;
 
 import com.flabser.dataengine.IDatabase;
@@ -12,20 +14,18 @@ import com.flabser.users.User;
 
 public class BudgetDAO {
 
+	private EntityManager em;
 	private IDatabase db;
 	private User user;
 
 	public BudgetDAO(_Session session) {
 		this.db = session.getDatabase();
 		this.user = session.getAppUser();
+		this.em = db.getEntityManager();
 	}
 
 	public String getSelectQuery() {
 		return "SELECT b FROM Budget AS b";
-	}
-
-	public String getDeleteQuery() {
-		return "DELETE FROM Budget AS b";
 	}
 
 	public List <IAppEntity> findAll() {
@@ -34,14 +34,22 @@ public class BudgetDAO {
 	}
 
 	public Budget add(Budget m) {
-		return (Budget) db.insert(m, user);
+		em.getTransaction().begin();
+		em.persist(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public Budget update(Budget m) {
-		return (Budget) db.update(m, user);
+		em.getTransaction().begin();
+		em.merge(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public void delete() {
-		db.delete(getDeleteQuery(), user);
+		em.getTransaction().begin();
+		em.createQuery("DELETE FROM Budget AS b").executeUpdate();
+		em.getTransaction().commit();
 	}
 }

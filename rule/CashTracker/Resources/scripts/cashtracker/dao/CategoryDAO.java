@@ -15,12 +15,14 @@ import com.flabser.users.User;
 
 public class CategoryDAO {
 
+	private EntityManager em;
 	private IDatabase db;
 	private User user;
 
 	public CategoryDAO(_Session session) {
 		this.db = session.getDatabase();
 		this.user = session.getAppUser();
+		this.em = db.getEntityManager();
 	}
 
 	public String getSelectQuery() {
@@ -42,7 +44,6 @@ public class CategoryDAO {
 	public boolean existsTransactionByCategory(Category m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.category = :category";
 
-		EntityManager em = db.getEntityManager();
 		Query q = em.createQuery(jpql);
 		q.setParameter("category", m);
 		q.setMaxResults(1);
@@ -54,14 +55,22 @@ public class CategoryDAO {
 	}
 
 	public Category add(Category m) {
-		return (Category) db.insert(m, user);
+		em.getTransaction().begin();
+		em.persist(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public Category update(Category m) {
-		return (Category) db.update(m, user);
+		em.getTransaction().begin();
+		em.merge(m);
+		em.getTransaction().commit();
+		return m;
 	}
 
 	public void delete(Category m) {
-		db.delete(m, user);
+		em.getTransaction().begin();
+		em.remove(m);
+		em.getTransaction().commit();
 	}
 }
