@@ -7,6 +7,7 @@ import java.util.Date;
 import org.apache.catalina.LifecycleException;
 
 import com.flabser.dataengine.IDatabase;
+import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.env.Environment;
 import com.flabser.env.Site;
 import com.flabser.log.Log4jLogger;
@@ -27,8 +28,8 @@ public class Server {
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 
 		logger.normalLogEntry("copyright(c) the F developers team 2015. All Right Reserved");
-		logger.normalLogEntry("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "(" + System.getProperty("os.arch")
-				+ "), jvm: " + System.getProperty("java.version"));
+		logger.normalLogEntry("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "("
+				+ System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
 
 		Environment.init();
 		if (!compilationTime.equalsIgnoreCase("")) {
@@ -37,9 +38,20 @@ public class Server {
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
 		webServerInst.init(Environment.hostName);
 
+		try {
+			Environment.systemBase = new com.flabser.dataengine.system.SystemDatabase();
+		} catch (DatabasePoolException e) {
+			Server.logger.errorLogEntry(e);
+			Server.logger.fatalLogEntry("server has not connected to system database");
+			shutdown();
+		} catch (Exception e) {
+			Server.logger.errorLogEntry(e);
+			shutdown();
+		}
+
 		webServerInst.initAdministartor();
 
-		for (Site webApp : Environment.webAppToStart.values()) {
+		for (Site webApp : Environment.availableTemplates.values()) {
 			webServerInst.addAppTemplate(webApp.name, "/" + webApp.appBase, webApp.appBase);
 		}
 
@@ -50,6 +62,7 @@ public class Server {
 		webServerInst.startContainer();
 
 		Environment.periodicalServices = new PeriodicalServices();
+
 
 		Thread thread = new Thread(new Console());
 		thread.setPriority(Thread.MIN_PRIORITY);

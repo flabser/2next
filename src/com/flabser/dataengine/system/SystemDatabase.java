@@ -1,20 +1,5 @@
 package com.flabser.dataengine.system;
 
-import com.flabser.dataengine.DatabaseUtil;
-import com.flabser.dataengine.activity.Activity;
-import com.flabser.dataengine.activity.IActivity;
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.pool.IDBConnectionPool;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.dataengine.system.entities.UserGroup;
-import com.flabser.dataengine.system.entities.UserRole;
-import com.flabser.env.EnvConst;
-import com.flabser.rule.constants.RunMode;
-import com.flabser.server.Server;
-import com.flabser.users.User;
-import com.flabser.users.UserStatusType;
-import org.apache.catalina.realm.RealmBase;
-
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -28,18 +13,44 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+
+import org.apache.catalina.realm.RealmBase;
+import org.eclipse.persistence.config.PersistenceUnitProperties;
+import org.eclipse.persistence.jpa.PersistenceProvider;
+
+import com.flabser.dataengine.DatabaseCore;
+import com.flabser.dataengine.DatabaseUtil;
+import com.flabser.dataengine.IDatabase;
+import com.flabser.dataengine.IDeployer;
+import com.flabser.dataengine.activity.Activity;
+import com.flabser.dataengine.activity.IActivity;
+import com.flabser.dataengine.ft.IFTIndexEngine;
+import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.pool.IDBConnectionPool;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.UserGroup;
+import com.flabser.dataengine.system.entities.UserRole;
+import com.flabser.env.EnvConst;
+import com.flabser.restful.data.IAppEntity;
+import com.flabser.rule.constants.RunMode;
+import com.flabser.server.Server;
+import com.flabser.solutions.postgresql.Deployer;
+import com.flabser.users.User;
+import com.flabser.users.UserStatusType;
+
 @SuppressWarnings({ "SqlDialectInspection", "SqlNoDataSourceInspection" })
-public class SystemDatabase implements ISystemDatabase {
+public class SystemDatabase extends DatabaseCore implements ISystemDatabase, IDatabase {
 	public static final String jdbcDriver = "org.postgresql.Driver";
-	private IDBConnectionPool dbPool;
 
 	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		dbPool = new com.flabser.dataengine.pool.DBConnectionPool();
-		dbPool.initConnectionPool(jdbcDriver, EnvConst.CONN_URI, EnvConst.DB_USER, EnvConst.DB_PWD);
+		pool = new com.flabser.dataengine.pool.DBConnectionPool();
+		pool.initConnectionPool(jdbcDriver, EnvConst.CONN_URI, EnvConst.DB_USER, EnvConst.DB_PWD);
 
 		HashMap<String, String> queries = new HashMap<>();
 		queries.put("USERS", DDEScripts.USERS_DDE);
@@ -54,7 +65,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 	@Override
 	public IActivity getActivity() {
-		return new Activity(dbPool);
+		return new Activity(pool);
 	}
 
 	@Override
@@ -93,7 +104,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 	private void pswToPswHash(User user, String pwd) {
 
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		String pwdHsh = RealmBase.Digest(pwd, "MD5", "UTF-8");
 
 		try (PreparedStatement pst = conn.prepareStatement("update USERS set PWD = ?, PWDHASH = ? where ID = ?")) {
@@ -106,13 +117,13 @@ public class SystemDatabase implements ISystemDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 	}
 
 	private User initUser(String login) {
 
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		try (PreparedStatement getUser = conn.prepareStatement("select ID from users where login = ? limit 1;")) {
 
 			getUser.setString(1, login);
@@ -126,7 +137,7 @@ public class SystemDatabase implements ISystemDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 
 		return null;
@@ -134,7 +145,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 	public ArrayList<UserRole> getUserRoles(Collection<Integer> ids) {
 		ArrayList<UserRole> result = new ArrayList<>();
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		try (Statement getApps = conn.createStatement();
 				ResultSet rs = getApps.executeQuery("select id, name, description, app_id, is_on from " + "(select unnest(ARRAY"
 						+ ids.stream().collect(Collectors.toList()) + "::integer[]) as g_id) as ids inner join roles on ids.g_id = ID ")) {
@@ -148,7 +159,7 @@ public class SystemDatabase implements ISystemDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 
 		return result;
@@ -156,7 +167,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 	public List<UserGroup> getUserGroups(Collection<Integer> ids) {
 		List<UserGroup> result = new ArrayList<>();
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		try (Statement getApps = conn.createStatement();
 				ResultSet rs = getApps.executeQuery("select id, name, description, roles_id from " + "(select unnest(ARRAY"
 						+ ids.stream().collect(Collectors.toList()) + "::integer[]) as g_id) as ids inner join groups on ids.g_id = ID ")) {
@@ -170,7 +181,7 @@ public class SystemDatabase implements ISystemDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 
 		return result;
@@ -182,7 +193,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 	public List<ApplicationProfile> getApplicationProfiles(Collection<Integer> ids) {
 		List<ApplicationProfile> result = new ArrayList<>();
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		try (Statement getApps = conn.createStatement();
 				ResultSet rs = getApps.executeQuery("select ID, APPTYPE, APPID, APPNAME, OWNER, DBTYPE, DBHOST, DBNAME, STATUS, STATUSDATE"
 						+ ", ARRAY(select id FROM roles where app_id = apps.ID) as roles_id from " + "(select unnest(ARRAY"
@@ -191,14 +202,14 @@ public class SystemDatabase implements ISystemDatabase {
 			while (rs.next()) {
 				result.add(new ApplicationProfile(rs.getInt("ID"), rs.getString("APPTYPE"), rs.getString("APPID"), rs.getString("APPNAME"),
 						rs.getString("OWNER"), rs.getInt("DBTYPE"), rs.getString("DBHOST"), rs.getString("DBNAME"), rs.getInt("STATUS"), rs
-								.getDate("STATUSDATE"), getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("roles_id"))))));
+						.getDate("STATUSDATE"), getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("roles_id"))))));
 			}
 
 			conn.commit();
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 
 		return result;
@@ -214,7 +225,7 @@ public class SystemDatabase implements ISystemDatabase {
 			wherePiece = "WHERE " + condition;
 		}
 
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery("select count(*) from USERS " + wherePiece)) {
 
 			if (rs.next()) {
@@ -226,7 +237,7 @@ public class SystemDatabase implements ISystemDatabase {
 			DatabaseUtil.debugErrorPrint(e);
 			return 0;
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 	}
 
@@ -240,7 +251,7 @@ public class SystemDatabase implements ISystemDatabase {
 	@Override
 	public HashMap<String, User> getAllAdministrators() {
 		HashMap<String, User> users = new HashMap<>();
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 
 		try (Statement s = conn.createStatement();
 				ResultSet rs = s.executeQuery("SELECT ARRAY(SELECT ID FROM USERS WHERE ISSUPERVISOR = TRUE) as IDS")) {
@@ -255,7 +266,7 @@ public class SystemDatabase implements ISystemDatabase {
 		} catch (Throwable e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 
 		return null;
@@ -263,7 +274,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 	@Override
 	public User getUserByVerifyCode(String code) {
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		try (PreparedStatement pstmt = conn.prepareStatement("select ID from USERS where USERS.VERIFYCODE = ?")) {
 
 			conn.setAutoCommit(true);
@@ -277,7 +288,7 @@ public class SystemDatabase implements ISystemDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 
 		return null;
@@ -286,7 +297,7 @@ public class SystemDatabase implements ISystemDatabase {
 	@SuppressWarnings("unused")
 	public User getUserByEmail(String email) {
 
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		try (PreparedStatement pstmt = conn.prepareStatement("select ID from USERS where USERS.EMAIL = ?")) {
 			pstmt.setString(1, email);
 
@@ -300,7 +311,7 @@ public class SystemDatabase implements ISystemDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 
 		return null;
@@ -308,7 +319,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 	private List<User> getUsers(Integer... ids) {
 
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		List<User> result = new ArrayList<>();
 		if (ids == null) {
 			return result;
@@ -326,16 +337,16 @@ public class SystemDatabase implements ISystemDatabase {
 						.getString("LOGIN"), rs.getString("EMAIL"), rs.getBoolean("ISSUPERVISOR"), rs.getString("PWD"), rs
 						.getString("PWDHASH"), rs.getString("DBPWD"), rs.getInt("LOGINHASH"), rs.getString("VERIFYCODE"), UserStatusType
 						.getType(rs.getInt("STATUS")), new HashSet<>(getUserGroups(Arrays.asList((Integer[]) getObjectArray(rs
-						.getArray("GROUPS"))))), new HashSet<>(
-						getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))), getApplicationProfiles(Arrays
-						.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true));
+								.getArray("GROUPS"))))), new HashSet<>(
+										getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))), getApplicationProfiles(Arrays
+												.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true));
 			}
 
 			conn.commit();
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 
 		return result;
@@ -359,7 +370,7 @@ public class SystemDatabase implements ISystemDatabase {
 	@Override
 	public int deleteUser(int id) {
 
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		try (PreparedStatement pst = conn.prepareStatement("delete from USERS where ID = ?")) {
 
 			pst.setInt(1, id);
@@ -370,14 +381,14 @@ public class SystemDatabase implements ISystemDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.errorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 
 		return -1;
 	}
 
 	public void createTable(HashMap<String, String> queries) {
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 
 		try (Statement stmt = conn.createStatement()) {
 
@@ -387,7 +398,7 @@ public class SystemDatabase implements ISystemDatabase {
 			String[] types = { "TABLE" };
 			try (ResultSet rs = dbmd.getTables(null, null, "%", types)) {
 				while (rs.next()) {
-					tables.add((Optional.ofNullable(rs.getString("table_name")).orElse("")).toLowerCase());
+					tables.add(Optional.ofNullable(rs.getString("table_name")).orElse("").toLowerCase());
 				}
 			}
 
@@ -406,13 +417,13 @@ public class SystemDatabase implements ISystemDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 	}
 
 	@Override
 	public int insert(User user) {
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 
 		try (PreparedStatement insertUser = conn
 				.prepareStatement(
@@ -453,13 +464,13 @@ public class SystemDatabase implements ISystemDatabase {
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 	}
 
 	@Override
 	public int update(User user) {
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 
 		try (PreparedStatement updateUser = conn.prepareStatement("update USERS set " + "USERNAME = ?, " + "LOGIN = ?, " + "EMAIL = ?, "
 				+ "PWD = ?, " + "ISSUPERVISOR = ?, " + "PRIMARYREGDATE = ?, " + "REGDATE = ?, " + "LOGINHASH = ?, " + "PWDHASH = ?, "
@@ -492,7 +503,7 @@ public class SystemDatabase implements ISystemDatabase {
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 	}
 
@@ -500,7 +511,7 @@ public class SystemDatabase implements ISystemDatabase {
 	public ArrayList<User> getUsers(String keyWord) {
 		ArrayList<User> users = new ArrayList<>();
 
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		try (PreparedStatement pst = conn.prepareStatement("select ARRAY(SELECT ID from USERS where USERS.LOGIN LIKE ?) AS IDS")) {
 			conn.setAutoCommit(true);
 			pst.setString(1, keyWord + "%");
@@ -512,7 +523,7 @@ public class SystemDatabase implements ISystemDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 
 		return users;
@@ -520,7 +531,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 	private boolean checkHash(String hashAsString, int hash) {
 		try {
-			return (Integer.parseInt(hashAsString) == hash);
+			return Integer.parseInt(hashAsString) == hash;
 		} catch (NumberFormatException ignored) {
 		}
 		return false;
@@ -536,7 +547,7 @@ public class SystemDatabase implements ISystemDatabase {
 			wherePiece = "WHERE " + condition;
 		}
 
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		try (Statement s = conn.createStatement();
 				ResultSet rs = s.executeQuery("select ARRAY(select ID from USERS " + wherePiece + " LIMIT " + pageSize + " OFFSET "
 						+ calcStartEntry + ") as IDS;")) {
@@ -549,7 +560,7 @@ public class SystemDatabase implements ISystemDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 
 		return users;
@@ -562,7 +573,7 @@ public class SystemDatabase implements ISystemDatabase {
 
 	public void insert(Collection<UserRole> roles) {
 
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 
 		try (PreparedStatement pstmt = conn.prepareStatement("" + "with sel as ( select id from roles where name = ? and app_id = ?), "
 				+ " ins as ( insert into roles (name, description, app_id, is_on) " + "    select ?, ?, ?, ? "
@@ -597,13 +608,13 @@ public class SystemDatabase implements ISystemDatabase {
 			e.printStackTrace();
 			DatabaseUtil.debugErrorPrint(e);
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 	}
 
 	@Override
 	public int insert(ApplicationProfile ap) {
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 
 		try (PreparedStatement pst = conn
 				.prepareStatement(
@@ -630,13 +641,13 @@ public class SystemDatabase implements ISystemDatabase {
 
 			insert(ap.getRoles());
 
-            try (Statement s = conn.createStatement()) {
-                s.executeUpdate("delete from roles where app_id = " + ap.id +
-                                (ap.getRoles().size() > 0
-                                        ? " and id not in " + ap.getRoles().stream().map(r -> String.valueOf(r.getId())).collect(Collectors.joining(", ", "(", ")"))
-                                        : "")
-                );
-            }
+			try (Statement s = conn.createStatement()) {
+				s.executeUpdate("delete from roles where app_id = " + ap.id +
+						(ap.getRoles().size() > 0
+								? " and id not in " + ap.getRoles().stream().map(r -> String.valueOf(r.getId())).collect(Collectors.joining(", ", "(", ")"))
+										: "")
+						);
+			}
 
 			conn.commit();
 			return ap.id;
@@ -644,13 +655,13 @@ public class SystemDatabase implements ISystemDatabase {
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 	}
 
 	@Override
 	public int update(ApplicationProfile ap) {
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 
 		try (PreparedStatement pst = conn
 				.prepareStatement("UPDATE APPS SET APPNAME = ?, OWNER = ?, DBHOST = ?, DBNAME = ?,  APPTYPE = ?, APPID = ?, DBTYPE = ?, STATUS = ?, STATUSDATE = ? WHERE ID = ?;")) {
@@ -669,13 +680,13 @@ public class SystemDatabase implements ISystemDatabase {
 			pst.executeUpdate();
 			insert(ap.getRoles());
 
-            try (Statement s = conn.createStatement()) {
-                s.executeUpdate("delete from roles where app_id = " + ap.id +
-                        (ap.getRoles().size() > 0
-                                ? " and id not in " + ap.getRoles().stream().map(r -> String.valueOf(r.getId())).collect(Collectors.joining(", ", "(", ")"))
-                                : "")
-                );
-            }
+			try (Statement s = conn.createStatement()) {
+				s.executeUpdate("delete from roles where app_id = " + ap.id +
+						(ap.getRoles().size() > 0
+								? " and id not in " + ap.getRoles().stream().map(r -> String.valueOf(r.getId())).collect(Collectors.joining(", ", "(", ")"))
+										: "")
+						);
+			}
 
 			conn.commit();
 			return ap.id;
@@ -683,13 +694,13 @@ public class SystemDatabase implements ISystemDatabase {
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 	}
 
 	@Override
 	public int deleteApplicationProfile(int id) {
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 
 		try {
 			PreparedStatement pst = conn.prepareStatement("DELETE FROM APPS WHERE ID = ?;");
@@ -702,7 +713,7 @@ public class SystemDatabase implements ISystemDatabase {
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
 	}
 
@@ -715,7 +726,7 @@ public class SystemDatabase implements ISystemDatabase {
 			wherePiece = "WHERE " + condition;
 		}
 
-		Connection conn = dbPool.getConnection();
+		Connection conn = pool.getConnection();
 		try (Statement s = conn.createStatement();
 				ResultSet rs = s.executeQuery("select * from APPS " + wherePiece + " LIMIT " + pageSize + " OFFSET " + calcStartEntry)) {
 
@@ -729,8 +740,113 @@ public class SystemDatabase implements ISystemDatabase {
 			DatabaseUtil.debugErrorPrint(e);
 			return null;
 		} finally {
-			dbPool.returnConnection(conn);
+			pool.returnConnection(conn);
 		}
+	}
+
+	@Override
+	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException,
+	ClassNotFoundException, DatabasePoolException {
+		Map<String, String> properties = new HashMap<String, String>();
+		properties.put(PersistenceUnitProperties.JDBC_DRIVER, jdbcDriver);
+		properties.put(PersistenceUnitProperties.JDBC_USER, EnvConst.DB_USER);
+		properties.put(PersistenceUnitProperties.JDBC_PASSWORD, EnvConst.DB_PWD);
+		properties.put(PersistenceUnitProperties.JDBC_URL, appProfile.getURI());
+		// properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "");
+		// properties.put(PersistenceUnitProperties.DDL_GENERATION,
+		// "drop-and-create-tables");
+		// properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE,
+		// "createDDL.jdbc");
+		// properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE,
+		// "dropDDL.jdbc");
+		// properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE,
+		// "both");
+
+		PersistenceProvider pp = new PersistenceProvider();
+		//EntityManagerFactory factory = pp.createEntityManagerFactory("JPA", properties);
+		//	entityManager = factory.createEntityManager();
+	}
+
+	@Override
+	public int getVersion() {
+		return 0;
+	}
+
+	@Override
+	public IDeployer getDeployer() {
+		Deployer d = new Deployer();
+		d.init(this);
+		return d;
+	}
+
+	@Override
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	@Override
+	public IFTIndexEngine getFTSearchEngine()  {
+		return null;
+
+	}
+
+	@Override
+	public ArrayList<IAppEntity> select(String condition, Class<IAppEntity> objClass, User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insert(String condition, User user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(String condition, User user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(String condition, User user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void shutdown() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public IAppEntity insert(IAppEntity a, User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IAppEntity update(IAppEntity a, User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IAppEntity> select(String condition, User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(IAppEntity a, User user) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public IDBConnectionPool getPool() {
+		return pool;
 	}
 
 }

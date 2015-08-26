@@ -93,7 +93,7 @@ public class User {
 
 	@JsonIgnore
 	public void setPasswordHash(String password) throws WebFormValueException {
-		if (!("".equalsIgnoreCase(password))) {
+		if (!"".equalsIgnoreCase(password)) {
 			if (Util.pwdIsCorrect(password)) {
 				this.passwordHash = password.hashCode() + "";
 				// this.passwordHash = getMD5Hash(password);
@@ -203,7 +203,6 @@ public class User {
 								if (res == 0 || res == 1) {
 									IDatabase dataBase = appProfile.getDatabase();
 									IDeployer ad = dataBase.getDeployer();
-									ad.init(appProfile);
 									Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
 									IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
 									dbInitializer.initApplication(appProfile.getPOJO());
@@ -278,7 +277,7 @@ public class User {
 	}
 
 	public void setPwd(String password) throws WebFormValueException {
-		if (!("".equalsIgnoreCase(password))) {
+		if (!"".equalsIgnoreCase(password)) {
 			if (Util.pwdIsCorrect(password)) {
 				this.password = password;
 			} else {

@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
 
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.IAppDatabaseInit;
+import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
-import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.server.Server;
 
@@ -25,10 +25,9 @@ public class Deployer extends DatabaseCore implements IDeployer {
 	ApplicationProfile appProfile;
 
 	@Override
-	public void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException {
-		this.appProfile = appProfile;
-		initConnectivity(Database.driver, appProfile);
+	public void init(IDatabase parentDb) {
+		pool = parentDb.getPool();
+		entityManager = parentDb.getEntityManager();
 	}
 
 	@SuppressWarnings("SqlNoDataSourceInspection")
@@ -44,7 +43,7 @@ public class Deployer extends DatabaseCore implements IDeployer {
 			String[] types = { "TABLE" };
 			try (ResultSet rs = dbmd.getTables(null, null, "%", types)) {
 				while (rs.next()) {
-					tables.add((Optional.ofNullable(rs.getString("table_name")).orElse("")).toLowerCase());
+					tables.add(Optional.ofNullable(rs.getString("table_name")).orElse("").toLowerCase());
 				}
 			}
 

@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.pool.IDBConnectionPool;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.restful.data.IAppEntity;
 import com.flabser.users.User;
@@ -13,7 +14,7 @@ import com.flabser.users.User;
 public interface IDatabase {
 
 	void init(ApplicationProfile appProfile) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException;
+	DatabasePoolException;
 
 	int getVersion();
 
@@ -41,4 +42,6 @@ public interface IDatabase {
 	java.util.List<IAppEntity> select(String condition, User user);
 
 	void delete(IAppEntity a, User user);
+
+	IDBConnectionPool getPool();
 }

@@ -2,15 +2,16 @@ package com.flabser.env;
 
 import java.io.File;
 
-//TODO need to secure this class 
+//TODO need to secure this class
 public class EnvConst {
 	public static final String DEFAULT_XML_ENC = "utf-8";
 	public static final String CFG_FILE = "cfg.xml";
 	public static final String SUPPOSED_CODE_PAGE = "utf-8";
 	public static final String ERROR_XSLT = "xsl" + File.separator + "errors" + File.separator + "error.xsl";
 	public static final String DATABASE_HOST = "localhost";
+	public static final String DATABASE_NAME = "2Next";
 	public static final String CONN_PORT = "5433";
-	public static final String CONN_URI = "jdbc:postgresql://" + DATABASE_HOST + ":" + CONN_PORT + "/2Next";
+	public static final String CONN_URI = "jdbc:postgresql://" + DATABASE_HOST + ":" + CONN_PORT + "/" + DATABASE_NAME;
 	public static final String DB_USER = "postgres";
 	public static final String DB_PWD = "smartdoc";
 	public static final String TEMPLATE_ATTR = "template";

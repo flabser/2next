@@ -20,6 +20,7 @@ import org.xml.sax.SAXException;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.runtimeobj.caching.ICache;
@@ -41,7 +42,7 @@ public class Environment implements ICache {
 	public static String defaultSender = "";
 	public static HashMap<String, String> mimeHash = new HashMap<String, String>();
 	public static String primaryAppDir;
-	public static HashMap<String, Site> webAppToStart = new HashMap<String, Site>();
+	public static HashMap<String, Site> availableTemplates = new HashMap<String, Site>();
 	public static String tmpDir;
 	public static String libsDir;
 
@@ -60,6 +61,7 @@ public class Environment implements ICache {
 	public static Boolean mailEnable = false;
 	private static String defaultRedirectURL;
 	private static HashMap<String, AppTemplate> appTemplates = new HashMap<String, AppTemplate>();
+	private static HashMap<String, ApplicationProfile> commonApps = new HashMap<String, ApplicationProfile>();
 	private static HashMap<String, Object> cache = new HashMap<String, Object>();
 
 	public static void init() {
@@ -103,7 +105,7 @@ public class Environment implements ICache {
 			Site site = new Site();
 			site.appBase = "Nubis";
 			site.name = "Nubis";
-			webAppToStart.put("Nubis", site);
+			availableTemplates.put("Nubis", site);
 
 			NodeList nodeList = XMLUtil.getNodeList(xmlDocument, "/tn/applications");
 			if (nodeList.getLength() > 0) {
@@ -120,7 +122,7 @@ public class Environment implements ICache {
 						if (!globalAttrValue.equals("")) {
 							site.global = globalAttrValue;
 						}
-						webAppToStart.put(appName, site);
+						availableTemplates.put(appName, site);
 					}
 				}
 			}
@@ -149,7 +151,7 @@ public class Environment implements ICache {
 			}
 
 			try {
-				mailEnable = (XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/@mode").equalsIgnoreCase("on")) ? true : false;
+				mailEnable = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/@mode").equalsIgnoreCase("on") ? true : false;
 				if (mailEnable) {
 					SMTPHost = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtphost");
 					defaultSender = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/defaultsender");
@@ -201,6 +203,15 @@ public class Environment implements ICache {
 	public static HashMap<String, AppTemplate> getAppTemplates() {
 		return appTemplates;
 	}
+
+	public static void addCommonApp(ApplicationProfile app) {
+		commonApps.put(app.appType, app);
+	}
+
+	public static ApplicationProfile getCommonApp(String appID) {
+		return commonApps.get(appID);
+	}
+
 
 	public static String getFullHostName() {
 		return httpSchema + "://" + Environment.hostName + ":" + Environment.httpPort;
@@ -270,7 +281,9 @@ public class Environment implements ICache {
 	}
 
 	public static void shutdown() {
-		periodicalServices.stop();
+		if (periodicalServices != null) {
+			periodicalServices.stop();
+		}
 	}
 
 }
