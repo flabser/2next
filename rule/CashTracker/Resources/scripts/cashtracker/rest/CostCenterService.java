@@ -23,7 +23,6 @@ import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
-import com.flabser.restful.data.IAppEntity;
 
 
 @Path("cost-centers")
@@ -95,11 +94,11 @@ public class CostCenterService extends RestProvider {
 	}
 
 	@JsonRootName("cost-centers")
-	class CostCenters extends ArrayList <IAppEntity> {
+	class CostCenters extends ArrayList <CostCenter> {
 
 		private static final long serialVersionUID = 1L;
 
-		public CostCenters(Collection <? extends IAppEntity> m) {
+		public CostCenters(Collection <? extends CostCenter> m) {
 			addAll(m);
 		}
 	}

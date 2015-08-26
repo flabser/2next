@@ -12,7 +12,6 @@ import cashtracker.dao.TagDAO;
 import cashtracker.model.Tag;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.restful.data.IAppEntity;
 
 
 public class TagTest extends InitEnv {
@@ -43,7 +42,7 @@ public class TagTest extends InitEnv {
 
 	// @Test
 	public void selectTest() {
-		List <IAppEntity> list = dao.findAll();
+		List <Tag> list = dao.findAll();
 		assertTrue(list.size() > 0);
 
 		Tag mFirst = dao.findById(list.get(0).getId());
@@ -55,7 +54,7 @@ public class TagTest extends InitEnv {
 
 	// @Test
 	public void updateTest() {
-		List <IAppEntity> list = dao.findAll();
+		List <Tag> list = dao.findAll();
 		Tag mFirst = dao.findById(list.get(0).getId());
 		mFirst.setName(mFirst.getName() + "-1");
 		dao.update(mFirst);

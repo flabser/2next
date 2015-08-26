@@ -25,7 +25,6 @@ import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
-import com.flabser.restful.data.IAppEntity;
 
 
 @Path("transactions")
@@ -45,7 +44,7 @@ public class TransactionService extends RestProvider {
 		if (trType != null && !trType.isEmpty()) {
 			type = TransactionType.typeOf(trType.substring(0, 1).toUpperCase());
 		}
-		Collection <IAppEntity> list = dao.findAll(pr, type);
+		Collection <Transaction> list = dao.findAll(pr, type);
 		return Response.ok(new Transactions(list)).build();
 	}
 
@@ -99,11 +98,11 @@ public class TransactionService extends RestProvider {
 	}
 
 	@JsonRootName("transactions")
-	class Transactions extends ArrayList <IAppEntity> {
+	class Transactions extends ArrayList <Transaction> {
 
 		private static final long serialVersionUID = 1L;
 
-		public Transactions(Collection <? extends IAppEntity> m) {
+		public Transactions(Collection <? extends Transaction> m) {
 			addAll(m);
 		}
 	}

@@ -23,7 +23,6 @@ import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
-import com.flabser.restful.data.IAppEntity;
 
 
 @Path("categories")
@@ -99,11 +98,11 @@ public class CategoryService extends RestProvider {
 	}
 
 	@JsonRootName("categories")
-	class Categories extends ArrayList <IAppEntity> {
+	class Categories extends ArrayList <Category> {
 
 		private static final long serialVersionUID = 1L;
 
-		public Categories(Collection <? extends IAppEntity> m) {
+		public Categories(Collection <? extends Category> m) {
 			addAll(m);
 		}
 	}

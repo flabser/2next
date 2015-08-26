@@ -95,11 +95,11 @@ public class TagService extends RestProvider {
 	}
 
 	@JsonRootName("tags")
-	class Tags extends ArrayList <IAppEntity> {
+	class Tags extends ArrayList <Tag> {
 
 		private static final long serialVersionUID = 1L;
 
-		public Tags(Collection <? extends IAppEntity> m) {
+		public Tags(Collection <? extends Tag> m) {
 			addAll(m);
 		}
 	}

@@ -13,7 +13,6 @@ import cashtracker.dao.AccountDAO;
 import cashtracker.model.Account;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.restful.data.IAppEntity;
 import com.flabser.util.Util;
 
 
@@ -51,7 +50,7 @@ public class AccountTest extends InitEnv {
 
 	@Test
 	public void selectTest() {
-		List <IAppEntity> list = dao.findAll();
+		List <Account> list = dao.findAll();
 		assertTrue(list.size() > 0);
 
 		Account aFirst = dao.findById(list.get(0).getId());

@@ -12,7 +12,6 @@ import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.restful.data.IAppEntity;
 
 
 public class CostCenterTest extends InitEnv {
@@ -43,7 +42,7 @@ public class CostCenterTest extends InitEnv {
 
 	@Test
 	public void selectTest() {
-		List <IAppEntity> list = dao.findAll();
+		List <CostCenter> list = dao.findAll();
 		assertTrue(list.size() > 0);
 
 		CostCenter mFirst = dao.findById(list.get(0).getId());
