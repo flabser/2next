@@ -12,8 +12,6 @@ import cashtracker.model.CostCenter;
 import cashtracker.model.Transaction;
 import cashtracker.model.constants.TransactionType;
 
-import com.flabser.dataengine.IDatabase;
-import com.flabser.restful.data.IAppEntity;
 import com.flabser.script._Session;
 import com.flabser.users.User;
 
@@ -21,31 +19,27 @@ import com.flabser.users.User;
 public class TransactionDAO {
 
 	private EntityManager em;
-	private IDatabase db;
 	private User user;
 
 	public TransactionDAO(_Session session) {
-		this.db = session.getDatabase();
 		this.user = session.getAppUser();
-		this.em = db.getEntityManager();
-	}
-
-	public String getSelectQuery() {
-		return "SELECT t FROM Transaction AS t";
-	}
-
-	public List <IAppEntity> findAll() {
-		List <IAppEntity> result = db.select(getSelectQuery() + " ORDER BY t.date", user);
-		return result;
+		this.em = session.getDatabase().getEntityManager();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List <IAppEntity> findAll(PageRequest pr, TransactionType type) {
+	public List <Transaction> findAll() {
+		String jpql = "SELECT t FROM Transaction AS t ORDER BY t.date";
+		Query q = em.createQuery(jpql);
+		return q.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List <Transaction> findAll(PageRequest pr, TransactionType type) {
 		String jpql;
 		if (type == null) {
-			jpql = getSelectQuery() + " ORDER BY t.date";
+			jpql = "SELECT t FROM Transaction AS t ORDER BY t.date";
 		} else {
-			jpql = getSelectQuery() + " WHERE t.transactionType = :type ORDER BY t.date";
+			jpql = "SELECT t FROM Transaction AS t WHERE t.transactionType = :type ORDER BY t.date";
 		}
 
 		Query q = em.createQuery(jpql);
@@ -55,33 +49,39 @@ public class TransactionDAO {
 		q.setFirstResult(pr.getOffset());
 		q.setMaxResults(pr.getLimit());
 
-		List <IAppEntity> result = q.getResultList();
+		List <Transaction> result = q.getResultList();
 		return result;
 	}
 
 	public Transaction findById(long id) {
-		String sql = getSelectQuery() + " WHERE t.id = " + id + " ORDER BY t.date";
-		List <IAppEntity> list = db.select(sql, user);
-		Transaction result = list.size() > 0 ? (Transaction) list.get(0) : null;
-		return result;
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.id = :id";
+		Query q = em.createQuery(jpql);
+		q.setParameter("id", id);
+		return (Transaction) q.getSingleResult();
 	}
 
-	public List <IAppEntity> findAllByAccount(Account m) {
-		String sql = getSelectQuery() + " WHERE t.account = " + m.getId() + " ORDER BY t.date";
-		List <IAppEntity> result = db.select(sql, user);
-		return result;
+	@SuppressWarnings("unchecked")
+	public List <Transaction> findAllByAccountFrom(Account m) {
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.accountFrom = :account";
+		Query q = em.createQuery(jpql);
+		q.setParameter("account", m);
+		return q.getResultList();
 	}
 
-	public List <IAppEntity> findAllByCostCenter(CostCenter m) {
-		String sql = getSelectQuery() + " WHERE t.cost_center = " + m.getId() + " ORDER BY t.date";
-		List <IAppEntity> result = db.select(sql, user);
-		return result;
+	@SuppressWarnings("unchecked")
+	public List <Transaction> findAllByCostCenter(CostCenter m) {
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.costCenter = :costCenter";
+		Query q = em.createQuery(jpql);
+		q.setParameter("costCenter", m);
+		return q.getResultList();
 	}
 
-	public List <IAppEntity> findAllByCategory(Category m) {
-		String sql = getSelectQuery() + " WHERE t.category = " + m.getId() + " ORDER BY t.date";
-		List <IAppEntity> result = db.select(sql, user);
-		return result;
+	@SuppressWarnings("unchecked")
+	public List <Transaction> findAllByCategory(Category m) {
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.category = :category";
+		Query q = em.createQuery(jpql);
+		q.setParameter("category", m);
+		return q.getResultList();
 	}
 
 	public Transaction add(Transaction m) {

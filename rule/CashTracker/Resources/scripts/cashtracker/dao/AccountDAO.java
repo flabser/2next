@@ -7,8 +7,6 @@ import javax.persistence.Query;
 
 import cashtracker.model.Account;
 
-import com.flabser.dataengine.IDatabase;
-import com.flabser.restful.data.IAppEntity;
 import com.flabser.script._Session;
 import com.flabser.users.User;
 
@@ -16,33 +14,29 @@ import com.flabser.users.User;
 public class AccountDAO {
 
 	private EntityManager em;
-	private IDatabase db;
 	private User user;
 
 	public AccountDAO(_Session session) {
-		this.db = session.getDatabase();
 		this.user = session.getAppUser();
-		this.em = db.getEntityManager();
+		this.em = session.getDatabase().getEntityManager();
 	}
 
-	public String getSelectQuery() {
-		return "SELECT a FROM Account AS a";
-	}
-
-	public List <IAppEntity> findAll() {
-		List <IAppEntity> result = db.select(getSelectQuery() + " ORDER BY a.name", user);
-		return result;
+	@SuppressWarnings("unchecked")
+	public List <Account> findAll() {
+		String jpql = "SELECT a FROM Account AS a ORDER BY a.name";
+		Query q = em.createQuery(jpql);
+		return q.getResultList();
 	}
 
 	public Account findById(long id) {
-		List <IAppEntity> list = db.select(getSelectQuery() + " WHERE a.id = " + id + " ORDER BY a.name", user);
-		Account result = list.size() > 0 ? (Account) list.get(0) : null;
-		return result;
+		String jpql = "SELECT a FROM Account AS a WHERE a.id = :id";
+		Query q = em.createQuery(jpql);
+		q.setParameter("id", id);
+		return (Account) q.getSingleResult();
 	}
 
 	public boolean existsTransactionByAccount(Account m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.accountFrom = :account or t.accountTo = :account";
-
 		Query q = em.createQuery(jpql);
 		q.setParameter("account", m);
 		q.setMaxResults(1);
