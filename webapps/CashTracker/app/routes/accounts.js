@@ -14,6 +14,9 @@ export default Em.Route.extend({
             var _this = this;
             account.destroyRecord().then(function() {
                 _this.transitionTo('accounts');
+            }, function(resp) {
+                account.rollback();
+                alert(resp.errors.message);
             });
         }
     }

@@ -10,6 +10,9 @@ export default Em.Route.extend({
             var _this = this;
             transaction.destroyRecord().then(function() {
                 _this.transitionTo('transactions');
+            }, function(resp) {
+                transaction.rollback();
+                alert(resp.errors.message);
             });
         }
     }

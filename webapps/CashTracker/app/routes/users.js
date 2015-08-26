@@ -14,6 +14,9 @@ export default Em.Route.extend({
             var _this = this;
             user.destroyRecord().then(function() {
                 _this.transitionTo('users');
+            }, function(resp) {
+                user.rollback();
+                alert(resp.errors.message);
             });
         }
     }

@@ -14,6 +14,9 @@ export default Em.Route.extend({
             var _this = this;
             costCenter.destroyRecord().then(function() {
                 _this.transitionTo('cost_centers');
+            }, function(resp) {
+                costCenter.rollback();
+                alert(resp.errors.message);
             });
         }
     }
