@@ -1,6 +1,11 @@
 {{#tn-form model=user onSubmit="submit" action="save"}}
 <header class="form-header">
-    <h1 class="header-title">{{t "user_profile"}}</h1>
+    <h1 class="header-title">
+        <button class="go-back" {{action "goBack"}}>
+            <i class="fa fa-chevron-left"></i>
+        </button>
+        {{t "user_profile"}}
+    </h1>
 </header>
 <section class="form-content">
     <div class="user_avatar">

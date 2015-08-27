@@ -1,6 +1,11 @@
 {{#tn-form model=invitation onSubmit="submit" action="sendInvite"}}
 <header class="form-header">
-    <h1 class="header-title">{{t "invitation_title"}}</h1>
+    <h1 class="header-title">
+        <button class="go-back" {{action "goBack"}}>
+            <i class="fa fa-chevron-left"></i>
+        </button>
+        {{t "invitation_title"}}
+    </h1>
 </header>
 <section class="form-content">
     <fieldset class="fieldset">
@@ -27,11 +32,11 @@
             </div>
         {{/tn-form-group}}
     </fieldset>
-    <footer class="action-bar">
-        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
-        <button type="submit" class="btn btn-primary">
-            <i class="fa fa-send-o"></i>{{t "send_invite"}}
-        </button>
-    </footer>
 </section>
+<footer class="form-actions">
+    <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-send-o"></i>{{t "send_invite"}}
+    </button>
+</footer>
 {{/tn-form}}

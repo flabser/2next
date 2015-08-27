@@ -8,5 +8,11 @@ export default Em.Route.extend(UnsavedModelRollbackMixin, {
 
     setEditModeFalse: function() {
         this.controller.send('cancel');
-    }.on('deactivate')
+    }.on('deactivate'),
+
+    actions: {
+        composeRecord: function() {
+            this.transitionTo('transactions.new');
+        }
+    }
 });

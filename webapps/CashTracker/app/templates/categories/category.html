@@ -1,6 +1,11 @@
 {{#tn-form model=category onSubmit="submit" action="save"}}
 <header class="form-header">
-    <h1 class="header-title">{{t "category"}}</h1>
+    <h1 class="header-title">
+        <button class="go-back" {{action "goBack"}}>
+            <i class="fa fa-chevron-left"></i>
+        </button>
+        {{t "category"}}
+    </h1>
 </header>
 <section class="form-content">
     <fieldset class="fieldset">
@@ -94,7 +99,7 @@
         {{/tn-form-group}}
     </fieldset>
 </section>
-<footer class="action-bar">
+<footer class="form-actions">
     <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
     <button type="submit" class="btn btn-primary">{{t "save"}}</button>
 </footer>

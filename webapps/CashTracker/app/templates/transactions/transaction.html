@@ -2,12 +2,11 @@
 <header class="form-header">
     <h1 class="header-title">
         <small id="saldo" class="pull-right" title="Сальдо"></small>
+        <button class="go-back" {{action "goBack"}}>
+            <i class="fa fa-chevron-left"></i>
+        </button>
         {{t "transaction"}}
     </h1>
-    <div class="action-bar">
-        <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
-        <button type="submit" class="btn btn-primary">{{t "save"}}</button>
-    </div>
 </header>
 <section class="form-content">
     <fieldset class="fieldset">
@@ -139,4 +138,8 @@
         </form>
     </div>
 </section>
+<footer class="form-actions">
+    <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
+    <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+</footer>
 {{/tn-form}}

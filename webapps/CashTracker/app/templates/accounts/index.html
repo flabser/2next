@@ -42,7 +42,7 @@
                             <i class="fa fa-trash" />
                         </button>
                     </div>
-                    <div class="entry document js-swipe-entry">
+                    {{#tn-swipe-entry class="entry document"}}
                         <label class="entry-select">
                             <input type="checkbox" value="{{account.id}}" {{action "selectOne"}} />
                         </label>
@@ -64,7 +64,7 @@
                             </span>
                         </div>
                         {{/link-to}}
-                    </div>
+                    {{/tn-swipe-entry}}
                 </div>
                 {{/unless}}
             {{/each}}

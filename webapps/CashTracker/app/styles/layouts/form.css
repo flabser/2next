@@ -5,13 +5,28 @@
 
 .form-header {}
 
-.form-content {
-    padding: 6px 0;
-}
-
-footer.action-bar {
+footer.form-actions {
     border-top: 1px solid #E6E6E6;
     padding-left: 235px;
+}
+
+.form-actions {
+    margin: 0;
+    padding: 8px;
+    vertical-align: middle;
+}
+
+.form-actions:after {
+    content: ' ';
+    clear: both;
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.form-content {
+    padding: 6px 0;
 }
 
 .fieldset {
@@ -40,7 +55,6 @@ footer.action-bar {
 .form-group {
     border-bottom: 1px solid transparent;
     display: block;
-    margin: 0 0 6px;
     max-width: 100%;
     min-height: 22px;
     overflow: hidden;
@@ -76,14 +90,6 @@ footer.action-bar {
     width: 230px;
 }
 
-/* .form-group .control-label:before {
-    color: #999;
-    content: ':';
-    float: right;
-    margin: 0 0 0 1px;
-    overflow: hidden;
-} */
-
 .form-group .controls {
     color: #000;
     display: block;
@@ -92,6 +98,23 @@ footer.action-bar {
     min-height: inherit;
     overflow: hidden;
     padding: 2px;
+}
+
+.go-back {
+    background: transparent;
+    border: 0;
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.go-back .fa {
+    color: #999;
+    font-size: .8em;
+}
+
+.go-back:hover .fa {
+    color: #666;
 }
 
 @media ( max-width: 960px) {
@@ -117,8 +140,15 @@ footer.action-bar {
     .form-group .controls {
         margin-left: 140px;
     }
-    footer.action-bar {
+    footer.form-actions {
         padding-left: 0;
+        text-align: center;
+    }
+    footer.form-actions .btn {
+        min-width: 33%;
+    }
+    .go-back {
+        display: inline;
     }
 }
 
