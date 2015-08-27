@@ -40,7 +40,7 @@ touch.touchMove = function(touchEvent) {
 touch.touchEnd = function(touchEvent) {
     if (touch.isValidTouch(touchEvent, true) && touch.startSwipe) {
         touch.swipedMsg = touchEvent.currentTarget;
-        if (touch.delta > i || new Date - touch.startTime < n) {
+        if ((touch.delta > i) || (new Date() - touch.startTime < n)) {
             // qu.animations.setStyle(touch.swipedMsg, -s, 0, t);
 
             touch.swipedMsg.style.cssText = '';
@@ -53,7 +53,7 @@ touch.touchEnd = function(touchEvent) {
             touch.hideSwipedMsg();
         }
         touchEvent.stopPropagation();
-        touchEvent.preventDefault()
+        touchEvent.preventDefault();
     }
 };
 
@@ -62,7 +62,7 @@ touch.hideSwipedMsg = function() {
         var i = touch.swipedMsg;
         setTimeout(function() {
             i.classList.remove(l);
-            i = null
+            i = null;
         }, t);
         // qu.animations.setStyle(touch.swipedMsg, 0, 0, t);
 
@@ -71,35 +71,35 @@ touch.hideSwipedMsg = function() {
         var parent = $(touch.swipedMsg).parent('.entry-wrap');
         parent.removeClass('entry-action-open');
 
-        touch.swipedMsg = null
+        touch.swipedMsg = null;
     }
 };
 
 touch.resetValue = function(t) {
     var i = t.originalEvent.changedTouches[0];
     touch.touchId = i.identifier;
-    touch.startTime = new Date;
+    touch.startTime = new Date();
     touch.startSwipe = !1;
     touch.startScroll = !1;
     touch.delta = 0;
     touch.x = i.pageX;
     touch.y = i.pageY;
-    touch.startSwipeTriggered = !1
+    touch.startSwipeTriggered = !1;
 };
 
 touch.bindEvents = function(t, i) {
     t["touchstart " + i] = touch.touchStart;
     t["touchend " + i] = touch.touchEnd;
-    t["touchmove " + i] = touch.touchMove
+    t["touchmove " + i] = touch.touchMove;
 };
 
 touch.defineUserAction = function(t) {
-    Math.abs(touch.y - t.pageY) > o && !touch.startSwipe ? touch.startScroll = !0 : touch.delta > a && !touch.startScroll && (touch.startSwipe = !0)
+    Math.abs(touch.y - t.pageY) > o && !touch.startSwipe ? touch.startScroll = !0 : touch.delta > a && !touch.startScroll && (touch.startSwipe = !0);
 };
 
 touch.isValidTouch = function(t, i) {
     var n = i ? "changedTouches" : "targetTouches";
-    return t.originalEvent[n][0].identifier === touch.touchId
+    return t.originalEvent[n][0].identifier === touch.touchId;
 };
 
 touch.move = function(el) {

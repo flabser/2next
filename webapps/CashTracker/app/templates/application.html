@@ -2,7 +2,7 @@
     {{partial "header"}}
     <section class="flex">
         {{partial "sidenav"}}
-        <div class="content-overlay" id="content-overlay" {{action "hideOpenedNav" on="mouseDown" }}></div>
+        {{content-overlay}}
         <section class="layout_content">
             {{outlet}}
         </section>
