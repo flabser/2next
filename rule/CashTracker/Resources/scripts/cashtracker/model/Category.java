@@ -57,11 +57,14 @@ public class Category extends AppEntity {
 	@Column(name = "sort_order")
 	private int sortOrder;
 
+	// @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+	// private List <Transaction> transactions;
+
+	//
 	public List <Category> getChildren() {
 		return children;
 	}
 
-	//
 	public Category getParentCategory() {
 		return parentCategory;
 	}

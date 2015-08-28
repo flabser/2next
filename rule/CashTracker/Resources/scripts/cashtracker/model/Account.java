@@ -41,6 +41,12 @@ public class Account extends AppEntity {
 
 	private String note;
 
+	// @OneToMany(mappedBy = "accountFrom", fetch = FetchType.LAZY)
+	// private List <Transaction> transactionsFrom;
+
+	// @OneToMany(mappedBy = "accountTo", fetch = FetchType.LAZY)
+	// private List <Transaction> transactionsTo;
+
 	//
 	public Long getUserId() {
 		return userId;

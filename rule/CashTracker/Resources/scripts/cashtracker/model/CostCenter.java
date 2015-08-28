@@ -21,7 +21,7 @@ public class CostCenter extends AppEntity {
 	@Column(nullable = false)
 	private String name;
 
-	// @OneToMany(mappedBy = "costCenter")
+	// @OneToMany(mappedBy = "costCenter", fetch = FetchType.LAZY)
 	// private List <Transaction> transactions;
 
 	//

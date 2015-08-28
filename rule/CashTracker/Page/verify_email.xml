@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="verify_email" mode="on" anonymous="on">
+	<description></description>
+	<xsltfile>pages/verify-email.xsl</xsltfile>
+
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="java_class">cashtracker.page.VerifyEMail</doscript>
+		</events>
+	</element>
+
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>site-inc</name>
+		<value>site-inc</value>
+	</element>
+
+	<caption name="verify_email_title" />
+	<caption name="verify_email_error" />
+	<caption name="verify_email_done" />
+	<caption name="verify_email_already" />
+</rule>

@@ -50,7 +50,7 @@ nbApp.reg = function(form) {
     $.ajax({
         method: 'POST',
         datatype: 'text',
-        url: 'Provider?client=' + screen.height + 'x' + screen.width,
+        url: 'Provider?id=signup&client=' + screen.height + 'x' + screen.width,
         data: $(form).serialize(),
         success: function(result) {
             console.log(result);
