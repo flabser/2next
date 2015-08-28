@@ -2,7 +2,7 @@
 <rule type="page" id="privacy" mode="on" anonymous="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>site/privacy.xsl</xsltfile>
+	<xsltfile>pages/privacy.xsl</xsltfile>
 
 	<element mode="ON" type="INCLUDED_PAGE">
 		<name>site-inc</name>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rule type="page" id="send-verify-email" mode="on" anonymous="on">
+<rule type="page" id="reg_user" mode="on" anonymous="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
 	<rununderuser source="STATIC" type="TEXT">[observer]</rununderuser>
-	<xsltfile>site/email-verify.xsl</xsltfile>
+	<xsltfile>xhr/reg-user.xsl</xsltfile>
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="file">cashtracker.page.SendVerifyEMailPage</doscript>
+			<doscript source="file">cashtracker.page.RegUserPage</doscript>
 		</events>
 	</element>
 </rule>

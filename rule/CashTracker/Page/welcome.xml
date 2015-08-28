@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rule type="page" id="welcome" mode="on" anonymous="on">
 	<description></description>
-	<!-- <caching>CACHING_IN_USER_SESSION_SCOPE</caching> -->
 	<caching>NO_CACHING</caching>
-	<xsltfile>site/welcome.xsl</xsltfile>
+	<xsltfile>pages/welcome.xsl</xsltfile>
 
 	<element mode="ON" type="INCLUDED_PAGE">
 		<value>site-inc</value>

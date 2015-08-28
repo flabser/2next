@@ -403,6 +403,12 @@
 		<entry lang="ENG">Повторная отправка письма для удостоверения e-mail</entry>
 		<entry lang="BG">Повторная отправка письма для удостоверения e-mail</entry>
 	</sentence>
+	<sentence mode="on" keyword="retry_send_verify_email_hint">
+		<entry lang="RUS">Введите e-mail указанный при регистрации</entry>
+		<entry lang="KAZ">Введите e-mail указанный при регистрации</entry>
+		<entry lang="ENG">Введите e-mail указанный при регистрации</entry>
+		<entry lang="BG">Введите e-mail указанный при регистрации</entry>
+	</sentence>
 	<sentence mode="on" keyword="retry_send_verify_email_btn_send">
 		<entry lang="RUS">Отправить</entry>
 		<entry lang="KAZ">Отправить</entry>

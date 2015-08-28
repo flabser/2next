@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="retry_send_verify_email" mode="on" anonymous="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/retry-send-verify-email.xsl</xsltfile>
+
+	<element mode="ON" type="INCLUDED_PAGE">
+		<name>site-inc</name>
+		<value>site-inc</value>
+	</element>
+	<element mode="ON" type="SCRIPT">
+		<name>retry-verify-email</name>
+		<events>
+			<doscript source="java_class">cashtracker.page.RetrySendVerifyEMail</doscript>
+		</events>
+	</element>
+
+	<caption name="retry_send_verify_email_title" />
+	<caption name="retry_send_verify_email_hint" />
+	<caption name="retry_send_verify_email_btn_send" />
+	<caption name="no_user" />
+	<caption name="invalid_email" />
+	<caption name="user_already_verified" />
+	<caption name="error_verify_email" />
+</rule>
