@@ -39,12 +39,12 @@
 						<footer>
 							<ul class="help-list">
 								<li>
-									<a href="?id=password-recovery" rel="nofollow">
+									<a href="?id=reset_password" rel="nofollow">
 										<xsl:value-of select="//captions/lost_password/@caption" />
 									</a>
 								</li>
 								<li>
-									<a href="?id=retry-send-verify-email" rel="nofollow">
+									<a href="?id=retry_send_verify_email" rel="nofollow">
 										<xsl:value-of select="//captions/no_verify_mail/@caption" />
 									</a>
 								</li>
