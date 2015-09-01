@@ -38,12 +38,12 @@ public class Secure extends ValveBase {
 		HttpServletRequest http = request;
 		String appType = ru.getAppType();
 		String appID = ru.getAppID();
-
+	
 		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(EnvConst.ADMIN_APP_NAME)) {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
-				if (us != null && !us.currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
+				if (us != null && (!us.currentUser.getLogin().equals(User.ANONYMOUS_USER))) {
 					if (!us.isBootstrapped(appID) && !appType.equalsIgnoreCase(EnvConst.WORKSPACE_APP_NAME)) {
 						AppTemplate env = Environment.getAppTemplate(appType);
 						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.templateType);
@@ -83,7 +83,7 @@ public class Secure extends ValveBase {
 		} else {
 			getNext().invoke(request, response);
 		}
-
+	
 	}
 
 	private void gettingSession(Request request, Response response) throws IOException, ServletException {

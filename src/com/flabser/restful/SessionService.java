@@ -71,14 +71,15 @@ public class SessionService {
 		} else {
 			user.refresh(authUser);
 			if (user.save()) {
-				SessionPool.remove(userSession);
-				UserSession newUserSession = new UserSession(user);
-				String token = SessionPool.put(newUserSession);
-				jses.setAttribute(EnvConst.SESSION_ATTR, newUserSession);
-				authUser = newUserSession.getUserPOJO();
-				int maxAge = -1;
-				NewCookie cookie = new NewCookie(EnvConst.AUTH_COOKIE_NAME, token, "/", null, null, maxAge, false);
-				return Response.status(HttpServletResponse.SC_OK).entity(authUser).cookie(cookie).build();
+				//				SessionPool.remove(userSession);
+				//				UserSession newUserSession = new UserSession(user);
+				//				String token = SessionPool.put(newUserSession);
+				//				jses.setAttribute(EnvConst.SESSION_ATTR, newUserSession);
+				//				authUser = newUserSession.getUserPOJO();
+				//				int maxAge = -1;
+				//				NewCookie cookie = new NewCookie(EnvConst.AUTH_COOKIE_NAME, token, "/", null, null, maxAge, false);
+				//				return Response.status(HttpServletResponse.SC_OK).entity(authUser).cookie(cookie).build();
+				return Response.status(HttpServletResponse.SC_OK).entity(authUser).build();
 			} else {
 				return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
 			}
@@ -89,7 +90,7 @@ public class SessionService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException,
-			UserException, IllegalAccessException, SQLException {
+	UserException, IllegalAccessException, SQLException {
 		UserSession userSession = null;
 		HttpSession jses;
 		String appID = authUser.getDefaultApp();

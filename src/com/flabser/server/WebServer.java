@@ -138,6 +138,8 @@ public class WebServer implements IWebServer {
 		String URLPath = "/" + env.templateType + "/" + appID;
 		try {
 			context = tomcat.addContext(URLPath, db);
+
+
 			context.setDisplayName(URLPath.substring(1));
 
 			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");

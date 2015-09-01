@@ -17,7 +17,7 @@
     	<certkeyfile>server.key</certkeyfile>    	
     </tls>
    
-    <mailagent mode="off">
+    <mailagent mode="on">
 		<smtphost>smtp.mail.ru</smtphost>
 		<defaultsender>mynameis.m@mail.ru</defaultsender>
 		<auth>true</auth>

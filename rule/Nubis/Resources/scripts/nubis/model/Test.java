@@ -11,10 +11,10 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.SecureAppEntity;
 
 
-@JsonRootName("profile")
+@JsonRootName("test")
 @Entity
-@Table(name = "profiles")
-public class Profile extends SecureAppEntity {
+@Table(name = "tests")
+public class Test extends SecureAppEntity {
 
 	@JsonIgnore
 	@Column(name = "user_id", nullable = false)

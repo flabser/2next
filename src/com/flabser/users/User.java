@@ -335,7 +335,7 @@ public class User {
 	}
 
 	public void refresh(AuthUser authUser) {
-		login = authUser.getLogin();
+		//	login = authUser.getLogin();
 		userName = authUser.getName();
 		password = authUser.getPwd();
 		email = authUser.getEmail();

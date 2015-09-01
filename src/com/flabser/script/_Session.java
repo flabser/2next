@@ -3,7 +3,9 @@ package com.flabser.script;
 import java.util.ArrayList;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.IDatabase;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.AuthUser;
@@ -21,9 +23,14 @@ public class _Session {
 
 	public _Session(AppTemplate env, UserSession userSession) {
 		this.env = env;
-		ActiveApplication aa = userSession.getActiveApplication(env.templateType);
-		if (aa != null) {
-			dataBase = aa.getDataBase();
+		if (env.globalSetting.getWorkMode() == WorkModeType.COMMON) {
+			ApplicationProfile app = new ApplicationProfile(env);
+			dataBase = app.getDatabase();
+		} else {
+			ActiveApplication aa = userSession.getActiveApplication(env.templateType);
+			if (aa != null) {
+				dataBase = aa.getDataBase();
+			}
 		}
 		this.userSession = userSession;
 	}
