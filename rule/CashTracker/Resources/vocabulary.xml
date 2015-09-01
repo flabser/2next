@@ -127,20 +127,20 @@
 	<sentence mode="on" keyword="writers_hint">
 		<entry lang="RUS">право на добавление, редактирование и удаления операций по данному счету</entry>
 		<entry lang="KAZ">право на добавление, редактирование и удаления операций по данному счету</entry>
-		<entry lang="ENG">право на добавление, редактирование и удаления операций по данному счету</entry>
-		<entry lang="BG">право на добавление, редактирование и удаления операций по данному счету</entry>
+		<entry lang="ENG">the right to add, edit, and delete operations in the account</entry>
+		<entry lang="BG">правото да добавя, редактирате и изтривате операции по сметката</entry>
 	</sentence>
 	<sentence mode="on" keyword="readers">
 		<entry lang="RUS">Просмотр</entry>
 		<entry lang="KAZ">Просмотр</entry>
-		<entry lang="ENG">Readers</entry>
-		<entry lang="BG">Просмотр</entry>
+		<entry lang="ENG">View</entry>
+		<entry lang="BG">Изглед</entry>
 	</sentence>
 	<sentence mode="on" keyword="readers_hint">
 		<entry lang="RUS">право на просмотр операций по данному счету</entry>
 		<entry lang="KAZ">право на просмотр операций по данному счету</entry>
-		<entry lang="ENG">право на просмотр операций по данному счету</entry>
-		<entry lang="BG">право на просмотр операций по данному счету</entry>
+		<entry lang="ENG">the right to view the account</entry>
+		<entry lang="BG">>правото да изглед по сметката</entry>
 	</sentence>
 	<sentence mode="on" keyword="color">
 		<entry lang="RUS">Цвет</entry>
@@ -189,8 +189,8 @@
 	<sentence mode="on" keyword="setup">
 		<entry lang="RUS">Начальная настройка</entry>
 		<entry lang="KAZ">Начальная настройка</entry>
-		<entry lang="ENG">Начальная настройка</entry>
-		<entry lang="BG">Начальная настройка</entry>
+		<entry lang="ENG">Setup</entry>
+		<entry lang="BG">Настройвам</entry>
 	</sentence>
 
 	<!-- help -->
@@ -254,7 +254,7 @@
 		<entry lang="RUS">Не верное имя пользователя или пароль</entry>
 		<entry lang="KAZ">Не верное имя пользователя или пароль</entry>
 		<entry lang="ENG">Password or login is incorrect</entry>
-		<entry lang="BG">Не верное имя пользователя или пароль</entry>
+		<entry lang="BG">Парола за вход или е грешен</entry>
 	</sentence>
 
 	<!-- reg -->
@@ -297,8 +297,8 @@
 	<sentence mode="on" keyword="reg_pwd_inf">
 		<entry lang="RUS">В пароле минимум 8 символов, используйте буквы и цифры</entry>
 		<entry lang="KAZ">В пароле минимум 8 символов, используйте буквы и цифры</entry>
-		<entry lang="ENG">В пароле минимум 8 символов, используйте буквы и цифры</entry>
-		<entry lang="BG"></entry>
+		<entry lang="ENG">The password must be consist 8 symbols. Use numbers and letters</entry>
+		<entry lang="BG">Паролата трябва да е да се състои на 8 символа. Използвайте цифри и букви</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_pwd_weak">
 		<entry lang="RUS">Слабый пароль</entry>
@@ -315,8 +315,8 @@
 	<sentence mode="on" keyword="reg_confirm_mail">
 		<entry lang="RUS">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
 		<entry lang="KAZ">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
-		<entry lang="ENG">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
-		<entry lang="BG">Для завершения регистрации подтвердите email адресс, пройдите по ссылке в письме.</entry>
+		<entry lang="ENG">To complete the registration, click the link.</entry>
+		<entry lang="BG">За да завършите регистрацията, кликнете на връзката.</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_terms">
 		<entry lang="RUS">Пользуясь сервисом вы соглащаетесь с условиями использования</entry>
@@ -343,7 +343,7 @@
 		<entry lang="RUS">Восстановление доступа</entry>
 		<entry lang="KAZ">Восстановление доступа</entry>
 		<entry lang="ENG">Access recovery</entry>
-		<entry lang="BG">Восстановление доступа</entry>
+		<entry lang="BG">Възстановяване доступ</entry>
 	</sentence>
 	<sentence mode="on" keyword="pwd_recovery_description">
 		<entry lang="RUS">На зарегистрированный e-mail будет отправлена ссылка для сброса пароля</entry>
@@ -531,44 +531,44 @@
 	<sentence mode="on" keyword="saved">
 		<entry lang="RUS">Сохраненный</entry>
 		<entry lang="KAZ">Сохраненный</entry>
-		<entry lang="ENG">Сохраненный</entry>
+		<entry lang="ENG">Saved</entry>
 		<entry lang="BG">Сохраненный</entry>
 	</sentence>
 	<sentence mode="on" keyword="newdoc">
 		<entry lang="RUS">Новый документ</entry>
 		<entry lang="KAZ">Новый документ</entry>
-		<entry lang="ENG">Новый документ</entry>
+		<entry lang="ENG">New document</entry>
 		<entry lang="BG">Новый документ</entry>
 	</sentence>
 	<sentence mode="on" keyword="editing">
 		<entry lang="RUS">Редактирование</entry>
 		<entry lang="KAZ">Редактирование</entry>
-		<entry lang="ENG">Редактирование</entry>
+		<entry lang="ENG">Edit</entry>
 		<entry lang="BG">Редактирование</entry>
 	</sentence>
 	<sentence mode="on" keyword="readonly">
 		<entry lang="RUS">Только для чтения</entry>
 		<entry lang="KAZ">Только для чтения</entry>
-		<entry lang="ENG">Только для чтения</entry>
+		<entry lang="ENG">Read only</entry>
 		<entry lang="BG">Только для чтения</entry>
 	</sentence>
 	<sentence mode="on" keyword="modenotdefined">
 		<entry lang="RUS">Режим не определен</entry>
 		<entry lang="KAZ">Режим не определен</entry>
-		<entry lang="ENG">Режим не определен</entry>
+		<entry lang="ENG">Unknown mode</entry>
 		<entry lang="BG">Режим не определен</entry>
 	</sentence>
 	<sentence mode="on" keyword="author">
 		<entry lang="RUS">Автор</entry>
 		<entry lang="KAZ">Автор</entry>
-		<entry lang="ENG">Автор</entry>
+		<entry lang="ENG">Author</entry>
 		<entry lang="BG">Автор</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="properties">
 		<entry lang="RUS">Свойства</entry>
 		<entry lang="KAZ">Свойства</entry>
-		<entry lang="ENG">Свойства</entry>
+		<entry lang="ENG">Properties</entry>
 		<entry lang="BG">Свойства</entry>
 	</sentence>
 	<sentence mode="on" keyword="attachments">
@@ -580,7 +580,7 @@
 	<sentence mode="on" keyword="additional">
 		<entry lang="RUS">Дополнительно</entry>
 		<entry lang="KAZ">Дополнительно</entry>
-		<entry lang="ENG">Дополнительно</entry>
+		<entry lang="ENG">Additional</entry>
 		<entry lang="BG">Дополнительно</entry>
 	</sentence>
 	<sentence mode="on" keyword="info_status_doc">
@@ -592,56 +592,56 @@
 	<sentence mode="on" keyword="info_permissions">
 		<entry lang="RUS">Права доступа</entry>
 		<entry lang="KAZ">Права доступа</entry>
-		<entry lang="ENG">Права доступа</entry>
+		<entry lang="ENG">Permissions</entry>
 		<entry lang="BG">Права доступа</entry>
 	</sentence>
 	<sentence mode="on" keyword="info_read">
 		<entry lang="RUS">Информация о прочтении</entry>
 		<entry lang="KAZ">Информация о прочтении</entry>
-		<entry lang="ENG">Информация о прочтении</entry>
+		<entry lang="ENG">Reading information</entry>
 		<entry lang="BG">Информация о прочтении</entry>
 	</sentence>
 	<sentence mode="on" keyword="info_readers">
 		<entry lang="RUS">Кем прочтен</entry>
 		<entry lang="KAZ">Кем прочтен</entry>
-		<entry lang="ENG">Кем прочтен</entry>
+		<entry lang="ENG">Who were is read</entry>
 		<entry lang="BG">Кем прочтен</entry>
 	</sentence>
 	<sentence mode="on" keyword="info_read_time">
 		<entry lang="RUS">Время прочтения</entry>
 		<entry lang="KAZ">Время прочтения</entry>
-		<entry lang="ENG">Время прочтения</entry>
+		<entry lang="ENG">Reading time</entry>
 		<entry lang="BG">Время прочтения</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="attach">
 		<entry lang="RUS">Прикрепить</entry>
 		<entry lang="KAZ">Прикрепить</entry>
-		<entry lang="ENG">Прикрепить</entry>
+		<entry lang="ENG">Attach</entry>
 		<entry lang="BG">Прикрепить</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_delete">
 		<entry lang="RUS">Удалить</entry>
 		<entry lang="KAZ">Удалить</entry>
-		<entry lang="ENG">Удалить</entry>
+		<entry lang="ENG">Delete</entry>
 		<entry lang="BG">Удалить</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_open">
 		<entry lang="RUS">Открыть</entry>
 		<entry lang="KAZ">Открыть</entry>
-		<entry lang="ENG">Открыть</entry>
+		<entry lang="ENG">Open</entry>
 		<entry lang="BG">Открыть</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_preview">
 		<entry lang="RUS">Просмотр</entry>
 		<entry lang="KAZ">Просмотр</entry>
-		<entry lang="ENG">Просмотр</entry>
+		<entry lang="ENG">View</entry>
 		<entry lang="BG">Просмотр</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_add_comment">
 		<entry lang="RUS">Добавить комментарий</entry>
 		<entry lang="KAZ">Добавить комментарий</entry>
-		<entry lang="ENG">Добавить комментарий</entry>
+		<entry lang="ENG">Add a comment</entry>
 		<entry lang="BG">Добавить комментарий</entry>
 	</sentence>
 
@@ -649,19 +649,19 @@
 	<sentence mode="on" keyword="active">
 		<entry lang="RUS">Активный</entry>
 		<entry lang="KAZ">Активный</entry>
-		<entry lang="ENG">Активный</entry>
+		<entry lang="ENG">Active</entry>
 		<entry lang="BG">Активный</entry>
 	</sentence>
 	<sentence mode="on" keyword="budget">
 		<entry lang="RUS">Бюджет</entry>
 		<entry lang="KAZ">Бюджет</entry>
-		<entry lang="ENG">Бюджет</entry>
+		<entry lang="ENG">Budget</entry>
 		<entry lang="BG">Бюджет</entry>
 	</sentence>
 	<sentence mode="on" keyword="category">
 		<entry lang="RUS">Категория</entry>
 		<entry lang="KAZ">Категория</entry>
-		<entry lang="ENG">Категория</entry>
+		<entry lang="ENG">Category</entry>
 		<entry lang="BG">Категория</entry>
 	</sentence>
 	<sentence mode="on" keyword="parent_category">
@@ -673,19 +673,19 @@
 	<sentence mode="on" keyword="category_transaction_type_hint">
 		<entry lang="RUS">Использовать в операциях</entry>
 		<entry lang="KAZ">Использовать в операциях</entry>
-		<entry lang="ENG">Использовать в операциях</entry>
+		<entry lang="ENG">Use in operations</entry>
 		<entry lang="BG">Использовать в операциях</entry>
 	</sentence>
 	<sentence mode="on" keyword="category_active_hint">
 		<entry lang="RUS">Неактивные категории скрыты</entry>
 		<entry lang="KAZ">Неактивные категории скрыты</entry>
-		<entry lang="ENG">Неактивные категории скрыты</entry>
+		<entry lang="ENG">Not active categories have hidden</entry>
 		<entry lang="BG">Неактивные категории скрыты</entry>
 	</sentence>
 	<sentence mode="on" keyword="account_active_hint">
 		<entry lang="RUS">Неактивные счета скрыты</entry>
 		<entry lang="KAZ">Неактивные счета скрыты</entry>
-		<entry lang="ENG">Неактивные счета скрыты</entry>
+		<entry lang="ENG">Not active accounts have hidden</entry>
 		<entry lang="BG">Неактивные счета скрыты</entry>
 	</sentence>
 	<sentence mode="on" keyword="tag">
@@ -697,7 +697,7 @@
 	<sentence mode="on" keyword="costcenter">
 		<entry lang="RUS">Место возникновения</entry>
 		<entry lang="KAZ">Место возникновения</entry>
-		<entry lang="ENG">Место возникновения</entry>
+		<entry lang="ENG">When it was happen</entry>
 		<entry lang="BG">Место возникновения</entry>
 	</sentence>
 	<sentence mode="on" keyword="user">
@@ -709,7 +709,7 @@
 	<sentence mode="on" keyword="transaction">
 		<entry lang="RUS">Операция</entry>
 		<entry lang="KAZ">Операция</entry>
-		<entry lang="ENG">Операция</entry>
+		<entry lang="ENG">Transaction</entry>
 		<entry lang="BG">Операция</entry>
 	</sentence>
 	<sentence mode="on" keyword="permissions">
@@ -727,13 +727,13 @@
 	<sentence mode="on" keyword="amount_control">
 		<entry lang="RUS">Сумма контроля</entry>
 		<entry lang="KAZ">Сумма контроля</entry>
-		<entry lang="ENG">Сумма контроля</entry>
+		<entry lang="ENG">Ammount control</entry>
 		<entry lang="BG">Сумма контроля</entry>
 	</sentence>
 	<sentence mode="on" keyword="amount_control_hint">
 		<entry lang="RUS">при превышении суммы опреации трололо</entry>
 		<entry lang="KAZ">при превышении суммы опреации трололо</entry>
-		<entry lang="ENG">при превышении суммы опреации трололо</entry>
+		<entry lang="ENG">when the ammount will be exceed</entry>
 		<entry lang="BG">при превышении суммы опреации трололо</entry>
 	</sentence>
 	<sentence mode="on" keyword="opening_balance">
@@ -745,25 +745,25 @@
 	<sentence mode="on" keyword="currency">
 		<entry lang="RUS">Валюта</entry>
 		<entry lang="KAZ">Валюта</entry>
-		<entry lang="ENG">Валюта</entry>
+		<entry lang="ENG">Currency</entry>
 		<entry lang="BG">Валюта</entry>
 	</sentence>
 	<sentence mode="on" keyword="require_document">
 		<entry lang="RUS">Требовать подтверждающий документ</entry>
 		<entry lang="KAZ">Требовать подтверждающий документ</entry>
-		<entry lang="ENG">Требовать подтверждающий документ</entry>
+		<entry lang="ENG">Requeire a document</entry>
 		<entry lang="BG">Требовать подтверждающий документ</entry>
 	</sentence>
 	<sentence mode="on" keyword="require_costcenter">
 		<entry lang="RUS">Требовать заполнения места возникновения затрат</entry>
 		<entry lang="KAZ">Требовать заполнения места возникновения затрат</entry>
-		<entry lang="ENG">Требовать заполнения места возникновения затрат</entry>
+		<entry lang="ENG">Require to point when it was happened</entry>
 		<entry lang="BG">Требовать заполнения места возникновения затрат</entry>
 	</sentence>
 	<sentence mode="on" keyword="user_name">
 		<entry lang="RUS">Имя пользователя</entry>
 		<entry lang="KAZ">Имя пользователя</entry>
-		<entry lang="ENG">Имя пользователя</entry>
+		<entry lang="ENG">User name</entry>
 		<entry lang="BG">Имя пользователя</entry>
 	</sentence>
 	<sentence mode="on" keyword="email">
@@ -775,50 +775,50 @@
 	<sentence mode="on" keyword="reg_date">
 		<entry lang="RUS">Дата регистрации</entry>
 		<entry lang="KAZ">Дата регистрации</entry>
-		<entry lang="ENG">Дата регистрации</entry>
+		<entry lang="ENG">Registration time</entry>
 		<entry lang="BG">Дата регистрации</entry>
 	</sentence>
 	<sentence mode="on" keyword="date">
 		<entry lang="RUS">Дата</entry>
 		<entry lang="KAZ">Дата</entry>
-		<entry lang="ENG">Дата</entry>
+		<entry lang="ENG">Date</entry>
 		<entry lang="BG">Дата</entry>
 	</sentence>
 	<sentence mode="on" keyword="month">
 		<entry lang="RUS">Месяц</entry>
 		<entry lang="KAZ">Месяц</entry>
-		<entry lang="ENG">Месяц</entry>
+		<entry lang="ENG">Month</entry>
 		<entry lang="BG">Месяц</entry>
 	</sentence>
 	<sentence mode="on" keyword="basis">
 		<entry lang="RUS">Основание</entry>
 		<entry lang="KAZ">Основание</entry>
-		<entry lang="ENG">Основание</entry>
+		<entry lang="ENG">Basis</entry>
 		<entry lang="BG">Основание</entry>
 	</sentence>
 	<sentence mode="on" keyword="documented">
 		<entry lang="RUS">Подтверждено документом</entry>
 		<entry lang="KAZ">Подтверждено документом</entry>
-		<entry lang="ENG">Подтверждено документом</entry>
+		<entry lang="ENG">Documented</entry>
 		<entry lang="BG">Подтверждено документом</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="add_user">
 		<entry lang="RUS">Пригласить пользователя</entry>
 		<entry lang="KAZ">Пригласить пользователя</entry>
-		<entry lang="ENG">Invite user</entry>
+		<entry lang="ENG">Invite a user</entry>
 		<entry lang="BG">Пригласить пользователя</entry>
 	</sentence>
 	<sentence mode="on" keyword="invitation_title">
 		<entry lang="RUS">Пригласить пользователя</entry>
 		<entry lang="KAZ">Пригласить пользователя</entry>
-		<entry lang="ENG">Пригласить пользователя</entry>
+		<entry lang="ENG">Invite a user</entry>
 		<entry lang="BG">Пригласить пользователя</entry>
 	</sentence>
 	<sentence mode="on" keyword="invitation_email_hint">
 		<entry lang="RUS">Адрес электронной почты приглашаемого пользователя</entry>
 		<entry lang="KAZ">Адрес электронной почты приглашаемого пользователя</entry>
-		<entry lang="ENG">Адрес электронной почты приглашаемого пользователя</entry>
+		<entry lang="ENG">Invited user's email </entry>
 		<entry lang="BG">Адрес электронной почты приглашаемого пользователя</entry>
 	</sentence>
 	<sentence mode="on" keyword="message">
