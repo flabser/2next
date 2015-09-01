@@ -15,17 +15,20 @@ export default Route.extend({
         this._super(controller, model);
 
         controller.set('user', model);
+        controller.set('isNotValid', this.get('isNotValid'));
     },
+
+    isNotValid: function() {
+        var u = this.get('session.user');
+        return false; // !u.pwd || u.pwd !== u.pwd_repeat;
+    }.property(),
 
     actions: {
         save: function() {
-            this.session.saveUserProfile();
-
-            /*var _this = this;
-            var model = this.get('user');
-            model.save().then(function() {
-                _this.send('goBack');
-            });*/
+            var _this = this;
+            this.session.saveUserProfile().then(function() {
+                _this.sendAction('goBack');
+            });
         }
     }
 });

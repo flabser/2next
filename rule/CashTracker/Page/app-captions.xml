@@ -55,13 +55,16 @@
 	<caption name="budget_name_hint" />
 
 	<caption name="password" />
+	<caption name="password_repeat" />
 	<caption name="name" />
 	<caption name="amount_control" />
 	<caption name="amount_control_hint" />
 	<caption name="require_document" />
 	<caption name="require_costcenter" />
+	<caption name="user_login" />
 	<caption name="user_name" />
 	<caption name="email" />
+	<caption name="roles" />
 	<caption name="reg_date" />
 	<caption name="date" />
 	<caption name="parent_category" />
