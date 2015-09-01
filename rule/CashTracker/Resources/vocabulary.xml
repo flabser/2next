@@ -766,11 +766,29 @@
 		<entry lang="ENG">Имя пользователя</entry>
 		<entry lang="BG">Имя пользователя</entry>
 	</sentence>
+	<sentence mode="on" keyword="user_login">
+		<entry lang="RUS">Login</entry>
+		<entry lang="KAZ">Login</entry>
+		<entry lang="ENG">Login</entry>
+		<entry lang="BG">Login</entry>
+	</sentence>
 	<sentence mode="on" keyword="email">
 		<entry lang="RUS">E-mail</entry>
 		<entry lang="KAZ">E-mail</entry>
 		<entry lang="ENG">E-mail</entry>
 		<entry lang="BG">E-mail</entry>
+	</sentence>
+	<sentence mode="on" keyword="roles">
+		<entry lang="RUS">Роли</entry>
+		<entry lang="KAZ">Роли</entry>
+		<entry lang="ENG">Roles</entry>
+		<entry lang="BG">Роли</entry>
+	</sentence>
+	<sentence mode="on" keyword="password_repeat">
+		<entry lang="RUS">Повтор пароля</entry>
+		<entry lang="KAZ">Құпия сөзді қайталау</entry>
+		<entry lang="ENG">Repeat password</entry>
+		<entry lang="BG">Повтор пароля</entry>
 	</sentence>
 	<sentence mode="on" keyword="reg_date">
 		<entry lang="RUS">Дата регистрации</entry>
