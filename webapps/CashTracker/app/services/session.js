@@ -20,6 +20,7 @@ export default Service.extend({
 
     _setResult: function(result) {
         if (result.authUser.login) {
+            result.authUser.pwd_repeat = '';
             this.set('user', result.authUser);
             this.set('_isAuthenticated', true);
         } else {
@@ -38,8 +39,10 @@ export default Service.extend({
             data: JSON.stringify({
                 authUser: {
                     name: _this.user.name,
-                    login: _this.user.email,
-                    pwd: _this.user.password
+                    login: _this.user.login,
+                    email: _this.user.email,
+                    pwd: _this.user.password,
+                    pwd_repeat: _this.user.password_repeat
                 }
             }),
             success: function(result) {

@@ -17,6 +17,11 @@
             {{input value=user.name}}
             {{tn-error-message}}
         {{/tn-form-group}}
+        {{#tn-form-group property="login"}}
+            <div>{{t "user_login"}}</div>
+            {{input value=user.login}}
+            {{tn-error-message}}
+        {{/tn-form-group}}
         {{#tn-form-group property="email"}}
             <div>{{t "email"}}</div>
             {{input value=user.email}}
@@ -24,13 +29,26 @@
         {{/tn-form-group}}
         {{#tn-form-group property="password"}}
             <div>{{t "password"}}</div>
-            {{input type="password" value=user.password}}
+            {{input type="password" value=user.pwd autocomplete="off"}}
             {{tn-error-message}}
+        {{/tn-form-group}}
+        {{#tn-form-group property="password_repeat"}}
+            <div>{{t "password_repeat"}}</div>
+            {{input type="password" value=user.pwd_repeat autocomplete="off"}}
+            {{tn-error-message}}
+        {{/tn-form-group}}
+        {{#tn-form-group property="roles"}}
+            <div>{{t "roles"}}</div>
+            <ul>
+                {{#each user.roles as |role|}}
+                    <li>{{role}}</li>
+                {{/each}}
+            </ul>
         {{/tn-form-group}}
     </div>
 </section>
 <footer class="action-bar">
     <button class="btn" {{action "goBack"}}>{{t "cancel"}}</button>
-    <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+    <button type="submit" class="btn btn-primary" disabled={{isNotValid}}>{{t "save"}}</button>{{isValid}}
 </footer>
 {{/tn-form}}

@@ -22,7 +22,7 @@
     height: 60px;
     line-height: 60px;
     max-width: inherit;
-    position: fixed;
+    /* position: fixed; */
     width: 100%;
     z-index: 5;
 }
