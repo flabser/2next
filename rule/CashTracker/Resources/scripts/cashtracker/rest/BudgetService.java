@@ -57,6 +57,7 @@ public class BudgetService extends RestProvider {
 			return Response.ok((Budget) budgets.get(0)).build();
 		}
 
+		m.setUserId((long) getSession().getAppUser().id);
 		return Response.ok(dao.add(m)).build();
 	}
 
@@ -72,6 +73,8 @@ public class BudgetService extends RestProvider {
 		}
 
 		BudgetDAO dao = new BudgetDAO(getSession());
+
+		m.setUserId((long) getSession().getAppUser().id);
 		return Response.ok(dao.update(m)).build();
 	}
 

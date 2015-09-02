@@ -19,7 +19,7 @@ public class Account extends AppEntity {
 	// private int type;
 
 	@JsonIgnore
-	@Column(name = "user_id", nullable = false)
+	@Column(name = "user_id", nullable = false, updatable = false)
 	private Long userId;
 
 	@Column(nullable = false)

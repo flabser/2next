@@ -17,7 +17,6 @@ public class Welcome extends _DoScript {
 		try {
 			if (toLang.length() > 0) {
 				session.switchLang(LanguageType.valueOf(toLang.toUpperCase()));
-				publishElement("process", "lang-switched");
 			}
 		} catch (Exception e) {
 			publishElement("error", "the " + toLang + " language is not available");

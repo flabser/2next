@@ -78,7 +78,6 @@ public class TransactionDAO {
 	}
 
 	public Transaction add(Transaction m) {
-		m.setUserId((long) user.id);
 		em.getTransaction().begin();
 		em.persist(m);
 		em.getTransaction().commit();

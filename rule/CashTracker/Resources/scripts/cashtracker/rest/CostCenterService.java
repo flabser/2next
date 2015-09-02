@@ -56,6 +56,8 @@ public class CostCenterService extends RestProvider {
 		}
 
 		CostCenterDAO dao = new CostCenterDAO(getSession());
+
+		m.setUserId((long) getSession().getAppUser().id);
 		return Response.ok(dao.add(m)).build();
 	}
 

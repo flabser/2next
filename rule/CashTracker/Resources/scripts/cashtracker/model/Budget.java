@@ -23,13 +23,13 @@ import com.flabser.restful.data.AppEntity;
 public class Budget extends AppEntity {
 
 	@JsonIgnore
-	@Column(name = "user_id", nullable = false)
+	@Column(name = "user_id", nullable = false, updatable = false)
 	private Long userId;
 
 	@Column(nullable = false)
 	private String name;
 
-	@Column(name = "reg_date")
+	@Column(name = "reg_date", nullable = false, updatable = false)
 	private Date regDate;
 
 	private Long owner;

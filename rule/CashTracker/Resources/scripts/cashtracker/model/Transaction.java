@@ -34,7 +34,7 @@ import com.flabser.restful.data.AppEntity;
 public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@JsonIgnore
-	@Column(name = "user_id", nullable = false)
+	@Column(name = "user_id", nullable = false, updatable = false)
 	private Long userId;
 
 	@Convert(converter = TransactionTypeConverter.class)

@@ -67,6 +67,8 @@ public class TransactionService extends RestProvider {
 		}
 
 		TransactionDAO dao = new TransactionDAO(getSession());
+
+		m.setUserId((long) getSession().getAppUser().id);
 		return Response.ok(dao.add(m)).build();
 	}
 
