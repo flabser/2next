@@ -21,7 +21,7 @@
 	<caption name="password" />
 	<caption name="login_alien_device" />
 	<caption name="login_button" />
-	<caption name="lost_password" />
+	<caption name="forgot_password" />
 	<caption name="no_verify_mail" />
 
 	<caption name="reg_email" />

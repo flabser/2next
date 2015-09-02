@@ -194,15 +194,15 @@
 	</sentence>
 
 	<!-- help -->
-	<sentence mode="on" keyword="lost_password">
-		<entry lang="RUS">Забыл пароль</entry>
-		<entry lang="KAZ">Забыл пароль</entry>
-		<entry lang="ENG">Have you forgotten your password?</entry>
+	<sentence mode="on" keyword="forgot_password">
+		<entry lang="RUS">Забыли пароль?</entry>
+		<entry lang="KAZ">Құпия сөзді ұмыттыңыз ба?</entry>
+		<entry lang="ENG">Forgot your password?</entry>
 		<entry lang="BG">Забравихте ли паролата си?</entry>
 	</sentence>
 	<sentence mode="on" keyword="no_verify_mail">
 		<entry lang="RUS">Не получили письмо подтверждения e-mail?</entry>
-		<entry lang="KAZ">Не получил письмо подтверждения e-mail</entry>
+		<entry lang="KAZ">Не получил письмо подтверждения e-mail?</entry>
 		<entry lang="ENG">Have you not received the e-mail?</entry>
 		<entry lang="BG">Не сте ли получили имейла?</entry>
 	</sentence>
@@ -234,7 +234,7 @@
 	</sentence>
 	<sentence mode="on" keyword="password">
 		<entry lang="RUS">Пароль</entry>
-		<entry lang="KAZ">Пароль</entry>
+		<entry lang="KAZ">Құпия сөз</entry>
 		<entry lang="ENG">Password</entry>
 		<entry lang="BG">Парола</entry>
 	</sentence>
@@ -246,7 +246,7 @@
 	</sentence>
 	<sentence mode="on" keyword="login_button">
 		<entry lang="RUS">Войти</entry>
-		<entry lang="KAZ">Войти</entry>
+		<entry lang="KAZ">Кіру</entry>
 		<entry lang="ENG">Log In</entry>
 		<entry lang="BG">Влизане</entry>
 	</sentence>
