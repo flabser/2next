@@ -15,13 +15,13 @@ export default Route.extend({
         this._super(controller, model);
 
         controller.set('user', model);
-        controller.set('isNotValid', this.get('isNotValid'));
+        controller.set('invalid', this.get('invalid'));
     },
 
-    isNotValid: function() {
+    invalid: Em.computed('session.user', function() {
         var u = this.get('session.user');
         return false; // !u.pwd || u.pwd !== u.pwd_repeat;
-    }.property(),
+    }),
 
     actions: {
         save: function() {

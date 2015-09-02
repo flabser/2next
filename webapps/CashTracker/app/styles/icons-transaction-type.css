@@ -1,0 +1,38 @@
+[class^="operation-type-icon-"] {
+	background: transparent url(../img/operation-icon-sprite.png) no-repeat 16px 16px;
+	display: inline-block;
+	height: 14px;
+	line-height: 1em;
+	margin: 0 .3em;
+	vertical-align: middle;
+	width: 11px;
+}
+
+.operation-type-icon-in {
+	background-position: -4px 0;
+}
+
+.operation-type-icon-out {
+	background-position: -17px 0;
+}
+
+.operation-type-icon-transfer {
+	background-position: -42px 0;
+}
+
+.operation-type-icon-calcstaff {
+	/* background-position: -56px 0; */
+	
+}
+
+.operation-type-icon-received {
+	background-position: -55px 0;
+}
+
+.operation-type-icon-withdraw {
+	background-position: -66px 0;
+}
+
+.operation-type-icon-getcash {
+	background-position: -78px 0;
+}

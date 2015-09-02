@@ -1,10 +1,10 @@
-.nav-primary {
+.nav-app {
     border-right: 1px solid #E6E6E6;
     width: 230px;
 }
 
-.tablet .nav-primary,
-.phone .nav-primary {
+.tablet .nav-app,
+.phone .nav-app {
     left: -230px;
 }
 

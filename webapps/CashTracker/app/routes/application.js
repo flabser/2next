@@ -8,6 +8,7 @@ export default Route.extend({
     tagName: '',
     navProfileIsExpanded: false,
     hasAddAction: false,
+    // loginThroughToken: false,
 
     session: inject.service(),
 
@@ -30,7 +31,7 @@ export default Route.extend({
         return this.get('translationsFetcher').fetch();
     },
 
-    afterModel: function( /*user*/ ) {
+    afterModel: function(user) {
         // this.set('i18n.locale', user.get('locale'));
         if (!this.get('session').isAuthenticated()) {
             // window.location.href = 'Provider?id=login';
@@ -51,6 +52,11 @@ export default Route.extend({
         return sessionService.getSession().then(function() {
             return sessionService.get('user');
         });
+    },
+
+    setupController: function(controller, model) {
+        controller.set('model', model);
+        controller.set('loginThroughToken', model.authMode === 'LOGIN_THROUGH_TOKEN');
     },
 
     actions: {

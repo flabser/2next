@@ -1,0 +1,38 @@
+/* social-icon */
+[class^="social-icon-"] {
+	background: url(../img/welcome-ui-sprite.png) 32px 32px no-repeat transparent;
+	border-radius: 3px;
+	display: inline-block;
+	height: 32px;
+	line-height: 32px;
+	margin: 0;
+	transition: background-color 0.5s;
+	width: 32px;
+}
+
+.social-icon-vk {
+	background-color: #4E729A;
+	background-position: -28px 8px;
+}
+
+.social-icon-vk:hover {
+	background-color: #3D5978;
+}
+
+.social-icon-fb {
+	background-color: #3460A0;
+	background-position: -52px 5px;
+}
+
+.social-icon-fb:hover {
+	background-color: #27497A;
+}
+
+.social-icon-twitter {
+	background-color: #27AAE1;
+	background-position: -86px 8px;
+}
+
+.social-icon-twitter:hover {
+	background-color: #1A8BBB;
+}

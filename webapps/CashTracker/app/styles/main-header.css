@@ -1,0 +1,263 @@
+.main-header {
+	background: #fff59d url(../img/yellow_background.png) 0 0 no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color: #494949;
+	height: inherit;
+	line-height: inherit;
+	position: relative;
+}
+
+.main-header .fa {
+	color: #646464;
+	font-size: 24px;
+	vertical-align: middle;
+}
+
+.head-item {
+	display: inline-block;
+	height: inherit;
+	line-height: inherit;
+	min-width: 48px;
+	position: relative;
+	text-align: center;
+	vertical-align: top;
+	width: 48px;
+}
+
+.head-item.brand {
+	display: inline-block;
+	margin: 0;
+	text-align: left;
+	width: 250px;
+}
+
+.brand .brand-logo {
+	margin: 0 4px;
+	max-height: 58px;
+	vertical-align: middle;
+}
+
+.brand .brand-title {
+	font-size: 1.6em;
+	margin-left: 10px;
+	vertical-align: middle;
+}
+
+/* */
+.head-nav-app-toggle {
+	display: none;
+	width: 30px;
+}
+
+.tablet .head-nav-app-toggle, .phone .head-nav-app-toggle {
+	display: inline-block;
+}
+
+.head-nav-ws-toggle {
+	float: right;
+}
+
+.nav-search-toggle {
+	cursor: pointer;
+	display: none;
+	float: right;
+}
+
+.nav-search-toggle i {
+	padding-bottom: 2px;
+}
+
+/* nav-action */
+.nav-action {
+	background: transparent;
+	border: none;
+	color: #444;
+	font-size: 18px;
+	margin-right: 5px;
+	padding: 0 .3em;
+	width: auto;
+}
+
+.nav-action .action-label {
+	margin-left: 3px;
+}
+
+.main-header .nav-action i.fa {
+	font-size: 18px;
+}
+
+.tablet .nav-action, .phone .nav-action {
+	float: right;
+}
+
+.phone .nav-action .action-label {
+	display: none;
+}
+
+/* nav-search */
+.nav-search {
+	float: right;
+	width: 200px;
+	white-space: nowrap;
+}
+
+.search-open .nav-search {
+	display: block;
+	z-index: 99;
+}
+
+.search-open .content-overlay {
+	display: block;
+}
+
+.search-open .layout_header {
+	z-index: 9;
+}
+
+.search-toggle-back {
+	cursor: pointer;
+	display: none;
+	width: 35px;
+}
+
+.nav-search form {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+}
+
+.nav-search form .search-keyword {
+	background: transparent;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	padding: 6px 2px;
+	position: relative;
+	transition: all .15s;
+	vertical-align: middle;
+	width: 100%;
+}
+
+.search-open form .search-keyword, .nav-search .search-keyword:focus, .nav-search:hover .search-keyword {
+	background: white;
+	border: 1px solid #CCC;
+}
+
+.nav-search .search-btn {
+	background: transparent;
+	border: none;
+	height: 100%;
+	line-height: 1;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	top: 0;
+	width: 22px;
+}
+
+@media ( max-width : 768px) {
+	.main-header .brand {
+		width: auto;
+	}
+	.main-header .brand-logo {
+		max-width: 32px;
+	}
+	.main-header .brand-title {
+		font-size: 1em;
+	}
+	.main-header .nav-create {
+		float: right;
+	}
+	.nav-search-toggle {
+		display: block;
+	}
+	.search-toggle-back {
+		display: inline-block;
+	}
+	.nav-search {
+		background: #fff59d url(../img/yellow_background.png) 0 0 no-repeat;
+		display: none;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 6;
+	}
+	.main-header .nav-search form {
+		text-align: left;
+		width: 85%;
+	}
+}
+
+@media ( max-width : 360px) {
+	.main-header .brand {
+		width: 48px;
+	}
+	.brand .brand-logo {
+		display: none;
+	}
+}
+
+/* nav-app-toggle */
+.nav-app-toggle {
+	display: none;
+	padding-top: 21px;
+}
+
+.tablet .nav-app-toggle, .phone .nav-app-toggle {
+	cursor: pointer;
+	display: inline-block;
+	padding-top: 16px;
+	position: relative;
+	width: 16px;
+}
+
+.nav-app-toggle:before {
+	border-bottom: 3px solid #666;
+	border-top: 3px solid #666;
+	content: '';
+	display: block;
+	padding: 2px 0;
+	width: 16px;
+}
+
+.nav-app-toggle:after {
+	border-top: 3px solid #666;
+	content: '';
+	display: block;
+	margin-top: 4px;
+	width: 16px;
+}
+
+/* nav-ws-toggle */
+.nav-ws-toggle {
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+	width: 20px;
+}
+
+.nav-ws-toggle:hover, .nav-ws-toggle:focus {
+	box-shadow: 0 0 3px #999;
+}
+
+.nav-ws-toggle:before {
+	border-left: 8px solid #666;
+	border-right: 8px solid #666;
+	content: '';
+	display: block;
+	height: 8px;
+}
+
+.nav-ws-toggle:after {
+	border-left: 8px solid #666;
+	border-right: 8px solid #666;
+	content: "";
+	display: block;
+	height: 8px;
+	margin-top: 4px;
+}

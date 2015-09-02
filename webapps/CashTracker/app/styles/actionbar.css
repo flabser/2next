@@ -1,0 +1,39 @@
+.action-bar {
+	margin: 0;
+	padding: 8px;
+	vertical-align: middle;
+}
+
+.action-bar:after {
+	content: ' ';
+	clear: both;
+	display: block;
+	font-size: 0;
+	height: 0;
+	visibility: hidden;
+}
+
+.btn.action_save_and_close, .btn.action_save_user_profile {
+	background-color: #FFED81;
+	border: 1px solid #FFCE00;
+}
+
+.btn.action_save_and_close:hover, .btn.action_save_user_profile:hover {
+	background: #FFF1A8;
+}
+
+.btn.action_save_and_close:active, .btn.action_save_user_profile:active {
+	background: #FFED81 !important;
+}
+
+.action-icon {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	background-size: cover;
+	display: none;
+	height: 16px;
+	margin-right: 3px;
+	vertical-align: middle;
+	width: 16px;
+}

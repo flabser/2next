@@ -1,0 +1,89 @@
+.btn {
+	background-color: #FFF;
+	border: 1px solid #CDCDCD;
+	border-radius: 2px;
+	box-sizing: border-box;
+	color: #243140;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 1em;
+	font-weight: normal;
+	line-height: 1.3em;
+	margin: 0 1px 1px 1px;
+	outline: 0;
+	padding: 5px 9px;
+	text-align: center;
+	text-decoration: none;
+	text-shadow: 0px 1px rgba(255, 255, 255, 0.196);
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+.btn:hover {
+	background-color: #efefef;
+	color: #243140;
+	text-decoration: none;
+}
+
+.btn:active {
+	background-color: #dfdfdf;
+}
+
+.tablet .btn, .phone .btn {
+	line-height: 1.4em;
+}
+
+.btn .fa, button .fa {
+	color: #646464;
+	margin: 0 3px;
+}
+
+.tablet .btn .fa, .tablet button .fa, .phone .btn .fa, .phone button .fa {
+	color: #646464;
+	margin: 0 6px;
+}
+
+.btn[disabled], .btn.disabled {
+	cursor: not-allowed;
+	opacity: 0.65;
+	pointer-events: none;
+}
+
+.btn-def {
+	background-color: #F5F6F7;
+}
+
+.btn-primary {
+	background-color: #FFED81;
+	border: 1px solid #FFCE00;
+}
+
+.btn-primary:hover {
+	background-color: #FFF1A8;
+}
+
+.btn-primary:active {
+	background-color: #FFED81;
+}
+
+.btn-text {
+	background: transparent;
+	border: 0;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+.btn-picklist {
+	background: transparent;
+	border: 0;
+	border-bottom: 1px dotted #CCC;
+}
+
+.btn-picklist .fa {
+	margin-left: 3px;
+}
+
+.icn-btn {
+	font-size: 18px;
+}

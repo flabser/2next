@@ -1,6 +1,7 @@
 .nav-profile {
     border-radius: 3px;
     border-bottom: 1px solid #E6E6E6;
+    margin-bottom: .3em;
 }
 
 .nav-profile > header {
@@ -16,7 +17,7 @@
 }
 
 .nav-profile.expanded > section {
-    max-height: 200px;
+    max-height: 500px;
 }
 
 .nav-profile ul {
@@ -26,17 +27,29 @@
 
 .nav-profile li {
     list-style: none;
-    margin: 0;
+    margin: 1px 0 0 0;
     padding: 0;
 }
 
-.nav-profile .profile {
-    display: block;
-    padding: .5em;
+.nav-profile .profile {}
+
+.nav-profile .ws {
+    color: blue;
 }
 
 .nav-profile .logout {
-    border: none;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    cursor: pointer;
     display: block;
-    padding: .5em;
+    line-height: 1;
+    padding: .8em .5em;
+    text-align: left;
+    width: 100%;
+}
+
+.nav-profile .logout:hover {
+    background-color: #F5F5F5;
+    color: red;
 }
