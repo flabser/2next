@@ -1,0 +1,46 @@
+/* login */
+
+.login {
+    border-radius: 3px;
+    margin: 0 auto;
+    max-width: 100%;
+    width: 320px;
+}
+
+.login-form {
+    margin-bottom: 10px;
+}
+
+.login-form input.input {
+    margin-bottom: 10px !important;
+}
+
+.login-form-bottom {
+    text-align: right;
+    padding-top: .5em;
+    vertical-align: middle;
+}
+
+.login-form .noauth {
+    float: left;
+    line-height: 28px;
+    margin: 0 .5em;
+}
+
+.login-form .noauth input {
+    margin: 0 .3em;
+}
+
+.login-form .btn-submit {
+	font-size: 1em;
+	padding: .2em .6em;
+}
+
+.login-error {
+    background: #FFEFEF;
+    border: 1px solid #FFD8D8;
+    border-radius: 6px;
+    color: #FF0000;
+    margin-bottom: 10px;
+    padding: 1em;
+}

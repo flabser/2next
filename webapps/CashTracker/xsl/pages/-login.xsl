@@ -19,7 +19,7 @@
 								<input type="checkbox" name="noauth" value="1" />
 								<xsl:value-of select="//captions/login_alien_device/@caption" />
 							</label>
-							<button type="submit" class="btn">
+							<button type="submit" class="btn-submit">
 								<xsl:value-of select="//captions/login_button/@caption" />
 							</button>
 						</div>
@@ -40,7 +40,7 @@
 							<ul class="help-list">
 								<li>
 									<a href="?id=reset_password" rel="nofollow">
-										<xsl:value-of select="//captions/lost_password/@caption" />
+										<xsl:value-of select="//captions/forgot_password/@caption" />
 									</a>
 								</li>
 								<li>

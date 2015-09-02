@@ -38,12 +38,13 @@ a {
 }
 
 a:hover {
+	color: #2222CC;
 	text-decoration: underline;
 }
 
-/* a:hover,a:hover:visited {
-	color: #EE0000;
-} */
+a:hover:visited {
+	color: #2222CC;
+}
 
 /* fix: content overflow */
 fieldset {

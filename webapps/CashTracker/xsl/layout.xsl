@@ -17,9 +17,6 @@
 				<xsl:with-param name="include" select="$include" />
 			</xsl:call-template>
 			<body class="wlc no_transition {$body_class}">
-				<xsl:if test="$UI_CLIENT = 'mobile'">
-					<xsl:attribute name="class" select="concat('wlc no_transition phone ',  $body_class)" />
-				</xsl:if>
 				<div class="content-overlay" id="content-overlay"></div>
 				<div class="main-load" id="main-load"></div>
 				<div class="layout">
@@ -50,7 +47,6 @@
 			<xsl:call-template name="STYLE_FIX_FIELDSET" />
 
 			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-2.1.4.min.js"></script>
-			<script type="text/javascript" src="/SharedResources/js/mobile-detect.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/vendor/jso/build/jso.js"></script>
 			<script type="text/javascript" src="js/welcome.js"></script>
 			<script type="text/javascript">
@@ -97,17 +93,16 @@
 								<i class="fa fa-caret-down"></i>
 							</a>
 							<div class="nav-dropdown-menu">
-								<a class="nav-item" href="index.html">
+								<a class="nav-item" href="#" id="transactions">
+									<xsl:attribute name="href" select="//availableapps/value/entry[3]" />
 									<xsl:value-of select="//captions/transactions/@caption" />
 								</a>
-								<a class="nav-item" href="index.html#/userprofile">
-									<xsl:value-of select="//captions/user_profile/@caption" />
-								</a>
-								<a class="nav-item btn-logout" href="#logout" onclick="nbApp.logout()">
+								<button class="nav-item btn-logout" href="#" onclick="nbApp.logout()">
+									<xsl:attribute name="onclick" select="concat('nbApp.logout(&quot;', //availableapps/value/entry[3], '&quot;)')" />
 									<span>
 										<xsl:value-of select="//captions/logout/@caption" />
 									</span>
-								</a>
+								</button>
 							</div>
 						</div>
 					</xsl:if>

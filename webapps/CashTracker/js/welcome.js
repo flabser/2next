@@ -154,10 +154,10 @@ nbApp.login = function(form) {
     return false;
 };
 
-nbApp.logout = function(form) {
+nbApp.logout = function(appId) {
     $.ajax({
         method: 'DELETE',
-        url: 'rest/session',
+        url: appId + '/rest/session',
         success: function(result) {
             location.href = '?id=welcome';
         }
