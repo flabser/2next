@@ -9,6 +9,8 @@
 	<caption name="cancel" />
 	<caption name="add" />
 
+	<caption name="workspace" />
+
 	<caption name="saved" />
 	<caption name="newdoc" />
 	<caption name="editing" />

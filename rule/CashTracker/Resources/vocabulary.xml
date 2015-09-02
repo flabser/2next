@@ -21,6 +21,13 @@
 		<entry lang="BG">фирмени и семейни финанси</entry>
 	</sentence>
 
+	<sentence mode="on" keyword="workspace">
+		<entry lang="RUS">Workspace</entry>
+		<entry lang="KAZ">Workspace</entry>
+		<entry lang="ENG">Workspace</entry>
+		<entry lang="BG">Workspace</entry>
+	</sentence>
+
 	<sentence mode="on" keyword="dashboard">
 		<entry lang="RUS">Обзор</entry>
 		<entry lang="KAZ">Жалпы шолу</entry>
