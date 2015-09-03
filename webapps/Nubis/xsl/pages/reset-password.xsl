@@ -22,12 +22,15 @@
 
 	<xsl:template name="page_content_send">
 		<div class="reset-password">
-			<h1>
-				<xsl:value-of select="//captions/pwd_recovery_title/@caption" />
-				<p class="text-muted">
-					<xsl:value-of select="//captions/pwd_recovery_description/@caption" />
-				</p>
-			</h1>
+			<div class="page-header">
+				<h1>
+					<xsl:value-of select="//captions/pwd_recovery_title/@caption" />
+					<br />
+					<small>
+						<xsl:value-of select="//captions/pwd_recovery_description/@caption" />
+					</small>
+				</h1>
+			</div>
 			<section>
 				<div class="error">
 					<xsl:if test="//password-recovery//error">
@@ -52,12 +55,15 @@
 
 	<xsl:template name="page_content_password">
 		<div class="reset-password">
-			<h1>
-				<xsl:value-of select="//captions/pwd_recovery_title/@caption" />
-				<p class="text-muted">
-					<xsl:value-of select="//captions/pwd_recovery_new_pwd/@caption" />
-				</p>
-			</h1>
+			<div class="page-header">
+				<h1>
+					<xsl:value-of select="//captions/pwd_recovery_title/@caption" />
+					<br />
+					<small>
+						<xsl:value-of select="//captions/pwd_recovery_new_pwd/@caption" />
+					</small>
+				</h1>
+			</div>
 			<section>
 				<div class="error">
 					<xsl:if test="//password-recovery//error">
