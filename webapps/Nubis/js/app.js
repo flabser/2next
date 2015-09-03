@@ -26,6 +26,10 @@ nubis.init = function() {
 		nubis.removeApp($(this).data('app-id'));
 	});
 
+	$('.js-app-create').click(function(e) {
+		alert('create');
+	});
+
 	// reg form
 	var $regForm = $('form[name=signup]');
 	if ($regForm.length) {
