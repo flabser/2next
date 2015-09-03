@@ -39,3 +39,18 @@ html, body {
 	max-width: 100%;
 	width: 980px;
 }
+
+a {
+	color: #2222CC;
+	margin: auto;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #2222CC;
+	text-decoration: underline;
+}
+
+a:hover:visited {
+	color: #2222CC;
+}

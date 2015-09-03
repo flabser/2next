@@ -49,15 +49,19 @@ img.tn-app-logo {
 
 .tn-app-name, .tn-app-owner {
 	display: block;
+	max-height: 3em;
+	min-height: 24px;
+	overflow: hidden;
 	padding: 2px;
+	text-overflow: ellipsis;
+	width: 100%;
 }
 
 .tn-app-owner {
+	background-color: #F8F8FF;
 	bottom: 0;
 	color: #222;
-	overflow: hidden;
 	position: absolute;
-	text-overflow: ellipsis;
 }
 
 .tn-app-description {
