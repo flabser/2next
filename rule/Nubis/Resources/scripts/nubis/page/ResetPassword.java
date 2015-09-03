@@ -7,7 +7,7 @@ import com.flabser.script.events._DoScript;
 import com.flabser.users.User;
 import com.flabser.users.UserStatusType;
 
-public class RestorePassword extends _DoScript {
+public class ResetPassword extends _DoScript {
 
 	@Override
 	public void doGet(_Session session, _WebFormData formData, String lang) {
