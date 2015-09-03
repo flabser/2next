@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rule type="page" id="verify-email" mode="on" anonymous="on">
 	<description></description>
-	<xsltfile>verify-email.xsl</xsltfile>
+	<xsltfile>pages/verify-email.xsl</xsltfile>
 
 	<element mode="ON" type="SCRIPT">
 		<events>

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rule type="page" id="captions" mode="on" anonymous="on">
 	<caption name="brand" />
+	<caption name="your_profile" />
+	<caption name="login" />
 	<caption name="login_title" />
 	<caption name="login_btn" />
 	<caption name="logout" />
+	<caption name="signup" />
 	<caption name="signup_title" />
 	<caption name="signup_btn" />
 	<caption name="password" />
+	<caption name="forgot_password" />
 </rule>

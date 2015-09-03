@@ -2,7 +2,7 @@
 <rule type="page" id="ws" mode="on" anonymous="off">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>ws.xsl</xsltfile>
+	<xsltfile>pages/ws.xsl</xsltfile>
 
 	<element mode="ON" type="SCRIPT">
 		<events>

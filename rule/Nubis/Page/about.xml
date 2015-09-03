@@ -2,7 +2,7 @@
 <rule type="page" id="about" mode="on" anonymous="on">
 	<description>About</description>
 	<caching>CACHING_IN_APPLICATION_SCOPE</caching>
-	<xsltfile>about.xsl</xsltfile>
+	<xsltfile>pages/about.xsl</xsltfile>
 
 	<caption name="about" />
 </rule>

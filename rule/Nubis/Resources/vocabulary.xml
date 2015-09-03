@@ -7,6 +7,12 @@
 		<entry lang="BG">Nubis</entry>
 	</sentence>
 
+	<sentence mode="on" keyword="login">
+		<entry lang="RUS">Авторизация</entry>
+		<entry lang="KAZ">Sign in</entry>
+		<entry lang="ENG">Sign in</entry>
+		<entry lang="BG">Sign in</entry>
+	</sentence>
 	<sentence mode="on" keyword="login_title">
 		<entry lang="RUS">Авторизация</entry>
 		<entry lang="KAZ">Sign in</entry>
@@ -26,6 +32,12 @@
 		<entry lang="BG">Log out</entry>
 	</sentence>
 
+	<sentence mode="on" keyword="signup">
+		<entry lang="RUS">Регистрация</entry>
+		<entry lang="KAZ">Sign up</entry>
+		<entry lang="ENG">Sign up</entry>
+		<entry lang="BG">Sign up</entry>
+	</sentence>
 	<sentence mode="on" keyword="signup_title">
 		<entry lang="RUS">Регистрация</entry>
 		<entry lang="KAZ">Sign up</entry>
@@ -44,6 +56,18 @@
 		<entry lang="KAZ">Password</entry>
 		<entry lang="ENG">Password</entry>
 		<entry lang="BG">Password</entry>
+	</sentence>
+	<sentence mode="on" keyword="forgot_password">
+		<entry lang="RUS">Забыли пароль?</entry>
+		<entry lang="KAZ">Құпия сөзді ұмыттыңыз ба?</entry>
+		<entry lang="ENG">Forgot your password?</entry>
+		<entry lang="BG">Забравихте ли паролата си?</entry>
+	</sentence>
+	<sentence mode="on" keyword="your_profile">
+		<entry lang="RUS">Ваш профиль</entry>
+		<entry lang="KAZ">Ваш профиль</entry>
+		<entry lang="ENG">Your profile</entry>
+		<entry lang="BG">Ваш профиль</entry>
 	</sentence>
 
 	<!-- verify_email -->

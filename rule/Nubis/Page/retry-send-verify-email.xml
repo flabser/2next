@@ -2,7 +2,7 @@
 <rule type="page" id="retry-send-verify-email" mode="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>retry-send-verify-email.xsl</xsltfile>
+	<xsltfile>pages/retry-send-verify-email.xsl</xsltfile>
 
 	<element mode="ON" type="SCRIPT">
 		<events>

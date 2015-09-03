@@ -2,7 +2,7 @@
 <rule type="page" id="signup" mode="on" anonymous="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>signup.xsl</xsltfile>
+	<xsltfile>pages/signup.xsl</xsltfile>
 
 	<element mode="ON" type="SCRIPT">
 		<events>

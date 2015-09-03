@@ -2,7 +2,7 @@
 <rule type="page" id="login" mode="on" anonymous="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>login.xsl</xsltfile>
+	<xsltfile>pages/login.xsl</xsltfile>
 
 	<element mode="ON" type="INCLUDED_PAGE">
 		<value>captions</value>
