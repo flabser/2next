@@ -18,8 +18,8 @@
 					<input class="form-control" type="email" name="login" required="required" placeholder="E-mail" />
 				</div>
 				<div class="form-group">
-					<div class="hint pull-right">
-						<a href="?id=reset_password">
+					<div class="clearfix">
+						<a href="?id=reset_password" class="pull-right">
 							<xsl:value-of select="//captions/forgot_password/@caption" />
 						</a>
 					</div>
