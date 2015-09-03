@@ -13,9 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.DatabaseUtil;
-import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.IDatabase;
-import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
@@ -30,7 +28,7 @@ import com.flabser.util.Util;
 
 @JsonRootName("user")
 public class User {
-	public int id;
+	public long id;
 	public boolean isValid = false;
 	public boolean isAuthorized;
 	public String lastURL;
@@ -202,15 +200,15 @@ public class User {
 								int res = appDb.createDatabase(appProfile.getDbName(), getDBLogin());
 								if (res == 0 || res == 1) {
 									IDatabase dataBase = appProfile.getDatabase();
-									IDeployer ad = dataBase.getDeployer();
-									Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
-									IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
-									dbInitializer.initApplication(appProfile.getPOJO());
-									if (ad.deploy(dbInitializer) == 0) {
-										appProfile.setStatus(ApplicationStatusType.ON_LINE);
-									} else {
-										appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
-									}
+									//IDeployer ad = dataBase.getDeployer();
+									//Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
+									//IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
+									//dbInitializer.initApplication(appProfile.getPOJO());
+									//								if (ad.deploy(dbInitializer) == 0) {
+									appProfile.setStatus(ApplicationStatusType.ON_LINE);
+									//								} else {
+									//									appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+									//								}
 									appProfile.save();
 								} else {
 									appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);

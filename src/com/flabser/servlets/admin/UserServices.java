@@ -75,7 +75,7 @@ public class UserServices {
 	}
 
 	public String deploy(String userID) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException {
+	DatabasePoolException {
 		String result = "";
 		User user = sysDatabase.getUser(Integer.parseInt(userID));
 		IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
@@ -85,14 +85,14 @@ public class UserServices {
 				IDatabase dataBase = appProfile.getDatabase();
 				IDeployer ad = dataBase.getDeployer();
 				ad.init(null);
-				ad.deploy(null);
+				//	ad.deploy(null);
 			}
 		}
 		return result;
 	}
 
 	public String remove(String userID) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException {
+	DatabasePoolException {
 		String result = "";
 		User user = sysDatabase.getUser(Integer.parseInt(userID));
 		IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();

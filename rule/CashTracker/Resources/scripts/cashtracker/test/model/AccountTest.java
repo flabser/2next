@@ -21,7 +21,6 @@ public class AccountTest extends Assert {
 		m.setAmountControl(new BigDecimal(10000));
 		m.setCurrencyCode("KZT");
 		m.setEnabled(true);
-		m.setIncludeInTotals(true);
 		m.setName("account 1");
 		m.setNote("account note");
 		m.setOpeningBalance(new BigDecimal(0));

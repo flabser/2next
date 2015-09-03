@@ -99,7 +99,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 		try (PreparedStatement pst = conn.prepareStatement("update USERS set PWD = ?, PWDHASH = ? where ID = ?")) {
 			pst.setString(1, null);
 			pst.setString(2, pwdHsh);
-			pst.setInt(3, user.id);
+			pst.setLong(3, user.id);
 			pst.executeUpdate();
 
 			conn.commit();
@@ -350,6 +350,15 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 		return users.get(0);
 	}
 
+	@Override
+	public User getUser(long id) {
+		List<User> users = getUsers((int)id);
+		if (users.size() == 0) {
+			return null;
+		}
+		return users.get(0);
+	}
+
 	// identical to initUser(String login)
 	@Override
 	public User getUser(String id) {
@@ -482,12 +491,12 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			updateUser.setArray(14, conn.createArrayOf("integer", user.getUserRoles().stream().map(UserRole::getId).toArray()));
 			updateUser.setArray(15, conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
 			updateUser.setString(16, user.getDbPwd());
-			updateUser.setInt(17, user.id);
+			updateUser.setLong(17, user.id);
 
 			updateUser.executeUpdate();
 
 			conn.commit();
-			return user.id;
+			return (int) user.id;
 		} catch (Throwable e) {
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;

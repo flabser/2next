@@ -2,23 +2,18 @@ package cashtracker.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import cashtracker.model.Account;
 
+import com.flabser.restful.data.DAO;
 import com.flabser.script._Session;
-import com.flabser.users.User;
 
 
-public class AccountDAO {
-
-	private EntityManager em;
-	private User user;
+public class AccountDAO extends DAO {
 
 	public AccountDAO(_Session session) {
-		this.user = session.getAppUser();
-		this.em = session.getDatabase().getEntityManager();
+		super(session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -43,23 +38,5 @@ public class AccountDAO {
 		return !q.getResultList().isEmpty();
 	}
 
-	public Account add(Account m) {
-		em.getTransaction().begin();
-		em.persist(m);
-		em.getTransaction().commit();
-		return m;
-	}
 
-	public Account update(Account m) {
-		em.getTransaction().begin();
-		em.merge(m);
-		em.getTransaction().commit();
-		return m;
-	}
-
-	public void delete(Account m) {
-		em.getTransaction().begin();
-		em.remove(m);
-		em.getTransaction().commit();
-	}
 }

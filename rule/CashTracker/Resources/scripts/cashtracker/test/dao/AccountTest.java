@@ -20,9 +20,10 @@ public class AccountTest extends InitEnv {
 
 	AccountDAO dao;
 
+	@Override
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException {
+	DatabasePoolException {
 		super.init();
 		dao = new AccountDAO(ses);
 	}
@@ -41,7 +42,6 @@ public class AccountTest extends InitEnv {
 			m.setOpeningBalance(new BigDecimal(Util.generateRandom()));
 			m.setAmountControl(new BigDecimal(Util.generateRandom()));
 			m.setEnabled(Util.getRandomBoolean());
-			m.setIncludeInTotals(Util.getRandomBoolean());
 			m.setNote("note " + i);
 
 			dao.add(m);

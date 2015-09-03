@@ -1,11 +1,11 @@
 package com.flabser.dataengine.system;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.users.User;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public interface ISystemDatabase {
 
@@ -44,5 +44,7 @@ public interface ISystemDatabase {
 	int deleteApplicationProfile(int id);
 
 	ArrayList<ApplicationProfile> getAllApps(String string, int calcStartEntry, int pageSize);
+
+	User getUser(long id);
 
 }

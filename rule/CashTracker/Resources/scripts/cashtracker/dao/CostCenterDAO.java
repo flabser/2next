@@ -2,23 +2,19 @@ package cashtracker.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import cashtracker.model.CostCenter;
 
+import com.flabser.restful.data.DAO;
 import com.flabser.script._Session;
-import com.flabser.users.User;
 
 
-public class CostCenterDAO {
+public class CostCenterDAO extends DAO {
 
-	private EntityManager em;
-	private User user;
 
 	public CostCenterDAO(_Session session) {
-		this.user = session.getAppUser();
-		this.em = session.getDatabase().getEntityManager();
+		super(session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -41,25 +37,5 @@ public class CostCenterDAO {
 		q.setParameter("costCenter", m);
 		q.setMaxResults(1);
 		return !q.getResultList().isEmpty();
-	}
-
-	public CostCenter add(CostCenter m) {
-		em.getTransaction().begin();
-		em.persist(m);
-		em.getTransaction().commit();
-		return m;
-	}
-
-	public CostCenter update(CostCenter m) {
-		em.getTransaction().begin();
-		em.merge(m);
-		em.getTransaction().commit();
-		return m;
-	}
-
-	public void delete(CostCenter m) {
-		em.getTransaction().begin();
-		em.remove(m);
-		em.getTransaction().commit();
 	}
 }

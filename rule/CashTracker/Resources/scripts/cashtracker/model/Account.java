@@ -1,12 +1,15 @@
 package cashtracker.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.data.AppEntity;
 
@@ -15,12 +18,6 @@ import com.flabser.restful.data.AppEntity;
 @Entity
 @Table(name = "accounts")
 public class Account extends AppEntity {
-
-	// private int type;
-
-	@JsonIgnore
-	@Column(name = "user_id", nullable = false, updatable = false)
-	private Long userId;
 
 	@Column(nullable = false)
 	private String name;
@@ -36,10 +33,15 @@ public class Account extends AppEntity {
 
 	private boolean enabled;
 
-	@Column(name = "include_in_totals")
-	private boolean includeInTotals;
-
 	private String note;
+
+	private Long owner;
+
+	@ElementCollection
+	@CollectionTable(name = "account_observers",joinColumns =  @JoinColumn(name = "fk_parent"))
+	@Column(name = "userid")
+	private List<Long> observers;
+
 
 	// @OneToMany(mappedBy = "accountFrom", fetch = FetchType.LAZY)
 	// private List <Transaction> transactionsFrom;
@@ -48,13 +50,7 @@ public class Account extends AppEntity {
 	// private List <Transaction> transactionsTo;
 
 	//
-	public Long getUserId() {
-		return userId;
-	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
 
 	public String getName() {
 		return name;
@@ -96,14 +92,6 @@ public class Account extends AppEntity {
 		this.enabled = enabled;
 	}
 
-	public boolean isIncludeInTotals() {
-		return includeInTotals;
-	}
-
-	public void setIncludeInTotals(boolean includeInTotals) {
-		this.includeInTotals = includeInTotals;
-	}
-
 	public String getNote() {
 		return note;
 	}
@@ -112,8 +100,26 @@ public class Account extends AppEntity {
 		this.note = note;
 	}
 
+	public Long getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Long owner) {
+		this.owner = owner;
+	}
+
+	public List<Long> getObservers() {
+		return observers;
+	}
+
+	public void setObservers(List<Long> observers) {
+		this.observers = observers;
+	}
+
 	@Override
 	public String toString() {
 		return "Account[" + id + "," + name + ", " + currencyCode + ", " + openingBalance + "]";
 	}
+
+
 }

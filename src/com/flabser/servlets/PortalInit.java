@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.DatabaseFactory;
-import com.flabser.dataengine.IAppDatabaseInit;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.system.IApplicationDatabase;
@@ -49,16 +48,16 @@ public class PortalInit extends HttpServlet {
 						IDatabase db = appProfile.getDatabase();
 						IDeployer ad = db.getDeployer();
 						try {
-							Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
-							IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass
-									.newInstance();
-							dbInitializer.initApplication(appProfile.getPOJO());
-							if (ad.deploy(dbInitializer) == 0) {
-								appProfile.setStatus(ApplicationStatusType.ON_LINE);
-								Environment.addCommonApp(new ApplicationProfile(template));
-							} else {
-								appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
-							}
+							//Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
+							//IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
+							//dbInitializer.initApplication(appProfile.getPOJO());
+							//if (ad.deploy(dbInitializer) == 0) {
+							//	appProfile.setStatus(ApplicationStatusType.ON_LINE);
+							//	Environment.addCommonApp(new ApplicationProfile(template));
+							//} else {
+							//	appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
+							//}
+							appProfile.setStatus(ApplicationStatusType.ON_LINE);
 						} catch (Exception e) {
 							Server.logger.errorLogEntry(e);
 							appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
