@@ -33,7 +33,6 @@ import com.flabser.script._Exception;
 import com.flabser.script._Page;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
-import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
 
 @Path("/")
@@ -71,7 +70,7 @@ public class RestProvider {
 	@Path("/page/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response producePage(@PathParam("id") String id, @Context UriInfo uriInfo) throws RuleException, AuthFailedException,
-			UserException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+	ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
 		MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
 		AppTemplate env = getAppEnv();
@@ -103,7 +102,7 @@ public class RestProvider {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public Response proPage(@PathParam("id") String id, MultivaluedMap<String, String> formParams) throws RuleException,
-			AuthFailedException, UserException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+	AuthFailedException,  ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
 		AppTemplate env = getAppEnv();
 		IRule rule = env.ruleProvider.getRule(id);
@@ -122,8 +121,8 @@ public class RestProvider {
 
 	@GET
 	@Path("/{model}")
-	public _Page produceEmptyPage(@PathParam("model") String model) throws RuleException, AuthFailedException, UserException,
-			ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public _Page produceEmptyPage(@PathParam("model") String model) throws RuleException, AuthFailedException,
+	ClassNotFoundException, InstantiationException, IllegalAccessException {
 		String msg = "The request \"" + request.getRequestURI() + "\" has not processed by some application handler";
 		Server.logger.errorLogEntry(msg);
 		throw new WebApplicationException(msg, HttpServletResponse.SC_NOT_FOUND);

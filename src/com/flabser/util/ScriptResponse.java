@@ -10,7 +10,7 @@ public class ScriptResponse {
 	public boolean resultFlag;
 	private ArrayList<_URL> redirects;
 	private ArrayList<_IContent> elementsList;
-	
+
 	public ScriptResponse(ResponseType type) {
 		this.type = type;
 	}
@@ -27,23 +27,23 @@ public class ScriptResponse {
 	public void setResponseType(ResponseType type) {
 		this.type = type;
 	}
-	
+
 	public void setResponseStatus(boolean responseStatus) {
-		resultFlag = responseStatus;		
+		resultFlag = responseStatus;
 	}
-	
+
 	public void setRedirects(ArrayList<_URL> r) {
 		redirects = r;
 	}
-	
+
 	public ArrayList<_URL> getRedirects() {
 		return redirects;
 	}
-	
+
 	public void setPublishResult(ArrayList<_IContent> pulishElement) {
 		this.elementsList = pulishElement;
 	}
-	
+
 	public ArrayList<_IContent> getElements(){
 		return elementsList;
 	}

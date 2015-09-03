@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import com.flabser.env.Environment;
 import com.flabser.exception.XSLTFileNotFoundException;
 import com.flabser.servlets.ProviderOutput;
-import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
 
 public class AdminProviderOutput extends ProviderOutput {
@@ -17,7 +16,7 @@ public class AdminProviderOutput extends ProviderOutput {
 			+ File.separator + "xslt" + File.separator;
 
 	AdminProviderOutput(String type, String element, String id, StringBuffer output, HttpServletRequest request, UserSession userSession,
-			HttpSession jses, String dbID) throws UserException {
+			HttpSession jses, String dbID)  {
 		super(type, element, output, request, userSession, jses);
 		this.element = element;
 	}

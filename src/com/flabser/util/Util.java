@@ -26,7 +26,8 @@ public class Util {
 	public static final Pattern pTag = Pattern.compile("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>");
 	public static final Pattern pAtEnd = Pattern.compile("\\G\\z");
 	public static final Pattern pWord = Pattern.compile("\\G(\\w|\\pL)+");
-	public static final Pattern pNonHtml = Pattern.compile("\\G([^(\\w|\\p{L})]|\\p{Ps}|\\p{Pe}|\\p{Pi}|\\p{Pf}|\\p{P}|\\p{S})+");
+	public static final Pattern pNonHtml = Pattern
+			.compile("\\G([^(\\w|\\p{L})]|\\p{Ps}|\\p{Pe}|\\p{Pi}|\\p{Pf}|\\p{P}|\\p{S})+");
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static HashMap cloneMap(HashMap sourceMap) {
@@ -68,8 +69,8 @@ public class Util {
 		try {
 			return dateTimeFormat.parse(date);
 		} catch (Exception e) {
-			Server.logger
-					.errorLogEntry("Util, Unbale to convert text to date " + date + ", expected format: " + dateTimeFormat.toPattern());
+			Server.logger.errorLogEntry("Util, Unbale to convert text to date " + date + ", expected format: "
+					+ dateTimeFormat.toPattern());
 			return null;
 		}
 	}
@@ -153,7 +154,7 @@ public class Util {
 
 	public static boolean isGroupName(String userID) {
 		if (userID != null && userID.length() != 0) {
-			return (userID.startsWith("[") && userID.endsWith("]"));
+			return userID.startsWith("[") && userID.endsWith("]");
 		}
 		return false;
 	}
@@ -205,7 +206,8 @@ public class Util {
 			is.close();
 			result = md.digest();
 		} catch (FileNotFoundException e) {
-			Server.logger.errorLogEntry("Util, не удалось получить контрольную сумму файла " + filePath + ": файл не найден");
+			Server.logger.errorLogEntry("Util, не удалось получить контрольную сумму файла " + filePath
+					+ ": файл не найден");
 			return null;
 		} catch (NoSuchAlgorithmException e) {
 			Server.logger.errorLogEntry("Util, не удалось инициализировать алгоритм шифрования");
@@ -250,7 +252,7 @@ public class Util {
 			file = new File(tmpFolder + File.separator + Integer.toString(folderNum) + File.separator + fn);
 			folderNum++;
 
-		} while ((!file.exists()) && folderNum < 20);
+		} while (!file.exists() && folderNum < 20);
 
 		return file;
 	}
@@ -269,11 +271,11 @@ public class Util {
 
 	public static void main(String[] args) {
 		System.out
-				.println(removeHTMLTags(
-						"<p1><p></p1>I-4979: Берг П. П. -> (Берг П. П.)<p><p> <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>")
-						.length());
+		.println(removeHTMLTags(
+				"<p1><p></p1>I-4979: Берг П. П. -> (Берг П. П.)<p><p> <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>")
+				.length());
 		System.out
-				.println(removeHTMLTags("I-4979: Берг П. П. -> (Берг П. П.) <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>"));
+		.println(removeHTMLTags("I-4979: Берг П. П. -> (Берг П. П.) <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>"));
 	}
 
 	public static String removeHTMLTags(String text) {
@@ -324,6 +326,12 @@ public class Util {
 		return generateRandomAsText(setOfTheLetters, 16);
 	}
 
+	public static Enum generateRandomEnum(Enum e) {
+		return e;
+		//	return e.values()[(int) (Math.random() * values().length)];
+
+	}
+
 	public static String generateRandomAsText(String setOfTheLetters, int len) {
 		Random r = new Random();
 		String key = "";
@@ -345,7 +353,8 @@ public class Util {
 	}
 
 	public static boolean addrIsCorrect(String email) {
-		String validate = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		String validate = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 		Pattern pattern = Pattern.compile(validate);
 		Matcher matcher = pattern.matcher(email);

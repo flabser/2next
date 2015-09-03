@@ -19,7 +19,7 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "budgets")
 public class Budget extends AppEntity {
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 64)
 	private String name;
 
 	private Long owner;

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.exception.XSLTFileNotFoundException;
-import com.flabser.users.UserException;
 import com.flabser.users.UserSession;
 
 public class ProviderOutput {
@@ -22,8 +21,7 @@ public class ProviderOutput {
 	protected String id;
 	private HttpServletRequest request;
 
-	public ProviderOutput(String type, String id, StringBuffer output, HttpServletRequest request, UserSession userSession, HttpSession jses)
-			throws UserException {
+	public ProviderOutput(String type, String id, StringBuffer output, HttpServletRequest request, UserSession userSession, HttpSession jses) {
 		this.type = type;
 		this.id = id;
 		this.output = output;
