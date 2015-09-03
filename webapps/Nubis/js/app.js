@@ -5,6 +5,23 @@ nubis.init = function() {
 	$('#main-load').hide();
 	$('#login-error').hide();
 
+	$('.js-tn-app-edit').click(function(e) {
+		$('.tn-app').removeClass('edit');
+		$(this).parent('.tn-app').addClass('edit');
+	});
+
+	$('.js-tn-app-close-edit').click(function(e) {
+		$('.tn-app').removeClass('edit');
+	});
+
+	$('.tn-app').click(function(e) {
+		e.stopPropagation();
+	});
+
+	$('body').click(function() {
+		$('.tn-app.edit').removeClass('edit');
+	});
+
 	// reg form
 	var $regForm = $('form[name=signup]');
 	if ($regForm.length) {

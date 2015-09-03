@@ -37,10 +37,12 @@
 			</title>
 			<link rel="shortcut icon" href="favicon.ico" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+			<link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css" />
 			<link rel="stylesheet" href="/SharedResources/vendor/bootstrap/css/bootstrap.min.css" />
 			<link rel="stylesheet" href="css/layout.css" />
 			<link rel="stylesheet" href="css/header.css" />
 			<link rel="stylesheet" href="css/content.css" />
+			<link rel="stylesheet" href="css/ws.css" />
 
 			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-2.1.4.min.js"></script>
 			<script type="text/javascript" src="/SharedResources/vendor/bootstrap/js/bootstrap.min.js"></script>

@@ -1,0 +1,123 @@
+.tn-apps {
+	position: relative;
+	z-index: 1;
+}
+
+.tn-app {
+	border: 1px solid #f2f2f2;
+	box-shadow: 1px 1px 1px #CCC;
+	display: inline-block;
+	height: 140px;
+	margin: 4px;
+	position: relative;
+	width: 140px;
+	z-index: 2;
+}
+
+.tn-app:hover {
+	border-color: #bbb;
+}
+
+.tn-app.off {
+	
+}
+
+.tn-app a {
+	display: block;
+	height: 100%;
+	text-align: center;
+	text-decoration: none;
+}
+
+span.tn-app-logo {
+	display: inline-block;
+	height: 56px;
+	padding: 4px;
+	width: 56px;
+}
+
+img.tn-app-logo {
+	border: none;
+	outline: 0;
+	max-height: 100%;
+	width: 100%;
+}
+
+.tn-app-type {
+	color: #444;
+}
+
+.tn-app-name, .tn-app-owner {
+	display: block;
+	padding: 2px;
+}
+
+.tn-app-owner {
+	bottom: 0;
+	color: #222;
+	overflow: hidden;
+	position: absolute;
+	text-overflow: ellipsis;
+}
+
+.tn-app-description {
+	
+}
+
+.tn-app button {
+	background: transparent;
+	border: none;
+}
+
+.tn-app-edit, .tn-app-close-edit {
+	background: #FAFAFA !important;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	bottom: 0;
+	color: #999;
+	display: none;
+	height: 24px;
+	right: 0;
+	position: absolute;
+	width: 24px;
+}
+
+.tn-app-edit:hover, .tn-app-close-edit:hover {
+	color: #444;
+}
+
+.tn-app:hover .tn-app-edit {
+	display: block;
+}
+
+.tn-app.edit .tn-app-edit {
+	display: none;
+}
+
+.tn-app.edit .tn-app-close-edit {
+	display: block;
+}
+
+.tn-app-settings {
+	background: #FAFAFA;
+	bottom: 0;
+	box-shadow: 0 -1px 3px #CCC;
+	display: block;
+	height: 0px;
+	overflow: hidden;
+	position: absolute;
+	transition: height .2s;
+	width: 100%;
+	z-index: 3;
+	width: 100%;
+}
+
+.tn-app.edit .tn-app-settings {
+	height: 70px;
+}
+
+.tn-app-remove {
+	display: block;
+	padding: 4px;
+	width: 100%;
+}
