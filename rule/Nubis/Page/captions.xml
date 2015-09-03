@@ -11,4 +11,6 @@
 	<caption name="signup_btn" />
 	<caption name="password" />
 	<caption name="forgot_password" />
+
+	<caption name="remove" />
 </rule>
