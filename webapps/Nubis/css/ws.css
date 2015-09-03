@@ -64,6 +64,7 @@ img.tn-app-logo {
 	background-color: #F8F8FF;
 	bottom: 0;
 	color: #222;
+	padding: 7px 3px;
 	position: absolute;
 }
 
@@ -83,10 +84,10 @@ img.tn-app-logo {
 	bottom: 0;
 	color: #999;
 	display: none;
-	height: 24px;
+	height: 32px;
 	right: 0;
 	position: absolute;
-	width: 24px;
+	width: 32px;
 }
 
 .tn-app-edit:hover, .tn-app-close-edit:hover {
@@ -125,7 +126,7 @@ img.tn-app-logo {
 
 .tn-app-remove {
 	display: block;
-	padding: 4px;
+	padding: 8px;
 	width: 100%;
 }
 
@@ -135,17 +136,7 @@ img.tn-app-logo {
 		margin: 16px auto;
 		width: 90%;
 	}
-	.tn-app-owner {
-		padding-bottom: 7px;
-		padding-top: 7px;
-	}
 	.tn-app-edit, .tn-app-close-edit {
 		display: block;
-		height: 32px;
-		width: 32px;
-	}
-	.tn-app-remove {
-		padding-bottom: 8px;
-		padding-top: 8px;
 	}
 }
