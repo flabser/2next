@@ -45,18 +45,20 @@
 					<xsl:value-of select="owner" />
 				</span>
 			</a>
-			<button class="tn-app-edit js-tn-app-edit">
-				<i class="fa fa-gear" />
-			</button>
-			<div class="tn-app-settings">
-				<button class="tn-app-remove">
-					<i class="fa fa-trash" />
-					<xsl:value-of select="//captions/remove/@caption" />
+			<xsl:if test="status = 'ON_LINE'">
+				<button class="tn-app-edit js-app-edit">
+					<i class="fa fa-gear" />
 				</button>
-				<button class="tn-app-close-edit js-tn-app-close-edit">
-					<i class="fa fa-close" />
-				</button>
-			</div>
+				<div class="tn-app-settings">
+					<button class="tn-app-remove js-app-remove" data-app-id="{appid}">
+						<i class="fa fa-trash" />
+						<xsl:value-of select="//captions/remove/@caption" />
+					</button>
+					<button class="tn-app-close-edit js-app-close-edit">
+						<i class="fa fa-close" />
+					</button>
+				</div>
+			</xsl:if>
 		</div>
 	</xsl:template>
 

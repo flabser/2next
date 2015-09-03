@@ -19,7 +19,7 @@
 }
 
 .tn-app.off {
-	
+	opacity: .5;
 }
 
 .tn-app a {

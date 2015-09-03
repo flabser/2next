@@ -5,12 +5,12 @@ nubis.init = function() {
 	$('#main-load').hide();
 	$('#login-error').hide();
 
-	$('.js-tn-app-edit').click(function(e) {
+	$('.js-app-edit').click(function(e) {
 		$('.tn-app').removeClass('edit');
 		$(this).parent('.tn-app').addClass('edit');
 	});
 
-	$('.js-tn-app-close-edit').click(function(e) {
+	$('.js-app-close-edit').click(function(e) {
 		$('.tn-app').removeClass('edit');
 	});
 
@@ -20,6 +20,10 @@ nubis.init = function() {
 
 	$('body').click(function() {
 		$('.tn-app.edit').removeClass('edit');
+	});
+
+	$('.js-app-remove').click(function() {
+		nubis.removeApp($(this).data('app-id'));
 	});
 
 	// reg form
@@ -181,6 +185,16 @@ nubis.logOut = function(form) {
 		url: 'rest/session',
 		success: function(result) {
 			location.href = '?id=login';
+		}
+	});
+};
+
+nubis.removeApp = function(appId) {
+	$.ajax({
+		method: 'DELETE',
+		url: '?id=unreg_app&app=' + appId,
+		success: function(result) {
+			location.reload();
 		}
 	});
 };
