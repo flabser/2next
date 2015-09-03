@@ -14,3 +14,13 @@
 	color: white;
 	padding: 4px;
 }
+
+@media ( max-width : 768px) {
+	.header .dropdown-menu>li>.logout {
+		padding: 8px 20px;
+	}
+}
+
+.header .navbar-toggle .icon-bar {
+	background-color: #666;
+}

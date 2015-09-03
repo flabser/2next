@@ -54,11 +54,18 @@
 		<header class="header navbar navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
+					<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#nb-navbar"
+						aria-controls="nb-navbar" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
 					<a class="navbar-brand" href="?id=ws">
 						<xsl:value-of select="//captions/brand/@caption" />
 					</a>
 				</div>
-				<nav>
+				<nav id="nb-navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right">
 						<xsl:if test="//@userid = 'anonymous'">
 							<xsl:if test="//@id = 'signup' or //@id = 'reset_password'">
