@@ -19,7 +19,7 @@
 			<body class="no_transition {$body_class}">
 				<div class="layout">
 					<xsl:call-template name="main-header" />
-					<section class="container content">
+					<section class="content">
 						<xsl:call-template name="_content" />
 					</section>
 					<xsl:call-template name="main-footer" />
@@ -70,14 +70,14 @@
 				<nav id="nb-navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right">
 						<xsl:if test="//@userid = 'anonymous'">
-							<xsl:if test="//@id = 'signup' or //@id = 'reset_password'">
+							<xsl:if test="//@id = 'signup' or //@id = 'reset_password' or //@id = 'verify_email'">
 								<li class="login">
 									<a href="?id=login">
 										<xsl:value-of select="//captions/login/@caption" />
 									</a>
 								</li>
 							</xsl:if>
-							<xsl:if test="//@id = 'login' or //@id = 'reset_password'">
+							<xsl:if test="//@id = 'login' or //@id = 'reset_password' or //@id = 'verify_email'">
 								<li class="signup">
 									<a href="?id=signup">
 										<xsl:value-of select="//captions/signup/@caption" />

@@ -54,3 +54,15 @@ a:hover {
 a:hover:visited {
 	color: #2222CC;
 }
+
+.page-header small {
+	margin-left: .5em;
+}
+
+@media ( max-width : 768px) {
+	.page-header small {
+		display: block;
+		margin-left: 0;
+		padding-top: 8px;
+	}
+}

@@ -8,27 +8,35 @@
 	</xsl:template>
 
 	<xsl:template name="_content">
-		<div class="container">
-			<h1>
-				<xsl:value-of select="//captions/verify_email_title/@caption" />
-			</h1>
-			<div style="font-size:1.5em;margin-bottom:2em;">
-				<xsl:choose>
-					<xsl:when test="//process = 'verify-ok'">
-						<xsl:value-of select="//captions/verify_email_done/@caption" />
-						<p>
-							<a href="?id=login">Sign In</a>
-						</p>
-					</xsl:when>
-					<xsl:when test="//process = 'already-registered'">
-						<xsl:value-of select="//captions/verify_email_already/@caption" />
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="//captions/verify_email_error/@caption" />
-					</xsl:otherwise>
-				</xsl:choose>
+		<section class="page-content verify-email">
+			<div class="container">
+				<div class="page-header">
+					<h1>
+						<xsl:value-of select="//captions/verify_email_title/@caption" />
+					</h1>
+				</div>
+				<div>
+					<xsl:choose>
+						<xsl:when test="//process = 'verify-ok'">
+							<xsl:value-of select="//captions/verify_email_done/@caption" />
+							<p>
+								<a href="?id=login">Sign In</a>
+							</p>
+						</xsl:when>
+						<xsl:when test="//process = 'already-registered'">
+							<div class="alert alert-info" role="alert">
+								<xsl:value-of select="//captions/verify_email_already/@caption" />
+							</div>
+						</xsl:when>
+						<xsl:otherwise>
+							<div class="alert alert-danger" role="alert">
+								<xsl:value-of select="//captions/verify_email_error/@caption" />
+							</div>
+						</xsl:otherwise>
+					</xsl:choose>
+				</div>
 			</div>
-		</div>
+		</section>
 	</xsl:template>
 
 </xsl:stylesheet>

@@ -19,4 +19,8 @@
 	<caption name="pwd_reset_new_pwd" />
 	<caption name="pwd_reset_send_btn" />
 	<caption name="pwd_reset_ok_btn" />
+
+	<caption name="templates" />
+	<caption name="templates_description" />
+	<caption name="create_app" />
 </rule>

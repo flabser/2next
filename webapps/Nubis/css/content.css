@@ -1,11 +1,11 @@
 .form-login, .form-signup {
 	width: 320px;
-	margin: 8% auto 0;
+	margin: 0 auto;
 	max-width: 90%;
 }
 
-.ws {
-	padding-top: 5%;
+.page-content {
+	padding: 10px 0;
 }
 
 .reset-password .form-control {

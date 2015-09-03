@@ -14,11 +14,10 @@
 	</xsl:template>
 
 	<xsl:template match="apps">
-		<h1>3 штуки для наглядности</h1>
 		<section class="tn-apps">
-			<xsl:apply-templates select="entry" mode="app" />
-			<xsl:apply-templates select="entry" mode="app" />
-			<xsl:apply-templates select="entry" mode="app" />
+			<div class="container">
+				<xsl:apply-templates select="entry" mode="app" />
+			</div>
 		</section>
 	</xsl:template>
 
@@ -65,16 +64,37 @@
 		</div>
 	</xsl:template>
 
-	<xsl:template match="templates">
-		<h1>Templates</h1>
-		<xsl:apply-templates select="entry" mode="template" />
+	<xsl:template match="page/templates">
+		<section class="tn-templates">
+			<div class="container">
+				<div class="page-header">
+					<h1>
+						<xsl:value-of select="//captions/templates/@caption" />
+						<small>
+							<xsl:value-of select="//captions/templates_description/@caption" />
+						</small>
+					</h1>
+				</div>
+				<xsl:apply-templates select="entry" mode="template" />
+			</div>
+		</section>
 	</xsl:template>
 
 	<xsl:template match="entry" mode="template">
-		<div>
-			<a href="/{.}">
+		<div class="tn-tpl js-app-create" data-app-type="{.}">
+			<span class="tn-tpl-logo">
+				<img class="tn-tpl-logo" src="/{.}/img/logo.png" alt="logo" />
+			</span>
+			<span class="tn-tpl-type">
 				<xsl:value-of select="." />
-			</a>
+			</span>
+			<span class="tn-tpl-description">
+				<xsl:value-of select="description" />
+			</span>
+			<button class="tn-tpl-create">
+				<i class="fa fa-plus" />
+				<xsl:value-of select="//captions/create_app/@caption" />
+			</button>
 		</div>
 	</xsl:template>
 

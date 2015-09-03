@@ -140,7 +140,6 @@
 		<entry lang="BG" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
 	</sentence>
 
-
 	<sentence mode="on" keyword="about">
 		<entry lang="RUS">Добро пожаловать в Nubis. Для начала работы необходимо авторизоваться</entry>
 		<entry lang="KAZ">Добро пожаловать в Nubis. Для начала работы необходимо авторизоваться</entry>
@@ -153,5 +152,24 @@
 		<entry lang="KAZ">Удалить</entry>
 		<entry lang="ENG">Remove</entry>
 		<entry lang="BG">Удалить</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="templates">
+		<entry lang="RUS">Шаблоны</entry>
+		<entry lang="KAZ">Шаблоны</entry>
+		<entry lang="ENG">Templates</entry>
+		<entry lang="BG">Шаблоны</entry>
+	</sentence>
+	<sentence mode="on" keyword="templates_description">
+		<entry lang="RUS">На основе шаблонов создаются приложения</entry>
+		<entry lang="KAZ">На основе шаблонов создаются приложения</entry>
+		<entry lang="ENG">На основе шаблонов создаются приложения</entry>
+		<entry lang="BG">На основе шаблонов создаются приложения</entry>
+	</sentence>
+	<sentence mode="on" keyword="create_app">
+		<entry lang="RUS">Создать приложение</entry>
+		<entry lang="KAZ">Создать приложение</entry>
+		<entry lang="ENG">Create application</entry>
+		<entry lang="BG">Создать приложение</entry>
 	</sentence>
 </vocabulary>

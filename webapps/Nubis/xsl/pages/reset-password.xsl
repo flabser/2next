@@ -8,15 +8,17 @@
 	</xsl:template>
 
 	<xsl:template name="_content">
-		<div class="reset-password">
-			<xsl:choose>
-				<xsl:when test="//reset-mode = 'password'">
-					<xsl:call-template name="page_content_password" />
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:call-template name="page_content_send" />
-				</xsl:otherwise>
-			</xsl:choose>
+		<div class="page-content reset-password">
+			<div class="container">
+				<xsl:choose>
+					<xsl:when test="//reset-mode = 'password'">
+						<xsl:call-template name="page_content_password" />
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="page_content_send" />
+					</xsl:otherwise>
+				</xsl:choose>
+			</div>
 		</div>
 	</xsl:template>
 

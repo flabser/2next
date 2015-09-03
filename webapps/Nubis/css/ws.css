@@ -1,4 +1,9 @@
+.ws {
+	padding: 10px 0;
+}
+
 .tn-apps {
+	padding: 10px 0;
 	position: relative;
 	z-index: 1;
 }
@@ -75,6 +80,7 @@ img.tn-app-logo {
 .tn-app button {
 	background: transparent;
 	border: none;
+	outline: 0;
 }
 
 .tn-app button:hover {
@@ -137,6 +143,10 @@ button.tn-app-remove {
 	width: 100%;
 }
 
+button.tn-app-remove>.fa {
+	margin-right: 3px;
+}
+
 @media ( max-width : 768px) {
 	.tn-app {
 		display: block;
@@ -146,4 +156,82 @@ button.tn-app-remove {
 	.tn-app-edit, .tn-app-close-edit, .tn-app-description {
 		display: block;
 	}
+}
+
+.tn-templates {
+	padding: 10px 0 40px;
+}
+
+.tn-templates .page-header h1 {
+	font-size: 1.5em;
+}
+
+.tn-tpl {
+	border: 1px solid #f2f2f2;
+	box-shadow: 1px 1px 1px #CCC;
+	cursor: pointer;
+	display: inline-block;
+	height: 85px;
+	margin: 6px;
+	position: relative;
+	width: 180px;
+}
+
+@media ( max-width : 768px) {
+	.tn-templates .page-header {
+		margin-top: 10px;
+	}
+	.tn-tpl {
+		display: block;
+		margin: 16px auto;
+		width: 90%;
+	}
+}
+
+.tn-tpl:hover {
+	border-color: #bbb;
+}
+
+.tn-tpl:active {
+	box-shadow: 0px 0px 0px #CCC;
+}
+
+span.tn-tpl-logo {
+	display: inline-block;
+	height: 54px;
+	line-height: 50px;
+	margin-right: 4px;
+	width: 56px;
+	padding: 4px;
+}
+
+img.tn-tpl-logo {
+	border: none;
+	outline: 0;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.tn-tpl-type {
+	display: inline-block;
+}
+
+.tn-tpl-description {
+	display: inline-block;
+}
+
+.tn-tpl-create {
+	background-color: #F8F8FF;
+	border: none;
+	bottom: 0;
+	color: #222;
+	outline: 0;
+	padding: 3px;
+	position: absolute;
+	left: 0;
+	width: 100%;
+}
+
+.tn-tpl-create .fa {
+	margin-right: 3px;
 }

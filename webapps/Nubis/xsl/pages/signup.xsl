@@ -8,27 +8,29 @@
 	</xsl:template>
 
 	<xsl:template name="_content">
-		<section class="form-signup">
-			<div class="page-header">
-				<h1 class="text-center">
-					<xsl:value-of select="//captions/signup_title/@caption" />
-				</h1>
+		<section class="page-content form-signup">
+			<div class="container">
+				<div class="page-header">
+					<h1 class="text-center">
+						<xsl:value-of select="//captions/signup_title/@caption" />
+					</h1>
+				</div>
+				<div class="alert alert-success reg-result-ok" role="alert" style="display:none;">reg-result-ok</div>
+				<form method="post" name="signup">
+					<div class="form-group">
+						<input class="form-control" type="email" name="email" required="required" placeholder="E-mail" autocomplete="off" />
+					</div>
+					<div class="form-group">
+						<input class="form-control" type="password" name="pwd" required="required" placeholder="{//captions/password/@caption}"
+							autocomplete="off" />
+					</div>
+					<div class="text-right">
+						<button type="submit" class="btn btn-default">
+							<xsl:value-of select="//captions/signup_btn/@caption" />
+						</button>
+					</div>
+				</form>
 			</div>
-			<div class="alert alert-success reg-result-ok" role="alert" style="display:none;">reg-result-ok</div>
-			<form method="post" name="signup">
-				<div class="form-group">
-					<input class="form-control" type="email" name="email" required="required" placeholder="E-mail" autocomplete="off" />
-				</div>
-				<div class="form-group">
-					<input class="form-control" type="password" name="pwd" required="required" placeholder="{//captions/password/@caption}"
-						autocomplete="off" />
-				</div>
-				<div class="text-right">
-					<button type="submit" class="btn btn-default">
-						<xsl:value-of select="//captions/signup_btn/@caption" />
-					</button>
-				</div>
-			</form>
 		</section>
 	</xsl:template>
 
