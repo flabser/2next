@@ -7,17 +7,25 @@ import com.flabser.script.events._DoScript;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.User;
 
+
 public class UnregApp extends _DoScript {
 
 	@Override
 	public void doGet(_Session session, _WebFormData formData, String lang) {
-		doPost(session, formData, lang);
 	}
 
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doPut(_Session session, _WebFormData formData, String lang) {
+	}
+
+	@Override
+	public void doDelete(_Session session, _WebFormData formData, String lang) {
 		User user = session.getAppUser();
-		String appID = formData.getValueSilently("appid");
+		String appID = formData.getValueSilently("app");
 		ApplicationProfile ap = user.getApplicationProfile(appID);
 
 		if (ap != null) {
@@ -31,14 +39,5 @@ public class UnregApp extends _DoScript {
 				}
 			}
 		}
-
-	}
-
-	@Override
-	public void doPut(_Session session, _WebFormData formData, String lang) {
-	}
-
-	@Override
-	public void doDelete(_Session session, _WebFormData formData, String lang) {
 	}
 }
