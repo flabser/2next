@@ -33,7 +33,7 @@
 					<xsl:attribute name="onclick" select="'return false;'" />
 				</xsl:if>
 				<span class="tn-app-logo">
-					<img class="tn-app-logo" src="" alt="logo" />
+					<img class="tn-app-logo" src="/{apptype}/img/logo.png" alt="logo" />
 				</span>
 				<span class="tn-app-type">
 					<xsl:value-of select="apptype" />
