@@ -27,7 +27,7 @@
 			<xsl:if test="status != 'ON_LINE'">
 				<xsl:attribute name="class" select="'tn-app off'" />
 			</xsl:if>
-			<a href="/{apptype}/{appid}">
+			<a class="tn-app-link" href="/{apptype}/{appid}">
 				<xsl:if test="status != 'ON_LINE'">
 					<xsl:attribute name="href" select="'#'" />
 					<xsl:attribute name="onclick" select="'return false;'" />
@@ -45,6 +45,9 @@
 					<xsl:value-of select="owner" />
 				</span>
 			</a>
+			<button class="tn-app-description js-app-open-description">
+				<i class="fa fa-info-circle" />
+			</button>
 			<xsl:if test="status = 'ON_LINE'">
 				<button class="tn-app-edit js-app-edit">
 					<i class="fa fa-gear" />

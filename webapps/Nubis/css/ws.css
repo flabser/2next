@@ -8,7 +8,7 @@
 	box-shadow: 1px 1px 1px #CCC;
 	display: inline-block;
 	height: 160px;
-	margin: 4px;
+	margin: 6px;
 	position: relative;
 	width: 180px;
 	z-index: 2;
@@ -22,7 +22,7 @@
 	opacity: .5;
 }
 
-.tn-app a {
+.tn-app .tn-app-link {
 	display: block;
 	height: 100%;
 	text-align: center;
@@ -68,16 +68,16 @@ img.tn-app-logo {
 	position: absolute;
 }
 
-.tn-app-description {
-	
-}
-
 .tn-app button {
 	background: transparent;
 	border: none;
 }
 
-.tn-app-edit, .tn-app-close-edit {
+.tn-app button:hover {
+	color: #444;
+}
+
+.tn-app-edit, .tn-app-close-edit, .tn-app-description {
 	background: #F8F8FF !important;
 	border: 1px solid transparent;
 	border-radius: 3px;
@@ -90,11 +90,13 @@ img.tn-app-logo {
 	width: 32px;
 }
 
-.tn-app-edit:hover, .tn-app-close-edit:hover {
-	color: #444;
+.tn-app-description {
+	background: #FFF !important;
+	top: 0;
+	right: 0;
 }
 
-.tn-app:hover .tn-app-edit {
+.tn-app:hover .tn-app-edit, .tn-app:hover .tn-app-description {
 	display: block;
 }
 
@@ -124,7 +126,8 @@ img.tn-app-logo {
 	height: 70px;
 }
 
-.tn-app-remove {
+button.tn-app-remove {
+	border-bottom: 1px solid #EEE;
 	display: block;
 	padding: 8px;
 	width: 100%;
@@ -136,7 +139,7 @@ img.tn-app-logo {
 		margin: 16px auto;
 		width: 90%;
 	}
-	.tn-app-edit, .tn-app-close-edit {
+	.tn-app-edit, .tn-app-close-edit, .tn-app-description {
 		display: block;
 	}
 }
