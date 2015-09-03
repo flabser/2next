@@ -1,0 +1,18 @@
+.form-login, .form-signup {
+	width: 320px;
+	margin: 8% auto 0;
+	max-width: 90%;
+}
+
+.ws {
+	padding-top: 5%;
+}
+
+.reset-password .form-control {
+	max-width: 100%;
+	width: 280px;
+}
+
+.reset-password .btn {
+	margin: 0 4px;
+}

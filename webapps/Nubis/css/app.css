@@ -1,9 +1,0 @@
-footer {
-	border-top: 1px solid #ccc;
-}
-
-.login, .signup {
-	margin: auto;
-	max-width: 98%;
-	width: 360px;
-}

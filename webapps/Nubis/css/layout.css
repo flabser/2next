@@ -1,54 +1,40 @@
-@media ( max-width : 768px) {
-	body {
-		font-size: 14px;
-	}
-	.container {
-		max-width: 100%;
-	}
+html, body {
+	height: 100%;
 }
 
 .layout {
 	background: none;
 	box-shadow: none;
 	max-width: 100%;
-}
-
-.header {
-	background: none;
-	border-bottom: 1px solid #F6F5F3;
-	box-shadow: none;
-	height: 70px;
+	min-height: 100%;
 	position: relative;
 }
 
-.content {
+.header {
+	background: #FFF;
+	border-bottom: 1px solid #F2F2F2;
+	box-shadow: none;
 	margin: 0;
-	padding: 0 !important;
+}
+
+.content {
+	
+}
+
+.footer-spacer {
+	display: block;
+	height: 50px;
 }
 
 .footer {
 	background: #F6F5F3;
+	border-top: 1px solid #F2F2F2;
 	bottom: 0;
 	position: absolute;
 	width: 100%;
 }
 
 .container {
-	margin: 0px auto;
-	max-width: 980px;
-}
-
-.tablet .container, .phone .container {
 	max-width: 100%;
-}
-
-.main-load {
-	background: transparent url(../img/loader.gif) center center no-repeat;
-	display: block;
-	height: 100%;
-	left: 0;
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 9999;
+	width: 980px;
 }

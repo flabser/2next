@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-	<xsl:import href="layout.xsl" />
+	<xsl:import href="../layout.xsl" />
 
 	<xsl:template match="/request">
 		<xsl:call-template name="layout" />
 	</xsl:template>
 
 	<xsl:template name="_content">
-		<div class="container">
-			<div class="ws">
-				<xsl:apply-templates />
-			</div>
-		</div>
+		<section class="ws">
+			<xsl:apply-templates />
+		</section>
 	</xsl:template>
 
 	<xsl:template match="apps">
@@ -23,9 +21,12 @@
 	<xsl:template match="entry" mode="app">
 		<div>
 			<a href="/{apptype}/{appid}">
-				<xsl:value-of select="status" />-<xsl:value-of select="appname" />
+				<xsl:value-of select="status" />
+				-
+				<xsl:value-of select="appname" />
 				<small>
-					-<xsl:value-of select="concat('(', apptype, ')')" />
+					-
+					<xsl:value-of select="concat('(', apptype, ')')" />
 				</small>
 			</a>
 		</div>

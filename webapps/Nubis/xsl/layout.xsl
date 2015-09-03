@@ -18,12 +18,11 @@
 			</xsl:call-template>
 			<body class="no_transition {$body_class}">
 				<div class="layout">
-					<header class="header">
-						<xsl:call-template name="main-header" />
-					</header>
-					<section class="content">
+					<xsl:call-template name="main-header" />
+					<section class="container content">
 						<xsl:call-template name="_content" />
 					</section>
+					<xsl:call-template name="main-footer" />
 				</div>
 			</body>
 		</html>
@@ -38,16 +37,13 @@
 			</title>
 			<link rel="shortcut icon" href="favicon.ico" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-			<link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css" />
-			<link rel="stylesheet" href="/SharedResources/css/normalize.css" />
-			<link rel="stylesheet" href="css/common.css" />
+			<link rel="stylesheet" href="/SharedResources/vendor/bootstrap/css/bootstrap.min.css" />
 			<link rel="stylesheet" href="css/layout.css" />
 			<link rel="stylesheet" href="css/header.css" />
-			<link rel="stylesheet" href="css/button.css" />
-			<link rel="stylesheet" href="css/form.css" />
-			<link rel="stylesheet" href="css/app.css" />
+			<link rel="stylesheet" href="css/content.css" />
 
 			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-2.1.4.min.js"></script>
+			<script type="text/javascript" src="/SharedResources/vendor/bootstrap/js/bootstrap.min.js"></script>
 			<script type="text/javascript" src="js/app.js"></script>
 
 			<xsl:copy-of select="$include" />
@@ -55,50 +51,67 @@
 	</xsl:template>
 
 	<xsl:template name="main-header">
-		<div class="container">
-			<nav class="navbar">
+		<header class="header navbar navbar-static-top">
+			<div class="container">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="#">
+					<a class="navbar-brand" href="?id=ws">
 						<xsl:value-of select="//captions/brand/@caption" />
 					</a>
 				</div>
-				<ul class="nav navbar-nav navbar-right">
-					<xsl:if test="//@userid = 'anonymous'">
-						<xsl:if test="//@id = 'signup'">
-							<li>
-								<a href="?id=login">Sign in</a>
+				<nav>
+					<ul class="nav navbar-nav navbar-right">
+						<xsl:if test="//@userid = 'anonymous'">
+							<xsl:if test="//@id = 'signup' or //@id = 'reset_password'">
+								<li class="login">
+									<a href="?id=login">
+										<xsl:value-of select="//captions/login/@caption" />
+									</a>
+								</li>
+							</xsl:if>
+							<xsl:if test="//@id = 'login' or //@id = 'reset_password'">
+								<li class="signup">
+									<a href="?id=signup">
+										<xsl:value-of select="//captions/signup/@caption" />
+									</a>
+								</li>
+							</xsl:if>
+						</xsl:if>
+						<xsl:if test="//@userid != 'anonymous'">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<xsl:value-of select="//@userid" />
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#user-profile">
+											<xsl:value-of select="//captions/your_profile/@caption" />
+										</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+										<button class="logout" onclick="nubis.logOut()">
+											<span>
+												<xsl:value-of select="//captions/logout/@caption" />
+											</span>
+										</button>
+									</li>
+								</ul>
 							</li>
 						</xsl:if>
-						<xsl:if test="//@id = 'login'">
-							<li>
-								<a href="?id=signup">Sign up</a>
-							</li>
-						</xsl:if>
-					</xsl:if>
-					<xsl:if test="//@userid != 'anonymous'">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<xsl:value-of select="//@userid" />
-								<i class="fa fa-caret-down"></i>
-							</a>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="#user-profile">My profile</a>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<button class="logout" onclick="nubis.logOut()">
-										<span>
-											<xsl:value-of select="//captions/logout/@caption" />
-										</span>
-									</button>
-								</li>
-							</ul>
-						</li>
-					</xsl:if>
-				</ul>
-			</nav>
-		</div>
+					</ul>
+				</nav>
+			</div>
+		</header>
+	</xsl:template>
+
+	<xsl:template name="main-footer">
+		<div class="footer-spacer"></div>
+		<footer class="footer">
+			<div class="container">
+				@
+			</div>
+		</footer>
 	</xsl:template>
 
 	<xsl:template name="_content" />
