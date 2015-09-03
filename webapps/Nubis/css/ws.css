@@ -7,10 +7,10 @@
 	border: 1px solid #f2f2f2;
 	box-shadow: 1px 1px 1px #CCC;
 	display: inline-block;
-	height: 140px;
+	height: 160px;
 	margin: 4px;
 	position: relative;
-	width: 140px;
+	width: 180px;
 	z-index: 2;
 }
 
@@ -31,8 +31,8 @@
 
 span.tn-app-logo {
 	display: inline-block;
-	height: 50px;
-	line-height: 50px;
+	height: 56px;
+	line-height: 56px;
 	width: 100%;
 	padding: 4px;
 }
@@ -46,6 +46,8 @@ img.tn-app-logo {
 
 .tn-app-type {
 	color: #444;
+	display: block;
+	padding: 3px;
 }
 
 .tn-app-name, .tn-app-owner {
@@ -53,7 +55,7 @@ img.tn-app-logo {
 	max-height: 3em;
 	min-height: 24px;
 	overflow: hidden;
-	padding: 2px;
+	padding: 3px;
 	text-overflow: ellipsis;
 	width: 100%;
 }
@@ -75,9 +77,9 @@ img.tn-app-logo {
 }
 
 .tn-app-edit, .tn-app-close-edit {
-	background: #FAFAFA !important;
+	background: #F8F8FF !important;
 	border: 1px solid transparent;
-	border-radius: 2px;
+	border-radius: 3px;
 	bottom: 0;
 	color: #999;
 	display: none;
@@ -104,7 +106,7 @@ img.tn-app-logo {
 }
 
 .tn-app-settings {
-	background: #FAFAFA;
+	background: #F8F8FF;
 	bottom: 0;
 	box-shadow: 0 -1px 3px #CCC;
 	display: block;
@@ -125,4 +127,25 @@ img.tn-app-logo {
 	display: block;
 	padding: 4px;
 	width: 100%;
+}
+
+@media ( max-width : 768px) {
+	.tn-app {
+		display: block;
+		margin: 16px auto;
+		width: 90%;
+	}
+	.tn-app-owner {
+		padding-bottom: 7px;
+		padding-top: 7px;
+	}
+	.tn-app-edit, .tn-app-close-edit {
+		display: block;
+		height: 32px;
+		width: 32px;
+	}
+	.tn-app-remove {
+		padding-bottom: 8px;
+		padding-top: 8px;
+	}
 }
