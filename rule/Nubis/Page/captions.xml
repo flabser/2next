@@ -13,4 +13,10 @@
 	<caption name="forgot_password" />
 
 	<caption name="remove" />
+
+	<caption name="pwd_reset_title" />
+	<caption name="pwd_reset_description" />
+	<caption name="pwd_reset_new_pwd" />
+	<caption name="pwd_reset_send_btn" />
+	<caption name="pwd_reset_ok_btn" />
 </rule>

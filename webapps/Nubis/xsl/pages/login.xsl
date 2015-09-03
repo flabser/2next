@@ -9,24 +9,26 @@
 
 	<xsl:template name="_content">
 		<section class="form-login">
-			<h1 class="text-center">
-				<xsl:value-of select="//captions/login_title/@caption" />
-			</h1>
+			<div class="page-header">
+				<h1 class="text-center">
+					<xsl:value-of select="//captions/login_title/@caption" />
+				</h1>
+			</div>
 			<div class="alert alert-danger" id="login-error" role="alert" style="display:none;">Login or password incorrect</div>
 			<form method="post" name="signin">
 				<div class="form-group">
 					<input class="form-control" type="email" name="login" required="required" placeholder="E-mail" />
 				</div>
 				<div class="form-group">
-					<div class="clearfix">
-						<a href="?id=reset_password" class="pull-right">
+					<div class="text-right">
+						<a href="?id=reset_password">
 							<xsl:value-of select="//captions/forgot_password/@caption" />
 						</a>
 					</div>
 					<input class="form-control" type="password" name="pwd" required="required" placeholder="{//captions/password/@caption}" />
 				</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-default pull-right">
+				<div class="text-right">
+					<button type="submit" class="btn btn-default">
 						<xsl:value-of select="//captions/login_btn/@caption" />
 					</button>
 				</div>
