@@ -109,6 +109,11 @@
 							</li>
 						</xsl:if>
 					</ul>
+					<xsl:if test="//@userid != 'anonymous'">
+						<form class="navbar-form navbar-right" role="search" onsubmit="alert('кручу-верчу найти хочу'); return false;">
+							<input type="text" class="form-control" name="keyword" placeholder="Search" />
+						</form>
+					</xsl:if>
 				</nav>
 			</div>
 		</header>
