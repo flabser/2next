@@ -22,7 +22,6 @@ import cashtracker.model.constants.converter.TransactionStateConverter;
 import cashtracker.model.constants.converter.TransactionTypeConverter;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.AppEntity;
@@ -32,10 +31,6 @@ import com.flabser.restful.data.AppEntity;
 @Entity
 @Table(name = "transactions")
 public class Transaction extends AppEntity /*SecureAppEntity*/{
-
-	@JsonIgnore
-	@Column(name = "user_id", nullable = false, updatable = false)
-	private Long userId;
 
 	@Convert(converter = TransactionTypeConverter.class)
 	@Column(name = "transaction_type")
@@ -62,7 +57,9 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	private CostCenter costCenter;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "transaction_tags", joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
+	@JoinTable(name = "transaction_tags",
+				joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") },
+				inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
 	private List <Tag> tags;
 
 	@Column(nullable = false)
@@ -93,14 +90,6 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	private boolean includeInReports;
 
 	//
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
 	public TransactionType getTransactionType() {
 		return transactionType;
 	}
@@ -369,7 +358,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@Override
 	public String toString() {
-		return "Transaction[" + id + ", " + userId + ", " + date + ", " + category + ", " + accountFrom + ", " + amount
-				+ ", " + costCenter + "," + tags + "]";
+		return "Transaction[" + id + ", " + date + ", " + category + ", " + accountFrom + ", " + amount + ", "
+				+ costCenter + "," + tags + "]";
 	}
 }

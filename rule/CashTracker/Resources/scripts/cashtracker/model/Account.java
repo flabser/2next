@@ -19,7 +19,7 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "accounts")
 public class Account extends AppEntity {
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 128)
 	private String name;
 
 	@Column(name = "currency_code")
@@ -33,15 +33,15 @@ public class Account extends AppEntity {
 
 	private boolean enabled;
 
+	@Column(length = 256)
 	private String note;
 
 	private Long owner;
 
 	@ElementCollection
-	@CollectionTable(name = "account_observers",joinColumns =  @JoinColumn(name = "fk_parent"))
+	@CollectionTable(name = "account_observers", joinColumns = @JoinColumn(name = "fk_parent"))
 	@Column(name = "userid")
-	private List<Long> observers;
-
+	private List <Long> observers;
 
 	// @OneToMany(mappedBy = "accountFrom", fetch = FetchType.LAZY)
 	// private List <Transaction> transactionsFrom;
@@ -50,8 +50,6 @@ public class Account extends AppEntity {
 	// private List <Transaction> transactionsTo;
 
 	//
-
-
 	public String getName() {
 		return name;
 	}
@@ -108,11 +106,11 @@ public class Account extends AppEntity {
 		this.owner = owner;
 	}
 
-	public List<Long> getObservers() {
+	public List <Long> getObservers() {
 		return observers;
 	}
 
-	public void setObservers(List<Long> observers) {
+	public void setObservers(List <Long> observers) {
 		this.observers = observers;
 	}
 
@@ -120,6 +118,4 @@ public class Account extends AppEntity {
 	public String toString() {
 		return "Account[" + id + "," + name + ", " + currencyCode + ", " + openingBalance + "]";
 	}
-
-
 }

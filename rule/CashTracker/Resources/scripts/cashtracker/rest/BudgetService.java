@@ -72,7 +72,6 @@ public class BudgetService extends RestProvider {
 		}
 
 		BudgetDAO dao = new BudgetDAO(getSession());
-
 		return Response.ok(dao.update(m)).build();
 	}
 

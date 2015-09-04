@@ -44,7 +44,7 @@ public class CategoryTest extends InitEnv {
 			}
 			m.setTransactionTypes(transactionTypes);
 
-			parent = dao.add(m);
+			parent = (Category) dao.add(m);
 		}
 
 		for (IAppEntity e : dao.findAll()) {

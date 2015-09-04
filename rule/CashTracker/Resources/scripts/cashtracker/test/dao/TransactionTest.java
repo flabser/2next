@@ -47,7 +47,7 @@ public class TransactionTest extends InitEnv {
 
 		PageRequest pr = new PageRequest(0, 5, "", "");
 
-		int size = dao.findAll(pr, null).size();
+		int size = dao.find(pr, null).size();
 		int iteration = size + 1;
 
 		for (int i = size; i < iteration; i++) {
@@ -84,12 +84,12 @@ public class TransactionTest extends InitEnv {
 
 	// @Test
 	public void selectTest() {
-		List <Transaction> ts = dao.findAll(new PageRequest(50000, 20, "", ""), TransactionType.EXPENSE);
+		List <Transaction> ts = dao.find(new PageRequest(50000, 20, "", ""), TransactionType.EXPENSE);
 		for (Transaction t : ts) {
 			t.getTags().forEach(Tag::getId);
 		}
 		//
-		ts = dao.findAll(new PageRequest(10000, 20, "", ""), TransactionType.INCOME);
-		ts = dao.findAll(new PageRequest(20000, 20, "", ""), TransactionType.TRANSFER);
+		ts = dao.find(new PageRequest(10000, 20, "", ""), TransactionType.INCOME);
+		ts = dao.find(new PageRequest(20000, 20, "", ""), TransactionType.TRANSFER);
 	}
 }

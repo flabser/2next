@@ -13,6 +13,8 @@ public class CategoryValidator {
 
 		if (m.getName() == null || m.getName().isEmpty()) {
 			ve.addError("name", "required", "required");
+		} else if (m.getName().length() > 128) {
+			ve.addError("name", "invalid", "too_long");
 		}
 
 		return ve;

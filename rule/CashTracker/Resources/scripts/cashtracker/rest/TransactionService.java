@@ -44,7 +44,7 @@ public class TransactionService extends RestProvider {
 		if (trType != null && !trType.isEmpty()) {
 			type = TransactionType.typeOf(trType.substring(0, 1).toUpperCase());
 		}
-		Collection <Transaction> list = dao.findAll(pr, type);
+		Collection <Transaction> list = dao.find(pr, type);
 		return Response.ok(new Transactions(list)).build();
 	}
 
@@ -67,8 +67,6 @@ public class TransactionService extends RestProvider {
 		}
 
 		TransactionDAO dao = new TransactionDAO(getSession());
-
-		m.setUserId((long) getSession().getAppUser().id);
 		return Response.ok(dao.add(m)).build();
 	}
 

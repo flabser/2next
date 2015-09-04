@@ -17,7 +17,6 @@ import cashtracker.model.constants.TransactionType;
 import cashtracker.model.constants.converter.TransactionTypeConverter;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.AppEntity;
@@ -35,11 +34,7 @@ public class Category extends AppEntity {
 	@OneToMany(mappedBy = "parentCategory")
 	private List <Category> children;
 
-	@JsonIgnore
-	@Column(name = "user_id", nullable = false, updatable = false)
-	private Long userId;
-
-	@Column(nullable = false)
+	@Column(nullable = false, length = 128)
 	private String name;
 
 	@ElementCollection
@@ -50,6 +45,7 @@ public class Category extends AppEntity {
 
 	private boolean enabled;
 
+	@Column(length = 256)
 	private String note;
 
 	private int color;
@@ -91,14 +87,6 @@ public class Category extends AppEntity {
 		Category parent = new Category();
 		parent.setId(id);
 		setParentCategory(parent);
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
 	}
 
 	public String getName() {

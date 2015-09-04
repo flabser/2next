@@ -37,6 +37,4 @@ public class AccountDAO extends DAO {
 		q.setMaxResults(1);
 		return !q.getResultList().isEmpty();
 	}
-
-
 }

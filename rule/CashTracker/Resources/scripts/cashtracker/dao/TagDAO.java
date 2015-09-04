@@ -2,23 +2,18 @@ package cashtracker.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import cashtracker.model.Tag;
 
+import com.flabser.restful.data.DAO;
 import com.flabser.script._Session;
-import com.flabser.users.User;
 
 
-public class TagDAO {
-
-	private EntityManager em;
-	private User user;
+public class TagDAO extends DAO {
 
 	public TagDAO(_Session session) {
-		this.user = session.getAppUser();
-		this.em = session.getDatabase().getEntityManager();
+		super(session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -41,25 +36,5 @@ public class TagDAO {
 		q.setParameter("tag", m);
 		q.setMaxResults(1);
 		return !q.getResultList().isEmpty();
-	}
-
-	public Tag add(Tag m) {
-		em.getTransaction().begin();
-		em.persist(m);
-		em.getTransaction().commit();
-		return m;
-	}
-
-	public Tag update(Tag m) {
-		em.getTransaction().begin();
-		em.merge(m);
-		em.getTransaction().commit();
-		return m;
-	}
-
-	public void delete(Tag m) {
-		em.getTransaction().begin();
-		em.remove(m);
-		em.getTransaction().commit();
 	}
 }

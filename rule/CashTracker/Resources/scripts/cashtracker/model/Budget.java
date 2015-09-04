@@ -19,14 +19,13 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "budgets")
 public class Budget extends AppEntity {
 
-	@Column(nullable = false, length = 64)
+	@Column(nullable = false, length = 128)
 	private String name;
 
 	private Long owner;
 
 	@Convert(converter = BudgetStateConverter.class)
 	private BudgetState status;
-
 
 	public String getName() {
 		return name;

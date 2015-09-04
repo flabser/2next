@@ -12,7 +12,6 @@ import com.flabser.script._Session;
 
 public class CostCenterDAO extends DAO {
 
-
 	public CostCenterDAO(_Session session) {
 		super(session);
 	}

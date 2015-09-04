@@ -2,7 +2,6 @@ package cashtracker.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import cashtracker.helper.PageRequest;
@@ -12,22 +11,18 @@ import cashtracker.model.CostCenter;
 import cashtracker.model.Transaction;
 import cashtracker.model.constants.TransactionType;
 
+import com.flabser.restful.data.DAO;
 import com.flabser.script._Session;
-import com.flabser.users.User;
 
 
-public class TransactionDAO {
-
-	private EntityManager em;
-	private User user;
+public class TransactionDAO extends DAO {
 
 	public TransactionDAO(_Session session) {
-		this.user = session.getAppUser();
-		this.em = session.getDatabase().getEntityManager();
+		super(session);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List <Transaction> findAll(PageRequest pr, TransactionType type) {
+	public List <Transaction> find(PageRequest pr, TransactionType type) {
 		String jpql;
 		if (type == null) {
 			jpql = "SELECT t FROM Transaction AS t ORDER BY t.date";
@@ -75,25 +70,5 @@ public class TransactionDAO {
 		Query q = em.createQuery(jpql);
 		q.setParameter("category", m);
 		return q.getResultList();
-	}
-
-	public Transaction add(Transaction m) {
-		em.getTransaction().begin();
-		em.persist(m);
-		em.getTransaction().commit();
-		return m;
-	}
-
-	public Transaction update(Transaction m) {
-		em.getTransaction().begin();
-		em.merge(m);
-		em.getTransaction().commit();
-		return m;
-	}
-
-	public void delete(Transaction m) {
-		em.getTransaction().begin();
-		em.remove(m);
-		em.getTransaction().commit();
 	}
 }

@@ -2,23 +2,18 @@ package cashtracker.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import cashtracker.model.Category;
 
+import com.flabser.restful.data.DAO;
 import com.flabser.script._Session;
-import com.flabser.users.User;
 
 
-public class CategoryDAO {
-
-	private EntityManager em;
-	private User user;
+public class CategoryDAO extends DAO {
 
 	public CategoryDAO(_Session session) {
-		this.user = session.getAppUser();
-		this.em = session.getDatabase().getEntityManager();
+		super(session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -45,25 +40,5 @@ public class CategoryDAO {
 
 	public boolean existsChildCategory(Category m) {
 		return !m.getChildren().isEmpty();
-	}
-
-	public Category add(Category m) {
-		em.getTransaction().begin();
-		em.persist(m);
-		em.getTransaction().commit();
-		return m;
-	}
-
-	public Category update(Category m) {
-		em.getTransaction().begin();
-		em.merge(m);
-		em.getTransaction().commit();
-		return m;
-	}
-
-	public void delete(Category m) {
-		em.getTransaction().begin();
-		em.remove(m);
-		em.getTransaction().commit();
 	}
 }
