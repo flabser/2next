@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import cashtracker.model.constants.TransactionState;
 import cashtracker.model.constants.TransactionType;
@@ -57,11 +59,10 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	private CostCenter costCenter;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "transaction_tags",
-				joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") },
-				inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
+	@JoinTable(name = "transaction_tags", joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
 	private List <Tag> tags;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Date date = new Date();
 
@@ -78,9 +79,11 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@Column(name = "repeat_step")
 	private int repeatStep;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_date", nullable = true)
 	private Date startDate;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "end_date", nullable = true)
 	private Date endDate;
 

@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -27,11 +28,11 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "categories")
 public class Category extends AppEntity {
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id")
 	private Category parentCategory;
 
-	@OneToMany(mappedBy = "parentCategory")
+	@OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY)
 	private List <Category> children;
 
 	@Column(nullable = false, length = 64)
@@ -48,8 +49,7 @@ public class Category extends AppEntity {
 	@Column(length = 256)
 	private String note;
 
-	private int color;
-
+	private byte color;
 
 	// @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	// private List <Transaction> transactions;
@@ -137,14 +137,13 @@ public class Category extends AppEntity {
 		this.note = note;
 	}
 
-	public int getColor() {
+	public byte getColor() {
 		return color;
 	}
 
-	public void setColor(int color) {
+	public void setColor(byte color) {
 		this.color = color;
 	}
-
 
 	@Override
 	public String toString() {

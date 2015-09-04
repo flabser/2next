@@ -22,7 +22,7 @@ public class Account extends AppEntity {
 	@Column(nullable = false, length = 64)
 	private String name;
 
-	@Column(name = "currency_code")
+	@Column(name = "currency_code", nullable = false, length = 3)
 	private String currencyCode;
 
 	@Column(name = "opening_balance")
