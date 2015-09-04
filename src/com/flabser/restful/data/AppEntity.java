@@ -3,6 +3,7 @@ package com.flabser.restful.data;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +12,7 @@ import javax.persistence.Transient;
 
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
+
 
 @MappedSuperclass
 public abstract class AppEntity implements IAppEntity {
@@ -21,12 +23,14 @@ public abstract class AppEntity implements IAppEntity {
 
 	protected long parentId;
 
+	@Column(name = "author", nullable = false, updatable = false)
 	protected Long author;
 
+	@Column(name = "reg_date", nullable = false, updatable = false)
 	protected Date regDate;
 
 	@Transient
-	protected ArrayList<AttachedFile> attachments = new ArrayList<AttachedFile>();
+	protected ArrayList <AttachedFile> attachments = new ArrayList <AttachedFile>();
 
 	@Override
 	public void setId(long id) {
@@ -49,6 +53,7 @@ public abstract class AppEntity implements IAppEntity {
 	}
 
 	class AttachedFile {
+
 		public String fieldName;
 		public String realFileName;
 		public String tempID;
@@ -78,5 +83,4 @@ public abstract class AppEntity implements IAppEntity {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
-
 }
