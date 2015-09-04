@@ -18,10 +18,12 @@ public class BudgetTest extends Assert {
 		ObjectMapper mapper = new ObjectMapper();
 
 		Budget m = new Budget();
+		m.setAuthor(1L);
+		m.setRegDate(new Date());
 		m.setId(1);
 		m.setName("budget 1");
 		m.setRegDate(new Date());
-		// b.setOwner(new User());
+		m.setOwner(1L);
 		m.setStatus(BudgetState.ACTIVE);
 
 		String json = mapper.writeValueAsString(m);

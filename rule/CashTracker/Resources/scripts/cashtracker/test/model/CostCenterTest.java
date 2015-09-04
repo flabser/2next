@@ -1,5 +1,7 @@
 package cashtracker.test.model;
 
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,6 +17,8 @@ public class CostCenterTest extends Assert {
 		ObjectMapper mapper = new ObjectMapper();
 
 		CostCenter m = new CostCenter();
+		m.setAuthor(1L);
+		m.setRegDate(new Date());
 		m.setId(1);
 		m.setName("CostCenter 1");
 

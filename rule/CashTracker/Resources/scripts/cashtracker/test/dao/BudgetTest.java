@@ -2,21 +2,29 @@ package cashtracker.test.dao;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import cashtracker.dao.BudgetDAO;
 import cashtracker.model.Budget;
 import cashtracker.model.constants.BudgetState;
 
+import com.flabser.dataengine.pool.DatabasePoolException;
+
 
 public class BudgetTest extends InitEnv {
 
-	// @Test
-	public void test() {
-		assertNotNull(db);
+	BudgetDAO dao;
 
-		BudgetDAO dao = new BudgetDAO(ses);
+	@Before
+	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
+			DatabasePoolException {
+		super.init();
+		dao = new BudgetDAO(ses);
+	}
 
+	@Test
+	public void insertTest() {
 		int it = dao.findAll().size();
 
 		Budget m = new Budget();
@@ -28,12 +36,11 @@ public class BudgetTest extends InitEnv {
 			m.setStatus(BudgetState.DELETED);
 		}
 
-		dao.add(m);
+		assertNotNull(dao.add(m) != null);
 	}
 
 	@Test
 	public void deleteTest() {
-		BudgetDAO dao = new BudgetDAO(ses);
 		dao.delete();
 	}
 }

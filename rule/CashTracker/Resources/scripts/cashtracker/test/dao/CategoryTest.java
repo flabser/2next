@@ -1,29 +1,36 @@
 package cashtracker.test.dao;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.util.ArrayList;
+import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import cashtracker.dao.CategoryDAO;
 import cashtracker.model.Category;
 import cashtracker.model.constants.TransactionType;
 
+import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.restful.data.IAppEntity;
 
 
 public class CategoryTest extends InitEnv {
 
-	@Test
-	public void test() {
-		assertNotNull(db);
+	CategoryDAO dao;
 
-		CategoryDAO dao = new CategoryDAO(ses);
+	@Before
+	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
+			DatabasePoolException {
+		super.init();
+		dao = new CategoryDAO(ses);
+	}
+
+	@Test
+	public void insertTest() {
 		Category parent = null;
 
 		int size = dao.findAll().size();
-		int iteration = size + 1;
+		int iteration = size + 3;
 
 		for (int i = size; i < iteration; i++) {
 			Category m = new Category();
@@ -48,6 +55,16 @@ public class CategoryTest extends InitEnv {
 		for (IAppEntity e : dao.findAll()) {
 			Category m = (Category) e;
 			m.getTransactionTypes().forEach(System.out::println);
+		}
+	}
+
+	@Test
+	public void updateTest() {
+		List <Category> list = dao.findAll();
+
+		for (Category m : list) {
+			m.setName(m.getName() + "-u");
+			System.out.println(dao.update(m));
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package cashtracker.test.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -19,6 +20,8 @@ public class CategoryTest extends Assert {
 		ObjectMapper mapper = new ObjectMapper();
 
 		Category m = new Category();
+		m.setAuthor(1L);
+		m.setRegDate(new Date());
 		m.setId(1);
 		m.setName("cat 1");
 		m.setEnabled(true);

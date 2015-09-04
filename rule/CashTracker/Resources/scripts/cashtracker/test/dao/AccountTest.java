@@ -23,7 +23,7 @@ public class AccountTest extends InitEnv {
 	@Override
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-	DatabasePoolException {
+			DatabasePoolException {
 		super.init();
 		dao = new AccountDAO(ses);
 	}
@@ -33,7 +33,7 @@ public class AccountTest extends InitEnv {
 		assertNotNull(db);
 
 		int size = dao.findAll().size();
-		int iteration = size + 1;
+		int iteration = size + 2;
 
 		for (int i = size; i < iteration; i++) {
 			Account m = new Account();
@@ -58,5 +58,15 @@ public class AccountTest extends InitEnv {
 
 		assertNotNull(aFirst);
 		assertNotNull(aLast);
+	}
+
+	@Test
+	public void updateTest() {
+		List <Account> list = dao.findAll();
+
+		for (Account m : list) {
+			m.setName(m.getName() + "-u");
+			System.out.println(dao.update(m));
+		}
 	}
 }

@@ -19,7 +19,7 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "accounts")
 public class Account extends AppEntity {
 
-	@Column(nullable = false, length = 64)
+	@Column(nullable = false, unique = true, length = 64)
 	private String name;
 
 	@Column(name = "currency_code", nullable = false, length = 3)
@@ -116,6 +116,7 @@ public class Account extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "Account[" + id + "," + name + ", " + currencyCode + ", " + openingBalance + "]";
+		return "Account[" + id + "," + name + ", " + currencyCode + ", " + openingBalance + ", " + getAuthor() + ", "
+				+ getRegDate() + "]";
 	}
 }

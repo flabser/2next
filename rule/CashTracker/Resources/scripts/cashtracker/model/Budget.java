@@ -19,7 +19,7 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "budgets")
 public class Budget extends AppEntity {
 
-	@Column(nullable = false, length = 64)
+	@Column(nullable = false, unique = true, length = 64)
 	private String name;
 
 	private Long owner;
@@ -66,6 +66,7 @@ public class Budget extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "Budget[" + id + ", " + name + ", " + regDate + ", " + owner + ", " + status + "]";
+		return "Budget[" + id + ", " + name + ", " + owner + ", " + status + ", " + getAuthor() + ", " + getRegDate()
+				+ "]";
 	}
 }

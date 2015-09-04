@@ -30,6 +30,6 @@ public class Tag extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "Tag[" + id + ", " + name + "]";
+		return "Tag[" + id + ", " + name + ", " + getAuthor() + ", " + getRegDate() + "]";
 	}
 }

@@ -18,6 +18,8 @@ public class TransactionTest extends Assert {
 		ObjectMapper mapper = new ObjectMapper();
 
 		Transaction m = new Transaction();
+		m.setAuthor(1L);
+		m.setRegDate(new Date());
 		m.setId(1);
 		m.setAmount(new BigDecimal(1000));
 		m.setDate(new Date());

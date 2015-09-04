@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import cashtracker.model.constants.TransactionType;
 import cashtracker.model.constants.converter.TransactionTypeConverter;
@@ -25,7 +26,7 @@ import com.flabser.restful.data.AppEntity;
 
 @JsonRootName("category")
 @Entity
-@Table(name = "categories")
+@Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = { "parent_id", "name" }))
 public class Category extends AppEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -147,6 +148,7 @@ public class Category extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "Category[" + id + ", " + name + ", " + enabled + ", " + parentCategory + ", " + transactionTypes + "]";
+		return "Category[" + id + ", " + name + ", " + enabled + ", " + parentCategory + ", " + transactionTypes + ", "
+				+ getAuthor() + ", " + getRegDate() + "]";
 	}
 }

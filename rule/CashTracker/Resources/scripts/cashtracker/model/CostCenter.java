@@ -30,6 +30,6 @@ public class CostCenter extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "CostCenter[" + id + ", " + name + "]";
+		return "CostCenter[" + id + ", " + name + ", " + getAuthor() + ", " + getRegDate() + "]";
 	}
 }

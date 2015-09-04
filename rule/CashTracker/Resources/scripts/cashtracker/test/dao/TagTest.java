@@ -25,12 +25,12 @@ public class TagTest extends InitEnv {
 		dao = new TagDAO(ses);
 	}
 
-	// @Test
+	@Test
 	public void insertTest() {
 		assertNotNull(db);
 
 		int size = dao.findAll().size();
-		int iteration = size + 1;
+		int iteration = size + 2;
 
 		for (int i = size; i < iteration; i++) {
 			Tag m = new Tag();
@@ -40,7 +40,7 @@ public class TagTest extends InitEnv {
 		}
 	}
 
-	// @Test
+	@Test
 	public void selectTest() {
 		List <Tag> list = dao.findAll();
 		assertTrue(list.size() > 0);
@@ -52,12 +52,14 @@ public class TagTest extends InitEnv {
 		assertNotNull(mLast);
 	}
 
-	// @Test
+	@Test
 	public void updateTest() {
 		List <Tag> list = dao.findAll();
-		Tag mFirst = dao.findById(list.get(0).getId());
-		mFirst.setName(mFirst.getName() + "-1");
-		dao.update(mFirst);
+
+		for (Tag m : list) {
+			m.setName(m.getName() + "-u");
+			System.out.println(dao.update(m));
+		}
 	}
 
 	@Test

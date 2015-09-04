@@ -363,6 +363,6 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@Override
 	public String toString() {
 		return "Transaction[" + id + ", " + date + ", " + category + ", " + accountFrom + ", " + amount + ", "
-				+ costCenter + "," + tags + "]";
+				+ costCenter + "," + tags + ", " + getAuthor() + ", " + getRegDate() + "]";
 	}
 }

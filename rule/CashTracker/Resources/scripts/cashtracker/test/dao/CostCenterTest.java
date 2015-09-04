@@ -26,11 +26,11 @@ public class CostCenterTest extends InitEnv {
 	}
 
 	@Test
-	public void test() {
+	public void insertTest() {
 		assertNotNull(db);
 
 		int size = dao.findAll().size();
-		int iteration = size + 1;
+		int iteration = size + 2;
 
 		for (int i = size; i < iteration; i++) {
 			CostCenter m = new CostCenter();
@@ -50,5 +50,15 @@ public class CostCenterTest extends InitEnv {
 
 		assertNotNull(mFirst);
 		assertNotNull(mLast);
+	}
+
+	@Test
+	public void updateTest() {
+		List <CostCenter> list = dao.findAll();
+
+		for (CostCenter m : list) {
+			m.setName(m.getName() + "-u");
+			System.out.println(dao.update(m));
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package cashtracker.test.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,6 +18,8 @@ public class AccountTest extends Assert {
 		ObjectMapper mapper = new ObjectMapper();
 
 		Account m = new Account();
+		m.setAuthor(1L);
+		m.setRegDate(new Date());
 		m.setId(1);
 		m.setAmountControl(new BigDecimal(10000));
 		m.setCurrencyCode("KZT");
