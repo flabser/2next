@@ -30,7 +30,9 @@ import com.flabser.server.Server;
 import com.flabser.servlets.sitefiles.AttachmentHandler;
 import com.flabser.users.UserSession;
 
+
 public class Provider extends HttpServlet {
+
 	private static final long serialVersionUID = 2352885167311108325L;
 	private AppTemplate env;
 	private ServletContext context;
@@ -48,6 +50,11 @@ public class Provider extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		doPost(request, response);
+	}
+
+	@Override
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		doPost(request, response);
 	}
 
@@ -89,8 +96,8 @@ public class Provider extends HttpServlet {
 					} else {
 						String reqEnc = request.getCharacterEncoding();
 						type = new String(type.getBytes("ISO-8859-1"), reqEnc);
-						ApplicationException ae = new ApplicationException(env.templateType, "Request has been undefined, type=" + type
-								+ ", id=" + id + ", key=" + key);
+						ApplicationException ae = new ApplicationException(env.templateType,
+								"Request has been undefined, type=" + type + ", id=" + id + ", key=" + key);
 						response.setStatus(ae.getCode());
 						response.getWriter().println(ae.getHTMLMessage());
 						return;
@@ -150,7 +157,8 @@ public class Provider extends HttpServlet {
 				}
 
 			} else {
-				throw new ServerException(ServerExceptionType.APPTEMPLATE_HAS_NOT_INITIALIZED, "context=" + context.getServletContextName());
+				throw new ServerException(ServerExceptionType.APPTEMPLATE_HAS_NOT_INITIALIZED, "context="
+						+ context.getServletContextName());
 			}
 		} catch (Exception e) {
 			ApplicationException ae = new ApplicationException(env.templateType, e.toString(), e);
@@ -159,12 +167,13 @@ public class Provider extends HttpServlet {
 		}
 	}
 
-	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule, UserSession userSession)
-			throws RuleException, UnsupportedEncodingException, ClassNotFoundException, _Exception, WebFormValueException {
+	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule,
+			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,
+			_Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
-		HashMap<String, String[]> fields = new HashMap<String, String[]>();
-		Map<String, String[]> parMap = request.getParameterMap();
+		HashMap <String, String[]> fields = new HashMap <String, String[]>();
+		Map <String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
 		Page page = new Page(env, userSession, pageRule, request.getMethod());
 		result.output.append(page.process(fields).toXML());
@@ -176,12 +185,12 @@ public class Provider extends HttpServlet {
 		return result;
 	}
 
-	private ProviderResult search(HttpServletRequest request, UserSession userSession) throws RuleException, UnsupportedEncodingException {
+	private ProviderResult search(HttpServletRequest request, UserSession userSession) throws RuleException,
+			UnsupportedEncodingException {
 		ProviderResult result = new ProviderResult(PublishAsType.HTML, "searchres.xsl");
 		try {
 			Integer.parseInt(request.getParameter("page"));
-		} catch (NumberFormatException nfe) {
-		}
+		} catch (NumberFormatException nfe) {}
 		String keyWord = request.getParameter("keyword");
 		keyWord = new String(keyWord.getBytes("ISO-8859-1"), "UTF-8");
 		// FTSearchRequest ftRequest = new FTSearchRequest(env,
@@ -192,7 +201,8 @@ public class Provider extends HttpServlet {
 		return result;
 	}
 
-	private ProviderResult getAttach(HttpServletRequest request, UserSession userSession, String key) throws UnsupportedEncodingException {
+	private ProviderResult getAttach(HttpServletRequest request, UserSession userSession, String key)
+			throws UnsupportedEncodingException {
 		ProviderResult result = new ProviderResult(PublishAsType.OUTPUTSTREAM, null);
 		/*
 		 * String fieldName = request.getParameter("field"); String attachName =
