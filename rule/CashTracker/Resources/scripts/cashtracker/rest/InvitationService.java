@@ -29,6 +29,8 @@ public class InvitationService extends RestProvider {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
+		// TODO send invite
+
 		return Response.ok().build();
 	}
 }

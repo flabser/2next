@@ -72,7 +72,16 @@ public class CategoryService extends RestProvider {
 		}
 
 		CategoryDAO dao = new CategoryDAO(getSession());
-		return Response.ok(dao.update(m)).build();
+		//
+		Category pm = dao.findById(id);
+		pm.setName(m.getName());
+		pm.setParentCategory(m.getParentCategory());
+		pm.setTransactionTypes(m.getTransactionTypes());
+		pm.setNote(m.getNote());
+		pm.setColor(m.getColor());
+		pm.setEnabled(m.isEnabled());
+		//
+		return Response.ok(dao.update(pm)).build();
 	}
 
 	@DELETE

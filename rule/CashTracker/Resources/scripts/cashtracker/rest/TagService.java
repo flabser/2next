@@ -72,7 +72,11 @@ public class TagService extends RestProvider {
 		}
 
 		TagDAO dao = new TagDAO(getSession());
-		return Response.ok(dao.update(m)).build();
+		//
+		Tag pm = dao.findById(id);
+		pm.setName(m.getName());
+		//
+		return Response.ok(dao.update(pm)).build();
 	}
 
 	@DELETE

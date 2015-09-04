@@ -72,7 +72,18 @@ public class AccountService extends RestProvider {
 		}
 
 		AccountDAO dao = new AccountDAO(getSession());
-		return Response.ok(dao.update(m)).build();
+		//
+		Account pm = dao.findById(id);
+		pm.setName(m.getName());
+		pm.setAmountControl(m.getAmountControl());
+		pm.setOpeningBalance(m.getOpeningBalance());
+		pm.setCurrencyCode(m.getCurrencyCode());
+		pm.setEnabled(m.isEnabled());
+		pm.setNote(m.getNote());
+		pm.setObservers(m.getObservers());
+		pm.setOwner(m.getOwner());
+		//
+		return Response.ok(dao.update(pm)).build();
 	}
 
 	@DELETE
