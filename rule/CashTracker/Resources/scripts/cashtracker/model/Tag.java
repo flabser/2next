@@ -13,7 +13,7 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "tags")
 public class Tag extends AppEntity {
 
-	@Column(nullable = false, length = 128)
+	@Column(nullable = false, unique = true, length = 32)
 	private String name;
 
 	// @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)

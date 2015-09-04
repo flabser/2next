@@ -34,7 +34,7 @@ public class Category extends AppEntity {
 	@OneToMany(mappedBy = "parentCategory")
 	private List <Category> children;
 
-	@Column(nullable = false, length = 128)
+	@Column(nullable = false, length = 64)
 	private String name;
 
 	@ElementCollection

@@ -28,6 +28,8 @@
 }
 
 .tn-app.off {
+	border-color: #bbb;
+	box-shadow: none;
 	opacity: .5;
 }
 
@@ -84,6 +86,14 @@ img.tn-app-logo {
 }
 
 .tn-app button:hover {
+	color: #444;
+}
+
+.tn-app button>.fa {
+	color: #999;
+}
+
+.tn-app button:hover>.fa {
 	color: #444;
 }
 
