@@ -2,23 +2,18 @@ package nubis.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import nubis.model.Profile;
 
+import com.flabser.restful.data.DAO;
 import com.flabser.script._Session;
-import com.flabser.users.User;
 
 
-public class ProfileDAO {
-
-	private EntityManager em;
-	private User user;
+public class ProfileDAO extends DAO {
 
 	public ProfileDAO(_Session session) {
-		this.user = session.getAppUser();
-		this.em = session.getDatabase().getEntityManager();
+		super(session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -33,25 +28,5 @@ public class ProfileDAO {
 		Query q = em.createQuery(jpql);
 		q.setParameter("id", id);
 		return (Profile) q.getSingleResult();
-	}
-
-	public Profile add(Profile m) {
-		em.getTransaction().begin();
-		em.persist(m);
-		em.getTransaction().commit();
-		return m;
-	}
-
-	public Profile update(Profile m) {
-		em.getTransaction().begin();
-		em.merge(m);
-		em.getTransaction().commit();
-		return m;
-	}
-
-	public void delete(Profile m) {
-		em.getTransaction().begin();
-		em.remove(m);
-		em.getTransaction().commit();
 	}
 }
