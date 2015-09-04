@@ -22,7 +22,7 @@ import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
-import com.flabser.restful.AuthUser;
+import com.flabser.restful.AppUser;
 import com.flabser.server.Server;
 import com.flabser.util.Util;
 
@@ -332,7 +332,7 @@ public class User {
 		this.isSupervisor = isSupervisor;
 	}
 
-	public void refresh(AuthUser authUser) {
+	public void refresh(AppUser authUser) {
 		//	login = authUser.getLogin();
 		userName = authUser.getName();
 		password = authUser.getPwd();

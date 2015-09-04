@@ -10,7 +10,7 @@ import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.restful.Application;
-import com.flabser.restful.AuthUser;
+import com.flabser.restful.AppUser;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
@@ -138,8 +138,8 @@ public class UserSession implements ICache {
 		}
 	}
 
-	public AuthUser getUserPOJO() {
-		AuthUser aUser = new AuthUser();
+	public AppUser getUserPOJO() {
+		AppUser aUser = new AppUser();
 		aUser.setLogin(currentUser.getLogin());
 		aUser.setName(currentUser.getUserName());
 		aUser.setEmail(currentUser.getEmail());

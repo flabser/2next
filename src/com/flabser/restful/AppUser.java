@@ -14,7 +14,7 @@ import com.flabser.users.AuthModeType;
 import com.flabser.users.UserStatusType;
 
 @JsonRootName("authUser")
-public class AuthUser {
+public class AppUser {
 	private String login;
 	private String name;
 	private String email;
