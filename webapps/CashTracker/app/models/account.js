@@ -10,14 +10,14 @@ export default DS.Model.extend(EmberValidations.Mixin, {
     enabled: DS.attr('boolean', {
         defaultValue: true
     }),
-    includeInTotals: DS.attr('boolean', {
+    /*includeInTotals: DS.attr('boolean', {
         defaultValue: true
-    }),
+    }),*/
     note: DS.attr('string'),
-    writers: DS.hasMany('user', {
+    owner: DS.hasMany('user', {
         async: true
     }),
-    readers: DS.hasMany('user', {
+    observers: DS.hasMany('user', {
         async: true
     }),
 

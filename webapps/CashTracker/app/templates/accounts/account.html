@@ -76,7 +76,7 @@
 
         <fieldset>
             <legend>{{t "permissions"}}</legend>
-            {{#tn-form-group property="writers"}}
+            {{#tn-form-group property="owner"}}
                 <div class="control-label">
                     {{t "writers"}}
                 </div>
@@ -85,7 +85,7 @@
                         contentBinding="users"
                         optionValuePath="content.id"
                         optionLabelPath="content.login"
-                        selectionBinding="account.writers"
+                        selectionBinding="account.owner"
                         multiple=true
                         prompt="- Select -"}}
                     {{tn-error-message}}
@@ -95,7 +95,7 @@
                 </div>
             {{/tn-form-group}}
 
-            {{#tn-form-group property="readers"}}
+            {{#tn-form-group property="observers"}}
                 <div class="control-label">
                     {{t "readers"}}
                 </div>
@@ -104,7 +104,7 @@
                         contentBinding="users"
                         optionValuePath="content.id"
                         optionLabelPath="content.login"
-                        selectionBinding="account.readers"
+                        selectionBinding="account.observers"
                         multiple=true
                         prompt="-"}}
                     {{tn-error-message}}
