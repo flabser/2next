@@ -84,6 +84,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@Column(name = "end_date", nullable = true)
 	private Date endDate;
 
+	@Column(length = 256)
 	private String note;
 
 	@Column(name = "include_in_reports")

@@ -19,7 +19,7 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "accounts")
 public class Account extends AppEntity {
 
-	@Column(nullable = false, length = 128)
+	@Column(nullable = false, length = 64)
 	private String name;
 
 	@Column(name = "currency_code")

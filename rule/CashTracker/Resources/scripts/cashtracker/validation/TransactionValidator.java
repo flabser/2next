@@ -15,6 +15,10 @@ public class TransactionValidator {
 			ve.addError("amount", "required", "required");
 		}
 
+		if (m.getNote() != null && m.getNote().length() > 256) {
+			ve.addError("note", "invalid", "too_long");
+		}
+
 		return ve;
 	}
 }

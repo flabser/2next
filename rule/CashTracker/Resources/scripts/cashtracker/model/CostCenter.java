@@ -13,7 +13,7 @@ import com.flabser.restful.data.AppEntity;
 @Table(name = "costcenters")
 public class CostCenter extends AppEntity {
 
-	@Column(nullable = false, length = 128)
+	@Column(nullable = false, unique = true, length = 64)
 	private String name;
 
 	// @OneToMany(mappedBy = "costCenter", fetch = FetchType.LAZY)
