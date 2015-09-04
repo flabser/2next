@@ -55,18 +55,13 @@ public abstract class DatabaseCore {
 		properties.put(PersistenceUnitProperties.JDBC_PASSWORD, dbPwd);
 		properties.put(PersistenceUnitProperties.JDBC_URL, appProfile.getURI());
 
-		//properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "");
-		properties.put(PersistenceUnitProperties.DDL_GENERATION,
-				"drop-and-create-tables");
-		properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE,
-				"createDDL.jdbc");
-		properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE,
-				"dropDDL.jdbc");
-		properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE,
-				"create");
-		//	properties.put(PersistenceUnitProperties.APP_LOCATION,Environment.tmpDir);
+		properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "");
+		properties.put(PersistenceUnitProperties.DDL_GENERATION,PersistenceUnitProperties.CREATE_ONLY);
+		properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE,"createDDL.jdbc");
+		properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE,"dropDDL.jdbc");
+
 		System.out.println(appProfile.appType);
-		//properties.put(PersistenceUnitProperties.ECLIPSELINK_PERSISTENCE_UNITS,appProfile.appType);
+
 		PersistenceProvider pp = new PersistenceProvider();
 		EntityManagerFactory factory = pp.createEntityManagerFactory(appProfile.appType, properties);
 		entityManager = factory.createEntityManager();

@@ -24,4 +24,8 @@ public enum BudgetState {
 	public String toValue() {
 		return value;
 	}
+
+	public static BudgetState getRandom() {
+		return values()[(int) (Math.random() * values().length)];
+	}
 }

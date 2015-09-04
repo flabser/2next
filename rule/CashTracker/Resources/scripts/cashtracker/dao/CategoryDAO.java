@@ -18,7 +18,7 @@ public class CategoryDAO extends DAO {
 
 	@SuppressWarnings("unchecked")
 	public List <Category> findAll() {
-		String jpql = "SELECT c FROM Category AS c ORDER BY c.sortOrder, c.name";
+		String jpql = "SELECT c FROM Category AS c ORDER BY c.name";
 		Query q = em.createQuery(jpql);
 		return q.getResultList();
 	}

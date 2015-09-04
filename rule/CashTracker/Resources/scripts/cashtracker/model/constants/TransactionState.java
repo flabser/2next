@@ -24,4 +24,8 @@ public enum TransactionState {
 	public String toValue() {
 		return value;
 	}
+
+	public static TransactionState getRandom() {
+		return values()[(int) (Math.random() * values().length)];
+	}
 }

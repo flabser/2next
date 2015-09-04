@@ -11,7 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -150,6 +152,11 @@ public class Util {
 
 	public static String generateRandomAsText() {
 		return Integer.toString(generateRandom());
+	}
+
+	public static Object getRandomFromList(List<?> list) {
+		int index = ThreadLocalRandom.current().nextInt(list.size());
+		return list.get(index);
 	}
 
 	public static boolean isGroupName(String userID) {
@@ -326,11 +333,6 @@ public class Util {
 		return generateRandomAsText(setOfTheLetters, 16);
 	}
 
-	public static Enum generateRandomEnum(Enum e) {
-		return e;
-		//	return e.values()[(int) (Math.random() * values().length)];
-
-	}
 
 	public static String generateRandomAsText(String setOfTheLetters, int len) {
 		Random r = new Random();

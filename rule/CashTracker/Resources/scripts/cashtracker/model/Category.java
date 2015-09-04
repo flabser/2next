@@ -50,8 +50,6 @@ public class Category extends AppEntity {
 
 	private int color;
 
-	@Column(name = "sort_order")
-	private int sortOrder;
 
 	// @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	// private List <Transaction> transactions;
@@ -147,13 +145,6 @@ public class Category extends AppEntity {
 		this.color = color;
 	}
 
-	public int getSortOrder() {
-		return sortOrder;
-	}
-
-	public void setSortOrder(int sortOrder) {
-		this.sortOrder = sortOrder;
-	}
 
 	@Override
 	public String toString() {

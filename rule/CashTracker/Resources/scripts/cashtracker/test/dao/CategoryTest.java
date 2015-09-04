@@ -37,10 +37,8 @@ public class CategoryTest extends InitEnv {
 			if (i % 2 == 1) {
 				transactionTypes.add(TransactionType.EXPENSE);
 				transactionTypes.add(TransactionType.INCOME);
-				m.setSortOrder(0);
 			} else {
 				transactionTypes.add(TransactionType.TRANSFER);
-				m.setSortOrder(i);
 			}
 			m.setTransactionTypes(transactionTypes);
 
