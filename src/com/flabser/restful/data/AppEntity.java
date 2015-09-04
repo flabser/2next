@@ -21,8 +21,6 @@ public abstract class AppEntity implements IAppEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
 
-	protected long parentId;
-
 	@Column(name = "author", nullable = false, updatable = false)
 	protected Long author;
 
@@ -40,16 +38,6 @@ public abstract class AppEntity implements IAppEntity {
 	@Override
 	public long getId() {
 		return id;
-	}
-
-	@Override
-	public long getParentId() {
-		return parentId;
-	}
-
-	@Override
-	public void setParentId(long parentId) {
-		this.parentId = parentId;
 	}
 
 	class AttachedFile {
@@ -71,7 +59,7 @@ public abstract class AppEntity implements IAppEntity {
 
 	public String getAuthorName() {
 		ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
-		return sysDb.getUser(author).getLogin();
+		return sysDb.getUser(author).getUserName();
 	}
 
 	@Override

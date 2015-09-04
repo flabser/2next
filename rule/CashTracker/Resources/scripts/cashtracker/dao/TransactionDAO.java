@@ -71,4 +71,5 @@ public class TransactionDAO extends DAO {
 		q.setParameter("category", m);
 		return q.getResultList();
 	}
+
 }

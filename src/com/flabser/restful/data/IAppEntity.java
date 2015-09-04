@@ -9,10 +9,6 @@ public interface IAppEntity {
 
 	long getId();
 
-	public long getParentId();
-
-	public void setParentId(long parentId);
-
 	public long getAuthor();
 
 	public void setAuthor(Long author);
