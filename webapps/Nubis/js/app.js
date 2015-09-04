@@ -27,7 +27,16 @@ nubis.init = function() {
 	});
 
 	$('.js-app-create').click(function(e) {
-		alert('create');
+		$('#app_сreate_modal').modal({
+			show: true,
+			backdrop: 'static',
+			keyboard: false
+		});
+
+		var appType = $(this).data('app-type');
+		$('[name=apptype]', '#form-app').val(appType);
+		$('[name=appname]', '#form-app').val('');
+		$('[name=description]', '#form-app').val('');
 	});
 
 	// reg form
@@ -199,6 +208,36 @@ nubis.removeApp = function(appId) {
 		url: '?id=unreg_app&app=' + appId,
 		success: function(result) {
 			location.reload();
+		}
+	});
+};
+
+nubis.createApp = function(form) {
+	$('#app_сreate_modal button').prop('disabled', true);
+	$('#app_сreate_modal button.btn-app-submit').button('loading');
+
+	$.ajax({
+		method: 'POST',
+		url: 'rest/page/reg-app',
+		data: $(form).serialize(),
+		success: function(resp) {
+			var appReg = false;
+			for (var i = 0; i < resp._Page.elements.length; i++) {
+				if ('application-registered' === resp._Page.elements[i].value) {
+					appReg = true;
+				}
+			}
+
+			if (appReg) {
+				$('#app_сreate_modal').modal('hide');
+				location.reload();
+			}
+		},
+		error: function(err) {
+			console.log(err);
+		},
+		complete: function() {
+			$('#app_сreate_modal button').prop('disabled', false);
 		}
 	});
 };

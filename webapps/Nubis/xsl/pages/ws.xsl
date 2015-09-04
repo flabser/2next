@@ -11,6 +11,7 @@
 		<section class="ws">
 			<xsl:apply-templates />
 		</section>
+		<xsl:call-template name="app-create-dialog" />
 	</xsl:template>
 
 	<xsl:template match="apps">
@@ -95,6 +96,58 @@
 				<i class="fa fa-plus" />
 				<xsl:value-of select="//captions/create_app/@caption" />
 			</button>
+		</div>
+	</xsl:template>
+
+	<xsl:template name="app-create-dialog">
+		<div class="modal fade" id="app_сreate_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">
+								<xsl:text disable-output-escaping="yes">&amp;times;</xsl:text>
+							</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							<xsl:value-of select="//captions/create_app/@caption" />
+						</h4>
+					</div>
+					<div class="modal-body">
+						<form id="form-app" onsubmit="nubis.createApp(this); return false;">
+							<div class="form-group">
+								<label for="recipient-name" class="control-label">
+									<xsl:value-of select="//captions/type/@caption" />
+								</label>
+								<input type="hidden" name="apptype" required="required" />
+								<input type="hidden" name="visibilty" value="public" required="required" />
+								<input type="text" class="form-control" name="apptype" required="required" disabled="disabled" />
+							</div>
+							<div class="form-group">
+								<label for="recipient-name" class="control-label">
+									<xsl:value-of select="//captions/name/@caption" />
+								</label>
+								<input type="text" class="form-control" name="appname" required="required" />
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="control-label">
+									<xsl:value-of select="//captions/description/@caption" />
+								</label>
+								<textarea class="form-control" name="description"></textarea>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							<xsl:value-of select="//captions/cancel/@caption" />
+						</button>
+						<button type="submit" form="form-app" class="btn btn-primary btn-app-submit">
+							<xsl:attribute name="data-loading-text" select="//captions/app_сreation/@caption" />
+							<xsl:value-of select="//captions/create_app/@caption" />
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</xsl:template>
 

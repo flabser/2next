@@ -147,6 +147,12 @@
 		<entry lang="BG">Добро пожаловать в Nubis. Для начала работы необходимо авторизоваться</entry>
 	</sentence>
 
+	<sentence mode="on" keyword="cancel">
+		<entry lang="RUS">Отмена</entry>
+		<entry lang="KAZ">Бодырмау</entry>
+		<entry lang="ENG">Cancel</entry>
+		<entry lang="BG">Отмена</entry>
+	</sentence>
 	<sentence mode="on" keyword="remove">
 		<entry lang="RUS">Удалить</entry>
 		<entry lang="KAZ">Удалить</entry>
@@ -171,5 +177,30 @@
 		<entry lang="KAZ">Создать приложение</entry>
 		<entry lang="ENG">Create application</entry>
 		<entry lang="BG">Создать приложение</entry>
+	</sentence>
+	<sentence mode="on" keyword="app_сreation">
+		<entry lang="RUS">Создание...</entry>
+		<entry lang="KAZ">Создание...</entry>
+		<entry lang="ENG">Creation...</entry>
+		<entry lang="BG">Создание...</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="type">
+		<entry lang="RUS">Тип</entry>
+		<entry lang="KAZ">Тип</entry>
+		<entry lang="ENG">Type</entry>
+		<entry lang="BG">Тип</entry>
+	</sentence>
+	<sentence mode="on" keyword="name">
+		<entry lang="RUS">Название</entry>
+		<entry lang="KAZ">Название</entry>
+		<entry lang="ENG">Name</entry>
+		<entry lang="BG">Название</entry>
+	</sentence>
+	<sentence mode="on" keyword="description">
+		<entry lang="RUS">Описание</entry>
+		<entry lang="KAZ">Описание</entry>
+		<entry lang="ENG">Description</entry>
+		<entry lang="BG">Описание</entry>
 	</sentence>
 </vocabulary>

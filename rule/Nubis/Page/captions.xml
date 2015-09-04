@@ -12,7 +12,11 @@
 	<caption name="password" />
 	<caption name="forgot_password" />
 
+	<caption name="cancel" />
 	<caption name="remove" />
+	<caption name="type" />
+	<caption name="name" />
+	<caption name="description" />
 
 	<caption name="pwd_reset_title" />
 	<caption name="pwd_reset_description" />
@@ -23,4 +27,5 @@
 	<caption name="templates" />
 	<caption name="templates_description" />
 	<caption name="create_app" />
+	<caption name="app_сreation" />
 </rule>

@@ -8,11 +8,11 @@ import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.User;
 import com.flabser.users.VisibiltyType;
 
+
 public class RegApp extends _DoScript {
 
 	@Override
 	public void doGet(_Session session, _WebFormData formData, String lang) {
-		doPost(session, formData, lang);
 	}
 
 	@Override
@@ -22,8 +22,8 @@ public class RegApp extends _DoScript {
 		String appType = formData.getValueSilently("apptype");
 		String appName = formData.getValueSilently("appname");
 		String visibilty = formData.getValueSilently("visibilty");
-		String descr = formData.getValueSilently("descr");
-		if (visibilty.equalsIgnoreCase("public")) {
+		String description = formData.getValueSilently("description");
+		if (visibilty.equals("public")) {
 			vis = VisibiltyType.PUBLIC;
 		}
 
@@ -32,7 +32,7 @@ public class RegApp extends _DoScript {
 			ap.appType = appType;
 			ap.appName = appName;
 			ap.setVisibilty(vis);
-			ap.setDesciption(descr);
+			ap.setDesciption(description);
 			ap.owner = user.getLogin();
 			ap.dbName = ap.appType.toLowerCase() + ap.appId();
 			ap.status = ApplicationStatusType.READY_TO_DEPLOY;
@@ -48,7 +48,6 @@ public class RegApp extends _DoScript {
 				publishElement("error", "save-error");
 			}
 		}
-
 	}
 
 	@Override
