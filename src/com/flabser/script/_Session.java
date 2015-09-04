@@ -8,7 +8,7 @@ import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
 import com.flabser.localization.LanguageType;
-import com.flabser.restful.AuthUser;
+import com.flabser.restful.AppUser;
 import com.flabser.rule.Role;
 import com.flabser.script.actions._ActionBar;
 import com.flabser.script.mail._MailAgent;
@@ -66,7 +66,7 @@ public class _Session {
 		return userSession.currentUser;
 	}
 
-	public AuthUser getUser() {
+	public AppUser getUser() {
 		return userSession.getUserPOJO();
 	}
 

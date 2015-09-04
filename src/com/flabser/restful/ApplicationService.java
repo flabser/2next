@@ -34,10 +34,10 @@ public class ApplicationService {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public AuthUser getSession() {
+	public AppUser getSession() {
 		HttpSession jses = request.getSession(true);
 
-		AuthUser user = new AuthUser();
+		AppUser user = new AppUser();
 		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 		if (userSession == null) {
 			return user;
@@ -49,7 +49,7 @@ public class ApplicationService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public AuthUser createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException,
+	public AppUser createSession(AppUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException,
 			UserException, IllegalAccessException, SQLException {
 
 		return authUser;

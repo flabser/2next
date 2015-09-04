@@ -49,9 +49,9 @@ public class SessionService {
 	public Response getSession() {
 		HttpSession jses = request.getSession(false);
 		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
-		AuthUser au = null;
+		AppUser au = null;
 		if (userSession == null) {
-			au = new AuthUser();
+			au = new AppUser();
 		} else {
 			au = userSession.getUserPOJO();
 		}
@@ -62,7 +62,7 @@ public class SessionService {
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateSession(AuthUser authUser) {
+	public Response updateSession(AppUser authUser) {
 		HttpSession jses = request.getSession(false);
 		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 		User user = userSession.currentUser;
@@ -89,7 +89,7 @@ public class SessionService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createSession(AuthUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException,
+	public Response createSession(AppUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException,
 	UserException, IllegalAccessException, SQLException {
 		UserSession userSession = null;
 		HttpSession jses;
