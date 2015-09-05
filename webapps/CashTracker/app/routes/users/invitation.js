@@ -10,10 +10,9 @@ export default Em.Route.extend({
     },
 
     actions: {
-        sendInvite: function() {
+        sendInvite: function(invitation) {
             var _this = this;
-            var model = this.get('controller').get('invitation');
-            model.save().then(function() {
+            invitation.save().then(function() {
                 _this.transitionTo('users');
             });
         }

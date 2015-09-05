@@ -15,15 +15,5 @@ export default Em.Route.extend(UnsavedModelRollbackMixin, {
     setupController: function(controller, model) {
         controller.set('account', model);
         controller.set('users', this.get('users'));
-    },
-
-    actions: {
-        save: function() {
-            var _this = this;
-            var model = this.get('controller').get('account');
-            model.save().then(function() {
-                _this.transitionTo('accounts');
-            });
-        }
     }
 });

@@ -27,15 +27,5 @@ export default Em.Route.extend(UnsavedModelRollbackMixin, {
         controller.set('category', model);
         controller.set('categories', this.get('categories'));
         controller.set('transactionTypes', this.get('transactionTypes'));
-    },
-
-    actions: {
-        save: function() {
-            let _this = this;
-            let model = this.get('controller').get('category');
-            model.save().then(function() {
-                _this.transitionTo('categories');
-            });
-        }
     }
 });

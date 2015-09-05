@@ -1,7 +1,6 @@
 import DS from 'ember-data';
-import EmberValidations from 'ember-validations';
 
-export default DS.Model.extend(EmberValidations.Mixin, {
+export default DS.Model.extend({
     transactionTypes: DS.attr(),
     parentCategory: DS.belongsTo('category', {
         async: false

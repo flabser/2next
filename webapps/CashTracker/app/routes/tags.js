@@ -10,12 +10,19 @@ export default Em.Route.extend({
             this.transitionTo('tags.new');
         },
 
+        saveTag: function(tag) {
+            var _this = this;
+            tag.save().then(function() {
+                _this.transitionTo('tags');
+            });
+        },
+
         deleteRecord: function(tag) {
             var _this = this;
             tag.destroyRecord().then(function() {
                 _this.transitionTo('tags');
             }, function(resp) {
-                tag.rollback();
+                tag.rollbackAttributes();
                 alert(resp.errors.message);
             });
         }

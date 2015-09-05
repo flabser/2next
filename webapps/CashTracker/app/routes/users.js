@@ -15,7 +15,7 @@ export default Em.Route.extend({
             user.destroyRecord().then(function() {
                 _this.transitionTo('users');
             }, function(resp) {
-                user.rollback();
+                user.rollbackAttributes();
                 alert(resp.errors.message);
             });
         }

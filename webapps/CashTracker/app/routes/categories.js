@@ -10,12 +10,19 @@ export default Em.Route.extend({
             this.transitionTo('categories.new');
         },
 
+        saveCategory: function(category) {
+            var _this = this;
+            category.save().then(function() {
+                _this.transitionTo('categories');
+            });
+        },
+
         deleteRecord: function(category) {
             var _this = this;
             category.destroyRecord().then(function() {
                 _this.transitionTo('categories');
             }, function(resp) {
-                category.rollback();
+                category.rollbackAttributes();
                 alert(resp.errors.message);
             });
         }

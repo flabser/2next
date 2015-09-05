@@ -6,9 +6,9 @@ export default Em.Route.extend(UnsavedModelRollbackMixin, {
         return this.store.find('budget', 1);
     },
 
-    setEditModeFalse: function() {
-        this.controller.send('cancel');
-    }.on('deactivate'),
+    setupController: function(controller, model) {
+        controller.set('budget', model);
+    },
 
     actions: {
         composeRecord: function() {

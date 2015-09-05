@@ -10,12 +10,19 @@ export default Em.Route.extend({
             this.transitionTo('cost_centers.new');
         },
 
+        saveCostCenter: function(costCenter) {
+            var _this = this;
+            costCenter.save().then(function() {
+                _this.transitionTo('cost_centers');
+            });
+        },
+
         deleteRecord: function(costCenter) {
             var _this = this;
             costCenter.destroyRecord().then(function() {
                 _this.transitionTo('cost_centers');
             }, function(resp) {
-                costCenter.rollback();
+                costCenter.rollbackAttributes();
                 alert(resp.errors.message);
             });
         }

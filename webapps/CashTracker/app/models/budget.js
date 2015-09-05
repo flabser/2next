@@ -1,7 +1,6 @@
 import DS from 'ember-data';
-import EmberValidations from 'ember-validations';
 
-export default DS.Model.extend(EmberValidations.Mixin, {
+export default DS.Model.extend({
     name: DS.attr('string'),
     date: DS.attr('date', {
         readOnly: true
@@ -12,11 +11,5 @@ export default DS.Model.extend(EmberValidations.Mixin, {
     }),
     status: DS.attr('number', {
         readOnly: true
-    }),
-
-    validations: {
-        name: {
-            presence: true
-        }
-    }
+    })
 });

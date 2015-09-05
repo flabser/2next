@@ -1,0 +1,147 @@
+<div class="form-wrapper">
+    <form {{action 'save' on='submit' }}>
+        <header class="form-header">
+            <h1 class="header-title">
+                <small id="saldo" class="pull-right" title="Сальдо"></small>
+                <button class="go-back" {{action "cancel"}}>
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+                {{t "transaction"}}
+            </h1>
+        </header>
+        <section class="form-content">
+            <fieldset class="fieldset">
+                {{#tn-form-group property="transactionType"}}
+                    <div class="controls">
+                        <label>
+                            {{tn-input-radio
+                                value="1"
+                                groupValue=transaction.transactionType}}
+                            {{t "expense"}}
+                        </label>
+                        <label>
+                            {{tn-input-radio
+                                value="2"
+                                groupValue=transaction.transactionType}}
+                            {{t "income"}}
+                        </label>
+                        <label>
+                            {{tn-input-radio
+                                value="3"
+                                groupValue=transaction.transactionType}}
+                            {{t "transfer"}}
+                        </label>
+                    </div>
+                {{/tn-form-group}}
+
+                {{#tn-form-group property="date"}}
+                    <div class="control-label">
+                        {{t "date"}}
+                    </div>
+                    <div class="controls">
+                        {{input type="date" value=transaction.date}}
+                        {{tn-error-message}}
+                    </div>
+                {{/tn-form-group}}
+
+                {{#tn-form-group property="accountFrom"}}
+                    <div class="control-label">
+                        {{#if isTransfer}}
+                            {{t "account_from"}}
+                        {{else}}
+                            {{t "account"}}
+                        {{/if}}
+                    </div>
+                    <div class="controls">
+                        <!-- {{view "select"
+                            contentBinding="accounts"
+                            optionValuePath="content.id"
+                            optionLabelPath="content.name"
+                            selectionBinding="transaction.accountFrom"
+                            prompt='- Select -'}} -->
+                        {{tn-error-message}}
+                    </div>
+                {{/tn-form-group}}
+
+                {{#if isTransfer}}
+                    {{#tn-form-group property="accountTo"}}
+                        <div class="control-label">
+                            {{t "account_to"}}
+                        </div>
+                        <div class="controls">
+                            <!-- {{view "select"
+                                contentBinding="accounts"
+                                optionValuePath="content.id"
+                                optionLabelPath="content.name"
+                                selectionBinding="transaction.accountTo"
+                                prompt='- Select -'}} -->
+                            {{tn-error-message}}
+                        </div>
+                    {{/tn-form-group}}
+                {{/if}}
+
+                {{#tn-form-group property="category"}}
+                    <div class="control-label">
+                        {{t "category"}}
+                    </div>
+                    <div class="controls">
+                        <!-- {{view "select"
+                            contentBinding="categories"
+                            optionValuePath="content.id"
+                            optionLabelPath="content.name"
+                            selectionBinding="transaction.category"
+                            prompt='- Select -'}} -->
+                        {{tn-error-message}}
+                    </div>
+                {{/tn-form-group}}
+
+                {{#tn-form-group property="amount"}}
+                    <div class="control-label">
+                        {{t "amount"}}
+                    </div>
+                    <div class="controls">
+                        {{input value=transaction.amount}}
+                        {{tn-error-message}}
+                    </div>
+                {{/tn-form-group}}
+
+                {{#tn-form-group property="costCenter"}}
+                    <div class="control-label">
+                        {{t "cost_center"}}
+                    </div>
+                    <div class="controls">
+                        <!-- {{view "select"
+                            contentBinding="costCenters"
+                            optionValuePath="content.id"
+                            optionLabelPath="content.name"
+                            selectionBinding="transaction.costCenter"
+                            prompt='- Select -'}} -->
+                        {{tn-error-message}}
+                    </div>
+                {{/tn-form-group}}
+
+                {{#tn-form-group property="note"}}
+                    <div class="control-label">
+                        {{t "note"}}
+                    </div>
+                    <div class="controls">
+                        {{textarea value=transaction.note}}
+                        {{tn-error-message}}
+                    </div>
+                {{/tn-form-group}}
+            </fieldset>
+            <div id="tabs-2">
+                <form action="Uploader" name="upload" id="upload" method="post" enctype="multipart/form-data">
+                    <!-- Секция "Вложения" -->
+                    <div display="block" id="att">
+                        <br /> attach
+                    </div>
+                </form>
+            </div>
+        </section>
+        <footer class="form-actions">
+            <button class="btn" {{action "cancel"}}>{{t "cancel"}}</button>
+            <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+        </footer>
+    </form>
+</div>

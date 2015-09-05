@@ -1,0 +1,31 @@
+<section class="budget_form">
+    {{#if isEditMode}}
+        <form {{action 'save' on='submit'}}>
+            <section class="form-content">
+                <fieldset class="fieldset">
+                    {{#tn-form-group property="name"}}
+                        <div class="control-label">
+                            {{t "name"}}
+                        </div>
+                        <div class="controls">
+                            {{input value=budget.name}}
+                            {{tn-error-message}}
+                            <p class="hint">
+                                {{t "budget_name_hint"}}
+                            </p>
+                        </div>
+                    {{/tn-form-group}}
+                </fieldset>
+                <footer class="action-bar">
+                    <button class="btn" {{action "cancel"}}>{{t "cancel"}}</button>
+                    <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+                </footer>
+            </section>
+        </form>
+    {{else}}
+        <h1 class="pull-left">{{budget.name}}</h1>
+        <button class="btn" {{action "edit"}}>
+            <i class="fa fa-edit"></i>
+        </button>
+    {{/if}}
+</section>

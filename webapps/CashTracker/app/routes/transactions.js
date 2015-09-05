@@ -6,12 +6,19 @@ export default Em.Route.extend({
             this.transitionTo('transactions.new');
         },
 
+        saveTransaction: function(transaction) {
+            var _this = this;
+            transaction.save().then(function() {
+                _this.transitionTo('transactions');
+            });
+        },
+
         deleteRecord: function(transaction) {
             var _this = this;
             transaction.destroyRecord().then(function() {
                 _this.transitionTo('transactions');
             }, function(resp) {
-                transaction.rollback();
+                transaction.rollbackAttributes();
                 alert(resp.errors.message);
             });
         }

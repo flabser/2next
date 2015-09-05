@@ -1,0 +1,56 @@
+<div class="form-wrapper">
+    <form {{action 'save' on='submit' }}>
+        <header class="form-header">
+            <h1 class="header-title">
+                <button class="go-back" {{action "cancel"}}>
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+                {{t "user_profile"}}
+            </h1>
+        </header>
+        <section class="form-content">
+            <div class="user_avatar">
+                avatar
+            </div>
+            <div class="fieldset" style="overflow:hidden">
+                {{#tn-form-group property="name"}}
+                    <div>{{t "user_name"}}</div>
+                    {{input value=user.name}}
+                    {{tn-error-message}}
+                {{/tn-form-group}}
+                {{#tn-form-group property="login"}}
+                    <div>{{t "user_login"}}</div>
+                    {{input value=user.login}}
+                    {{tn-error-message}}
+                {{/tn-form-group}}
+                {{#tn-form-group property="email"}}
+                    <div>{{t "email"}}</div>
+                    {{input value=user.email}}
+                    {{tn-error-message}}
+                {{/tn-form-group}}
+                {{#tn-form-group property="password"}}
+                    <div>{{t "password"}}</div>
+                    {{input type="password" value=user.pwd autocomplete="off"}}
+                    {{tn-error-message}}
+                {{/tn-form-group}}
+                {{#tn-form-group property="password_repeat"}}
+                    <div>{{t "password_repeat"}}</div>
+                    {{input type="password" value=user.pwd_repeat autocomplete="off"}}
+                    {{tn-error-message}}
+                {{/tn-form-group}}
+                {{#tn-form-group property="roles"}}
+                    <div>{{t "roles"}}</div>
+                    <ul>
+                        {{#each user.roles as |role|}}
+                            <li>{{role}}</li>
+                        {{/each}}
+                    </ul>
+                {{/tn-form-group}}
+            </div>
+        </section>
+        <footer class="action-bar">
+            <button class="btn" {{action "cancel"}}>{{t "cancel"}}</button>
+            <button type="submit" class="btn btn-primary" disabled={{invalid}}>{{t "save"}}</button>
+        </footer>
+    </form>
+</div>

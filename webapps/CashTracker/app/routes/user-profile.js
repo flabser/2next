@@ -12,19 +12,11 @@ export default Route.extend({
     },
 
     setupController: function(controller, model) {
-        this._super(controller, model);
-
-        controller.set('user', model);
-        controller.set('invalid', this.get('invalid'));
+        controller.set('userProfile', model);
     },
 
-    invalid: Em.computed('session.user', function() {
-        var u = this.get('session.user');
-        return false; // !u.pwd || u.pwd !== u.pwd_repeat;
-    }),
-
     actions: {
-        save: function() {
+        saveUserProfile: function() {
             var _this = this;
             this.session.saveUserProfile().then(function() {
                 _this.sendAction('goBack');

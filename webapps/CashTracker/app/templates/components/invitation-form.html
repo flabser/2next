@@ -1,0 +1,44 @@
+<div class="form-wrapper">
+    <form {{action 'sendInvite' on='submit' }}>
+        <header class="form-header">
+            <h1 class="header-title">
+                <button class="go-back" {{action "cancel"}}>
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+                {{t "invitation_title"}}
+            </h1>
+        </header>
+        <section class="form-content">
+            <fieldset class="fieldset">
+                {{#tn-form-group property="email"}}
+                <div class="control-label">
+                    {{t "email"}}
+                </div>
+                <div class="controls">
+                    {{input type="email" value=invitation.email}}
+                    {{tn-error-message}}
+                    <p class="hint">
+                        {{t "invitation_email_hint"}}
+                    </p>
+                </div>
+                {{/tn-form-group}}
+
+                {{#tn-form-group property="message"}}
+                <div class="control-label">
+                    {{t "message"}}
+                </div>
+                <div class="controls">
+                    {{textarea value=invitation.message}}
+                    {{tn-error-message}}
+                </div>
+                {{/tn-form-group}}
+            </fieldset>
+        </section>
+        <footer class="form-actions">
+            <button class="btn" {{action "cancel"}}>{{t "cancel"}}</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-send-o"></i>{{t "send_invite"}}
+            </button>
+        </footer>
+    </form>
+</div>
