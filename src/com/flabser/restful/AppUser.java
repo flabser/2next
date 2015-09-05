@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.exception.AuthFailedExceptionType;
+import com.flabser.restful.data.AttachedFile;
 import com.flabser.users.AuthModeType;
 import com.flabser.users.UserStatusType;
 
@@ -26,6 +27,7 @@ public class AppUser {
 	private AuthModeType authMode;
 	private ArrayList<String> appRoles = new ArrayList<String>();
 	private HashMap<String, Application> applications = new HashMap<String, Application>();
+	private AttachedFile attachedFile;
 
 	public String getLogin() {
 		return login;
@@ -124,6 +126,15 @@ public class AppUser {
 
 	public void setAuthMode(AuthModeType authMode) {
 		this.authMode = authMode;
+	}
+
+
+	public AttachedFile getAttachedFile() {
+		return attachedFile;
+	}
+
+	public void setAttachedFile(AttachedFile avatar) {
+		this.attachedFile = avatar;
 	}
 
 	@Override

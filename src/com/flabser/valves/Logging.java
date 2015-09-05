@@ -28,11 +28,15 @@ public class Logging extends ValveBase {
 
 		RequestURL ru = new RequestURL(requestURI);
 
-		Enumeration<String> headerNames = http.getHeaderNames();
-
-		if (headerNames.hasMoreElements()) {
-			headerNames.nextElement();
+		System.out.println("-------------" + ru.getUrl());
+		Enumeration<String> headerNames = request.getHeaderNames();
+		while (headerNames.hasMoreElements()) {
+			String key = headerNames.nextElement();
+			String value = request.getHeader(key);
+			System.out.println(key + "=" + value);
 		}
+		System.out.println("-------------");
+
 		// Server.logger.normalLogEntry(ru.getUrl());
 		((Unsecure) getNext()).invoke(request, response, ru);
 		return;

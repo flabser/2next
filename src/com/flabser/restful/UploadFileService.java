@@ -17,6 +17,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.flabser.env.Environment;
 import com.flabser.users.UserSession;
+import com.flabser.util.Util;
 
 @Path("/file")
 public class UploadFileService extends RestProvider {
@@ -35,13 +36,14 @@ public class UploadFileService extends RestProvider {
 			userTmpDir.mkdir();
 		}
 
-		String uploadedFileLocation = userTmpDir + File.separator + fileDetail.getFileName();
+		String tempFileName = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 32);
+		String uploadedFileLocation = userTmpDir + File.separator + tempFileName;
 
 		writeToFile(uploadedInputStream, uploadedFileLocation);
 
-		String output = "File uploaded to : " + uploadedFileLocation;
 
-		return Response.status(200).entity(output).build();
+
+		return Response.status(200).entity(tempFileName).build();
 
 	}
 
@@ -58,10 +60,11 @@ public class UploadFileService extends RestProvider {
 			}
 			out.flush();
 			out.close();
+			out = null;
 		} catch (IOException e) {
-
 			e.printStackTrace();
 		}
+
 
 	}
 

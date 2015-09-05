@@ -1,5 +1,9 @@
 package com.flabser.dataengine.system;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -28,6 +32,8 @@ import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.EnvConst;
+import com.flabser.env.Environment;
+import com.flabser.restful.data.AttachedFile;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.server.Server;
 import com.flabser.users.User;
@@ -425,7 +431,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 
 		try (PreparedStatement insertUser = conn
 				.prepareStatement(
-						"insert into USERS(USERNAME, LOGIN, EMAIL, PWD, ISSUPERVISOR, PRIMARYREGDATE, REGDATE, LOGINHASH, PWDHASH, LASTDEFAULTURL, STATUS, VERIFYCODE, APPS, ROLES, GROUPS, DBPWD) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+						"insert into USERS(USERNAME, LOGIN, EMAIL, PWD, ISSUPERVISOR, PRIMARYREGDATE, REGDATE, LOGINHASH, PWDHASH, LASTDEFAULTURL, STATUS, VERIFYCODE, APPS, ROLES, GROUPS, DBPWD,AVATAR, AVATARNAME) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)",
 						PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			insertUser.setString(1, user.getUserName());
@@ -444,6 +450,24 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			insertUser.setArray(14, conn.createArrayOf("integer", user.getUserRoles().stream().map(UserRole::getId).toArray()));
 			insertUser.setArray(15, conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
 			insertUser.setString(16, user.getDbPwd());
+			AttachedFile aFile = user.getAvatar();
+			if(aFile != null){
+				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
+				if (userTmpDir.exists()) {
+					String uploadedFileLocation = userTmpDir + File.separator + aFile.tempID;
+					File avatarFile = new File(uploadedFileLocation);
+					if (avatarFile.exists()) {
+						try {
+							InputStream is = new FileInputStream(avatarFile);
+							insertUser.setBinaryStream(17, is, (int)avatarFile.length());
+							insertUser.setString(18, aFile.realFileName);
+						} catch (FileNotFoundException e) {
+							Server.logger.errorLogEntry(e);
+						}
+
+					}
+				}
+			}
 
 			insert(user.getUserRoles());
 
@@ -492,6 +516,25 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			updateUser.setArray(15, conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
 			updateUser.setString(16, user.getDbPwd());
 			updateUser.setLong(17, user.id);
+
+			AttachedFile aFile = user.getAvatar();
+			if(aFile != null){
+				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getOldLogin());
+				if (userTmpDir.exists()) {
+					String uploadedFileLocation = userTmpDir + File.separator + aFile.tempID;
+					File avatarFile = new File(uploadedFileLocation);
+					if (avatarFile.exists()) {
+						try {
+							InputStream is = new FileInputStream(avatarFile);
+							updateUser.setBinaryStream(17, is, (int)avatarFile.length());
+							updateUser.setString(18, aFile.realFileName);
+						} catch (FileNotFoundException e) {
+							Server.logger.errorLogEntry(e);
+						}
+
+					}
+				}
+			}
 
 			updateUser.executeUpdate();
 

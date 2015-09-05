@@ -62,24 +62,16 @@ public class SessionService {
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateSession(AppUser authUser) {
+	public Response updateSession(AppUser appUser) {
 		HttpSession jses = request.getSession(false);
 		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 		User user = userSession.currentUser;
 		if (user.getLogin().equals(User.ANONYMOUS_USER)) {
 			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
 		} else {
-			user.refresh(authUser);
+			user.refresh(appUser);
 			if (user.save()) {
-				//				SessionPool.remove(userSession);
-				//				UserSession newUserSession = new UserSession(user);
-				//				String token = SessionPool.put(newUserSession);
-				//				jses.setAttribute(EnvConst.SESSION_ATTR, newUserSession);
-				//				authUser = newUserSession.getUserPOJO();
-				//				int maxAge = -1;
-				//				NewCookie cookie = new NewCookie(EnvConst.AUTH_COOKIE_NAME, token, "/", null, null, maxAge, false);
-				//				return Response.status(HttpServletResponse.SC_OK).entity(authUser).cookie(cookie).build();
-				return Response.status(HttpServletResponse.SC_OK).entity(authUser).build();
+				return Response.status(HttpServletResponse.SC_OK).entity(appUser).build();
 			} else {
 				return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
 			}

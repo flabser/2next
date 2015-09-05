@@ -40,13 +40,6 @@ public abstract class AppEntity implements IAppEntity {
 		return id;
 	}
 
-	class AttachedFile {
-
-		public String fieldName;
-		public String realFileName;
-		public String tempID;
-	}
-
 	@Override
 	public long getAuthor() {
 		return author;

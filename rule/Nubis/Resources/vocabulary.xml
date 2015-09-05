@@ -9,53 +9,53 @@
 
 	<sentence mode="on" keyword="login">
 		<entry lang="RUS">Авторизация</entry>
-		<entry lang="KAZ">Sign in</entry>
-		<entry lang="ENG">Sign in</entry>
-		<entry lang="BG">Sign in</entry>
+		<entry lang="KAZ">Авторизация</entry>
+		<entry lang="ENG">Authorization</entry>
+		<entry lang="BG">Упълномощаване</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_title">
 		<entry lang="RUS">Авторизация</entry>
-		<entry lang="KAZ">Sign in</entry>
-		<entry lang="ENG">Sign in</entry>
-		<entry lang="BG">Sign in</entry>
+		<entry lang="KAZ">Авторизация</entry>
+		<entry lang="ENG">Authorization</entry>
+		<entry lang="BG">Упълномощаване</entry>
 	</sentence>
 	<sentence mode="on" keyword="login_btn">
 		<entry lang="RUS">Войти</entry>
 		<entry lang="KAZ">Кіру</entry>
 		<entry lang="ENG">Sign in</entry>
-		<entry lang="BG">Sign in</entry>
+		<entry lang="BG">Влизане</entry>
 	</sentence>
 	<sentence mode="on" keyword="logout">
 		<entry lang="RUS">Выйти</entry>
 		<entry lang="KAZ">Шығу</entry>
 		<entry lang="ENG">Log out</entry>
-		<entry lang="BG">Log out</entry>
+		<entry lang="BG">Изход</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="signup">
 		<entry lang="RUS">Регистрация</entry>
-		<entry lang="KAZ">Sign up</entry>
+		<entry lang="KAZ">Тіркелу</entry>
 		<entry lang="ENG">Sign up</entry>
-		<entry lang="BG">Sign up</entry>
+		<entry lang="BG">Регистрация</entry>
 	</sentence>
 	<sentence mode="on" keyword="signup_title">
 		<entry lang="RUS">Регистрация</entry>
-		<entry lang="KAZ">Sign up</entry>
+		<entry lang="KAZ">Тіркелу</entry>
 		<entry lang="ENG">Sign up</entry>
-		<entry lang="BG">Sign up</entry>
+		<entry lang="BG">Регистрация</entry>
 	</sentence>
 	<sentence mode="on" keyword="signup_btn">
 		<entry lang="RUS">Sign up</entry>
-		<entry lang="KAZ">Sign up</entry>
+		<entry lang="KAZ">Тіркелу</entry>
 		<entry lang="ENG">Sign up</entry>
-		<entry lang="BG">Sign up</entry>
+		<entry lang="BG">Регистрация</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="password">
-		<entry lang="RUS">Password</entry>
-		<entry lang="KAZ">Password</entry>
+		<entry lang="RUS">Пароль</entry>
+		<entry lang="KAZ">Пароль</entry>
 		<entry lang="ENG">Password</entry>
-		<entry lang="BG">Password</entry>
+		<entry lang="BG">Парола</entry>
 	</sentence>
 	<sentence mode="on" keyword="forgot_password">
 		<entry lang="RUS">Забыли пароль?</entry>

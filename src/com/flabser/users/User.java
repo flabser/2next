@@ -23,6 +23,7 @@ import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.AppUser;
+import com.flabser.restful.data.AttachedFile;
 import com.flabser.server.Server;
 import com.flabser.util.Util;
 
@@ -39,6 +40,7 @@ public class User {
 	private HashMap<String, ApplicationProfile> applications = new HashMap<>();
 	private transient ISystemDatabase sysDatabase;
 	private String login;
+	private String oldLogin;
 	private String userName;
 	private HashSet<UserRole> roles = new HashSet<>();
 	private HashSet<UserGroup> groups = new HashSet<>();
@@ -55,6 +57,7 @@ public class User {
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private String dbPwd;
 	private String defaultApp;
+	private AttachedFile avatar;
 
 	public User() {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
@@ -70,6 +73,7 @@ public class User {
 		this.primaryRegDate = primaryRegDate;
 		this.regDate = regDate;
 		this.login = login;
+		oldLogin = login;
 		this.email = email;
 		this.isSupervisor = isSupervisor;
 		this.password = password;
@@ -249,6 +253,10 @@ public class User {
 		return login;
 	}
 
+	public String getOldLogin() {
+		return oldLogin;
+	}
+
 	public String getDBLogin() {
 		return login.replace("@", "__").replace(".", "_").replace("-", "_").toLowerCase();
 	}
@@ -332,13 +340,18 @@ public class User {
 		this.isSupervisor = isSupervisor;
 	}
 
-	public void refresh(AppUser authUser) {
-		//	login = authUser.getLogin();
-		userName = authUser.getName();
-		password = authUser.getPwd();
-		email = authUser.getEmail();
-		defaultApp = authUser.getDefaultApp();
+	public void refresh(AppUser appUser) {
+		login = appUser.getLogin();
+		userName = appUser.getName();
+		password = appUser.getPwd();
+		email = appUser.getEmail();
+		avatar = appUser.getAttachedFile();
+		//defaultApp = authUser.getDefaultApp();
 
+	}
+
+	public AttachedFile getAvatar() {
+		return avatar;
 	}
 
 	public boolean delete() {

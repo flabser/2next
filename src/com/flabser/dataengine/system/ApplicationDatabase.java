@@ -11,6 +11,7 @@ import org.postgresql.util.PSQLException;
 
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.env.EnvConst;
+import com.flabser.server.Server;
 
 public class ApplicationDatabase implements IApplicationDatabase {
 	private Properties props = new Properties();
@@ -69,6 +70,8 @@ public class ApplicationDatabase implements IApplicationDatabase {
 			try {
 				Statement st = conn.createStatement();
 				st.executeUpdate("DROP DATABASE " + name);
+			}catch(PSQLException e){
+				Server.logger.errorLogEntry("database busy " + e.getErrorCode());
 			} catch (Throwable e) {
 				DatabaseUtil.debugErrorPrint(e);
 				return -1;
