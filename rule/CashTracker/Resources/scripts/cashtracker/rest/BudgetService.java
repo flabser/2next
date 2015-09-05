@@ -74,10 +74,19 @@ public class BudgetService extends RestProvider {
 		BudgetDAO dao = new BudgetDAO(getSession());
 		//
 		List <Budget> budgets = dao.findAll();
-		Budget pm = budgets.get(0);
-		pm.setName(m.getName());
+		Budget pm;
+		if (budgets.size() > 0) {
+			pm = budgets.get(0);
+			pm.setName(m.getName());
+			pm = (Budget) dao.update(pm);
+		} else {
+			pm = new Budget();
+			pm.setName(m.getName());
+			pm = (Budget) dao.add(pm);
+		}
+
 		//
-		return Response.ok(dao.update(pm)).build();
+		return Response.ok(pm).build();
 	}
 
 	@DELETE
