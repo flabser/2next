@@ -41,7 +41,7 @@ public abstract class AppEntity implements IAppEntity {
 	}
 
 	@Override
-	public long getAuthor() {
+	public Long getAuthor() {
 		return author;
 	}
 
@@ -51,6 +51,8 @@ public abstract class AppEntity implements IAppEntity {
 	}
 
 	public String getAuthorName() {
+		if (author == null) return null;
+
 		ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
 		return sysDb.getUser(author).getUserName();
 	}

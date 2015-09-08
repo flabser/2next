@@ -9,7 +9,7 @@ public interface IAppEntity {
 
 	long getId();
 
-	public long getAuthor();
+	public Long getAuthor();
 
 	public void setAuthor(Long author);
 
