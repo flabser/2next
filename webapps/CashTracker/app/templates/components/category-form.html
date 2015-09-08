@@ -14,9 +14,9 @@
                     <div class="controls">
                         {{multiselect-checkboxes
                             options=transactionTypes
-                            labelProperty="name"
-                            valueProperty="code"
-                            value="category.transactionType"}}
+                            labelProperty='name'
+                            valueProperty='code'
+                            value=category.transactionType}}
 
                         <!-- <label>
                             {{tn-input-checkbox
@@ -71,8 +71,8 @@
                         {{select-2
                             content=categories
                             value=category.parentCategory
-                            optionValuePath='content.id'
-                            optionLabelPath='content.name'
+                            optionValuePath='id'
+                            optionLabelPath='name'
                             placeholder='Parent category'
                         }}
                     </div>

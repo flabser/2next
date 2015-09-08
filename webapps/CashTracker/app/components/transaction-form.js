@@ -29,6 +29,10 @@ export default Em.Component.extend({
             this.sendAction('cancel');
         },
 
+        addAttach: function(attach) {
+            this.get('transaction.attachments').createRecord(attach);
+        },
+
         validateAmount: function() {
             this.validate('amount');
         },
@@ -43,7 +47,7 @@ export default Em.Component.extend({
 
             switch (fieldName) {
                 case 'amount':
-                    if (Validate.isNumeric(this.get('transaction.amount'))) {
+                    if (!Validate.isNumeric(this.get('transaction.amount'))) {
                         this.get('errors').add('amount', this.get('i18n').t('validation_numeric'));
                     }
                     break;
@@ -56,7 +60,7 @@ export default Em.Component.extend({
         } else {
             this.set('errors', DS.Errors.create());
 
-            if (Validate.isNumeric(this.get('transaction.amount'))) {
+            if (!Validate.isNumeric(this.get('transaction.amount'))) {
                 this.get('errors').add('amount', this.get('i18n').t('validation_numeric'));
             }
             if (this.get('transaction.note') && this.get('transaction.note').length > 256) {

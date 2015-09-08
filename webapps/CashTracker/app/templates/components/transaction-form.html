@@ -55,8 +55,8 @@
                         {{select-2
                             content='accounts'
                             value=transaction.accountFrom
-                            optionValuePath='content.id'
-                            optionLabelPath='content.name'
+                            optionValuePath='id'
+                            optionLabelPath='name'
                             placeholder='account_from'
                         }}
                         {{#each errors.accountFrom as |error|}}
@@ -74,8 +74,8 @@
                             {{select-2
                                 content='accounts'
                                 value=transaction.accountTo
-                                optionValuePath='content.id'
-                                optionLabelPath='content.name'
+                                optionValuePath='id'
+                                optionLabelPath='name'
                                 placeholder='account_to'
                             }}
                             {{#each errors.accountTo as |error|}}
@@ -93,8 +93,8 @@
                         {{select-2
                             content='categories'
                             value=transaction.category
-                            optionValuePath='content.id'
-                            optionLabelPath='content.name'
+                            optionValuePath='id'
+                            optionLabelPath='name'
                             placeholder='Category'
                         }}
                     </div>
@@ -118,8 +118,8 @@
                         {{select-2
                             content='costCenters'
                             value=transaction.costCenter
-                            optionValuePath='content.id'
-                            optionLabelPath='content.name'
+                            optionValuePath='id'
+                            optionLabelPath='name'
                             placeholder='Cost center'
                         }}
                     </div>
@@ -132,8 +132,8 @@
                         {{select-2
                             content='tags'
                             value=transaction.tags
-                            optionValuePath='content.id'
-                            optionLabelPath='content.name'
+                            optionValuePath='id'
+                            optionLabelPath='name'
                             placeholder='Tags'
                             multiple=true
                         }}
@@ -154,11 +154,9 @@
                     </div>
                 </div>
             </fieldset>
-            <div id="tabs-2">
-                <div display="block" id="att">
-                    <br /> attach
-                </div>
-            </div>
+            <fieldset class="fieldset transaction-att">
+                {{attach-list list=transaction.attachments addAttach='addAttach'}}
+            </fieldset>
         </section>
         <footer class="form-actions">
             <button class="btn" {{action 'cancel'}}>{{t 'cancel'}}</button>
