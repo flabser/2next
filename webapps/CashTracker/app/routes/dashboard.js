@@ -6,7 +6,7 @@ export default Em.Route.extend({
     },
 
     actions: {
-        composeRecord() {
+        composeRecord: function() {
             this.transitionTo('transactions.new');
         }
     }

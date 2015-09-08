@@ -11,16 +11,14 @@ export default Em.Route.extend({
         },
 
         saveTag: function(tag) {
-            var _this = this;
-            tag.save().then(function() {
-                _this.transitionTo('tags');
+            tag.save().then(() => {
+                this.transitionTo('tags');
             });
         },
 
         deleteRecord: function(tag) {
-            var _this = this;
-            tag.destroyRecord().then(function() {
-                _this.transitionTo('tags');
+            tag.destroyRecord().then(() => {
+                this.transitionTo('tags');
             }, function(resp) {
                 tag.rollbackAttributes();
                 alert(resp.errors.message);

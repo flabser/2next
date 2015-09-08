@@ -7,16 +7,14 @@ export default Em.Route.extend({
         },
 
         saveTransaction: function(transaction) {
-            var _this = this;
-            transaction.save().then(function() {
-                _this.transitionTo('transactions');
+            transaction.save().then(() => {
+                this.transitionTo('transactions');
             });
         },
 
         deleteRecord: function(transaction) {
-            var _this = this;
-            transaction.destroyRecord().then(function() {
-                _this.transitionTo('transactions');
+            transaction.destroyRecord().then(() => {
+                this.transitionTo('transactions');
             }, function(resp) {
                 transaction.rollbackAttributes();
                 alert(resp.errors.message);

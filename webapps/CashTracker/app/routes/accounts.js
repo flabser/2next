@@ -11,16 +11,14 @@ export default Em.Route.extend({
         },
 
         saveAccount: function(account) {
-            var _this = this;
-            account.save().then(function() {
-                _this.transitionTo('accounts');
+            account.save().then(() => {
+                this.transitionTo('accounts');
             });
         },
 
         deleteRecord: function(account) {
-            var _this = this;
-            account.destroyRecord().then(function() {
-                _this.transitionTo('accounts');
+            account.destroyRecord().then(() => {
+                this.transitionTo('accounts');
             }, function(resp) {
                 account.rollbackAttributes();
                 alert(resp.errors.message);

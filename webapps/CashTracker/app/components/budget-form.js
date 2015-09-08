@@ -1,19 +1,22 @@
 import Em from 'ember';
+import DS from 'ember-data';
+import Validate from '../utils/validator';
 
 export default Em.Component.extend({
+    i18n: Em.inject.service(),
+    errors: DS.Errors.create(),
     budget: null,
-
     isEditMode: false,
 
     actions: {
         check: function() {
             var budget = this.get('budget');
-            budget.then(function(m) {
+            budget.then((m) => {
                 if (m.get('id') === 0 || m.get('name') === null) {
                     this.set('isEditMode', true);
                     this.transitionToRoute('budget');
                 }
-            }.bind(this));
+            });
         },
 
         edit: function() {
@@ -30,11 +33,21 @@ export default Em.Component.extend({
         },
 
         save: function() {
-            var _this = this;
-            var model = this.get('budget');
-            model.save().then(function() {
-                _this.set('isEditMode', false);
-            });
+            if (this.validate()) {
+                this.get('budget').save().then(() => {
+                    this.set('isEditMode', false);
+                });
+            }
         }
+    },
+
+    validate: function() {
+        this.set('errors', DS.Errors.create());
+
+        if (Validate.isEmpty(this.get('budget.name'))) {
+            this.get('errors').add('name', this.get('i18n').t('validation_empty'));
+        }
+
+        return this.get('errors.isEmpty');
     }
 });

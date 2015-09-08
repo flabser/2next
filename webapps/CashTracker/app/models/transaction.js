@@ -27,18 +27,5 @@ export default DS.Model.extend({
     note: DS.attr('string'),
     includeInReports: DS.attr('boolean', {
         defaultValue: true
-    }),
-
-    validations: {
-        date: {
-            presence: true
-        },
-        amount: {
-            presence: true,
-            numericality: true
-        },
-        transactionType: {
-            presence: true
-        }
-    }
+    })
 });

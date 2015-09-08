@@ -1,9 +1,10 @@
 import Em from 'ember';
 import DS from 'ember-data';
+import Validate from '../utils/validator';
 
 export default Em.Component.extend({
+    i18n: Em.inject.service(),
     errors: DS.Errors.create(),
-
     costCenter: null,
 
     actions: {
@@ -15,14 +16,18 @@ export default Em.Component.extend({
 
         cancel: function() {
             this.sendAction('cancel');
+        },
+
+        validateName: function() {
+            this.validate();
         }
     },
 
     validate: function() {
         this.set('errors', DS.Errors.create());
 
-        if (!this.get('costCenter.name')) {
-            this.get('errors').add('name', 'can_not_be_empty');
+        if (Validate.isEmpty(this.get('costCenter.name'))) {
+            this.get('errors').add('name', this.get('i18n').t('validation_empty'));
         }
 
         return this.get('errors.isEmpty');

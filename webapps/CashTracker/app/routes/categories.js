@@ -11,16 +11,14 @@ export default Em.Route.extend({
         },
 
         saveCategory: function(category) {
-            var _this = this;
-            category.save().then(function() {
-                _this.transitionTo('categories');
+            category.save().then(() => {
+                this.transitionTo('categories');
             });
         },
 
         deleteRecord: function(category) {
-            var _this = this;
-            category.destroyRecord().then(function() {
-                _this.transitionTo('categories');
+            category.destroyRecord().then(() => {
+                this.transitionTo('categories');
             }, function(resp) {
                 category.rollbackAttributes();
                 alert(resp.errors.message);

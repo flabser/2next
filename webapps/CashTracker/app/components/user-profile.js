@@ -1,15 +1,16 @@
 import Em from 'ember';
 import DS from 'ember-data';
+import Validate from '../utils/validator';
 
 export default Em.Component.extend({
+    i18n: Em.inject.service(),
     errors: DS.Errors.create(),
-
     userProfile: null,
 
     actions: {
         save: function() {
             if (this.validate()) {
-                this.sendAction('saveUserProfile', this.get('userProfile'));
+                this.sendAction('save', this.get('userProfile'));
             }
         },
 
@@ -21,8 +22,8 @@ export default Em.Component.extend({
     validate: function() {
         this.set('errors', DS.Errors.create());
 
-        if (!this.get('userProfile.name')) {
-            this.get('errors').add('name', 'can_not_be_empty');
+        if (Validate.isEmpty(this.get('userProfile.name'))) {
+            this.get('errors').add('name', this.get('i18n').t('validation_empty'));
         }
 
         return this.get('errors.isEmpty');

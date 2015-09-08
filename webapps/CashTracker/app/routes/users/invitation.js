@@ -11,9 +11,8 @@ export default Em.Route.extend({
 
     actions: {
         sendInvite: function(invitation) {
-            var _this = this;
-            invitation.save().then(function() {
-                _this.transitionTo('users');
+            invitation.save().then(() => {
+                this.transitionTo('users');
             });
         }
     }

@@ -2,30 +2,32 @@
     {{#if isEditMode}}
         <form {{action 'save' on='submit'}}>
             <section class="form-content">
-                <fieldset class="fieldset">
-                    {{#tn-form-group property="name"}}
-                        <div class="control-label">
-                            {{t "name"}}
-                        </div>
-                        <div class="controls">
-                            {{input value=budget.name}}
-                            {{tn-error-message}}
-                            <p class="hint">
-                                {{t "budget_name_hint"}}
-                            </p>
-                        </div>
-                    {{/tn-form-group}}
-                </fieldset>
-                <footer class="action-bar">
-                    <button class="btn" {{action "cancel"}}>{{t "cancel"}}</button>
-                    <button type="submit" class="btn btn-primary">{{t "save"}}</button>
-                </footer>
+                <div class="form-group {{if errors.name 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'name'}}
+                    </div>
+                    <div class="controls">
+                        {{input value=budget.name maxlength='64'}}
+                        {{#each errors.name as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                        <p class="hint">
+                            {{t 'budget_name_hint'}}
+                        </p>
+                    </div>
+                </div>
             </section>
+            <footer class="form-actions">
+                <button class="btn" {{action 'cancel'}}>{{t 'cancel'}}</button>
+                <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
+            </footer>
         </form>
     {{else}}
-        <h1 class="pull-left">{{budget.name}}</h1>
-        <button class="btn" {{action "edit"}}>
-            <i class="fa fa-edit"></i>
-        </button>
+        <h1>
+            {{budget.name}}
+            <button class="btn" {{action 'edit'}}>
+                <i class="fa fa-edit"></i>
+            </button>
+        </h1>
     {{/if}}
 </section>

@@ -2,21 +2,21 @@
     <form {{action 'save' on='submit' }}>
         <header class="form-header">
             <h1 class="header-title">
-                <button class="go-back" {{action "cancel"}}>
+                <button class="btn-back" {{action 'cancel'}}>
                     <i class="fa fa-chevron-left"></i>
                 </button>
-                {{t "category"}}
+                {{t 'category'}}
             </h1>
         </header>
         <section class="form-content">
             <fieldset class="fieldset">
-                {{#tn-form-group property="transactionType"}}
+                <div class="form-group">
                     <div class="controls">
                         {{multiselect-checkboxes
                             options=transactionTypes
                             labelProperty="name"
                             valueProperty="code"
-                            valueBinding="category.transactionType"}}
+                            value="category.transactionType"}}
 
                         <!-- <label>
                             {{tn-input-checkbox
@@ -37,72 +37,73 @@
                             {{t "transfer"}}
                         </label> -->
                         <p class="hint">
-                            {{t "category_transaction_type_hint"}}
+                            {{t 'category_transaction_type_hint'}}
                         </p>
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="name"}}
+                </div>
+                <div class="form-group {{if errors.name 'has-error'}}">
                     <div class="control-label">
-                        {{t "name"}}
+                        {{t 'name'}}
                     </div>
                     <div class="controls">
-                        {{input value=category.name}}
-                        {{tn-error-message}}
+                        {{input value=category.name key-up='validateName' maxlength='64'}}
+                        {{#each errors.name as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="enabled"}}
+                </div>
+                <div class="form-group">
                     <div class="controls">
                         <label>
-                            {{input type="checkbox" checked=category.enabled }}
-                            {{t "active"}}
+                            {{input type='checkbox' checked=category.enabled }}
+                            {{t 'active'}}
                         </label>
                         <p class="hint">
-                            {{t "category_active_hint"}}
+                            {{t 'category_active_hint'}}
                         </p>
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="parentCategory"}}
+                </div>
+                <div class="form-group">
                     <div class="control-label">
-                        {{t "parent_category"}}
+                        {{t 'parent_category'}}
                     </div>
                     <div class="controls">
-                        <!-- {{view "select"
-                            contentBinding="categories"
-                            optionValuePath="content.id"
-                            optionLabelPath="content.name"
-                            selectionBinding="category.parentCategory"
-                            prompt='- Select -'}} -->
-                        {{tn-error-message}}
+                        {{select-2
+                            content=categories
+                            value=category.parentCategory
+                            optionValuePath='content.id'
+                            optionLabelPath='content.name'
+                            placeholder='Parent category'
+                        }}
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="note"}}
+                </div>
+                <div class="form-group {{if errors.note 'has-error'}}">
                     <div class="control-label">
-                        {{t "note"}}
+                        {{t 'note'}}
                     </div>
                     <div class="controls">
-                        {{textarea value=category.note}}
-                        {{tn-error-message}}
+                        {{textarea value=category.note key-up='validateNote' maxlength='256'}}
+                        {{#if noteCharacterLeft}}
+                            <div class="text-muted">left: {{noteCharacterLeft}}</div>
+                        {{/if}}
+                        {{#each errors.note as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="color"}}
+                </div>
+                <div class="form-group">
                     <div class="control-label">
-                        {{t "color"}}
+                        {{t 'color'}}
                     </div>
                     <div class="controls">
                         {{input value=category.color}}
-                        {{tn-error-message}}
                     </div>
-                {{/tn-form-group}}
+                </div>
             </fieldset>
         </section>
         <footer class="form-actions">
-            <button class="btn" {{action "cancel"}}>{{t "cancel"}}</button>
-            <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+            <button class="btn" {{action 'cancel'}}>{{t 'cancel'}}</button>
+            <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
         </footer>
     </form>
 </div>

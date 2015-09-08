@@ -1,6 +1,5 @@
 export default {
     name: 'i18n',
-
     after: 'ember-i18n',
 
     initialize: function initialize(container, application) {

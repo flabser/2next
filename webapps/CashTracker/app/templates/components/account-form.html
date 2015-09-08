@@ -2,124 +2,129 @@
     <form {{action 'save' on='submit' }}>
         <header class="form-header">
             <h1 class="header-title">
-                <button class="go-back" {{action "cancel"}}>
+                <button class="btn-back" {{action 'cancel'}}>
                     <i class="fa fa-chevron-left"></i>
                 </button>
-                {{t "account"}}
+                {{t 'account'}}
             </h1>
         </header>
         <section class="form-content">
             <fieldset class="fieldset">
-                {{#tn-form-group property="name"}}
+                <div class="form-group {{if errors.name 'has-error'}}">
                     <div class="control-label">
-                        {{t "name"}}
+                        {{t 'name'}}
                     </div>
                     <div class="controls">
-                        {{input value=account.name}}
-                        {{tn-error-message}}
+                        {{input value=account.name key-up='validateName' maxlength='64'}}
+                        {{#each errors.name as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="enabled"}}
+                </div>
+                <div class="form-group">
                     <div class="controls">
                         <label>
-                            {{input type="checkbox" checked=account.enabled }}
-                            {{t "active"}}
+                            {{input type='checkbox' checked=account.enabled }}
+                            {{t 'active'}}
                         </label>
                         <p class="hint">
-                            {{t "account_active_hint"}}
+                            {{t 'account_active_hint'}}
                         </p>
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="openingBalance"}}
+                </div>
+                <div class="form-group {{if errors.openingBalance 'has-error'}}">
                     <div class="control-label">
-                        {{t "opening_balance"}}
+                        {{t 'opening_balance'}}
                     </div>
                     <div class="controls">
-                        {{input type="number" value=account.openingBalance}}
-                        {{tn-error-message}}
+                        {{input type='number' value=account.openingBalance key-up='validateOpeningBalance'}}
+                        {{#each errors.openingBalance as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="amountControl"}}
+                </div>
+                <div class="form-group {{if errors.amountControl 'has-error'}}">
                     <div class="control-label">
-                        {{t "amount_control"}}
+                        {{t 'amount_control'}}
                     </div>
                     <div class="controls">
-                        {{input type="number" value=account.amountControl}}
-                        {{tn-error-message}}
+                        {{input type='number' value=account.amountControl key-up='validateAmountControl'}}
+                        {{#each errors.amountControl as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
                         <p class="hint">
-                            {{t "amount_control_hint"}}
+                            {{t 'amount_control_hint'}}
                         </p>
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="currencyCode"}}
+                </div>
+                <div class="form-group {{if errors.currencyCode 'has-error'}}">
                     <div class="control-label">
-                        {{t "currency"}}
+                        {{t 'currency'}}
                     </div>
                     <div class="controls">
-                        {{input value=account.currencyCode}}
-                        {{tn-error-message}}
+                        {{input value=account.currencyCode maxlength='3' key-up='validateCurrencyCode'}}
+                        {{#each errors.currencyCode as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="note"}}
+                </div>
+                <div class="form-group {{if errors.note 'has-error'}}">
                     <div class="control-label">
-                        {{t "note"}}
+                        {{t 'note'}}
                     </div>
                     <div class="controls">
-                        {{textarea value=account.note}}
-                        {{tn-error-message}}
+                        {{textarea value=account.note key-up='validateNote' maxlength='256'}}
+                        {{#if noteCharacterLeft}}
+                            <div class="text-muted">left: {{noteCharacterLeft}}</div>
+                        {{/if}}
+                        {{#each errors.note as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
                     </div>
-                {{/tn-form-group}}
-
+                </div>
                 <fieldset>
-                    <legend>{{t "permissions"}}</legend>
-                    {{#tn-form-group property="owner"}}
+                    <legend>{{t 'permissions'}}</legend>
+                    <div class="form-group">
                         <div class="control-label">
-                            {{t "writers"}}
+                            {{t 'writers'}}
                         </div>
                         <div class="controls">
-                            <!-- {{view "select"
-                                contentBinding="users"
-                                optionValuePath="content.id"
-                                optionLabelPath="content.login"
-                                selectionBinding="account.owner"
-                                multiple=true
-                                prompt="- Select -"}} -->
-                            {{tn-error-message}}
+                            {{select-2
+                                content=users
+                                value=transaction.owner
+                                optionValuePath='id'
+                                optionLabelPath='userName'
+                                placeholder='owner'
+                            }}
                             <p class="hint">
-                                {{t "writers_hint"}}
+                                {{t 'writers_hint'}}
                             </p>
                         </div>
-                    {{/tn-form-group}}
-
-                    {{#tn-form-group property="observers"}}
+                    </div>
+                    <div class="form-group">
                         <div class="control-label">
-                            {{t "readers"}}
+                            {{t 'readers'}}
                         </div>
                         <div class="controls">
-                            <!-- {{view "select"
-                                contentBinding="users"
-                                optionValuePath="content.id"
-                                optionLabelPath="content.login"
-                                selectionBinding="account.observers"
+                            {{select-2
+                                content=users
+                                value=transaction.observers
+                                optionValuePath='content.content.content.id'
+                                optionLabelPath='content.content.content.userName'
+                                placeholder='observers'
                                 multiple=true
-                                prompt="-"}} -->
-                            {{tn-error-message}}
+                            }}
                             <p class="hint">
-                                {{t "readers_hint"}}
+                                {{t 'readers_hint'}}
                             </p>
                         </div>
-                    {{/tn-form-group}}
+                    </div>
                 </fieldset>
             </fieldset>
         </section>
         <footer class="form-actions">
-            <button class="btn" {{action "cancel"}}>{{t "cancel"}}</button>
-            <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+            <button class="btn" {{action 'cancel'}}>{{t 'cancel'}}</button>
+            <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
         </footer>
     </form>
 </div>

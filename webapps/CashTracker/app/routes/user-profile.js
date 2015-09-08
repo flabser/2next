@@ -17,9 +17,8 @@ export default Route.extend({
 
     actions: {
         saveUserProfile: function() {
-            var _this = this;
-            this.session.saveUserProfile().then(function() {
-                _this.sendAction('goBack');
+            this.session.saveUserProfile().then(() => {
+                this.sendAction('goBack');
             });
         }
     }

@@ -10,18 +10,5 @@ export default DS.Model.extend({
         defaultValue: true
     }),
     note: DS.attr('string'),
-    color: DS.attr('number'),
-
-    validations: {
-        name: {
-            presence: true
-        },
-        color: {
-            numericality: true,
-            inclusion: {
-                range: [0, 10],
-                allowBlank: true
-            }
-        }
-    }
+    color: DS.attr('number')
 });

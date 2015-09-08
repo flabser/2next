@@ -2,146 +2,167 @@
     <form {{action 'save' on='submit' }}>
         <header class="form-header">
             <h1 class="header-title">
-                <small id="saldo" class="pull-right" title="Сальдо"></small>
-                <button class="go-back" {{action "cancel"}}>
+                <button class="btn-back" {{action 'cancel'}}>
                     <i class="fa fa-chevron-left"></i>
                 </button>
-                {{t "transaction"}}
+                {{t 'transaction'}}
             </h1>
         </header>
         <section class="form-content">
             <fieldset class="fieldset">
-                {{#tn-form-group property="transactionType"}}
+                <div class="form-group {{if errors.name 'has-error'}}">
                     <div class="controls">
                         <label>
                             {{tn-input-radio
-                                value="1"
+                                value='E'
                                 groupValue=transaction.transactionType}}
-                            {{t "expense"}}
+                            {{t 'expense'}}
                         </label>
                         <label>
                             {{tn-input-radio
-                                value="2"
+                                value='I'
                                 groupValue=transaction.transactionType}}
-                            {{t "income"}}
+                            {{t 'income'}}
                         </label>
                         <label>
                             {{tn-input-radio
-                                value="3"
+                                value='T'
                                 groupValue=transaction.transactionType}}
-                            {{t "transfer"}}
+                            {{t 'transfer'}}
                         </label>
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="date"}}
+                </div>
+                <div class="form-group {{if errors.date 'has-error'}}">
                     <div class="control-label">
-                        {{t "date"}}
+                        {{t 'date'}}
                     </div>
                     <div class="controls">
-                        {{input type="date" value=transaction.date}}
-                        {{tn-error-message}}
+                        {{input type='date' value=transaction.date}}
+                        {{#each errors.date as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="accountFrom"}}
+                </div>
+                <div class="form-group {{if errors.accountFrom 'has-error'}}">
                     <div class="control-label">
                         {{#if isTransfer}}
-                            {{t "account_from"}}
+                            {{t 'account_from'}}
                         {{else}}
-                            {{t "account"}}
+                            {{t 'account'}}
                         {{/if}}
                     </div>
                     <div class="controls">
-                        <!-- {{view "select"
-                            contentBinding="accounts"
-                            optionValuePath="content.id"
-                            optionLabelPath="content.name"
-                            selectionBinding="transaction.accountFrom"
-                            prompt='- Select -'}} -->
-                        {{tn-error-message}}
+                        {{select-2
+                            content='accounts'
+                            value=transaction.accountFrom
+                            optionValuePath='content.id'
+                            optionLabelPath='content.name'
+                            placeholder='account_from'
+                        }}
+                        {{#each errors.accountFrom as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
                     </div>
-                {{/tn-form-group}}
+                </div>
 
                 {{#if isTransfer}}
-                    {{#tn-form-group property="accountTo"}}
+                    <div class="form-group {{if errors.accountTo 'has-error'}}">
                         <div class="control-label">
-                            {{t "account_to"}}
+                            {{t 'account_to'}}
                         </div>
                         <div class="controls">
-                            <!-- {{view "select"
-                                contentBinding="accounts"
-                                optionValuePath="content.id"
-                                optionLabelPath="content.name"
-                                selectionBinding="transaction.accountTo"
-                                prompt='- Select -'}} -->
-                            {{tn-error-message}}
+                            {{select-2
+                                content='accounts'
+                                value=transaction.accountTo
+                                optionValuePath='content.id'
+                                optionLabelPath='content.name'
+                                placeholder='account_to'
+                            }}
+                            {{#each errors.accountTo as |error|}}
+                                <div class="error-message">{{error.message}}</div>
+                            {{/each}}
                         </div>
-                    {{/tn-form-group}}
+                    </div>
                 {{/if}}
 
-                {{#tn-form-group property="category"}}
+                <div class="form-group">
                     <div class="control-label">
-                        {{t "category"}}
+                        {{t 'category'}}
                     </div>
                     <div class="controls">
-                        <!-- {{view "select"
-                            contentBinding="categories"
-                            optionValuePath="content.id"
-                            optionLabelPath="content.name"
-                            selectionBinding="transaction.category"
-                            prompt='- Select -'}} -->
-                        {{tn-error-message}}
+                        {{select-2
+                            content='categories'
+                            value=transaction.category
+                            optionValuePath='content.id'
+                            optionLabelPath='content.name'
+                            placeholder='Category'
+                        }}
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="amount"}}
+                </div>
+                <div class="form-group {{if errors.amount 'has-error'}}">
                     <div class="control-label">
-                        {{t "amount"}}
+                        {{t 'amount'}}
                     </div>
                     <div class="controls">
-                        {{input value=transaction.amount}}
-                        {{tn-error-message}}
+                        {{input type='number' value=transaction.amount key-up='validateAmount'}}
+                        {{#each errors.amount as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="costCenter"}}
+                </div>
+                <div class="form-group">
                     <div class="control-label">
-                        {{t "cost_center"}}
+                        {{t 'cost_center'}}
                     </div>
                     <div class="controls">
-                        <!-- {{view "select"
-                            contentBinding="costCenters"
-                            optionValuePath="content.id"
-                            optionLabelPath="content.name"
-                            selectionBinding="transaction.costCenter"
-                            prompt='- Select -'}} -->
-                        {{tn-error-message}}
+                        {{select-2
+                            content='costCenters'
+                            value=transaction.costCenter
+                            optionValuePath='content.id'
+                            optionLabelPath='content.name'
+                            placeholder='Cost center'
+                        }}
                     </div>
-                {{/tn-form-group}}
-
-                {{#tn-form-group property="note"}}
+                </div>
+                <div class="form-group">
                     <div class="control-label">
-                        {{t "note"}}
+                        {{t 'tags'}}
                     </div>
                     <div class="controls">
-                        {{textarea value=transaction.note}}
-                        {{tn-error-message}}
+                        {{select-2
+                            content='tags'
+                            value=transaction.tags
+                            optionValuePath='content.id'
+                            optionLabelPath='content.name'
+                            placeholder='Tags'
+                            multiple=true
+                        }}
                     </div>
-                {{/tn-form-group}}
+                </div>
+                <div class="form-group {{if errors.name 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'note'}}
+                    </div>
+                    <div class="controls">
+                        {{textarea value=transaction.note key-up='validateNote' maxlength='256'}}
+                        {{#if noteCharacterLeft}}
+                            <div class="text-muted">left: {{noteCharacterLeft}}</div>
+                        {{/if}}
+                        {{#each errors.note as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                    </div>
+                </div>
             </fieldset>
             <div id="tabs-2">
-                <form action="Uploader" name="upload" id="upload" method="post" enctype="multipart/form-data">
-                    <!-- Секция "Вложения" -->
-                    <div display="block" id="att">
-                        <br /> attach
-                    </div>
-                </form>
+                <div display="block" id="att">
+                    <br /> attach
+                </div>
             </div>
         </section>
         <footer class="form-actions">
-            <button class="btn" {{action "cancel"}}>{{t "cancel"}}</button>
-            <button type="submit" class="btn btn-primary">{{t "save"}}</button>
+            <button class="btn" {{action 'cancel'}}>{{t 'cancel'}}</button>
+            <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
         </footer>
     </form>
 </div>

@@ -25,6 +25,11 @@ footer.form-actions {
     visibility: hidden;
 }
 
+.form-actions .btn {
+    padding: 6px 12px;
+    min-width: 120px;
+}
+
 .form-content {
     padding: 6px 0;
 }
@@ -55,6 +60,7 @@ footer.form-actions {
 .form-group {
     border-bottom: 1px solid transparent;
     display: block;
+    margin: 0;
     max-width: 100%;
     min-height: 22px;
     overflow: hidden;
@@ -100,20 +106,22 @@ footer.form-actions {
     padding: 2px;
 }
 
-.go-back {
+.btn-back {
     background: transparent;
     border: 0;
-    display: inline;
+    cursor: pointer;
+    display: inline-block;
     margin: 0;
-    padding: 3px 0;
+    padding: 4px 6px;
 }
 
-.go-back .fa {
+.btn-back .fa {
     color: #999;
-    font-size: .8em;
+    font-size: 1em;
+    margin: 0;
 }
 
-.go-back:hover .fa {
+.btn-back:hover .fa {
     color: #666;
 }
 
@@ -146,9 +154,6 @@ footer.form-actions {
     }
     footer.form-actions .btn {
         min-width: 33%;
-    }
-    .go-back {
-        display: inline;
     }
 }
 

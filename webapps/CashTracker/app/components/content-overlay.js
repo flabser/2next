@@ -7,17 +7,11 @@ export default Em.Component.extend({
 
     mouseDown: function(e) {
         e.preventDefault();
-        this.send('hideOpenedNav');
+        this.sendAction();
     },
 
     touchStart: function(e) {
         e.preventDefault();
-        this.send('hideOpenedNav');
-    },
-
-    actions: {
-        hideOpenedNav() {
-            $('body').removeClass('nav-app-open nav-ws-open');
-        }
+        this.sendAction();
     }
 });

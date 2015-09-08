@@ -14,13 +14,13 @@ export default Em.Route.extend(UnsavedModelRollbackMixin, {
 
     transactionTypes: [{
         'value': 'E',
-        'name': "Expense"
+        'name': 'Expense'
     }, {
         'value': 'I',
-        'name': "Income"
+        'name': 'Income'
     }, {
         'value': 'T',
-        'name': "Transfer"
+        'name': 'Transfer'
     }],
 
     setupController: function(controller, model) {

@@ -16,20 +16,19 @@ export default Em.Route.extend({
 
     actions: {
         login: function() {
-            var route = this,
-                controller = this.get('controller');
+            var controller = this.get('controller');
 
             var userName = controller.get('username'),
                 password = controller.get('password');
 
-            this.session.login(userName, password).then(function(user) {
-                route.session.set('user', user);
+            this.session.login(userName, password).then((user) => {
+                this.session.set('user', user);
 
                 var transition = controller.get('transition');
                 if (transition) {
                     transition.retry();
                 } else {
-                    route.transitionTo('index');
+                    this.transitionTo('index');
                 }
             });
         },
