@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.restful.data.AppEntity;
+import com.flabser.restful.data.AttachedFile;
 
 
 @JsonRootName("transaction")
@@ -358,6 +359,14 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	public void setIncludeInReports(boolean includeInReports) {
 		this.includeInReports = includeInReports;
+	}
+
+	public void setAttachments(ArrayList <AttachedFile> attachedFile) {
+		this.attachments = attachedFile;
+	}
+
+	public ArrayList <AttachedFile> getAttachments() {
+		return attachments;
 	}
 
 	@Override
