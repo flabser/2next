@@ -1,7 +1,7 @@
 .layout {
     background: #FFF;
     margin: 0px auto;
-    max-width: 1366px;
+    max-width: 1440px;
     min-height: 100%;
     min-width: 320px;
     position: relative;
@@ -22,7 +22,7 @@
     height: 60px;
     line-height: 60px;
     max-width: inherit;
-    /* position: fixed; */
+    position: relative;
     width: 100%;
     z-index: 5;
 }
@@ -33,6 +33,11 @@
     line-height: 50px;
     position: fixed;
     top: 0;
+}
+
+.main {
+    display: block;
+    z-index: 1;
 }
 
 .aside {
@@ -59,8 +64,9 @@
     height: auto;
     margin: 0 0 10px 230px;
     padding: 0;
-    padding-top: 60px;
+    /* padding-top: 60px; */
     position: relative;
+    /* width: 100%; */
 }
 
 .tablet .content,
@@ -80,4 +86,12 @@
     z-index: 6;
 }
 
-.page-loading {}
+.app-loading {
+    background: #FFF url(../img/loader-mini.gif) center center no-repeat;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}

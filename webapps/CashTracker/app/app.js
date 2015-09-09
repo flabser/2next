@@ -12,7 +12,12 @@ Em.MODEL_FACTORY_INJECTIONS = true;
 App = Em.Application.extend({
     modulePrefix: config.modulePrefix,
     podModulePrefix: config.podModulePrefix,
-    Resolver: Resolver
+    Resolver: Resolver,
+
+    ready: function() {
+        Em.$('body').bind('touchstart', function() {});
+        Em.$('#app-loading').hide();
+    }
 });
 
 loadInitializers(App, config.modulePrefix);

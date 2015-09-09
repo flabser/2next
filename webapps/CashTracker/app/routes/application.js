@@ -5,7 +5,8 @@ const {
 } = Em;
 
 export default Route.extend({
-    tagName: '',
+    tagName: 'div',
+    classNames: ['layout'],
     navProfileIsExpanded: false,
     hasAddAction: false,
     // loginThroughToken: false,
@@ -20,7 +21,7 @@ export default Route.extend({
     },
 
     windowOnResize: function() {
-        if (window.innerWidth <= 800) {
+        if (window.innerWidth <= 768) {
             $('body').addClass('phone');
         } else {
             $('body').removeClass('phone');
@@ -42,8 +43,6 @@ export default Route.extend({
             } else {
                 // this.controllerFor('budget').send('check');
             }
-
-            $('.page-loading').hide();
         }
     },
 
@@ -57,6 +56,36 @@ export default Route.extend({
     setupController: function(controller, model) {
         controller.set('model', model);
         controller.set('loginThroughToken', model.authMode === 'LOGIN_THROUGH_TOKEN');
+
+        setTimeout(this.initScrollSpySide, 200);
+    },
+
+    initScrollSpySide: function() {
+
+        var offsetTop = 0;
+        var sideOnTop = false;
+        var $side = $('#nav-app');
+
+        if ($side.length) {
+            offsetTop = $('.header')[0].clientHeight;
+
+            $(window).scroll(scrollSpySide);
+            scrollSpySide();
+        }
+
+        function scrollSpySide() {
+            if (window.pageYOffset > offsetTop) {
+                if (!sideOnTop) {
+                    $side.css('top', '0px');
+                    sideOnTop = true;
+                }
+            } else {
+                if (sideOnTop) {
+                    $side.css('top', '');
+                    sideOnTop = false;
+                }
+            }
+        }
     },
 
     actions: {
@@ -106,7 +135,7 @@ export default Route.extend({
         },
 
         willTransition: function(transition) {
-            this.send('hideOpenedNav');
+            $('body').removeClass('nav-app-open nav-ws-open');
         },
 
         error: function(_error /*, transition*/ ) {

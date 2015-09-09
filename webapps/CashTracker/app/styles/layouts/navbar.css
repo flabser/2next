@@ -1,42 +1,320 @@
 .navbar {
-	background: #FFF;
-	margin: 0;
-	padding: 0;
-	position: relative;
-	vertical-align: top;
-	white-space: nowrap;
+    background: #fff59d url(../img/yellow_background.png) 0 0 no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: #494949;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    white-space: nowrap;
 }
 
 .navbar-header {
-	display: inline-block;
-	float: left;
+    display: inline-block;
+    float: left;
 }
 
 .navbar-brand {
-	color: #494949;
-	display: inline-block;
-	font-size: 1.6em;
-	height: 69px;
-	line-height: 70px;
-	margin-left: 10px;
-	padding: 0 1em;
-	text-decoration: none;
-	vertical-align: middle;
+    color: #494949;
+    display: inline-block;
+    font-size: 1.6em;
+    height: inherit;
+    padding: 0 4px;
+    text-decoration: none;
+    vertical-align: top;
+}
+
+.brand-logo {
+    line-height: 60px;
+    margin: 0 4px;
+    max-height: 58px;
+    vertical-align: middle;
+}
+
+.brand-title {
+    font-size: 1em;
+    line-height: 60px;
+    vertical-align: middle;
 }
 
 .navbar-right {
-	float: right;
+    float: right;
 }
 
 .navbar-nav {
-	display: inline-block;
-	float: left;
-	margin: 0;
-	padding: 0;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
 }
 
-.navbar-nav>li {
-	display: inline-block;
-	margin: 0;
-	padding: 0;
+.nav-item {
+    background: transparent;
+    border: 0;
+    display: inline-block;
+    height: 60px;
+    margin: 0;
+    min-width: 48px;
+    outline: 0;
+    padding: 0;
+    position: relative;
+    text-align: center;
+    vertical-align: top;
+    width: 48px;
+}
+
+.tablet .nav-item,
+.phone .nav-item {
+    height: 50px;
+}
+
+.nav-item:hover,
+.nav-app-side-toggle:hover {
+    background-color: rgba(255, 214, 1, .5);
+}
+
+.navbar button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    outline: 0;
+    vertical-align: top;
+}
+
+.navbar .fa {
+    color: #646464;
+    font-size: 24px;
+    vertical-align: middle;
+}
+
+
+/* compose-new */
+
+.nav-item.compose-new {
+    display: none;
+}
+
+.tablet .nav-item.compose-new,
+.phone .nav-item.compose-new {
+    display: inline-block;
+}
+
+
+/* nav-search-toggle */
+
+.nav-item.nav-search-toggle {
+    display: none;
+}
+
+.tablet .nav-item.nav-search-toggle,
+.phone .nav-item.nav-search-toggle {
+    display: inline-block;
+}
+
+.nav-search-toggle i {
+    padding-bottom: 2px;
+}
+
+.nav-search {
+    display: inline-block;
+    padding: 0 8px;
+    width: 200px;
+    white-space: nowrap;
+}
+
+.tablet .nav-search,
+.phone .nav-search {
+    background: #fff59d url(../img/yellow_background.png) 0 0 no-repeat;
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 6;
+}
+
+.search-open .nav-search {
+    display: block;
+    z-index: 99;
+}
+
+.search-open .content-overlay {
+    display: block;
+}
+
+.search-open .header {
+    z-index: 9;
+}
+
+.search-form {
+    display: block;
+    height: 100%;
+    position: relative;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.search-form .search-toggle-back {
+    cursor: pointer;
+    display: none;
+    height: 100%;
+    position: absolute;
+    left: 0;
+}
+
+.tablet .search-form .search-toggle-back,
+.phone .search-form .search-toggle-back {
+    display: inline-block;
+}
+
+.search-form .search-keyword {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    padding: 6px;
+    position: relative;
+    transition: all .15s;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.tablet .search-form .search-keyword,
+.phone .search-form .search-keyword {
+    display: block;
+    border: none !important;
+    height: 100%;
+    position: absolute;
+    left: 48px;
+    vertical-align: top;
+}
+
+.search-open .search-keyword,
+.search-form .search-keyword:focus,
+.search-form:hover .search-keyword {
+    background: white;
+    border: 1px solid #CCC;
+}
+
+.search-form .search-btn {
+    height: 100%;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+}
+
+.tablet .search-form .search-btn,
+.phone .search-form .search-btn {
+    position: absolute;
+    right: 0;
+}
+
+
+/* nav-app-side-toggle */
+
+.navbar .nav-app-side-toggle {
+    display: none;
+    height: 50px;
+    width: 30px;
+}
+
+.tablet .nav-app-side-toggle,
+.phone .nav-app-side-toggle {
+    display: inline-block;
+}
+
+
+/* nav-app-toggle */
+
+.nav-app-toggle {
+    display: none;
+}
+
+.tablet .nav-app-toggle,
+.phone .nav-app-toggle {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    width: 16px;
+}
+
+.nav-app-toggle:before {
+    border-bottom: 3px solid #666;
+    border-top: 3px solid #666;
+    content: '';
+    display: block;
+    padding: 2px 0;
+    width: 16px;
+}
+
+.nav-app-toggle:after {
+    border-top: 3px solid #666;
+    content: '';
+    display: block;
+    margin-top: 4px;
+    width: 16px;
+}
+
+
+/* nav-ws-toggle */
+
+.nav-ws-toggle {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+}
+
+.nav-ws-toggle:hover,
+.nav-ws-toggle:focus {
+    box-shadow: 0 0 3px #999;
+}
+
+.nav-ws-toggle:before {
+    border-left: 8px solid #666;
+    border-right: 8px solid #666;
+    content: '';
+    display: block;
+    height: 8px;
+}
+
+.nav-ws-toggle:after {
+    border-left: 8px solid #666;
+    border-right: 8px solid #666;
+    content: '';
+    display: block;
+    height: 8px;
+    margin-top: 4px;
+}
+
+@media ( max-width: 768px) {
+    .navbar .brand {
+        width: auto;
+    }
+    .navbar .brand-logo {
+        line-height: 50px;
+        max-width: 32px;
+    }
+    .navbar .brand-title {
+        line-height: 50px;
+        font-size: .8em;
+    }
+    .nav-search .search-toggle-back {
+        display: inline-block;
+    }
+}
+
+@media ( max-width: 360px) {
+    .navbar-brand {
+        width: 48px;
+    }
+    .navbar-brand .brand-logo {
+        display: none;
+    }
 }

@@ -1,98 +1,100 @@
-<aside class="layout_aside nav-app" id="nav">
+<aside class="aside nav-app" id="nav-app">
     <nav class="side-nav">
-        <div class={{if navProfileIsExpanded "nav-profile side-nav expanded" "nav-profile side-nav" }}>
-            <header {{action "toggleNavProfile"}}>
-                <i class="fa fa-user"></i>
-                <span>{{model.login}}</span>
+        <div class="nav-profile {{navProfileClass}}">
+            <header {{action 'toggleNavProfile'}}>
+                <span class="user-avatar">
+                    <i class="fa fa-user"></i>
+                </span>
+                <span class="user-name">{{model.login}}</span>
                 <i class="fa fa-angle-down"></i>
             </header>
             <section>
                 <ul>
-                    <li class="side-tree-item">
-                        {{#link-to "user_profile" class="profile"}}
-                        <span class="nav-icon"><i class="fa fa-cog"></i></span>
-                        <span class="nav-text">{{t "user_profile"}}</span> {{/link-to}}
+                    <li>
+                        {{#link-to 'user_profile'}}
+                        <span class="nav-i"><i class="fa fa-cog"></i></span>
+                        <span class="nav-t">{{t 'user_profile'}}</span>{{/link-to}}
                     </li>
                     {{#if loginThroughToken}}
-                    <li class="side-tree-item">
+                    <li>
                         <a href="/Nubis/Provider?id=ws" class="ws">
-                            <span class="nav-icon"><i class="fa fa-desktop"></i></span>
-                            <span class="nav-text">{{t "workspace"}}</span>
+                            <span class="nav-i"><i class="fa fa-desktop"></i></span>
+                            <span class="nav-t">{{t 'workspace'}}</span>
                         </a>
                     </li>
                     {{/if}}
-                    <li>
-                        <button class="logout" {{action "logout"}}>
-                            <span class="nav-icon"><i class="fa fa-sign-out"></i></span>
-                            <span class="nav-text">{{t "logout"}}</span>
+                    <li class="logout">
+                        <button {{action 'logout'}}>
+                            <span class="nav-i"><i class="fa fa-sign-out"></i></span>
+                            <span class="nav-t">{{t 'logout'}}</span>
                         </button>
                     </li>
                 </ul>
             </section>
         </div>
-        <ul class="side-tree">
-            <li class="side-tree-item">
-                {{#link-to "dashboard"}}
-                <span class="nav-icon"><i class="fa fa-dashboard"></i></span>
-                <span class="nav-text">{{t "dashboard"}}</span> {{/link-to}}
+        <ul>
+            <li>
+                {{#link-to 'dashboard'}}
+                <span class="nav-i"><i class="fa fa-dashboard"></i></span>
+                <span class="nav-t">{{t 'dashboard'}}</span>{{/link-to}}
             </li>
-            <li class="side-tree-item">
-                {{#link-to "transactions" (query-params type="")}}
-                <span class="nav-icon"><i class="fa fa-tasks"></i></span>
-                <span class="nav-text">{{t "transactions"}}</span> {{/link-to}}
-                <ul class="side-tree">
-                    <li class="side-tree-item">
-                        {{#link-to "transactions" (query-params type="income")}}
-                        <span class="nav-icon"><i class="fa fa-caret-up green"></i></span>
-                        <span class="nav-text">{{t "incomes"}}</span> {{/link-to}}
+            <li>
+                {{#link-to 'transactions' (query-params type='')}}
+                <span class="nav-i"><i class="fa fa-tasks"></i></span>
+                <span class="nav-t">{{t 'transactions'}}</span>{{/link-to}}
+                <ul>
+                    <li>
+                        {{#link-to 'transactions' (query-params type='income')}}
+                        <span class="nav-i"><i class="fa fa-caret-up green"></i></span>
+                        <span class="nav-t">{{t 'incomes'}}</span>{{/link-to}}
                     </li>
-                    <li class="side-tree-item">
-                        {{#link-to "transactions" (query-params type="expense")}}
-                        <span class="nav-icon"><i class="fa fa-caret-down red"></i></span>
-                        <span class="nav-text">{{t "expenses"}}</span> {{/link-to}}
+                    <li>
+                        {{#link-to 'transactions' (query-params type='expense')}}
+                        <span class="nav-i"><i class="fa fa-caret-down red"></i></span>
+                        <span class="nav-t">{{t 'expenses'}}</span>{{/link-to}}
                     </li>
-                    <li class="side-tree-item">
-                        {{#link-to "transactions" (query-params type="transfer")}}
-                        <span class="nav-icon"><i class="fa fa-retweet blue"></i></span>
-                        <span class="nav-text">{{t "transfers"}}</span> {{/link-to}}
+                    <li>
+                        {{#link-to 'transactions' (query-params type='transfer')}}
+                        <span class="nav-i"><i class="fa fa-retweet blue"></i></span>
+                        <span class="nav-t">{{t 'transfers'}}</span>{{/link-to}}
                     </li>
                 </ul>
             </li>
-            <li class="side-tree-item">
-                {{#link-to "reports"}}
-                <span class="nav-icon"><i class="fa fa-bar-chart-o"></i></span>
-                <span class="nav-text">{{t "reports"}}</span> {{/link-to}}
+            <li>
+                {{#link-to 'reports'}}
+                <span class="nav-i"><i class="fa fa-bar-chart-o"></i></span>
+                <span class="nav-t">{{t 'reports'}}</span>{{/link-to}}
             </li>
-            <li class="items-separator"></li>
-            <li class="side-tree-item">
-                {{#link-to "budget"}}
-                <span class="nav-icon"><i class="fa fa-calculator"></i></span>
-                <span class="nav-text">{{t "budget"}}</span> {{/link-to}}
+            <li class="nav-separator"></li>
+            <li>
+                {{#link-to 'budget'}}
+                <span class="nav-i"><i class="fa fa-calculator"></i></span>
+                <span class="nav-t">{{t 'budget'}}</span>{{/link-to}}
             </li>
-            <li class="side-tree-item">
-                {{#link-to "accounts"}}
-                <span class="nav-icon"><i class="fa fa-credit-card"></i></span>
-                <span class="nav-text">{{t "accounts"}}</span> {{/link-to}}
+            <li>
+                {{#link-to 'accounts'}}
+                <span class="nav-i"><i class="fa fa-credit-card"></i></span>
+                <span class="nav-t">{{t 'accounts'}}</span>{{/link-to}}
             </li>
-            <li class="side-tree-item">
-                {{#link-to "categories"}}
-                <span class="nav-icon"><i class="fa fa-sitemap"></i></span>
-                <span class="nav-text">{{t "categories"}}</span> {{/link-to}}
+            <li>
+                {{#link-to 'categories'}}
+                <span class="nav-i"><i class="fa fa-sitemap"></i></span>
+                <span class="nav-t">{{t 'categories'}}</span>{{/link-to}}
             </li>
-            <li class="side-tree-item">
-                {{#link-to "cost_centers"}}
-                <span class="nav-icon"><i class="fa fa-map-marker"></i></span>
-                <span class="nav-text">{{t "cost_centers"}}</span> {{/link-to}}
+            <li>
+                {{#link-to 'cost_centers'}}
+                <span class="nav-i"><i class="fa fa-map-marker"></i></span>
+                <span class="nav-t">{{t 'cost_centers'}}</span>{{/link-to}}
             </li>
-            <li class="side-tree-item">
-                {{#link-to "tags"}}
-                <span class="nav-icon"><i class="fa fa-tags"></i></span>
-                <span class="nav-text">{{t "tags"}}</span> {{/link-to}}
+            <li>
+                {{#link-to 'tags'}}
+                <span class="nav-i"><i class="fa fa-tags"></i></span>
+                <span class="nav-t">{{t 'tags'}}</span>{{/link-to}}
             </li>
-            <li class="side-tree-item">
-                {{#link-to "users"}}
-                <span class="nav-icon"><i class="fa fa-users"></i></span>
-                <span class="nav-text">{{t "users"}}</span> {{/link-to}}
+            <li>
+                {{#link-to 'users'}}
+                <span class="nav-i"><i class="fa fa-users"></i></span>
+                <span class="nav-t">{{t 'users'}}</span>{{/link-to}}
             </li>
         </ul>
     </nav>

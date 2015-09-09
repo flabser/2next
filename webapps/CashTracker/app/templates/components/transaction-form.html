@@ -155,7 +155,10 @@
                 </div>
             </fieldset>
             <fieldset class="fieldset transaction-att">
-                {{attach-list list=transaction.attachments addAttach='addAttach'}}
+                {{attach-list
+                    fieldName='files'
+                    list=transaction.attachments
+                    addAttach='addAttach'}}
             </fieldset>
         </section>
         <footer class="form-actions">

@@ -1,13 +1,14 @@
 .nav-profile {
     border-radius: 3px;
     border-bottom: 1px solid #E6E6E6;
-    margin-bottom: .3em;
+    margin-bottom: 8px;
 }
 
 .nav-profile > header {
     cursor: pointer;
     margin: 0;
-    padding: 1em;
+    padding: .8em .5em;
+    vertical-align: middle;
 }
 
 .nav-profile > section {
@@ -21,35 +22,45 @@
 }
 
 .nav-profile ul {
-    margin: 0;
-    padding: 0;
+    margin: 1px 0;
+    padding: 0 0 .5em;
 }
-
-.nav-profile li {
-    list-style: none;
-    margin: 1px 0 0 0;
-    padding: 0;
-}
-
-.nav-profile .profile {}
 
 .nav-profile .ws {
     color: blue;
 }
 
-.nav-profile .logout {
+.nav-profile .user-avatar {
+    display: inline-block;
+    vertical-align: middle;
+    width: 26px;
+}
+
+.nav-profile .user-name {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    width: 126px;
+}
+
+.nav-profile .logout button {
     background: transparent;
     border: 1px solid transparent;
     border-radius: 2px;
     cursor: pointer;
     display: block;
     line-height: 1;
-    padding: .8em .5em;
+    margin-bottom: 3px;
+    padding: 8px 5px;
     text-align: left;
     width: 100%;
 }
 
 .nav-profile .logout:hover {
     background-color: #F5F5F5;
+}
+
+.nav-profile .logout:hover button {
     color: red;
 }

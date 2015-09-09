@@ -1,9 +1,9 @@
 <div class="layout">
     {{partial "header"}}
-    <section class="flex">
-        {{partial "sidenav"}}
+    <section class="main">
         {{content-overlay action='hideOpenedNav'}}
-        <section class="layout_content">
+        {{partial "sidenav"}}
+        <section class="content">
             {{outlet}}
         </section>
     </section>

@@ -15,7 +15,7 @@
                         {{t 'email'}}
                     </div>
                     <div class="controls">
-                        {{input type='email' value=invitation.email focus-out='validateEmail'}}
+                        {{input type='email' value=invitation.email focus-out='validateEmail' maxlength='64'}}
                         {{#each errors.email as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
