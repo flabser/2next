@@ -2,8 +2,9 @@
 <rule type="page" id="app-captions" mode="on">
 	<description>app-captions</description>
 
-	<caption name="logout" />
+	<caption name="brand" />
 
+	<caption name="logout" />
 	<caption name="save" />
 	<caption name="close" />
 	<caption name="cancel" />
@@ -97,4 +98,9 @@
 	<caption name="invitation_email_hint" />
 	<caption name="message" />
 	<caption name="send_invite" />
+
+	<caption name="validation_empty" />
+	<caption name="validation_email" />
+	<caption name="validation_date" />
+	<caption name="validation_numeric" />
 </rule>

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <vocabulary>
+	<sentence mode="on" keyword="brand">
+		<entry lang="RUS">CashTracker</entry>
+		<entry lang="KAZ">CashTracker</entry>
+		<entry lang="ENG">CashTracker</entry>
+		<entry lang="BG">CashTracker</entry>
+	</sentence>
 	<sentence mode="on" keyword="copyright">
 		<entry lang="RUS">@copyright</entry>
 		<entry lang="KAZ">@copyright</entry>
@@ -857,5 +863,30 @@
 		<entry lang="KAZ">Отправить приглашение</entry>
 		<entry lang="ENG">Send invite</entry>
 		<entry lang="BG">Отправить приглашение</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="validation_empty">
+		<entry lang="RUS">Обязательное поле</entry>
+		<entry lang="KAZ">Обязательное поле</entry>
+		<entry lang="ENG">Can't be empty</entry>
+		<entry lang="BG">Обязательное поле</entry>
+	</sentence>
+	<sentence mode="on" keyword="validation_email">
+		<entry lang="RUS">Введите корректный аддресс</entry>
+		<entry lang="KAZ">Введите корректный аддресс</entry>
+		<entry lang="ENG">Введите корректный аддресс</entry>
+		<entry lang="BG">Введите корректный аддресс</entry>
+	</sentence>
+	<sentence mode="on" keyword="validation_date">
+		<entry lang="RUS">Укажите дату</entry>
+		<entry lang="KAZ">Укажите дату</entry>
+		<entry lang="ENG">Укажите дату</entry>
+		<entry lang="BG">Укажите дату</entry>
+	</sentence>
+	<sentence mode="on" keyword="validation_numeric">
+		<entry lang="RUS">Должно числовое значение</entry>
+		<entry lang="KAZ">Должно числовое значение</entry>
+		<entry lang="ENG">Должно числовое значение</entry>
+		<entry lang="BG">Должно числовое значение</entry>
 	</sentence>
 </vocabulary>
