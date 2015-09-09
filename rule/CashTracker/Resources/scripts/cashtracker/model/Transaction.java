@@ -26,8 +26,8 @@ import cashtracker.model.constants.converter.TransactionTypeConverter;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.flabser.restful.data.AppEntity;
-import com.flabser.restful.data.AttachedFile;
+import com.flabser.dataengine.jpa.AppEntity;
+import com.flabser.dataengine.jpa.AttachedFile;
 
 
 @JsonRootName("transaction")

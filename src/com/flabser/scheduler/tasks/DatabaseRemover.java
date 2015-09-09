@@ -22,6 +22,10 @@ public class DatabaseRemover implements Job {
 
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+		process();
+	}
+
+	public void process(){
 		Server.logger.normalLogEntry("start database remover task");
 		ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
 		ArrayList<ApplicationProfile> apps = sysDb.getAllApps("status=896", 0, 100);

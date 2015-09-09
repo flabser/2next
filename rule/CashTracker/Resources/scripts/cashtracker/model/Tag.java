@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.restful.data.AppEntity;
+import com.flabser.dataengine.jpa.AppEntity;
 
 
 @JsonRootName("tag")

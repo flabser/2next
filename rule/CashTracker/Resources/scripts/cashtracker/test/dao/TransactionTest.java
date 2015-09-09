@@ -22,8 +22,8 @@ import cashtracker.model.Transaction;
 import cashtracker.model.constants.TransactionState;
 import cashtracker.model.constants.TransactionType;
 
+import com.flabser.dataengine.jpa.IAppEntity;
 import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.restful.data.IAppEntity;
 
 
 public class TransactionTest extends InitEnv {

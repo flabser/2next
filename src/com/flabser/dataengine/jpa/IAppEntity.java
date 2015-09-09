@@ -1,4 +1,4 @@
-package com.flabser.restful.data;
+package com.flabser.dataengine.jpa;
 
 import java.util.Date;
 

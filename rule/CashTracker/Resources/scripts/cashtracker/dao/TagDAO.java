@@ -6,7 +6,7 @@ import javax.persistence.Query;
 
 import cashtracker.model.Tag;
 
-import com.flabser.restful.data.DAO;
+import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 

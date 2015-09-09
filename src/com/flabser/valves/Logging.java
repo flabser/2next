@@ -1,7 +1,6 @@
 package com.flabser.valves;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,14 +27,14 @@ public class Logging extends ValveBase {
 
 		RequestURL ru = new RequestURL(requestURI);
 
-		System.out.println("-------------" + ru.getUrl());
-		Enumeration<String> headerNames = request.getHeaderNames();
-		while (headerNames.hasMoreElements()) {
-			String key = headerNames.nextElement();
-			String value = request.getHeader(key);
-			System.out.println(key + "=" + value);
-		}
-		System.out.println("-------------");
+		//	System.out.println("-------------" + ru.getUrl());
+		//	Enumeration<String> headerNames = request.getHeaderNames();
+		//	while (headerNames.hasMoreElements()) {
+		//		String key = headerNames.nextElement();
+		//		String value = request.getHeader(key);
+		//		System.out.println(key + "=" + value);
+		//	}
+		//	System.out.println("-------------");
 
 		// Server.logger.normalLogEntry(ru.getUrl());
 		((Unsecure) getNext()).invoke(request, response, ru);

@@ -27,13 +27,13 @@ import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.activity.Activity;
 import com.flabser.dataengine.activity.IActivity;
+import com.flabser.dataengine.jpa.AttachedFile;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
-import com.flabser.restful.data.AttachedFile;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.server.Server;
 import com.flabser.users.User;
@@ -454,13 +454,13 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			if(aFile != null){
 				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
 				if (userTmpDir.exists()) {
-					String uploadedFileLocation = userTmpDir + File.separator + aFile.tempID;
+					String uploadedFileLocation = userTmpDir + File.separator + aFile.getTempID();
 					File avatarFile = new File(uploadedFileLocation);
 					if (avatarFile.exists()) {
 						try {
 							InputStream is = new FileInputStream(avatarFile);
 							insertUser.setBinaryStream(17, is, (int)avatarFile.length());
-							insertUser.setString(18, aFile.realFileName);
+							insertUser.setString(18, aFile.getRealFileName());
 						} catch (FileNotFoundException e) {
 							Server.logger.errorLogEntry(e);
 						}
@@ -521,13 +521,13 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			if(aFile != null){
 				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getOldLogin());
 				if (userTmpDir.exists()) {
-					String uploadedFileLocation = userTmpDir + File.separator + aFile.tempID;
+					String uploadedFileLocation = userTmpDir + File.separator + aFile.getTempID();
 					File avatarFile = new File(uploadedFileLocation);
 					if (avatarFile.exists()) {
 						try {
 							InputStream is = new FileInputStream(avatarFile);
 							updateUser.setBinaryStream(17, is, (int)avatarFile.length());
-							updateUser.setString(18, aFile.realFileName);
+							updateUser.setString(18, aFile.getRealFileName());
 						} catch (FileNotFoundException e) {
 							Server.logger.errorLogEntry(e);
 						}

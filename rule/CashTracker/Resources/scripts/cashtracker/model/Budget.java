@@ -11,7 +11,7 @@ import cashtracker.model.constants.converter.BudgetStateConverter;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.flabser.restful.data.AppEntity;
+import com.flabser.dataengine.jpa.AppEntity;
 
 
 @JsonRootName("budget")

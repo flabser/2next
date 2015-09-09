@@ -6,6 +6,7 @@ import java.util.Scanner;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.scheduler.PeriodicalServices;
+import com.flabser.scheduler.tasks.DatabaseRemover;
 import com.flabser.users.UserSession;
 
 public class Console implements Runnable {
@@ -33,7 +34,10 @@ public class Console implements Runnable {
 				PeriodicalServices services = Environment.periodicalServices;
 
 				System.out.println(services.getCurrentJobs());
-
+			} else if (command.contains("force")) {
+				if (command.contains("database remover")) {
+					new DatabaseRemover().process();
+				}
 			} else {
 				if (!command.trim().equalsIgnoreCase("")) {
 					System.err.println("command \"" + command + "\" is not recognized");

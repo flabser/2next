@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.restful.data.SecureAppEntity;
+import com.flabser.dataengine.jpa.SecureAppEntity;
 
 
 @JsonRootName("profile")

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IDatabase;
+import com.flabser.dataengine.jpa.AttachedFile;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
@@ -23,7 +24,6 @@ import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.AppUser;
-import com.flabser.restful.data.AttachedFile;
 import com.flabser.server.Server;
 import com.flabser.util.Util;
 
@@ -345,7 +345,7 @@ public class User {
 		userName = appUser.getName();
 		password = appUser.getPwd();
 		email = appUser.getEmail();
-		avatar = appUser.getAttachedFile();
+		avatar = appUser.getAttachments().get(0);
 		//defaultApp = authUser.getDefaultApp();
 
 	}

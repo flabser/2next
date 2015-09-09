@@ -10,8 +10,8 @@ import cashtracker.dao.CategoryDAO;
 import cashtracker.model.Category;
 import cashtracker.model.constants.TransactionType;
 
+import com.flabser.dataengine.jpa.IAppEntity;
 import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.restful.data.IAppEntity;
 
 
 public class CategoryTest extends InitEnv {

@@ -17,6 +17,8 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 		objectMapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
 		objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
 		objectMapper.getSerializerProvider().setNullKeySerializer(new NullKeySerializer());
+
+
 	}
 
 	@Override
