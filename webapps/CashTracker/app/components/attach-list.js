@@ -1,9 +1,7 @@
 import Em from 'ember';
 
 export default Em.Component.extend({
-    tagName: 'div',
-    classNames: ['attachments'],
-    isVisible: true,
+    fieldName: 'files',
     list: [],
 
     uploadService: Em.inject.service('upload'),
@@ -16,12 +14,14 @@ export default Em.Component.extend({
                 return;
             }
 
-            var promise = this.get('uploadService').upload(fileInput);
+            var file = fileInput[0].files[0];
+
+            var promise = this.get('uploadService').upload(file);
             promise.then((tid) => {
                 fileInput.attr('value', '');
                 this.sendAction('addAttach', {
-                    fieldName: 'files',
-                    realFileName: fileInput[0].files[0].name,
+                    fieldName: this.get('fieldName'),
+                    realFileName: file.name,
                     tempID: tid
                 });
             });

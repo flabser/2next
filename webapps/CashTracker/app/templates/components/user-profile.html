@@ -1,4 +1,4 @@
-<div class="form-wrapper">
+<div class="form-wrapper user-profile">
     <form {{action 'save' on='submit' }}>
         <header class="form-header">
             <h1 class="header-title">
@@ -10,7 +10,10 @@
         </header>
         <section class="form-content">
             <div class="user_avatar">
-                avatar
+                {{attach-list
+                    fieldName='avatar'
+                    list=userProfile.attachments
+                    addAttach='addAttach'}}
             </div>
             <div class="fieldset" style="overflow:hidden">
                 <div class="form-group {{if errors.name 'has-error'}}">

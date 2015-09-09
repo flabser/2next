@@ -8,9 +8,9 @@ const PATH = 'rest/file/upload';
 
 export default Service.extend({
 
-    upload: function(attachInput) {
+    upload: function(attachFile) {
         var formData = new FormData();
-        formData.append('file', attachInput[0].files[0]);
+        formData.append('file', attachFile);
 
         return $.ajax({
             url: PATH,

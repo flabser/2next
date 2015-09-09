@@ -1,14 +1,16 @@
-<h1>Attachments</h1>
-<div class="attach-upload-form">
-    <input type="file" name="file" />
-    <button class="btn" {{action 'upload'}}>Upload It</button>
-</div>
-<div class="attach-list">
-    <ul>
-        {{#each list as |attach|}}
-        <li>
-            {{attach.tempID}}, {{attach.fieldName}}, {{attach.realFileName}}
-        </li>
-        {{/each}}
-    </ul>
+<div class="attachments">
+    <h1>Attachments</h1>
+    <div class="attach-upload-form">
+        <input type="file" name="file" />
+        <button class="btn" {{action 'upload'}}>{{t 'upload_file'}}</button>
+    </div>
+    <div class="attach-list">
+        <ul>
+            {{#each list as |attach|}}
+            <li>
+                {{attach.tempID}}, {{attach.fieldName}}, {{attach.realFileName}}
+            </li>
+            {{/each}}
+        </ul>
+    </div>
 </div>

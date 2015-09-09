@@ -16,6 +16,10 @@ export default Em.Component.extend({
 
         cancel: function() {
             this.sendAction('cancel');
+        },
+
+        addAttach: function(attach) {
+            this.get('userProfile').attachedFile = attach;
         }
     },
 

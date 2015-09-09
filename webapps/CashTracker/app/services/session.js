@@ -42,7 +42,8 @@ export default Service.extend({
                     login: _this.user.login,
                     email: _this.user.email,
                     pwd: _this.user.password,
-                    pwd_repeat: _this.user.password_repeat
+                    pwd_repeat: _this.user.password_repeat,
+                    attachedFile: _this.user.attachedFile
                 }
             }),
             success: function(result) {
