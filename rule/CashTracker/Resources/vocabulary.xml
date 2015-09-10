@@ -872,10 +872,10 @@
 		<entry lang="BG">Обязательное поле</entry>
 	</sentence>
 	<sentence mode="on" keyword="validation_email">
-		<entry lang="RUS">Введите корректный аддресс</entry>
-		<entry lang="KAZ">Введите корректный аддресс</entry>
-		<entry lang="ENG">Введите корректный аддресс</entry>
-		<entry lang="BG">Введите корректный аддресс</entry>
+		<entry lang="RUS">Введите корректный адрес</entry>
+		<entry lang="KAZ">Введите корректный адрес</entry>
+		<entry lang="ENG">Введите корректный адрес</entry>
+		<entry lang="BG">Введите корректный адрес</entry>
 	</sentence>
 	<sentence mode="on" keyword="validation_date">
 		<entry lang="RUS">Укажите дату</entry>
