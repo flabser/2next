@@ -1,6 +1,7 @@
 import Em from 'ember';
+import ModelRoute from '../../mixins/model-route';
 
-export default Em.Route.extend({
+export default Em.Route.extend(ModelRoute, {
     model: function() {
         return this.store.createRecord('invitation');
     },

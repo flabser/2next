@@ -1,7 +1,7 @@
 import Em from 'ember';
-import UnsavedModelRollbackMixin from '../../mixins/m-unsaved-model-rollback';
+import ModelRoute from '../../mixins/model-route';
 
-export default Em.Route.extend(UnsavedModelRollbackMixin, {
+export default Em.Route.extend(ModelRoute, {
     templateName: 'accounts/account',
 
     model: function(params) {
