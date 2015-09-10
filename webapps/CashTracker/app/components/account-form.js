@@ -17,6 +17,10 @@ export default Em.Component.extend({
         return '';
     }),
 
+    willDestroyElement: function() {
+        this.set('errors', null);
+    },
+
     actions: {
         save: function() {
             if (this.validate()) {

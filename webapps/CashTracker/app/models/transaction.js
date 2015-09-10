@@ -19,7 +19,9 @@ export default DS.Model.extend({
     transactionState: DS.attr('number'),
     transactionType: DS.attr('number'),
     exchangeRate: DS.attr('number'),
-    repeat: DS.attr('boolean'),
+    repeat: DS.attr('boolean', {
+        defaultValue: false
+    }),
     every: DS.attr('number'),
     repeatStep: DS.attr('number'),
     startDate: DS.attr('date'),

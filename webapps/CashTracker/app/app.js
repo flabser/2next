@@ -16,7 +16,6 @@ App = Em.Application.extend({
 
     ready: function() {
         Em.$('body').bind('touchstart', function() {});
-        Em.$('#app-loading').hide();
     }
 });
 

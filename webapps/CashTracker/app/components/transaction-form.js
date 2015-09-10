@@ -18,6 +18,10 @@ export default Em.Component.extend({
         return '';
     }),
 
+    willDestroyElement: function() {
+        this.set('errors', null);
+    },
+
     actions: {
         save: function() {
             if (this.validate()) {
@@ -33,6 +37,9 @@ export default Em.Component.extend({
             this.get('transaction.attachments').createRecord(attach);
         },
 
+        validateDate: function() {
+            this.validate('date');
+        },
         validateAmount: function() {
             this.validate('amount');
         },
@@ -46,6 +53,11 @@ export default Em.Component.extend({
             this.get('errors').remove(fieldName);
 
             switch (fieldName) {
+                case 'date':
+                    if (!Validate.isDate(this.get('transaction.date'))) {
+                        this.get('errors').add('date', this.get('i18n').t('validation_date'));
+                    }
+                    break;
                 case 'amount':
                     if (!Validate.isNumeric(this.get('transaction.amount'))) {
                         this.get('errors').add('amount', this.get('i18n').t('validation_numeric'));
@@ -60,6 +72,9 @@ export default Em.Component.extend({
         } else {
             this.set('errors', DS.Errors.create());
 
+            if (!Validate.isDate(this.get('transaction.date'))) {
+                this.get('errors').add('date', this.get('i18n').t('validation_date'));
+            }
             if (!Validate.isNumeric(this.get('transaction.amount'))) {
                 this.get('errors').add('amount', this.get('i18n').t('validation_numeric'));
             }

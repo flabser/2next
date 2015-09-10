@@ -16,6 +16,10 @@ export default Em.Component.extend({
         return '';
     }),
 
+    willDestroyElement: function() {
+        this.set('errors', null);
+    },
+
     actions: {
         sendInvite: function() {
             if (this.validate()) {

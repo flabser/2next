@@ -13,10 +13,15 @@ function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+function isDate(dateStr) {
+    return !isEmpty(dateStr);
+}
+
 var Validate = {
     isEmpty: isEmpty,
     isEmail: validateEmail,
-    isNumeric: isNumeric
+    isNumeric: isNumeric,
+    isDate: isDate
 };
 
 export default Validate;

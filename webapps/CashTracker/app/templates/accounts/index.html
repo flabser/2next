@@ -1,34 +1,30 @@
 <div class="view view_accounts">
-    <header class="view-header">
-        <h1 class="header-title">
-            {{t "accounts"}}
-        </h1>
-        <nav class="navbar-action on-desktop">
-            <div class="action-bar">
-                <button class="btn" {{action "composeRecord"}}>
-                    <i class="fa fa-plus"></i>{{t "add"}}
-                </button>
-            </div>
+    <header class="content-header">
+        <h1 class="header-title">{{t 'accounts'}}</h1>
+        <nav class="content-actions on-desktop">
+            <button class="btn" {{action 'composeRecord'}}>
+                <i class="fa fa-plus"></i>{{t 'add'}}
+            </button>
         </nav>
     </header>
-    <section class="view-content">
+    <section class="content-body">
         <header class="entries-head">
             <div class="head-wrap">
                 <label class="entry-select">
-                    <input type="checkbox" class="all" {{action "selectAll"}} />
+                    <input type="checkbox" class="all" {{action 'selectAll'}} />
                 </label>
                 <div class="entry-captions">
                     <span class="vaccount-name">
-                        {{t "name"}}
+                        {{t 'name'}}
                     </span>
                     <span class="vaccount-writers">
-                        {{t "writers"}}
+                        {{t 'writers'}}
                     </span>
                     <span class="vaccount-readers">
-                        {{t "readers"}}
+                        {{t 'readers'}}
                     </span>
                     <span class="vaccount-amount-control">
-                        {{t "amount_control"}}
+                        {{t 'amount_control'}}
                     </span>
                 </div>
             </div>
@@ -38,15 +34,15 @@
                 {{#unless account.isNew}}
                 <div class="entry-wrap">
                     <div class="entry-actions">
-                        <button class="entry-action action-delete" {{action "deleteRecord" account}}>
+                        <button class="entry-action action-delete" {{action 'deleteRecord' account}}>
                             <i class="fa fa-trash" />
                         </button>
                     </div>
-                    {{#tn-swipe-entry class="entry document"}}
+                    {{#tn-swipe-entry class='entry document'}}
                         <label class="entry-select">
-                            <input type="checkbox" value="{{account.id}}" {{action "selectOne"}} />
+                            <input type="checkbox" value="{{account.id}}" {{action 'selectOne'}} />
                         </label>
-                        {{#link-to "accounts.account" account class="entry-link"}}
+                        {{#link-to 'accounts.account' account class='entry-link'}}
                         <div class="entry-fields">
                             <span class="entry-field vaccount-name">
                                 {{account.name}}

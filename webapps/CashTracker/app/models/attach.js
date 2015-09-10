@@ -1,9 +1,7 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-    fieldName: DS.attr('string', {
-        defaultValue: 'attach'
-    }),
+    fieldName: DS.attr('string'),
     realFileName: DS.attr('string'),
     tempID: DS.attr('string')
 });

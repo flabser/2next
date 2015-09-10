@@ -7,6 +7,10 @@ export default Em.Component.extend({
     errors: DS.Errors.create(),
     tag: null,
 
+    willDestroyElement: function() {
+        this.set('errors', null);
+    },
+
     actions: {
         save: function() {
             if (this.validate()) {

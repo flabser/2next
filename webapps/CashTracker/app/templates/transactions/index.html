@@ -1,38 +1,36 @@
 <div class="view view_op">
-    <header class="view-header">
-        <h1 class="header-title">{{t "transactions"}}</h1>
-        <nav class="navbar-action on-desktop">
-            <div class="action-bar pull-left">
-                <button class="btn" {{action "composeRecord"}}>
-                    <i class="fa fa-plus"></i>{{t "add"}}
-                </button>
-            </div>
-            <div class="action-bar pull-right">
+    <header class="content-header">
+        <h1 class="header-title">{{t 'transactions'}}</h1>
+        <nav class="content-actions on-desktop">
+            <button class="btn" {{action 'composeRecord'}}>
+                <i class="fa fa-plus"></i>{{t 'add'}}
+            </button>
+            <div class="pull-right">
                 page-navigator
             </div>
         </nav>
     </header>
-    <section class="view-content">
+    <section class="content-body">
         <header class="entries-head">
             <div class="head-wrap op-head">
                 <label class="entry-select">
-                    <input type="checkbox" class="all" {{action "selectAll"}} />
+                    <input type="checkbox" class="all" {{action 'selectAll'}} />
                 </label>
                 <div class="entry-captions">
                     <span class="op-icon-att">
                         <i class="fa fa-paperclip" />
                     </span>
                     <span class="op-account">
-                        {{t "account"}}
+                        {{t 'account'}}
                     </span>
                     <span class="op-date">
-                        {{t "date"}}
+                        {{t 'date'}}
                     </span>
                     <span class="op-amount">
-                        {{t "amount"}}
+                        {{t 'amount'}}
                     </span>
                     <span class="entry-field op-costcenter">
-                        {{t "costcenter"}}
+                        {{t 'costcenter'}}
                     </span>
                 </div>
             </div>
@@ -42,15 +40,15 @@
                 {{#unless transaction.isNew}}
                 <div class="entry-wrap">
                     <div class="entry-actions">
-                        <button class="entry-action action-delete" {{action "deleteRecord" transaction}}>
+                        <button class="entry-action action-delete" {{action 'deleteRecord' transaction}}>
                             <i class="fa fa-trash" />
                         </button>
                     </div>
-                    {{#tn-swipe-entry class="entry document"}}
+                    {{#tn-swipe-entry class='entry document'}}
                         <label class="entry-select">
-                            <input type="checkbox" value="{{transaction.id}}" {{action "selectOne"}} />
+                            <input type="checkbox" value="{{transaction.id}}" {{action 'selectOne'}} />
                         </label>
-                        {{#link-to "transactions.transaction" transaction class="entry-link"}}
+                        {{#link-to 'transactions.transaction' transaction class='entry-link'}}
                         <div class="entry-fields">
                             <span class="entry-field op-icon-att" {{hasattach}}></span>
                             <span class="entry-field op-account">

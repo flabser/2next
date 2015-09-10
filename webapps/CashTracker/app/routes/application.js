@@ -62,6 +62,9 @@ export default Route.extend({
 
     initScrollSpySide: function() {
 
+        Em.$('body').removeClass('no_transition');
+        Em.$('#app-loading').hide();
+
         var offsetTop = 0;
         var sideOnTop = false;
         var $side = $('#nav-app');

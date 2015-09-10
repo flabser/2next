@@ -12,7 +12,16 @@ export default Em.Route.extend(UnsavedModelRollbackMixin, {
         return this.store.findAll('user');
     }.property(),
 
-    currencies: [],
+    currencies: [{
+        'value': 'KZT',
+        'name': 'Kazakhstani Tenge'
+    }, {
+        'value': 'USD',
+        'name': 'US Dollar'
+    }, {
+        'value': 'RUB',
+        'name': 'Russian Ruble'
+    }],
 
     setupController: function(controller, model) {
         controller.set('account', model);

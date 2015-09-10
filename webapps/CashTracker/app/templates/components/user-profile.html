@@ -1,14 +1,14 @@
 <div class="form-wrapper user-profile">
     <form {{action 'save' on='submit' }}>
-        <header class="form-header">
+        <header class="content-header">
+            <button class="btn-back" {{action 'cancel'}}>
+                <i class="fa fa-chevron-left"></i>
+            </button>
             <h1 class="header-title">
-                <button class="btn-back" {{action 'cancel'}}>
-                    <i class="fa fa-chevron-left"></i>
-                </button>
                 {{t 'user_profile'}}
             </h1>
         </header>
-        <section class="form-content">
+        <section class="content-body">
             <div class="user_avatar">
                 {{attach-list
                     fieldName='avatar'
@@ -17,42 +17,42 @@
             </div>
             <div class="fieldset" style="overflow:hidden">
                 <div class="form-group {{if errors.name 'has-error'}}">
-                    <div>{{t 'user_name'}}</div>
-                    {{input value=userProfile.name}}
+                    <div class="text-muted">{{t 'user_name'}}</div>
+                    {{input value=userProfile.name class='span3'}}
                     {{#each errors.name as |error|}}
                         <div class="error-message">{{error.message}}</div>
                     {{/each}}
                 </div>
                 <div class="form-group {{if errors.login 'has-error'}}">
-                    <div>{{t 'user_login'}}</div>
-                    {{input value=userProfile.login}}
+                    <div class="text-muted">{{t 'user_login'}}</div>
+                    {{input value=userProfile.login class='span3'}}
                     {{#each errors.login as |error|}}
                         <div class="error-message">{{error.message}}</div>
                     {{/each}}
                 </div>
                 <div class="form-group {{if errors.email 'has-error'}}">
-                    <div>{{t 'email'}}</div>
-                    {{input value=userProfile.email}}
+                    <div class="text-muted">{{t 'email'}}</div>
+                    {{input value=userProfile.email class='span3'}}
                     {{#each errors.email as |error|}}
                         <div class="error-message">{{error.message}}</div>
                     {{/each}}
                 </div>
                 <div class="form-group {{if errors.pwd 'has-error'}}">
-                    <div>{{t 'password'}}</div>
-                    {{input type='password' value=userProfile.pwd autocomplete='off'}}
+                    <div class="text-muted">{{t 'password'}}</div>
+                    {{input type='password' value=userProfile.pwd autocomplete='off' class='span3'}}
                     {{#each errors.pwd as |error|}}
                         <div class="error-message">{{error.message}}</div>
                     {{/each}}
                 </div>
                 <div class="form-group {{if errors.pwd_repeat 'has-error'}}">
-                    <div>{{t 'password_repeat'}}</div>
-                    {{input type='password' value=userProfile.pwd_repeat autocomplete='off'}}
+                    <div class="text-muted">{{t 'password_repeat'}}</div>
+                    {{input type='password' value=userProfile.pwd_repeat autocomplete='off' class='span3'}}
                     {{#each errors.pwd_repeat as |error|}}
                         <div class="error-message">{{error.message}}</div>
                     {{/each}}
                 </div>
                 <div class="form-group">
-                    <div>{{t 'roles'}}</div>
+                    <div class="text-muted">{{t 'roles'}}</div>
                     <ul>
                         {{#each userProfile.roles as |role|}}
                             <li>{{role}}</li>
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </section>
-        <footer class="form-actions">
+        <footer class="content-actions">
             <button class="btn" {{action 'cancel'}}>{{t 'cancel'}}</button>
             <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
         </footer>

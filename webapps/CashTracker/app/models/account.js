@@ -3,8 +3,12 @@ import DS from 'ember-data';
 export default DS.Model.extend({
     name: DS.attr('string'),
     currencyCode: DS.attr('string'),
-    openingBalance: DS.attr('number'),
-    amountControl: DS.attr('number'),
+    openingBalance: DS.attr('number', {
+        defaultValue: 0
+    }),
+    amountControl: DS.attr('number', {
+        defaultValue: 0
+    }),
     enabled: DS.attr('boolean', {
         defaultValue: true
     }),

@@ -37,7 +37,6 @@
 
 .main {
     display: block;
-    z-index: 1;
 }
 
 .aside {
@@ -66,7 +65,6 @@
     padding: 0;
     /* padding-top: 60px; */
     position: relative;
-    /* width: 100%; */
 }
 
 .tablet .content,

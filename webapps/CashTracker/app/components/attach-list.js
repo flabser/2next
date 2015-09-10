@@ -18,7 +18,7 @@ export default Em.Component.extend({
 
             var promise = this.get('uploadService').upload(file);
             promise.then((tid) => {
-                fileInput.attr('value', '');
+                fileInput.val('');
                 this.sendAction('addAttach', {
                     fieldName: this.get('fieldName'),
                     realFileName: file.name,

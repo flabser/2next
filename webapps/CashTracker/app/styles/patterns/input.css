@@ -1,0 +1,112 @@
+input,
+textarea,
+select {
+    background: white;
+    border: 1px solid #CCC;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.157);
+    border-left: 1px solid rgba(0, 0, 0, 0.267);
+    border-right: 1px solid rgba(0, 0, 0, 0.267);
+    border-top: 1px solid rgba(0, 0, 0, 0.377);
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.196), inset 0px 1px 1px rgba(0, 0, 0, 0.102);
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #000;
+    display: inline-block;
+    height: 28px;
+    font-size: 1em;
+    line-height: 1;
+    max-width: 100%;
+    outline: 0;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    background-color: #FFFCCE;
+    border-color: #888;
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+    border-color: #888;
+}
+
+input[readonly]:focus {
+    background: white;
+}
+
+input[disabled] {
+    background: #FAFAFA;
+}
+
+input[type=checkbox][disabled],
+input[type=radio][disabled] {
+    background: #DDD;
+}
+
+input[required]:invalid,
+textarea[required]:invalid {
+    border-bottom-color: #FF7676;
+}
+
+input[type=checkbox],
+input[type=radio] {
+    border: 1px solid #CCC;
+    box-shadow: none;
+    margin: 0;
+    max-width: 16px;
+    padding: 1px;
+    width: auto !important;
+}
+
+input[type=radio] {
+    border: 1px solid transparent;
+}
+
+textarea {
+    min-height: 5em;
+    width: 100%;
+}
+
+.tablet input,
+.tablet textarea,
+.phone input,
+.phone textarea {
+    padding: 6px;
+    width: 100%;
+}
+
+.tablet input[type=checkbox],
+.tablet input[type=radio],
+.phone input[type=checkbox],
+.phone input[type=radio] {
+    padding: 2px;
+}
+
+.tablet select,
+.phone select {
+    padding: 6px;
+}
+
+.fieldset[disabled] input,
+.fieldset[disabled] select {
+    background-color: #FAFAFA;
+}
+
+@media ( max-width: 768px) {
+    input,
+    textarea {
+        padding: 6px;
+        width: 100%;
+    }
+    input[type=checkbox],
+    input[type=radio] {
+        padding: 2px;
+    }
+    select {
+        padding: 6px;
+    }
+}

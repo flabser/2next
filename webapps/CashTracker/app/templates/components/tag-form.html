@@ -1,21 +1,21 @@
 <div class="form-wrapper">
     <form {{action 'save' on='submit' }}>
-        <header class="form-header">
+        <header class="content-header">
+            <button class="btn-back" {{action 'cancel'}}>
+                <i class="fa fa-chevron-left"></i>
+            </button>
             <h1 class="header-title">
-                <button class="btn-back" {{action 'cancel'}}>
-                    <i class="fa fa-chevron-left"></i>
-                </button>
                 {{t 'tag'}}
             </h1>
         </header>
-        <section class="form-content">
+        <section class="content-body">
             <fieldset class="fieldset">
                 <div class="form-group {{if errors.name 'has-error'}}">
                     <div class="control-label">
                         {{t 'name'}}
                     </div>
                     <div class="controls">
-                        {{input value=tag.name key-up='validateName' maxlength='64'}}
+                        {{input value=tag.name key-up='validateName' maxlength='64' class='span5'}}
                         {{#each errors.name as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -23,7 +23,7 @@
                 </div>
             </fieldset>
         </section>
-        <footer class="form-actions">
+        <footer class="content-actions">
             <button class="btn" {{action 'cancel'}}>{{t 'cancel'}}</button>
             <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
         </footer>

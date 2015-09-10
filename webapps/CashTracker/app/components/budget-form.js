@@ -8,6 +8,10 @@ export default Em.Component.extend({
     budget: null,
     isEditMode: false,
 
+    willDestroyElement: function() {
+        this.set('errors', null);
+    },
+
     actions: {
         check: function() {
             var budget = this.get('budget');

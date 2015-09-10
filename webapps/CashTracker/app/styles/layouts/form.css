@@ -3,46 +3,15 @@
     min-width: 320px;
 }
 
-.form-header {}
-
-footer.form-actions {
-    border-top: 1px solid #E6E6E6;
-    padding-left: 235px;
-}
-
-.form-actions {
-    margin: 0;
-    padding: 8px;
-    vertical-align: middle;
-}
-
-.form-actions:after {
-    content: ' ';
-    clear: both;
-    display: block;
-    font-size: 0;
-    height: 0;
-    visibility: hidden;
-}
-
-.form-actions .btn {
-    padding: 6px 12px;
-    min-width: 120px;
-}
-
-.form-content {
-    padding: 6px 0;
-}
-
 .fieldset {
     border: none;
     margin: 0;
     padding: 8px;
 }
 
-.fieldset .legend {
+.fieldset > .legend {
     border: none;
-    border-bottom: 1px solid #AAAAAA;
+    border-bottom: 1px solid #E6E6E6;
     color: #000;
     display: block;
     font-size: .9em;
@@ -51,27 +20,23 @@ footer.form-actions {
     width: 100%;
 }
 
-.fieldset-container {
-    list-style: none;
-    margin: 0;
-    padding: 6px 0 0 0;
-}
-
 .form-group {
     border-bottom: 1px solid transparent;
     display: block;
     margin: 0;
     max-width: 100%;
-    min-height: 22px;
+    min-height: 28px;
     overflow: hidden;
-    padding: 0 0 6px;
+    padding: 8px 0;
+}
+
+.form-group:last-child {
+    border-bottom: none;
 }
 
 .tablet .form-group,
 .phone .form-group {
     border-bottom-color: #F2F2F4;
-    margin-bottom: 8px;
-    padding-bottom: 8px;
 }
 
 .form-group-divider {
@@ -91,7 +56,7 @@ footer.form-actions {
     max-width: 100%;
     min-height: inherit;
     overflow: hidden;
-    padding: 2px;
+    padding: 6px 2px 2px;
     text-align: right;
     width: 230px;
 }
@@ -106,23 +71,10 @@ footer.form-actions {
     padding: 2px;
 }
 
-.btn-back {
-    background: transparent;
-    border: 0;
-    cursor: pointer;
-    display: inline-block;
-    margin: 0;
-    padding: 4px 6px;
-}
-
-.btn-back .fa {
-    color: #999;
-    font-size: 1em;
-    margin: 0;
-}
-
-.btn-back:hover .fa {
-    color: #666;
+.form-group.has-error .controls input,
+.form-group.has-error .controls textarea,
+.form-group.has-error .controls select {
+    border-color: #DE3309;
 }
 
 @media ( max-width: 960px) {
@@ -137,8 +89,6 @@ footer.form-actions {
 @media ( max-width: 768px) {
     .form-group {
         border-bottom-color: #F2F2F4;
-        margin-bottom: 8px;
-        padding-bottom: 8px;
         width: auto;
     }
     .form-group .control-label {
@@ -147,13 +97,6 @@ footer.form-actions {
     }
     .form-group .controls {
         margin-left: 140px;
-    }
-    footer.form-actions {
-        padding-left: 0;
-        text-align: center;
-    }
-    footer.form-actions .btn {
-        min-width: 33%;
     }
 }
 

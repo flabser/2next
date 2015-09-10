@@ -1,14 +1,14 @@
 <div class="form-wrapper">
     <form {{action 'save' on='submit' }}>
-        <header class="form-header">
+        <header class="content-header">
+            <button class="btn-back" {{action 'cancel'}}>
+                <i class="fa fa-chevron-left"></i>
+            </button>
             <h1 class="header-title">
-                <button class="btn-back" {{action 'cancel'}}>
-                    <i class="fa fa-chevron-left"></i>
-                </button>
                 {{t 'transaction'}}
             </h1>
         </header>
-        <section class="form-content">
+        <section class="content-body">
             <fieldset class="fieldset">
                 <div class="form-group {{if errors.name 'has-error'}}">
                     <div class="controls">
@@ -37,7 +37,7 @@
                         {{t 'date'}}
                     </div>
                     <div class="controls">
-                        {{input type='date' value=transaction.date}}
+                        {{input type='date' value=transaction.date class='span2'}}
                         {{#each errors.date as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -104,7 +104,7 @@
                         {{t 'amount'}}
                     </div>
                     <div class="controls">
-                        {{input type='number' value=transaction.amount key-up='validateAmount'}}
+                        {{input type='number' value=transaction.amount key-up='validateAmount' class='span2'}}
                         {{#each errors.amount as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -144,7 +144,7 @@
                         {{t 'note'}}
                     </div>
                     <div class="controls">
-                        {{textarea value=transaction.note key-up='validateNote' maxlength='256'}}
+                        {{textarea value=transaction.note key-up='validateNote' maxlength='256' class='span5'}}
                         {{#if noteCharacterLeft}}
                             <div class="text-muted">left: {{noteCharacterLeft}}</div>
                         {{/if}}
@@ -154,14 +154,15 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="fieldset transaction-att">
+            <fieldset class="fieldset">
+                <legend class="legend">{{t 'attachments'}}</legend>
                 {{attach-list
                     fieldName='files'
                     list=transaction.attachments
                     addAttach='addAttach'}}
             </fieldset>
         </section>
-        <footer class="form-actions">
+        <footer class="content-actions">
             <button class="btn" {{action 'cancel'}}>{{t 'cancel'}}</button>
             <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
         </footer>

@@ -1,23 +1,21 @@
 <div class="view">
-    <header class="view-header">
-        <h1 class="header-title">{{t "categories"}}</h1>
-        <nav class="navbar-action on-desktop">
-            <div class="action-bar">
-                <button class="btn" {{action "composeRecord"}}>
-                    <i class="fa fa-plus"></i>{{t "add"}}
-                </button>
-            </div>
+    <header class="content-header">
+        <h1 class="header-title">{{t 'categories'}}</h1>
+        <nav class="content-actions on-desktop">
+            <button class="btn" {{action 'composeRecord'}}>
+                <i class="fa fa-plus"></i>{{t 'add'}}
+            </button>
         </nav>
     </header>
-    <section class="view-content">
+    <section class="content-body">
         <header class="entries-head">
             <div class="head-wrap">
+                <label class="entry-select">
+                    <input type="checkbox" class="all" {{action "selectAll"}} />
+                </label>
                 <div class="entry-captions">
-                    <label class="entry-select">
-                        <input type="checkbox" class="all" {{action "selectAll"}} />
-                    </label>
                     <span>
-                        {{t "name"}}
+                        {{t 'name'}}
                     </span>
                 </div>
             </div>
@@ -27,15 +25,15 @@
                 {{#unless category.isNew}}
                 <div class="entry-wrap">
                     <div class="entry-actions">
-                        <button class="entry-action action-delete" {{action "deleteRecord" category}}>
+                        <button class="entry-action action-delete" {{action 'deleteRecord' category}}>
                             <i class="fa fa-trash" />
                         </button>
                     </div>
-                    {{#tn-swipe-entry class="entry document"}}
+                    {{#tn-swipe-entry class='entry document'}}
                         <label class="entry-select">
-                            <input type="checkbox" value="{{category.id}}" {{action "selectOne"}} />
+                            <input type="checkbox" value="{{category.id}}" {{action 'selectOne'}} />
                         </label>
-                        {{#link-to "categories.category" category class="entry-link"}}
+                        {{#link-to 'categories.category' category class='entry-link'}}
                         <div class="entry-fields">
                             <span class="entry-field">
                                 {{category.name}}
