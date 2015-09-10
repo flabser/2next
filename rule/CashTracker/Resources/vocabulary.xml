@@ -878,15 +878,15 @@
 		<entry lang="BG">Введите корректный адрес</entry>
 	</sentence>
 	<sentence mode="on" keyword="validation_date">
-		<entry lang="RUS">Укажите дату</entry>
-		<entry lang="KAZ">Укажите дату</entry>
-		<entry lang="ENG">Укажите дату</entry>
-		<entry lang="BG">Укажите дату</entry>
+		<entry lang="RUS">Введите дату</entry>
+		<entry lang="KAZ">Введите дату</entry>
+		<entry lang="ENG">Введите дату</entry>
+		<entry lang="BG">Введите дату</entry>
 	</sentence>
 	<sentence mode="on" keyword="validation_numeric">
-		<entry lang="RUS">Должно числовое значение</entry>
-		<entry lang="KAZ">Должно числовое значение</entry>
-		<entry lang="ENG">Должно числовое значение</entry>
-		<entry lang="BG">Должно числовое значение</entry>
+		<entry lang="RUS">Должно быть числовое значение</entry>
+		<entry lang="KAZ">Должно быть числовое значение</entry>
+		<entry lang="ENG">Должно быть числовое значение</entry>
+		<entry lang="BG">Должно быть числовое значение</entry>
 	</sentence>
 </vocabulary>
