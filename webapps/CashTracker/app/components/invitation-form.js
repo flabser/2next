@@ -1,12 +1,11 @@
 import Em from 'ember';
 import DS from 'ember-data';
+import ModelForm from '../mixins/model-form';
 import Validate from '../utils/validator';
 
 const noteMaxLen = 256;
 
-export default Em.Component.extend({
-    i18n: Em.inject.service(),
-    errors: DS.Errors.create(),
+export default Em.Component.extend(ModelForm, {
     invitation: null,
 
     noteCharacterLeft: Em.computed('category.note', function() {
@@ -15,10 +14,6 @@ export default Em.Component.extend({
         }
         return '';
     }),
-
-    willDestroyElement: function() {
-        this.set('errors', null);
-    },
 
     actions: {
         sendInvite: function() {
@@ -40,18 +35,20 @@ export default Em.Component.extend({
     },
 
     validate: function(fieldName) {
+        var i18n = this.get('i18n');
+
         if (fieldName) {
             this.get('errors').remove(fieldName);
 
             switch (fieldName) {
                 case 'email':
                     if (!Validate.isEmail(this.get('invitation.email'))) {
-                        this.get('errors').add('email', this.get('i18n').t('validation_email'));
+                        this.get('errors').add('email', i18n.t('validation_email'));
                     }
                     break;
                 case 'message':
                     if (Validate.isEmpty(this.get('invitation.message'))) {
-                        this.get('errors').add('message', this.get('i18n').t('validation_empty'));
+                        this.get('errors').add('message', i18n.t('validation_empty'));
                     }
                     break;
             }
@@ -59,10 +56,10 @@ export default Em.Component.extend({
             this.set('errors', DS.Errors.create());
 
             if (!Validate.isEmail(this.get('invitation.email'))) {
-                this.get('errors').add('email', this.get('i18n').t('validation_email'));
+                this.get('errors').add('email', i18n.t('validation_email'));
             }
             if (Validate.isEmpty(this.get('invitation.message'))) {
-                this.get('errors').add('message', this.get('i18n').t('validation_empty'));
+                this.get('errors').add('message', i18n.t('validation_empty'));
             }
         }
 

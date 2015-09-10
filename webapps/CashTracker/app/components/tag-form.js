@@ -1,15 +1,10 @@
 import Em from 'ember';
 import DS from 'ember-data';
+import ModelForm from '../mixins/model-form';
 import Validate from '../utils/validator';
 
-export default Em.Component.extend({
-    i18n: Em.inject.service(),
-    errors: DS.Errors.create(),
+export default Em.Component.extend(ModelForm, {
     tag: null,
-
-    willDestroyElement: function() {
-        this.set('errors', null);
-    },
 
     actions: {
         save: function() {

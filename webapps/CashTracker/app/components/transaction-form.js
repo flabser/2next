@@ -1,10 +1,9 @@
 import Em from 'ember';
 import DS from 'ember-data';
+import ModelForm from '../mixins/model-form';
 import Validate from '../utils/validator';
 
-export default Em.Component.extend({
-    i18n: Em.inject.service(),
-    errors: DS.Errors.create(),
+export default Em.Component.extend(ModelForm, {
     transaction: null,
 
     isTransfer: Em.computed('transaction.transactionType', function() {
@@ -17,10 +16,6 @@ export default Em.Component.extend({
         }
         return '';
     }),
-
-    willDestroyElement: function() {
-        this.set('errors', null);
-    },
 
     actions: {
         save: function() {
@@ -49,23 +44,25 @@ export default Em.Component.extend({
     },
 
     validate: function(fieldName) {
+        var i18n = this.get('i18n');
+
         if (fieldName) {
             this.get('errors').remove(fieldName);
 
             switch (fieldName) {
                 case 'date':
                     if (!Validate.isDate(this.get('transaction.date'))) {
-                        this.get('errors').add('date', this.get('i18n').t('validation_date'));
+                        this.get('errors').add('date', i18n.t('validation_date'));
                     }
                     break;
                 case 'amount':
                     if (!Validate.isNumeric(this.get('transaction.amount'))) {
-                        this.get('errors').add('amount', this.get('i18n').t('validation_numeric'));
+                        this.get('errors').add('amount', i18n.t('validation_numeric'));
                     }
                     break;
                 case 'note':
                     if (this.get('transaction.note') && this.get('transaction.note').length > 256) {
-                        this.get('errors').add('note', this.get('i18n').t('validation_long', 256));
+                        this.get('errors').add('note', i18n.t('validation_long', 256));
                     }
                     break;
             }
@@ -73,13 +70,13 @@ export default Em.Component.extend({
             this.set('errors', DS.Errors.create());
 
             if (!Validate.isDate(this.get('transaction.date'))) {
-                this.get('errors').add('date', this.get('i18n').t('validation_date'));
+                this.get('errors').add('date', i18n.t('validation_date'));
             }
             if (!Validate.isNumeric(this.get('transaction.amount'))) {
-                this.get('errors').add('amount', this.get('i18n').t('validation_numeric'));
+                this.get('errors').add('amount', i18n.t('validation_numeric'));
             }
             if (this.get('transaction.note') && this.get('transaction.note').length > 256) {
-                this.get('errors').add('note', this.get('i18n').t('validation_long', 256));
+                this.get('errors').add('note', i18n.t('validation_long', 256));
             }
         }
 

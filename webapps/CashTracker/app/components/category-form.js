@@ -1,12 +1,11 @@
 import Em from 'ember';
 import DS from 'ember-data';
+import ModelForm from '../mixins/model-form';
 import Validate from '../utils/validator';
 
 const noteMaxLen = 256;
 
-export default Em.Component.extend({
-    i18n: Em.inject.service(),
-    errors: DS.Errors.create(),
+export default Em.Component.extend(ModelForm, {
     category: null,
     transactionTypes: null,
 
@@ -16,10 +15,6 @@ export default Em.Component.extend({
         }
         return '';
     }),
-
-    willDestroyElement: function() {
-        this.set('errors', null);
-    },
 
     actions: {
         save: function() {
@@ -41,18 +36,20 @@ export default Em.Component.extend({
     },
 
     validate: function(fieldName) {
+        var i18n = this.get('i18n');
+
         if (fieldName) {
             this.get('errors').remove(fieldName);
 
             switch (fieldName) {
                 case 'name':
                     if (Validate.isEmpty(this.get('category.name'))) {
-                        this.get('errors').add('name', this.get('i18n').t('validation_empty'));
+                        this.get('errors').add('name', i18n.t('validation_empty'));
                     }
                     break;
                 case 'note':
                     if (this.get('category.note') && this.get('category.note').length > noteMaxLen) {
-                        this.get('errors').add('note', this.get('i18n').t('validation_long', noteMaxLen));
+                        this.get('errors').add('note', i18n.t('validation_long', noteMaxLen));
                     }
                     break;
             }
@@ -60,10 +57,10 @@ export default Em.Component.extend({
             this.set('errors', DS.Errors.create());
 
             if (Validate.isEmpty(this.get('category.name'))) {
-                this.get('errors').add('name', this.get('i18n').t('validation_empty'));
+                this.get('errors').add('name', i18n.t('validation_empty'));
             }
             if (this.get('category.note') && this.get('category.note.length') > noteMaxLen) {
-                this.get('errors').add('note', this.get('i18n').t('validation_long', noteMaxLen));
+                this.get('errors').add('note', i18n.t('validation_long', noteMaxLen));
             }
         }
 

@@ -37,7 +37,7 @@
                         {{t 'date'}}
                     </div>
                     <div class="controls">
-                        {{input type='date' value=transaction.date class='span2'}}
+                        {{input type='date' value=transaction.date focus-out='validateDate' class='span2'}}
                         {{#each errors.date as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
