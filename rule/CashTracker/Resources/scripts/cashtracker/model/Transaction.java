@@ -6,12 +6,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -27,7 +30,6 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.dataengine.jpa.AppEntity;
-import com.flabser.dataengine.jpa.AttachedFile;
 
 
 @JsonRootName("transaction")
@@ -93,6 +95,35 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@Column(name = "include_in_reports")
 	private boolean includeInReports;
+
+	@ElementCollection
+	@CollectionTable(name = "transaction_files",joinColumns =  @JoinColumn(name = "files_fk_parent"))
+	@Lob
+	@Column(name = "file")
+	private List<byte[]> files;
+
+	@ElementCollection
+	@CollectionTable(name = "transaction_files",joinColumns =  @JoinColumn(name = "files_fk_parent"))
+	@Lob
+	@Column(name = "fileNames")
+	private List<String> fileNames;
+
+
+	public List<byte[]> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<byte[]> files) {
+		this.files = files;
+	}
+
+	public List<String> getFileNames() {
+		return fileNames;
+	}
+
+	public void setFileNames(List<String> fileNames) {
+		this.fileNames = fileNames;
+	}
 
 	//
 	public TransactionType getTransactionType() {
@@ -361,13 +392,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.includeInReports = includeInReports;
 	}
 
-	public void setAttachments(ArrayList <AttachedFile> attachedFile) {
-		this.attachments = attachedFile;
-	}
 
-	public ArrayList <AttachedFile> getAttachments() {
-		return attachments;
-	}
 
 	@Override
 	public String toString() {

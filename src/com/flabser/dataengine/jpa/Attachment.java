@@ -1,9 +1,13 @@
 package com.flabser.dataengine.jpa;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonRootName("attachedFile")
-public class AttachedFile {
+@JsonPropertyOrder({
+	"fieldName",
+	"realFileName",
+	"tempID"
+})
+public class Attachment {
 
 	private String fieldName;
 	private String realFileName;

@@ -1,6 +1,7 @@
 package com.flabser.dataengine.jpa;
 
 import java.util.Date;
+import java.util.List;
 
 
 public interface IAppEntity {
@@ -9,12 +10,17 @@ public interface IAppEntity {
 
 	long getId();
 
-	public Long getAuthor();
+	Long getAuthor();
 
-	public void setAuthor(Long author);
+	void setAuthor(Long author);
 
-	public Date getRegDate();
+	Date getRegDate();
 
-	public void setRegDate(Date regDate);
+	void setRegDate(Date regDate);
+
+
+	List<Attachment> getAttachments();
+
+	void setAttachments(List<Attachment> attachments);
 
 }
