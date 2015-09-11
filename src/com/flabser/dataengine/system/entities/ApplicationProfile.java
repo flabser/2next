@@ -26,6 +26,7 @@ import com.flabser.util.Util;
 @JsonRootName("applicationProfile")
 public class ApplicationProfile implements _IContent {
 	public int id;
+	public Date regDate;
 	public String appType;
 
 	public String appID;
@@ -136,6 +137,7 @@ public class ApplicationProfile implements _IContent {
 		ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
 
 		if (id == 0) {
+			regDate = new Date();
 			id = sysDatabase.insert(this);
 		} else {
 			id = sysDatabase.update(this);

@@ -28,6 +28,7 @@ public class DDEScripts {
 
 	public static final String APPS_DDE = "create table APPS("
 			+ "ID serial NOT NULL, "
+			+ "regdate timestamp without time zone, "
 			+ "APPTYPE varchar(32), "
 			+ "APPID varchar(16), "
 			+ "APPNAME varchar(64), "
@@ -37,6 +38,7 @@ public class DDEScripts {
 			+ "dbname varchar(64), "
 			+ "status integer, "
 			+ "statusdate timestamp without time zone, "
+			+ "description varchar(256), "
 			+ "CONSTRAINT apps_pkey PRIMARY KEY (ID))";
 
 	public static final String USERS_ACTIVITY_DDE = "create table USERSACTIVITY(ID serial NOT NULL, "

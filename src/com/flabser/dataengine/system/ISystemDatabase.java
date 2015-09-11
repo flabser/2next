@@ -47,4 +47,6 @@ public interface ISystemDatabase {
 
 	User getUser(long id);
 
+	byte[] getUserAvatarStream(long id);
+
 }

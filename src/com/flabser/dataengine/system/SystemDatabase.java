@@ -312,6 +312,29 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 		return null;
 	}
 
+	public byte[] getUserAvatarStream(long id) {
+
+		Connection conn = pool.getConnection();
+		byte[] result = null;
+
+
+		try (Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery("select AVATAR FROM users WHERE id = " + id)) {
+
+			if (rs.next()) {
+				result = rs.getBytes("AVATAR");
+			}
+
+			conn.commit();
+		} catch (SQLException e) {
+			DatabaseUtil.debugErrorPrint(e);
+		} finally {
+			pool.returnConnection(conn);
+		}
+
+		return result;
+	}
+
 	private List<User> getUsers(Integer... ids) {
 
 		Connection conn = pool.getConnection();

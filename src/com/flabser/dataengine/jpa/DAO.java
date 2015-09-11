@@ -17,7 +17,7 @@ import com.flabser.script._Session;
 import com.flabser.server.Server;
 import com.flabser.users.User;
 
-public class DAO {
+public abstract class DAO implements IDAO{
 	protected EntityManager em;
 	protected User user;
 
@@ -81,4 +81,5 @@ public class DAO {
 		em.remove(entity);
 		em.getTransaction().commit();
 	}
+
 }
