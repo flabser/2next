@@ -1,0 +1,103 @@
+.upload {
+    display: block;
+}
+
+.upload ul {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+.upload li {
+    clear: both;
+    display: inline-block;
+    max-width: 250px;
+    min-width: 180px;
+    padding: 4px;
+    position: relative;
+    vertical-align: top;
+}
+
+
+/* drop */
+
+.upload .drop {
+    color: #7f858a;
+    font-weight: bold;
+    min-width: 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.upload .drop.dragenter {
+    border-color: #999;
+}
+
+.upload .drop a {
+    cursor: pointer;
+    display: block;
+    font-weight: normal;
+    text-transform: none;
+}
+
+.upload .drop a:hover {
+    color: red;
+}
+
+.upload .drop input {
+    display: none;
+}
+
+.upload .drop-label {
+    display: none;
+}
+
+.upload li p {
+    margin: 0;
+    padding: 1px;
+}
+
+.upload li p i {
+    font-weight: normal;
+    font-style: normal;
+    color: #7f7f7f;
+    display: block;
+}
+
+.upload .progress {
+    background: rgba(180, 0, 0, .5);
+    display: block;
+    height: 2px;
+    width: 0%;
+}
+
+.upload .done .progress {
+    background: rgba(0, 130, 0, .5);
+}
+
+.upload .cancel {
+    border-radius: 50%;
+    color: #666;
+    height: 26px;
+    float: right;
+    margin: 2px;
+    vertical-align: top;
+    width: 26px;
+}
+
+.upload li.error p {
+    color: red;
+}
+
+@media ( max-width: 768px) {
+    .upload li {
+        display: block;
+        max-width: 100%;
+        width: 100%;
+    }
+    .upload .drop-label {
+        display: none;
+    }
+}

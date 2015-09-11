@@ -1,0 +1,17 @@
+<ul>
+    {{#if uploadVisible}}
+    <li class="drop">
+        <a {{action 'browse'}}>{{t 'upload_browse'}}</a>
+        <span class="drop-label">{{t 'upload_drop_here'}}</span>
+        <input type="file" name="file" />
+    </li>
+    {{/if}}
+    {{#each attachments as |attach|}}
+    <li>
+        <p>{{attach.realFileName}}
+            <i>{{attach.size}}</i>
+        </p>
+        <span class="remove">{{t 'remove'}}</span>
+    </li>
+    {{/each}}
+</ul>

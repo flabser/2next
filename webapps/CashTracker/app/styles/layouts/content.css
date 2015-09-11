@@ -120,3 +120,12 @@ footer.content-actions .btn {
     margin: 0;
     padding: 0;
 }
+
+.content-body:after {
+    content: ' ';
+    clear: both;
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}

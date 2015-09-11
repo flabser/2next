@@ -156,10 +156,12 @@
             </fieldset>
             <fieldset class="fieldset">
                 <legend class="legend">{{t 'attachments'}}</legend>
-                {{attach-list
+                {{upload-form
+                    maxSize=3
                     fieldName='files'
-                    list=transaction.attachments
-                    addAttach='addAttach'}}
+                    attachments=transaction.attachments
+                    addAttach='addAttach'
+                    removeAttach='removeAttach'}}
             </fieldset>
         </section>
         <footer class="content-actions">

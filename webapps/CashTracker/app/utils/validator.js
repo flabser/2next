@@ -1,5 +1,3 @@
-var Validate = {};
-
 function isEmpty(str) {
     return (!str || 0 === str.length || !str.trim());
 }

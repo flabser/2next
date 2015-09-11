@@ -16,6 +16,9 @@ App = Em.Application.extend({
 
     ready: function() {
         Em.$('body').bind('touchstart', function() {});
+        Em.$(document).on('drop dragover', function(e) {
+            e.preventDefault();
+        });
     }
 });
 
