@@ -29,7 +29,15 @@ export default Em.Component.extend(ModelForm, {
         },
 
         addAttach: function(attach) {
-            this.get('transaction.attachments').createRecord(attach);
+            return this.get('transaction.attachments').createRecord(attach);
+        },
+        removeAttach: function(tid) {
+            this.get('transaction.attachments').forEach((attach) => {
+                if (attach && tid == attach.get('tempID')) {
+                    console.log(tid, attach);
+                    attach.destroyRecord();
+                }
+            });
         },
 
         validateDate: function() {

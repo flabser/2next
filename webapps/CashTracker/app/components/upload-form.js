@@ -17,14 +17,15 @@ export default Em.Component.extend({
 
     initJqFileUpload: function() {
         const PATH = 'rest/file/upload';
-        var $ul = $(this.get('element')).find('ul');
+        var _this = this;
+        var $ul = $(this.get('element')).find('ul.uploads');
         var $drop = $ul.find('.drop');
 
-        $drop.on('dragenter', function() {
+        /*$drop.on('dragenter', function() {
             $drop.addClass('dragenter');
         }).on('dragleave', function() {
             $drop.removeClass('dragenter');
-        });
+        });*/
 
         $(this.get('element')).fileupload({
 
@@ -36,7 +37,7 @@ export default Em.Component.extend({
             // This function is called when a file is added to the queue;
             // either via the browse button, or via drag/drop:
             add: function(e, data) {
-                var $tpl = $('<li class="working"><span class="progress"></span><button class="btn cancel">x</button><p></p></li>');
+                var $tpl = $('<li class="working"><span class="progress"></span><button type="button" class="btn cancel">x</button><p></p></li>');
 
                 // Append the file name and file size
                 $tpl.find('p').text(data.files[0].name)
@@ -51,6 +52,8 @@ export default Em.Component.extend({
                     if ($tpl.hasClass('working')) {
                         jqXHR.abort();
                     }
+
+                    _this.sendAction('removeAttach', $(this).data('tid'));
 
                     $tpl.fadeOut(function() {
                         $tpl.remove();
@@ -78,7 +81,12 @@ export default Em.Component.extend({
             },
 
             done: function(e, data) {
-                console.log(e, data);
+                _this.sendAction('addAttach', {
+                    fieldName: _this.get('fieldName'),
+                    realFileName: data.originalFiles[0].name,
+                    tempID: data.result
+                });
+                data.context.find('.cancel').data('tid', data.result);
             }
         });
     },
