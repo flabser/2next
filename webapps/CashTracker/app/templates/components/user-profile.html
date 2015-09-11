@@ -1,4 +1,4 @@
-<div class="form-wrapper user-profile">
+<div class="user-profile">
     <form {{action 'save' on='submit' }}>
         <header class="content-header">
             <button class="btn-back" {{action 'cancel'}}>
@@ -9,63 +9,105 @@
             </h1>
         </header>
         <section class="content-body">
-            <div class="user_avatar">
-                {{upload-form
-                    maxSize=3
-                    fieldName='avatar'
-                    attachments=userProfile.attachments
-                    addAttach='addAttach'
-                    removeAttach='removeAttach'}}
-            </div>
-            <div class="fieldset" style="overflow:hidden">
-                <div class="form-group {{if errors.name 'has-error'}}">
-                    <div class="text-muted">{{t 'user_name'}}</div>
-                    {{input value=userProfile.name class='span3'}}
-                    {{#each errors.name as |error|}}
-                        <div class="error-message">{{error.message}}</div>
-                    {{/each}}
+            <fieldset class="fieldset">
+                <div class="user_avatar">
+                    <div class="avatar_thumb">
+                    {{upload-form
+                        uploadVisible=isEdit
+                        maxSize=3
+                        fieldName='avatar'
+                        attachments=user.attachments
+                        addAttach='updateAvatar'
+                        removeAttach='removeAvatar'}}
+                    </div>
                 </div>
-                <div class="form-group {{if errors.login 'has-error'}}">
-                    <div class="text-muted">{{t 'user_login'}}</div>
-                    {{input value=userProfile.login class='span3'}}
-                    {{#each errors.login as |error|}}
-                        <div class="error-message">{{error.message}}</div>
-                    {{/each}}
-                </div>
-                <div class="form-group {{if errors.email 'has-error'}}">
-                    <div class="text-muted">{{t 'email'}}</div>
-                    {{input value=userProfile.email class='span3'}}
-                    {{#each errors.email as |error|}}
-                        <div class="error-message">{{error.message}}</div>
-                    {{/each}}
-                </div>
-                <div class="form-group {{if errors.pwd 'has-error'}}">
-                    <div class="text-muted">{{t 'password'}}</div>
-                    {{input type='password' value=userProfile.pwd autocomplete='off' class='span3'}}
-                    {{#each errors.pwd as |error|}}
-                        <div class="error-message">{{error.message}}</div>
-                    {{/each}}
-                </div>
-                <div class="form-group {{if errors.pwd_repeat 'has-error'}}">
-                    <div class="text-muted">{{t 'password_repeat'}}</div>
-                    {{input type='password' value=userProfile.pwd_repeat autocomplete='off' class='span3'}}
-                    {{#each errors.pwd_repeat as |error|}}
-                        <div class="error-message">{{error.message}}</div>
-                    {{/each}}
-                </div>
-                <div class="form-group">
-                    <div class="text-muted">{{t 'roles'}}</div>
-                    <ul>
-                        {{#each userProfile.roles as |role|}}
-                            <li>{{role}}</li>
+                <div class="user_fields">
+                    {{#unless isEdit}}
+                    <p>
+                        <a href="#" {{action 'setEdit'}}>{{t 'change_profile'}}</a>
+                    </p>
+                    {{/unless}}
+                    <div class="form-group {{if errors.name 'has-error'}}">
+                        {{#if isEdit}}
+                            <div class="text-muted">{{t 'user_name'}}</div>
+                            {{input value=user.name}}
+                            {{#each errors.name as |error|}}
+                                <div class="error-message">{{error.message}}</div>
+                            {{/each}}
+                        {{else}}
+                            {{user.name}}
+                        {{/if}}
+                    </div>
+                    <div class="form-group {{if errors.login 'has-error'}}">
+                        {{#if isEdit}}
+                            <div class="text-muted">{{t 'user_login'}}</div>
+                            {{input value=user.login}}
+                            {{#each errors.login as |error|}}
+                                <div class="error-message">{{error.message}}</div>
+                            {{/each}}
+                        {{else}}
+                            {{user.login}}
+                        {{/if}}
+                    </div>
+                    <div class="form-group {{if errors.email 'has-error'}}">
+                        {{#if isEdit}}
+                            <div class="text-muted">{{t 'email'}}</div>
+                            {{input value=user.email}}
+                            {{#each errors.email as |error|}}
+                                <div class="error-message">{{error.message}}</div>
+                            {{/each}}
+                        {{else}}
+                            {{user.login}}
+                        {{/if}}
+                    </div>
+                    <div class="form-group">
+                        <ul class="user_roles">
+                            {{#each user.roles as |role|}}
+                                <li>{{role}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    {{#if isEdit}}
+                    <p>
+                        <a href="#" {{action 'toggleChangePassword'}}>
+                            {{#if changePassword}}
+                                {{t 'password_change_cancel'}}
+                            {{else}}
+                                {{t 'password_change'}}
+                            {{/if}}
+                        </a>
+                    </p>
+                    {{/if}}
+                    <div class="form-group {{unless needPassword 'hidden'}} {{if errors.pwd 'has-error'}}">
+                        <div class="text-muted">{{t 'password'}}</div>
+                        {{input value=user.pwd}}
+                        {{#each errors.pwd as |error|}}
+                            <div class="error-message">{{error.message}}</div>
                         {{/each}}
-                    </ul>
+                    </div>
+                    <div class="password_group {{unless changePassword 'hidden'}}">
+                        <div class="{{if errors.pwd_new 'has-error'}}">
+                            <div class="text-muted">{{t 'password_new'}}</div>
+                            {{input type='password' value=user.pwd_new autocomplete='off'}}
+                            {{#each errors.pwd_new as |error|}}
+                                <div class="error-message">{{error.message}}</div>
+                            {{/each}}
+                        </div>
+                        <div class="{{if errors.pwd_repeat 'has-error'}}">
+                            <div class="text-muted">{{t 'password_repeat'}}</div>
+                            {{input type='password' value=user.pwd_repeat autocomplete='off'}}
+                            {{#each errors.pwd_repeat as |error|}}
+                                <div class="error-message">{{error.message}}</div>
+                            {{/each}}
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </fieldset>
         </section>
+        {{#if isEdit}}
         <footer class="content-actions">
-            <button class="btn" {{action 'cancel'}}>{{t 'cancel'}}</button>
             <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
         </footer>
+        {{/if}}
     </form>
 </div>

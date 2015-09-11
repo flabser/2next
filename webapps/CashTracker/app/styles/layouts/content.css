@@ -88,20 +88,6 @@ footer.content-actions {
     padding-left: 235px;
 }
 
-.content-actions .btn {
-    padding: 4px 12px;
-}
-
-footer.content-actions .btn {
-    min-height: 36px;
-    min-width: 80px;
-}
-
-.tablet footer.content-actions .btn,
-.phone footer.content-actions .btn {
-    padding: 6px 12px;
-}
-
 @media ( max-width: 768px) {
     footer.content-actions {
         padding-left: 0;
@@ -109,7 +95,6 @@ footer.content-actions .btn {
     }
     footer.content-actions .btn {
         min-width: 33%;
-        padding: 6px 12px;
     }
 }
 
