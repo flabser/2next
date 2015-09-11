@@ -3,13 +3,12 @@ package com.flabser.restful;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.flabser.dataengine.jpa.AttachedFile;
+import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.users.AuthModeType;
@@ -28,7 +27,7 @@ public class AppUser {
 	private AuthModeType authMode;
 	private ArrayList<String> appRoles = new ArrayList<String>();
 	private HashMap<String, Application> applications = new HashMap<String, Application>();
-	private List <AttachedFile> attachments;
+	private Attachment attachedFile;
 
 	public String getLogin() {
 		return login;
@@ -129,12 +128,12 @@ public class AppUser {
 		this.authMode = authMode;
 	}
 
-	public List <AttachedFile> getAttachments() {
-		return attachments;
+	public Attachment getAttachedFile() {
+		return attachedFile;
 	}
 
-	public void setAttachments(List <AttachedFile> attachments) {
-		this.attachments = attachments;
+	public void setAttachedFile(Attachment attachedFile) {
+		this.attachedFile = attachedFile;
 	}
 
 	@Override

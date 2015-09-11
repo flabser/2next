@@ -1,16 +1,14 @@
 package com.flabser.dataengine.jpa;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
@@ -29,11 +27,8 @@ public abstract class AppEntity implements IAppEntity {
 	@Column(name = "reg_date", nullable = false, updatable = false)
 	protected Date regDate;
 
-	//@Transient
-	@ElementCollection
-	@CollectionTable(name = "attachments",joinColumns =  @JoinColumn(name = "attachments_fk_parent"))
-	@Column(name = "attachments")
-	protected ArrayList <AttachedFile> attachments = new ArrayList <AttachedFile>();
+	@Transient
+	protected List<Attachment> attachments;
 
 	@Override
 	public void setId(long id) {
@@ -74,11 +69,15 @@ public abstract class AppEntity implements IAppEntity {
 		this.regDate = regDate;
 	}
 
-	public ArrayList<AttachedFile> getAttachments() {
+	@Override
+	public List<Attachment> getAttachments() {
 		return attachments;
 	}
 
-	public void setAttachments(ArrayList<AttachedFile> attachments) {
+	@Override
+	public void setAttachments(List<Attachment> attachments) {
 		this.attachments = attachments;
 	}
+
+
 }

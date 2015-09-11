@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IDatabase;
-import com.flabser.dataengine.jpa.AttachedFile;
+import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
@@ -57,7 +57,7 @@ public class User {
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private String dbPwd;
 	private String defaultApp;
-	private AttachedFile avatar;
+	private Attachment avatar;
 
 	public User() {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
@@ -66,7 +66,7 @@ public class User {
 
 	public User(int id, String userName, Date primaryRegDate, Date regDate, String login, String email, boolean isSupervisor,
 			String password, String passwordHash, String defaultDbPwd, int loginHash, String verifyCode, UserStatusType status,
-			HashSet<UserGroup> groups, HashSet<UserRole> roles, List<ApplicationProfile> applications, boolean isValid) {
+			HashSet<UserGroup> groups, HashSet<UserRole> roles, List<ApplicationProfile> applications, boolean isValid, String avatarName) {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
 		this.id = id;
 		this.userName = userName;
@@ -86,6 +86,9 @@ public class User {
 		this.roles = roles;
 		applications.forEach(this::addApplication);
 		this.isValid = isValid;
+		avatar = new Attachment();
+		avatar.setRealFileName(avatarName);
+		avatar.setFieldName("AVATAR");
 	}
 
 	@JsonIgnore
@@ -345,12 +348,12 @@ public class User {
 		userName = appUser.getName();
 		password = appUser.getPwd();
 		email = appUser.getEmail();
-		avatar = appUser.getAttachments().get(0);
+		avatar = appUser.getAttachedFile();
 		//defaultApp = authUser.getDefaultApp();
 
 	}
 
-	public AttachedFile getAvatar() {
+	public Attachment getAvatar() {
 		return avatar;
 	}
 

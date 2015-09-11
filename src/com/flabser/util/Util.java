@@ -250,18 +250,27 @@ public class Util {
 		return hexHash.equals(getHexHash(filePath));
 	}
 
-	public static File getExistFile(String fn, String tmpFolder) {
-		int folderNum = 1;
-		File file = null;
-		// File file = new File(tmpFolder + File.separator +
-		// Integer.toString(folderNum) + File.separator + fn);
-		do {
-			file = new File(tmpFolder + File.separator + Integer.toString(folderNum) + File.separator + fn);
-			folderNum++;
+	public static File getRandomFileIn(File dir) {
 
-		} while (!file.exists() && folderNum < 20);
+		String[] children = dir.list();
+		if (children == null) {
+			return null;
+		} else {
+			int i = 0;
+			int max = children.length - 1;
+			int min = 1;
+			while (i < children.length) {
+				Random rand = new Random();
+				int randomNum = rand.nextInt(max - min + 1) + min;
+				String filename = dir + File.separator +  children[randomNum];
+				if (filename.contains(".JPG") || filename.contains(".jpg")) {
+					return new File(filename);
+				}
+				i++;
+			}
+			return null;
 
-		return file;
+		}
 	}
 
 	public static String convertDataTimeToString(Calendar date) {
@@ -277,12 +286,9 @@ public class Util {
 	}
 
 	public static void main(String[] args) {
-		System.out
-		.println(removeHTMLTags(
-				"<p1><p></p1>I-4979: Берг П. П. -> (Берг П. П.)<p><p> <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>")
-				.length());
-		System.out
-		.println(removeHTMLTags("I-4979: Берг П. П. -> (Берг П. П.) <p>Допереводить непереведенные слова(в файле dict.xml, слова которые с приставкой kaz, файл во вложении)<br></p>"));
+
+		File file = getRandomFileIn(new File("C:\\Users\\k-zon_000\\Pictures"));
+		System.out.println(file);
 	}
 
 	public static String removeHTMLTags(String text) {
@@ -332,7 +338,6 @@ public class Util {
 	public static String generateRandomAsText(String setOfTheLetters) {
 		return generateRandomAsText(setOfTheLetters, 16);
 	}
-
 
 	public static String generateRandomAsText(String setOfTheLetters, int len) {
 		Random r = new Random();

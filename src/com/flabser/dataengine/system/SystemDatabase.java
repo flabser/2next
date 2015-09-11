@@ -27,7 +27,7 @@ import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.activity.Activity;
 import com.flabser.dataengine.activity.IActivity;
-import com.flabser.dataengine.jpa.AttachedFile;
+import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserGroup;
@@ -322,7 +322,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 
 		try (Statement stmt = conn.createStatement();
 				ResultSet rs = stmt
-						.executeQuery("select ID, USERNAME, PRIMARYREGDATE, REGDATE, LOGIN, EMAIL, ISSUPERVISOR, PWD, PWDHASH, DBPWD, LOGINHASH, VERIFYCODE, STATUS, APPS, ROLES, GROUPS "
+						.executeQuery("select ID, USERNAME, PRIMARYREGDATE, REGDATE, LOGIN, EMAIL, ISSUPERVISOR, PWD, PWDHASH, DBPWD, LOGINHASH, VERIFYCODE, STATUS, AVATARNAME, APPS, ROLES, GROUPS "
 								+ "FROM (SELECT unnest(ARRAY"
 								+ Arrays.toString(ids)
 								+ "::integer[]) as u_id) as ids inner join users on ids.u_id = ID")) {
@@ -334,7 +334,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 						.getType(rs.getInt("STATUS")), new HashSet<>(getUserGroups(Arrays.asList((Integer[]) getObjectArray(rs
 								.getArray("GROUPS"))))), new HashSet<>(
 										getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))), getApplicationProfiles(Arrays
-												.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true));
+												.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true, rs.getString("AVATARNAME")));
 			}
 
 			conn.commit();
@@ -450,7 +450,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			insertUser.setArray(14, conn.createArrayOf("integer", user.getUserRoles().stream().map(UserRole::getId).toArray()));
 			insertUser.setArray(15, conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
 			insertUser.setString(16, user.getDbPwd());
-			AttachedFile aFile = user.getAvatar();
+			Attachment aFile = user.getAvatar();
 			if(aFile != null){
 				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
 				if (userTmpDir.exists()) {
@@ -496,8 +496,8 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 
 		try (PreparedStatement updateUser = conn.prepareStatement("update USERS set " + "USERNAME = ?, " + "LOGIN = ?, " + "EMAIL = ?, "
 				+ "PWD = ?, " + "ISSUPERVISOR = ?, " + "PRIMARYREGDATE = ?, " + "REGDATE = ?, " + "LOGINHASH = ?, " + "PWDHASH = ?, "
-				+ "LASTDEFAULTURL = ?, " + "STATUS = ?, " + "VERIFYCODE = ?, " + "APPS = ?, " + "ROLES = ?, " + "GROUPS = ?, DBPWD = ? "
-				+ "where id = ?")) {
+				+ "LASTDEFAULTURL = ?, " + "STATUS = ?, " + "VERIFYCODE = ?, " + "APPS = ?, " + "ROLES = ?, " + "GROUPS = ?, DBPWD = ?, "
+				+ "AVATAR = ?, AVATARNAME = ? where id = ?")) {
 
 			updateUser.setString(1, user.getUserName());
 			updateUser.setString(2, user.getLogin());
@@ -515,9 +515,9 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			updateUser.setArray(14, conn.createArrayOf("integer", user.getUserRoles().stream().map(UserRole::getId).toArray()));
 			updateUser.setArray(15, conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
 			updateUser.setString(16, user.getDbPwd());
-			updateUser.setLong(17, user.id);
 
-			AttachedFile aFile = user.getAvatar();
+
+			Attachment aFile = user.getAvatar();
 			if(aFile != null){
 				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getOldLogin());
 				if (userTmpDir.exists()) {
@@ -526,7 +526,8 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 					if (avatarFile.exists()) {
 						try {
 							InputStream is = new FileInputStream(avatarFile);
-							updateUser.setBinaryStream(17, is, (int)avatarFile.length());
+							int len = (int)avatarFile.length();
+							updateUser.setBinaryStream(17, is, len);
 							updateUser.setString(18, aFile.getRealFileName());
 						} catch (FileNotFoundException e) {
 							Server.logger.errorLogEntry(e);
@@ -536,6 +537,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 				}
 			}
 
+			updateUser.setLong(19, user.id);
 			updateUser.executeUpdate();
 
 			conn.commit();
