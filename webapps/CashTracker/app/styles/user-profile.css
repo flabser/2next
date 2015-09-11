@@ -1,0 +1,65 @@
+.user_avatar {
+    display: block;
+    float: left;
+    padding: 1em;
+    width: 180px;
+}
+
+.avatar_thumb {
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    margin: auto;
+    min-height: 130px;
+    width: 130px;
+}
+
+.user_fields {
+    overflow: hidden;
+    width: 210px;
+}
+
+.user_fields input {
+    width: 100%;
+}
+
+.user_roles {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.user_roles li {
+    border: 1px solid #F2F2F2;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 2px;
+}
+
+.password_group {
+    white-space: nowrap
+}
+
+.password_group>div {
+    display: inline-block;
+    width: 48.9%;
+}
+
+.password_group input {
+    width: 100%;
+}
+
+.tablet .user_avatar,
+.tablet .user_fields,
+.phone .user_avatar,
+.phone .user_fields {
+    width: 100%;
+}
+
+.user-profile .content-actions {
+    padding-left: 185px;
+}
+
+.tablet .content-actions,
+.phone .content-actions {
+    padding-left: 0;
+}
