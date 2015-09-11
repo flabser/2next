@@ -99,6 +99,9 @@
 	<caption name="message" />
 	<caption name="send_invite" />
 
+	<caption name="upload_browse" />
+	<caption name="upload_drop_here" />
+
 	<caption name="validation_empty" />
 	<caption name="validation_email" />
 	<caption name="validation_date" />

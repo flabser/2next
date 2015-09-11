@@ -865,6 +865,19 @@
 		<entry lang="BG">Отправить приглашение</entry>
 	</sentence>
 
+	<sentence mode="on" keyword="upload_browse">
+		<entry lang="RUS">Прикрепить файл</entry>
+		<entry lang="KAZ">Файл тіркеу</entry>
+		<entry lang="ENG">Attach file</entry>
+		<entry lang="BG">Прикрепить файл</entry>
+	</sentence>
+	<sentence mode="on" keyword="upload_drop_here">
+		<entry lang="RUS">Перетащите файл сюда</entry>
+		<entry lang="KAZ">Файлды осында тасыңыз</entry>
+		<entry lang="ENG">Drop file here</entry>
+		<entry lang="BG">Перетащите файл сюда</entry>
+	</sentence>
+
 	<sentence mode="on" keyword="validation_empty">
 		<entry lang="RUS">Обязательное поле</entry>
 		<entry lang="KAZ">Обязательное поле</entry>
