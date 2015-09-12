@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Basic;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -99,12 +100,12 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@ElementCollection
 	@CollectionTable(name = "transaction_files",joinColumns =  @JoinColumn(name = "files_fk_parent"))
 	@Lob
+	@Basic(fetch=FetchType.LAZY)
 	@Column(name = "file")
 	private List<byte[]> files;
 
 	@ElementCollection
 	@CollectionTable(name = "transaction_files",joinColumns =  @JoinColumn(name = "files_fk_parent"))
-	@Lob
 	@Column(name = "fileNames")
 	private List<String> fileNames;
 

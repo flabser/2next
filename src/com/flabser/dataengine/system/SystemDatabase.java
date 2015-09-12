@@ -312,6 +312,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 		return null;
 	}
 
+	@Override
 	public byte[] getUserAvatarStream(long id) {
 
 		Connection conn = pool.getConnection();
@@ -490,6 +491,9 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 
 					}
 				}
+			}else{
+				insertUser.setBinaryStream(17, null, 0);
+				insertUser.setString(18, "");
 			}
 
 			insert(user.getUserRoles());
@@ -556,8 +560,17 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 							Server.logger.errorLogEntry(e);
 						}
 
+					}else{
+						updateUser.setBinaryStream(17, null, 0);
+						updateUser.setString(18, "");
 					}
+				}else{
+					updateUser.setBinaryStream(17, null, 0);
+					updateUser.setString(18, "");
 				}
+			}else{
+				updateUser.setBinaryStream(17, null, 0);
+				updateUser.setString(18, "");
 			}
 
 			updateUser.setLong(19, user.id);
