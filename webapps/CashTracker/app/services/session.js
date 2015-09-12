@@ -20,6 +20,7 @@ export default Service.extend({
 
     _setResult: function(result) {
         if (result.authUser.login) {
+            result.authUser.pwd_new = '';
             result.authUser.pwd_repeat = '';
             this.set('user', result.authUser);
             this.set('_isAuthenticated', true);

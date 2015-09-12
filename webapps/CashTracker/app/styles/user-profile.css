@@ -63,3 +63,7 @@
 .phone .content-actions {
     padding-left: 0;
 }
+
+.user-profile .form-group.has-error input {
+    border-color: #DE3309;
+}

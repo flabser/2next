@@ -15,11 +15,20 @@ function isDate(dateStr) {
     return !isEmpty(dateStr);
 }
 
+function notEmptyAndEqual(v1, v2) {
+    if (isEmpty(v1) || isEmpty(v2)) {
+        return false;
+    }
+
+    return v1 === v2;
+}
+
 var Validate = {
     isEmpty: isEmpty,
     isEmail: validateEmail,
     isNumeric: isNumeric,
-    isDate: isDate
+    isDate: isDate,
+    notEmptyAndEqual: notEmptyAndEqual
 };
 
 export default Validate;

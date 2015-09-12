@@ -30,7 +30,7 @@
                     <div class="form-group {{if errors.name 'has-error'}}">
                         {{#if isEdit}}
                             <div class="text-muted">{{t 'user_name'}}</div>
-                            {{input value=user.name}}
+                            {{input value=user.name focus-out='validateProfile'}}
                             {{#each errors.name as |error|}}
                                 <div class="error-message">{{error.message}}</div>
                             {{/each}}
@@ -41,7 +41,7 @@
                     <div class="form-group {{if errors.login 'has-error'}}">
                         {{#if isEdit}}
                             <div class="text-muted">{{t 'user_login'}}</div>
-                            {{input value=user.login}}
+                            {{input value=user.login focus-out='validateProfile'}}
                             {{#each errors.login as |error|}}
                                 <div class="error-message">{{error.message}}</div>
                             {{/each}}
@@ -52,7 +52,7 @@
                     <div class="form-group {{if errors.email 'has-error'}}">
                         {{#if isEdit}}
                             <div class="text-muted">{{t 'email'}}</div>
-                            {{input value=user.email}}
+                            {{input value=user.email focus-out='validateProfile'}}
                             {{#each errors.email as |error|}}
                                 <div class="error-message">{{error.message}}</div>
                             {{/each}}
@@ -68,38 +68,35 @@
                         </ul>
                     </div>
                     {{#if isEdit}}
-                    <p>
-                        <a href="#" {{action 'toggleChangePassword'}}>
-                            {{#if changePassword}}
-                                {{t 'password_change_cancel'}}
-                            {{else}}
+                        {{#unless changePassword}}
+                        <p>
+                            <a href="#" {{action 'setChangePassword'}}>
                                 {{t 'password_change'}}
-                            {{/if}}
-                        </a>
-                    </p>
+                            </a>
+                        </p>
+                        {{/unless}}
                     {{/if}}
                     <div class="form-group {{unless needPassword 'hidden'}} {{if errors.pwd 'has-error'}}">
                         <div class="text-muted">{{t 'password'}}</div>
-                        {{input value=user.pwd}}
+                        {{input value=user.pwd focus-out='validateProfile'}}
                         {{#each errors.pwd as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
                     </div>
                     <div class="password_group {{unless changePassword 'hidden'}}">
-                        <div class="{{if errors.pwd_new 'has-error'}}">
-                            <div class="text-muted">{{t 'password_new'}}</div>
-                            {{input type='password' value=user.pwd_new autocomplete='off'}}
-                            {{#each errors.pwd_new as |error|}}
+                        <div class="{{if errors.pwd_change 'has-error'}}">
+                            <div class="text-muted">{{t 'new'}}</div>
+                            {{input type='password' value=user.pwd_new autocomplete='off' focus-out='validateProfile'}}
+                        </div>
+                        <div class="{{if errors.pwd_change 'has-error'}}">
+                            <div class="text-muted">{{t 'repeat'}}</div>
+                            {{input type='password' value=user.pwd_repeat autocomplete='off' focus-out='validateProfile'}}
+                        </div>
+                        <p>
+                            {{#each errors.pwd_change as |error|}}
                                 <div class="error-message">{{error.message}}</div>
                             {{/each}}
-                        </div>
-                        <div class="{{if errors.pwd_repeat 'has-error'}}">
-                            <div class="text-muted">{{t 'password_repeat'}}</div>
-                            {{input type='password' value=user.pwd_repeat autocomplete='off'}}
-                            {{#each errors.pwd_repeat as |error|}}
-                                <div class="error-message">{{error.message}}</div>
-                            {{/each}}
-                        </div>
+                        </p>
                     </div>
                 </div>
             </fieldset>
