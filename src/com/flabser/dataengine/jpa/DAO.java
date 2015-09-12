@@ -17,7 +17,7 @@ import com.flabser.script._Session;
 import com.flabser.server.Server;
 import com.flabser.users.User;
 
-public class DAO {
+public abstract class DAO implements IDAO {
 	protected EntityManager em;
 	protected User user;
 
@@ -32,19 +32,21 @@ public class DAO {
 		entity.setAuthor(user.id);
 		entity.setRegDate(new Date());
 		List<byte[]> files = new ArrayList<byte[]>();
-		Transaction t = (Transaction)entity;
-		for(Attachment a: entity.getAttachments()){
-			String fieldName = a.getFieldName();
-			String uploadedFileLocation = userTmpDir + File.separator + a.getTempID();
-			File file = new File(uploadedFileLocation);
-			byte[] bFile;
-			try {
-				bFile = FileUtils.readFileToByteArray(file);
-				files.add(bFile);
-			} catch (IOException e) {
-				Server.logger.errorLogEntry(e);
+		List<Attachment> attachments = entity.getAttachments();
+		if (attachments != null) {
+			for (Attachment a : attachments) {
+				Transaction t = (Transaction) entity;
+				String fieldName = a.getFieldName();
+				String uploadedFileLocation = userTmpDir + File.separator + a.getTempID();
+				File file = new File(uploadedFileLocation);
+				byte[] bFile;
+				try {
+					bFile = FileUtils.readFileToByteArray(file);
+					files.add(bFile);
+				} catch (IOException e) {
+					Server.logger.errorLogEntry(e);
+				}
 			}
-
 
 		}
 		em.persist(entity);
@@ -56,8 +58,8 @@ public class DAO {
 		File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
 		em.getTransaction().begin();
 		List<byte[]> files = new ArrayList<byte[]>();
-		Transaction t = (Transaction)entity;
-		for(Attachment a: entity.getAttachments()){
+		Transaction t = (Transaction) entity;
+		for (Attachment a : entity.getAttachments()) {
 			String fieldName = a.getFieldName();
 			String uploadedFileLocation = userTmpDir + File.separator + a.getTempID();
 			File file = new File(uploadedFileLocation);
@@ -68,7 +70,6 @@ public class DAO {
 			} catch (IOException e) {
 				Server.logger.errorLogEntry(e);
 			}
-
 
 		}
 		em.merge(entity);
@@ -81,4 +82,5 @@ public class DAO {
 		em.remove(entity);
 		em.getTransaction().commit();
 	}
+
 }

@@ -1,5 +1,7 @@
 package com.flabser.restful;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.servlet.ServletContext;
@@ -18,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.io.FileUtils;
 import org.omg.CORBA.UserException;
 
 import com.flabser.dataengine.DatabaseFactory;
@@ -25,9 +28,11 @@ import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.EnvConst;
+import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
+import com.flabser.scheduler.tasks.TempFileCleaner;
 import com.flabser.server.Server;
 import com.flabser.servlets.ServletUtil;
 import com.flabser.users.User;
@@ -59,6 +64,40 @@ public class SessionService {
 
 	}
 
+	@GET
+	@Path("/avatar")
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	public Response getFile() {
+		File file = null;
+		String fn = null;
+
+		HttpSession jses = request.getSession(false);
+		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
+		User user = userSession.currentUser;
+		if (user.getLogin().equals(User.ANONYMOUS_USER)) {
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
+		} else {
+			File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
+			fn = userTmpDir.getAbsolutePath() + File.separator + user.getAvatar().getRealFileName();
+			File fileToWriteTo = new File(fn);
+			byte[] fileAsByteArray = DatabaseFactory.getSysDatabase().getUserAvatarStream(user.id);
+			try {
+				FileUtils.writeByteArrayToFile(fileToWriteTo, fileAsByteArray);
+			} catch (IOException e) {
+				Server.logger.errorLogEntry(e);
+			}
+			file = new File(fn);
+		}
+
+		if (file != null && file.exists()) {
+			TempFileCleaner.addFileToDelete(fn);
+			return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
+					.header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"").build();
+		} else {
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
+		}
+	}
+
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -81,8 +120,8 @@ public class SessionService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createSession(AppUser authUser) throws ClassNotFoundException, InstantiationException, DatabasePoolException,
-	UserException, IllegalAccessException, SQLException {
+	public Response createSession(AppUser authUser) throws ClassNotFoundException, InstantiationException,
+	DatabasePoolException, UserException, IllegalAccessException, SQLException {
 		UserSession userSession = null;
 		HttpSession jses;
 		String appID = authUser.getDefaultApp();
@@ -119,7 +158,7 @@ public class SessionService {
 		} else if (user.getStatus() == UserStatusType.DELETED) {
 			authUser.setError(AuthFailedExceptionType.NOT_FOUND);
 			throw new AuthFailedException(authUser);
-		} else{
+		} else {
 			authUser.setError(AuthFailedExceptionType.UNKNOWN_STATUS);
 			throw new AuthFailedException(authUser);
 		}

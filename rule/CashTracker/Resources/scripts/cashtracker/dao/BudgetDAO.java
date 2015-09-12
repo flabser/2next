@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import cashtracker.model.Budget;
 
 import com.flabser.dataengine.jpa.DAO;
+import com.flabser.dataengine.jpa.IAppEntity;
 import com.flabser.script._Session;
 
 
@@ -27,5 +28,10 @@ public class BudgetDAO extends DAO {
 		em.getTransaction().begin();
 		em.createQuery("DELETE FROM Budget").executeUpdate();
 		em.getTransaction().commit();
+	}
+
+	@Override
+	public IAppEntity findById(long id) {
+		return null;
 	}
 }

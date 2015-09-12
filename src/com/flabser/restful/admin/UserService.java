@@ -1,10 +1,13 @@
 package com.flabser.restful.admin;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,13 +19,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.io.FileUtils;
+
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.env.Environment;
 import com.flabser.restful.RestProvider;
 import com.flabser.runtimeobj.RuntimeObjUtil;
+import com.flabser.scheduler.tasks.TempFileCleaner;
 import com.flabser.script._Session;
+import com.flabser.server.Server;
 import com.flabser.users.User;
 import com.flabser.users.UserStatusType;
 
@@ -54,11 +62,47 @@ public class UserService extends RestProvider {
 
 	}
 
+	@GET
+	@Path("/{model}/{id}/{field}/{file}")
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	public Response getFile(@PathParam("model") String model, @PathParam("id") long id,@PathParam("field") String fieldName, @PathParam("file") String fileName) {
+		File file = null;
+		String fn = null;
+		if (!model.equalsIgnoreCase("users")){
+
+		}else{
+			ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
+			User user = sysDb.getUser(id);
+
+			if (fieldName.equalsIgnoreCase("avatar")){
+				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
+				fn = userTmpDir.getAbsolutePath() + File.separator + "___" + user.getAvatar().getRealFileName();
+				File fileToWriteTo = new File(fn);
+				byte[] fileAsByteArray = sysDb.getUserAvatarStream(user.id);
+				try {
+					FileUtils.writeByteArrayToFile(fileToWriteTo, fileAsByteArray);
+				} catch (IOException e) {
+					Server.logger.errorLogEntry(e);
+				}
+
+				file = new File(fn);
+			}
+		}
+		if(file != null && file.exists()){
+			TempFileCleaner.addFileToDelete(fn);
+			return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
+					.header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"" )
+					.build();
+		}else{
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
+		}
+	}
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(User user) throws ClassNotFoundException, SQLException, InstantiationException, DatabasePoolException,
-			IllegalAccessException {
+	IllegalAccessException {
 		System.out.println("POST " + user);
 		user.setRegDate(new Date());
 		user.lastURL = "";

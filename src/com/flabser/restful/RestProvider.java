@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.dataengine.jpa.DAO;
 import com.flabser.env.EnvConst;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.RuleException;
@@ -37,6 +38,7 @@ import com.flabser.users.UserSession;
 
 @Path("/")
 public class RestProvider {
+	protected DAO dao;
 
 	@Context
 	private ServletContext context;
@@ -120,6 +122,16 @@ public class RestProvider {
 	}
 
 	@GET
+	@Path("/{model}/stream/{id}/{field}/{file}")
+	public _Page produceStream(@PathParam("model") String model, @PathParam("id") long id,@PathParam("field") String fieldName, @PathParam("file") String fileName) throws RuleException, AuthFailedException,
+	ClassNotFoundException, InstantiationException, IllegalAccessException {
+		String msg = "The request \"" + request.getRequestURI() + "\" has not processed by some application handler";
+		Server.logger.errorLogEntry(msg);
+		throw new WebApplicationException(msg, HttpServletResponse.SC_NOT_FOUND);
+	}
+
+
+	@GET
 	@Path("/{model}")
 	public _Page produceEmptyPage(@PathParam("model") String model) throws RuleException, AuthFailedException,
 	ClassNotFoundException, InstantiationException, IllegalAccessException {
@@ -127,6 +139,9 @@ public class RestProvider {
 		Server.logger.errorLogEntry(msg);
 		throw new WebApplicationException(msg, HttpServletResponse.SC_NOT_FOUND);
 	}
+
+
+
 
 	private _Page page(AppTemplate env, Map<String, String[]> parMap, HttpServletRequest request, IRule rule, UserSession userSession)
 			throws RuleException, UnsupportedEncodingException, ClassNotFoundException, _Exception, WebFormValueException {
