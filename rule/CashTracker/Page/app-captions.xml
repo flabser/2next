@@ -9,6 +9,8 @@
 	<caption name="close" />
 	<caption name="cancel" />
 	<caption name="add" />
+	<caption name="new" />
+	<caption name="repeat" />
 
 	<caption name="workspace" />
 
@@ -58,7 +60,6 @@
 	<caption name="budget_name_hint" />
 
 	<caption name="password" />
-	<caption name="password_repeat" />
 	<caption name="name" />
 	<caption name="amount_control" />
 	<caption name="amount_control_hint" />
