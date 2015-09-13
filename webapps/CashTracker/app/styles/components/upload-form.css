@@ -11,6 +11,7 @@
 }
 
 .upload li {
+    border: none; /* 2px dashed transparent; */
     clear: both;
     display: inline-block;
     max-width: 250px;
@@ -24,6 +25,7 @@
 /* drop */
 
 .upload .drop {
+    border-color: #999;
     color: #7f858a;
     font-weight: bold;
     min-width: 0;
@@ -31,8 +33,26 @@
     text-transform: uppercase;
 }
 
-.upload .drop.dragenter {
+.has-drag .upload .drop {
     border-color: #999;
+}
+
+.upload .drop-label {
+    display: none;
+}
+
+.has-drag .upload .drop-label {
+    display: block;
+}
+
+.tablet .upload .drop,
+.phone .upload .drop {
+    border-color: transparent;
+}
+
+.tablet .upload .drop-label,
+.phone .upload .drop-label {
+    display: none;
 }
 
 .upload .drop a {
@@ -47,10 +67,6 @@
 }
 
 .upload .drop input {
-    display: none;
-}
-
-.upload .drop-label {
     display: none;
 }
 

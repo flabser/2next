@@ -10,15 +10,15 @@
             </div>
         </div>
         <nav class="navbar-nav navbar-right">
-            <button class="nav-item compose-new" {{action 'composeRecord'}}>
+            <button class="nav-item compose-new" type="button" {{action 'composeRecord'}}>
                 <i class="fa fa-plus"></i>
             </button>
-            <button class="nav-item nav-search-toggle" {{action 'toggleSearchForm' on='mouseDown' }}>
+            <button class="nav-item nav-search-toggle" type="button" {{action 'toggleSearchForm' on='mouseDown' }}>
                 <i class="fa fa-search"></i>
             </button>
             <div class="nav-item nav-search" id="head-search-block">
                 <form class="search-form" role="search" onsubmit="alert('кручу-верчу найти хочу'); return false;">
-                    <button class="search-toggle-back" {{action 'toggleSearchForm' on='mouseDown' }}>
+                    <button class="search-toggle-back" type="button" {{action 'toggleSearchForm' on='mouseDown' }}>
                         <i class="fa fa-chevron-left"></i>
                     </button>
                     {{input type='search' name='keyword' class='search-keyword' placeholder='Search'}}

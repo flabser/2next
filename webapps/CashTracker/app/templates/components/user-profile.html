@@ -76,13 +76,13 @@
                         </p>
                         {{/unless}}
                     {{/if}}
-                    <div class="form-group {{unless needPassword 'hidden'}} {{if errors.pwd 'has-error'}}">
+                    <p class="{{unless needPassword 'hidden'}} {{if errors.pwd 'has-error'}}">
                         <div class="text-muted">{{t 'password'}}</div>
                         {{input value=user.pwd focus-out='validateProfile'}}
                         {{#each errors.pwd as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
-                    </div>
+                    </p>
                     <div class="password_group {{unless changePassword 'hidden'}}">
                         <div class="{{if errors.pwd_change 'has-error'}}">
                             <div class="text-muted">{{t 'new'}}</div>

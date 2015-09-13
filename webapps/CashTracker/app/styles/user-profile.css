@@ -64,6 +64,6 @@
     padding-left: 0;
 }
 
-.user-profile .form-group.has-error input {
+.user-profile .has-error input {
     border-color: #DE3309;
 }

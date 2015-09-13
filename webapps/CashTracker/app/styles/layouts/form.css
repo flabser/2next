@@ -6,7 +6,7 @@
 .fieldset {
     border: none;
     margin: 0 0 8px 0;
-    padding: 8px;
+    padding: 8px 16px;
 }
 
 .fieldset > .legend {
@@ -71,9 +71,9 @@
     padding: 2px;
 }
 
-.form-group.has-error .controls input,
-.form-group.has-error .controls textarea,
-.form-group.has-error .controls select {
+.has-error>.controls input,
+.has-error>.controls textarea,
+.has-error>.controls select {
     border-color: #DE3309;
 }
 

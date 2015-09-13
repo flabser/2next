@@ -15,9 +15,12 @@ App = Em.Application.extend({
     Resolver: Resolver,
 
     ready: function() {
-        Em.$('body').bind('touchstart', function() {});
         Em.$(document).on('drop dragover', function(e) {
             e.preventDefault();
+            // Em.$('body').addClass('has-drag');
+        }).on('dragleave', function(e) {
+            // e.preventDefault();
+            // Em.$('body').removeClass('has-drag');
         });
     }
 });

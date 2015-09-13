@@ -21,12 +21,6 @@ export default Em.Component.extend({
         var $ul = $(this.get('element')).find('ul.uploads');
         var $drop = $ul.find('.drop');
 
-        /*$drop.on('dragenter', function() {
-            $drop.addClass('dragenter');
-        }).on('dragleave', function() {
-            $drop.removeClass('dragenter');
-        });*/
-
         $(this.get('element')).fileupload({
 
             url: PATH,
