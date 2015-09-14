@@ -4,20 +4,19 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.Basic;
-import javax.persistence.CollectionTable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -97,36 +96,21 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@Column(name = "include_in_reports")
 	private boolean includeInReports;
 
-	@ElementCollection
-	@CollectionTable(name = "transaction_files",joinColumns =  @JoinColumn(name = "files_fk_parent"))
-	@Lob
-	@Basic(fetch=FetchType.LAZY)
-	@Column(name = "file")
-	private List<byte[]> files;
-
-	@ElementCollection
-	@CollectionTable(name = "transaction_files",joinColumns =  @JoinColumn(name = "files_fk_parent"))
-	@Column(name = "fileNames")
-	private List<String> fileNames;
 
 
-	public List<byte[]> getFiles() {
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction",  cascade = CascadeType.ALL)
+	public Set <TransactionFile> files;
+
+
+
+	public Set<TransactionFile> getFiles() {
 		return files;
 	}
 
-	public void setFiles(List<byte[]> files) {
+	public void setFiles(Set<TransactionFile> files) {
 		this.files = files;
 	}
 
-	public List<String> getFileNames() {
-		return fileNames;
-	}
-
-	public void setFileNames(List<String> fileNames) {
-		this.fileNames = fileNames;
-	}
-
-	//
 	public TransactionType getTransactionType() {
 		return transactionType;
 	}

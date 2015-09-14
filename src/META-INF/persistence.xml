@@ -10,6 +10,7 @@
 		<class>cashtracker.model.CostCenter</class>
 		<class>cashtracker.model.Tag</class>
 		<class>cashtracker.model.Transaction</class>
+		<class>cashtracker.model.TransactionFile</class>
 		<class>cashtracker.model.constants.converter.TransactionTypeConverter</class>
 		<class>cashtracker.model.constants.converter.TransactionStateConverter</class>
 	</persistence-unit>

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IDatabase;
-import com.flabser.dataengine.jpa.Attachment;
+import com.flabser.dataengine.jpa.AttachmentEntity;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
@@ -57,7 +57,7 @@ public class User {
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private String dbPwd;
 	private String defaultApp;
-	private Attachment avatar;
+	private AttachmentEntity avatar;
 
 	public User() {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
@@ -86,7 +86,7 @@ public class User {
 		this.roles = roles;
 		applications.forEach(this::addApplication);
 		this.isValid = isValid;
-		avatar = new Attachment();
+		avatar = new AttachmentEntity();
 		avatar.setRealFileName(avatarName);
 		avatar.setFieldName("AVATAR");
 	}
@@ -223,6 +223,8 @@ public class User {
 									return false;
 								}
 							} catch (Exception e) {
+								Server.logger.errorLogEntry(e);
+								appProfile.setLastError(e.getMessage().substring(0,255));
 								appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 								appProfile.save();
 								return false;
@@ -353,7 +355,7 @@ public class User {
 
 	}
 
-	public Attachment getAvatar() {
+	public AttachmentEntity getAvatar() {
 		return avatar;
 	}
 

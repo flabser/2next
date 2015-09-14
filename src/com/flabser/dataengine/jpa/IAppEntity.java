@@ -4,11 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public interface IAppEntity {
-
-	void setId(long id);
-
-	long getId();
+public interface IAppEntity extends ISimpleAppEntity {
 
 	Long getAuthor();
 
@@ -18,9 +14,8 @@ public interface IAppEntity {
 
 	void setRegDate(Date regDate);
 
+	List<AttachmentEntity> getAttachments();
 
-	List<Attachment> getAttachments();
-
-	void setAttachments(List<Attachment> attachments);
+	void setAttachments(List<AttachmentEntity> attachments);
 
 }

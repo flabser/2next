@@ -33,7 +33,7 @@ public class InitEnv {
 
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
-			DatabasePoolException {
+	DatabasePoolException {
 		Server.logger = new SimpleLogger();
 		Environment.systemBase = new com.flabser.dataengine.system.SystemDatabase();
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
@@ -42,7 +42,7 @@ public class InitEnv {
 		HashMap <String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(appType);
 		if (hh != null) {
 			for (ApplicationProfile app : hh.values()) {
-				if (app.status == ApplicationStatusType.ON_LINE) {
+				if (app.getStatus() == ApplicationStatusType.ON_LINE) {
 					ap = app;
 					us.init(ap.appID);
 					break;

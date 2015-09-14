@@ -27,7 +27,7 @@ import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.activity.Activity;
 import com.flabser.dataengine.activity.IActivity;
-import com.flabser.dataengine.jpa.Attachment;
+import com.flabser.dataengine.jpa.AttachmentEntity;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserGroup;
@@ -190,14 +190,15 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 		List<ApplicationProfile> result = new ArrayList<>();
 		Connection conn = pool.getConnection();
 		try (Statement getApps = conn.createStatement();
-				ResultSet rs = getApps.executeQuery("select ID, APPTYPE, APPID, APPNAME, OWNER, DBTYPE, DBHOST, DBNAME, STATUS, STATUSDATE"
+				ResultSet rs = getApps.executeQuery("select ID, APPTYPE, APPID, APPNAME, OWNER, DBTYPE, DBHOST, DBNAME, STATUS, STATUSDATE, regdate, description, lasterror, visibility"
 						+ ", ARRAY(select id FROM roles where app_id = apps.ID) as roles_id from " + "(select unnest(ARRAY"
 						+ ids.stream().collect(Collectors.toList()) + "::integer[]) as app_id) as ids inner join apps on ids.app_id = ID ")) {
 
 			while (rs.next()) {
 				result.add(new ApplicationProfile(rs.getInt("ID"), rs.getString("APPTYPE"), rs.getString("APPID"), rs.getString("APPNAME"),
 						rs.getString("OWNER"), rs.getInt("DBTYPE"), rs.getString("DBHOST"), rs.getString("DBNAME"), rs.getInt("STATUS"), rs
-						.getDate("STATUSDATE"), getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("roles_id"))))));
+						.getDate("STATUSDATE"), getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("roles_id")))),
+						rs.getDate("REGDATE"), rs.getString("DESCRIPTION"), rs.getString("LASTERROR"), rs.getInt("visibility")));
 			}
 
 			conn.commit();
@@ -474,7 +475,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			insertUser.setArray(14, conn.createArrayOf("integer", user.getUserRoles().stream().map(UserRole::getId).toArray()));
 			insertUser.setArray(15, conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
 			insertUser.setString(16, user.getDbPwd());
-			Attachment aFile = user.getAvatar();
+			AttachmentEntity aFile = user.getAvatar();
 			if(aFile != null){
 				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
 				if (userTmpDir.exists()) {
@@ -544,7 +545,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			updateUser.setString(16, user.getDbPwd());
 
 
-			Attachment aFile = user.getAvatar();
+			AttachmentEntity aFile = user.getAvatar();
 			if(aFile != null){
 				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getOldLogin());
 				if (userTmpDir.exists()) {
@@ -697,8 +698,9 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 
 		try (PreparedStatement pst = conn
 				.prepareStatement(
-						"insert into APPS(APPNAME, OWNER, DBHOST, DBNAME, APPTYPE, APPID, DBTYPE, STATUS, STATUSDATE) values(?, ?, ?, ?, ?, ?, ?, ?, ?);",
-						PreparedStatement.RETURN_GENERATED_KEYS)) {
+						"insert into APPS(APPNAME, OWNER, DBHOST, DBNAME, APPTYPE, APPID, DBTYPE, STATUS, STATUSDATE, "
+								+ "REGDATE, DESCRIPTION, LASTERROR, visibility) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+								PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			pst.setString(1, ap.appName);
 			pst.setString(2, ap.owner);
@@ -707,8 +709,12 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			pst.setString(5, ap.appType);
 			pst.setString(6, ap.appID);
 			pst.setInt(7, ap.dbType.getCode());
-			pst.setInt(8, ap.status.getCode());
-			pst.setDate(9, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
+			pst.setInt(8, ap.getStatus().getCode());
+			pst.setTimestamp(9, ap.getStatusDate() != null ? new java.sql.Timestamp(ap.getStatusDate().getTime()) : null);
+			pst.setTimestamp(10, ap.regDate != null ? new java.sql.Timestamp(ap.regDate.getTime()) : null);
+			pst.setString(11, ap.getDesciption());
+			pst.setString(12, ap.getLastError());
+			pst.setInt(13, ap.getVisibilty().getCode());
 
 			pst.executeUpdate();
 			try (ResultSet rs = pst.getGeneratedKeys()) {
@@ -743,7 +749,8 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 		Connection conn = pool.getConnection();
 
 		try (PreparedStatement pst = conn
-				.prepareStatement("UPDATE APPS SET APPNAME = ?, OWNER = ?, DBHOST = ?, DBNAME = ?,  APPTYPE = ?, APPID = ?, DBTYPE = ?, STATUS = ?, STATUSDATE = ? WHERE ID = ?;")) {
+				.prepareStatement("UPDATE APPS SET APPNAME = ?, OWNER = ?, DBHOST = ?, DBNAME = ?,  APPTYPE = ?, APPID = ?, DBTYPE = ?, STATUS = ?,"
+						+ " STATUSDATE = ?, DESCRIPTION = ?, LASTERROR = ?, visibility = ? WHERE ID = ?;")) {
 
 			pst.setString(1, ap.appName);
 			pst.setString(2, ap.owner);
@@ -752,9 +759,13 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			pst.setString(5, ap.appType);
 			pst.setString(6, ap.appID);
 			pst.setInt(7, ap.dbType.getCode());
-			pst.setInt(8, ap.status.getCode());
-			pst.setDate(9, ap.getStatusDate() != null ? new java.sql.Date(ap.getStatusDate().getTime()) : null);
-			pst.setInt(10, ap.id);
+			pst.setInt(8, ap.getStatus().getCode());
+			pst.setTimestamp(9, ap.getStatusDate() != null ? new java.sql.Timestamp(ap.getStatusDate().getTime()) : null);
+			pst.setString(10, ap.getDesciption());
+			pst.setString(11, ap.getLastError());
+			pst.setInt(12, ap.getVisibilty().getCode());
+			pst.setInt(13, ap.id);
+
 
 			pst.executeUpdate();
 			insert(ap.getRoles());

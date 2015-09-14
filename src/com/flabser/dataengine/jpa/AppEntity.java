@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
 
@@ -28,7 +29,7 @@ public abstract class AppEntity implements IAppEntity {
 	protected Date regDate;
 
 	@Transient
-	protected List<Attachment> attachments;
+	protected List<AttachmentEntity> attachments;
 
 	@Override
 	public void setId(long id) {
@@ -69,13 +70,14 @@ public abstract class AppEntity implements IAppEntity {
 		this.regDate = regDate;
 	}
 
+	@JsonIgnore
 	@Override
-	public List<Attachment> getAttachments() {
+	public List<AttachmentEntity> getAttachments() {
 		return attachments;
 	}
 
 	@Override
-	public void setAttachments(List<Attachment> attachments) {
+	public void setAttachments(List<AttachmentEntity> attachments) {
 		this.attachments = attachments;
 	}
 

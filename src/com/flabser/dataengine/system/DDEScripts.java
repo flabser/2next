@@ -38,7 +38,9 @@ public class DDEScripts {
 			+ "dbname varchar(64), "
 			+ "status integer, "
 			+ "statusdate timestamp without time zone, "
+			+ "visibility integer, "
 			+ "description varchar(256), "
+			+ "lasterror varchar(256), "
 			+ "CONSTRAINT apps_pkey PRIMARY KEY (ID))";
 
 	public static final String USERS_ACTIVITY_DDE = "create table USERSACTIVITY(ID serial NOT NULL, "

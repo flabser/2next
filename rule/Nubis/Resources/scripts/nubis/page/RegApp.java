@@ -35,7 +35,7 @@ public class RegApp extends _DoScript {
 			ap.setDesciption(description);
 			ap.owner = user.getLogin();
 			ap.dbName = ap.appType.toLowerCase() + ap.appId();
-			ap.status = ApplicationStatusType.READY_TO_DEPLOY;
+			ap.setStatus(ApplicationStatusType.READY_TO_DEPLOY);
 			if (ap.save()) {
 				user.addApplication(ap);
 				if (user.save()) {

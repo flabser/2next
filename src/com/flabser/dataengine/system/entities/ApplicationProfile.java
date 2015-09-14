@@ -41,12 +41,13 @@ public class ApplicationProfile implements _IContent {
 	@JsonIgnore
 	public String dbName;
 	public String defaultURL;
-	public ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
+	private ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
 	private WorkModeType workingMode = WorkModeType.CLOUD;
 	private Date statusDate;
 	private VisibiltyType visibilty;
 	private ArrayList<UserRole> roles = new ArrayList<>();
 	private String desciption;
+	private String lastError;
 
 	public ApplicationProfile() {
 	}
@@ -61,7 +62,7 @@ public class ApplicationProfile implements _IContent {
 	}
 
 	public ApplicationProfile(int id, String appType, String appID, String appName, String owner, int dbType,
-			String dbHost, String dbName, int status, Date statusDate, ArrayList<UserRole> roles) {
+			String dbHost, String dbName, int status, Date statusDate, ArrayList<UserRole> roles, Date regDate, String descr, String lastError, int v) {
 		this.id = id;
 		this.appType = appType;
 		this.appID = appID;
@@ -72,8 +73,11 @@ public class ApplicationProfile implements _IContent {
 		this.dbName = dbName;
 		this.status = ApplicationStatusType.getType(status);
 		this.statusDate = statusDate;
-		// visibilty
+		visibilty = VisibiltyType.getType(v);
 		this.setRoles(roles);
+		this.regDate = regDate;
+		desciption = descr;
+		this.lastError = lastError;
 	}
 
 	public ApplicationProfile(ResultSet rs) throws SQLException {
@@ -248,6 +252,14 @@ public class ApplicationProfile implements _IContent {
 
 	public void setDesciption(String desciption) {
 		this.desciption = desciption;
+	}
+
+	public String getLastError() {
+		return lastError;
+	}
+
+	public void setLastError(String e) {
+		this.lastError = e;
 	}
 
 }

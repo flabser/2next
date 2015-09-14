@@ -7,6 +7,7 @@ import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.scheduler.PeriodicalServices;
 import com.flabser.scheduler.tasks.DatabaseRemover;
+import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.UserSession;
 
 public class Console implements Runnable {
@@ -36,7 +37,13 @@ public class Console implements Runnable {
 				System.out.println(services.getCurrentJobs());
 			} else if (command.contains("force")) {
 				if (command.contains("database remover")) {
-					new DatabaseRemover().process();
+					new DatabaseRemover().process(ApplicationStatusType.DATABASE_NOT_CREATED);
+				}
+			} else if (command.contains("command")) {
+				if (command.contains("898")) {
+					new DatabaseRemover().process(ApplicationStatusType.DATABASE_NOT_CREATED);
+				} else if (command.contains("899")) {
+					new DatabaseRemover().process(ApplicationStatusType.READY_TO_DEPLOY);
 				}
 			} else {
 				if (!command.trim().equalsIgnoreCase("")) {

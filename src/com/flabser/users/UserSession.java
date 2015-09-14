@@ -9,8 +9,8 @@ import com.flabser.env.EnvConst;
 import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
-import com.flabser.restful.Application;
 import com.flabser.restful.AppUser;
+import com.flabser.restful.Application;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Page;
@@ -153,7 +153,7 @@ public class UserSession implements ICache {
 				a.setAppType(ap.appType);
 				a.setOwner(ap.owner);
 				a.setVisibilty(ap.getVisibilty());
-				a.setStatus(ap.status);
+				a.setStatus(ap.getStatus());
 				applications.put(ap.appID, a);
 			}
 		}

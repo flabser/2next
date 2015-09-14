@@ -32,9 +32,9 @@ public abstract class DAO implements IDAO {
 		entity.setAuthor(user.id);
 		entity.setRegDate(new Date());
 		List<byte[]> files = new ArrayList<byte[]>();
-		List<Attachment> attachments = entity.getAttachments();
+		List<AttachmentEntity> attachments = entity.getAttachments();
 		if (attachments != null) {
-			for (Attachment a : attachments) {
+			for (AttachmentEntity a : attachments) {
 				Transaction t = (Transaction) entity;
 				String fieldName = a.getFieldName();
 				String uploadedFileLocation = userTmpDir + File.separator + a.getTempID();
@@ -59,7 +59,7 @@ public abstract class DAO implements IDAO {
 		em.getTransaction().begin();
 		List<byte[]> files = new ArrayList<byte[]>();
 		Transaction t = (Transaction) entity;
-		for (Attachment a : entity.getAttachments()) {
+		/*		for (Attachment a : entity.getAttachments()) {
 			String fieldName = a.getFieldName();
 			String uploadedFileLocation = userTmpDir + File.separator + a.getTempID();
 			File file = new File(uploadedFileLocation);
@@ -71,7 +71,7 @@ public abstract class DAO implements IDAO {
 				Server.logger.errorLogEntry(e);
 			}
 
-		}
+		}*/
 		em.merge(entity);
 		em.getTransaction().commit();
 		return entity;

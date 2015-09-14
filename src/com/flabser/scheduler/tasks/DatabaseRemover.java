@@ -12,6 +12,7 @@ import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.server.Server;
+import com.flabser.users.ApplicationStatusType;
 
 //TODO To realize
 public class DatabaseRemover implements Job {
@@ -22,13 +23,14 @@ public class DatabaseRemover implements Job {
 
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-		process();
+		process(ApplicationStatusType.READY_TO_REMOVE);
 	}
 
-	public void process(){
+	public void process(ApplicationStatusType type){
 		Server.logger.normalLogEntry("start database remover task");
 		ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
-		ArrayList<ApplicationProfile> apps = sysDb.getAllApps("status=896", 0, 100);
+		//ArrayList<ApplicationProfile> apps = sysDb.getAllApps("status=" + type.getCode(), 0, 100);
+		ArrayList<ApplicationProfile> apps = sysDb.getAllApps("status=" + type.getCode() + " or status=" + ApplicationStatusType.DATABASE_NOT_CREATED.getCode(), 0, 100);
 		for (ApplicationProfile ap : apps) {
 			String appID = ap.appID;
 			Server.logger.normalLogEntry("application " + appID + " prepared to delete. It will be try to deleted");
