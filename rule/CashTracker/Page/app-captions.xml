@@ -4,15 +4,16 @@
 
 	<caption name="brand" />
 
-	<caption name="logout" />
-	<caption name="save" />
-	<caption name="close" />
-	<caption name="cancel" />
 	<caption name="add" />
 	<caption name="new" />
+	<caption name="edit" />
+	<caption name="save" />
+	<caption name="cancel" />
+	<caption name="close" />
 	<caption name="repeat" />
 
 	<caption name="workspace" />
+	<caption name="logout" />
 
 	<caption name="saved" />
 	<caption name="newdoc" />
@@ -21,9 +22,7 @@
 	<caption name="modenotdefined" />
 	<caption name="author" />
 
-	<caption name="properties" />
 	<caption name="attachments" />
-	<caption name="additional" />
 
 	<caption name="attach" />
 	<caption name="attach_delete" />
@@ -31,18 +30,10 @@
 	<caption name="attach_preview" />
 	<caption name="attach_add_comment" />
 
-	<caption name="account" />
-	<caption name="account_from" />
-	<caption name="account_to" />
-	<caption name="budget" />
-	<caption name="category" />
-	<caption name="tag" />
-	<caption name="costcenter" />
-	<caption name="user" />
-	<caption name="transaction" />
 	<caption name="user_profile" />
 
 	<caption name="dashboard" />
+	<caption name="transaction" />
 	<caption name="transactions" />
 	<caption name="income" />
 	<caption name="incomes" />
@@ -51,16 +42,27 @@
 	<caption name="transfer" />
 	<caption name="transfers" />
 	<caption name="reports" />
+	<caption name="budget" />
+	<caption name="account" />
 	<caption name="accounts" />
+	<caption name="category" />
 	<caption name="categories" />
+	<caption name="costcenter" />
 	<caption name="cost_centers" />
+	<caption name="tag" />
 	<caption name="tags" />
+	<caption name="user" />
 	<caption name="users" />
 
 	<caption name="budget_name_hint" />
 
 	<caption name="password" />
+	<caption name="password_change" />
+	<caption name="pwd_repeat_not_equal" />
+	<caption name="pwd_format_error" />
 	<caption name="name" />
+	<caption name="account_from" />
+	<caption name="account_to" />
 	<caption name="amount_control" />
 	<caption name="amount_control_hint" />
 	<caption name="require_document" />
