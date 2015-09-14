@@ -34,6 +34,12 @@
 		<entry lang="BG">Workspace</entry>
 	</sentence>
 
+	<sentence mode="on" keyword="user_profile">
+		<entry lang="RUS">Профиль</entry>
+		<entry lang="KAZ">Профиль</entry>
+		<entry lang="ENG">User Profile</entry>
+		<entry lang="BG">Потребителски профил</entry>
+	</sentence>
 	<sentence mode="on" keyword="dashboard">
 		<entry lang="RUS">Обзор</entry>
 		<entry lang="KAZ">Жалпы шолу</entry>
@@ -167,12 +173,6 @@
 		<entry lang="ENG">Note</entry>
 		<entry lang="BG">Примечание</entry>
 	</sentence>
-	<sentence mode="on" keyword="user_profile">
-		<entry lang="RUS">Профиль</entry>
-		<entry lang="KAZ">Профиль</entry>
-		<entry lang="ENG">User Profile</entry>
-		<entry lang="BG">Потребителски профил</entry>
-	</sentence>
 
 	<!-- pages -->
 	<sentence mode="on" keyword="privacy">
@@ -207,6 +207,24 @@
 	</sentence>
 
 	<!-- help -->
+	<sentence mode="on" keyword="password_change">
+		<entry lang="RUS">Изменить пароль</entry>
+		<entry lang="KAZ">Құпия сөзді өзгерту</entry>
+		<entry lang="ENG">Change password</entry>
+		<entry lang="BG">Изменить пароль</entry>
+	</sentence>
+	<sentence mode="on" keyword="pwd_repeat_not_equal">
+		<entry lang="RUS">Введенные вами пароли не совпадают.</entry>
+		<entry lang="KAZ">Енгізілген құпия сөздер сәйкес емес.</entry>
+		<entry lang="ENG">The passwords you entered did not match.</entry>
+		<entry lang="BG">Введенные вами пароли не совпадают.</entry>
+	</sentence>
+	<sentence mode="on" keyword="pwd_format_error">
+		<entry lang="RUS">Введены недопустимые символы в пароле.</entry>
+		<entry lang="KAZ">Введены недопустимые символы в пароле.</entry>
+		<entry lang="ENG">Введены недопустимые символы в пароле.</entry>
+		<entry lang="BG">Введены недопустимые символы в пароле.</entry>
+	</sentence>
 	<sentence mode="on" keyword="forgot_password">
 		<entry lang="RUS">Забыли пароль?</entry>
 		<entry lang="KAZ">Құпия сөзді ұмыттыңыз ба?</entry>
@@ -501,6 +519,12 @@
 		<entry lang="KAZ">Жаңа</entry>
 		<entry lang="ENG">New</entry>
 		<entry lang="BG">Новый</entry>
+	</sentence>
+	<sentence mode="on" keyword="edit">
+		<entry lang="RUS">Редактировать</entry>
+		<entry lang="KAZ">Өзгерту</entry>
+		<entry lang="ENG">Edit</entry>
+		<entry lang="BG">Редактировать</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="budget_name_hint">
