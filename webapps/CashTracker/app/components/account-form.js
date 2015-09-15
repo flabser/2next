@@ -11,7 +11,8 @@ export default Em.Component.extend(ModelForm, {
 
     noteCharacterLeft: Em.computed('account.note', function() {
         if (this.get('account.note')) {
-            return noteMaxLen - this.get('account.note').length;
+            var noteLen = this.get('account.note').length;
+            return noteMaxLen - noteLen;
         }
         return '';
     }),

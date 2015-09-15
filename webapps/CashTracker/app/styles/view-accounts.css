@@ -1,30 +1,42 @@
 .view_accounts {}
 
-.vaccount-name {
+.vacc-name {
     min-width: 110px;
     width: 25%;
 }
 
-.vaccount-writers {
+.vacc-own {
     color: #666;
+    width: 20%;
+}
+
+.vacc-obs {
     width: 25%;
 }
 
-.vaccount-readers {
-    width: 25%;
+.vacc-cur {
+    color: #666;
+    text-align: center;
+    width: 3em;
 }
 
-.vaccount-amount-control {
+.vacc-initial {
+    color: #3F51B5;
+    text-align: right;
+    width: 120px;
+}
+
+.vacc-amount-ctrl {
     color: #E02117;
     text-align: right;
     width: 120px;
 }
 
 @media ( max-width: 570px) {
-    .view_accounts .vaccount-readers {
+    .view_accounts .vacc-obs {
         display: none;
     }
-    .vaccount-amount-control {
+    .view_accounts .vacc-amount-ctrl {
         text-align: left;
     }
 }

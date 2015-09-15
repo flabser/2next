@@ -14,10 +14,10 @@
                     <input type="checkbox" class="all" {{action 'selectAll'}} />
                 </label>
                 <div class="entry-captions">
-                    <span class="vcategory-name">
+                    <span class="vcat-name">
                         {{t 'name'}}
                     </span>
-                    <span class="vcategory-types">
+                    <span class="vcat-types">
                         {{t 'category_transaction_type_hint'}}
                     </span>
                     <span>
@@ -41,12 +41,12 @@
                         </label>
                         {{#link-to 'categories.category' category class='entry-link'}}
                         <div class="entry-fields">
-                            <span class="vcategory-name">
+                            <span class="vcat-name">
                                 {{category.name}}
                             </span>
-                            <span class="vcategory-types">
+                            <span class="vcat-types">
                                 {{#each category.transactionTypes as |transactionType|}}
-                                    <span class="vtransaction-type vtransaction-type-{{transactionType}}">
+                                    <span class="vtr-type vtr-type-{{transactionType}}">
                                         {{transactionType}}
                                     </span>
                                 {{/each}}

@@ -3,6 +3,8 @@ import DS from 'ember-data';
 import ModelForm from '../mixins/model-form';
 import Validate from '../utils/validator';
 
+const noteMaxLen = 256;
+
 export default Em.Component.extend(ModelForm, {
     transaction: null,
 
@@ -12,7 +14,8 @@ export default Em.Component.extend(ModelForm, {
 
     noteCharacterLeft: Em.computed('transaction.note', function() {
         if (this.get('transaction.note')) {
-            return 256 - this.get('transaction.note').length;
+            var noteLen = this.get('transaction.note').length;
+            return noteMaxLen - noteLen;
         }
         return '';
     }),

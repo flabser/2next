@@ -1,24 +1,24 @@
 .view_category {}
 
-.vcategory-icon-type {
+.vcat-icon-type {
     width: 22px;
 }
 
-.vcategory-name {
-    width: 260px;
+.vcat-name {
+    width: 270px;
 }
 
-.vcategory-types {
+.vcat-types {
     width: 160px;
 }
 
-.vtransaction-type {
+.vtr-type {
     display: inline-block;
     padding: 1px;
 }
 
-.vtransaction-type-E {}
+.vtr-type-E {}
 
-.vtransaction-type-I {}
+.vtr-type-I {}
 
-.vtransaction-type-T {}
+.vtr-type-T {}

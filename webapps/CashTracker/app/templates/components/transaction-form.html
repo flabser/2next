@@ -146,7 +146,7 @@
                     <div class="controls">
                         {{textarea value=transaction.note key-up='validateNote' maxlength='256' class='span5'}}
                         {{#if noteCharacterLeft}}
-                            <div class="text-muted">left: {{noteCharacterLeft}}</div>
+                            <div class="text-muted">{{noteCharacterLeft}}</div>
                         {{/if}}
                         {{#each errors.note as |error|}}
                             <div class="error-message">{{error.message}}</div>

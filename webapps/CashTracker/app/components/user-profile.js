@@ -42,8 +42,8 @@ export default Em.Component.extend(ModelForm, {
         cancel: function() {
             this.sendAction('cancel');
         },
-        addAttach: function(attach) {
-            this.get('user').avatar = attach;
+        updateAvatar: function(attach) {
+            this.get('user').attachedFile = attach;
         },
         setChangePassword: function() {
             this.set('changePassword', true);

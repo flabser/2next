@@ -13,7 +13,7 @@ export default DS.Model.extend({
         defaultValue: true
     }),
     note: DS.attr('string'),
-    owner: DS.hasMany('user', {
+    owner: DS.belongsTo('user', {
         async: true
     }),
     observers: DS.hasMany('user', {

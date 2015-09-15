@@ -1,11 +1,9 @@
-<ul class="uploads">
-    {{#if uploadVisible}}
+<ul class="uploads {{unless uploadVisible 'hidden'}}">
     <li class="drop">
         <a {{action 'browse'}}>{{t 'upload_browse'}}</a>
         <span class="drop-label">{{t 'upload_drop_here'}}</span>
         <input type="file" name="file" />
     </li>
-    {{/if}}
 </ul>
 <ul class="attachments">
     {{#each attachments as |attach|}}

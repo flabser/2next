@@ -55,7 +55,7 @@
                 <div class="form-group">
                     <div class="controls">
                         <label>
-                            {{tn-input type='checkbox' checked=category.enabled }}
+                            {{input type='checkbox' checked=category.enabled }}
                             {{t 'active'}}
                         </label>
                         <p class="hint">
@@ -84,7 +84,7 @@
                     <div class="controls">
                         {{textarea value=category.note key-up='validateNote' maxlength='256' class='span5'}}
                         {{#if noteCharacterLeft}}
-                            <div class="text-muted">left: {{noteCharacterLeft}}</div>
+                            <div class="text-muted">{{noteCharacterLeft}}</div>
                         {{/if}}
                         {{#each errors.note as |error|}}
                             <div class="error-message">{{error.message}}</div>

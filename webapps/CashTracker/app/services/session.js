@@ -43,8 +43,9 @@ export default Service.extend({
                     name: _this.user.name,
                     login: _this.user.login,
                     email: _this.user.email,
-                    pwd: _this.user.password,
-                    pwd_repeat: _this.user.password_repeat,
+                    pwd: _this.user.pwd,
+                    pwd_new: _this.user.pwd_new,
+                    pwd_repeat: _this.user.pwd_repeat,
                     attachedFile: _this.user.attachedFile
                 }
             }),
