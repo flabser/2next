@@ -41,6 +41,6 @@ public class BudgetTest extends InitEnv {
 
 	@Test
 	public void deleteTest() {
-		dao.delete();
+		// dao.delete();
 	}
 }

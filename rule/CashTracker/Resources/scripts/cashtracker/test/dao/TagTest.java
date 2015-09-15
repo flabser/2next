@@ -30,7 +30,7 @@ public class TagTest extends InitEnv {
 		assertNotNull(db);
 
 		int size = dao.findAll().size();
-		int iteration = size + 2;
+		int iteration = size + 50;
 
 		for (int i = size; i < iteration; i++) {
 			Tag m = new Tag();

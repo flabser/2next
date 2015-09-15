@@ -35,7 +35,7 @@ public class CategoryTest extends InitEnv {
 		for (int i = size; i < iteration; i++) {
 			Category m = new Category();
 			if (parent != null) {
-				m.setParentCategory(parent);
+				m.setParent(parent);
 			}
 			m.setName("category - " + i);
 			m.setNote("note " + i);
