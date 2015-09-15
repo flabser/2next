@@ -43,12 +43,6 @@ public class Account extends AppEntity {
 	@Column(name = "userid")
 	private List <Long> observers;
 
-	// @OneToMany(mappedBy = "accountFrom", fetch = FetchType.LAZY)
-	// private List <Transaction> transactionsFrom;
-
-	// @OneToMany(mappedBy = "accountTo", fetch = FetchType.LAZY)
-	// private List <Transaction> transactionsTo;
-
 	//
 	public String getName() {
 		return name;
