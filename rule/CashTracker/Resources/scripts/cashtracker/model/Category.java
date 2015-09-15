@@ -19,6 +19,7 @@ import cashtracker.model.constants.TransactionType;
 import cashtracker.model.constants.converter.TransactionTypeConverter;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.dataengine.jpa.AppEntity;
@@ -29,6 +30,7 @@ import com.flabser.dataengine.jpa.AppEntity;
 @Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = { "parent_id", "name" }))
 public class Category extends AppEntity {
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id")
 	private Category parentCategory;
@@ -68,13 +70,13 @@ public class Category extends AppEntity {
 		this.parentCategory = parentCategory;
 	}
 
-	@JsonGetter("parentCategory")
+	/*@JsonGetter("parentCategory")
 	public Long getParentCategoryId() {
 		if (parentCategory == null || parentCategory.id == 0) {
 			return null;
 		}
 		return parentCategory.id;
-	}
+	}*/
 
 	@JsonSetter("parentCategory")
 	public void setParentCategoryId(Long id) {
