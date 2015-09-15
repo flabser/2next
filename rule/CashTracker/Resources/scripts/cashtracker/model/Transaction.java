@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -96,17 +95,15 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@Column(name = "include_in_reports")
 	private boolean includeInReports;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction", cascade = CascadeType.ALL)
+	public Set <TransactionFile> files;
 
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction",  cascade = CascadeType.ALL)
-	public Set<TransactionFile> files;
-
-
-	public Set<TransactionFile> getFiles() {
+	//
+	public Set <TransactionFile> getFiles() {
 		return files;
 	}
 
-	public void setFiles(Set<TransactionFile> files) {
+	public void setFiles(Set <TransactionFile> files) {
 		this.files = files;
 	}
 
@@ -160,13 +157,13 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.category = category;
 	}
 
-	@JsonGetter("category")
+	/*@JsonGetter("category")
 	public Long getCategoryId() {
 		if (category != null) {
 			return category.getId();
 		}
 		return null;
-	}
+	}*/
 
 	@JsonSetter("category")
 	public void setCategoryById(Long id) {
@@ -189,13 +186,13 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.accountFrom = account;
 	}
 
-	@JsonGetter("accountFrom")
+	/*@JsonGetter("accountFrom")
 	public Long getAccountFromId() {
 		if (accountFrom != null) {
 			return accountFrom.getId();
 		}
 		return null;
-	}
+	}*/
 
 	@JsonSetter("accountFrom")
 	public void setAccountFromById(Long id) {
@@ -218,13 +215,13 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.accountTo = account;
 	}
 
-	@JsonGetter("accountTo")
+	/*@JsonGetter("accountTo")
 	public Long getAccountToId() {
 		if (accountTo != null) {
 			return accountTo.getId();
 		}
 		return null;
-	}
+	}*/
 
 	@JsonSetter("accountTo")
 	public void setAccountToById(Long id) {
@@ -247,13 +244,13 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.costCenter = costCenter;
 	}
 
-	@JsonGetter("costCenter")
+	/*@JsonGetter("costCenter")
 	public Long getCostCenterId() {
 		if (costCenter != null) {
 			return costCenter.getId();
 		}
 		return null;
-	}
+	}*/
 
 	@JsonSetter("costCenter")
 	public void setCostCenterById(Long id) {
@@ -273,13 +270,13 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.tags = tags;
 	}
 
-	@JsonGetter("tags")
+	/*@JsonGetter("tags")
 	public List <Long> getTagsId() {
 		if (tags != null) {
 			return tags.stream().map(Tag::getId).collect(Collectors.toList());
 		}
 		return null;
-	}
+	}*/
 
 	@JsonSetter("tags")
 	public void setTagsId(List <Long> ids) {
@@ -375,8 +372,6 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	public void setIncludeInReports(boolean includeInReports) {
 		this.includeInReports = includeInReports;
 	}
-
-
 
 	@Override
 	public String toString() {
