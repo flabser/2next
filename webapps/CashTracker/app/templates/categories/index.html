@@ -29,35 +29,9 @@
         <div class="entries">
             {{#each model as |category|}}
                 {{#unless category.isNew}}
-                <div class="entry-wrap">
-                    <div class="entry-actions">
-                        <button class="entry-action action-delete" {{action 'deleteRecord' category}}>
-                            <i class="fa fa-trash" />
-                        </button>
-                    </div>
-                    {{#tn-swipe-entry class='entry'}}
-                        <label class="entry-select">
-                            <input type="checkbox" value="{{category.id}}" {{action 'selectOne'}} />
-                        </label>
-                        {{#link-to 'categories.category' category class='entry-link'}}
-                        <div class="entry-fields">
-                            <span class="vcat-name">
-                                {{category.name}}
-                            </span>
-                            <span class="vcat-types">
-                                {{#each category.transactionTypes as |transactionType|}}
-                                    <span class="vtr-type vtr-type-{{transactionType}}">
-                                        {{transactionType}}
-                                    </span>
-                                {{/each}}
-                            </span>
-                            <span>
-                                {{category.note}}
-                            </span>
-                        </div>
-                        {{/link-to}}
-                    {{/tn-swipe-entry}}
-                </div>
+                    {{#unless category.parent}}
+                        {{category-view-row category=category tagName=''}}
+                    {{/unless}}
                 {{/unless}}
             {{/each}}
         </div>

@@ -226,3 +226,35 @@
 .action-delete:hover .fa {
     color: white;
 }
+
+
+/* child */
+
+.child .indent {
+    display: inline-block;
+    padding-left: 16px;
+}
+
+.child .child .indent {
+    padding-left: 32px;
+}
+
+.child .child .child .indent {
+    padding-left: 48px;
+}
+
+.child .child .child .child .indent {
+    padding-left: 54px;
+}
+
+i.has-parent {
+    border-bottom: 1px solid #AAA;
+    border-left: 1px solid #AAA;
+    display: inline-block;
+    height: 11px;
+    width: 11px;
+}
+
+.entry-action-open i.has-parent {
+    display: none;
+}

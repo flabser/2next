@@ -14,9 +14,9 @@ export default DS.Model.extend({
     }),
     note: DS.attr('string'),
     owner: DS.belongsTo('user', {
-        async: true
+        async: false
     }),
     observers: DS.hasMany('user', {
-        async: true
+        async: false
     })
 });

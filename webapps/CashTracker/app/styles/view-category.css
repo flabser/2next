@@ -5,7 +5,8 @@
 }
 
 .vcat-name {
-    width: 270px;
+    min-width: 260px;
+    width: 40%;
 }
 
 .vcat-types {
