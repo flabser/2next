@@ -5,8 +5,6 @@ const {
 } = Em;
 
 export default Route.extend({
-    tagName: 'div',
-    classNames: ['layout'],
     navProfileIsExpanded: false,
     hasAddAction: false,
     // loginThroughToken: false,
@@ -107,6 +105,10 @@ export default Route.extend({
 
         goBack: function() {
             history.back(-1);
+        },
+
+        toggleDevice: function() {
+            $('body').toggleClass('phone');
         },
 
         showAddAction: function() {

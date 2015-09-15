@@ -15,7 +15,7 @@
                         {{t 'name'}}
                     </div>
                     <div class="controls">
-                        {{input value=account.name key-up='validateName' maxlength='64' class='span5'}}
+                        {{tn-input value=account.name key-up='validateName' maxlength='64' class='span5'}}
                         {{#each errors.name as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -24,7 +24,7 @@
                 <div class="form-group">
                     <div class="controls">
                         <label>
-                            {{input type='checkbox' checked=account.enabled }}
+                            {{tn-input type='checkbox' checked=account.enabled }}
                             {{t 'active'}}
                         </label>
                         <p class="hint">
@@ -37,7 +37,7 @@
                         {{t 'opening_balance'}}
                     </div>
                     <div class="controls">
-                        {{input type='number' value=account.openingBalance key-up='validateOpeningBalance' class='span2'}}
+                        {{tn-input type='number' value=account.openingBalance key-up='validateOpeningBalance' class='span2'}}
                         {{#each errors.openingBalance as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -48,7 +48,7 @@
                         {{t 'amount_control'}}
                     </div>
                     <div class="controls">
-                        {{input type='number' value=account.amountControl key-up='validateAmountControl' class='span2'}}
+                        {{tn-input type='number' value=account.amountControl key-up='validateAmountControl' class='span2'}}
                         {{#each errors.amountControl as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -62,7 +62,7 @@
                         {{t 'currency'}}
                     </div>
                     <div class="controls">
-                        {{input value=account.currencyCode maxlength='3' key-up='validateCurrencyCode' class='span1'}}
+                        {{tn-input value=account.currencyCode maxlength='3' key-up='validateCurrencyCode' class='span1'}}
                         {{#each errors.currencyCode as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}

@@ -89,8 +89,10 @@ li.nav-separator {
     display: block;
     font-weight: normal;
     margin: 0;
+    overflow: hidden;
     padding: 8px 5px;
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .tablet .side-nav li > a,

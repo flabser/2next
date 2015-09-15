@@ -56,7 +56,7 @@
     max-width: 100%;
     min-height: inherit;
     overflow: hidden;
-    padding: 6px 2px 2px;
+    padding: 5px 0px 0px;
     text-align: right;
     width: 230px;
 }
@@ -64,11 +64,20 @@
 .form-group .controls {
     color: #000;
     display: block;
-    margin: 0 0 0 235px;
+    margin: 0 0 0 240px;
     max-width: 100%;
     min-height: inherit;
     overflow: hidden;
-    padding: 2px;
+    padding: 0px;
+}
+
+.form-group.vertical {
+    border-bottom-color: transparent !important;
+}
+
+.form-group.vertical .control-label,
+.form-group.vertical .controls {
+    display: block;
 }
 
 .has-error>.controls input,
@@ -79,7 +88,7 @@
 
 @media ( max-width: 960px) {
     .form-group .control-label {
-        width: 200px;
+        width: 195px;
     }
     .form-group .controls {
         margin-left: 205px;
@@ -93,7 +102,7 @@
     }
     .form-group .control-label {
         text-align: left;
-        width: 140px;
+        width: 135px;
     }
     .form-group .controls {
         margin-left: 140px;
@@ -102,7 +111,7 @@
 
 @media ( max-width: 540px) {
     .form-group .control-label {
-        width: 115px;
+        width: 110px;
     }
     .form-group .controls {
         margin-left: 115px;

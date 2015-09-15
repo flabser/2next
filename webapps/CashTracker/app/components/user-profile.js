@@ -24,7 +24,16 @@ export default Em.Component.extend(ModelForm, {
         return !Validate.isEmpty(this.get('user.email')) && this.get('user.email') !== this.get('userEmail');
     }),
 
+    willDestroyElement: function() {
+        this.set('user.pwd', '');
+        this.set('user.pwd_new', '');
+        this.set('user.pwd_repeat', '');
+    },
+
     actions: {
+        edit: function() {
+            this.set('isEdit', true);
+        },
         save: function() {
             if (this.validate()) {
                 this.sendAction('save', this.get('user'));
@@ -38,9 +47,6 @@ export default Em.Component.extend(ModelForm, {
         },
         setChangePassword: function() {
             this.set('changePassword', true);
-        },
-        setEdit: function() {
-            this.set('isEdit', true);
         },
         validateProfile: function() {
             this.validate();
@@ -61,15 +67,22 @@ export default Em.Component.extend(ModelForm, {
         }
 
         if (this.get('changePassword')) {
-            if (!Validate.isEmpty(this.get('user.pwd_new')) && !Validate.isEmpty(this.get('user.pwd_repeat'))) {
+            var pwdNew = this.get('user.pwd_new');
+            var pwdRepeat = this.get('user.pwd_repeat');
+
+            if (!Validate.isEmpty(pwdNew) && !Validate.isEmpty(pwdRepeat)) {
                 if (Validate.isEmpty(this.get('user.pwd'))) {
                     this.get('errors').add('pwd', this.get('i18n').t('validation_empty'));
                 }
             }
 
-            if (!Validate.isEmpty(this.get('user.pwd_new')) || !Validate.isEmpty(this.get('user.pwd_repeat'))) {
-                if (!Validate.notEmptyAndEqual(this.get('user.pwd_new'), this.get('user.pwd_repeat'))) {
-                    this.get('errors').add('pwd_change', this.get('i18n').t('pwd_repeat_not_equal'));
+            if (!Validate.isEmpty(pwdNew) || !Validate.isEmpty(pwdRepeat)) {
+                if ((pwdNew + pwdRepeat).indexOf(' ') > -1) {
+                    this.get('errors').add('pwd_format', this.get('i18n').t('pwd_format_error'));
+                } else {
+                    if (!Validate.notEmptyAndEqual(pwdNew, pwdRepeat)) {
+                        this.get('errors').add('pwd_change', this.get('i18n').t('pwd_repeat_not_equal'));
+                    }
                 }
             }
         }
@@ -80,7 +93,6 @@ export default Em.Component.extend(ModelForm, {
                 this.get('errors').add('pwd', this.get('i18n').t('validation_empty'));
             }
         }
-
 
         return this.get('errors.isEmpty');
     }

@@ -21,6 +21,10 @@ select {
     vertical-align: middle;
 }
 
+input[type=date] {
+    height: 28px;
+}
+
 input:focus,
 textarea:focus,
 select:focus {

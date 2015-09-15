@@ -18,6 +18,8 @@ export default Em.Mixin.create({
             if (this.get('saving') === true) {
                 // transition.abort();
             }
+
+            return true;
         }
     }
 });

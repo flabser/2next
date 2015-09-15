@@ -6,31 +6,30 @@
             </button>
             <h1 class="header-title">
                 {{t 'user_profile'}}
+                {{#unless isEdit}}
+                    <a href="#" {{action 'edit'}}>{{t 'edit'}}</a>
+                {{/unless}}
             </h1>
         </header>
         <section class="content-body">
             <fieldset class="fieldset">
                 <div class="user_avatar">
                     <div class="avatar_thumb">
-                    {{upload-form
-                        uploadVisible=isEdit
-                        maxSize=3
-                        fieldName='avatar'
-                        attachments=user.attachments
-                        addAttach='updateAvatar'
-                        removeAttach='removeAvatar'}}
+                        <img src="rest/session/avatar" alt="avatar" class="img-thumbnail" />
+                        {{upload-form
+                            uploadVisible=isEdit
+                            maxSize=3
+                            fieldName='avatar'
+                            attachments=user.attachments
+                            addAttach='updateAvatar'
+                            removeAttach='removeAvatar'}}
                     </div>
                 </div>
                 <div class="user_fields">
-                    {{#unless isEdit}}
-                    <p>
-                        <a href="#" {{action 'setEdit'}}>{{t 'change_profile'}}</a>
-                    </p>
-                    {{/unless}}
-                    <div class="form-group {{if errors.name 'has-error'}}">
+                    <div class="form-group vertical {{if errors.name 'has-error'}}">
                         {{#if isEdit}}
                             <div class="text-muted">{{t 'user_name'}}</div>
-                            {{input value=user.name focus-out='validateProfile'}}
+                            {{tn-input value=user.name focus-out='validateProfile'}}
                             {{#each errors.name as |error|}}
                                 <div class="error-message">{{error.message}}</div>
                             {{/each}}
@@ -38,10 +37,10 @@
                             {{user.name}}
                         {{/if}}
                     </div>
-                    <div class="form-group {{if errors.login 'has-error'}}">
+                    <div class="form-group vertical {{if errors.login 'has-error'}}">
                         {{#if isEdit}}
                             <div class="text-muted">{{t 'user_login'}}</div>
-                            {{input value=user.login focus-out='validateProfile'}}
+                            {{tn-input value=user.login focus-out='validateProfile'}}
                             {{#each errors.login as |error|}}
                                 <div class="error-message">{{error.message}}</div>
                             {{/each}}
@@ -49,10 +48,10 @@
                             {{user.login}}
                         {{/if}}
                     </div>
-                    <div class="form-group {{if errors.email 'has-error'}}">
+                    <div class="form-group vertical {{if errors.email 'has-error'}}">
                         {{#if isEdit}}
                             <div class="text-muted">{{t 'email'}}</div>
-                            {{input value=user.email focus-out='validateProfile'}}
+                            {{tn-input value=user.email focus-out='validateProfile'}}
                             {{#each errors.email as |error|}}
                                 <div class="error-message">{{error.message}}</div>
                             {{/each}}
@@ -60,7 +59,7 @@
                             {{user.login}}
                         {{/if}}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group vertical">
                         <ul class="user_roles">
                             {{#each user.roles as |role|}}
                                 <li>{{role}}</li>
@@ -76,26 +75,49 @@
                         </p>
                         {{/unless}}
                     {{/if}}
-                    <p class="{{unless needPassword 'hidden'}} {{if errors.pwd 'has-error'}}">
+                    <div class="form-group vertical {{unless needPassword 'hidden'}} {{if errors.pwd 'has-error'}}">
                         <div class="text-muted">{{t 'password'}}</div>
-                        {{input value=user.pwd focus-out='validateProfile'}}
+                        {{tn-input
+                            type='password'
+                            value=user.pwd
+                            selectOnClick=true
+                            trim=true
+                            focus-out='validateProfile'}}
                         {{#each errors.pwd as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
-                    </p>
+                    </div>
                     <div class="password_group {{unless changePassword 'hidden'}}">
                         <div class="{{if errors.pwd_change 'has-error'}}">
                             <div class="text-muted">{{t 'new'}}</div>
-                            {{input type='password' value=user.pwd_new autocomplete='off' focus-out='validateProfile'}}
+                            {{tn-input
+                                type='password'
+                                value=user.pwd_new
+                                autocomplete='off'
+                                trim=true
+                                selectOnClick=true
+                                key-up='validateProfile'}}
                         </div>
-                        <div class="{{if errors.pwd_change 'has-error'}}">
+                        <div class="pull-right {{if errors.pwd_change 'has-error'}}">
                             <div class="text-muted">{{t 'repeat'}}</div>
-                            {{input type='password' value=user.pwd_repeat autocomplete='off' focus-out='validateProfile'}}
+                            {{tn-input
+                                type='password'
+                                value=user.pwd_repeat
+                                autocomplete='off'
+                                trim=true
+                                selectOnClick=true
+                                key-up='validateProfile'}}
                         </div>
-                        <p>
-                            {{#each errors.pwd_change as |error|}}
-                                <div class="error-message">{{error.message}}</div>
-                            {{/each}}
+                        <p class="clearfix">
+                            {{#if errors.pwd_format}}
+                                {{#each errors.pwd_format as |error|}}
+                                    <div class="error-message">{{error.message}}</div>
+                                {{/each}}
+                            {{else}}
+                                {{#each errors.pwd_change as |error|}}
+                                    <div class="error-message">{{error.message}}</div>
+                                {{/each}}
+                            {{/if}}
                         </p>
                     </div>
                 </div>

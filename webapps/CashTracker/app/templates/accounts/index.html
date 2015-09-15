@@ -38,24 +38,24 @@
                             <i class="fa fa-trash" />
                         </button>
                     </div>
-                    {{#tn-swipe-entry class='entry document'}}
+                    {{#tn-swipe-entry class='entry'}}
                         <label class="entry-select">
                             <input type="checkbox" value="{{account.id}}" {{action 'selectOne'}} />
                         </label>
                         {{#link-to 'accounts.account' account class='entry-link'}}
                         <div class="entry-fields">
-                            <span class="entry-field vaccount-name">
+                            <span class="vaccount-name">
                                 {{account.name}}
                             </span>
-                            <span class="entry-field vaccount-writers">
+                            <span class="vaccount-writers">
                                 {{account.writers.name}}
                             </span>
-                            <span class="entry-field vaccount-readers">
+                            <span class="vaccount-readers">
                                 <span>
                                     {{account.readers.name}}
                                 </span>
                             </span>
-                            <span class="entry-field vaccount-amount-control">
+                            <span class="vaccount-amount-control">
                                 {{account.amountControl}}
                             </span>
                         </div>

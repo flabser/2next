@@ -16,7 +16,7 @@
                             options=transactionTypes
                             labelProperty='name'
                             valueProperty='code'
-                            value=category.transactionType}}
+                            value=category.transactionTypes}}
 
                         <!-- <label>
                             {{tn-input-checkbox
@@ -46,7 +46,7 @@
                         {{t 'name'}}
                     </div>
                     <div class="controls">
-                        {{input value=category.name key-up='validateName' maxlength='64' class='span5'}}
+                        {{tn-input value=category.name key-up='validateName' maxlength='64' class='span5'}}
                         {{#each errors.name as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -55,7 +55,7 @@
                 <div class="form-group">
                     <div class="controls">
                         <label>
-                            {{input type='checkbox' checked=category.enabled }}
+                            {{tn-input type='checkbox' checked=category.enabled }}
                             {{t 'active'}}
                         </label>
                         <p class="hint">
@@ -96,7 +96,7 @@
                         {{t 'color'}}
                     </div>
                     <div class="controls">
-                        {{input value=category.color}}
+                        {{tn-input value=category.color}}
                     </div>
                 </div>
             </fieldset>

@@ -37,7 +37,7 @@
                         {{t 'date'}}
                     </div>
                     <div class="controls">
-                        {{input type='date' value=transaction.date focus-out='validateDate' class='span2'}}
+                        {{tn-input type='date' value=transaction.date focus-out='validateDate' class='span2'}}
                         {{#each errors.date as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -104,7 +104,7 @@
                         {{t 'amount'}}
                     </div>
                     <div class="controls">
-                        {{input type='number' value=transaction.amount key-up='validateAmount' class='span2'}}
+                        {{tn-input type='number' value=transaction.amount key-up='validateAmount' class='span2'}}
                         {{#each errors.amount as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}

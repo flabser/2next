@@ -85,11 +85,19 @@
 }
 
 .app-loading {
-    background: #FFF url(../img/loader-mini.gif) center center no-repeat;
+    background: #FFF;
+    /* url(../img/loader-mini.gif) center center no-repeat; */
     height: 100%;
     left: 0;
+    padding-top: 10%;
     position: absolute;
+    text-align: center;
     top: 0;
     width: 100%;
     z-index: 999;
+}
+
+.app-loading img {
+    display: inline-block;
+    margin: auto;
 }

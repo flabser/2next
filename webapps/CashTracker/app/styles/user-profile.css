@@ -35,10 +35,6 @@
     padding: 2px;
 }
 
-.password_group {
-    white-space: nowrap
-}
-
 .password_group>div {
     display: inline-block;
     width: 48.9%;
@@ -56,7 +52,7 @@
 }
 
 .user-profile .content-actions {
-    padding-left: 185px;
+    padding-left: 195px;
 }
 
 .tablet .content-actions,
@@ -66,4 +62,9 @@
 
 .user-profile .has-error input {
     border-color: #DE3309;
+}
+
+.user-profile .header-title a {
+    font-size: 13px;
+    vertical-align: top;
 }

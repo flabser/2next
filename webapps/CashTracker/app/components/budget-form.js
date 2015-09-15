@@ -5,21 +5,21 @@ import Validate from '../utils/validator';
 
 export default Em.Component.extend(ModelForm, {
     budget: null,
-    isEditMode: false,
+    isEdit: false,
 
     actions: {
         check: function() {
             var budget = this.get('budget');
             budget.then((m) => {
                 if (m.get('id') === 0 || m.get('name') === null) {
-                    this.set('isEditMode', true);
+                    this.set('isEdit', true);
                     this.transitionToRoute('budget');
                 }
             });
         },
 
         edit: function() {
-            this.set('isEditMode', true);
+            this.set('isEdit', true);
         },
 
         cancel: function() {
@@ -28,13 +28,13 @@ export default Em.Component.extend(ModelForm, {
                 (!model.get('isNew') && model.get('hasDirtyAttributes'))) {
                 model.rollbackAttributes();
             }
-            this.set('isEditMode', false);
+            this.set('isEdit', false);
         },
 
         save: function() {
             if (this.validate()) {
                 this.get('budget').save().then(() => {
-                    this.set('isEditMode', false);
+                    this.set('isEdit', false);
                 });
             }
         }

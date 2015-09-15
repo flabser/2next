@@ -29,13 +29,13 @@
                             <i class="fa fa-trash" />
                         </button>
                     </div>
-                    {{#tn-swipe-entry class='entry document'}}
+                    {{#tn-swipe-entry class='entry'}}
                         <label class="entry-select">
                             <input type="checkbox" value="{{costCenter.id}}" {{action 'selectOne'}} />
                         </label>
                         {{#link-to 'cost_centers.cost_center' costCenter class='entry-link'}}
                         <div class="entry-fields">
-                            <span class="entry-field">
+                            <span>
                                 {{costCenter.name}}
                             </span>
                         </div>

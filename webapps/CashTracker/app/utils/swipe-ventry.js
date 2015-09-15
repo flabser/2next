@@ -41,7 +41,6 @@ touch.touchEnd = function(touchEvent) {
     if (touch.isValidTouch(touchEvent, true) && touch.startSwipe) {
         touch.swipedMsg = touchEvent.currentTarget;
         if ((touch.delta > i) || (new Date() - touch.startTime < n)) {
-            // qu.animations.setStyle(touch.swipedMsg, -s, 0, t);
 
             touch.swipedMsg.style.cssText = '';
 
@@ -64,7 +63,6 @@ touch.hideSwipedMsg = function() {
             i.classList.remove(l);
             i = null;
         }, t);
-        // qu.animations.setStyle(touch.swipedMsg, 0, 0, t);
 
         touch.swipedMsg.style.cssText = '';
 
@@ -87,12 +85,6 @@ touch.resetValue = function(t) {
     touch.startSwipeTriggered = !1;
 };
 
-touch.bindEvents = function(t, i) {
-    t["touchstart " + i] = touch.touchStart;
-    t["touchend " + i] = touch.touchEnd;
-    t["touchmove " + i] = touch.touchMove;
-};
-
 touch.defineUserAction = function(t) {
     Math.abs(touch.y - t.pageY) > o && !touch.startSwipe ? touch.startScroll = !0 : touch.delta > a && !touch.startScroll && (touch.startSwipe = !0);
 };
@@ -104,7 +96,6 @@ touch.isValidTouch = function(t, i) {
 
 touch.move = function(el) {
     var i = Math.min(-touch.delta, 0); - s > i && (i = -s + (s + i) / 8);
-    // qu.animations.setStyle(el, i, 0, 0)
 
     el.style.cssText = 'transition:transform 0ms ease-in-out;-moz-transform:translate3d(' + i + 'px,0,0);-webkit-transform:translate3d(' + i + 'px,0,0);transform:translate3d(' + i + 'px,0,0)';
 };
