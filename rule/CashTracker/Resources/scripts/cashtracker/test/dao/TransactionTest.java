@@ -11,11 +11,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cashtracker.dao.AccountDAO;
+import cashtracker.dao.CategoryDAO;
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.dao.TagDAO;
 import cashtracker.dao.TransactionDAO;
 import cashtracker.helper.PageRequest;
 import cashtracker.model.Account;
+import cashtracker.model.Category;
 import cashtracker.model.CostCenter;
 import cashtracker.model.Tag;
 import cashtracker.model.Transaction;
@@ -45,11 +47,12 @@ public class TransactionTest extends InitEnv {
 		AccountDAO accountDAO = new AccountDAO(ses);
 		CostCenterDAO costCenterDAO = new CostCenterDAO(ses);
 		TagDAO tagDAO = new TagDAO(ses);
+		CategoryDAO categoryDAO = new CategoryDAO(ses);
 
 		PageRequest pr = new PageRequest(0, 5, "", "");
 
 		int size = dao.find(pr, null).size();
-		int iteration = size + 100;
+		int iteration = size + 150;
 
 		for (int i = size; i < iteration; i++) {
 			Transaction m = new Transaction();
@@ -58,6 +61,7 @@ public class TransactionTest extends InitEnv {
 			m.setAmount(new BigDecimal(1000 + i));
 			m.setAccountFrom((Account) accountDAO.findAll().get(0));
 			m.setCostCenter((CostCenter) costCenterDAO.findAll().get(0));
+			m.setCategory((Category) categoryDAO.findAll().get(0));
 
 			List <Tag> tags = m.getTags();
 			if (tags == null) {
@@ -101,6 +105,14 @@ public class TransactionTest extends InitEnv {
 		for (Transaction m : list) {
 			m.setAmount(m.getAmount().add(new BigDecimal(1)));
 			System.out.println(dao.update(m));
+		}
+	}
+
+	@Test
+	public void deleteTest() {
+		List <Transaction> list = dao.find(new PageRequest(0, 100, "", ""), null);
+		for (Transaction t : list) {
+			dao.delete(t);
 		}
 	}
 }

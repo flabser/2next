@@ -82,13 +82,17 @@ public class TransactionDAO extends DAO {
 		em.getTransaction().begin();
 		entity.setAuthor(user.id);
 		entity.setRegDate(new Date());
-		Set<AttachmentEntity>  f = proccesAttachments(entity, entity.getFiles());
-		Set<TransactionFile> files = new HashSet<TransactionFile>();
-		for (AttachmentEntity ae: f){
-			ae.setParent(entity);
-			files.add((TransactionFile)ae);
+		//
+		Set <AttachmentEntity> f = proccesAttachments(entity, entity.getFiles());
+		if (f != null) {
+			Set <TransactionFile> files = new HashSet <TransactionFile>();
+			for (AttachmentEntity ae : f) {
+				ae.setParent(entity);
+				files.add((TransactionFile) ae);
+			}
+			entity.setFiles(files);
 		}
-		entity.setFiles(files);
+		//
 		em.persist(entity);
 		em.getTransaction().commit();
 		return entity;
@@ -96,16 +100,17 @@ public class TransactionDAO extends DAO {
 
 	public Transaction update(Transaction entity) {
 		em.getTransaction().begin();
-		Set<AttachmentEntity>  f = proccesAttachments(entity, entity.getFiles());
-		Set<TransactionFile> files = new HashSet<TransactionFile>();
-		for (AttachmentEntity ae: f){
+		//
+		Set <AttachmentEntity> f = proccesAttachments(entity, entity.getFiles());
+		Set <TransactionFile> files = new HashSet <TransactionFile>();
+		for (AttachmentEntity ae : f) {
 			ae.setParent(entity);
-			files.add((TransactionFile)ae);
+			files.add((TransactionFile) ae);
 		}
 		entity.setFiles(files);
+		//
 		em.merge(entity);
 		em.getTransaction().commit();
 		return entity;
 	}
-
 }
