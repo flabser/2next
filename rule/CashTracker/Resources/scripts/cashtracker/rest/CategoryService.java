@@ -75,7 +75,7 @@ public class CategoryService extends RestProvider {
 		//
 		Category pm = dao.findById(id);
 		pm.setName(m.getName());
-		pm.setParentCategory(m.getParentCategory());
+		pm.setParent(m.getParent());
 		pm.setTransactionTypes(m.getTransactionTypes());
 		pm.setNote(m.getNote());
 		pm.setColor(m.getColor());

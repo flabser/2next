@@ -33,9 +33,9 @@ public class Category extends AppEntity {
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id")
-	private Category parentCategory;
+	private Category parent;
 
-	@OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
 	private List <Category> children;
 
 	@Column(nullable = false, length = 64)
@@ -54,40 +54,37 @@ public class Category extends AppEntity {
 
 	private byte color;
 
-	// @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-	// private List <Transaction> transactions;
-
 	//
 	public List <Category> getChildren() {
 		return children;
 	}
 
-	public Category getParentCategory() {
-		return parentCategory;
+	public Category getParent() {
+		return parent;
 	}
 
-	public void setParentCategory(Category parentCategory) {
-		this.parentCategory = parentCategory;
+	public void setParent(Category parent) {
+		this.parent = parent;
 	}
 
-	/*@JsonGetter("parentCategory")
-	public Long getParentCategoryId() {
-		if (parentCategory == null || parentCategory.id == 0) {
+	@JsonGetter("parent")
+	public Long getParentId() {
+		if (parent == null || parent.id == 0) {
 			return null;
 		}
-		return parentCategory.id;
-	}*/
+		return parent.id;
+	}
 
-	@JsonSetter("parentCategory")
-	public void setParentCategoryId(Long id) {
+	@JsonSetter("parent")
+	public void setParentId(Long id) {
 		if (id == null || id == 0) {
-			setParentCategory(null);
+			setParent(null);
 			return;
 		}
 
 		Category parent = new Category();
 		parent.setId(id);
-		setParentCategory(parent);
+		setParent(parent);
 	}
 
 	public String getName() {
@@ -150,7 +147,7 @@ public class Category extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "Category[" + id + ", " + name + ", " + enabled + ", " + parentCategory + ", " + transactionTypes + ", "
+		return "Category[" + id + ", " + name + ", " + enabled + ", " + parent + ", " + transactionTypes + ", "
 				+ getAuthor() + ", " + getRegDate() + "]";
 	}
 }
