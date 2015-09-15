@@ -124,7 +124,7 @@
     display: inline-block;
     line-height: inherit;
     /* text-align: center; */
-    padding: 8px 0;
+    padding: 6px 0;
     width: 36px;
     vertical-align: top;
 }
@@ -144,7 +144,7 @@
 .entry-link {
     display: inline-block;
     line-height: 1.4;
-    padding: 13px 0;
+    padding: 11px 0;
     position: relative;
     vertical-align: top;
     width: 100%;
