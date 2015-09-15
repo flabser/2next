@@ -16,9 +16,6 @@ public class Tag extends AppEntity {
 	@Column(nullable = false, unique = true, length = 32)
 	private String name;
 
-	// @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
-	// private List <Transaction> transactions;
-
 	//
 	public String getName() {
 		return name;
