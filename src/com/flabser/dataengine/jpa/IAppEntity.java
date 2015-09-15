@@ -1,7 +1,6 @@
 package com.flabser.dataengine.jpa;
 
 import java.util.Date;
-import java.util.List;
 
 
 public interface IAppEntity extends ISimpleAppEntity {
@@ -14,8 +13,6 @@ public interface IAppEntity extends ISimpleAppEntity {
 
 	void setRegDate(Date regDate);
 
-	List<AttachmentEntity> getAttachments();
 
-	void setAttachments(List<AttachmentEntity> attachments);
 
 }

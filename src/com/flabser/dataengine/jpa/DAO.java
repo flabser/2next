@@ -2,15 +2,13 @@ package com.flabser.dataengine.jpa;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 
 import org.apache.commons.io.FileUtils;
-
-import cashtracker.model.Transaction;
 
 import com.flabser.env.Environment;
 import com.flabser.script._Session;
@@ -27,51 +25,16 @@ public abstract class DAO implements IDAO {
 	}
 
 	public IAppEntity add(IAppEntity entity) {
-		File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
 		em.getTransaction().begin();
 		entity.setAuthor(user.id);
 		entity.setRegDate(new Date());
-		List<byte[]> files = new ArrayList<byte[]>();
-		List<AttachmentEntity> attachments = entity.getAttachments();
-		if (attachments != null) {
-			for (AttachmentEntity a : attachments) {
-				Transaction t = (Transaction) entity;
-				String fieldName = a.getFieldName();
-				String uploadedFileLocation = userTmpDir + File.separator + a.getTempID();
-				File file = new File(uploadedFileLocation);
-				byte[] bFile;
-				try {
-					bFile = FileUtils.readFileToByteArray(file);
-					files.add(bFile);
-				} catch (IOException e) {
-					Server.logger.errorLogEntry(e);
-				}
-			}
-
-		}
 		em.persist(entity);
 		em.getTransaction().commit();
 		return entity;
 	}
 
 	public IAppEntity update(IAppEntity entity) {
-		File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
 		em.getTransaction().begin();
-		List<byte[]> files = new ArrayList<byte[]>();
-		Transaction t = (Transaction) entity;
-		/*		for (Attachment a : entity.getAttachments()) {
-			String fieldName = a.getFieldName();
-			String uploadedFileLocation = userTmpDir + File.separator + a.getTempID();
-			File file = new File(uploadedFileLocation);
-			byte[] bFile;
-			try {
-				bFile = FileUtils.readFileToByteArray(file);
-				files.add(bFile);
-			} catch (IOException e) {
-				Server.logger.errorLogEntry(e);
-			}
-
-		}*/
 		em.merge(entity);
 		em.getTransaction().commit();
 		return entity;
@@ -81,6 +44,32 @@ public abstract class DAO implements IDAO {
 		em.getTransaction().begin();
 		em.remove(entity);
 		em.getTransaction().commit();
+	}
+
+	protected Set<AttachmentEntity> proccesAttachments(IAppEntity entity, Set<?> attachments){
+		if (attachments != null) {
+			File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
+			Set<AttachmentEntity> files = new HashSet<AttachmentEntity>();
+			for (Object o : attachments) {
+				AttachmentEntity a = (AttachmentEntity)o;
+				//	String fieldName = a.getFieldName();
+				String uploadedFileLocation = userTmpDir + File.separator + a.getTempID();
+				File file = new File(uploadedFileLocation);
+				AttachmentEntity attachEntity = new AttachmentEntity();
+				try {
+					byte[] bFile = FileUtils.readFileToByteArray(file);
+					attachEntity.setFile(bFile);
+					attachEntity.setRealFileName(file.getName());
+					attachEntity.setParent(entity);
+				} catch (IOException e) {
+					Server.logger.errorLogEntry(e);
+				}
+				files.add(attachEntity);
+			}
+			return files;
+		}else{
+			return null;
+		}
 	}
 
 }

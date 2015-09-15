@@ -1,6 +1,9 @@
 package cashtracker.dao;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Query;
 
@@ -9,8 +12,10 @@ import cashtracker.model.Account;
 import cashtracker.model.Category;
 import cashtracker.model.CostCenter;
 import cashtracker.model.Transaction;
+import cashtracker.model.TransactionFile;
 import cashtracker.model.constants.TransactionType;
 
+import com.flabser.dataengine.jpa.AttachmentEntity;
 import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
@@ -41,6 +46,7 @@ public class TransactionDAO extends DAO {
 		return result;
 	}
 
+	@Override
 	public Transaction findById(long id) {
 		String jpql = "SELECT t FROM Transaction AS t WHERE t.id = :id";
 		Query q = em.createQuery(jpql);
@@ -70,6 +76,36 @@ public class TransactionDAO extends DAO {
 		Query q = em.createQuery(jpql);
 		q.setParameter("category", m);
 		return q.getResultList();
+	}
+
+	public Transaction add(Transaction entity) {
+		em.getTransaction().begin();
+		entity.setAuthor(user.id);
+		entity.setRegDate(new Date());
+		Set<AttachmentEntity>  f = proccesAttachments(entity, entity.getFiles());
+		Set<TransactionFile> files = new HashSet<TransactionFile>();
+		for (AttachmentEntity ae: f){
+			ae.setParent(entity);
+			files.add((TransactionFile)ae);
+		}
+		entity.setFiles(files);
+		em.persist(entity);
+		em.getTransaction().commit();
+		return entity;
+	}
+
+	public Transaction update(Transaction entity) {
+		em.getTransaction().begin();
+		Set<AttachmentEntity>  f = proccesAttachments(entity, entity.getFiles());
+		Set<TransactionFile> files = new HashSet<TransactionFile>();
+		for (AttachmentEntity ae: f){
+			ae.setParent(entity);
+			files.add((TransactionFile)ae);
+		}
+		entity.setFiles(files);
+		em.merge(entity);
+		em.getTransaction().commit();
+		return entity;
 	}
 
 }

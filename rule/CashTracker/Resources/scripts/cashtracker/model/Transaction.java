@@ -99,8 +99,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction",  cascade = CascadeType.ALL)
-	public Set <TransactionFile> files;
-
+	public Set<TransactionFile> files;
 
 
 	public Set<TransactionFile> getFiles() {

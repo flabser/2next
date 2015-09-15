@@ -81,12 +81,14 @@ public class SessionService {
 			fn = userTmpDir.getAbsolutePath() + File.separator + user.getAvatar().getRealFileName();
 			File fileToWriteTo = new File(fn);
 			byte[] fileAsByteArray = DatabaseFactory.getSysDatabase().getUserAvatarStream(user.id);
-			try {
-				FileUtils.writeByteArrayToFile(fileToWriteTo, fileAsByteArray);
-			} catch (IOException e) {
-				Server.logger.errorLogEntry(e);
+			if (fileAsByteArray != null) {
+				try {
+					FileUtils.writeByteArrayToFile(fileToWriteTo, fileAsByteArray);
+				} catch (IOException e) {
+					Server.logger.errorLogEntry(e);
+				}
+				file = new File(fn);
 			}
-			file = new File(fn);
 		}
 
 		if (file != null && file.exists()) {

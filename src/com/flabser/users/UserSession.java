@@ -161,6 +161,7 @@ public class UserSession implements ICache {
 		aUser.setRoles(currentUser.getUserRoles());
 		aUser.setAuthMode(authMode);
 		aUser.setStatus(currentUser.getStatus());
+		aUser.setAttachedFile(currentUser.getAvatar());
 		return aUser;
 	}
 

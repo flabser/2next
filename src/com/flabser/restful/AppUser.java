@@ -20,6 +20,8 @@ public class AppUser {
 	private String name;
 	private String email;
 	private String pwd;
+	private String pwdNew;
+	private String pwdRepeat;
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private AuthFailedExceptionType error;
 	private String redirect;
@@ -59,6 +61,27 @@ public class AppUser {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+
+	@JsonGetter("pwd_new")
+	public String getPwdNew() {
+		return pwdNew;
+	}
+
+
+	@JsonSetter("pwd_new")
+	public void setPwdNew(String pwdNew) {
+		this.pwdNew = pwdNew;
+	}
+
+	@JsonGetter("pwd_repeat")
+	public String getPwdRepeat() {
+		return pwdRepeat;
+	}
+
+	@JsonSetter("pwd_repeat")
+	public void setPwdRepeat(String pwdRepeat) {
+		this.pwdRepeat = pwdRepeat;
 	}
 
 	@JsonGetter("roles")

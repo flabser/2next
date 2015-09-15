@@ -1,16 +1,13 @@
 package com.flabser.dataengine.jpa;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
 
@@ -28,8 +25,6 @@ public abstract class AppEntity implements IAppEntity {
 	@Column(name = "reg_date", nullable = false, updatable = false)
 	protected Date regDate;
 
-	@Transient
-	protected List<AttachmentEntity> attachments;
 
 	@Override
 	public void setId(long id) {
@@ -70,16 +65,6 @@ public abstract class AppEntity implements IAppEntity {
 		this.regDate = regDate;
 	}
 
-	@JsonIgnore
-	@Override
-	public List<AttachmentEntity> getAttachments() {
-		return attachments;
-	}
-
-	@Override
-	public void setAttachments(List<AttachmentEntity> attachments) {
-		this.attachments = attachments;
-	}
 
 
 }

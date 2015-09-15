@@ -348,7 +348,9 @@ public class User {
 	public void refresh(AppUser appUser) {
 		login = appUser.getLogin();
 		userName = appUser.getName();
-		password = appUser.getPwd();
+		if (!appUser.getPwdNew().equals("") && appUser.getPwdNew().equals(appUser.getPwdRepeat())){
+			password = appUser.getPwdNew();
+		}
 		email = appUser.getEmail();
 		avatar = appUser.getAttachedFile();
 		//defaultApp = authUser.getDefaultApp();

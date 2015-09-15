@@ -1,6 +1,7 @@
 package com.flabser.dataengine.jpa;
 
 import javax.persistence.Basic;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 	"tempID"
 })
 
+@Entity
 @MappedSuperclass
 public class AttachmentEntity implements ISimpleAppEntity {
 
@@ -30,6 +32,9 @@ public class AttachmentEntity implements ISimpleAppEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long id;
+
+	private IAppEntity parentEntity;
+
 
 	@Lob
 	@Basic(fetch=FetchType.LAZY)
@@ -69,6 +74,7 @@ public class AttachmentEntity implements ISimpleAppEntity {
 		return tempID;
 	}
 
+
 	@Transient
 	public void setTempID(String tempID) {
 		this.tempID = tempID;
@@ -81,8 +87,18 @@ public class AttachmentEntity implements ISimpleAppEntity {
 	}
 
 
+
 	public void setFile(byte[] file) {
 		this.file = file;
 	}
 
+
+	public IAppEntity getParent() {
+		return parentEntity;
+	}
+
+
+	public void setParent(IAppEntity parentEntity) {
+		this.parentEntity = parentEntity;
+	}
 }
