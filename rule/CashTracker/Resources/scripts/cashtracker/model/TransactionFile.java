@@ -10,15 +10,13 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flabser.dataengine.jpa.AttachmentEntity;
 
+
 @Entity
 @Table(name = "transaction_files")
 public class TransactionFile extends AttachmentEntity {
-
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "transaction_id", nullable = false)
 	private Transaction transaction;
-
-
 }

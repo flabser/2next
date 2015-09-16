@@ -37,11 +37,11 @@ import com.flabser.dataengine.jpa.AppEntity;
 public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@Convert(converter = TransactionTypeConverter.class)
-	@Column(name = "transaction_type")
+	@Column(name = "transaction_type", length = 3)
 	private TransactionType transactionType = TransactionType.EXPENSE;
 
 	@Convert(converter = TransactionStateConverter.class)
-	@Column(name = "transaction_state")
+	@Column(name = "transaction_state", length = 3)
 	private TransactionState transactionState;
 
 	@ManyToOne(fetch = FetchType.LAZY)
