@@ -20,21 +20,21 @@
                     <span class="op-icon-att">
                         <i class="fa fa-paperclip" />
                     </span>
+                    <span class="op-date">
+                        {{t 'date'}}
+                    </span>
                     <span class="op-account">
                         {{t 'account'}}
                     </span>
-                    <span class="op-date">
-                        {{t 'date'}}
+                    <span class="op-cat">
+                        {{t 'category'}}
                     </span>
                     <span class="op-amount">
                         {{t 'amount'}}
                     </span>
                     <span class="op-type"></span>
-                    <span class="op-cat">
-                        {{t 'category'}}
-                    </span>
                     <span class="op-costcenter">
-                        {{t 'costcenter'}}
+                        {{t 'cost_center'}}
                     </span>
                 </div>
             </div>
@@ -48,27 +48,27 @@
                             <i class="fa fa-trash" />
                         </button>
                     </div>
-                    {{#tn-swipe-entry class='entry document'}}
+                    {{#tn-swipe-entry class='entry'}}
                         <label class="entry-select">
                             <input type="checkbox" value="{{transaction.id}}" {{action 'selectOne'}} />
                         </label>
                         {{#link-to 'transactions.transaction' transaction class='entry-link'}}
                         <div class="entry-fields">
                             <span class="op-icon-att" {{hasattach}}></span>
+                            <span class="op-date">
+                                {{format-date transaction.date}}
+                            </span>
                             <span class="op-account">
                                 {{transaction.account.name}}
                             </span>
-                            <span class="op-date">
-                                {{format-date transaction.date}}
+                            <span class="op-cat">
+                                {{transaction.category.name}}
                             </span>
                             <span class="op-amount">
                                 {{transaction.amount}}
                             </span>
                             <span class="op-type">
                                 {{transaction-icon transaction.transactionType}}
-                            </span>
-                            <span class="op-cat">
-                                {{transaction.category.name}}
                             </span>
                             <span class="op-costcenter">
                                 {{transaction.costCenter.name}}

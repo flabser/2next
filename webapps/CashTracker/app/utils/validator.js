@@ -1,5 +1,7 @@
+import Em from 'ember';
+
 function isEmpty(str) {
-    return (!str || 0 === str.length || !str.trim());
+    return Em.isEmpty(str); // (!str || 0 === str.length || !str.trim());
 }
 
 function validateEmail(email) {

@@ -8,13 +8,6 @@ const noteMaxLen = 256;
 export default Em.Component.extend(ModelForm, {
     invitation: null,
 
-    noteCharacterLeft: Em.computed('category.note', function() {
-        if (this.get('category.note')) {
-            return noteMaxLen - this.get('category.note').length;
-        }
-        return '';
-    }),
-
     actions: {
         sendInvite: function() {
             if (this.validate()) {

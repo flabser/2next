@@ -17,7 +17,9 @@ export default DS.Model.extend({
     }),
     tags: DS.hasMany('tag'),
     transactionState: DS.attr('string'),
-    transactionType: DS.attr('string'),
+    transactionType: DS.attr('string', {
+        defaultValue: 'E'
+    }),
     exchangeRate: DS.attr('number'),
     repeat: DS.attr('boolean', {
         defaultValue: false

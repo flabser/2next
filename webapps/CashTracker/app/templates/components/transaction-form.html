@@ -37,7 +37,12 @@
                         {{t 'date'}}
                     </div>
                     <div class="controls">
-                        {{tn-input type='date' value=transaction.date focus-out='validateDate' class='span2'}}
+                        {{tn-input
+                            type='date'
+                            value=transaction.date
+                            focus-out='validateDate'
+                            class='span2'
+                        }}
                         {{#each errors.date as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -104,7 +109,12 @@
                         {{t 'amount'}}
                     </div>
                     <div class="controls">
-                        {{tn-input type='number' value=transaction.amount key-up='validateAmount' class='span2'}}
+                        {{tn-input
+                            type='number'
+                            value=transaction.amount
+                            key-up='validateAmount'
+                            class='span2'
+                        }}
                         {{#each errors.amount as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -144,7 +154,12 @@
                         {{t 'note'}}
                     </div>
                     <div class="controls">
-                        {{textarea value=transaction.note key-up='validateNote' maxlength='256' class='span5'}}
+                        {{textarea
+                            value=transaction.note
+                            key-up='validateNote'
+                            maxlength='256'
+                            class='span5'
+                        }}
                         {{count-down-characters transaction.note 256}}
                         {{#each errors.note as |error|}}
                             <div class="error-message">{{error.message}}</div>

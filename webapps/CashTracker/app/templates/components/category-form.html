@@ -16,26 +16,8 @@
                             options=transactionTypes
                             labelProperty='name'
                             valueProperty='code'
-                            value=category.transactionTypes}}
-
-                        <!-- <label>
-                            {{tn-input-checkbox
-                                value=1
-                                groupValue=category.transactionType}}
-                            {{t "expense"}}
-                        </label>
-                        <label>
-                            {{tn-input-checkbox
-                                value=2
-                                groupValue=category.transactionType}}
-                            {{t "income"}}
-                        </label>
-                        <label>
-                            {{tn-input-checkbox
-                                value=3
-                                groupValue=category.transactionType}}
-                            {{t "transfer"}}
-                        </label> -->
+                            selection=category.transactionTypes
+                        }}
                         <p class="hint">
                             {{t 'category_transaction_type_hint'}}
                         </p>
@@ -46,7 +28,12 @@
                         {{t 'name'}}
                     </div>
                     <div class="controls">
-                        {{tn-input value=category.name key-up='validateName' maxlength='64' class='span5'}}
+                        {{tn-input
+                            value=category.name
+                            key-up='validateName'
+                            maxlength='64'
+                            class='span5'
+                        }}
                         {{#each errors.name as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -82,7 +69,12 @@
                         {{t 'note'}}
                     </div>
                     <div class="controls">
-                        {{textarea value=category.note key-up='validateNote' maxlength='256' class='span5'}}
+                        {{textarea
+                            value=category.note
+                            key-up='validateNote'
+                            maxlength='256'
+                            class='span5'
+                        }}
                         {{count-down-characters category.note 256}}
                         {{#each errors.note as |error|}}
                             <div class="error-message">{{error.message}}</div>
@@ -94,7 +86,7 @@
                         {{t 'color'}}
                     </div>
                     <div class="controls">
-                        {{tn-input value=category.color}}
+                        {{input type='color' value=category.color class='span3'}}
                     </div>
                 </div>
             </fieldset>

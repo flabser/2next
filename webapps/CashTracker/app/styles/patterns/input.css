@@ -25,6 +25,13 @@ input[type=date] {
     height: 28px;
 }
 
+input[type=color] {
+    box-shadow: none;
+    height: 48px !important;
+    padding: 1px;
+    width: 48px !important;
+}
+
 input:focus,
 textarea:focus,
 select:focus {
@@ -79,7 +86,6 @@ textarea {
 .tablet textarea,
 .phone input,
 .phone textarea {
-    padding: 6px;
     width: 100%;
 }
 
@@ -90,11 +96,6 @@ textarea {
     padding: 2px;
 }
 
-.tablet select,
-.phone select {
-    padding: 6px;
-}
-
 .fieldset[disabled] input,
 .fieldset[disabled] select {
     background-color: #FAFAFA;
@@ -103,14 +104,10 @@ textarea {
 @media ( max-width: 768px) {
     input,
     textarea {
-        padding: 6px;
         width: 100%;
     }
     input[type=checkbox],
     input[type=radio] {
         padding: 2px;
-    }
-    select {
-        padding: 6px;
     }
 }

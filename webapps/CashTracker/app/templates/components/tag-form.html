@@ -15,7 +15,12 @@
                         {{t 'name'}}
                     </div>
                     <div class="controls">
-                        {{tn-input value=tag.name key-up='validateName' maxlength='64' class='span5'}}
+                        {{tn-input
+                            value=tag.name
+                            key-up='validateName'
+                            maxlength='64'
+                            class='span5'
+                        }}
                         {{#each errors.name as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}

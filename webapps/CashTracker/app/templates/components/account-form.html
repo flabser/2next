@@ -15,7 +15,12 @@
                         {{t 'name'}}
                     </div>
                     <div class="controls">
-                        {{tn-input value=account.name key-up='validateName' maxlength='64' class='span5'}}
+                        {{tn-input
+                            value=account.name
+                            key-up='validateName'
+                            maxlength='64'
+                            class='span5'
+                        }}
                         {{#each errors.name as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -37,7 +42,12 @@
                         {{t 'opening_balance'}}
                     </div>
                     <div class="controls">
-                        {{tn-input type='number' value=account.openingBalance key-up='validateOpeningBalance' class='span2'}}
+                        {{tn-input
+                            type='number'
+                            value=account.openingBalance
+                            key-up='validateOpeningBalance'
+                            class='span2'
+                        }}
                         {{#each errors.openingBalance as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -48,7 +58,12 @@
                         {{t 'amount_control'}}
                     </div>
                     <div class="controls">
-                        {{tn-input type='number' value=account.amountControl key-up='validateAmountControl' class='span2'}}
+                        {{tn-input
+                            type='number'
+                            value=account.amountControl
+                            key-up='validateAmountControl'
+                            class='span2'
+                        }}
                         {{#each errors.amountControl as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -62,7 +77,14 @@
                         {{t 'currency'}}
                     </div>
                     <div class="controls">
-                        {{tn-input value=account.currencyCode maxlength='3' key-up='validateCurrencyCode' class='span1'}}
+                        {{select-2
+                            content=currencies
+                            value=account.currencyCode
+                            optionIdPath='value'
+                            optionValuePath='value'
+                            optionLabelPath='name'
+                            placeholder='Currencies'
+                        }}
                         {{#each errors.currencyCode as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -73,7 +95,12 @@
                         {{t 'note'}}
                     </div>
                     <div class="controls">
-                        {{textarea value=account.note key-up='validateNote' maxlength='256' class='span5'}}
+                        {{textarea
+                            value=account.note
+                            key-up='validateNote'
+                            maxlength='256'
+                            class='span5'
+                        }}
                         {{count-down-characters account.note 256}}
                         {{#each errors.note as |error|}}
                             <div class="error-message">{{error.message}}</div>
@@ -93,7 +120,8 @@
                             value=account.owner
                             optionValuePath='id'
                             optionLabelPath='userName'
-                            placeholder='owner'}}
+                            placeholder='owner'
+                        }}
                         <p class="hint">
                             {{t 'writers_hint'}}
                         </p>
@@ -110,7 +138,8 @@
                             optionValuePath='id'
                             optionLabelPath='userName'
                             placeholder='observers'
-                            multiple=true}}
+                            multiple=true
+                        }}
                         <p class="hint">
                             {{t 'readers_hint'}}
                         </p>

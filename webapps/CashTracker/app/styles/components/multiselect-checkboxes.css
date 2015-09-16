@@ -1,0 +1,11 @@
+.multiselect-checkboxes {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.multiselect-checkboxes li {
+    display: inline-block;
+    margin: 2px;
+    padding: 2px;
+}

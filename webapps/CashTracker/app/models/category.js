@@ -11,5 +11,7 @@ export default DS.Model.extend({
         defaultValue: true
     }),
     note: DS.attr('string'),
-    color: DS.attr('number')
+    color: DS.attr('string', {
+        defaultValue: '#FFFFFF'
+    })
 });
