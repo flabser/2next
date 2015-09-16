@@ -38,7 +38,15 @@ public class AccountTest extends InitEnv {
 		for (int i = size; i < iteration; i++) {
 			Account m = new Account();
 			m.setName("Account - " + i);
-			m.setCurrencyCode(Util.generateRandomAsText("QWERTYUIOP", 3));
+
+			if (i % 2 == 1) {
+				m.setCurrencyCode("RUB");
+			} else if (i % 3 == 1) {
+				m.setCurrencyCode("USD");
+			} else {
+				m.setCurrencyCode("KZT");
+			}
+
 			m.setOpeningBalance(new BigDecimal(Util.generateRandom()));
 			m.setAmountControl(new BigDecimal(Util.generateRandom()));
 			m.setEnabled(Util.getRandomBoolean());
@@ -67,6 +75,15 @@ public class AccountTest extends InitEnv {
 		for (Account m : list) {
 			m.setName(m.getName() + "-u");
 			System.out.println(dao.update(m));
+		}
+	}
+
+	// @Test
+	public void deleteTest() {
+		List <Account> list = dao.findAll();
+
+		for (Account m : list) {
+			dao.delete(m);
 		}
 	}
 }

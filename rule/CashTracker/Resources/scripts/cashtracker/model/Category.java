@@ -52,7 +52,8 @@ public class Category extends AppEntity {
 	@Column(length = 256)
 	private String note;
 
-	private byte color;
+	@Column(length = 7)
+	private String color;
 
 	//
 	public List <Category> getChildren() {
@@ -137,11 +138,11 @@ public class Category extends AppEntity {
 		this.note = note;
 	}
 
-	public byte getColor() {
+	public String getColor() {
 		return color;
 	}
 
-	public void setColor(byte color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 

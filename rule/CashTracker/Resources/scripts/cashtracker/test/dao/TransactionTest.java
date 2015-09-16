@@ -24,14 +24,13 @@ import cashtracker.model.Transaction;
 import cashtracker.model.constants.TransactionState;
 import cashtracker.model.constants.TransactionType;
 
-import com.flabser.dataengine.jpa.IAppEntity;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.util.Util;
 
 
 public class TransactionTest extends InitEnv {
 
 	TransactionDAO dao;
-	String NL = "\n--------\n---------\n";
 
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
@@ -67,9 +66,8 @@ public class TransactionTest extends InitEnv {
 			if (tags == null) {
 				tags = new ArrayList <Tag>();
 			}
-			for (IAppEntity tag : tagDAO.findAll()) {
-				tags.add((Tag) tag);
-			}
+
+			tags.add((Tag) Util.getRandomFromList(tagDAO.findAll()));
 			m.setTags(tags);
 
 			if (i % 2 == 1) {

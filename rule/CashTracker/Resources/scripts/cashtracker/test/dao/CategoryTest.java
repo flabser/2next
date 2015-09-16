@@ -39,6 +39,7 @@ public class CategoryTest extends InitEnv {
 			}
 			m.setName("category - " + i);
 			m.setNote("note " + i);
+			m.setColor("red");
 
 			ArrayList <TransactionType> transactionTypes = new ArrayList <TransactionType>();
 			if (i % 2 == 1) {
