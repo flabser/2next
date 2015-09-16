@@ -83,14 +83,14 @@ public class TransactionDAO extends DAO {
 		entity.setAuthor(user.id);
 		entity.setRegDate(new Date());
 		//
-		Set <AttachmentEntity> f = proccesAttachments(entity, entity.getFiles());
+		Set <AttachmentEntity> f = proccesAttachments(entity, entity.getAttachments());
 		if (f != null) {
 			Set <TransactionFile> files = new HashSet <TransactionFile>();
 			for (AttachmentEntity ae : f) {
 				ae.setParent(entity);
 				files.add((TransactionFile) ae);
 			}
-			entity.setFiles(files);
+			entity.setAttachments(files);
 		}
 		//
 		em.persist(entity);
@@ -101,13 +101,13 @@ public class TransactionDAO extends DAO {
 	public Transaction update(Transaction entity) {
 		em.getTransaction().begin();
 		//
-		Set <AttachmentEntity> f = proccesAttachments(entity, entity.getFiles());
+		Set <AttachmentEntity> f = proccesAttachments(entity, entity.getAttachments());
 		Set <TransactionFile> files = new HashSet <TransactionFile>();
 		for (AttachmentEntity ae : f) {
 			ae.setParent(entity);
 			files.add((TransactionFile) ae);
 		}
-		entity.setFiles(files);
+		entity.setAttachments(files);
 		//
 		em.merge(entity);
 		em.getTransaction().commit();
