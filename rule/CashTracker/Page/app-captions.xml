@@ -47,7 +47,8 @@
 	<caption name="accounts" />
 	<caption name="category" />
 	<caption name="categories" />
-	<caption name="costcenter" />
+	<caption name="cost_center" />
+	<caption name="cost_center_short" />
 	<caption name="cost_centers" />
 	<caption name="tag" />
 	<caption name="tags" />
@@ -82,7 +83,6 @@
 	<caption name="currency" />
 	<caption name="opening_balance" />
 	<caption name="amount" />
-	<caption name="cost_center" />
 	<caption name="permissions" />
 	<caption name="writers" />
 	<caption name="writers_hint" />

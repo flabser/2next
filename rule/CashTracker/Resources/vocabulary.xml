@@ -133,8 +133,14 @@
 	</sentence>
 	<sentence mode="on" keyword="cost_center">
 		<entry lang="RUS">Место возникновения затрат</entry>
-		<entry lang="KAZ">Место возникновения затрат</entry>
-		<entry lang="ENG">Spending place</entry>
+		<entry lang="KAZ">Шығын орталығы</entry>
+		<entry lang="ENG">Cost center</entry>
+		<entry lang="BG">Място на расходи</entry>
+	</sentence>
+	<sentence mode="on" keyword="cost_center_short">
+		<entry lang="RUS">МВЗ</entry>
+		<entry lang="KAZ">Шығын орталығы</entry>
+		<entry lang="ENG">Cost center</entry>
 		<entry lang="BG">Място на расходи</entry>
 	</sentence>
 	<sentence mode="on" keyword="writers">
@@ -742,12 +748,6 @@
 		<entry lang="KAZ">Белгі</entry>
 		<entry lang="ENG">Tag</entry>
 		<entry lang="BG">Метка</entry>
-	</sentence>
-	<sentence mode="on" keyword="costcenter">
-		<entry lang="RUS">Место возникновения</entry>
-		<entry lang="KAZ">Место возникновения</entry>
-		<entry lang="ENG">When it was happen</entry>
-		<entry lang="BG">Место возникновения</entry>
 	</sentence>
 	<sentence mode="on" keyword="user">
 		<entry lang="RUS">Пользователь</entry>
