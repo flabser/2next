@@ -21,9 +21,7 @@
             </span>
             <span class="vcat-types">
                 {{#each category.transactionTypes as |transactionType|}}
-                    <span class="vtr-type vtr-type-{{transactionType}}">
-                        {{transactionType}}
-                    </span>
+                    {{transaction-icon transactionType}}
                 {{/each}}
             </span>
             <span>
@@ -36,7 +34,7 @@
 {{#if category.children}}
     {{#each category.children as |child_category|}}
         {{#unless child_category.isNew}}
-            {{category-view-row category=child_category tagName='div' class='child'}}
+            {{category-view-row category=child_category tagName='div' class='child' deleteRecord='deleteRecord'}}
         {{/unless}}
     {{/each}}
 {{/if}}

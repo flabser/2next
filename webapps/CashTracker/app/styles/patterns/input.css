@@ -14,7 +14,7 @@ select {
     display: inline-block;
     min-height: 28px;
     font-size: 1em;
-    line-height: 1;
+    /* line-height: 1; */
     max-width: 100%;
     outline: 0;
     padding: 6px;

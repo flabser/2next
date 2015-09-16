@@ -498,13 +498,13 @@
 	</sentence>
 	<sentence mode="on" keyword="cancel">
 		<entry lang="RUS">Отмена</entry>
-		<entry lang="KAZ">Отмена</entry>
+		<entry lang="KAZ">Болдырмау</entry>
 		<entry lang="ENG">Cancel</entry>
 		<entry lang="BG">Отмена</entry>
 	</sentence>
 	<sentence mode="on" keyword="close">
 		<entry lang="RUS">Закрыть</entry>
-		<entry lang="KAZ">Закрыть</entry>
+		<entry lang="KAZ">Жабу</entry>
 		<entry lang="ENG">Close</entry>
 		<entry lang="BG">Затвори</entry>
 	</sentence>
@@ -775,7 +775,7 @@
 	</sentence>
 	<sentence mode="on" keyword="amount_control">
 		<entry lang="RUS">Сумма контроля</entry>
-		<entry lang="KAZ">Сумма контроля</entry>
+		<entry lang="KAZ">Бақылау сомасы</entry>
 		<entry lang="ENG">Ammount control</entry>
 		<entry lang="BG">Сумма контроля</entry>
 	</sentence>
@@ -786,10 +786,10 @@
 		<entry lang="BG">при превышении суммы опреации трололо</entry>
 	</sentence>
 	<sentence mode="on" keyword="opening_balance">
-		<entry lang="RUS">Начальный балланс</entry>
-		<entry lang="KAZ">Начальный балланс</entry>
+		<entry lang="RUS">Начальный баланс</entry>
+		<entry lang="KAZ">Бастапқы теңгерім</entry>
 		<entry lang="ENG">Initial</entry>
-		<entry lang="BG">Начальный балланс</entry>
+		<entry lang="BG">Начальный баланс</entry>
 	</sentence>
 	<sentence mode="on" keyword="currency">
 		<entry lang="RUS">Валюта</entry>

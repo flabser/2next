@@ -1,25 +1,10 @@
 .view_category {}
 
-.vcat-icon-type {
-    width: 22px;
-}
-
 .vcat-name {
     min-width: 260px;
     width: 40%;
 }
 
 .vcat-types {
-    width: 160px;
+    width: 52px;
 }
-
-.vtr-type {
-    display: inline-block;
-    padding: 1px;
-}
-
-.vtr-type-E {}
-
-.vtr-type-I {}
-
-.vtr-type-T {}

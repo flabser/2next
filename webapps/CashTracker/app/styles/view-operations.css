@@ -14,6 +14,11 @@
     width: 13%;
 }
 
+.op-cat {
+    min-width: 7em;
+    width: 13%;
+}
+
 .op-date {
     color: #666;
     text-align: center;
@@ -38,6 +43,12 @@
 .op-costcenter {
     color: #666;
     width: 13%;
+}
+
+.op-type {
+    color: #007617;
+    text-align: center;
+    width: 22px;
 }
 
 .view_op span.op-vt {

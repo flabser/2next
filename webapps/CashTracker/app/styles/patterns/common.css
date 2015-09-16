@@ -7,11 +7,7 @@ body {
 
 body {
     /* F6F5F3 */
-    background: #FFF; /* url(../img/2015-09-14_232303.png) 0 0 no-repeat fixed; */
-    /* -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover; */
+    background: #FFF;
     font: 13px/1.43 Verdana, Arial, Helvetica, sans-serif;
 }
 
@@ -172,4 +168,16 @@ table {
     -webkit-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.blue {
+    color: blue;
 }
