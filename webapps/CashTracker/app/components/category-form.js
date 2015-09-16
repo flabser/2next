@@ -9,14 +9,6 @@ export default Em.Component.extend(ModelForm, {
     category: null,
     transactionTypes: null,
 
-    noteCharacterLeft: Em.computed('category.note', function() {
-        if (this.get('category.note')) {
-            var noteLen = this.get('category.note').length;
-            return noteMaxLen - noteLen;
-        }
-        return '';
-    }),
-
     actions: {
         save: function() {
             if (this.validate()) {
@@ -24,8 +16,8 @@ export default Em.Component.extend(ModelForm, {
             }
         },
 
-        cancel: function() {
-            this.sendAction('cancel');
+        close: function() {
+            this.sendAction('close');
         },
 
         validateName: function() {
@@ -33,7 +25,7 @@ export default Em.Component.extend(ModelForm, {
         },
         validateNote: function() {
             this.validate('note');
-        },
+        }
     },
 
     validate: function(fieldName) {

@@ -46,6 +46,7 @@
 
 .entry-captions>span {
     display: inline-block;
+    /* outline: 1px solid #ccc; */
     overflow: hidden;
     padding: 0 3px;
 }
@@ -165,6 +166,7 @@
 
 .entry-fields>span {
     display: inline-block;
+    /* outline: 1px solid #ccc; */
     overflow: hidden;
     padding: 0 3px;
     vertical-align: top;
@@ -252,6 +254,7 @@ i.has-parent {
     border-left: 1px solid #AAA;
     display: inline-block;
     height: 11px;
+    vertical-align: top;
     width: 11px;
 }
 

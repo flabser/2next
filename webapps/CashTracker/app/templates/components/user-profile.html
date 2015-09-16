@@ -1,7 +1,7 @@
 <div class="user-profile">
     <form {{action 'save' on='submit' }}>
         <header class="content-header">
-            <button class="btn-back" {{action 'cancel'}}>
+            <button class="btn-back" {{action 'close'}}>
                 <i class="fa fa-chevron-left"></i>
             </button>
             <h1 class="header-title">
@@ -88,6 +88,7 @@
                         {{/each}}
                     </div>
                     <div class="password_group {{unless changePassword 'hidden'}}">
+                        <p class="form-group vertical text-muted">{{t 'password_change'}}</p>
                         <div class="{{if errors.pwd_change 'has-error'}}">
                             <div class="text-muted">{{t 'new'}}</div>
                             {{tn-input

@@ -17,9 +17,7 @@
                     <span class="vcat-name">
                         {{t 'name'}}
                     </span>
-                    <span class="vcat-types">
-                        {{t 'category_transaction_type_hint'}}
-                    </span>
+                    <span class="vcat-types"></span>
                     <span>
                         {{t 'note'}}
                     </span>
@@ -30,7 +28,7 @@
             {{#each model as |category|}}
                 {{#unless category.isNew}}
                     {{#unless category.parent}}
-                        {{category-view-row category=category tagName=''}}
+                        {{category-view-row category=category tagName='' deleteRecord='deleteRecord'}}
                     {{/unless}}
                 {{/unless}}
             {{/each}}

@@ -34,20 +34,25 @@ export default Em.Component.extend(ModelForm, {
         edit: function() {
             this.set('isEdit', true);
         },
+
         save: function() {
             if (this.validate()) {
                 this.sendAction('save', this.get('user'));
             }
         },
-        cancel: function() {
-            this.sendAction('cancel');
+
+        close: function() {
+            this.sendAction('close');
         },
+
         updateAvatar: function(attach) {
             this.get('user').attachedFile = attach;
         },
+
         setChangePassword: function() {
             this.set('changePassword', true);
         },
+
         validateProfile: function() {
             this.validate();
         }

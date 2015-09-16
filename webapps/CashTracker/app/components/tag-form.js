@@ -13,8 +13,8 @@ export default Em.Component.extend(ModelForm, {
             }
         },
 
-        cancel: function() {
-            this.sendAction('cancel');
+        close: function() {
+            this.sendAction('close');
         },
 
         validateName: function() {
