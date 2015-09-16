@@ -96,15 +96,16 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	private boolean includeInReports;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction", cascade = CascadeType.ALL)
-	public Set <TransactionFile> files;
+	public Set <TransactionFile> attachments;
 
-	//
-	public Set <TransactionFile> getFiles() {
-		return files;
+
+
+	public Set<TransactionFile> getAttachments() {
+		return attachments;
 	}
 
-	public void setFiles(Set <TransactionFile> files) {
-		this.files = files;
+	public void setAttachments(Set<TransactionFile> attachments) {
+		this.attachments = attachments;
 	}
 
 	public TransactionType getTransactionType() {
