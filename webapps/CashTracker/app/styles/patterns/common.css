@@ -6,8 +6,7 @@ body {
 }
 
 body {
-    /* F6F5F3 */
-    background: #FFF;
+    background: #FFF; /*  url(../img/bg-lb.jpg) bottom repeat-x fixed; */
     font: 13px/1.43 Verdana, Arial, Helvetica, sans-serif;
 }
 
