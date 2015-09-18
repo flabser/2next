@@ -90,11 +90,11 @@ footer.content-actions {
 
 @media ( max-width: 768px) {
     footer.content-actions {
-        padding-left: 0;
+        padding-left: 8px;
         text-align: center;
     }
     footer.content-actions .btn {
-        min-width: 33%;
+        min-width: 28%;
     }
 }
 

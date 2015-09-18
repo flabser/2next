@@ -9,11 +9,17 @@ export default Em.Component.extend(ModelForm, {
     isEdit: false,
     userEmail: '',
 
+    session: Em.inject.service(),
+
     init: function() {
         this._super();
+        this.set('userEmail', this.get('user.email'));
+    },
 
-        var um = this.get('user.email');
-        this.set('userEmail', um);
+    willDestroyElement: function() {
+        this.set('user.pwd', '');
+        this.set('user.pwd_new', '');
+        this.set('user.pwd_repeat', '');
     },
 
     needPassword: Em.computed('changePassword', 'user.email', function() {
@@ -24,12 +30,6 @@ export default Em.Component.extend(ModelForm, {
         return !Validate.isEmpty(this.get('user.email')) && this.get('user.email') !== this.get('userEmail');
     }),
 
-    willDestroyElement: function() {
-        this.set('user.pwd', '');
-        this.set('user.pwd_new', '');
-        this.set('user.pwd_repeat', '');
-    },
-
     actions: {
         edit: function() {
             this.set('isEdit', true);
@@ -37,8 +37,14 @@ export default Em.Component.extend(ModelForm, {
 
         save: function() {
             if (this.validate()) {
-                this.sendAction('save', this.get('user'));
+                this.send('saveUserProfile');
             }
+        },
+
+        saveUserProfile: function() {
+            this.get('session').saveUserProfile().then(() => {
+                this.rerender();
+            });
         },
 
         close: function() {

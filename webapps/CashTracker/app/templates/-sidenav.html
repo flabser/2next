@@ -1,12 +1,14 @@
 <aside class="aside nav-app" id="nav-app">
     <nav class="side-nav">
         <div class="nav-profile {{navProfileClass}}">
-            <header {{action 'toggleNavProfile'}}>
-                <span class="user-avatar">
-                    <i class="fa fa-user"></i>
-                </span>
-                <span class="user-name">{{model.login}}</span>
-                <i class="fa fa-angle-down"></i>
+            <header>
+                <a href="#" {{action 'toggleNavProfile'}}>
+                    <span class="nav-i user-avatar">
+                        <i class="fa fa-user"></i>
+                    </span>
+                    <span class="user-name">{{model.login}}</span>
+                    <i class="fa expand"></i>
+                </a>
             </header>
             <section>
                 <ul>
@@ -23,11 +25,11 @@
                         </a>
                     </li>
                     {{/if}}
-                    <li class="logout">
-                        <button {{action 'logout'}}>
+                    <li>
+                        <a href="#" {{action 'logout'}} class="logout">
                             <span class="nav-i"><i class="fa fa-sign-out"></i></span>
                             <span class="nav-t">{{t 'logout'}}</span>
-                        </button>
+                        </a>
                     </li>
                 </ul>
             </section>

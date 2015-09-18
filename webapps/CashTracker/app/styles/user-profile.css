@@ -55,8 +55,8 @@
     padding-left: 195px;
 }
 
-.tablet .content-actions,
-.phone .content-actions {
+.tablet .user-profile .content-actions,
+.phone .user-profile .content-actions {
     padding-left: 0;
 }
 

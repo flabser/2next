@@ -15,7 +15,9 @@
             <fieldset class="fieldset">
                 <div class="user_avatar">
                     <div class="avatar_thumb">
-                        <img src="rest/session/avatar" alt="avatar" class="img-thumbnail" />
+                        {{#if user.attachments}}
+                            <img src="rest/session/avatar" alt="avatar" class="img-thumbnail" />
+                        {{/if}}
                         {{upload-form
                             uploadVisible=isEdit
                             maxSize=3

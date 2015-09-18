@@ -46,7 +46,7 @@ body.nav-app-open {
 /* side-nav */
 
 .side-nav {
-    padding: .2em;
+    padding: 0;
     word-wrap: normal;
 }
 
@@ -64,7 +64,7 @@ body.nav-app-open {
 
 .side-nav li {
     display: block;
-    margin: 1px 0 0 0;
+    margin: 0;
     padding: 0;
 }
 
@@ -84,20 +84,20 @@ li.nav-separator {
 
 .side-nav li > a {
     border: 1px solid transparent;
-    border-radius: 2px;
+    /* border-radius: 2px; */
     color: #222;
     display: block;
     font-weight: normal;
     margin: 0;
     overflow: hidden;
-    padding: 8px 5px;
+    padding: 8px 16px;
     text-decoration: none;
     white-space: nowrap;
 }
 
 .tablet .side-nav li > a,
 .phone .side-nav li > a {
-    padding: 10px 5px;
+    padding: 8px 16px;
 }
 
 .side-nav li > a i {
@@ -109,7 +109,7 @@ li.nav-separator {
 }
 
 .side-nav li > a:hover {
-    background-color: #F5F5F5;
+    background-color: #F9F9F9;
 }
 
 .side-nav .nav-i {
