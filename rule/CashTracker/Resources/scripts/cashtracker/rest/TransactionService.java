@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.TransactionDAO;
@@ -44,8 +45,21 @@ public class TransactionService extends RestProvider {
 		if (trType != null && !trType.isEmpty()) {
 			type = TransactionType.typeOf(trType.substring(0, 1).toUpperCase());
 		}
+		long count = dao.getCountTransactions();
 		Collection <Transaction> list = dao.find(pr, type);
-		return Response.ok(new Transactions(list)).build();
+		//
+		ResponseBuilder resp = Response.ok(new Transactions(list));
+		//
+		String urlPrev = "transactions?limit=" + pr.getLimit() + "&offset=" + (pr.getOffset() - pr.getLimit())
+				+ "&order_by=" + orderBy + "&type=" + trType;
+		resp.link(urlPrev, "prev");
+		if (count > offset) {
+			String urlNext = "transactions?limit=" + pr.getLimit() + "&offset=" + (pr.getOffset() + pr.getLimit())
+					+ "&order_by=" + orderBy + "&type=" + trType;
+			resp.link(urlNext, "next");
+		}
+		//
+		return resp.build();
 	}
 
 	@GET
@@ -105,5 +119,14 @@ public class TransactionService extends RestProvider {
 		public Transactions(Collection <? extends Transaction> m) {
 			addAll(m);
 		}
+	}
+
+	//
+	public boolean hasNext(int offset, int count) {
+		return offset < count;
+	}
+
+	public static int calculatePageCount(int count, int limit) {
+		return (count > limit) ? (int) Math.ceil((double) count / limit) : 1;
 	}
 }
