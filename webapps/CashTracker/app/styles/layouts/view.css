@@ -19,7 +19,7 @@
 .head-wrap {
     background: #F5F5F5;
     border-bottom: 1px solid #EEE;
-    border-top: 1px solid #EEE;
+    border-top: 1px solid transparent;
     display: block;
     height: 40px;
     overflow: hidden;

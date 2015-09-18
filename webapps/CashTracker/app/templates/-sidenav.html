@@ -41,22 +41,22 @@
                 <span class="nav-t">{{t 'dashboard'}}</span>{{/link-to}}
             </li>
             <li>
-                {{#link-to 'transactions' (query-params type='')}}
+                {{#link-to 'transactions' (query-params offset=0 type='')}}
                 <span class="nav-i"><i class="fa fa-tasks"></i></span>
                 <span class="nav-t">{{t 'transactions'}}</span>{{/link-to}}
                 <ul>
                     <li>
-                        {{#link-to 'transactions' (query-params type='income')}}
+                        {{#link-to 'transactions' (query-params offset=0 type='income')}}
                         <span class="nav-i"><i class="fa fa-caret-up green"></i></span>
                         <span class="nav-t">{{t 'incomes'}}</span>{{/link-to}}
                     </li>
                     <li>
-                        {{#link-to 'transactions' (query-params type='expense')}}
+                        {{#link-to 'transactions' (query-params offset=0 type='expense')}}
                         <span class="nav-i"><i class="fa fa-caret-down red"></i></span>
                         <span class="nav-t">{{t 'expenses'}}</span>{{/link-to}}
                     </li>
                     <li>
-                        {{#link-to 'transactions' (query-params type='transfer')}}
+                        {{#link-to 'transactions' (query-params offset=0 type='transfer')}}
                         <span class="nav-i"><i class="fa fa-retweet blue"></i></span>
                         <span class="nav-t">{{t 'transfers'}}</span>{{/link-to}}
                     </li>

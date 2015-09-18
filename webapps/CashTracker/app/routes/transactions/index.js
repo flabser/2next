@@ -44,5 +44,20 @@ export default Em.Route.extend({
         }
 
         this._super(transition);
+    },
+
+    actions: {
+        paginatePrev: function() {
+            this.get('controller').set('offset', (+this.get('controller.offset') - 20));
+            this.transitionTo('transactions', {
+                queryParams: this.get('controller').queryParams
+            });
+        },
+        paginateNext: function() {
+            this.get('controller').set('offset', (+this.get('controller.offset') + 20));
+            this.transitionTo('transactions', {
+                queryParams: this.get('controller').queryParams
+            });
+        }
     }
 });

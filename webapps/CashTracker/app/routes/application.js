@@ -30,6 +30,13 @@ export default Route.extend({
         return this.get('translationsFetcher').fetch();
     },
 
+    model: function() {
+        var sessionService = this.get('session');
+        return sessionService.getSession().then(function() {
+            return sessionService.get('user');
+        });
+    },
+
     afterModel: function(user) {
         // this.set('i18n.locale', user.get('locale'));
         if (!this.get('session').isAuthenticated()) {
@@ -42,13 +49,6 @@ export default Route.extend({
                 // this.controllerFor('budget').send('check');
             }
         }
-    },
-
-    model: function() {
-        var sessionService = this.get('session');
-        return sessionService.getSession().then(function() {
-            return sessionService.get('user');
-        });
     },
 
     setupController: function(controller, model) {
@@ -87,6 +87,10 @@ export default Route.extend({
                 }
             }
         }
+    },
+
+    setWindowTitle: function(title) {
+        this.get('controller').set('windowTitle', title);
     },
 
     actions: {
