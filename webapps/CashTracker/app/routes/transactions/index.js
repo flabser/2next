@@ -1,6 +1,11 @@
 import Em from 'ember';
+import InfinityRoute from "ember-infinity/mixins/route";
 
-export default Em.Route.extend({
+export default Em.Route.extend(InfinityRoute, {
+    perPageParam: "limit", // instead of "per_page"
+    pageParam: "page", // instead of "page"
+    totalPagesParam: "meta.total", // instead of "meta.total_pages"
+
     queryParams: {
         type: {
             refreshModel: true
@@ -17,7 +22,12 @@ export default Em.Route.extend({
     },
 
     model: function(params) {
-        return this.store.query('transaction', params);
+        //return this.store.query('transaction', params);
+
+        return this.infinityModel("transaction", {
+            perPage: 20,
+            startingPage: 1
+        });
     },
 
     beforeModel: function(transition) {
