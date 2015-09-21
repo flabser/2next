@@ -2,6 +2,7 @@ package cashtracker.rest;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -11,17 +12,23 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.CostCenterDAO;
+import cashtracker.helper.PageRequest;
 import cashtracker.model.CostCenter;
 import cashtracker.model.Errors;
 import cashtracker.validation.CostCenterValidator;
 import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.flabser.restful.RestProvider;
 
 
@@ -32,9 +39,22 @@ public class CostCenterService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get() {
+	public Response get(@QueryParam("page") int page, @QueryParam("limit") int limit) {
 		CostCenterDAO dao = new CostCenterDAO(getSession());
-		return Response.ok(new CostCenters(dao.findAll())).build();
+		PageRequest pr = new PageRequest(page * limit, limit, "", "");
+		List <CostCenter> list = dao.findAll(pr);
+		_Response resp = new _Response("success", list, new Meta(list.size(), -1, -1));
+
+		ObjectMapper om = new ObjectMapper();
+		om.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
+		om.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+
+		try {
+			return Response.ok(om.writeValueAsString(resp)).build();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@GET
@@ -104,6 +124,32 @@ public class CostCenterService extends RestProvider {
 
 		public CostCenters(Collection <? extends CostCenter> m) {
 			addAll(m);
+		}
+	}
+
+	class Meta {
+
+		public int total = 0;
+		public int limit = 20;
+		public int offset = 0;
+
+		public Meta(int total, int limit, int offset) {
+			this.total = total;
+			this.limit = limit;
+			this.offset = offset;
+		}
+	}
+
+	class _Response {
+
+		public String status;
+		public List <CostCenter> costCenters;
+		public Meta meta;
+
+		public _Response(String status, List <CostCenter> list, Meta meta) {
+			this.status = status;
+			this.costCenters = list;
+			this.meta = meta;
 		}
 	}
 }

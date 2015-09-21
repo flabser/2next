@@ -84,6 +84,13 @@ public class TransactionDAO extends DAO {
 		return count;
 	}
 
+	public long getCountTransactions(TransactionType type) {
+		Query q = em.createQuery("SELECT count(t) FROM Transaction AS t WHERE t.transactionType = :type");
+		q.setParameter("type", type);
+		Long count = (Long) q.getSingleResult();
+		return count;
+	}
+
 	public Transaction add(Transaction entity) {
 		em.getTransaction().begin();
 		entity.setAuthor(user.id);

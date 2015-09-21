@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import cashtracker.helper.PageRequest;
 import cashtracker.model.CostCenter;
 
 import com.flabser.dataengine.jpa.DAO;
@@ -17,9 +18,12 @@ public class CostCenterDAO extends DAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List <CostCenter> findAll() {
+	public List <CostCenter> findAll(PageRequest pr) {
 		String jpql = "SELECT cc FROM CostCenter AS cc ORDER BY cc.name";
 		Query q = em.createQuery(jpql);
+		q.setFirstResult(pr.getOffset());
+		q.setMaxResults(pr.getLimit());
+
 		return q.getResultList();
 	}
 

@@ -1,7 +1,6 @@
 package cashtracker.rest;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,7 +20,10 @@ import cashtracker.model.Errors;
 import cashtracker.validation.AccountValidator;
 import cashtracker.validation.ValidationError;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.flabser.restful.RestProvider;
 
 
@@ -34,7 +36,19 @@ public class AccountService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get() {
 		AccountDAO dao = new AccountDAO(getSession());
-		return Response.ok(new Accounts(dao.findAll())).build();
+		List <Account> list = dao.findAll();
+		_Response resp = new _Response("success", list, new Meta(list.size(), -1, -1));
+
+		ObjectMapper om = new ObjectMapper();
+		om.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
+		om.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+
+		try {
+			return Response.ok(om.writeValueAsString(resp)).build();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@GET
@@ -104,13 +118,29 @@ public class AccountService extends RestProvider {
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
-	@JsonRootName("accounts")
-	class Accounts extends ArrayList <Account> {
+	class Meta {
 
-		private static final long serialVersionUID = 1L;
+		public int total = 0;
+		public int limit = 20;
+		public int offset = 0;
 
-		public Accounts(Collection <? extends Account> m) {
-			addAll(m);
+		public Meta(int total, int limit, int offset) {
+			this.total = total;
+			this.limit = limit;
+			this.offset = offset;
+		}
+	}
+
+	class _Response {
+
+		public String status;
+		public List <Account> accounts;
+		public Meta meta;
+
+		public _Response(String status, List <Account> list, Meta meta) {
+			this.status = status;
+			this.accounts = list;
+			this.meta = meta;
 		}
 	}
 }

@@ -1,7 +1,6 @@
 package cashtracker.rest;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -24,7 +23,10 @@ import cashtracker.model.constants.TransactionType;
 import cashtracker.validation.TransactionValidator;
 import cashtracker.validation.ValidationError;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.flabser.restful.RestProvider;
 
 
@@ -35,20 +37,22 @@ public class TransactionService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@QueryParam("offset") int offset, @QueryParam("limit") int limit,
+	public Response get(@QueryParam("page") int page, @QueryParam("offset") int offset, @QueryParam("limit") int limit,
 			@QueryParam("order_by") String orderBy, @QueryParam("direction") String direction,
 			@QueryParam("type") String trType) {
 
-		PageRequest pr = new PageRequest(offset, limit, orderBy, direction);
+		PageRequest pr = new PageRequest((page - 1) * limit, limit, orderBy, direction);
 		TransactionDAO dao = new TransactionDAO(getSession());
 		TransactionType type = null;
+		long count;
 		if (trType != null && !trType.isEmpty()) {
 			type = TransactionType.typeOf(trType.substring(0, 1).toUpperCase());
+			count = dao.getCountTransactions(type);
+		} else {
+			count = dao.getCountTransactions();
 		}
-		long count = dao.getCountTransactions();
-		Collection <Transaction> list = dao.find(pr, type);
 		//
-		ResponseBuilder resp = Response.ok(new Transactions(list));
+		ResponseBuilder resp = Response.ok();
 		//
 		String urlPrev = "transactions?limit=" + pr.getLimit() + "&offset=" + (pr.getOffset() - pr.getLimit())
 				+ "&order_by=" + orderBy + "&type=" + trType;
@@ -59,7 +63,19 @@ public class TransactionService extends RestProvider {
 			resp.link(urlNext, "next");
 		}
 		//
-		return resp.build();
+		List <Transaction> list = dao.find(pr, type);
+		_Response _resp = new _Response("success", list, new Meta(count, pr.getLimit(), pr.getOffset()));
+
+		ObjectMapper om = new ObjectMapper();
+		om.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
+		om.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+
+		try {
+			return resp.entity(om.writeValueAsString(_resp)).build();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@GET
@@ -111,13 +127,29 @@ public class TransactionService extends RestProvider {
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
-	@JsonRootName("transactions")
-	class Transactions extends ArrayList <Transaction> {
+	class Meta {
 
-		private static final long serialVersionUID = 1L;
+		public long total = 0;
+		public int limit = 20;
+		public int offset = 0;
 
-		public Transactions(Collection <? extends Transaction> m) {
-			addAll(m);
+		public Meta(long total, int limit, int offset) {
+			this.total = total;
+			this.limit = limit;
+			this.offset = offset;
+		}
+	}
+
+	class _Response {
+
+		public String status;
+		public List <Transaction> transactions;
+		public Meta meta;
+
+		public _Response(String status, List <Transaction> list, Meta meta) {
+			this.status = status;
+			this.transactions = list;
+			this.meta = meta;
 		}
 	}
 
