@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import cashtracker.helper.PageRequest;
@@ -15,7 +16,7 @@ import cashtracker.model.Transaction;
 import cashtracker.model.TransactionFile;
 import cashtracker.model.constants.TransactionType;
 
-import com.flabser.dataengine.jpa.AttachmentEntity;
+import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
@@ -92,38 +93,43 @@ public class TransactionDAO extends DAO {
 	}
 
 	public Transaction add(Transaction entity) {
-		em.getTransaction().begin();
+		EntityTransaction transact = em.getTransaction();
+		transact.begin();
 		entity.setAuthor(user.id);
 		entity.setRegDate(new Date());
 		//
-		Set <AttachmentEntity> f = proccesAttachments(entity, entity.getAttachments());
+		Set <Attachment> f = proccesAttachments(entity, entity.getAttachments());
 		if (f != null) {
 			Set <TransactionFile> files = new HashSet <TransactionFile>();
-			for (AttachmentEntity ae : f) {
+			for (Attachment ae : f) {
 				ae.setParent(entity);
-				files.add((TransactionFile) ae);
+				//		files.add((TransactionFile) ae);
 			}
 			entity.setAttachments(files);
 		}
 		//
 		em.persist(entity);
-		em.getTransaction().commit();
+		transact.commit();
 		return entity;
 	}
 
 	public Transaction update(Transaction entity) {
-		em.getTransaction().begin();
+		EntityTransaction transact = em.getTransaction();
+		transact.begin();
 		//
-		Set <AttachmentEntity> f = proccesAttachments(entity, entity.getAttachments());
+		Set <Attachment> f = proccesAttachments(entity, entity.getAttachments());
 		Set <TransactionFile> files = new HashSet <TransactionFile>();
-		for (AttachmentEntity ae : f) {
+		for (Attachment ae : f) {
+			System.out.println(ae.getClass().getName());
 			ae.setParent(entity);
-			files.add((TransactionFile) ae);
+			TransactionFile tf = new TransactionFile();
+			tf.setFile(ae);
+			files.add(tf);
 		}
 		entity.setAttachments(files);
 		//
 		em.merge(entity);
-		em.getTransaction().commit();
+		transact.commit();
 		return entity;
 	}
 }

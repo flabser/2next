@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.IDatabase;
-import com.flabser.dataengine.jpa.AttachmentEntity;
+import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
@@ -57,7 +57,7 @@ public class User {
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private String dbPwd;
 	private String defaultApp;
-	private AttachmentEntity avatar;
+	private Attachment avatar;
 
 	public User() {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
@@ -86,7 +86,7 @@ public class User {
 		this.roles = roles;
 		applications.forEach(this::addApplication);
 		this.isValid = isValid;
-		avatar = new AttachmentEntity();
+		avatar = new Attachment();
 		avatar.setRealFileName(avatarName);
 		avatar.setFieldName("AVATAR");
 	}
@@ -357,7 +357,7 @@ public class User {
 
 	}
 
-	public AttachmentEntity getAvatar() {
+	public Attachment getAvatar() {
 		return avatar;
 	}
 

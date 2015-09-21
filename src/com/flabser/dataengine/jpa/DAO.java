@@ -46,16 +46,16 @@ public abstract class DAO implements IDAO {
 		em.getTransaction().commit();
 	}
 
-	protected Set<AttachmentEntity> proccesAttachments(IAppEntity entity, Set<?> attachments){
+	protected Set<Attachment> proccesAttachments(IAppEntity entity, Set<?> attachments){
 		if (attachments != null) {
 			File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
-			Set<AttachmentEntity> files = new HashSet<AttachmentEntity>();
+			Set<Attachment> files = new HashSet<Attachment>();
 			for (Object o : attachments) {
-				AttachmentEntity a = (AttachmentEntity)o;
+				Attachment a = (Attachment)o;
 				//	String fieldName = a.getFieldName();
 				String uploadedFileLocation = userTmpDir + File.separator + a.getTempID();
 				File file = new File(uploadedFileLocation);
-				AttachmentEntity attachEntity = new AttachmentEntity();
+				Attachment attachEntity = new Attachment();
 				try {
 					byte[] bFile = FileUtils.readFileToByteArray(file);
 					attachEntity.setFile(bFile);
