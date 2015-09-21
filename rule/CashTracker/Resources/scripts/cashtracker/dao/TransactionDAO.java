@@ -78,6 +78,12 @@ public class TransactionDAO extends DAO {
 		return q.getResultList();
 	}
 
+	public long getCountTransactions() {
+		Query q = em.createQuery("SELECT count(t) FROM Transaction AS t");
+		Long count = (Long) q.getSingleResult();
+		return count;
+	}
+
 	public Transaction add(Transaction entity) {
 		em.getTransaction().begin();
 		entity.setAuthor(user.id);
