@@ -22,7 +22,7 @@ import com.flabser.users.User;
 public abstract class DatabaseCore {
 	protected ApplicationProfile appProfile;
 	protected IDBConnectionPool pool;
-	protected EntityManager entityManager;
+	protected static EntityManager entityManager;
 
 	protected void initConnectivity(String driver, ApplicationProfile appProfile) throws InstantiationException,
 	IllegalAccessException, ClassNotFoundException, DatabasePoolException {
@@ -81,4 +81,6 @@ public abstract class DatabaseCore {
 		// properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE,
 		// "both");
 	}
+
+
 }

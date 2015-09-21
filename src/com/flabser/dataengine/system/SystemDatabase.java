@@ -27,7 +27,7 @@ import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.activity.Activity;
 import com.flabser.dataengine.activity.IActivity;
-import com.flabser.dataengine.jpa.AttachmentEntity;
+import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserGroup;
@@ -475,7 +475,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			insertUser.setArray(14, conn.createArrayOf("integer", user.getUserRoles().stream().map(UserRole::getId).toArray()));
 			insertUser.setArray(15, conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
 			insertUser.setString(16, user.getDbPwd());
-			AttachmentEntity aFile = user.getAvatar();
+			Attachment aFile = user.getAvatar();
 			if(aFile != null){
 				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
 				if (userTmpDir.exists()) {
@@ -545,7 +545,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			updateUser.setString(16, user.getDbPwd());
 
 
-			AttachmentEntity aFile = user.getAvatar();
+			Attachment aFile = user.getAvatar();
 			if(aFile != null){
 				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getOldLogin());
 				if (userTmpDir.exists()) {
