@@ -13,7 +13,6 @@
 		<class>cashtracker.model.TransactionFile</class>
 		<class>cashtracker.model.constants.converter.TransactionTypeConverter</class>
 		<class>cashtracker.model.constants.converter.TransactionStateConverter</class>
-		<class>com.flabser.dataengine.jpa.AttachmentEntity</class>
 	</persistence-unit>
 	<persistence-unit name="Nubis" transaction-type="RESOURCE_LOCAL">
 		<class>nubis.model.Profile</class>
