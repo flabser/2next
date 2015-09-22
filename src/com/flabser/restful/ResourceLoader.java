@@ -34,7 +34,6 @@ public class ResourceLoader extends Application {
 		classes.add(RestProvider.class);
 		classes.add(MultiPartFeature.class);
 		classes.add(UploadFileService.class);
-		classes.add(StreamService.class);
 
 		if (!appName.equalsIgnoreCase("administrator")) {
 			List<Class<?>> appClasses = ClassFinder.find(appName.toLowerCase() + ".rest");

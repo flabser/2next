@@ -1,7 +1,12 @@
 package cashtracker.rest;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -15,9 +20,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.commons.io.FileUtils;
+
 import cashtracker.dao.TransactionDAO;
 import cashtracker.helper.PageRequest;
 import cashtracker.model.Transaction;
+import cashtracker.model.TransactionFile;
 import cashtracker.model.constants.TransactionType;
 import cashtracker.pojo.Meta;
 import cashtracker.validation.TransactionValidator;
@@ -26,8 +34,11 @@ import cashtracker.validation.ValidationError;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.flabser.env.Environment;
 import com.flabser.restful.RestProvider;
-
+import com.flabser.scheduler.tasks.TempFileCleaner;
+import com.flabser.server.Server;
+import com.flabser.users.User;
 
 @Path("transactions")
 public class TransactionService extends RestProvider {
@@ -51,7 +62,7 @@ public class TransactionService extends RestProvider {
 			count = dao.getCountTransactions();
 		}
 		//
-		List <Transaction> list = dao.find(pr, type);
+		List<Transaction> list = dao.find(pr, type);
 		_Response _resp = new _Response("success", list, new Meta(count, pr.getLimit(), pr.getOffset()));
 
 		ObjectMapper om = new ObjectMapper();
@@ -125,13 +136,73 @@ public class TransactionService extends RestProvider {
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
+	@GET
+	@Path("{id}/{field}/{file}")
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	public Response getStream(@PathParam("id") long id, @PathParam("field") String fieldName,
+			@PathParam("file") String fileName) {
+		TransactionDAO dao = new TransactionDAO(getSession());
+		Transaction m = dao.findById(id);
+		//
+		if (m == null) {
+			return Response.noContent().status(Status.NOT_FOUND).build();
+		} else {
+			User user = getUserSession().currentUser;
+			File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
+			TransactionFile tFile = m.getAttachment(fieldName, fileName);
+			if (tFile != null) {
+				String fn = userTmpDir.getAbsolutePath() + File.separator + tFile.getRealFileName();
+				File file = new File(fn);
+				byte[] fileAsByteArray = tFile.getFile();
+				try {
+					FileUtils.writeByteArrayToFile(file, fileAsByteArray);
+				} catch (IOException e) {
+					Server.logger.errorLogEntry(e);
+				}
+				if (file != null && file.exists()) {
+					TempFileCleaner.addFileToDelete(fn);
+					try {
+						String codedFileName = URLEncoder.encode(file.getName(), "UTF8");
+						return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
+								.header("Content-Disposition", "attachment; filename*=\"utf-8'" + codedFileName + "\"" ).build();
+					} catch (UnsupportedEncodingException e) {
+						Server.logger.errorLogEntry(e);
+					}
+
+				} else {
+					return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
+				}
+			}
+			//
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
+		}
+	}
+
+	@DELETE
+	@Path("{id}/{field}/{file}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteAttachment(@PathParam("id") long id, @PathParam("field") String fieldName,
+			@PathParam("file") String fileName) {
+		TransactionDAO dao = new TransactionDAO(getSession());
+		Transaction m = dao.findById(id);
+		//
+		if (m == null) {
+			return Response.noContent().status(Status.NOT_FOUND).build();
+		} else {
+			if(m.deleteAttachment(fieldName, fileName)){
+				return Response.status(HttpServletResponse.SC_OK).build();
+			}
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
+		}
+	}
+
 	class _Response {
 
 		public String status;
-		public List <Transaction> transactions;
+		public List<Transaction> transactions;
 		public Meta meta;
 
-		public _Response(String status, List <Transaction> list, Meta meta) {
+		public _Response(String status, List<Transaction> list, Meta meta) {
 			this.status = status;
 			this.transactions = list;
 			this.meta = meta;
@@ -140,6 +211,6 @@ public class TransactionService extends RestProvider {
 
 	//
 	public static int calculatePageCount(int count, int limit) {
-		return (count > limit) ? (int) Math.ceil((double) count / limit) : 1;
+		return count > limit ? (int) Math.ceil((double) count / limit) : 1;
 	}
 }

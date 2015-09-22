@@ -104,6 +104,24 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		return attachments;
 	}
 
+	public TransactionFile getAttachment(String fieldName, String fileName) {
+		for (TransactionFile file : attachments) {
+			if (file.getFieldName().equalsIgnoreCase(fieldName) && file.getRealFileName().equals(fileName)){
+				return file;
+			}
+		}
+		return null;
+	}
+
+	public boolean deleteAttachment(String fieldName, String fileName) {
+		for (TransactionFile file : attachments) {
+			if (file.getFieldName().equalsIgnoreCase(fieldName) && file.getRealFileName().equals(fileName)){
+				return attachments.remove(file);
+			}
+		}
+		return false;
+	}
+
 	public void setAttachments(Set <TransactionFile> attachments) {
 		this.attachments = attachments;
 	}

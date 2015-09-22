@@ -1,5 +1,7 @@
 package com.flabser.restful;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,19 +23,26 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.commons.io.FileUtils;
+
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.jpa.DAO;
+import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.EnvConst;
+import com.flabser.env.Environment;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.rule.IRule;
 import com.flabser.rule.page.PageRule;
 import com.flabser.runtimeobj.page.Page;
+import com.flabser.scheduler.tasks.TempFileCleaner;
 import com.flabser.script._Exception;
 import com.flabser.script._Page;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
+import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
 @Path("/")
@@ -71,8 +80,8 @@ public class RestProvider {
 	@GET
 	@Path("/page/{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response producePage(@PathParam("id") String id, @Context UriInfo uriInfo) throws RuleException, AuthFailedException,
-	ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public Response producePage(@PathParam("id") String id, @Context UriInfo uriInfo) throws RuleException,
+	AuthFailedException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
 		MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
 		AppTemplate env = getAppEnv();
@@ -103,8 +112,9 @@ public class RestProvider {
 	@Path("/page/{id}")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response proPage(@PathParam("id") String id, MultivaluedMap<String, String> formParams) throws RuleException,
-	AuthFailedException,  ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public Response proPage(@PathParam("id") String id, MultivaluedMap<String, String> formParams)
+			throws RuleException, AuthFailedException, ClassNotFoundException, InstantiationException,
+			IllegalAccessException {
 		System.out.println("get page id=" + id);
 		AppTemplate env = getAppEnv();
 		IRule rule = env.ruleProvider.getRule(id);
@@ -122,14 +132,39 @@ public class RestProvider {
 	}
 
 	@GET
-	@Path("/{model}/stream/{id}/{field}/{file}")
-	public _Page produceStream(@PathParam("model") String model, @PathParam("id") long id,@PathParam("field") String fieldName, @PathParam("file") String fileName) throws RuleException, AuthFailedException,
-	ClassNotFoundException, InstantiationException, IllegalAccessException {
-		String msg = "The request \"" + request.getRequestURI() + "\" has not processed by some application handler";
-		Server.logger.errorLogEntry(msg);
-		throw new WebApplicationException(msg, HttpServletResponse.SC_NOT_FOUND);
-	}
+	@Path("/stream/{model}/{id}/{field}/{file}")
+	public Response produceStream(@PathParam("model") String model, @PathParam("id") long id,
+			@PathParam("field") String fieldName, @PathParam("file") String fileName) {
+		File file = null;
+		String fn = null;
+		if (!model.equalsIgnoreCase("users")) {
 
+		} else {
+			ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
+			User user = sysDb.getUser(id);
+
+			if (fieldName.equalsIgnoreCase("avatar")) {
+				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
+				fn = userTmpDir.getAbsolutePath() + File.separator + "___" + user.getAvatar().getRealFileName();
+				File fileToWriteTo = new File(fn);
+				byte[] fileAsByteArray = sysDb.getUserAvatarStream(user.id);
+				try {
+					FileUtils.writeByteArrayToFile(fileToWriteTo, fileAsByteArray);
+				} catch (IOException e) {
+					Server.logger.errorLogEntry(e);
+				}
+
+				file = new File(fn);
+			}
+		}
+		if (file != null && file.exists()) {
+			TempFileCleaner.addFileToDelete(fn);
+			return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
+					.header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"").build();
+		} else {
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
+		}
+	}
 
 	@GET
 	@Path("/{model}")
@@ -140,17 +175,15 @@ public class RestProvider {
 		throw new WebApplicationException(msg, HttpServletResponse.SC_NOT_FOUND);
 	}
 
-
-
-
-	private _Page page(AppTemplate env, Map<String, String[]> parMap, HttpServletRequest request, IRule rule, UserSession userSession)
-			throws RuleException, UnsupportedEncodingException, ClassNotFoundException, _Exception, WebFormValueException {
+	private _Page page(AppTemplate env, Map<String, String[]> parMap, HttpServletRequest request, IRule rule,
+			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,
+			_Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		return new Page(env, userSession, pageRule, request.getMethod()).process(parMap);
 	}
 
-	private _Page page(AppTemplate env, MultivaluedMap<String, String> formParams, HttpServletRequest request2, IRule rule,
-			UserSession userSession) throws ClassNotFoundException, RuleException, WebFormValueException {
+	private _Page page(AppTemplate env, MultivaluedMap<String, String> formParams, HttpServletRequest request2,
+			IRule rule, UserSession userSession) throws ClassNotFoundException, RuleException, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		Map<String, String[]> parMap = new HashMap<String, String[]>();
 		for (String e : formParams.keySet()) {
