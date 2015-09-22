@@ -1,7 +1,6 @@
 package cashtracker.model;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -24,10 +23,12 @@ import cashtracker.model.constants.TransactionState;
 import cashtracker.model.constants.TransactionType;
 import cashtracker.model.constants.converter.TransactionStateConverter;
 import cashtracker.model.constants.converter.TransactionTypeConverter;
+import cashtracker.serializers.JsonDateSerializer;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.flabser.dataengine.jpa.AppEntity;
 
 
@@ -64,6 +65,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@JoinTable(name = "transaction_tags", joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
 	private List <Tag> tags;
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Date date = new Date();
@@ -277,7 +279,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		return null;
 	}*/
 
-	@JsonSetter("tags")
+	/*@JsonSetter("tags")
 	public void setTagsId(List <Long> ids) {
 		if (ids != null) {
 			List <Tag> _tags = new ArrayList <Tag>();
@@ -290,7 +292,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		} else {
 			setTags(null);
 		}
-	}
+	}*/
 
 	public Date getDate() {
 		return date;

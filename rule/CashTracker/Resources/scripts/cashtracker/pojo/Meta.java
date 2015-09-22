@@ -1,5 +1,9 @@
 package cashtracker.pojo;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+
+@JsonRootName("meta")
 public class Meta {
 
 	public long total = 0;

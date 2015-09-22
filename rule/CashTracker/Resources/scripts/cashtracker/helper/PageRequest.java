@@ -9,7 +9,7 @@ public class PageRequest {
 
 	public PageRequest(int offset, int limit, String sort, String direction) {
 		this.offset = offset;
-		this.limit = (limit == 0 || limit > 100) ? 20 : limit;
+		this.limit = (limit < 1 || limit > 100) ? 20 : limit;
 		this.sort = sort;
 		this.direction = direction;
 	}

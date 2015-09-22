@@ -51,7 +51,7 @@ public class TransactionTest extends InitEnv {
 		PageRequest pr = new PageRequest(0, 5, "", "");
 
 		int size = dao.find(pr, null).size();
-		int iteration = size + 15000;
+		int iteration = size + 1500;
 
 		for (int i = size; i < iteration; i++) {
 			Transaction m = new Transaction();
