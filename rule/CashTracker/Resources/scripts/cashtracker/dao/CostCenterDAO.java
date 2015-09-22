@@ -18,12 +18,18 @@ public class CostCenterDAO extends DAO {
 	}
 
 	@SuppressWarnings("unchecked")
+	public List <CostCenter> findAll() {
+		String jpql = "SELECT cc FROM CostCenter AS cc ORDER BY cc.name";
+		Query q = em.createQuery(jpql);
+		return q.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
 	public List <CostCenter> findAll(PageRequest pr) {
 		String jpql = "SELECT cc FROM CostCenter AS cc ORDER BY cc.name";
 		Query q = em.createQuery(jpql);
 		q.setFirstResult(pr.getOffset());
 		q.setMaxResults(pr.getLimit());
-
 		return q.getResultList();
 	}
 

@@ -36,7 +36,6 @@ public class TransactionFile extends SimpleAppEntity {
 		return fieldName;
 	}
 
-
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
@@ -65,6 +64,7 @@ public class TransactionFile extends SimpleAppEntity {
 	public byte[] getFile() {
 		return file;
 	}
+
 
 	@JsonIgnore
 	public void setFile(byte[] file) {

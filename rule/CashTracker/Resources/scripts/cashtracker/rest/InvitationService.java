@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import cashtracker.model.Invitation;
+import cashtracker.pojo.Invitation;
 import cashtracker.validation.InvitationValidator;
 import cashtracker.validation.ValidationError;
 

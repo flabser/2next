@@ -1,4 +1,4 @@
-package cashtracker.model;
+package cashtracker.pojo;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 

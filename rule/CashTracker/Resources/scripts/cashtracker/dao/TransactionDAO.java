@@ -32,7 +32,7 @@ public class TransactionDAO extends DAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Transaction> find(PageRequest pr, TransactionType type) {
+	public List <Transaction> find(PageRequest pr, TransactionType type) {
 		String jpql;
 		if (type == null) {
 			jpql = "SELECT t FROM Transaction AS t ORDER BY t.date";
@@ -47,8 +47,7 @@ public class TransactionDAO extends DAO {
 		q.setFirstResult(pr.getOffset());
 		q.setMaxResults(pr.getLimit());
 
-		List<Transaction> result = q.getResultList();
-		return result;
+		return q.getResultList();
 	}
 
 	@Override
@@ -85,14 +84,14 @@ public class TransactionDAO extends DAO {
 
 	public long getCountTransactions() {
 		Query q = em.createQuery("SELECT count(t) FROM Transaction AS t");
-		Long count = (Long) q.getSingleResult();
+		long count = (long) q.getSingleResult();
 		return count;
 	}
 
 	public long getCountTransactions(TransactionType type) {
 		Query q = em.createQuery("SELECT count(t) FROM Transaction AS t WHERE t.transactionType = :type");
 		q.setParameter("type", type);
-		Long count = (Long) q.getSingleResult();
+		long count = (long) q.getSingleResult();
 		return count;
 	}
 

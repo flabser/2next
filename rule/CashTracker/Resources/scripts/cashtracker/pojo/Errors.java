@@ -1,4 +1,4 @@
-package cashtracker.model;
+package cashtracker.pojo;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 
@@ -19,6 +19,6 @@ public class Errors {
 
 	@Override
 	public String toString() {
-		return "Message[" + message + "]";
+		return "Errors[" + message + "]";
 	}
 }

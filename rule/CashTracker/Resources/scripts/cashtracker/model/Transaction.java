@@ -98,13 +98,11 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction", cascade = CascadeType.ALL)
 	public Set <TransactionFile> attachments;
 
-
-
-	public Set<TransactionFile> getAttachments() {
+	public Set <TransactionFile> getAttachments() {
 		return attachments;
 	}
 
-	public void setAttachments(Set<TransactionFile> attachments) {
+	public void setAttachments(Set <TransactionFile> attachments) {
 		this.attachments = attachments;
 	}
 
@@ -166,7 +164,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		return null;
 	}*/
 
-	//@JsonSetter("category")
+	// @JsonSetter("category")
 	public void setCategoryById(Long id) {
 		Category category = null;
 		if (id != null) {
@@ -195,7 +193,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		return null;
 	}*/
 
-	//@JsonSetter("accountFrom")
+	// @JsonSetter("accountFrom")
 	public void setAccountFromById(Long id) {
 		Account accountFrom = null;
 		if (id != null) {
@@ -224,7 +222,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		return null;
 	}*/
 
-	//@JsonSetter("accountTo")
+	// @JsonSetter("accountTo")
 	public void setAccountToById(Long id) {
 		Account accountTo = null;
 		if (id != null) {
@@ -253,7 +251,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		return null;
 	}*/
 
-	//@JsonSetter("costCenter")
+	// @JsonSetter("costCenter")
 	public void setCostCenterById(Long id) {
 		CostCenter costCenter = null;
 		if (id != null) {

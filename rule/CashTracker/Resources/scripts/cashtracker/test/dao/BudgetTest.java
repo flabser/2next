@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import cashtracker.dao.BudgetDAO;
 import cashtracker.model.Budget;
-import cashtracker.model.constants.BudgetState;
+import cashtracker.model.Budget.BudgetStatus;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
 
@@ -31,16 +31,23 @@ public class BudgetTest extends InitEnv {
 		m.setName("my budget " + it);
 
 		if (it % 2 == 1) {
-			m.setStatus(BudgetState.ACTIVE);
+			m.setStatus(BudgetStatus.ACTIVE);
 		} else {
-			m.setStatus(BudgetState.DELETED);
+			m.setStatus(BudgetStatus.DELETED);
 		}
 
 		assertNotNull(dao.add(m) != null);
 	}
 
 	@Test
+	public void selectTest() {
+		for (Budget b : dao.findAll()) {
+			System.out.println(b);
+		}
+	}
+
+	// @Test
 	public void deleteTest() {
-		// dao.delete();
+		dao.delete();
 	}
 }

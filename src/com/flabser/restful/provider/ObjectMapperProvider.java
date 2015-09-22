@@ -7,22 +7,24 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-@Provider
-public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
-	private ObjectMapper objectMapper;
+@Provider
+public class ObjectMapperProvider implements ContextResolver <ObjectMapper> {
+
+	private ObjectMapper om;
 
 	public ObjectMapperProvider() {
-		objectMapper = new ObjectMapper();
-		objectMapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
-		objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, true);
-		objectMapper.getSerializerProvider().setNullKeySerializer(new NullKeySerializer());
+		om = new ObjectMapper();
 
+		om.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+		om.enable(SerializationFeature.WRAP_ROOT_VALUE);
+		om.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		om.getSerializerProvider().setNullKeySerializer(new NullKeySerializer());
 
 	}
 
 	@Override
 	public ObjectMapper getContext(@SuppressWarnings("rawtypes") Class type) {
-		return objectMapper;
+		return om;
 	}
 }

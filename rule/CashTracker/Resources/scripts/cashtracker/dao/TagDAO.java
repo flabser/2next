@@ -18,12 +18,18 @@ public class TagDAO extends DAO {
 	}
 
 	@SuppressWarnings("unchecked")
+	public List <Tag> findAll() {
+		String jpql = "SELECT t FROM Tag AS t ORDER BY t.name";
+		Query q = em.createQuery(jpql);
+		return q.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
 	public List <Tag> findAll(PageRequest pr) {
 		String jpql = "SELECT t FROM Tag AS t ORDER BY t.name";
 		Query q = em.createQuery(jpql);
 		q.setFirstResult(pr.getOffset());
 		q.setMaxResults(pr.getLimit());
-
 		return q.getResultList();
 	}
 
