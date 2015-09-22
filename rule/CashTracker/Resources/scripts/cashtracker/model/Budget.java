@@ -1,16 +1,12 @@
 package cashtracker.model;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
-import cashtracker.model.constants.BudgetState;
-import cashtracker.model.constants.converter.BudgetStateConverter;
-
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.dataengine.jpa.AppEntity;
 
 
@@ -19,13 +15,18 @@ import com.flabser.dataengine.jpa.AppEntity;
 @Table(name = "budgets")
 public class Budget extends AppEntity {
 
+	public enum BudgetStatus {
+		ACTIVE, DELETED;
+	}
+
 	@Column(nullable = false, unique = true, length = 64)
 	private String name;
 
 	private Long owner;
 
-	@Convert(converter = BudgetStateConverter.class)
-	private BudgetState status;
+	@Enumerated(EnumType.STRING)
+	@Column(length = 16)
+	private BudgetStatus status;
 
 	public String getName() {
 		return name;
@@ -43,25 +44,12 @@ public class Budget extends AppEntity {
 		this.owner = user;
 	}
 
-	public BudgetState getStatus() {
+	public BudgetStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(BudgetState status) {
+	public void setStatus(BudgetStatus status) {
 		this.status = status;
-	}
-
-	@JsonGetter("status")
-	public String getStatusValue() {
-		if (status == null) {
-			return null;
-		}
-		return status.toValue();
-	}
-
-	@JsonSetter("status")
-	public void setStatusByValue(String value) {
-		setStatus(BudgetState.stateOf(value));
 	}
 
 	@Override

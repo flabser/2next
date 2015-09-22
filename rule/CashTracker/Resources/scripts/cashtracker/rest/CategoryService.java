@@ -1,6 +1,7 @@
 package cashtracker.rest;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -16,14 +17,11 @@ import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.CategoryDAO;
 import cashtracker.model.Category;
-import cashtracker.model.Errors;
+import cashtracker.pojo.Errors;
 import cashtracker.validation.CategoryValidator;
 import cashtracker.validation.ValidationError;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
 
 
@@ -36,19 +34,7 @@ public class CategoryService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get() {
 		CategoryDAO dao = new CategoryDAO(getSession());
-		List <Category> list = dao.findAll();
-		_Response resp = new _Response("success", list, new Meta(list.size(), -1, -1));
-
-		ObjectMapper om = new ObjectMapper();
-		om.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
-		om.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-
-		try {
-			return Response.ok(om.writeValueAsString(resp)).build();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return Response.ok(new Categories(dao.findAll())).build();
 	}
 
 	@GET
@@ -57,6 +43,11 @@ public class CategoryService extends RestProvider {
 	public Response get(@PathParam("id") long id) {
 		CategoryDAO dao = new CategoryDAO(getSession());
 		Category m = dao.findById(id);
+		//
+		if (m == null) {
+			return Response.noContent().status(Status.NOT_FOUND).build();
+		}
+		//
 		return Response.ok(m).build();
 	}
 
@@ -86,8 +77,12 @@ public class CategoryService extends RestProvider {
 		}
 
 		CategoryDAO dao = new CategoryDAO(getSession());
-		//
 		Category pm = dao.findById(id);
+		//
+		if (pm == null) {
+			return Response.noContent().status(Status.NOT_FOUND).build();
+		}
+		//
 		pm.setName(m.getName());
 		pm.setParent(m.getParent());
 		pm.setTransactionTypes(m.getTransactionTypes());
@@ -120,29 +115,13 @@ public class CategoryService extends RestProvider {
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
-	class Meta {
+	@JsonRootName("categories")
+	class Categories extends ArrayList <Category> {
 
-		public int total = 0;
-		public int limit = 20;
-		public int offset = 0;
+		private static final long serialVersionUID = 1L;
 
-		public Meta(int total, int limit, int offset) {
-			this.total = total;
-			this.limit = limit;
-			this.offset = offset;
-		}
-	}
-
-	class _Response {
-
-		public String status;
-		public List <Category> categories;
-		public Meta meta;
-
-		public _Response(String status, List <Category> list, Meta meta) {
-			this.status = status;
-			this.categories = list;
-			this.meta = meta;
+		public Categories(Collection <? extends Category> m) {
+			addAll(m);
 		}
 	}
 }

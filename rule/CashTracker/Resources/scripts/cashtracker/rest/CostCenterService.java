@@ -20,13 +20,13 @@ import javax.ws.rs.core.Response.Status;
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.helper.PageRequest;
 import cashtracker.model.CostCenter;
-import cashtracker.model.Errors;
+import cashtracker.pojo.Errors;
+import cashtracker.pojo.Meta;
 import cashtracker.validation.CostCenterValidator;
 import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.flabser.restful.RestProvider;
@@ -46,7 +46,6 @@ public class CostCenterService extends RestProvider {
 		_Response resp = new _Response("success", list, new Meta(list.size(), -1, -1));
 
 		ObjectMapper om = new ObjectMapper();
-		om.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
 		om.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
 
 		try {
@@ -63,6 +62,11 @@ public class CostCenterService extends RestProvider {
 	public Response get(@PathParam("id") long id) {
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		CostCenter m = dao.findById(id);
+		//
+		if (m == null) {
+			return Response.noContent().status(Status.NOT_FOUND).build();
+		}
+		//
 		return Response.ok(m).build();
 	}
 
@@ -92,8 +96,12 @@ public class CostCenterService extends RestProvider {
 		}
 
 		CostCenterDAO dao = new CostCenterDAO(getSession());
-		//
 		CostCenter pm = dao.findById(id);
+		//
+		if (pm == null) {
+			return Response.noContent().status(Status.NOT_FOUND).build();
+		}
+		//
 		pm.setName(m.getName());
 		//
 		return Response.ok(dao.update(pm)).build();
@@ -124,19 +132,6 @@ public class CostCenterService extends RestProvider {
 
 		public CostCenters(Collection <? extends CostCenter> m) {
 			addAll(m);
-		}
-	}
-
-	class Meta {
-
-		public int total = 0;
-		public int limit = 20;
-		public int offset = 0;
-
-		public Meta(int total, int limit, int offset) {
-			this.total = total;
-			this.limit = limit;
-			this.offset = offset;
 		}
 	}
 

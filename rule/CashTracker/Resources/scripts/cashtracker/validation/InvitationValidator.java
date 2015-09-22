@@ -1,6 +1,6 @@
 package cashtracker.validation;
 
-import cashtracker.model.Invitation;
+import cashtracker.pojo.Invitation;
 
 import com.flabser.script._Validator;
 

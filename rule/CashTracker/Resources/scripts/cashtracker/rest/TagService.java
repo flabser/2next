@@ -17,13 +17,13 @@ import javax.ws.rs.core.Response.Status;
 
 import cashtracker.dao.TagDAO;
 import cashtracker.helper.PageRequest;
-import cashtracker.model.Errors;
 import cashtracker.model.Tag;
+import cashtracker.pojo.Errors;
+import cashtracker.pojo.Meta;
 import cashtracker.validation.TagValidator;
 import cashtracker.validation.ValidationError;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.flabser.restful.RestProvider;
@@ -44,7 +44,6 @@ public class TagService extends RestProvider {
 		_Response resp = new _Response("success", list, new Meta(list.size(), -1, -1));
 
 		ObjectMapper om = new ObjectMapper();
-		om.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
 		om.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
 
 		try {
@@ -61,6 +60,11 @@ public class TagService extends RestProvider {
 	public Response get(@PathParam("id") long id) {
 		TagDAO dao = new TagDAO(getSession());
 		Tag m = dao.findById(id);
+		//
+		if (m == null) {
+			return Response.noContent().status(Status.NOT_FOUND).build();
+		}
+		//
 		return Response.ok(m).build();
 	}
 
@@ -90,8 +94,12 @@ public class TagService extends RestProvider {
 		}
 
 		TagDAO dao = new TagDAO(getSession());
-		//
 		Tag pm = dao.findById(id);
+		//
+		if (pm == null) {
+			return Response.noContent().status(Status.NOT_FOUND).build();
+		}
+		//
 		pm.setName(m.getName());
 		//
 		return Response.ok(dao.update(pm)).build();
@@ -113,19 +121,6 @@ public class TagService extends RestProvider {
 			}
 		}
 		return Response.status(Status.NO_CONTENT).build();
-	}
-
-	class Meta {
-
-		public int total = 0;
-		public int limit = 20;
-		public int offset = 0;
-
-		public Meta(int total, int limit, int offset) {
-			this.total = total;
-			this.limit = limit;
-			this.offset = offset;
-		}
 	}
 
 	class _Response {

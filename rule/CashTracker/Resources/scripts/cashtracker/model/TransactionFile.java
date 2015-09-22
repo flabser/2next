@@ -21,15 +21,12 @@ public class TransactionFile {
 	@JoinColumn(name = "transaction_id", nullable = false)
 	private Transaction transaction;
 
-
 	@Embedded
 	private Attachment file;
-
 
 	public Attachment getFile() {
 		return file;
 	}
-
 
 	public void setFile(Attachment file) {
 		this.file = file;
