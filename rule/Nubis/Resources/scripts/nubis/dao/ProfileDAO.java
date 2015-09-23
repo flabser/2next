@@ -10,10 +10,10 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 
-public class ProfileDAO extends DAO {
+public class ProfileDAO extends DAO <Profile> {
 
 	public ProfileDAO(_Session session) {
-		super(session);
+		super(Profile.class, session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -21,12 +21,5 @@ public class ProfileDAO extends DAO {
 		String jpql = "SELECT a FROM Profile AS a";
 		Query q = em.createQuery(jpql);
 		return q.getResultList();
-	}
-
-	public Profile findById(long id) {
-		String jpql = "SELECT a FROM Profile AS a WHERE a.id = :id";
-		Query q = em.createQuery(jpql);
-		q.setParameter("id", id);
-		return (Profile) q.getSingleResult();
 	}
 }
