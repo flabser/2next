@@ -10,10 +10,10 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 
-public class CategoryDAO extends DAO {
+public class CategoryDAO extends DAO <Category> {
 
 	public CategoryDAO(_Session session) {
-		super(session);
+		super(Category.class, session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -21,13 +21,6 @@ public class CategoryDAO extends DAO {
 		String jpql = "SELECT c FROM Category AS c WHERE c.parent IS NULL ORDER BY c.name";
 		Query q = em.createQuery(jpql);
 		return q.getResultList();
-	}
-
-	public Category findById(long id) {
-		String jpql = "SELECT c FROM Category AS c WHERE c.id = :id";
-		Query q = em.createQuery(jpql);
-		q.setParameter("id", id);
-		return (Category) q.getSingleResult();
 	}
 
 	public boolean existsTransactionByCategory(Category m) {

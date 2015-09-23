@@ -7,14 +7,13 @@ import javax.persistence.Query;
 import cashtracker.model.Budget;
 
 import com.flabser.dataengine.jpa.DAO;
-import com.flabser.dataengine.jpa.IAppEntity;
 import com.flabser.script._Session;
 
 
-public class BudgetDAO extends DAO {
+public class BudgetDAO extends DAO <Budget> {
 
 	public BudgetDAO(_Session session) {
-		super(session);
+		super(Budget.class, session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -31,7 +30,7 @@ public class BudgetDAO extends DAO {
 	}
 
 	@Override
-	public IAppEntity findById(long id) {
+	public Budget findById(long id) {
 		return null;
 	}
 }

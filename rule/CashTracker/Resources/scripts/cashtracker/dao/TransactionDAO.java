@@ -25,10 +25,11 @@ import com.flabser.env.Environment;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
 
-public class TransactionDAO extends DAO {
+
+public class TransactionDAO extends DAO <Transaction> {
 
 	public TransactionDAO(_Session session) {
-		super(session);
+		super(Transaction.class, session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -50,16 +51,8 @@ public class TransactionDAO extends DAO {
 		return q.getResultList();
 	}
 
-	@Override
-	public Transaction findById(long id) {
-		String jpql = "SELECT t FROM Transaction AS t WHERE t.id = :id";
-		Query q = em.createQuery(jpql);
-		q.setParameter("id", id);
-		return (Transaction) q.getSingleResult();
-	}
-
 	@SuppressWarnings("unchecked")
-	public List<Transaction> findAllByAccountFrom(Account m) {
+	public List <Transaction> findAllByAccountFrom(Account m) {
 		String jpql = "SELECT t FROM Transaction AS t WHERE t.accountFrom = :account";
 		Query q = em.createQuery(jpql);
 		q.setParameter("account", m);
@@ -67,7 +60,7 @@ public class TransactionDAO extends DAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Transaction> findAllByCostCenter(CostCenter m) {
+	public List <Transaction> findAllByCostCenter(CostCenter m) {
 		String jpql = "SELECT t FROM Transaction AS t WHERE t.costCenter = :costCenter";
 		Query q = em.createQuery(jpql);
 		q.setParameter("costCenter", m);
@@ -75,24 +68,17 @@ public class TransactionDAO extends DAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Transaction> findAllByCategory(Category m) {
+	public List <Transaction> findAllByCategory(Category m) {
 		String jpql = "SELECT t FROM Transaction AS t WHERE t.category = :category";
 		Query q = em.createQuery(jpql);
 		q.setParameter("category", m);
 		return q.getResultList();
 	}
 
-	public long getCountTransactions() {
-		Query q = em.createQuery("SELECT count(t) FROM Transaction AS t");
-		long count = (long) q.getSingleResult();
-		return count;
-	}
-
-	public long getCountTransactions(TransactionType type) {
+	public int getCountTransactions(TransactionType type) {
 		Query q = em.createQuery("SELECT count(t) FROM Transaction AS t WHERE t.transactionType = :type");
 		q.setParameter("type", type);
-		long count = (long) q.getSingleResult();
-		return count;
+		return ((Long) q.getSingleResult()).intValue();
 	}
 
 	public Transaction add(Transaction entity) {
@@ -101,7 +87,7 @@ public class TransactionDAO extends DAO {
 		entity.setAuthor(user.id);
 		entity.setRegDate(new Date());
 		//
-		Set<TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
+		Set <TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
 		if (files != null) {
 			entity.setAttachments(files);
 		}
@@ -115,7 +101,7 @@ public class TransactionDAO extends DAO {
 		EntityTransaction transact = em.getTransaction();
 		transact.begin();
 		//
-		Set<TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
+		Set <TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
 		if (files != null) {
 			entity.setAttachments(files);
 		}
@@ -125,10 +111,10 @@ public class TransactionDAO extends DAO {
 		return entity;
 	}
 
-	protected Set<TransactionFile> proccesAttachments(Transaction entity, Set<TransactionFile> attachments) {
+	protected Set <TransactionFile> proccesAttachments(Transaction entity, Set <TransactionFile> attachments) {
 		if (attachments != null) {
 			File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
-			Set<TransactionFile> files = new HashSet<TransactionFile>();
+			Set <TransactionFile> files = new HashSet <TransactionFile>();
 			for (TransactionFile newFile : attachments) {
 				String tmpID = newFile.getTempID();
 				if (tmpID != null) {

@@ -10,10 +10,10 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 
-public class AccountDAO extends DAO {
+public class AccountDAO extends DAO <Account> {
 
 	public AccountDAO(_Session session) {
-		super(session);
+		super(Account.class, session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -21,13 +21,6 @@ public class AccountDAO extends DAO {
 		String jpql = "SELECT a FROM Account AS a ORDER BY a.name";
 		Query q = em.createQuery(jpql);
 		return q.getResultList();
-	}
-
-	public Account findById(long id) {
-		String jpql = "SELECT a FROM Account AS a WHERE a.id = :id";
-		Query q = em.createQuery(jpql);
-		q.setParameter("id", id);
-		return (Account) q.getSingleResult();
 	}
 
 	public boolean existsTransactionByAccount(Account m) {

@@ -11,10 +11,10 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 
-public class CostCenterDAO extends DAO {
+public class CostCenterDAO extends DAO <CostCenter> {
 
 	public CostCenterDAO(_Session session) {
-		super(session);
+		super(CostCenter.class, session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -31,13 +31,6 @@ public class CostCenterDAO extends DAO {
 		q.setFirstResult(pr.getOffset());
 		q.setMaxResults(pr.getLimit());
 		return q.getResultList();
-	}
-
-	public CostCenter findById(long id) {
-		String jpql = "SELECT cc FROM CostCenter AS cc WHERE cc.id = :id";
-		Query q = em.createQuery(jpql);
-		q.setParameter("id", id);
-		return (CostCenter) q.getSingleResult();
 	}
 
 	public boolean existsTransactionByCostCenter(CostCenter m) {

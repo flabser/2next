@@ -11,10 +11,10 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 
-public class TagDAO extends DAO {
+public class TagDAO extends DAO <Tag> {
 
 	public TagDAO(_Session session) {
-		super(session);
+		super(Tag.class, session);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -31,13 +31,6 @@ public class TagDAO extends DAO {
 		q.setFirstResult(pr.getOffset());
 		q.setMaxResults(pr.getLimit());
 		return q.getResultList();
-	}
-
-	public Tag findById(long id) {
-		String jpql = "SELECT t FROM Tag AS t WHERE t.id = :id";
-		Query q = em.createQuery(jpql);
-		q.setParameter("id", id);
-		return (Tag) q.getSingleResult();
 	}
 
 	public boolean existsTransactionByTag(Tag m) {
