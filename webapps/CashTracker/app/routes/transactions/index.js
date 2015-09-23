@@ -4,7 +4,7 @@ import InfinityRoute from "ember-infinity/mixins/route";
 export default Em.Route.extend(InfinityRoute, {
     perPageParam: "limit", // instead of "per_page"
     pageParam: "page", // instead of "page"
-    totalPagesParam: "meta.total", // instead of "meta.total_pages"
+    totalPagesParam: "meta.total_pages", // instead of "meta.total_pages"
 
     queryParams: {
         type: {
@@ -22,11 +22,13 @@ export default Em.Route.extend(InfinityRoute, {
     },
 
     model: function(params) {
+        console.log(params);
         //return this.store.query('transaction', params);
 
         return this.infinityModel("transaction", {
             perPage: 20,
-            startingPage: 1
+            startingPage: 1,
+            type: params.type
         });
     },
 
@@ -56,18 +58,8 @@ export default Em.Route.extend(InfinityRoute, {
         this._super(transition);
     },
 
-    actions: {
-        paginatePrev: function() {
-            this.get('controller').set('offset', (+this.get('controller.offset') - 20));
-            this.transitionTo('transactions', {
-                queryParams: this.get('controller').queryParams
-            });
-        },
-        paginateNext: function() {
-            this.get('controller').set('offset', (+this.get('controller.offset') + 20));
-            this.transitionTo('transactions', {
-                queryParams: this.get('controller').queryParams
-            });
-        }
-    }
+    deactivate: function() {
+        this._super();
+        this.store.unloadAll('transaction');
+    },
 });

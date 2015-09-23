@@ -9,7 +9,8 @@
     {{#each attachments as |attach|}}
         {{#unless attach.isNew}}
         <li>
-            <p>{{attach.realFileName}}
+            <p>
+                <a href="rest/{{modelUrl}}/{{modelId}}/{{attach.fieldName}}/{{attach.realFileName}}">{{attach.realFileName}}</a>
                 <i>{{attach.size}}</i>
             </p>
             <span class="remove">{{t 'remove'}}</span>

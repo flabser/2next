@@ -8,7 +8,7 @@ export default DS.Model.extend({
         async: false
     }),
     amount: DS.attr('number'),
-    date: DS.attr('date'),
+    date: DS.attr('string'),
     category: DS.belongsTo('category', {
         async: false
     }),

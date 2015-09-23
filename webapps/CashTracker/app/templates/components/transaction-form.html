@@ -37,12 +37,13 @@
                         {{t 'date'}}
                     </div>
                     <div class="controls">
-                        {{tn-input
-                            type='date'
+                        {{date-picker date=transaction.date valueFormat='YYYY-MM-DD' class='span2'}}
+                        <!-- {{tn-input
+                            type='text'
                             value=transaction.date
                             focus-out='validateDate'
                             class='span2'
-                        }}
+                        }} -->
                         {{#each errors.date as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -173,6 +174,8 @@
                     maxSize=3
                     fieldName='files'
                     attachments=transaction.attachments
+                    modelId=transaction.id
+                    modelUrl='transactions'
                     addAttach='addAttach'
                     removeAttach='removeAttach'}}
             </fieldset>

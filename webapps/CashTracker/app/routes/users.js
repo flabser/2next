@@ -5,6 +5,11 @@ export default Em.Route.extend({
         return this.store.findAll('user');
     },
 
+    deactivate: function() {
+        this._super();
+        this.store.unloadAll('user');
+    },
+
     actions: {
         composeRecord: function() {
             this.transitionTo('users.invitation');

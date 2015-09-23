@@ -14,6 +14,11 @@ export default Em.Route.extend(InfinityRoute, {
         });
     },
 
+    deactivate: function() {
+        this._super();
+        this.store.unloadAll('tag');
+    },
+
     actions: {
         composeRecord: function() {
             this.transitionTo('tags.new');

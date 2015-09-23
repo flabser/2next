@@ -14,6 +14,11 @@ export default Em.Route.extend(InfinityRoute, {
         });
     },
 
+    deactivate: function() {
+        this._super();
+        this.store.unloadAll('cost-center');
+    },
+
     actions: {
         composeRecord: function() {
             this.transitionTo('cost_centers.new');

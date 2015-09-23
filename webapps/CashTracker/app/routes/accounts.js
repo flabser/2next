@@ -5,6 +5,11 @@ export default Em.Route.extend({
         return this.store.findAll('account');
     },
 
+    deactivate: function() {
+        this._super();
+        this.store.unloadAll('account');
+    },
+
     actions: {
         composeRecord: function() {
             this.transitionTo('accounts.new');

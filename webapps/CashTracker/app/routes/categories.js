@@ -5,6 +5,11 @@ export default Em.Route.extend({
         return this.store.findAll('category');
     },
 
+    deactivate: function() {
+        this._super();
+        this.store.unloadAll('category');
+    },
+
     actions: {
         composeRecord: function() {
             this.transitionTo('categories.new');
