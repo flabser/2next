@@ -78,7 +78,7 @@ public class AccountTest extends InitEnv {
 		}
 	}
 
-	// @Test
+	@Test
 	public void deleteTest() {
 		List <Account> list = dao.findAll();
 

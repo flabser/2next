@@ -37,10 +37,10 @@ public class AccountService extends RestProvider {
 	public Response get() {
 		AccountDAO dao = new AccountDAO(getSession());
 		List <Account> list = dao.findAll();
-		_Response resp = new _Response("success", list, new Meta(list.size(), -1, -1));
+		_Response resp = new _Response("success", list, new Meta(list.size(), 20, 0, 1));
 
 		ObjectMapper om = new ObjectMapper();
-		om.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+		om.disable(SerializationFeature.WRAP_ROOT_VALUE);
 
 		try {
 			return Response.ok(om.writeValueAsString(resp)).build();

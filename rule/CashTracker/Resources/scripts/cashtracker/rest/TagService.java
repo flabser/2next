@@ -39,12 +39,12 @@ public class TagService extends RestProvider {
 	public Response get(@QueryParam("page") int page, @QueryParam("limit") int limit) {
 		TagDAO dao = new TagDAO(getSession());
 
-		PageRequest pr = new PageRequest(page * limit, limit, "", "");
+		PageRequest pr = new PageRequest((page - 1) * limit, limit, "", "");
 		List <Tag> list = dao.findAll(pr);
-		_Response resp = new _Response("success", list, new Meta(list.size(), -1, -1));
+		_Response resp = new _Response("success", list, new Meta(dao.getCount().intValue(), 20, 0, page));
 
 		ObjectMapper om = new ObjectMapper();
-		om.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+		om.disable(SerializationFeature.WRAP_ROOT_VALUE);
 
 		try {
 			return Response.ok(om.writeValueAsString(resp)).build();

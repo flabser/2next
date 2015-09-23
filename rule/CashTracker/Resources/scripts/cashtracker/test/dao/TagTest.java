@@ -48,6 +48,10 @@ public class TagTest extends InitEnv {
 		Tag mFirst = dao.findById(list.get(0).getId());
 		Tag mLast = dao.findById(list.get(list.size() - 1).getId());
 
+		System.out.println(mFirst);
+		System.out.println(mLast);
+		System.out.println(dao.getCount());
+
 		assertNotNull(mFirst);
 		assertNotNull(mLast);
 	}

@@ -40,6 +40,7 @@ import com.flabser.scheduler.tasks.TempFileCleaner;
 import com.flabser.server.Server;
 import com.flabser.users.User;
 
+
 @Path("transactions")
 public class TransactionService extends RestProvider {
 
@@ -54,19 +55,19 @@ public class TransactionService extends RestProvider {
 		PageRequest pr = new PageRequest((page - 1) * limit, limit, orderBy, direction);
 		TransactionDAO dao = new TransactionDAO(getSession());
 		TransactionType type = null;
-		long count;
+		int count;
 		if (trType != null && !trType.isEmpty()) {
 			type = TransactionType.typeOf(trType.substring(0, 1).toUpperCase());
 			count = dao.getCountTransactions(type);
 		} else {
-			count = dao.getCountTransactions();
+			count = dao.getCount().intValue();
 		}
 		//
-		List<Transaction> list = dao.find(pr, type);
-		_Response _resp = new _Response("success", list, new Meta(count, pr.getLimit(), pr.getOffset()));
+		List <Transaction> list = dao.find(pr, type);
+		_Response _resp = new _Response("success", list, new Meta(count, pr.getLimit(), pr.getOffset(), page));
 
 		ObjectMapper om = new ObjectMapper();
-		om.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+		om.disable(SerializationFeature.WRAP_ROOT_VALUE);
 
 		try {
 			return Response.ok(om.writeValueAsString(_resp)).build();
@@ -164,7 +165,8 @@ public class TransactionService extends RestProvider {
 					try {
 						String codedFileName = URLEncoder.encode(file.getName(), "UTF8");
 						return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
-								.header("Content-Disposition", "attachment; filename*=\"utf-8'" + codedFileName + "\"" ).build();
+								.header("Content-Disposition", "attachment; filename*=\"utf-8'" + codedFileName + "\"")
+								.build();
 					} catch (UnsupportedEncodingException e) {
 						Server.logger.errorLogEntry(e);
 					}
@@ -189,7 +191,7 @@ public class TransactionService extends RestProvider {
 		if (m == null) {
 			return Response.noContent().status(Status.NOT_FOUND).build();
 		} else {
-			if(m.deleteAttachment(fieldName, fileName)){
+			if (m.deleteAttachment(fieldName, fileName)) {
 				return Response.status(HttpServletResponse.SC_OK).build();
 			}
 			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
@@ -199,10 +201,10 @@ public class TransactionService extends RestProvider {
 	class _Response {
 
 		public String status;
-		public List<Transaction> transactions;
+		public List <Transaction> transactions;
 		public Meta meta;
 
-		public _Response(String status, List<Transaction> list, Meta meta) {
+		public _Response(String status, List <Transaction> list, Meta meta) {
 			this.status = status;
 			this.transactions = list;
 			this.meta = meta;
