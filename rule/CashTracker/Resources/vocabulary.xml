@@ -514,6 +514,12 @@
 		<entry lang="ENG">Close</entry>
 		<entry lang="BG">Затвори</entry>
 	</sentence>
+	<sentence mode="on" keyword="remove">
+		<entry lang="RUS">Удалить</entry>
+		<entry lang="KAZ">Жою</entry>
+		<entry lang="ENG">Remove</entry>
+		<entry lang="BG">Удалить</entry>
+	</sentence>
 	<sentence mode="on" keyword="repeat">
 		<entry lang="RUS">Повтор</entry>
 		<entry lang="KAZ">Қайталау</entry>

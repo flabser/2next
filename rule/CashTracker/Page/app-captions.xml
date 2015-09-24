@@ -10,6 +10,7 @@
 	<caption name="save" />
 	<caption name="cancel" />
 	<caption name="close" />
+	<caption name="remove" />
 	<caption name="repeat" />
 
 	<caption name="workspace" />
