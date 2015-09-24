@@ -108,6 +108,17 @@ export default Em.Component.extend({
                     tempID: tid
                 });
             });
+        },
+
+        removeAttach: function(attach) {
+            // rest/{{modelUrl}}/{{modelId}}/{{attach.fieldName}}/{{attach.realFileName}}
+            $.ajax({
+                method: 'DELETE',
+                url: 'rest/' + this.get('modelUrl') + '/' + this.get('modelId') + '/' + attach.get('fieldName') + '/' + attach.get('realFileName'),
+                success: function() {
+                    attach.deleteRecord();
+                }
+            })
         }
     },
 

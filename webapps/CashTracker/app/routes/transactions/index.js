@@ -28,7 +28,10 @@ export default Em.Route.extend(InfinityRoute, {
         return this.infinityModel("transaction", {
             perPage: 20,
             startingPage: 1,
-            type: params.type
+            type: params.type,
+            offset: params.offset,
+            limit: params.limit,
+            order_by: params.order_by
         });
     },
 
@@ -56,10 +59,5 @@ export default Em.Route.extend(InfinityRoute, {
         }
 
         this._super(transition);
-    },
-
-    deactivate: function() {
-        this._super();
-        this.store.unloadAll('transaction');
-    },
+    }
 });

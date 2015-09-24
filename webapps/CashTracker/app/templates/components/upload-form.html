@@ -8,13 +8,17 @@
 <ul class="attachments">
     {{#each attachments as |attach|}}
         {{#unless attach.isNew}}
-        <li>
-            <p>
-                <a href="rest/{{modelUrl}}/{{modelId}}/{{attach.fieldName}}/{{attach.realFileName}}">{{attach.realFileName}}</a>
-                <i>{{attach.size}}</i>
-            </p>
-            <span class="remove">{{t 'remove'}}</span>
-        </li>
+            {{#unless attach.isDeleted}}
+            <li>
+                <p>
+                    <a href="rest/{{modelUrl}}/{{modelId}}/{{attach.fieldName}}/{{attach.realFileName}}">
+                        {{attach.realFileName}}
+                    </a>
+                    <i>{{attach.size}}</i>
+                    <a href="#" class="remove" {{action 'removeAttach' attach}}>{{t 'remove'}}</a>
+                </p>
+            </li>
+            {{/unless}}
         {{/unless}}
     {{/each}}
 </ul>
