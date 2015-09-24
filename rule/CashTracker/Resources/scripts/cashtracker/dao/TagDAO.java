@@ -3,6 +3,7 @@ package cashtracker.dao;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import cashtracker.helper.PageRequest;
 import cashtracker.model.Tag;
@@ -17,17 +18,15 @@ public class TagDAO extends DAO <Tag> {
 		super(Tag.class, session);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List <Tag> findAll() {
 		String jpql = "SELECT t FROM Tag AS t ORDER BY t.name";
-		Query q = em.createQuery(jpql);
+		TypedQuery <Tag> q = em.createQuery(jpql, Tag.class);
 		return q.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
-	public List <Tag> findAll(PageRequest pr) {
+	public List <Tag> find(PageRequest pr) {
 		String jpql = "SELECT t FROM Tag AS t ORDER BY t.name";
-		Query q = em.createQuery(jpql);
+		TypedQuery <Tag> q = em.createQuery(jpql, Tag.class);
 		q.setFirstResult(pr.getOffset());
 		q.setMaxResults(pr.getLimit());
 		return q.getResultList();

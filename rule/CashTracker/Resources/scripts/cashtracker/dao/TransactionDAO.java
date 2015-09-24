@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.apache.commons.io.FileUtils;
 
@@ -32,7 +33,6 @@ public class TransactionDAO extends DAO <Transaction> {
 		super(Transaction.class, session);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List <Transaction> find(PageRequest pr, TransactionType type) {
 		String jpql;
 		if (type == null) {
@@ -41,7 +41,7 @@ public class TransactionDAO extends DAO <Transaction> {
 			jpql = "SELECT t FROM Transaction AS t WHERE t.transactionType = :type ORDER BY t.date";
 		}
 
-		Query q = em.createQuery(jpql);
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		if (type != null) {
 			q.setParameter("type", type);
 		}
@@ -51,26 +51,23 @@ public class TransactionDAO extends DAO <Transaction> {
 		return q.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	public List <Transaction> findAllByAccountFrom(Account m) {
 		String jpql = "SELECT t FROM Transaction AS t WHERE t.accountFrom = :account";
-		Query q = em.createQuery(jpql);
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("account", m);
 		return q.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	public List <Transaction> findAllByCostCenter(CostCenter m) {
 		String jpql = "SELECT t FROM Transaction AS t WHERE t.costCenter = :costCenter";
-		Query q = em.createQuery(jpql);
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("costCenter", m);
 		return q.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	public List <Transaction> findAllByCategory(Category m) {
 		String jpql = "SELECT t FROM Transaction AS t WHERE t.category = :category";
-		Query q = em.createQuery(jpql);
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("category", m);
 		return q.getResultList();
 	}

@@ -3,6 +3,7 @@ package cashtracker.dao;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import cashtracker.helper.PageRequest;
 import cashtracker.model.CostCenter;
@@ -17,17 +18,15 @@ public class CostCenterDAO extends DAO <CostCenter> {
 		super(CostCenter.class, session);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List <CostCenter> findAll() {
 		String jpql = "SELECT cc FROM CostCenter AS cc ORDER BY cc.name";
-		Query q = em.createQuery(jpql);
+		TypedQuery <CostCenter> q = em.createQuery(jpql, CostCenter.class);
 		return q.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
-	public List <CostCenter> findAll(PageRequest pr) {
+	public List <CostCenter> find(PageRequest pr) {
 		String jpql = "SELECT cc FROM CostCenter AS cc ORDER BY cc.name";
-		Query q = em.createQuery(jpql);
+		TypedQuery <CostCenter> q = em.createQuery(jpql, CostCenter.class);
 		q.setFirstResult(pr.getOffset());
 		q.setMaxResults(pr.getLimit());
 		return q.getResultList();

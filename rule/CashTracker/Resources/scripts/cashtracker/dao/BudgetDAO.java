@@ -2,7 +2,7 @@ package cashtracker.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import cashtracker.model.Budget;
 
@@ -16,10 +16,9 @@ public class BudgetDAO extends DAO <Budget> {
 		super(Budget.class, session);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List <Budget> findAll() {
 		String jpql = "SELECT b FROM Budget AS b";
-		Query q = em.createQuery(jpql);
+		TypedQuery <Budget> q = em.createQuery(jpql, Budget.class);
 		return q.getResultList();
 	}
 

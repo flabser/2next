@@ -2,7 +2,7 @@ package nubis.dao;
 
 import java.util.List;
 
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import nubis.model.Profile;
 
@@ -16,10 +16,9 @@ public class ProfileDAO extends DAO <Profile> {
 		super(Profile.class, session);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List <Profile> findAll() {
 		String jpql = "SELECT a FROM Profile AS a";
-		Query q = em.createQuery(jpql);
+		TypedQuery <Profile> q = em.createQuery(jpql, Profile.class);
 		return q.getResultList();
 	}
 }

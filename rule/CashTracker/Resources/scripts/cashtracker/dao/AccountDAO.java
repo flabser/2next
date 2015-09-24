@@ -3,6 +3,7 @@ package cashtracker.dao;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import cashtracker.model.Account;
 
@@ -16,10 +17,9 @@ public class AccountDAO extends DAO <Account> {
 		super(Account.class, session);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List <Account> findAll() {
 		String jpql = "SELECT a FROM Account AS a ORDER BY a.name";
-		Query q = em.createQuery(jpql);
+		TypedQuery <Account> q = em.createQuery(jpql, Account.class);
 		return q.getResultList();
 	}
 

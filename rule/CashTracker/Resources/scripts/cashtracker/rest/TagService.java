@@ -40,7 +40,7 @@ public class TagService extends RestProvider {
 		TagDAO dao = new TagDAO(getSession());
 
 		PageRequest pr = new PageRequest((page - 1) * limit, limit, "", "");
-		List <Tag> list = dao.findAll(pr);
+		List <Tag> list = dao.find(pr);
 		_Response resp = new _Response("success", list, new Meta(dao.getCount().intValue(), 20, 0, page));
 
 		ObjectMapper om = new ObjectMapper();

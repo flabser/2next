@@ -3,6 +3,7 @@ package cashtracker.dao;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import cashtracker.model.Category;
 
@@ -16,10 +17,9 @@ public class CategoryDAO extends DAO <Category> {
 		super(Category.class, session);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List <Category> findAll() {
 		String jpql = "SELECT c FROM Category AS c WHERE c.parent IS NULL ORDER BY c.name";
-		Query q = em.createQuery(jpql);
+		TypedQuery <Category> q = em.createQuery(jpql, Category.class);
 		return q.getResultList();
 	}
 

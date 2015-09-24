@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import com.flabser.script._Session;
 import com.flabser.users.User;
@@ -25,12 +26,11 @@ public abstract class DAO<T extends IAppEntity> implements IDAO {
 		return entityClass.getName();
 	}
 
-	@SuppressWarnings("unchecked")
 	public T findById(long id) {
 		String jpql = "SELECT m FROM " + getEntityClassName() + " AS m WHERE m.id = :id";
-		Query q = em.createQuery(jpql);
+		TypedQuery <T> q = em.createQuery(jpql, entityClass);
 		q.setParameter("id", id);
-		return (T) q.getSingleResult();
+		return q.getSingleResult();
 	}
 
 	public T add(T entity) {
@@ -56,7 +56,7 @@ public abstract class DAO<T extends IAppEntity> implements IDAO {
 	}
 
 	public Long getCount() {
-		Query q = em.createQuery("SELECT count(t) FROM " + getEntityClassName() + " AS t");
+		Query q = em.createQuery("SELECT count(m) FROM " + getEntityClassName() + " AS m");
 		return (Long) q.getSingleResult();
 	}
 }

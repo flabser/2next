@@ -42,7 +42,7 @@ public class CostCenterService extends RestProvider {
 	public Response get(@QueryParam("page") int page, @QueryParam("limit") int limit) {
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		PageRequest pr = new PageRequest((page - 1) * limit, limit, "", "");
-		List <CostCenter> list = dao.findAll(pr);
+		List <CostCenter> list = dao.find(pr);
 		_Response resp = new _Response("success", list, new Meta(dao.getCount().intValue(), 20, 0, page));
 
 		ObjectMapper om = new ObjectMapper();
