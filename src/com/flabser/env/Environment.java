@@ -102,10 +102,6 @@ public class Environment implements ICache {
 
 			defaultRedirectURL = "/" + XMLUtil.getTextContent(xmlDocument, "/tn/applications/@default", false, "Nibis", true);
 
-			Site site = new Site();
-			site.appBase = "Nubis";
-			site.name = "Nubis";
-			availableTemplates.put("Nubis", site);
 
 			NodeList nodeList = XMLUtil.getNodeList(xmlDocument, "/tn/applications");
 			if (nodeList.getLength() > 0) {
@@ -115,9 +111,9 @@ public class Environment implements ICache {
 					Node appNode = nodes.item(i);
 					if (XMLUtil.getTextContent(appNode, "name/@mode", false).equals("on")) {
 						String appName = XMLUtil.getTextContent(appNode, "name", false);
-						site = new Site();
+						Site site = new Site();
 						site.appBase = appName;
-						site.name = XMLUtil.getTextContent(appNode, "name/@sitename", false);
+						site.virtualHostName = XMLUtil.getTextContent(appNode, "name/@sitename", false);
 						String globalAttrValue = XMLUtil.getTextContent(appNode, "name/@global", false);
 						if (!globalAttrValue.equals("")) {
 							site.global = globalAttrValue;

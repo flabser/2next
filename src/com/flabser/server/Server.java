@@ -51,8 +51,8 @@ public class Server {
 
 		webServerInst.initAdministartor();
 
-		for (Site webApp : Environment.availableTemplates.values()) {
-			webServerInst.addAppTemplate(webApp.name, "/" + webApp.appBase, webApp.appBase);
+		for (Site site : Environment.availableTemplates.values()) {
+			webServerInst.addAppTemplate(site.virtualHostName, "/" + site.appBase, site.appBase);
 		}
 
 		webServerInst.initDefaultURL();
