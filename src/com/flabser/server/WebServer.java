@@ -28,7 +28,9 @@ import com.flabser.valves.Logging;
 import com.flabser.valves.Secure;
 import com.flabser.valves.Unsecure;
 
+
 public class WebServer implements IWebServer {
+
 	public static final String httpSchema = "http";
 	public static final String httpSecureSchema = "https";
 
@@ -52,7 +54,6 @@ public class WebServer implements IWebServer {
 		server.addLifecycleListener(listener);
 
 		initSharedResources();
-
 	}
 
 	public Context initSharedResources() throws LifecycleException, MalformedURLException {
@@ -119,8 +120,8 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
-				new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(
+				new ResourceLoader(docBase).getClasses())));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -138,7 +139,6 @@ public class WebServer implements IWebServer {
 		String URLPath = "/" + env.templateType + "/" + appID;
 		try {
 			context = tomcat.addContext(URLPath, db);
-
 
 			context.setDisplayName(URLPath.substring(1));
 
@@ -164,8 +164,8 @@ public class WebServer implements IWebServer {
 			context.addMimeMapping("css", "text/css");
 			context.addMimeMapping("js", "text/javascript");
 
-			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(new ResourceLoader(
-					env.templateType).getClasses())));
+			ResourceConfig rc = new ResourceConfig(new ResourceLoader(env.templateType).getClasses());
+			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(rc));
 			w1.setLoadOnStartup(1);
 			w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 			context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -179,7 +179,8 @@ public class WebServer implements IWebServer {
 	}
 
 	@Override
-	public Host addAppTemplate(String siteName, String URLPath, String docBase) throws LifecycleException, MalformedURLException {
+	public Host addAppTemplate(String siteName, String URLPath, String docBase) throws LifecycleException,
+			MalformedURLException {
 		Context context = null;
 
 		Server.logger.normalLogEntry("load \"" + docBase + "\" application template...");
@@ -213,8 +214,8 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
-				new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(
+				new ResourceLoader(docBase).getClasses())));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -241,12 +242,12 @@ public class WebServer implements IWebServer {
 
 		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 		context.addServletMapping("/", "default");
-
 	}
 
 	@Override
 	public String initConnectors() {
 		String portInfo = "";
+
 		if (Environment.isTLSEnable) {
 			Connector secureConnector = null;
 			Server.logger.normalLogEntry("TLS has been enabled");
@@ -261,12 +262,22 @@ public class WebServer implements IWebServer {
 			secureConnector.setProperty("SSLCertificateFile", Environment.certFile);
 			secureConnector.setProperty("SSLCertificateKeyFile", Environment.certKeyFile);
 			tomcat.setConnector(secureConnector);
-			portInfo = httpSecureSchema + "://" + tomcat.getHost().getName() + ":" + Integer.toString(Environment.secureHttpPort);
+
+			portInfo = httpSecureSchema + "://" + tomcat.getHost().getName() + ":"
+					+ Integer.toString(Environment.secureHttpPort);
 		} else {
 			portInfo = tomcat.getHost().getName() + ":" + Integer.toString(Environment.httpPort);
 		}
-		return portInfo;
 
+		Connector connector = tomcat.getConnector();
+		connector.setProperty("compression", "on");
+		connector.setProperty("compressionMinSize", "1024");
+		connector.setProperty("noCompressionUserAgents", "gozilla, traviata");
+		connector.setProperty("compressableMimeType",
+				"text/html, text/xml, text/plain, text/css, text/javascript, application/json,"
+						+ "application/javascript, application/x-javascript");
+
+		return portInfo;
 	}
 
 	@Override
@@ -278,6 +289,7 @@ public class WebServer implements IWebServer {
 		}
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
+
 			@Override
 			public void run() {
 				stopContainer();
@@ -294,7 +306,6 @@ public class WebServer implements IWebServer {
 		} catch (LifecycleException exception) {
 			Server.logger.errorLogEntry("cannot stop WebServer normally " + exception.getMessage());
 		}
-
 	}
 
 	private void initErrorPages(Context context) {
@@ -314,7 +325,5 @@ public class WebServer implements IWebServer {
 		er500.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		er500.setLocation("/Error");
 		context.addErrorPage(er);
-
 	}
-
 }
