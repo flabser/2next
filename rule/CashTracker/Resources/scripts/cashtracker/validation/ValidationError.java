@@ -23,7 +23,7 @@ public class ValidationError {
 		return errors.size() > 0;
 	}
 
-	class Error {
+	public class Error {
 
 		String field;
 		String type;
@@ -45,6 +45,10 @@ public class ValidationError {
 
 		public String getMessage() {
 			return message;
+		}
+
+		public String toString() {
+			return field + ", " + type + ", " + message;
 		}
 	}
 }

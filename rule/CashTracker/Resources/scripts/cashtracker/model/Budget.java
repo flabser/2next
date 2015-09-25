@@ -28,6 +28,7 @@ public class Budget extends AppEntity {
 	@Column(length = 16)
 	private BudgetStatus status;
 
+	//
 	public String getName() {
 		return name;
 	}

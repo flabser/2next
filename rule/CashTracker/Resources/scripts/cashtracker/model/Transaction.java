@@ -62,7 +62,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	private CostCenter costCenter;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "transaction_tags", joinColumns = { @JoinColumn(name = "TRANSACTION_ID", referencedColumnName = "ID") }, inverseJoinColumns = { @JoinColumn(name = "TAG_ID", referencedColumnName = "ID") })
+	@JoinTable(name = "transaction_tags", joinColumns = { @JoinColumn(name = "transaction_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "tag_id", referencedColumnName = "id") })
 	private List <Tag> tags;
 
 	@JsonSerialize(using = JsonDateSerializer.class)
@@ -83,10 +83,12 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@Column(name = "repeat_step")
 	private int repeatStep;
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_date", nullable = true)
 	private Date startDate;
 
+	@JsonSerialize(using = JsonDateSerializer.class)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "end_date", nullable = true)
 	private Date endDate;
@@ -97,16 +99,17 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	@Column(name = "include_in_reports")
 	private boolean includeInReports;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction", orphanRemoval = true, cascade = CascadeType.ALL)
 	public Set <TransactionFile> attachments;
 
+	//
 	public Set <TransactionFile> getAttachments() {
 		return attachments;
 	}
 
 	public TransactionFile getAttachment(String fieldName, String fileName) {
 		for (TransactionFile file : attachments) {
-			if (file.getFieldName().equalsIgnoreCase(fieldName) && file.getRealFileName().equals(fileName)){
+			if (file.getFieldName().equalsIgnoreCase(fieldName) && file.getRealFileName().equals(fileName)) {
 				return file;
 			}
 		}
@@ -115,7 +118,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	public boolean deleteAttachment(String fieldName, String fileName) {
 		for (TransactionFile file : attachments) {
-			if (file.getFieldName().equalsIgnoreCase(fieldName) && file.getRealFileName().equals(fileName)){
+			if (file.getFieldName().equalsIgnoreCase(fieldName) && file.getRealFileName().equals(fileName)) {
 				return attachments.remove(file);
 			}
 		}

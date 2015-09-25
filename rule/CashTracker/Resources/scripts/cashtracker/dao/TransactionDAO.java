@@ -78,6 +78,7 @@ public class TransactionDAO extends DAO <Transaction> {
 		return ((Long) q.getSingleResult()).intValue();
 	}
 
+	@Override
 	public Transaction add(Transaction entity) {
 		EntityTransaction transact = em.getTransaction();
 		transact.begin();
@@ -94,6 +95,7 @@ public class TransactionDAO extends DAO <Transaction> {
 		return entity;
 	}
 
+	@Override
 	public Transaction update(Transaction entity) {
 		EntityTransaction transact = em.getTransaction();
 		transact.begin();

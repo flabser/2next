@@ -1,6 +1,6 @@
 package cashtracker.test.dao;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertFalse;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -23,6 +23,8 @@ import cashtracker.model.Tag;
 import cashtracker.model.Transaction;
 import cashtracker.model.constants.TransactionState;
 import cashtracker.model.constants.TransactionType;
+import cashtracker.validation.TransactionValidator;
+import cashtracker.validation.ValidationError;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.util.Util;
@@ -30,7 +32,8 @@ import com.flabser.util.Util;
 
 public class TransactionTest extends InitEnv {
 
-	TransactionDAO dao;
+	private TransactionDAO dao;
+	private TransactionValidator validator = new TransactionValidator();
 
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
@@ -41,32 +44,25 @@ public class TransactionTest extends InitEnv {
 
 	@Test
 	public void insertTest() {
-		assertNotNull(db);
-
 		AccountDAO accountDAO = new AccountDAO(ses);
 		CostCenterDAO costCenterDAO = new CostCenterDAO(ses);
 		TagDAO tagDAO = new TagDAO(ses);
 		CategoryDAO categoryDAO = new CategoryDAO(ses);
 
 		PageRequest pr = new PageRequest(0, 5, "", "");
-
 		int size = dao.find(pr, null).size();
-		int iteration = size + 1500;
+		int iteration = size + 25;
+		long ctime = System.currentTimeMillis() - ((60 * 60 * 24) * 1000);
 
 		for (int i = size; i < iteration; i++) {
 			Transaction m = new Transaction();
 
-			m.setDate(new Date(System.currentTimeMillis() + (3600 * i)));
+			m.setDate(new Date(ctime + ((60 * 60 * 24) * i)));
 			m.setAmount(new BigDecimal(1000 + i));
-			m.setAccountFrom((Account) accountDAO.findAll().get(0));
-			m.setCostCenter((CostCenter) costCenterDAO.findAll().get(0));
-			m.setCategory((Category) categoryDAO.findAll().get(0));
+			m.setAccountFrom((Account) Util.getRandomFromList(accountDAO.findAllEnabled()));
+			m.setCostCenter((CostCenter) Util.getRandomFromList(costCenterDAO.findAll()));
 
-			List <Tag> tags = m.getTags();
-			if (tags == null) {
-				tags = new ArrayList <Tag>();
-			}
-
+			List <Tag> tags = new ArrayList <Tag>();
 			tags.add((Tag) Util.getRandomFromList(tagDAO.findAll()));
 			m.setTags(tags);
 
@@ -76,12 +72,24 @@ public class TransactionTest extends InitEnv {
 			} else if (i % 10 == 0) {
 				m.setTransactionType(TransactionType.TRANSFER);
 				m.setTransactionState(TransactionState.PENDING);
+				m.setAccountTo((Account) Util.getRandomFromList(accountDAO.findAllEnabled()));
 			} else {
 				m.setTransactionType(TransactionType.INCOME);
 				m.setTransactionState(TransactionState.CONFIRMED);
 			}
 
+			m.setCategory((Category) Util.getRandomFromList(categoryDAO.findByTransactionType(m.getTransactionType())));
+
+			ValidationError ve = validator.validate(m);
+			if (ve.hasError()) {
+				for (cashtracker.validation.ValidationError.Error err : ve.getErrors()) {
+					assertFalse("ValidationError : " + err.toString(), ve.hasError());
+				}
+			}
+
 			dao.add(m);
+
+			System.out.println(iteration + " : " + i);
 		}
 	}
 

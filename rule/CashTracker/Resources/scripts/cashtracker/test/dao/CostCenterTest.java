@@ -1,5 +1,6 @@
 package cashtracker.test.dao;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -10,6 +11,8 @@ import org.junit.Test;
 
 import cashtracker.dao.CostCenterDAO;
 import cashtracker.model.CostCenter;
+import cashtracker.validation.CostCenterValidator;
+import cashtracker.validation.ValidationError;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
 
@@ -17,6 +20,7 @@ import com.flabser.dataengine.pool.DatabasePoolException;
 public class CostCenterTest extends InitEnv {
 
 	CostCenterDAO dao;
+	private CostCenterValidator validator = new CostCenterValidator();
 
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
@@ -35,6 +39,13 @@ public class CostCenterTest extends InitEnv {
 		for (int i = size; i < iteration; i++) {
 			CostCenter m = new CostCenter();
 			m.setName("cost center - " + i);
+
+			ValidationError ve = validator.validate(m);
+			if (ve.hasError()) {
+				for (cashtracker.validation.ValidationError.Error err : ve.getErrors()) {
+					assertFalse("ValidationError : " + err.toString(), ve.hasError());
+				}
+			}
 
 			dao.add(m);
 		}

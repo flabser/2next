@@ -27,9 +27,4 @@ public class BudgetDAO extends DAO <Budget> {
 		em.createQuery("DELETE FROM Budget").executeUpdate();
 		em.getTransaction().commit();
 	}
-
-	@Override
-	public Budget findById(long id) {
-		return null;
-	}
 }

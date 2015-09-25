@@ -6,6 +6,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import cashtracker.model.Category;
+import cashtracker.model.constants.TransactionType;
 
 import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
@@ -20,6 +21,13 @@ public class CategoryDAO extends DAO <Category> {
 	public List <Category> findAll() {
 		String jpql = "SELECT c FROM Category AS c WHERE c.parent IS NULL ORDER BY c.name";
 		TypedQuery <Category> q = em.createQuery(jpql, Category.class);
+		return q.getResultList();
+	}
+
+	public List <Category> findByTransactionType(TransactionType type) {
+		String jpql = "SELECT c FROM Category AS c WHERE c.parent IS NULL AND :type MEMBER OF c.transactionTypes ORDER BY c.name";
+		TypedQuery <Category> q = em.createQuery(jpql, Category.class);
+		q.setParameter("type", type);
 		return q.getResultList();
 	}
 

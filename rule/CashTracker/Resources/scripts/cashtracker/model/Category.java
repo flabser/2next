@@ -43,7 +43,7 @@ public class Category extends AppEntity {
 
 	@ElementCollection
 	@Convert(converter = TransactionTypeConverter.class)
-	@CollectionTable(name = "category_transactiontypes", joinColumns = @JoinColumn(name = "CATEGORY_ID"))
+	@CollectionTable(name = "category_transactiontypes", joinColumns = @JoinColumn(name = "category_id"))
 	@Column(name = "transaction_types", length = 3)
 	private List <TransactionType> transactionTypes;
 

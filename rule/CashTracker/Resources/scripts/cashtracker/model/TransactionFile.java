@@ -29,7 +29,7 @@ public class TransactionFile extends SimpleAppEntity {
 	private String tempID;
 
 	@Lob
-	@Basic(fetch=FetchType.LAZY)
+	@Basic(fetch = FetchType.LAZY)
 	private byte[] file;
 
 	public String getFieldName() {
@@ -40,21 +40,17 @@ public class TransactionFile extends SimpleAppEntity {
 		this.fieldName = fieldName;
 	}
 
-
 	public String getRealFileName() {
 		return realFileName;
 	}
-
 
 	public void setRealFileName(String realFileName) {
 		this.realFileName = realFileName;
 	}
 
-
 	public String getTempID() {
 		return tempID;
 	}
-
 
 	public void setTempID(String tempID) {
 		this.tempID = tempID;
@@ -65,12 +61,10 @@ public class TransactionFile extends SimpleAppEntity {
 		return file;
 	}
 
-
 	@JsonIgnore
 	public void setFile(byte[] file) {
 		this.file = file;
 	}
-
 
 	public void setTransaction(Transaction entity) {
 		transaction = entity;
@@ -79,8 +73,10 @@ public class TransactionFile extends SimpleAppEntity {
 
 	public Transaction getTransaction() {
 		return transaction;
-
 	}
 
-
+	@Override
+	public String toString() {
+		return fieldName + "/" + realFileName + "; " + tempID;
+	}
 }

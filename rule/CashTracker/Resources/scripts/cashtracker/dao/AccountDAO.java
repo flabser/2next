@@ -23,6 +23,12 @@ public class AccountDAO extends DAO <Account> {
 		return q.getResultList();
 	}
 
+	public List <Account> findAllEnabled() {
+		String jpql = "SELECT a FROM Account AS a WHERE a.enabled = true ORDER BY a.name";
+		TypedQuery <Account> q = em.createQuery(jpql, Account.class);
+		return q.getResultList();
+	}
+
 	public boolean existsTransactionByAccount(Account m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.accountFrom = :account or t.accountTo = :account";
 		Query q = em.createQuery(jpql);
