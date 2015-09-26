@@ -27,7 +27,7 @@ import com.flabser.script._Session;
 import com.flabser.server.Server;
 
 
-public class TransactionDAO extends DAO <Transaction> {
+public class TransactionDAO extends DAO <Transaction, Long> {
 
 	public TransactionDAO(_Session session) {
 		super(Transaction.class, session);

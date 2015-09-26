@@ -12,7 +12,7 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 
-public class CostCenterDAO extends DAO <CostCenter> {
+public class CostCenterDAO extends DAO <CostCenter, Long> {
 
 	public CostCenterDAO(_Session session) {
 		super(CostCenter.class, session);

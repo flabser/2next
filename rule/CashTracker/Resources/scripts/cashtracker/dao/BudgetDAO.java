@@ -10,7 +10,7 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 
-public class BudgetDAO extends DAO <Budget> {
+public class BudgetDAO extends DAO <Budget, Long> {
 
 	public BudgetDAO(_Session session) {
 		super(Budget.class, session);

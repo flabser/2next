@@ -12,7 +12,7 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 
-public class CategoryDAO extends DAO <Category> {
+public class CategoryDAO extends DAO <Category, Long> {
 
 	public CategoryDAO(_Session session) {
 		super(Category.class, session);

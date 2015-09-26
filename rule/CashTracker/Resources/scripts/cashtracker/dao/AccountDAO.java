@@ -8,10 +8,11 @@ import javax.persistence.TypedQuery;
 import cashtracker.model.Account;
 
 import com.flabser.dataengine.jpa.DAO;
+import com.flabser.dataengine.jpa.IAppEntity;
 import com.flabser.script._Session;
 
 
-public class AccountDAO extends DAO <Account> {
+public class AccountDAO extends DAO <Account, Long> {
 
 	public AccountDAO(_Session session) {
 		super(Account.class, session);

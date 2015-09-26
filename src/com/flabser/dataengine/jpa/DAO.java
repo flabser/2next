@@ -10,7 +10,7 @@ import com.flabser.script._Session;
 import com.flabser.users.User;
 
 
-public abstract class DAO<T extends IAppEntity> implements IDAO {
+public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 
 	protected EntityManager em;
 	private Class <T> entityClass;
@@ -26,7 +26,8 @@ public abstract class DAO<T extends IAppEntity> implements IDAO {
 		return entityClass.getName();
 	}
 
-	public T findById(long id) {
+	@Override
+	public T findById(K id) {
 		String jpql = "SELECT m FROM " + getEntityClassName() + " AS m WHERE m.id = :id";
 		TypedQuery <T> q = em.createQuery(jpql, entityClass);
 		q.setParameter("id", id);
