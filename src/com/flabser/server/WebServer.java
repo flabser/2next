@@ -24,9 +24,11 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.restful.ResourceLoader;
+import com.flabser.valves.AccessGuard;
 import com.flabser.valves.Logging;
 import com.flabser.valves.Secure;
 import com.flabser.valves.Unsecure;
+import com.flabser.web.filter.CacheControlFilter;
 
 
 public class WebServer implements IWebServer {
@@ -56,11 +58,28 @@ public class WebServer implements IWebServer {
 		initSharedResources();
 	}
 
+	private void addFilterToContext(Context context, Class <?> filterClass, String filterName, String... urlPattern) {
+		FilterDef filterDef = new FilterDef();
+		filterDef.setFilterName(filterName);
+		filterDef.setFilterClass(filterClass.getName());
+
+		FilterMap filterMap = new FilterMap();
+		filterMap.setFilterName(filterName);
+		for (String path : urlPattern) {
+			filterMap.addURLPattern(path);
+		}
+
+		context.addFilterDef(filterDef);
+		context.addFilterMap(filterMap);
+	}
+
 	public Context initSharedResources() throws LifecycleException, MalformedURLException {
 		String URLPath = "/" + EnvConst.SHARED_RESOURCES_NAME;
 		String db = new File("webapps/" + EnvConst.SHARED_RESOURCES_NAME).getAbsolutePath();
 		Context sharedResContext = tomcat.addContext(URLPath, db);
 		sharedResContext.setDisplayName(EnvConst.SHARED_RESOURCES_NAME);
+
+		addFilterToContext(sharedResContext, CacheControlFilter.class, "CacheControlFilter", "/*");
 
 		Tomcat.addServlet(sharedResContext, "default", "org.apache.catalina.servlets.DefaultServlet");
 		sharedResContext.addServletMapping("/", "default");
@@ -84,16 +103,7 @@ public class WebServer implements IWebServer {
 		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
 		context.setDisplayName(EnvConst.ADMIN_APP_NAME);
 
-		FilterDef filterAccessGuard = new FilterDef();
-		filterAccessGuard.setFilterName("AccessGuard");
-		filterAccessGuard.setFilterClass("com.flabser.valves.AccessGuard");
-
-		FilterMap filterAccessGuardMapping = new FilterMap();
-		filterAccessGuardMapping.setFilterName("AccessGuard");
-		filterAccessGuardMapping.addURLPattern("/*");
-
-		context.addFilterDef(filterAccessGuard);
-		context.addFilterMap(filterAccessGuardMapping);
+		addFilterToContext(context, AccessGuard.class, "AccessGuard", "/*");
 
 		initErrorPages(context);
 
@@ -120,8 +130,8 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(
-				new ResourceLoader(docBase).getClasses())));
+		ResourceConfig rc = new ResourceConfig(new ResourceLoader(docBase).getClasses());
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(rc));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -142,9 +152,8 @@ public class WebServer implements IWebServer {
 
 			context.setDisplayName(URLPath.substring(1));
 
-			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
-
 			initErrorPages(context);
+			addFilterToContext(context, CacheControlFilter.class, "CacheControlFilter", "/*");
 
 			for (int i = 0; i < defaultWelcomeList.length; i++) {
 				context.addWelcomeFile(defaultWelcomeList[i]);
@@ -153,6 +162,7 @@ public class WebServer implements IWebServer {
 			Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 			context.addServletMapping("/", "default");
 
+			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 			context.addServletMapping("/Provider", "Provider");
 
 			Tomcat.addServlet(context, "Uploader", "com.flabser.servlets.Uploader");
@@ -189,8 +199,6 @@ public class WebServer implements IWebServer {
 		context = tomcat.addContext(URLPath, db);
 		context.setDisplayName(URLPath.substring(1));
 
-		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
-
 		initErrorPages(context);
 
 		for (int i = 0; i < defaultInfoList.length; i++) {
@@ -200,6 +208,7 @@ public class WebServer implements IWebServer {
 		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 		context.addServletMapping("/", "default");
 
+		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 		context.addServletMapping("/Provider", "Provider");
 		context.addServletMapping("/info.html", "Provider");
 
@@ -214,8 +223,8 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(
-				new ResourceLoader(docBase).getClasses())));
+		ResourceConfig rc = new ResourceConfig(new ResourceLoader(docBase).getClasses());
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(rc));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
