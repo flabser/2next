@@ -87,7 +87,7 @@ public class CategoryTest extends InitEnv {
 		List <Category> list = dao.findAll();
 
 		for (Category m : list) {
-			m.setName(m.getName() + "-u");
+			m.setName(m.getName());
 			System.out.println(dao.update(m));
 		}
 	}

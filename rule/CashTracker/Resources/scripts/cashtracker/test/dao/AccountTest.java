@@ -82,7 +82,7 @@ public class AccountTest extends InitEnv {
 		List <Account> list = dao.findAll();
 
 		for (Account m : list) {
-			m.setName(m.getName() + "-u");
+			m.setName(m.getName());
 			System.out.println(dao.update(m));
 		}
 	}

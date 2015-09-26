@@ -72,7 +72,7 @@ public class TagTest extends InitEnv {
 		List <Tag> list = dao.findAll();
 
 		for (Tag m : list) {
-			m.setName(m.getName() + "-u");
+			m.setName(m.getName());
 			System.out.println(dao.update(m));
 		}
 	}

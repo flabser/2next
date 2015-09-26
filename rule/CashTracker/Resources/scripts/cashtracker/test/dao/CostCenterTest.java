@@ -31,8 +31,6 @@ public class CostCenterTest extends InitEnv {
 
 	@Test
 	public void insertTest() {
-		assertNotNull(db);
-
 		int size = dao.findAll().size();
 		int iteration = size + 50;
 
@@ -68,7 +66,7 @@ public class CostCenterTest extends InitEnv {
 		List <CostCenter> list = dao.findAll();
 
 		for (CostCenter m : list) {
-			m.setName(m.getName() + "-u");
+			m.setName(m.getName());
 			System.out.println(dao.update(m));
 		}
 	}
