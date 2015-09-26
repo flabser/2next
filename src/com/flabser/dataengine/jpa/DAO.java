@@ -1,7 +1,5 @@
 package com.flabser.dataengine.jpa;
 
-import java.util.Date;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -37,7 +35,6 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 	public T add(T entity) {
 		em.getTransaction().begin();
 		entity.setAuthor(user.id);
-		entity.setRegDate(new Date());
 		em.persist(entity);
 		em.getTransaction().commit();
 		return entity;

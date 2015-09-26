@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
@@ -25,7 +26,13 @@ public abstract class AppEntity implements IAppEntity {
 	@Column(name = "reg_date", nullable = false, updatable = false)
 	protected Date regDate;
 
+	//
+	@PrePersist
+	private void onPersist() {
+		regDate = new Date();
+	}
 
+	//
 	@Override
 	public void setId(long id) {
 		this.id = id;
@@ -64,7 +71,4 @@ public abstract class AppEntity implements IAppEntity {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
-
-
-
 }
