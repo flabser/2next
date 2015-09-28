@@ -11,14 +11,14 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 
-public class AccountDAO extends DAO <Account> {
+public class AccountDAO extends DAO <Account, Long> {
 
 	public AccountDAO(_Session session) {
 		super(Account.class, session);
 	}
 
-	public List <Account> findAll() {
-		String jpql = "SELECT a FROM Account AS a ORDER BY a.name";
+	public List <Account> findAllEnabled() {
+		String jpql = "SELECT a FROM Account AS a WHERE a.enabled = true ORDER BY a.name";
 		TypedQuery <Account> q = em.createQuery(jpql, Account.class);
 		return q.getResultList();
 	}

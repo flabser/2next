@@ -28,11 +28,15 @@ import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.env.Site;
 import com.flabser.restful.ResourceLoader;
+import com.flabser.valves.AccessGuard;
 import com.flabser.valves.Logging;
 import com.flabser.valves.Secure;
 import com.flabser.valves.Unsecure;
+import com.flabser.web.filter.CacheControlFilter;
+
 
 public class WebServer implements IWebServer {
+
 	public static final String httpSchema = "http";
 	public static final String httpSecureSchema = "https";
 
@@ -58,7 +62,21 @@ public class WebServer implements IWebServer {
 		server.addLifecycleListener(listener);
 
 		initSharedResources();
+	}
 
+	private void addFilterToContext(Context context, Class <?> filterClass, String filterName, String... urlPattern) {
+		FilterDef filterDef = new FilterDef();
+		filterDef.setFilterName(filterName);
+		filterDef.setFilterClass(filterClass.getName());
+
+		FilterMap filterMap = new FilterMap();
+		filterMap.setFilterName(filterName);
+		for (String path : urlPattern) {
+			filterMap.addURLPattern(path);
+		}
+
+		context.addFilterDef(filterDef);
+		context.addFilterMap(filterMap);
 	}
 
 	public Context initSharedResources() throws LifecycleException, MalformedURLException {
@@ -66,6 +84,8 @@ public class WebServer implements IWebServer {
 		String db = new File("webapps/" + EnvConst.SHARED_RESOURCES_NAME).getAbsolutePath();
 		Context sharedResContext = tomcat.addContext(URLPath, db);
 		sharedResContext.setDisplayName(EnvConst.SHARED_RESOURCES_NAME);
+
+		addFilterToContext(sharedResContext, CacheControlFilter.class, "CacheControlFilter", "/*");
 
 		Tomcat.addServlet(sharedResContext, "default", "org.apache.catalina.servlets.DefaultServlet");
 		sharedResContext.addServletMapping("/", "default");
@@ -89,16 +109,7 @@ public class WebServer implements IWebServer {
 		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
 		context.setDisplayName(EnvConst.ADMIN_APP_NAME);
 
-		FilterDef filterAccessGuard = new FilterDef();
-		filterAccessGuard.setFilterName("AccessGuard");
-		filterAccessGuard.setFilterClass("com.flabser.valves.AccessGuard");
-
-		FilterMap filterAccessGuardMapping = new FilterMap();
-		filterAccessGuardMapping.setFilterName("AccessGuard");
-		filterAccessGuardMapping.addURLPattern("/*");
-
-		context.addFilterDef(filterAccessGuard);
-		context.addFilterMap(filterAccessGuardMapping);
+		addFilterToContext(context, AccessGuard.class, "AccessGuard", "/*");
 
 		initErrorPages(context);
 
@@ -125,8 +136,8 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
-				new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
+		ResourceConfig rc = new ResourceConfig(new ResourceLoader(docBase).getClasses());
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(rc));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -145,12 +156,10 @@ public class WebServer implements IWebServer {
 		try {
 			context = tomcat.addContext(URLPath, db);
 
-
 			context.setDisplayName(URLPath.substring(1));
 
-			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
-
 			initErrorPages(context);
+			addFilterToContext(context, CacheControlFilter.class, "CacheControlFilter", "/*");
 
 			for (int i = 0; i < defaultWelcomeList.length; i++) {
 				context.addWelcomeFile(defaultWelcomeList[i]);
@@ -159,6 +168,7 @@ public class WebServer implements IWebServer {
 			Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 			context.addServletMapping("/", "default");
 
+			Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 			context.addServletMapping("/Provider", "Provider");
 
 			Tomcat.addServlet(context, "Uploader", "com.flabser.servlets.Uploader");
@@ -170,8 +180,8 @@ public class WebServer implements IWebServer {
 			context.addMimeMapping("css", "text/css");
 			context.addMimeMapping("js", "text/javascript");
 
-			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(new ResourceConfig(new ResourceLoader(
-					env.templateType).getClasses())));
+			ResourceConfig rc = new ResourceConfig(new ResourceLoader(env.templateType).getClasses());
+			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(rc));
 			w1.setLoadOnStartup(1);
 			w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 			context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -185,12 +195,14 @@ public class WebServer implements IWebServer {
 	}
 
 	@Override
+
 	public Host addAppTemplate(Site site) throws LifecycleException, MalformedURLException {
 		Context context = null;
 
 		String docBase = site.getAppBase();
 		Server.logger.normalLogEntry("load \"" + docBase + "\" application template...");
 		String db = new File("webapps/" + docBase).getAbsolutePath();
+
 		if (site.getVirtualHostName().equals("")){
 			context = tomcat.addContext("/" + docBase, db);
 			context.setDisplayName(docBase);
@@ -229,7 +241,7 @@ public class WebServer implements IWebServer {
 		}
 
 
-		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
+
 
 		initErrorPages(context);
 
@@ -240,6 +252,7 @@ public class WebServer implements IWebServer {
 		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 		context.addServletMapping("/", "default");
 
+		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 		context.addServletMapping("/Provider", "Provider");
 		context.addServletMapping("/info.html", "Provider");
 
@@ -254,8 +267,8 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service",
-				new ServletContainer(new ResourceConfig(new ResourceLoader(docBase).getClasses())));
+		ResourceConfig rc = new ResourceConfig(new ResourceLoader(docBase).getClasses());
+		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(rc));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
@@ -282,12 +295,12 @@ public class WebServer implements IWebServer {
 
 		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 		context.addServletMapping("/", "default");
-
 	}
 
 	@Override
 	public String initConnectors() {
 		String portInfo = "";
+
 		if (Environment.isTLSEnable) {
 			Connector secureConnector = null;
 			Server.logger.normalLogEntry("TLS has been enabled");
@@ -302,12 +315,22 @@ public class WebServer implements IWebServer {
 			secureConnector.setProperty("SSLCertificateFile", Environment.certFile);
 			secureConnector.setProperty("SSLCertificateKeyFile", Environment.certKeyFile);
 			tomcat.setConnector(secureConnector);
-			portInfo = httpSecureSchema + "://" + tomcat.getHost().getName() + ":" + Integer.toString(Environment.secureHttpPort);
+
+			portInfo = httpSecureSchema + "://" + tomcat.getHost().getName() + ":"
+					+ Integer.toString(Environment.secureHttpPort);
 		} else {
 			portInfo = tomcat.getHost().getName() + ":" + Integer.toString(Environment.httpPort);
 		}
-		return portInfo;
 
+		Connector connector = tomcat.getConnector();
+		connector.setProperty("compression", "on");
+		connector.setProperty("compressionMinSize", "1024");
+		connector.setProperty("noCompressionUserAgents", "gozilla, traviata");
+		connector.setProperty("compressableMimeType",
+				"text/html, text/xml, text/plain, text/css, text/javascript, application/json,"
+						+ "application/javascript, application/x-javascript");
+
+		return portInfo;
 	}
 
 	@Override
@@ -319,6 +342,7 @@ public class WebServer implements IWebServer {
 		}
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
+
 			@Override
 			public void run() {
 				stopContainer();
@@ -335,7 +359,6 @@ public class WebServer implements IWebServer {
 		} catch (LifecycleException exception) {
 			Server.logger.errorLogEntry("cannot stop WebServer normally " + exception.getMessage());
 		}
-
 	}
 
 	private Context initContex(String siteName, AppTemplate env, String appID){
@@ -371,7 +394,5 @@ public class WebServer implements IWebServer {
 		er500.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		er500.setLocation("/Error");
 		context.addErrorPage(er);
-
 	}
-
 }

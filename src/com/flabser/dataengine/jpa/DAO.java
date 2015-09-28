@@ -1,6 +1,6 @@
 package com.flabser.dataengine.jpa;
 
-import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -10,7 +10,7 @@ import com.flabser.script._Session;
 import com.flabser.users.User;
 
 
-public abstract class DAO<T extends IAppEntity> implements IDAO {
+public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 
 	protected EntityManager em;
 	private Class <T> entityClass;
@@ -22,26 +22,30 @@ public abstract class DAO<T extends IAppEntity> implements IDAO {
 		this.entityClass = entityClass;
 	}
 
-	public String getEntityClassName() {
-		return entityClass.getName();
-	}
-
-	public T findById(long id) {
-		String jpql = "SELECT m FROM " + getEntityClassName() + " AS m WHERE m.id = :id";
+	@Override
+	public T findById(K id) {
+		String jpql = "SELECT m FROM " + entityClass.getName() + " AS m WHERE m.id = :id";
 		TypedQuery <T> q = em.createQuery(jpql, entityClass);
 		q.setParameter("id", id);
 		return q.getSingleResult();
 	}
 
+	@Override
+	public List <T> findAll() {
+		TypedQuery <T> q = em.createNamedQuery(getNameQueryForAll(), entityClass);
+		return q.getResultList();
+	}
+
+	@Override
 	public T add(T entity) {
 		em.getTransaction().begin();
 		entity.setAuthor(user.id);
-		entity.setRegDate(new Date());
 		em.persist(entity);
 		em.getTransaction().commit();
 		return entity;
 	}
 
+	@Override
 	public T update(T entity) {
 		em.getTransaction().begin();
 		em.merge(entity);
@@ -49,6 +53,7 @@ public abstract class DAO<T extends IAppEntity> implements IDAO {
 		return entity;
 	}
 
+	@Override
 	public void delete(T entity) {
 		em.getTransaction().begin();
 		em.remove(entity);
@@ -56,7 +61,12 @@ public abstract class DAO<T extends IAppEntity> implements IDAO {
 	}
 
 	public Long getCount() {
-		Query q = em.createQuery("SELECT count(m) FROM " + getEntityClassName() + " AS m");
+		Query q = em.createQuery("SELECT count(m) FROM " + entityClass.getName() + " AS m");
 		return (Long) q.getSingleResult();
+	}
+
+	private String getNameQueryForAll() {
+		String queryName = entityClass.getSimpleName() + ".findAll";
+		return queryName;
 	}
 }

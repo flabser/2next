@@ -6,10 +6,10 @@
       
     <applications workspace="Nubis">
     	<app>
-			<name mode="on" sitename="nubis.com">Nubis</name>
+			<name mode="on" >Nubis</name>
 		</app>
 		<app>
-			<name mode="on" parent="Nubis">CashTracker</name>
+			<name mode="on" >CashTracker</name>
 		</app>
 	</applications>
 		

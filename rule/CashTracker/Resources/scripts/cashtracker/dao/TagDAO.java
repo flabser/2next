@@ -12,21 +12,14 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 
-public class TagDAO extends DAO <Tag> {
+public class TagDAO extends DAO <Tag, Long> {
 
 	public TagDAO(_Session session) {
 		super(Tag.class, session);
 	}
 
-	public List <Tag> findAll() {
-		String jpql = "SELECT t FROM Tag AS t ORDER BY t.name";
-		TypedQuery <Tag> q = em.createQuery(jpql, Tag.class);
-		return q.getResultList();
-	}
-
 	public List <Tag> find(PageRequest pr) {
-		String jpql = "SELECT t FROM Tag AS t ORDER BY t.name";
-		TypedQuery <Tag> q = em.createQuery(jpql, Tag.class);
+		TypedQuery <Tag> q = em.createNamedQuery("Tag.findAll", Tag.class);
 		q.setFirstResult(pr.getOffset());
 		q.setMaxResults(pr.getLimit());
 		return q.getResultList();

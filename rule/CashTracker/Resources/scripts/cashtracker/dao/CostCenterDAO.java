@@ -12,21 +12,14 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 
-public class CostCenterDAO extends DAO <CostCenter> {
+public class CostCenterDAO extends DAO <CostCenter, Long> {
 
 	public CostCenterDAO(_Session session) {
 		super(CostCenter.class, session);
 	}
 
-	public List <CostCenter> findAll() {
-		String jpql = "SELECT cc FROM CostCenter AS cc ORDER BY cc.name";
-		TypedQuery <CostCenter> q = em.createQuery(jpql, CostCenter.class);
-		return q.getResultList();
-	}
-
 	public List <CostCenter> find(PageRequest pr) {
-		String jpql = "SELECT cc FROM CostCenter AS cc ORDER BY cc.name";
-		TypedQuery <CostCenter> q = em.createQuery(jpql, CostCenter.class);
+		TypedQuery <CostCenter> q = em.createNamedQuery("CostCenter.findAll", CostCenter.class);
 		q.setFirstResult(pr.getOffset());
 		q.setMaxResults(pr.getLimit());
 		return q.getResultList();

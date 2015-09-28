@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -17,6 +18,7 @@ import com.flabser.dataengine.jpa.AppEntity;
 @JsonRootName("account")
 @Entity
 @Table(name = "accounts")
+@NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account AS a ORDER BY a.name")
 public class Account extends AppEntity {
 
 	@Column(nullable = false, unique = true, length = 64)

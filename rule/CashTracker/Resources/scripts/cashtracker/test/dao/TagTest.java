@@ -1,5 +1,6 @@
 package cashtracker.test.dao;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -10,6 +11,8 @@ import org.junit.Test;
 
 import cashtracker.dao.TagDAO;
 import cashtracker.model.Tag;
+import cashtracker.validation.TagValidator;
+import cashtracker.validation.ValidationError;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
 
@@ -17,6 +20,7 @@ import com.flabser.dataengine.pool.DatabasePoolException;
 public class TagTest extends InitEnv {
 
 	TagDAO dao;
+	private TagValidator validator = new TagValidator();
 
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
@@ -35,6 +39,13 @@ public class TagTest extends InitEnv {
 		for (int i = size; i < iteration; i++) {
 			Tag m = new Tag();
 			m.setName("tag - " + i);
+
+			ValidationError ve = validator.validate(m);
+			if (ve.hasError()) {
+				for (cashtracker.validation.ValidationError.Error err : ve.getErrors()) {
+					assertFalse("ValidationError : " + err.toString(), ve.hasError());
+				}
+			}
 
 			dao.add(m);
 		}
@@ -61,8 +72,19 @@ public class TagTest extends InitEnv {
 		List <Tag> list = dao.findAll();
 
 		for (Tag m : list) {
-			m.setName(m.getName() + "-u");
+			m.setName(m.getName());
 			System.out.println(dao.update(m));
+		}
+	}
+
+	@Test
+	public void deleteTest() {
+		List <Tag> list = dao.findAll();
+
+		for (Tag m : list) {
+			if (!dao.existsTransactionByTag(m)) {
+				dao.delete(m);
+			}
 		}
 	}
 

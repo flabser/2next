@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,6 +15,7 @@ import com.flabser.dataengine.jpa.SecureAppEntity;
 @JsonRootName("test")
 @Entity
 @Table(name = "tests")
+@NamedQuery(name = "Test.findAll", query = "SELECT t FROM Test AS t")
 public class Test extends SecureAppEntity {
 
 	@JsonIgnore
@@ -29,67 +31,45 @@ public class Test extends SecureAppEntity {
 
 	private String city;
 
-
-
 	public Long getUserId() {
 		return userId;
 	}
-
-
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
-
-
 	public Date getBirthDay() {
 		return birthDay;
 	}
-
-
 
 	public void setBirthDay(Date birthDay) {
 		this.birthDay = birthDay;
 	}
 
-
-
 	public String getSex() {
 		return sex;
 	}
-
-
 
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
-
-
 	public String getCountry() {
 		return country;
 	}
-
-
 
 	public void setCountry(String country) {
 		this.country = country;
 	}
 
-
-
 	public String getCity() {
 		return city;
 	}
 
-
-
 	public void setCity(String city) {
 		this.city = city;
 	}
-
-
 
 	@Override
 	public String toString() {

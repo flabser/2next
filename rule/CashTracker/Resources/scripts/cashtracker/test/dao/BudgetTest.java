@@ -1,6 +1,9 @@
 package cashtracker.test.dao;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +11,8 @@ import org.junit.Test;
 import cashtracker.dao.BudgetDAO;
 import cashtracker.model.Budget;
 import cashtracker.model.Budget.BudgetStatus;
+import cashtracker.validation.BudgetValidator;
+import cashtracker.validation.ValidationError;
 
 import com.flabser.dataengine.pool.DatabasePoolException;
 
@@ -15,6 +20,7 @@ import com.flabser.dataengine.pool.DatabasePoolException;
 public class BudgetTest extends InitEnv {
 
 	BudgetDAO dao;
+	private BudgetValidator validator = new BudgetValidator();
 
 	@Before
 	public void init() throws InstantiationException, IllegalAccessException, ClassNotFoundException,
@@ -36,13 +42,32 @@ public class BudgetTest extends InitEnv {
 			m.setStatus(BudgetStatus.DELETED);
 		}
 
-		assertNotNull(dao.add(m) != null);
+		ValidationError ve = validator.validate(m);
+		if (ve.hasError()) {
+			for (cashtracker.validation.ValidationError.Error err : ve.getErrors()) {
+				assertFalse("ValidationError : " + err.toString(), ve.hasError());
+			}
+		}
+
+		dao.add(m);
 	}
 
 	@Test
 	public void selectTest() {
 		for (Budget b : dao.findAll()) {
 			System.out.println(b);
+		}
+	}
+
+	@Test
+	public void updateTest() {
+		List <Budget> list = dao.findAll();
+
+		for (Budget m : list) {
+			String name = m.getName() + "-u";
+			m.setName(name);
+			dao.update(m);
+			assertEquals(m.getName(), name);
 		}
 	}
 

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -13,6 +14,7 @@ import com.flabser.dataengine.jpa.AppEntity;
 @JsonRootName("budget")
 @Entity
 @Table(name = "budgets")
+@NamedQuery(name = "Budget.findAll", query = "SELECT b FROM Budget AS b")
 public class Budget extends AppEntity {
 
 	public enum BudgetStatus {
@@ -28,6 +30,7 @@ public class Budget extends AppEntity {
 	@Column(length = 16)
 	private BudgetStatus status;
 
+	//
 	public String getName() {
 		return name;
 	}

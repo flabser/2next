@@ -17,12 +17,16 @@ public class CategoryValidator {
 			ve.addError("name", "invalid", "too_long");
 		}
 
-		if (m.getParentId() != null && m.getParentId().equals(m.getId())) {
-			ve.addError("parent", "invalid", "cross_reference");
-		}
-
 		if (m.getNote() != null && m.getNote().length() > 256) {
 			ve.addError("note", "invalid", "too_long");
+		}
+
+		if (m.getParentId() != null) {
+			if (m.getParentId().equals(m.getId())) {
+				ve.addError("parent", "invalid", "cross_reference");
+			} else if (!m.getParent().getTransactionTypes().containsAll(m.getTransactionTypes())) {
+				ve.addError("transactionTypes", "invalid", "selection_invalid");
+			}
 		}
 
 		return ve;

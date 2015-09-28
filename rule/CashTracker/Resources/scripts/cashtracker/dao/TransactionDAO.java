@@ -2,7 +2,6 @@ package cashtracker.dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +26,7 @@ import com.flabser.script._Session;
 import com.flabser.server.Server;
 
 
-public class TransactionDAO extends DAO <Transaction> {
+public class TransactionDAO extends DAO <Transaction, Long> {
 
 	public TransactionDAO(_Session session) {
 		super(Transaction.class, session);
@@ -78,11 +77,11 @@ public class TransactionDAO extends DAO <Transaction> {
 		return ((Long) q.getSingleResult()).intValue();
 	}
 
+	@Override
 	public Transaction add(Transaction entity) {
 		EntityTransaction transact = em.getTransaction();
 		transact.begin();
 		entity.setAuthor(user.id);
-		entity.setRegDate(new Date());
 		//
 		Set <TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
 		if (files != null) {
@@ -94,6 +93,7 @@ public class TransactionDAO extends DAO <Transaction> {
 		return entity;
 	}
 
+	@Override
 	public Transaction update(Transaction entity) {
 		EntityTransaction transact = em.getTransaction();
 		transact.begin();
