@@ -16,6 +16,7 @@ import cashtracker.dao.CostCenterDAO;
 import cashtracker.dao.TagDAO;
 import cashtracker.dao.TransactionDAO;
 import cashtracker.helper.PageRequest;
+import cashtracker.helper.TransactionFilter;
 import cashtracker.model.Account;
 import cashtracker.model.Category;
 import cashtracker.model.CostCenter;
@@ -119,6 +120,52 @@ public class TransactionTest extends InitEnv {
 		List <Transaction> list = dao.find(new PageRequest(0, 100, "", ""), null);
 		for (Transaction t : list) {
 			dao.delete(t);
+		}
+	}
+
+	@Test
+	public void findAllByTagsTest() {
+		TagDAO tagDao = new TagDAO(ses);
+		dao.findAllByTags(tagDao.findAll().subList(0, 1));
+	}
+
+	@Test
+	public void findByTransactionFilterTest() {
+		AccountDAO accountDao = new AccountDAO(ses);
+		CategoryDAO categoryDao = new CategoryDAO(ses);
+		CostCenterDAO ccDao = new CostCenterDAO(ses);
+		TagDAO tagDao = new TagDAO(ses);
+
+		List <Account> accounts = new ArrayList <Account>();
+		Account acc1 = new Account();
+		acc1.setId(1L);
+		Account acc2 = new Account();
+		acc2.setId(2L);
+		accounts.add(acc1);
+		accounts.add(acc2);
+
+		TransactionFilter tf = new TransactionFilter();
+		// tf.setAccounts(accountDao.findAll().subList(0, 2));
+		tf.setAccounts(accounts);
+		tf.setCategories(categoryDao.findAll().subList(0, 2));
+		tf.setCostCenters(ccDao.findAll().subList(0, 2));
+		tf.setTags(tagDao.findAll().subList(0, 2));
+		List <TransactionType> types = new ArrayList <TransactionType>();
+		types.add(TransactionType.EXPENSE);
+		types.add(TransactionType.INCOME);
+		tf.setTypes(types);
+
+		Date stD = new Date(System.currentTimeMillis() - (86400000L));
+		Date eD = new Date();
+		tf.setDateRange(new Date[] { stD, eD });
+		//
+		PageRequest pr = new PageRequest(0, 100, "", "");
+		List <Transaction> list = dao.find(tf, pr);
+
+		System.out.println(list.size());
+		for (Transaction t : list) {
+			// System.out.println(t);
+			t.getAuthor();
 		}
 	}
 }

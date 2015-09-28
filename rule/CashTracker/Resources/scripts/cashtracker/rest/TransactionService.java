@@ -58,7 +58,7 @@ public class TransactionService extends RestProvider {
 		int count;
 		if (trType != null && !trType.isEmpty()) {
 			type = TransactionType.typeOf(trType.substring(0, 1).toUpperCase());
-			count = dao.getCountTransactions(type);
+			count = dao.getCountByType(type);
 		} else {
 			count = dao.getCount().intValue();
 		}

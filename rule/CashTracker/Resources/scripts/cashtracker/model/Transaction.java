@@ -36,7 +36,7 @@ import com.flabser.dataengine.jpa.AppEntity;
 @JsonRootName("transaction")
 @Entity
 @Table(name = "transactions")
-@NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction AS t ORDER BY t.date")
+@NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction AS t ORDER BY t.date ASC")
 public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@Convert(converter = TransactionTypeConverter.class)
@@ -399,7 +399,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@Override
 	public String toString() {
-		return "Transaction[" + id + ", " + date + ", " + category + ", " + accountFrom + ", " + amount + ", "
-				+ costCenter + "," + tags + ", " + getAuthor() + ", " + getRegDate() + "]";
+		return "Transaction[" + id + ", " + date + ", " + transactionType + ", " + category + ", " + accountFrom + ", "
+				+ amount + ", " + costCenter + "," + tags + ", " + getAuthor() + ", " + getRegDate() + "]";
 	}
 }

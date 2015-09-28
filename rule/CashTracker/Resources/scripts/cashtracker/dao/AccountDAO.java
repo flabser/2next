@@ -24,7 +24,7 @@ public class AccountDAO extends DAO <Account, Long> {
 	}
 
 	public boolean existsTransactionByAccount(Account m) {
-		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.accountFrom = :account or t.accountTo = :account";
+		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.accountFrom = :account OR t.accountTo = :account";
 		Query q = em.createQuery(jpql);
 		q.setParameter("account", m);
 		q.setMaxResults(1);
