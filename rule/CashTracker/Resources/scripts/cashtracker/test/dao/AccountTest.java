@@ -1,5 +1,6 @@
 package cashtracker.test.dao;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -78,12 +79,26 @@ public class AccountTest extends InitEnv {
 	}
 
 	@Test
+	public void findAllEnabledTest() {
+		List <Account> list = dao.findAllEnabled();
+		assertTrue(list.size() > 0);
+	}
+
+	@Test
+	public void existsTransactionByAccountTest() {
+		List <Account> accounts = dao.findAll();
+		assertTrue(dao.existsTransactionByAccount(accounts.get(0)));
+	}
+
+	@Test
 	public void updateTest() {
 		List <Account> list = dao.findAll();
 
 		for (Account m : list) {
-			m.setName(m.getName());
-			System.out.println(dao.update(m));
+			String name = m.getName() + "-u";
+			m.setName(name);
+			dao.update(m);
+			assertEquals(m.getName(), name);
 		}
 	}
 

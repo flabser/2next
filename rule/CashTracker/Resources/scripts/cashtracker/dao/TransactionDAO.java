@@ -2,7 +2,6 @@ package cashtracker.dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,7 +82,6 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 		EntityTransaction transact = em.getTransaction();
 		transact.begin();
 		entity.setAuthor(user.id);
-		entity.setRegDate(new Date());
 		//
 		Set <TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
 		if (files != null) {

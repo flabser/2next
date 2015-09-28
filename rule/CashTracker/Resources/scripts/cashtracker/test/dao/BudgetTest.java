@@ -1,6 +1,9 @@
 package cashtracker.test.dao;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,6 +56,18 @@ public class BudgetTest extends InitEnv {
 	public void selectTest() {
 		for (Budget b : dao.findAll()) {
 			System.out.println(b);
+		}
+	}
+
+	@Test
+	public void updateTest() {
+		List <Budget> list = dao.findAll();
+
+		for (Budget m : list) {
+			String name = m.getName() + "-u";
+			m.setName(name);
+			dao.update(m);
+			assertEquals(m.getName(), name);
 		}
 	}
 

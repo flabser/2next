@@ -70,4 +70,15 @@ public class CostCenterTest extends InitEnv {
 			System.out.println(dao.update(m));
 		}
 	}
+
+	@Test
+	public void deleteTest() {
+		List <CostCenter> list = dao.findAll();
+
+		for (CostCenter m : list) {
+			if (!dao.existsTransactionByCostCenter(m)) {
+				dao.delete(m);
+			}
+		}
+	}
 }

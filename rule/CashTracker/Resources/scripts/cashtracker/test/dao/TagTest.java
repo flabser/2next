@@ -78,6 +78,17 @@ public class TagTest extends InitEnv {
 	}
 
 	@Test
+	public void deleteTest() {
+		List <Tag> list = dao.findAll();
+
+		for (Tag m : list) {
+			if (!dao.existsTransactionByTag(m)) {
+				dao.delete(m);
+			}
+		}
+	}
+
+	@Test
 	public void existsByTagTest() {
 		TagDAO tagDAO = new TagDAO(ses);
 		Tag tag = (Tag) tagDAO.findAll().get(0);

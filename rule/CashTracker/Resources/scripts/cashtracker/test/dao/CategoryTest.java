@@ -1,6 +1,8 @@
 package cashtracker.test.dao;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,8 +89,27 @@ public class CategoryTest extends InitEnv {
 		List <Category> list = dao.findAll();
 
 		for (Category m : list) {
-			m.setName(m.getName());
-			System.out.println(dao.update(m));
+			String name = m.getName() + "-u";
+			m.setName(name);
+			dao.update(m);
+			assertEquals(m.getName(), name);
+		}
+	}
+
+	@Test
+	public void existsTransactionByCategoryTest() {
+		List <Category> list = dao.findAll();
+		assertTrue(dao.existsTransactionByCategory(list.get(0)));
+	}
+
+	@Test
+	public void deleteTest() {
+		List <Category> list = dao.findAll();
+
+		for (Category m : list) {
+			if (!dao.existsTransactionByCategory(m) && !dao.existsChildCategory(m)) {
+				dao.delete(m);
+			}
 		}
 	}
 }

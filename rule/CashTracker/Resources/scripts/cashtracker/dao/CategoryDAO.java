@@ -34,6 +34,10 @@ public class CategoryDAO extends DAO <Category, Long> {
 	}
 
 	public boolean existsChildCategory(Category m) {
-		return !m.getChildren().isEmpty();
+		String jpql = "SELECT c FROM Category AS c WHERE c.parent = :category";
+		Query q = em.createQuery(jpql);
+		q.setParameter("category", m);
+		q.setMaxResults(1);
+		return !q.getResultList().isEmpty();
 	}
 }
