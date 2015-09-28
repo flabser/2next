@@ -9,11 +9,12 @@ import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.env.Site;
 
 public interface IWebServer {
 	void init(String defaultHostName) throws MalformedURLException, LifecycleException;
 
-	Host addAppTemplate(String siteName, String URLPath, String docBase) throws LifecycleException, MalformedURLException;
+	Host addAppTemplate(Site site) throws LifecycleException, MalformedURLException;
 
 	String initConnectors();
 

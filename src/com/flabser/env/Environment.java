@@ -40,7 +40,6 @@ public class Environment implements ICache {
 
 	public static ISystemDatabase systemBase;
 	public static String defaultSender = "";
-	public static HashMap<String, String> mimeHash = new HashMap<String, String>();
 	public static String primaryAppDir;
 	public static HashMap<String, Site> availableTemplates = new HashMap<String, Site>();
 	public static String tmpDir;
@@ -59,7 +58,7 @@ public class Environment implements ICache {
 	public static String smtpUser;
 	public static String smtpPassword;
 	public static Boolean mailEnable = false;
-	private static String defaultRedirectURL;
+	private static String workspaceName;
 	private static HashMap<String, AppTemplate> appTemplates = new HashMap<String, AppTemplate>();
 	private static HashMap<String, ApplicationProfile> commonApps = new HashMap<String, ApplicationProfile>();
 	private static HashMap<String, Object> cache = new HashMap<String, Object>();
@@ -79,7 +78,6 @@ public class Environment implements ICache {
 			Document xmlDocument = getDocument();
 
 			Server.logger.normalLogEntry("initialize runtime environment");
-			initMimeTypes();
 
 			hostName = XMLUtil.getTextContent(xmlDocument, "/tn/hostname");
 			if (hostName.trim().equals("")) {
@@ -100,8 +98,7 @@ public class Environment implements ICache {
 				primaryAppDir = primaryAppDir + File.separator;
 			}
 
-			defaultRedirectURL = "/" + XMLUtil.getTextContent(xmlDocument, "/tn/applications/@default", false, "Nibis", true);
-
+			workspaceName = "/" + XMLUtil.getTextContent(xmlDocument, "/tn/applications/@workspace", false, "", true);
 
 			NodeList nodeList = XMLUtil.getNodeList(xmlDocument, "/tn/applications");
 			if (nodeList.getLength() > 0) {
@@ -112,12 +109,23 @@ public class Environment implements ICache {
 					if (XMLUtil.getTextContent(appNode, "name/@mode", false).equals("on")) {
 						String appName = XMLUtil.getTextContent(appNode, "name", false);
 						Site site = new Site();
-						site.appBase = appName;
-						site.virtualHostName = XMLUtil.getTextContent(appNode, "name/@sitename", false);
+						site.setAppBase(appName);
+						String vh = XMLUtil.getTextContent(appNode, "name/@sitename", false);
+						if (vh.equals("")) {
+							site.setVirtualHostName(vh);
+							String parent = XMLUtil.getTextContent(appNode, "name/@parent", false);
+							if (!parent.equals("")) {
+								site.setParent(parent);
+							}
+						} else {
+							site.setVirtualHostName(vh);
+						}
+
 						String globalAttrValue = XMLUtil.getTextContent(appNode, "name/@global", false);
 						if (!globalAttrValue.equals("")) {
-							site.global = globalAttrValue;
+							site.setGlobal(globalAttrValue);
 						}
+
 						availableTemplates.put(appName, site);
 					}
 				}
@@ -147,7 +155,8 @@ public class Environment implements ICache {
 			}
 
 			try {
-				mailEnable = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/@mode").equalsIgnoreCase("on") ? true : false;
+				mailEnable = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/@mode").equalsIgnoreCase("on") ? true
+						: false;
 				if (mailEnable) {
 					SMTPHost = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtphost");
 					defaultSender = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/defaultsender");
@@ -190,6 +199,9 @@ public class Environment implements ICache {
 
 	public static void addAppTemplate(AppTemplate env) {
 		appTemplates.put(env.templateType, env);
+		if (!env.getSite().getVirtualHostName().equals("")) {
+			appTemplates.put(env.getSite().getVirtualHostName(), env);
+		}
 	}
 
 	public static AppTemplate getAppTemplate(String appID) {
@@ -208,26 +220,12 @@ public class Environment implements ICache {
 		return commonApps.get(appID);
 	}
 
-
 	public static String getFullHostName() {
 		return httpSchema + "://" + Environment.hostName + ":" + Environment.httpPort;
 	}
 
-	public static String getDefaultRedirectURL() {
-		return defaultRedirectURL;
-	}
-
-	private static void initMimeTypes() {
-		mimeHash.put("pdf", "application/pdf");
-		mimeHash.put("doc", "application/msword");
-		mimeHash.put("xls", "application/vnd.ms-excel");
-		mimeHash.put("tif", "image/tiff");
-		mimeHash.put("rtf", "application/msword");
-		mimeHash.put("gif", "image/gif");
-		mimeHash.put("jpg", "image/jpeg");
-		mimeHash.put("html", "text/html");
-		mimeHash.put("zip", "application/zip");
-		mimeHash.put("rar", "application/x-rar-compressed");
+	public static String getWorkspaceName() {
+		return workspaceName;
 	}
 
 	private static Document getDocument() {
@@ -258,7 +256,8 @@ public class Environment implements ICache {
 	}
 
 	@Override
-	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, WebFormValueException {
+	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
+	WebFormValueException {
 		Object obj = cache.get(page.getID());
 		String cacheParam = formData.get("cache")[0];
 		if (obj == null || cacheParam.equalsIgnoreCase("reload")) {

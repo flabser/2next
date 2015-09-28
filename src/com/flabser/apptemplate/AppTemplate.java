@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
+import com.flabser.env.Site;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.Localizator;
@@ -23,21 +24,24 @@ import com.flabser.server.Server;
 
 public class AppTemplate implements ICache, _IContent {
 	public boolean isValid;
-	public String templateType = "undefined";
+
 	public RuleProvider ruleProvider;
 	public HashMap<String, File> xsltFileMap = new HashMap<String, File>();
 	public String adminXSLTPath;
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
 
+	public String templateType = "undefined";
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 	private String docBase;
+	private Site site;
 
 	public AppTemplate(String at) {
 		isValid = true;
 		templateType = EnvConst.ADMIN_APP_NAME;
 	}
 
+	@Deprecated
 	public AppTemplate(String appType, String globalFileName) {
 		this.templateType = appType;
 		try {
@@ -71,6 +75,46 @@ public class AppTemplate implements ICache, _IContent {
 		} catch (Exception e) {
 			Server.logger.errorLogEntry(e);
 		}
+	}
+
+	public AppTemplate(Site site) {
+		this.site = site;
+		templateType = site.getAppBase();
+		try {
+			Server.logger.normalLogEntry("# init application template \"" + templateType + "\"");
+			ruleProvider = new RuleProvider(this);
+			ruleProvider.initAppTemplate(site.getGlobal());
+			globalSetting = ruleProvider.global;
+			docBase = new File(Environment.primaryAppDir + "webapps/" + templateType).getAbsolutePath();
+			if (globalSetting.isOn == RunMode.ON) {
+				if (globalSetting.langsList.size() > 0) {
+					Server.logger.normalLogEntry("dictionary is loading...");
+
+					try {
+						Localizator l = new Localizator(globalSetting);
+						vocabulary = l.populate("vocabulary");
+						if (vocabulary != null) {
+							Server.logger.normalLogEntry("dictionary has loaded");
+						}
+					} catch (LocalizatorException le) {
+						Server.logger.verboseLogEntry(le.getMessage());
+					}
+
+				}
+
+				isValid = true;
+			} else {
+				Server.logger.warningLogEntry("application: \"" + templateType + "\" is off");
+
+			}
+
+		} catch (Exception e) {
+			Server.logger.errorLogEntry(e);
+		}
+	}
+
+	public Site getSite(){
+		return site;
 	}
 
 	@Override

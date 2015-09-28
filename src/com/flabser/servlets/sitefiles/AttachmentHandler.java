@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
 
-import com.flabser.env.Environment;
 import com.flabser.scheduler.tasks.TempFileCleaner;
 import com.flabser.server.Server;
 
@@ -21,6 +21,7 @@ public class AttachmentHandler {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private boolean deleteOnPublish;
+	public static HashMap<String, String> mimeHash = new HashMap<String, String>();
 
 	public AttachmentHandler(HttpServletRequest request, HttpServletResponse response, boolean deleteOnPublish) {
 		this.request = request;
@@ -39,14 +40,14 @@ public class AttachmentHandler {
 
 			String userAgent = request.getHeader("USER-AGENT").toLowerCase();
 			fileName = URLEncoder.encode(fileName, "UTF8");
-			if (userAgent != null && (userAgent.indexOf("opera") == -1 && userAgent.indexOf("msie") != -1)
+			if (userAgent != null && userAgent.indexOf("opera") == -1 && userAgent.indexOf("msie") != -1
 					|| userAgent.indexOf("chrome") != -1) {
 				response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 			} else {
 				response.setHeader("Content-Disposition", "attachment; filename*=\"utf-8'" + fileName + "\"");
 			}
 
-			response.setContentType(Environment.mimeHash.get(fileType));
+			//response.setContentType(Environment.mimeHash.get(fileType));
 			response.setContentLength((int) file.length());
 			FileInputStream inStream = new FileInputStream(file);
 			buf = new BufferedInputStream(inStream);

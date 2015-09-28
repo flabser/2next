@@ -7,11 +7,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.Context;
+import org.apache.catalina.Engine;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.Wrapper;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.AprLifecycleListener;
+import org.apache.catalina.core.StandardContext;
+import org.apache.catalina.core.StandardHost;
 import org.apache.catalina.core.StandardServer;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.descriptor.web.ErrorPage;
@@ -23,6 +26,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
+import com.flabser.env.Site;
 import com.flabser.restful.ResourceLoader;
 import com.flabser.valves.Logging;
 import com.flabser.valves.Secure;
@@ -33,6 +37,7 @@ public class WebServer implements IWebServer {
 	public static final String httpSecureSchema = "https";
 
 	private static Tomcat tomcat;
+	private static Engine engine;
 	private static final String defaultWelcomeList[] = { "index.html" };
 	private static final String defaultInfoList[] = { "info.html" };
 
@@ -45,6 +50,7 @@ public class WebServer implements IWebServer {
 		tomcat.setHostname(defaultHostName);
 		tomcat.setBaseDir("webserver");
 		tomcat.getHost().setAutoDeploy(false);
+		engine = tomcat.getEngine();
 
 		StandardServer server = (StandardServer) WebServer.tomcat.getServer();
 
@@ -179,14 +185,49 @@ public class WebServer implements IWebServer {
 	}
 
 	@Override
-	public Host addAppTemplate(String siteName, String URLPath, String docBase) throws LifecycleException, MalformedURLException {
+	public Host addAppTemplate(Site site) throws LifecycleException, MalformedURLException {
 		Context context = null;
 
+		String docBase = site.getAppBase();
 		Server.logger.normalLogEntry("load \"" + docBase + "\" application template...");
-
 		String db = new File("webapps/" + docBase).getAbsolutePath();
-		context = tomcat.addContext(URLPath, db);
-		context.setDisplayName(URLPath.substring(1));
+		if (site.getVirtualHostName().equals("")){
+			context = tomcat.addContext("/" + docBase, db);
+			context.setDisplayName(docBase);
+		}else{
+			Host appHost = site.getHost();
+			context = new StandardContext();
+			context = tomcat.addContext(appHost, "", db);
+			//		context.setDocBase(db);
+			context.setDisplayName(docBase);
+			context.setName(docBase);
+			//		context.setPath("");
+			context.setConfigured(true);
+
+			appHost.addChild(context);
+
+
+
+			String srDocBase = EnvConst.SHARED_RESOURCES_NAME;
+			Context shContext = new StandardContext();
+			String sharedResDb = new File("webapps/" + EnvConst.SHARED_RESOURCES_NAME).getAbsolutePath();
+			shContext = tomcat.addContext(appHost, "/" + EnvConst.SHARED_RESOURCES_NAME, sharedResDb);
+			//	shContext.setDocBase(sharedResDb);
+			shContext.setDisplayName(srDocBase);
+			shContext.setName(srDocBase);
+			//	shContext.setPath("");
+			Tomcat.addServlet(shContext, "default", "org.apache.catalina.servlets.DefaultServlet");
+			shContext.addServletMapping("/", "default");
+
+			shContext.addMimeMapping("css", "text/css");
+			shContext.addMimeMapping("js", "text/javascript");
+			shContext.setConfigured(true);
+
+			appHost.addChild(shContext);
+
+			engine.addChild(appHost);
+		}
+
 
 		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 
@@ -233,9 +274,9 @@ public class WebServer implements IWebServer {
 			context.addWelcomeFile(defaultInfoList[i]);
 		}
 
-		tomcat.getEngine().getPipeline().addValve(new Logging());
-		tomcat.getEngine().getPipeline().addValve(new Unsecure());
-		tomcat.getEngine().getPipeline().addValve(new Secure());
+		engine.getPipeline().addValve(new Logging());
+		engine.getPipeline().addValve(new Unsecure());
+		engine.getPipeline().addValve(new Secure());
 
 		initErrorPages(context);
 
@@ -295,6 +336,22 @@ public class WebServer implements IWebServer {
 			Server.logger.errorLogEntry("cannot stop WebServer normally " + exception.getMessage());
 		}
 
+	}
+
+	private Context initContex(String siteName, AppTemplate env, String appID){
+		String db = new File("webapps/" + env.templateType).getAbsolutePath();
+
+		Host appHost = new StandardHost();
+		appHost.setName(appID + "." + siteName);
+		//appHost.setAppBase(db);
+		Context context = new StandardContext();
+		context = tomcat.addContext(appHost, "/" + appID, db);
+
+		context.setDocBase(db);
+		context.setDisplayName(appID);
+		context.setName(appID);
+		context.setPath("");
+		return context;
 	}
 
 	private void initErrorPages(Context context) {

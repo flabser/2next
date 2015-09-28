@@ -31,8 +31,14 @@ public class Unsecure extends ValveBase {
 	@Override
 	public void invoke(Request request, Response response) throws IOException, ServletException {
 		http = request;
+		AppTemplate aTemplate = Environment.getAppTemplate(ru.getAppType());
+		if (aTemplate == null){
+			String rh = http.getServerName();
+			aTemplate = Environment.getAppTemplate(rh);
+		}
 
-		if (Environment.getAppTemplates().containsKey(ru.getAppType())) {
+		if (aTemplate != null) {
+			ru.setAppType(aTemplate.templateType);
 			if (ru.isAuthRequest()) {
 				if (http.getMethod().equalsIgnoreCase("POST")) {
 					HttpSession jses = http.getSession(true);
@@ -44,7 +50,6 @@ public class Unsecure extends ValveBase {
 			} else {
 				if (ru.isProtected()) {
 					if (ru.isPage()) {
-						AppTemplate aTemplate = Environment.getAppTemplate(ru.getAppType());
 						try {
 							if (aTemplate.ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
 								gettingSession(request, response);

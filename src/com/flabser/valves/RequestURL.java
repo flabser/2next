@@ -24,7 +24,7 @@ public class RequestURL {
 		}
 
 		for (String pageIdRegex : new String[] { "^.*/page/([\\w\\-~\\.]+)",
-				"^.*/Provider\\?[\\w\\-~\\.=&]*id=([\\w\\-~\\.]+)[\\w\\-~\\.=&]*" }) {
+		"^.*/Provider\\?[\\w\\-~\\.=&]*id=([\\w\\-~\\.]+)[\\w\\-~\\.=&]*" }) {
 			if (urlVal.matches(pageIdRegex)) {
 				pageID = urlVal.replaceAll(pageIdRegex, "$1");
 				break;
@@ -67,6 +67,11 @@ public class RequestURL {
 
 	public boolean isProtected() {
 		return !appType.equals("") && !appID.equals("") || !(isDefault() || url.matches(".*/[\\w\\.-]+$"));
+	}
+
+	public void setAppType(String templateType) {
+		appType = templateType;
+
 	}
 
 	@Override
