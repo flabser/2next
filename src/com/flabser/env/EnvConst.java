@@ -22,4 +22,7 @@ public class EnvConst {
 	public static final String AUTH_COOKIE_NAME = "2nses";
 	public static final String LANG_COOKIE_NAME = "lang";
 	public static final String DEFAULT_PAGE = "about";
+
+
+
 }

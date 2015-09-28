@@ -4,12 +4,12 @@
     <hostname>localhost</hostname>
     <port></port>
       
-    <applications default="Nubis">
+    <applications workspace="Nubis">
     	<app>
-			<name mode="on" sitename="nubis.com">Nubis</name>
+			<name mode="on" >Nubis</name>
 		</app>
 		<app>
-			<name mode="on">CashTracker</name>
+			<name mode="on" >CashTracker</name>
 		</app>
 	</applications>
 		
