@@ -155,9 +155,9 @@ public class TransactionTest extends InitEnv {
 		types.add(TransactionType.INCOME);
 		tf.setTypes(types);
 
-		Date stD = new Date(System.currentTimeMillis() - (86400000L));
-		Date eD = new Date();
-		tf.setDateRange(new Date[] { stD, eD });
+		Date sd = new Date(System.currentTimeMillis() - (86400000L));
+		Date ed = new Date();
+		tf.setDateRange(sd, ed);
 		//
 		PageRequest pr = new PageRequest(0, 100, "", "");
 		List <Transaction> list = dao.find(tf, pr);

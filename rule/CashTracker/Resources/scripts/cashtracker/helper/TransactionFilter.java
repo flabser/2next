@@ -67,10 +67,10 @@ public class TransactionFilter {
 		return dateRange;
 	}
 
-	public void setDateRange(Date[] dateRange) {
-		if (dateRange[0].compareTo(dateRange[1]) < 0) {
-			new IllegalArgumentException("st date < end date; " + dateRange[0] + " : " + dateRange[1]);
+	public void setDateRange(Date sd, Date ed) {
+		if (sd.compareTo(ed) >= 0) {
+			throw new IllegalArgumentException("st date < end date; " + sd + " : " + ed);
 		}
-		this.dateRange = dateRange;
+		this.dateRange = new Date[] { sd, ed };
 	}
 }
