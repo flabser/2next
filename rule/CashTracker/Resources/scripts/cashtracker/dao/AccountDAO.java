@@ -8,7 +8,6 @@ import javax.persistence.TypedQuery;
 import cashtracker.model.Account;
 
 import com.flabser.dataengine.jpa.DAO;
-import com.flabser.dataengine.jpa.IAppEntity;
 import com.flabser.script._Session;
 
 
@@ -16,12 +15,6 @@ public class AccountDAO extends DAO <Account, Long> {
 
 	public AccountDAO(_Session session) {
 		super(Account.class, session);
-	}
-
-	public List <Account> findAll() {
-		String jpql = "SELECT a FROM Account AS a ORDER BY a.name";
-		TypedQuery <Account> q = em.createQuery(jpql, Account.class);
-		return q.getResultList();
 	}
 
 	public List <Account> findAllEnabled() {

@@ -1,9 +1,5 @@
 package cashtracker.dao;
 
-import java.util.List;
-
-import javax.persistence.TypedQuery;
-
 import cashtracker.model.Budget;
 
 import com.flabser.dataengine.jpa.DAO;
@@ -14,12 +10,6 @@ public class BudgetDAO extends DAO <Budget, Long> {
 
 	public BudgetDAO(_Session session) {
 		super(Budget.class, session);
-	}
-
-	public List <Budget> findAll() {
-		String jpql = "SELECT b FROM Budget AS b";
-		TypedQuery <Budget> q = em.createQuery(jpql, Budget.class);
-		return q.getResultList();
 	}
 
 	public void delete() {

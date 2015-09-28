@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -28,6 +29,7 @@ import com.flabser.dataengine.jpa.AppEntity;
 @JsonRootName("category")
 @Entity
 @Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = { "parent_id", "name" }))
+@NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category AS c WHERE c.parent IS NULL ORDER BY c.name")
 public class Category extends AppEntity {
 
 	@JsonIgnore

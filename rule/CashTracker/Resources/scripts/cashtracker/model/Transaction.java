@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -35,6 +36,7 @@ import com.flabser.dataengine.jpa.AppEntity;
 @JsonRootName("transaction")
 @Entity
 @Table(name = "transactions")
+@NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction AS t ORDER BY t.date")
 public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@Convert(converter = TransactionTypeConverter.class)

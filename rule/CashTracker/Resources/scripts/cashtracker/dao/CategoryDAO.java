@@ -18,12 +18,6 @@ public class CategoryDAO extends DAO <Category, Long> {
 		super(Category.class, session);
 	}
 
-	public List <Category> findAll() {
-		String jpql = "SELECT c FROM Category AS c WHERE c.parent IS NULL ORDER BY c.name";
-		TypedQuery <Category> q = em.createQuery(jpql, Category.class);
-		return q.getResultList();
-	}
-
 	public List <Category> findByTransactionType(TransactionType type) {
 		String jpql = "SELECT c FROM Category AS c WHERE c.parent IS NULL AND :type MEMBER OF c.transactionTypes ORDER BY c.name";
 		TypedQuery <Category> q = em.createQuery(jpql, Category.class);
