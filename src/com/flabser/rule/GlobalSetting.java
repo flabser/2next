@@ -22,7 +22,6 @@ public class GlobalSetting {
 	public String description;
 	public String rulePath;
 	public String primaryRulePath;
-	public String appName;
 	public RunMode isOn;
 	public boolean isValid;
 	public String entryPoint;
@@ -57,7 +56,6 @@ public class GlobalSetting {
 			}
 
 			description = XMLUtil.getTextContent(doc, "/rule/description");
-			appName = XMLUtil.getTextContent(doc, "/rule/templatetype");
 			workMode =  WorkModeType.valueOf(XMLUtil.getTextContent(doc,"/rule/workmode", true, "CLOUD", true));
 			entryPoint = XMLUtil.getTextContent(doc, "/rule/entrypoint");
 
@@ -81,7 +79,7 @@ public class GlobalSetting {
 
 			NodeList roles = XMLUtil.getNodeList(doc, "/rule/roles/entry");
 			for (int i = 0; i < roles.getLength(); i++) {
-				Role role = new Role(roles.item(i), appName);
+				Role role = new Role(roles.item(i), env.templateType);
 
 				if (role.isValid && role.isOn == RunMode.ON) {
 					if (!role.name.equalsIgnoreCase("supervisor")) {

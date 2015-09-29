@@ -80,4 +80,9 @@ public class Site implements _IContent{
 		return new File(Environment.primaryAppDir + "webapps/" + appBase).getAbsolutePath();
 	}
 
+	@Override
+	public String toString(){
+		return "[appBase=\"" + appBase + "\", virtualHostName=\"" + virtualHostName + "\" , parent=\"" + parent + "\"]";
+	}
+
 }
