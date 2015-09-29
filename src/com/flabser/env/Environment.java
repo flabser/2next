@@ -107,6 +107,8 @@ public class Environment implements ICache {
 						site.setVirtualHostName(vh);
 						if (vh.equals("")) {
 							site.setParent(XMLUtil.getTextContent(appNode, "name/@parent", false));
+						}else{
+							site.setParent("");
 						}
 
 						String globalAttrValue = XMLUtil.getTextContent(appNode, "name/@global", false);

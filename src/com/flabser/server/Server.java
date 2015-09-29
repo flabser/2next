@@ -57,10 +57,12 @@ public class Server {
 			webServerInst.addAppTemplate(nSite);
 		}
 
-
-		for (Site site : Environment.availableTemplates.values()) {
-			if (!site.getAppBase().equals(ws)) {
-				webServerInst.addAppTemplate(site);
+		for (String key : Environment.availableTemplates.keySet()) {
+			if (!key.contains(".")) {
+				Site site = Environment.availableTemplates.get(key);
+				if (!site.getAppBase().equals(ws)) {
+					webServerInst.addAppTemplate(site);
+				}
 			}
 		}
 
@@ -71,7 +73,6 @@ public class Server {
 		webServerInst.startContainer();
 
 		Environment.periodicalServices = new PeriodicalServices();
-
 
 		Thread thread = new Thread(new Console());
 		thread.setPriority(Thread.MIN_PRIORITY);

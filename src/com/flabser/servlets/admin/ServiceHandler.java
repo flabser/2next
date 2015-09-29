@@ -48,7 +48,7 @@ public class ServiceHandler {
 
 	String getSettings(AppTemplate env) {
 		StringBuffer xmlFragment = new StringBuffer(1000);
-		xmlFragment.append("<application>" + env.globalSetting.appName + "</application>");
+		xmlFragment.append("<application>" + env.templateType + "</application>");
 		xmlFragment.append("<mode>" + env.globalSetting.isOn + "</mode>");
 		xmlFragment.append("<description>" + env.globalSetting.description + "</description>");
 		xmlFragment.append("<availablelangs>");
@@ -76,7 +76,7 @@ public class ServiceHandler {
 		 * "</id>"); xmlFragment.append("<version>" +
 		 * env.getDataBase().getVersion() + "</version>");
 		 * xmlFragment.append("<daemons>");
-		 * 
+		 *
 		 * xmlFragment.append("</daemons>"); xmlFragment.append("<dbpool>");
 		 * //xmlFragment.append(env.getDataBase().getConnectionPool().toXML());
 		 * xmlFragment.append("</dbpool>");
