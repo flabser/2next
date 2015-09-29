@@ -121,7 +121,8 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	public boolean deleteAttachment(String fieldName, String fileName) {
 		for (TransactionFile file : attachments) {
 			if (file.getFieldName().equalsIgnoreCase(fieldName) && file.getRealFileName().equals(fileName)) {
-				return attachments.remove(file);
+				boolean res = attachments.remove(file);
+				return res;
 			}
 		}
 		return false;

@@ -34,7 +34,6 @@ import com.flabser.valves.Secure;
 import com.flabser.valves.Unsecure;
 import com.flabser.web.filter.CacheControlFilter;
 
-
 public class WebServer implements IWebServer {
 
 	public static final String httpSchema = "http";
@@ -64,7 +63,7 @@ public class WebServer implements IWebServer {
 		initSharedResources();
 	}
 
-	private void addFilterToContext(Context context, Class <?> filterClass, String filterName, String... urlPattern) {
+	private void addFilterToContext(Context context, Class<?> filterClass, String filterName, String... urlPattern) {
 		FilterDef filterDef = new FilterDef();
 		filterDef.setFilterName(filterName);
 		filterDef.setFilterClass(filterClass.getName());
@@ -152,11 +151,23 @@ public class WebServer implements IWebServer {
 
 		Server.logger.normalLogEntry("add context \"" + env.templateType + "/" + appID + "\" application...");
 		String db = env.getDocBase();
-		String URLPath = "/" + env.templateType + "/" + appID;
+		String URLPath = "/" + env.templateType  + appID;
 		try {
-			context = tomcat.addContext(URLPath, db);
+			String parent = env.getSite().getParent();
+			if (!parent.equals("")) {
+				AppTemplate parentApp = Environment.getAppTemplate(parent);
+				Host appHost = parentApp.getSite().getHost();
+				context = new StandardContext();
+				context = tomcat.addContext(appHost, URLPath, db);
+				context.setDisplayName(appID);
+				context.setName(appID);
 
-			context.setDisplayName(URLPath.substring(1));
+				appHost.addChild(context);
+				// engine.addChild(appHost);
+			} else {
+				context = tomcat.addContext(URLPath, db);
+			}
+			context.setDisplayName(URLPath);
 
 			initErrorPages(context);
 			addFilterToContext(context, CacheControlFilter.class, "CacheControlFilter", "/*");
@@ -190,12 +201,12 @@ public class WebServer implements IWebServer {
 			Server.logger.warningLogEntry("Context \"" + URLPath + "\" has not been initialized");
 			throw new ServletException("Context \"" + URLPath + "\" has not been initialized");
 		}
-		context.getServletContext().setAttribute(EnvConst.TEMPLATE_ATTR, env);
+		//	context.getServletContext().setAttribute(EnvConst.TEMPLATE_ATTR, env);
+
 		return context;
 	}
 
 	@Override
-
 	public Host addAppTemplate(Site site) throws LifecycleException, MalformedURLException {
 		Context context = null;
 
@@ -203,31 +214,29 @@ public class WebServer implements IWebServer {
 		Server.logger.normalLogEntry("load \"" + docBase + "\" application template...");
 		String db = new File("webapps/" + docBase).getAbsolutePath();
 
-		if (site.getVirtualHostName().equals("")){
+		if (site.getVirtualHostName().equals("")) {
 			context = tomcat.addContext("/" + docBase, db);
 			context.setDisplayName(docBase);
-		}else{
+		} else {
 			Host appHost = site.getHost();
 			context = new StandardContext();
 			context = tomcat.addContext(appHost, "", db);
-			//		context.setDocBase(db);
+			// context.setDocBase(db);
 			context.setDisplayName(docBase);
 			context.setName(docBase);
-			//		context.setPath("");
+			// context.setPath("");
 			context.setConfigured(true);
 
 			appHost.addChild(context);
-
-
 
 			String srDocBase = EnvConst.SHARED_RESOURCES_NAME;
 			Context shContext = new StandardContext();
 			String sharedResDb = new File("webapps/" + EnvConst.SHARED_RESOURCES_NAME).getAbsolutePath();
 			shContext = tomcat.addContext(appHost, "/" + EnvConst.SHARED_RESOURCES_NAME, sharedResDb);
-			//	shContext.setDocBase(sharedResDb);
+			// shContext.setDocBase(sharedResDb);
 			shContext.setDisplayName(srDocBase);
 			shContext.setName(srDocBase);
-			//	shContext.setPath("");
+			// shContext.setPath("");
 			Tomcat.addServlet(shContext, "default", "org.apache.catalina.servlets.DefaultServlet");
 			shContext.addServletMapping("/", "default");
 
@@ -239,9 +248,6 @@ public class WebServer implements IWebServer {
 
 			engine.addChild(appHost);
 		}
-
-
-
 
 		initErrorPages(context);
 
@@ -361,12 +367,12 @@ public class WebServer implements IWebServer {
 		}
 	}
 
-	private Context initContex(String siteName, AppTemplate env, String appID){
+	private Context initContex(String siteName, AppTemplate env, String appID) {
 		String db = new File("webapps/" + env.templateType).getAbsolutePath();
 
 		Host appHost = new StandardHost();
 		appHost.setName(appID + "." + siteName);
-		//appHost.setAppBase(db);
+		// appHost.setAppBase(db);
 		Context context = new StandardContext();
 		context = tomcat.addContext(appHost, "/" + appID, db);
 
