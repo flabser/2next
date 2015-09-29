@@ -21,6 +21,7 @@ import com.flabser.script._Exception;
 import com.flabser.script._IContent;
 import com.flabser.script._Page;
 import com.flabser.server.Server;
+import com.flabser.server.WebServer;
 
 public class AppTemplate implements ICache, _IContent {
 	public boolean isValid;
@@ -31,10 +32,12 @@ public class AppTemplate implements ICache, _IContent {
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
 
+
 	public String templateType = "undefined";
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
-	private String docBase;
-	private Site site;
+	private String url;
+
+
 
 	public AppTemplate(String at) {
 		isValid = true;
@@ -49,7 +52,6 @@ public class AppTemplate implements ICache, _IContent {
 			ruleProvider = new RuleProvider(this);
 			ruleProvider.initAppTemplate(globalFileName);
 			globalSetting = ruleProvider.global;
-			docBase = new File(Environment.primaryAppDir + "webapps/" + appType).getAbsolutePath();
 			if (globalSetting.isOn == RunMode.ON) {
 				if (globalSetting.langsList.size() > 0) {
 					Server.logger.normalLogEntry("dictionary is loading...");
@@ -78,14 +80,12 @@ public class AppTemplate implements ICache, _IContent {
 	}
 
 	public AppTemplate(Site site) {
-		this.site = site;
 		templateType = site.getAppBase();
 		try {
 			Server.logger.normalLogEntry("# init application template \"" + templateType + "\"");
 			ruleProvider = new RuleProvider(this);
 			ruleProvider.initAppTemplate(site.getGlobal());
 			globalSetting = ruleProvider.global;
-			docBase = new File(Environment.primaryAppDir + "webapps/" + templateType).getAbsolutePath();
 			if (globalSetting.isOn == RunMode.ON) {
 				if (globalSetting.langsList.size() > 0) {
 					Server.logger.normalLogEntry("dictionary is loading...");
@@ -102,6 +102,12 @@ public class AppTemplate implements ICache, _IContent {
 
 				}
 
+				if (site.getVirtualHostName().equals("")){
+					url = WebServer.httpSchema + "://" + Environment.hostName + ":" + Environment.httpPort + "/" + templateType;
+				}else{
+					url = WebServer.httpSchema + "://" + site.getVirtualHostName() + ":" + Environment.httpPort;
+				}
+
 				isValid = true;
 			} else {
 				Server.logger.warningLogEntry("application: \"" + templateType + "\" is off");
@@ -113,8 +119,8 @@ public class AppTemplate implements ICache, _IContent {
 		}
 	}
 
-	public Site getSite(){
-		return site;
+	public String getUrl() {
+		return url;
 	}
 
 	@Override
@@ -154,8 +160,5 @@ public class AppTemplate implements ICache, _IContent {
 		return output.append("<entry><apptype>" + templateType + "</apptype></entry>");
 	}
 
-	public String getDocBase() {
-		return docBase;
-	}
 
 }

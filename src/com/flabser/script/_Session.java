@@ -6,7 +6,6 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.env.Environment;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.AppUser;
 import com.flabser.rule.Role;
@@ -49,8 +48,8 @@ public class _Session {
 		return rolesList;
 	}
 
-	public String getFullAppURI() {
-		return Environment.getFullHostName() + "/" + env.templateType;
+	public String getBaseAppURI() {
+		return env.getUrl();
 	}
 
 	public _ActionBar createActionBar() {

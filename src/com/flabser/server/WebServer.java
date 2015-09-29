@@ -63,20 +63,7 @@ public class WebServer implements IWebServer {
 		initSharedResources();
 	}
 
-	private void addFilterToContext(Context context, Class<?> filterClass, String filterName, String... urlPattern) {
-		FilterDef filterDef = new FilterDef();
-		filterDef.setFilterName(filterName);
-		filterDef.setFilterClass(filterClass.getName());
 
-		FilterMap filterMap = new FilterMap();
-		filterMap.setFilterName(filterName);
-		for (String path : urlPattern) {
-			filterMap.addURLPattern(path);
-		}
-
-		context.addFilterDef(filterDef);
-		context.addFilterMap(filterMap);
-	}
 
 	public Context initSharedResources() throws LifecycleException, MalformedURLException {
 		String URLPath = "/" + EnvConst.SHARED_RESOURCES_NAME;
@@ -146,28 +133,31 @@ public class WebServer implements IWebServer {
 	}
 
 	@Override
-	public Context addApplication(String appID, AppTemplate env) throws ServletException {
+	public Context addApplication(String appID, Site site) throws ServletException {
 		Context context = null;
 
-		Server.logger.normalLogEntry("add context \"" + env.templateType + "/" + appID + "\" application...");
-		String db = env.getDocBase();
-		String URLPath = "/" + env.templateType  + appID;
+		Server.logger.normalLogEntry("add context \"" + site.getAppBase() + "/" + appID + "\" application...");
+		String db = site.getFullPathAppBase();
+		String URLPath = "/" + site.getAppBase() + "/" + appID;
 		try {
-			String parent = env.getSite().getParent();
+			String parent = site.getParent();
 			if (!parent.equals("")) {
-				AppTemplate parentApp = Environment.getAppTemplate(parent);
-				Host appHost = parentApp.getSite().getHost();
+				Site parentApp = Environment.availableTemplates.get(parent);
+				Host appHost = parentApp.getHost();
 				context = new StandardContext();
 				context = tomcat.addContext(appHost, URLPath, db);
 				context.setDisplayName(appID);
 				context.setName(appID);
-
+				context.setConfigured(true);
 				appHost.addChild(context);
+
+
 				// engine.addChild(appHost);
 			} else {
 				context = tomcat.addContext(URLPath, db);
+				context.setDisplayName(URLPath);
 			}
-			context.setDisplayName(URLPath);
+
 
 			initErrorPages(context);
 			addFilterToContext(context, CacheControlFilter.class, "CacheControlFilter", "/*");
@@ -191,7 +181,7 @@ public class WebServer implements IWebServer {
 			context.addMimeMapping("css", "text/css");
 			context.addMimeMapping("js", "text/javascript");
 
-			ResourceConfig rc = new ResourceConfig(new ResourceLoader(env.templateType).getClasses());
+			ResourceConfig rc = new ResourceConfig(new ResourceLoader(site.getAppBase()).getClasses());
 			Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(rc));
 			w1.setLoadOnStartup(1);
 			w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
@@ -201,7 +191,7 @@ public class WebServer implements IWebServer {
 			Server.logger.warningLogEntry("Context \"" + URLPath + "\" has not been initialized");
 			throw new ServletException("Context \"" + URLPath + "\" has not been initialized");
 		}
-		//	context.getServletContext().setAttribute(EnvConst.TEMPLATE_ATTR, env);
+		context.getServletContext().setAttribute(EnvConst.TEMPLATE_ATTR, site.getAppTemlate());
 
 		return context;
 	}
@@ -210,41 +200,48 @@ public class WebServer implements IWebServer {
 	public Host addAppTemplate(Site site) throws LifecycleException, MalformedURLException {
 		Context context = null;
 
-		String docBase = site.getAppBase();
-		Server.logger.normalLogEntry("load \"" + docBase + "\" application template...");
-		String db = new File("webapps/" + docBase).getAbsolutePath();
+		String templateName = site.getAppBase();
+		Server.logger.normalLogEntry("load \"" + templateName + "\" application template...");
+		String docBase = site.getFullPathAppBase();
 
 		if (site.getVirtualHostName().equals("")) {
-			context = tomcat.addContext("/" + docBase, db);
-			context.setDisplayName(docBase);
+			String parent = site.getParent();
+			if (!parent.equals("")) {
+				Site parentSite = Environment.availableTemplates.get(parent);
+				Host appHost = parentSite.getHost();
+				context = new StandardContext();
+				context = tomcat.addContext(appHost, "/" + templateName, docBase);
+				context.setDisplayName(templateName);
+				context.setName(templateName);
+				context.setConfigured(true);
+				appHost.addChild(context);
+				site.setVirtualHostName(parentSite.getVirtualHostName());
+			} else {
+				context = tomcat.addContext("/" + templateName, docBase);
+				context.setDisplayName(templateName);
+			}
+
+
 		} else {
 			Host appHost = site.getHost();
 			context = new StandardContext();
-			context = tomcat.addContext(appHost, "", db);
-			// context.setDocBase(db);
-			context.setDisplayName(docBase);
-			context.setName(docBase);
-			// context.setPath("");
-			context.setConfigured(true);
-
+			context = tomcat.addContext(appHost, "", docBase);
+			context.setDisplayName(templateName);
+			context.setName(templateName);
 			appHost.addChild(context);
 
 			String srDocBase = EnvConst.SHARED_RESOURCES_NAME;
 			Context shContext = new StandardContext();
 			String sharedResDb = new File("webapps/" + EnvConst.SHARED_RESOURCES_NAME).getAbsolutePath();
 			shContext = tomcat.addContext(appHost, "/" + EnvConst.SHARED_RESOURCES_NAME, sharedResDb);
-			// shContext.setDocBase(sharedResDb);
 			shContext.setDisplayName(srDocBase);
 			shContext.setName(srDocBase);
-			// shContext.setPath("");
 			Tomcat.addServlet(shContext, "default", "org.apache.catalina.servlets.DefaultServlet");
 			shContext.addServletMapping("/", "default");
 
 			shContext.addMimeMapping("css", "text/css");
 			shContext.addMimeMapping("js", "text/javascript");
 			shContext.setConfigured(true);
-
-			appHost.addChild(shContext);
 
 			engine.addChild(appHost);
 		}
@@ -273,7 +270,7 @@ public class WebServer implements IWebServer {
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
-		ResourceConfig rc = new ResourceConfig(new ResourceLoader(docBase).getClasses());
+		ResourceConfig rc = new ResourceConfig(new ResourceLoader(templateName).getClasses());
 		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(rc));
 		w1.setLoadOnStartup(1);
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
@@ -365,6 +362,21 @@ public class WebServer implements IWebServer {
 		} catch (LifecycleException exception) {
 			Server.logger.errorLogEntry("cannot stop WebServer normally " + exception.getMessage());
 		}
+	}
+
+	private void addFilterToContext(Context context, Class<?> filterClass, String filterName, String... urlPattern) {
+		FilterDef filterDef = new FilterDef();
+		filterDef.setFilterName(filterName);
+		filterDef.setFilterClass(filterClass.getName());
+
+		FilterMap filterMap = new FilterMap();
+		filterMap.setFilterName(filterName);
+		for (String path : urlPattern) {
+			filterMap.addURLPattern(path);
+		}
+
+		context.addFilterDef(filterDef);
+		context.addFilterMap(filterMap);
 	}
 
 	private Context initContex(String siteName, AppTemplate env, String appID) {

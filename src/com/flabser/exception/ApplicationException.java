@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import net.sf.saxon.s9api.SaxonApiException;
 
 import com.flabser.env.EnvConst;
+import com.flabser.env.Environment;
 import com.flabser.server.Server;
 import com.flabser.servlets.SaxonTransformator;
 
@@ -49,7 +50,7 @@ public class ApplicationException extends WebApplicationException {
 		String xslt = "webapps" + File.separator + appType + File.separator + EnvConst.ERROR_XSLT;
 		File errorXslt = new File(xslt);
 		if (!errorXslt.exists()) {
-			errorXslt = new File("webapps" + File.separator + EnvConst.WORKSPACE_APP_NAME + File.separator + EnvConst.ERROR_XSLT);
+			errorXslt = new File("webapps" + File.separator + Environment.workspaceName + File.separator + EnvConst.ERROR_XSLT);
 		}
 
 		try {

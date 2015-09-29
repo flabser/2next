@@ -8,7 +8,6 @@ import org.apache.catalina.Context;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
 
-import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.Site;
 
 public interface IWebServer {
@@ -24,7 +23,7 @@ public interface IWebServer {
 
 	void stopContainer();
 
-	Context addApplication(String appID, AppTemplate env) throws ServletException;
+	Context addApplication(String appID, Site env) throws ServletException;
 
 	Context initAdministartor();
 

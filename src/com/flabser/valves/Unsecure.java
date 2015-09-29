@@ -10,9 +10,9 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 
-import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
+import com.flabser.env.Site;
 import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
 import com.flabser.server.Server;
@@ -31,14 +31,14 @@ public class Unsecure extends ValveBase {
 	@Override
 	public void invoke(Request request, Response response) throws IOException, ServletException {
 		http = request;
-		AppTemplate aTemplate = Environment.getAppTemplate(ru.getAppType());
-		if (aTemplate == null){
+		Site site = Environment.availableTemplates.get(ru.getAppType());
+		if (site == null){
 			String rh = http.getServerName();
-			aTemplate = Environment.getAppTemplate(rh);
+			site = Environment.availableTemplates.get(rh);
 		}
 
-		if (aTemplate != null) {
-			ru.setAppType(aTemplate.templateType);
+		if (site != null) {
+			ru.setAppType(site.getAppBase());
 			if (ru.isAuthRequest()) {
 				if (http.getMethod().equalsIgnoreCase("POST")) {
 					HttpSession jses = http.getSession(true);
@@ -51,7 +51,7 @@ public class Unsecure extends ValveBase {
 				if (ru.isProtected()) {
 					if (ru.isPage()) {
 						try {
-							if (aTemplate.ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
+							if (site.getAppTemlate().ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
 								gettingSession(request, response);
 								getNext().getNext().invoke(request, response);
 							} else {

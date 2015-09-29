@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.DatabaseFactory;
-import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
@@ -46,7 +45,7 @@ public class PortalInit extends HttpServlet {
 						IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
 						int res = appDb.createDatabase(appProfile.getDbName(), EnvConst.DB_USER);
 						if (res == 0 || res == 1) {
-							IDatabase db = appProfile.getDatabase();
+							appProfile.getDatabase();
 							try {
 								appProfile.setStatus(ApplicationStatusType.ON_LINE);
 							} catch (Exception e) {
@@ -63,7 +62,7 @@ public class PortalInit extends HttpServlet {
 					}
 
 				}
-				Environment.addAppTemplate(template);
+				site.setAppTemlate(template);
 				isValid = true;
 			} else {
 				Server.logger.errorLogEntry("description of \"" + app + "\" has not found in cfg.xml or the application is off");

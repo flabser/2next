@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.env.EnvConst;
+import com.flabser.env.Environment;
 import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
@@ -146,7 +146,7 @@ public class UserSession implements ICache {
 		aUser.setRoles(currentUser.getUserRoles());
 		HashMap<String, Application> applications = new HashMap<String, Application>();
 		for (ApplicationProfile ap : currentUser.getApplicationProfiles().values()) {
-			if (!ap.appType.equalsIgnoreCase(EnvConst.WORKSPACE_APP_NAME)) {
+			if (!ap.appType.equalsIgnoreCase(Environment.workspaceName)) {
 				Application a = new Application(ap);
 				a.setAppID(ap.appID);
 				a.setAppName(ap.appName);

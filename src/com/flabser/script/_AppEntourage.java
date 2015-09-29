@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.rule.Lang;
 import com.flabser.server.Server;
@@ -54,10 +53,10 @@ public class _AppEntourage {
 		return list;
 	}
 
-	public Collection<AppTemplate> getAvailableTemplates() {
+	public Collection<com.flabser.env.Site> getAvailableTemplates() {
 		@SuppressWarnings("unchecked")
-		HashMap<String, AppTemplate> at = (HashMap<String, AppTemplate>) Environment.getAppTemplates().clone();
-		at.remove(EnvConst.WORKSPACE_APP_NAME);
+		HashMap<String, com.flabser.env.Site> at = (HashMap<String, com.flabser.env.Site>) Environment.availableTemplates.clone();
+		at.remove(Environment.workspaceName);
 		return at.values();
 	}
 

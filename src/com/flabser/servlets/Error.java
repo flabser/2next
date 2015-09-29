@@ -17,6 +17,7 @@ import net.sf.saxon.s9api.SaxonApiException;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.EnvConst;
+import com.flabser.env.Environment;
 import com.flabser.exception.ExceptionXML;
 import com.flabser.exception.TransformatorException;
 import com.flabser.script._WebFormData;
@@ -70,7 +71,7 @@ public class Error extends HttpServlet {
 			response.setStatus(statusCode);
 			File errorXslt = new File(xslt);
 			if (!errorXslt.exists()) {
-				errorXslt = new File("webapps" + File.separator + EnvConst.WORKSPACE_APP_NAME + File.separator + EnvConst.ERROR_XSLT);
+				errorXslt = new File("webapps" + File.separator + Environment.workspaceName + File.separator + EnvConst.ERROR_XSLT);
 			}
 
 			new SaxonTransformator().toTrans(response, errorXslt, outputContent);

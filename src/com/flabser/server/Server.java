@@ -51,9 +51,17 @@ public class Server {
 
 		webServerInst.initAdministartor();
 
+		String ws = Environment.workspaceName;
+		Site nSite = Environment.availableTemplates.get(ws);
+		if (nSite != null) {
+			webServerInst.addAppTemplate(nSite);
+		}
+
+
 		for (Site site : Environment.availableTemplates.values()) {
-			//webServerInst.addAppTemplate(site.virtualHostName, "/" + site.appBase, site.appBase);
-			webServerInst.addAppTemplate(site);
+			if (!site.getAppBase().equals(ws)) {
+				webServerInst.addAppTemplate(site);
+			}
 		}
 
 		webServerInst.initDefaultURL();

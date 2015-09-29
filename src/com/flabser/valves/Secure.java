@@ -12,11 +12,11 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 
-import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
+import com.flabser.env.Site;
 import com.flabser.exception.ApplicationException;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
@@ -44,13 +44,13 @@ public class Secure extends ValveBase {
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 				if (us != null && !us.currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
-					if (!us.isBootstrapped(appID) && !appType.equalsIgnoreCase(EnvConst.WORKSPACE_APP_NAME)) {
-						AppTemplate env = Environment.getAppTemplate(appType);
-						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(env.templateType);
+					if (!us.isBootstrapped(appID) && !appType.equalsIgnoreCase(Environment.workspaceName)) {
+						Site site = Environment.availableTemplates.get(appType);
+						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(site.getAppBase());
 						if (hh != null) {
 							Server.logger.verboseLogEntry("start application initializing ...");
 							try {
-								Server.webServerInst.addApplication(appID, env);
+								Server.webServerInst.addApplication(appID, site);
 								us.init(appID);
 								Server.logger.verboseLogEntry("application ready on: " + ru.getUrl());
 								((HttpServletResponse) response).sendRedirect(ru.getUrl());
@@ -65,7 +65,7 @@ public class Secure extends ValveBase {
 								response.getWriter().println(ae.getHTMLMessage());
 							}
 						} else {
-							String msg = "\"" + env.templateType + "\" has not set for \"" + us.currentUser.getLogin() + "\" (" + ru + ")";
+							String msg = "\"" + site.getAppBase() + "\" has not set for \"" + us.currentUser.getLogin() + "\" (" + ru + ")";
 							Server.logger.warningLogEntry(msg);
 							ApplicationException e = new ApplicationException(ru.getAppType(), msg);
 							response.setStatus(e.getCode());

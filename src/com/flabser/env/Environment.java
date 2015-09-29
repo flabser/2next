@@ -18,9 +18,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.system.ISystemDatabase;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.runtimeobj.caching.ICache;
@@ -28,15 +26,13 @@ import com.flabser.runtimeobj.page.Page;
 import com.flabser.scheduler.PeriodicalServices;
 import com.flabser.script._Page;
 import com.flabser.server.Server;
-import com.flabser.server.WebServer;
 import com.flabser.util.XMLUtil;
 
 public class Environment implements ICache {
 	public static int serverVersion;
-	public static String serverName;
 	public static String hostName;
-	public static int httpPort = 38779;
-	public static String httpSchema = WebServer.httpSchema;
+	public static int httpPort = EnvConst.DEFAULT_HTTP_PORT;
+
 
 	public static ISystemDatabase systemBase;
 	public static String defaultSender = "";
@@ -58,9 +54,7 @@ public class Environment implements ICache {
 	public static String smtpUser;
 	public static String smtpPassword;
 	public static Boolean mailEnable = false;
-	private static String workspaceName;
-	private static HashMap<String, AppTemplate> appTemplates = new HashMap<String, AppTemplate>();
-	private static HashMap<String, ApplicationProfile> commonApps = new HashMap<String, ApplicationProfile>();
+	public static String workspaceName;
 	private static HashMap<String, Object> cache = new HashMap<String, Object>();
 
 	public static void init() {
@@ -84,7 +78,6 @@ public class Environment implements ICache {
 				hostName = getHostName();
 			}
 
-			serverName = XMLUtil.getTextContent(xmlDocument, "/tn/name");
 			String portAsText = XMLUtil.getTextContent(xmlDocument, "/tn/port");
 			try {
 				httpPort = Integer.parseInt(portAsText);
@@ -98,7 +91,7 @@ public class Environment implements ICache {
 				primaryAppDir = primaryAppDir + File.separator;
 			}
 
-			workspaceName = "/" + XMLUtil.getTextContent(xmlDocument, "/tn/applications/@workspace", false, "", true);
+			workspaceName = XMLUtil.getTextContent(xmlDocument, "/tn/applications/@workspace", false, "", true);
 
 			NodeList nodeList = XMLUtil.getNodeList(xmlDocument, "/tn/applications");
 			if (nodeList.getLength() > 0) {
@@ -111,14 +104,9 @@ public class Environment implements ICache {
 						Site site = new Site();
 						site.setAppBase(appName);
 						String vh = XMLUtil.getTextContent(appNode, "name/@sitename", false);
+						site.setVirtualHostName(vh);
 						if (vh.equals("")) {
-							site.setVirtualHostName(vh);
-							String parent = XMLUtil.getTextContent(appNode, "name/@parent", false);
-							if (!parent.equals("")) {
-								site.setParent(parent);
-							}
-						} else {
-							site.setVirtualHostName(vh);
+							site.setParent(XMLUtil.getTextContent(appNode, "name/@parent", false));
 						}
 
 						String globalAttrValue = XMLUtil.getTextContent(appNode, "name/@global", false);
@@ -127,6 +115,9 @@ public class Environment implements ICache {
 						}
 
 						availableTemplates.put(appName, site);
+						if(!site.getVirtualHostName().equals("")) {
+							availableTemplates.put(site.getVirtualHostName(), site);
+						}
 					}
 				}
 			}
@@ -144,7 +135,6 @@ public class Environment implements ICache {
 					certKeyFile = XMLUtil.getTextContent(xmlDocument, "/tn/tls/certkeyfile");
 
 					Server.logger.normalLogEntry("TLS is enabled");
-					httpSchema = WebServer.httpSecureSchema;
 					httpPort = secureHttpPort;
 				}
 			} catch (Exception ex) {
@@ -195,33 +185,6 @@ public class Environment implements ICache {
 		} catch (IOException ioe) {
 			Server.logger.errorLogEntry(ioe);
 		}
-	}
-
-	public static void addAppTemplate(AppTemplate env) {
-		appTemplates.put(env.templateType, env);
-		if (!env.getSite().getVirtualHostName().equals("")) {
-			appTemplates.put(env.getSite().getVirtualHostName(), env);
-		}
-	}
-
-	public static AppTemplate getAppTemplate(String appID) {
-		return appTemplates.get(appID);
-	}
-
-	public static HashMap<String, AppTemplate> getAppTemplates() {
-		return appTemplates;
-	}
-
-	public static void addCommonApp(ApplicationProfile app) {
-		commonApps.put(app.appType, app);
-	}
-
-	public static ApplicationProfile getCommonApp(String appID) {
-		return commonApps.get(appID);
-	}
-
-	public static String getFullHostName() {
-		return httpSchema + "://" + Environment.hostName + ":" + Environment.httpPort;
 	}
 
 	public static String getWorkspaceName() {
