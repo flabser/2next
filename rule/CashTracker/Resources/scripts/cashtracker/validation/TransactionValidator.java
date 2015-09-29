@@ -16,8 +16,8 @@ public class TransactionValidator {
 		TransactionType tt = m.getTransactionType();
 		if (tt == null) {
 			ve.addError("transactionType", "required", "required");
-		} else if (tt == TransactionType.TRANSFER && m.getAccountTo() == null) {
-			ve.addError("accountTo", "required", "required");
+		} else if (tt == TransactionType.TRANSFER && m.getTransferAccount() == null) {
+			ve.addError("transferAccount", "required", "required");
 		}
 
 		if (m.getAmount() == null || m.getAmount().intValue() == 0) {
@@ -28,16 +28,16 @@ public class TransactionValidator {
 			ve.addError("note", "invalid", "too_long");
 		}
 
-		if (m.getAccountFrom() == null) {
-			ve.addError("accountFrom", "required", "required");
+		if (m.getAccount() == null) {
+			ve.addError("account", "required", "required");
 		}
 
-		if (!m.getAccountFrom().isEnabled()) {
-			ve.addError("accountFrom", "invalid", "disabled");
-		}
+		/*if (!m.getAccount().isEnabled()) {
+			ve.addError("account", "invalid", "disabled");
+		}*/
 
-		if (m.getAccountTo() != null && !m.getAccountTo().isEnabled()) {
-			ve.addError("accountTo", "invalid", "disabled");
+		if (m.getTransferAccount() != null && !m.getTransferAccount().isEnabled()) {
+			ve.addError("transferAccount", "invalid", "disabled");
 		}
 
 		Category c = m.getCategory();

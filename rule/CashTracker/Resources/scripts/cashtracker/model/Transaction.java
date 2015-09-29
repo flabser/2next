@@ -40,7 +40,7 @@ import com.flabser.dataengine.jpa.AppEntity;
 public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@Convert(converter = TransactionTypeConverter.class)
-	@Column(name = "transaction_type", length = 3)
+	@Column(name = "transaction_type", nullable = false, length = 3)
 	private TransactionType transactionType = TransactionType.EXPENSE;
 
 	@Convert(converter = TransactionStateConverter.class)
@@ -48,12 +48,12 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	private TransactionState transactionState;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "account_from", nullable = false)
-	private Account accountFrom;
+	@JoinColumn(name = "account", nullable = false)
+	private Account account;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "account_to")
-	private Account accountTo;
+	@JoinColumn(name = "transfer_account")
+	private Account transferAccount;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category")
@@ -200,62 +200,62 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		setCategory(category);
 	}
 
-	public Account getAccountFrom() {
-		if (accountFrom == null || accountFrom.getId() == 0) {
+	public Account getAccount() {
+		if (account == null || account.getId() == 0) {
 			return null;
 		}
-		return accountFrom;
+		return account;
 	}
 
-	public void setAccountFrom(Account account) {
-		this.accountFrom = account;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
-	/*@JsonGetter("accountFrom")
-	public Long getAccountFromId() {
-		if (accountFrom != null) {
-			return accountFrom.getId();
+	/*@JsonGetter("account")
+	public Long getAccountId() {
+		if (account != null) {
+			return account.getId();
 		}
 		return null;
 	}*/
 
-	// @JsonSetter("accountFrom")
-	public void setAccountFromById(Long id) {
-		Account accountFrom = null;
+	// @JsonSetter("account")
+	public void setAccountById(Long id) {
+		Account account = null;
 		if (id != null) {
-			accountFrom = new Account();
-			accountFrom.setId(id);
+			account = new Account();
+			account.setId(id);
 		}
-		setAccountFrom(accountFrom);
+		setAccount(account);
 	}
 
-	public Account getAccountTo() {
-		if (accountTo == null || accountTo.getId() == 0) {
+	public Account getTransferAccount() {
+		if (transferAccount == null || transferAccount.getId() == 0) {
 			return null;
 		}
-		return accountTo;
+		return transferAccount;
 	}
 
-	public void setAccountTo(Account account) {
-		this.accountTo = account;
+	public void setTransferAccount(Account account) {
+		this.transferAccount = account;
 	}
 
-	/*@JsonGetter("accountTo")
-	public Long getAccountToId() {
-		if (accountTo != null) {
-			return accountTo.getId();
+	/*@JsonGetter("transferAccount")
+	public Long getTransferAccountId() {
+		if (transferAccount != null) {
+			return transferAccount.getId();
 		}
 		return null;
 	}*/
 
-	// @JsonSetter("accountTo")
-	public void setAccountToById(Long id) {
-		Account accountTo = null;
+	// @JsonSetter("transferAccount")
+	public void setTransferAccountById(Long id) {
+		Account transferAccount = null;
 		if (id != null) {
-			accountTo = new Account();
-			accountTo.setId(id);
+			transferAccount = new Account();
+			transferAccount.setId(id);
 		}
-		setAccountTo(accountTo);
+		setTransferAccount(transferAccount);
 	}
 
 	public CostCenter getCostCenter() {
@@ -400,7 +400,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 
 	@Override
 	public String toString() {
-		return "Transaction[" + id + ", " + date + ", " + transactionType + ", " + category + ", " + accountFrom + ", "
+		return "Transaction[" + id + ", " + date + ", " + transactionType + ", " + category + ", " + account + ", "
 				+ amount + ", " + costCenter + "," + tags + ", " + getAuthor() + ", " + getRegDate() + "]";
 	}
 }

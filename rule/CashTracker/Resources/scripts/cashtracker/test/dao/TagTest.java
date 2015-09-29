@@ -31,8 +31,6 @@ public class TagTest extends InitEnv {
 
 	@Test
 	public void insertTest() {
-		assertNotNull(db);
-
 		int size = dao.findAll().size();
 		int iteration = size + 50;
 
@@ -77,7 +75,7 @@ public class TagTest extends InitEnv {
 		}
 	}
 
-	@Test
+	// @Test
 	public void deleteTest() {
 		List <Tag> list = dao.findAll();
 

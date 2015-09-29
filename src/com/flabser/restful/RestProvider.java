@@ -27,7 +27,6 @@ import org.apache.commons.io.FileUtils;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.DatabaseFactory;
-import com.flabser.dataengine.jpa.DAO;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
@@ -47,7 +46,6 @@ import com.flabser.users.UserSession;
 
 @Path("/")
 public class RestProvider {
-	protected DAO dao;
 
 	@Context
 	private ServletContext context;

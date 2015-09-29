@@ -1,5 +1,7 @@
 package cashtracker.test.rest;
 
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -36,7 +38,10 @@ public class TagServiceTest extends Assert {
 
 		assertTrue("l1.contains(l2)", l1.containsAll(l2));*/
 
-		System.out.println(cachePatternMatch("ssddf/sdew/ghjg/assets/app.js"));
+		Date sd = new Date(System.currentTimeMillis() - (86400000L));
+		Date ed = new Date();
+
+		assertTrue(sd.compareTo(ed) < 0);
 	}
 
 	// @Test

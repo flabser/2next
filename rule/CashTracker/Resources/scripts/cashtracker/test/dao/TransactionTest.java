@@ -60,7 +60,7 @@ public class TransactionTest extends InitEnv {
 
 			m.setDate(new Date(ctime + ((60 * 60 * 24) * i)));
 			m.setAmount(new BigDecimal(1000 + i));
-			m.setAccountFrom((Account) Util.getRandomFromList(accountDAO.findAllEnabled()));
+			m.setAccount((Account) Util.getRandomFromList(accountDAO.findAllEnabled()));
 			m.setCostCenter((CostCenter) Util.getRandomFromList(costCenterDAO.findAll()));
 
 			List <Tag> tags = new ArrayList <Tag>();
@@ -73,7 +73,7 @@ public class TransactionTest extends InitEnv {
 			} else if (i % 10 == 0) {
 				m.setTransactionType(TransactionType.TRANSFER);
 				m.setTransactionState(TransactionState.PENDING);
-				m.setAccountTo((Account) Util.getRandomFromList(accountDAO.findAllEnabled()));
+				m.setTransferAccount((Account) Util.getRandomFromList(accountDAO.findAllEnabled()));
 			} else {
 				m.setTransactionType(TransactionType.INCOME);
 				m.setTransactionState(TransactionState.CONFIRMED);
@@ -155,8 +155,8 @@ public class TransactionTest extends InitEnv {
 		types.add(TransactionType.INCOME);
 		tf.setTypes(types);
 
-		Date sd = new Date(System.currentTimeMillis() - (86400000L));
-		Date ed = new Date();
+		Date sd = new Date(System.currentTimeMillis() - (86400000L * 3));
+		Date ed = new Date(System.currentTimeMillis() - (86400000L));
 		tf.setDateRange(sd, ed);
 		//
 		PageRequest pr = new PageRequest(0, 100, "", "");

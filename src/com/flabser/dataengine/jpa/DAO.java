@@ -32,7 +32,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 
 	@Override
 	public List <T> findAll() {
-		TypedQuery <T> q = em.createNamedQuery(getNameQueryForAll(), entityClass);
+		TypedQuery <T> q = em.createNamedQuery(getQueryNameForAll(), entityClass);
 		return q.getResultList();
 	}
 
@@ -65,7 +65,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 		return (Long) q.getSingleResult();
 	}
 
-	private String getNameQueryForAll() {
+	public String getQueryNameForAll() {
 		String queryName = entityClass.getSimpleName() + ".findAll";
 		return queryName;
 	}

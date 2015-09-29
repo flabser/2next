@@ -52,15 +52,15 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 		return q.getResultList();
 	}
 
-	public List <Transaction> findAllByAccountFrom(Account m) {
-		String jpql = "SELECT t FROM Transaction AS t WHERE t.accountFrom = :account";
+	public List <Transaction> findAllByAccount(Account m) {
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.account = :account";
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("account", m);
 		return q.getResultList();
 	}
 
-	public List <Transaction> findAllByAccountTo(Account m) {
-		String jpql = "SELECT t FROM Transaction AS t WHERE t.accountTo = :account";
+	public List <Transaction> findAllByTransferAccount(Account m) {
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.transferAccount = :account";
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("account", m);
 		return q.getResultList();
@@ -101,36 +101,36 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 		String tags = "";
 		String transactionTypes = "";
 		String dateRange = "";
-		boolean hasPrev = false;
+		boolean hasWhere = false;
 
 		if (filter.getAccounts() != null) {
-			accouns = " t.accountFrom IN :accounts";
-			hasPrev = true;
+			accouns = " t.account IN :accounts";
+			hasWhere = true;
 		}
 		if (filter.getCategories() != null) {
-			categories = (hasPrev ? " AND " : "") + " t.category IN :categories";
-			hasPrev = true;
+			categories = (hasWhere ? " AND " : "") + " t.category IN :categories";
+			hasWhere = true;
 		}
 		if (filter.getCostCenters() != null) {
-			costCenters = (hasPrev ? " AND " : "") + " t.costCenter IN :costCenters";
-			hasPrev = true;
+			costCenters = (hasWhere ? " AND " : "") + " t.costCenter IN :costCenters";
+			hasWhere = true;
 		}
 		if (filter.getTags() != null) {
-			tags = (hasPrev ? " AND " : "") + " t.tags IN :tags";
-			hasPrev = true;
+			tags = (hasWhere ? " AND " : "") + " t.tags IN :tags";
+			hasWhere = true;
 		}
 		if (filter.getTransactionTypes() != null) {
-			transactionTypes = (hasPrev ? " AND " : "") + " t.transactionType IN :transactionTypes";
-			hasPrev = true;
+			transactionTypes = (hasWhere ? " AND " : "") + " t.transactionType IN :transactionTypes";
+			hasWhere = true;
 		}
 		if (filter.getDateRange() != null) {
-			dateRange = (hasPrev ? " AND " : "") + " t.date > :sdate AND t.date < :edate";
-			hasPrev = true;
+			dateRange = (hasWhere ? " AND " : "") + " t.date > :sdate AND t.date < :edate";
+			hasWhere = true;
 		}
 
 		//
-		String jpql = all + (hasPrev ? " WHERE " : "") + accouns + categories + costCenters + tags + transactionTypes
-				+ dateRange;
+		String jpql = all + (hasWhere ? " WHERE " : "") + accouns + categories + costCenters + tags + transactionTypes
+				+ dateRange + " ORDER BY t.date ASC";
 
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		if (!accouns.isEmpty()) {

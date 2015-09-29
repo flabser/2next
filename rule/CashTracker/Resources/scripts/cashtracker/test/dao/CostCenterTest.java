@@ -71,7 +71,7 @@ public class CostCenterTest extends InitEnv {
 		}
 	}
 
-	@Test
+	// @Test
 	public void deleteTest() {
 		List <CostCenter> list = dao.findAll();
 
