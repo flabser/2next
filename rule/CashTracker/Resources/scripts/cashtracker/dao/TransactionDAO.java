@@ -13,9 +13,11 @@ import javax.persistence.TypedQuery;
 import org.apache.commons.io.FileUtils;
 
 import cashtracker.helper.PageRequest;
+import cashtracker.helper.TransactionFilter;
 import cashtracker.model.Account;
 import cashtracker.model.Category;
 import cashtracker.model.CostCenter;
+import cashtracker.model.Tag;
 import cashtracker.model.Transaction;
 import cashtracker.model.TransactionFile;
 import cashtracker.model.constants.TransactionType;
@@ -35,9 +37,9 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 	public List <Transaction> find(PageRequest pr, TransactionType type) {
 		String jpql;
 		if (type == null) {
-			jpql = "SELECT t FROM Transaction AS t ORDER BY t.date";
+			jpql = "SELECT t FROM Transaction AS t ORDER BY t.date ASC";
 		} else {
-			jpql = "SELECT t FROM Transaction AS t WHERE t.transactionType = :type ORDER BY t.date";
+			jpql = "SELECT t FROM Transaction AS t WHERE t.transactionType = :type ORDER BY t.date ASC";
 		}
 
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
@@ -57,6 +59,13 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 		return q.getResultList();
 	}
 
+	public List <Transaction> findAllByAccountTo(Account m) {
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.accountTo = :account";
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+		q.setParameter("account", m);
+		return q.getResultList();
+	}
+
 	public List <Transaction> findAllByCostCenter(CostCenter m) {
 		String jpql = "SELECT t FROM Transaction AS t WHERE t.costCenter = :costCenter";
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
@@ -71,10 +80,83 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 		return q.getResultList();
 	}
 
-	public int getCountTransactions(TransactionType type) {
+	public List <Transaction> findAllByTags(List <Tag> tags) {
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.tags IN :tags";
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+		q.setParameter("tags", tags);
+		return q.getResultList();
+	}
+
+	public int getCountByType(TransactionType type) {
 		Query q = em.createQuery("SELECT count(t) FROM Transaction AS t WHERE t.transactionType = :type");
 		q.setParameter("type", type);
 		return ((Long) q.getSingleResult()).intValue();
+	}
+
+	public List <Transaction> find(TransactionFilter filter, PageRequest pr) {
+		String all = "SELECT t FROM Transaction AS t";
+		String accouns = "";
+		String categories = "";
+		String costCenters = "";
+		String tags = "";
+		String transactionTypes = "";
+		String dateRange = "";
+		boolean hasPrev = false;
+
+		if (filter.getAccounts() != null) {
+			accouns = " t.accountFrom IN :accounts";
+			hasPrev = true;
+		}
+		if (filter.getCategories() != null) {
+			categories = (hasPrev ? " AND " : "") + " t.category IN :categories";
+			hasPrev = true;
+		}
+		if (filter.getCostCenters() != null) {
+			costCenters = (hasPrev ? " AND " : "") + " t.costCenter IN :costCenters";
+			hasPrev = true;
+		}
+		if (filter.getTags() != null) {
+			tags = (hasPrev ? " AND " : "") + " t.tags IN :tags";
+			hasPrev = true;
+		}
+		if (filter.getTransactionTypes() != null) {
+			transactionTypes = (hasPrev ? " AND " : "") + " t.transactionType IN :transactionTypes";
+			hasPrev = true;
+		}
+		if (filter.getDateRange() != null) {
+			dateRange = (hasPrev ? " AND " : "") + " t.date > :sdate AND t.date < :edate";
+			hasPrev = true;
+		}
+
+		//
+		String jpql = all + (hasPrev ? " WHERE " : "") + accouns + categories + costCenters + tags + transactionTypes
+				+ dateRange;
+
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+		if (!accouns.isEmpty()) {
+			q.setParameter("accounts", filter.getAccounts());
+		}
+		if (!categories.isEmpty()) {
+			q.setParameter("categories", filter.getCategories());
+		}
+		if (!costCenters.isEmpty()) {
+			q.setParameter("costCenters", filter.getCostCenters());
+		}
+		if (!tags.isEmpty()) {
+			q.setParameter("tags", filter.getTags());
+		}
+		if (!transactionTypes.isEmpty()) {
+			q.setParameter("transactionTypes", filter.getTransactionTypes());
+		}
+		if (!dateRange.isEmpty()) {
+			q.setParameter("sdate", filter.getDateRange()[0]);
+			q.setParameter("edate", filter.getDateRange()[1]);
+		}
+
+		q.setFirstResult(pr.getOffset());
+		q.setMaxResults(pr.getLimit());
+
+		return q.getResultList();
 	}
 
 	@Override
