@@ -1,10 +1,10 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-    accountFrom: DS.belongsTo('account', {
+    account: DS.belongsTo('account', {
         async: false
     }),
-    accountTo: DS.belongsTo('account', {
+    transferAccount: DS.belongsTo('account', {
         async: false
     }),
     amount: DS.attr('number'),

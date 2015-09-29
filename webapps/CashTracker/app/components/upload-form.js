@@ -111,14 +111,16 @@ export default Em.Component.extend({
         },
 
         removeAttach: function(attach) {
+            let url = attach.get('url');
+            console.log(url);
             // rest/{{modelUrl}}/{{modelId}}/{{attach.fieldName}}/{{attach.realFileName}}
-            $.ajax({
+            /*$.ajax({
                 method: 'DELETE',
                 url: 'rest/' + this.get('modelUrl') + '/' + this.get('modelId') + '/' + attach.get('fieldName') + '/' + attach.get('realFileName'),
                 success: function() {
                     attach.deleteRecord();
                 }
-            })
+            });*/
         }
     },
 

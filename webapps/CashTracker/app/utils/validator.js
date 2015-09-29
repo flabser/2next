@@ -14,7 +14,11 @@ function isNumeric(n) {
 }
 
 function isDate(dateStr) {
-    return !isEmpty(dateStr);
+    var d = moment(dateStr);
+    if (d == null || !d.isValid()) {
+        return false;
+    }
+    return true;
 }
 
 function notEmptyAndEqual(v1, v2) {

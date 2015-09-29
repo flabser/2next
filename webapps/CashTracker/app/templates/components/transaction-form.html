@@ -37,54 +37,45 @@
                         {{t 'date'}}
                     </div>
                     <div class="controls">
-                        {{date-picker date=transaction.date valueFormat='YYYY-MM-DD' class='span2'}}
-                        <!-- {{tn-input
-                            type='text'
-                            value=transaction.date
-                            focus-out='validateDate'
-                            class='span2'
-                        }} -->
+                        <!-- {{pikaday-input value=transaction.date format='YYYY-MM-DD' class='span2'}} -->
+                        {{input value=transaction.date class='span2'}}
                         {{#each errors.date as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
                     </div>
                 </div>
-                <div class="form-group {{if errors.accountFrom 'has-error'}}">
+                <div class="form-group {{if errors.account 'has-error'}}">
                     <div class="control-label">
-                        {{#if isTransfer}}
-                            {{t 'account_from'}}
-                        {{else}}
-                            {{t 'account'}}
-                        {{/if}}
+                        {{t 'account'}}
                     </div>
                     <div class="controls">
                         {{select-2
-                            content='accounts'
-                            value=transaction.accountFrom
-                            optionValuePath='id'
+                            content=accounts
+                            value=transaction.account
+                            
                             optionLabelPath='name'
-                            placeholder='account_from'
+                            placeholder='account'
                         }}
-                        {{#each errors.accountFrom as |error|}}
+                        {{#each errors.account as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
                     </div>
                 </div>
 
                 {{#if isTransfer}}
-                    <div class="form-group {{if errors.accountTo 'has-error'}}">
+                    <div class="form-group {{if errors.transferAccount 'has-error'}}">
                         <div class="control-label">
-                            {{t 'account_to'}}
+                            {{t 'tranfer_to_account'}}
                         </div>
                         <div class="controls">
                             {{select-2
-                                content='accounts'
-                                value=transaction.accountTo
-                                optionValuePath='id'
+                                content=accounts
+                                value=transaction.transferAccount
+                                
                                 optionLabelPath='name'
-                                placeholder='account_to'
+                                placeholder='transfer_account'
                             }}
-                            {{#each errors.accountTo as |error|}}
+                            {{#each errors.transferAccount as |error|}}
                                 <div class="error-message">{{error.message}}</div>
                             {{/each}}
                         </div>
@@ -97,9 +88,9 @@
                     </div>
                     <div class="controls">
                         {{select-2
-                            content='categories'
+                            content=categories
                             value=transaction.category
-                            optionValuePath='id'
+                            
                             optionLabelPath='name'
                             placeholder='Category'
                         }}
@@ -127,9 +118,9 @@
                     </div>
                     <div class="controls">
                         {{select-2
-                            content='costCenters'
+                            content=costCenters
                             value=transaction.costCenter
-                            optionValuePath='id'
+                            
                             optionLabelPath='name'
                             placeholder='Cost center'
                         }}
@@ -141,9 +132,9 @@
                     </div>
                     <div class="controls">
                         {{select-2
-                            content='tags'
+                            content=tags
                             value=transaction.tags
-                            optionValuePath='id'
+                            
                             optionLabelPath='name'
                             placeholder='Tags'
                             multiple=true
@@ -174,6 +165,7 @@
                     maxSize=3
                     fieldName='files'
                     attachments=transaction.attachments
+                    model=transaction
                     modelId=transaction.id
                     modelUrl='transactions'
                     addAttach='addAttach'

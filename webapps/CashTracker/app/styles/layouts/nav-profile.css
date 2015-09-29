@@ -3,7 +3,9 @@
     margin-bottom: 5px;
 }
 
-.nav-profile > header {}
+.nav-profile > header {
+    height: 48px;
+}
 
 .nav-profile > header > a {
     color: #222;

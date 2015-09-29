@@ -5,10 +5,10 @@ export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
         attachments: {
             embedded: 'always'
         },
-        accountFrom: {
+        account: {
             embedded: 'always'
         },
-        accountTo: {
+        transferAccount: {
             embedded: 'always'
         },
         category: {
