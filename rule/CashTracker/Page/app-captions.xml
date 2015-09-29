@@ -63,8 +63,7 @@
 	<caption name="pwd_repeat_not_equal" />
 	<caption name="pwd_format_error" />
 	<caption name="name" />
-	<caption name="account_from" />
-	<caption name="account_to" />
+	<caption name="tranfer_to_account" />
 	<caption name="amount_control" />
 	<caption name="amount_control_hint" />
 	<caption name="require_document" />
