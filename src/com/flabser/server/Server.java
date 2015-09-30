@@ -74,6 +74,7 @@ public class Server {
 
 		Environment.periodicalServices = new PeriodicalServices();
 
+		//TODO rerun thread
 		Thread thread = new Thread(new Console());
 		thread.setPriority(Thread.MIN_PRIORITY);
 		thread.start();

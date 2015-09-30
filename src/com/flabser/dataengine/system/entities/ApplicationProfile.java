@@ -171,6 +171,7 @@ public class ApplicationProfile implements _IContent {
 		dbType = DatabaseType.getType(rs.getInt("DBTYPE"));
 		dbHost = rs.getString("DBHOST");
 		dbName = rs.getString("DBNAME");
+		status = ApplicationStatusType.getType(rs.getInt("STATUS"));
 		// visibilty
 	}
 
@@ -260,6 +261,11 @@ public class ApplicationProfile implements _IContent {
 
 	public void setLastError(String e) {
 		this.lastError = e;
+	}
+
+	@Override
+	public String toString(){
+		return appID + "," + appType + "," + owner + "," + status.toString();
 	}
 
 }
