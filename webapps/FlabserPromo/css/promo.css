@@ -1,0 +1,46 @@
+.promo {
+    background: url(../img/flabser-promo-bg.png);
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    padding: 130px 0 80px;
+    text-align: center;
+}
+
+.promo::before {
+    background: rgba(0, 0, 0, 0.6);
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .promo {
+        padding: 220px 0 150px;
+    }
+}
+
+.promo__heading {
+    font-family: 'Dosis', sans-serif;
+    color: #f3f3f3;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 54px;
+    margin: 10px 0 30px 0;
+    text-transform: uppercase;
+}
+
+.promo__heading + .promo-heading__sub {
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Dosis', sans-serif;
+    font-size: 18px;
+    margin: 10px 0 40px;
+}
+
+.promo__btn.btn-link {
+    color: rgba(255, 255, 255, 0.9);
+}

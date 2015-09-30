@@ -1,0 +1,28 @@
+header {
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    background: #F2F2F2;
+    color: #666;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.section {
+    padding: 20px 0 40px;
+}
+
+.section_divider {
+    background: #EEE;
+    display: block;
+    border: none;
+    height: 1px;
+}
+
+@media (min-width: 768px) {
+    .section {
+        padding: 40px 0 80px;
+    }
+}

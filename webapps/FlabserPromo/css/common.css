@@ -1,0 +1,35 @@
+.heading,
+.heading__sub {
+    text-align: center;
+}
+
+.heading {
+    position: relative;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.heading + .heading__sub {
+    margin-top: -20px;
+    margin-bottom: 40px;
+    color: #9a9a9a;
+}
+
+.heading__sub + .heading__btn {
+    margin-top: -40px;
+    margin-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+    .heading {
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+    .heading + .heading__sub {
+        margin-top: -40px;
+        margin-bottom: 80px;
+        color: #9a9a9a;
+    }
+}
