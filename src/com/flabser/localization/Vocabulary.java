@@ -32,11 +32,7 @@ public class Vocabulary {
 		String returnVal[] = new String[2];
 		Sentence sent = words.get(keyWord);
 		if (sent == null) {
-			if (globalSetting.multiLangEnable) {
-				logger.warningLogEntry("translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");
-				// System.out.println("Translation of word \"" + keyWord +
-				// "\" to " + lang + ", has not found in vocabulary");
-			}
+			logger.warningLogEntry("translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");
 			returnVal[0] = keyWord;
 			returnVal[1] = "";
 			return returnVal;

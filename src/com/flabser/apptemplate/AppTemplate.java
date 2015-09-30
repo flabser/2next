@@ -32,12 +32,11 @@ public class AppTemplate implements ICache, _IContent {
 	public GlobalSetting globalSetting;
 	public Vocabulary vocabulary;
 
-
 	public String templateType = "undefined";
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 	private String url;
 
-
+	private AppTemplate parent;
 
 	public AppTemplate(String at) {
 		isValid = true;
@@ -81,6 +80,10 @@ public class AppTemplate implements ICache, _IContent {
 
 	public AppTemplate(Site site) {
 		templateType = site.getAppBase();
+		if (!site.getParent().equals("")) {
+			Site parentSite = Environment.availableTemplates.get(site.getParent());
+			parent = parentSite.getAppTemlate();
+		}
 		try {
 			Server.logger.normalLogEntry("# init application template \"" + templateType + "\"");
 			ruleProvider = new RuleProvider(this);
@@ -102,9 +105,10 @@ public class AppTemplate implements ICache, _IContent {
 
 				}
 
-				if (site.getVirtualHostName().equals("")){
-					url = WebServer.httpSchema + "://" + Environment.hostName + ":" + Environment.httpPort + "/" + templateType;
-				}else{
+				if (site.getVirtualHostName().equals("")) {
+					url = WebServer.httpSchema + "://" + Environment.hostName + ":" + Environment.httpPort + "/"
+							+ templateType;
+				} else {
 					url = WebServer.httpSchema + "://" + site.getVirtualHostName() + ":" + Environment.httpPort;
 				}
 
@@ -123,13 +127,30 @@ public class AppTemplate implements ICache, _IContent {
 		return url;
 	}
 
+	public String getWorkspaceURL() {
+		if (parent != null) {
+			return parent.getUrl() + "/Provider?id=ws";
+		} else {
+			return url + "/Provider?id=ws";
+		}
+	}
+
+	public String getLoginURL() {
+		if (parent != null) {
+			return parent.getUrl() + "/Provider?id=login";
+		} else {
+			return url + "/Provider?id=login";
+		}
+	}
+
 	@Override
 	public String toString() {
 		return templateType;
 	}
 
 	@Override
-	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, WebFormValueException {
+	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
+	WebFormValueException {
 		boolean reload = false;
 		Object obj = cache.get(page.getID());
 		String p[] = formData.get("cache");
@@ -159,6 +180,5 @@ public class AppTemplate implements ICache, _IContent {
 		StringBuffer output = new StringBuffer(1000);
 		return output.append("<entry><apptype>" + templateType + "</apptype></entry>");
 	}
-
 
 }

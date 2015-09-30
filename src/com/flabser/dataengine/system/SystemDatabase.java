@@ -476,7 +476,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 			insertUser.setArray(15, conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
 			insertUser.setString(16, user.getDbPwd());
 			Attachment aFile = user.getAvatar();
-			if(aFile != null){
+			if(aFile != null && aFile.getRealFileName() != null){
 				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
 				if (userTmpDir.exists()) {
 					String uploadedFileLocation = userTmpDir + File.separator + aFile.getTempID();
@@ -546,7 +546,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase{
 
 
 			Attachment aFile = user.getAvatar();
-			if(aFile != null){
+			if(aFile != null && aFile.getRealFileName() != null){
 				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getOldLogin());
 				if (userTmpDir.exists()) {
 					String uploadedFileLocation = userTmpDir + File.separator + aFile.getTempID();

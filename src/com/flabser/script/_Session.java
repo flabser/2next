@@ -11,6 +11,7 @@ import com.flabser.restful.AppUser;
 import com.flabser.rule.Role;
 import com.flabser.script.actions._ActionBar;
 import com.flabser.script.mail._MailAgent;
+import com.flabser.users.AuthModeType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.users.UserSession.ActiveApplication;
@@ -48,8 +49,24 @@ public class _Session {
 		return rolesList;
 	}
 
-	public String getBaseAppURI() {
+	public String getBaseAppURL() {
 		return env.getUrl();
+	}
+
+	public String getWorkspaceURL() {
+		if (userSession.getAuthMode() == AuthModeType.DIRECT_LOGIN) {
+			return "";
+		} else {
+			return env.getWorkspaceURL();
+		}
+	}
+
+	public String getLoginURL() {
+		if (userSession.getAuthMode() == AuthModeType.DIRECT_LOGIN) {
+			return env.getUrl() + "/Provider?id=login";
+		} else {
+			return env.getWorkspaceURL();
+		}
 	}
 
 	public _ActionBar createActionBar() {

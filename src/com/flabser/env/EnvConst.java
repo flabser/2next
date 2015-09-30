@@ -7,6 +7,7 @@ public class EnvConst {
 	public static final int DEFAULT_HTTP_PORT = 38779;
 	public static final String DEFAULT_XML_ENC = "utf-8";
 	public static final String CFG_FILE = "cfg.xml";
+	public static final String VOCABULARY_FILE = "vocabulary.xml";
 	public static final String SUPPOSED_CODE_PAGE = "utf-8";
 	public static final String ERROR_XSLT = "xsl" + File.separator + "errors" + File.separator + "error.xsl";
 	public static final String DATABASE_HOST = "localhost";
