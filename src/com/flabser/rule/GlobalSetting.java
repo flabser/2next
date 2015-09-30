@@ -12,6 +12,7 @@ import org.w3c.dom.NodeList;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.apptemplate.WorkModeType;
+import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.server.Server;
@@ -27,8 +28,7 @@ public class GlobalSetting {
 	public String entryPoint;
 	public String defaultRedirectURL;
 	public ArrayList<Lang> langsList = new ArrayList<Lang>();
-	public boolean multiLangEnable;
-	public String vocabulary = "vocabulary.xml";
+	public String vocabulary = EnvConst.VOCABULARY_FILE;
 	public UserRoleCollection roleCollection = new UserRoleCollection();
 	private WorkModeType workMode;
 
@@ -71,10 +71,6 @@ public class GlobalSetting {
 				if (lang.isOn == RunMode.ON) {
 					langsList.add(lang);
 				}
-			}
-
-			if (langsList.size() > 1) {
-				multiLangEnable = true;
 			}
 
 			NodeList roles = XMLUtil.getNodeList(doc, "/rule/roles/entry");
