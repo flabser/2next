@@ -49,7 +49,7 @@ public class _AppEntourage {
 		ArrayList<String[]> list = new ArrayList<String[]>();
 
 		for (ApplicationProfile app : user.getApplications()) {
-			String p[] = { app.appName, app.owner, app.appID };
+			String p[] = { app.appName, app.owner, app.appID, app.getDesciption() };
 			list.add(p);
 		}
 		return list;
