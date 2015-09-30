@@ -5,8 +5,10 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
+import com.flabser.env.Site;
 import com.flabser.rule.Lang;
 import com.flabser.server.Server;
 import com.flabser.users.User;
@@ -54,9 +56,13 @@ public class _AppEntourage {
 	}
 
 	public Collection<com.flabser.env.Site> getAvailableTemplates() {
-		@SuppressWarnings("unchecked")
-		HashMap<String, com.flabser.env.Site> at = (HashMap<String, com.flabser.env.Site>) Environment.availableTemplates.clone();
-		at.remove(Environment.workspaceName);
+		HashMap<String, com.flabser.env.Site> at = new HashMap<String, com.flabser.env.Site>();
+		for(Site site : Environment.availableTemplates.values()){
+			if (site.getAppTemlate().globalSetting.getWorkMode() == WorkModeType.CLOUD){
+				at.put(site.getAppBase(), site);
+			}
+		}
+
 		return at.values();
 	}
 

@@ -1,0 +1,9 @@
+quit (q) - stop server safely;
+sessions(us) - show a list of the session pool;
+job list (jl) - show a list of the current scheduled jobs;
+force database remover - start database remover immediately;
+show applications (sh apps) - show a list of the all applications;
+delete application all (del app all) - delete all applications;
+command 898 - start removing process for databases that are have 898(DATABASE_NOT_CREATED) status (temporary command);
+command 898 - start removing process for databases that are have 899(READY_TO_DEPLOY) status (temporary command);
+help (h) - show this help;
