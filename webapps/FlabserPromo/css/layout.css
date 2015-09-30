@@ -12,6 +12,7 @@ footer {
 
 .section {
     padding: 20px 0 40px;
+    position: relative;
 }
 
 .section_divider {

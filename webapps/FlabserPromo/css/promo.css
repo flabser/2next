@@ -41,6 +41,25 @@
     margin: 10px 0 40px;
 }
 
+.promo__btn {
+    margin: 10px 0 0;
+}
+
 .promo__btn.btn-link {
+    background: transparent;
     color: rgba(255, 255, 255, 0.9);
+}
+
+.promo__btn.btn-primary {
+    background: transparent;
+    border-color: #F9FF00;
+    border-radius: 3px;
+    color: #F9FF00;
+}
+
+.promo__btn.btn-primary:hover,
+.promo__btn.btn-primary:focus {
+    background: #F9FF00;
+    border-color: #FFF340;
+    color: #383838;
 }

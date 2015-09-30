@@ -1,3 +1,26 @@
+.contact {
+    position: relative;
+}
+
 .form-control {
+    border: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 0;
+    box-shadow: none;
     margin: 8px 0;
+    max-height: 200px;
+    max-width: 100%;
+    padding: 8px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.btn-contact,
+.btn-contact:hover,
+.btn-contact:focus {
+    background: #DB4A35;
+    border-color: #CE0000;
+    color: #FFFFFF;
 }

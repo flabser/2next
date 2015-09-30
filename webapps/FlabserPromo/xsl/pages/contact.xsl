@@ -7,7 +7,7 @@
 			<!-- CONTACT -->
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-12 contact">
+					<div class="col-sm-12">
 						<h3 class="heading">
 							<xsl:value-of select="//captions/contact_us/@caption" />
 						</h3>

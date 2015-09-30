@@ -61,7 +61,7 @@ $(function() {
                 target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
                 if (target.length) {
                     $('html,body').animate({
-                        scrollTop: (target.offset().top - 70) // 70px offset for navbar menu
+                        scrollTop: (target.offset().top - 50) // 50px offset for navbar menu
                     }, 500);
                     return false;
                 }

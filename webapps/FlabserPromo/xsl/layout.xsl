@@ -32,7 +32,7 @@
 				<link rel="stylesheet" href="css/skills.css" />
 				<link rel="stylesheet" href="css/contact.css" />
 			</head>
-			<body data-spy="scroll" data-target=".navbar" data-offset="71">
+			<body data-spy="scroll" data-target=".navbar" data-offset="51">
 				<div class="layout wrapper">
 					<xsl:call-template name="_content" />
 				</div>

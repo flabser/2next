@@ -4,11 +4,14 @@
 }
 
 .heading {
-    position: relative;
+    font-family: 'Dosis', sans-serif;
+    font-size: 32px;
+    font-weight: normal;
+    line-height: 36px;
     margin-top: 40px;
     margin-bottom: 40px;
+    position: relative;
     text-transform: uppercase;
-    font-weight: 700;
 }
 
 .heading + .heading__sub {
