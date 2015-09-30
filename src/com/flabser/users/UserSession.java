@@ -154,6 +154,7 @@ public class UserSession implements ICache {
 				a.setOwner(ap.owner);
 				a.setVisibilty(ap.getVisibilty());
 				a.setStatus(ap.getStatus());
+				a.setDescription(ap.getDesciption());
 				applications.put(ap.appID, a);
 			}
 		}

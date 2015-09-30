@@ -29,6 +29,6 @@ public class ExceptionXML {
 	public String toXML() {
 		return "<?xml version = \"1.0\" encoding=\"" + EnvConst.DEFAULT_XML_ENC + "\"?><error><apptype>" + appType + "</apptype><message>"
 				+ errorMessage + "</message><code>" + code + "</code><location>" + location + "</location><type>" + type + "</type><name>"
-				+ servletName + "</name><exception>" + exception + "</exception><server>" + Server.serverTitle + "</server></error>";
+				+ servletName + "</name><exception><![CDATA[" + exception + "]]></exception><server>" + Server.serverTitle + "</server></error>";
 	}
 }

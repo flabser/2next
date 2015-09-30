@@ -67,7 +67,7 @@ public class Application implements _IContent {
 	public StringBuffer toXML() {
 		StringBuffer output = new StringBuffer(1000);
 		return output.append("<apptype>" + appType + "</apptype><appname>" + getAppName() + "</appname>" + "<owner>" + getOwner() + "</owner><appid>"
-				+ getAppID() + "</appid><status>" + status + "</status>");
+				+ getAppID() + "</appid><status>" + status + "</status><description>" + description + "</description>");
 	}
 
 	public void setAppID(String appID) {
