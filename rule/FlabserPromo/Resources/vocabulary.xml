@@ -6,5 +6,105 @@
 		<entry lang="ENG">Flabser</entry>
 		<entry lang="BG">Flabser</entry>
 	</sentence>
-	
+
+	<sentence mode="on" keyword="promo_heading">
+		<entry lang="RUS">Flabser</entry>
+		<entry lang="KAZ">Flabser</entry>
+		<entry lang="ENG">Flabser</entry>
+		<entry lang="BG">Flabser</entry>
+	</sentence>
+	<sentence mode="on" keyword="promo_heading_sub">
+		<entry lang="RUS">Мы являемся командой талантливых, опытных и мотивированных программистов-разработчиков</entry>
+		<entry lang="KAZ">Мы являемся командой талантливых, опытных и мотивированных программистов-разработчиков</entry>
+		<entry lang="ENG">We are a team of talented, experienced and motivated developers</entry>
+		<entry lang="BG">Ние сме екип от талантливи, опитни и мотивирани програмисти-разработчици</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="find_out_more">
+		<entry lang="RUS">Узнать больше</entry>
+		<entry lang="KAZ">Көбірек білгім келеді</entry>
+		<entry lang="ENG">Find out more</entry>
+		<entry lang="BG">Узнать больше</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="home">
+		<entry lang="RUS">Главная</entry>
+		<entry lang="KAZ">Басты бет</entry>
+		<entry lang="ENG">Home</entry>
+		<entry lang="BG">Главная</entry>
+	</sentence>
+	<sentence mode="on" keyword="about">
+		<entry lang="RUS">О нас</entry>
+		<entry lang="KAZ">Біз жайлы</entry>
+		<entry lang="ENG">About</entry>
+		<entry lang="BG">О нас</entry>
+	</sentence>
+	<sentence mode="on" keyword="about_title">
+		<entry lang="RUS">О нашей компании</entry>
+		<entry lang="KAZ">Біздің ұйым жайлы</entry>
+		<entry lang="ENG">About our company</entry>
+		<entry lang="BG">О нашей компании</entry>
+	</sentence>
+	<sentence mode="on" keyword="skills">
+		<entry lang="RUS">Наши умения</entry>
+		<entry lang="KAZ">Біздің қабілетіміз</entry>
+		<entry lang="ENG">Skills</entry>
+		<entry lang="BG">Наши умения</entry>
+	</sentence>
+	<sentence mode="on" keyword="skills_title">
+		<entry lang="RUS">Наш текущий список базовых компетенции</entry>
+		<entry lang="KAZ">Біздің басты қабілетіміз</entry>
+		<entry lang="ENG">Our current list of specialities includes</entry>
+		<entry lang="BG">Нашият актуален списък на базови компетенции</entry>
+	</sentence>
+	<sentence mode="on" keyword="contact_us">
+		<entry lang="RUS">Свяжитесь с нами</entry>
+		<entry lang="KAZ">Бізбен хабарласыңыз</entry>
+		<entry lang="ENG">Contact Us</entry>
+		<entry lang="BG">Свяжитесь с нами</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="contact_us_on_lang">
+		<entry lang="RUS">Можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
+		<entry lang="KAZ">Можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
+		<entry lang="ENG">You can contact us on the Russian, Bulgarian and English.</entry>
+		<entry lang="BG">Можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="message_title">
+		<entry lang="RUS">Сообщение</entry>
+		<entry lang="KAZ">Хабар</entry>
+		<entry lang="ENG">Message</entry>
+		<entry lang="BG">Сообщение</entry>
+	</sentence>
+	<sentence mode="on" keyword="message_subject">
+		<entry lang="RUS">Тема</entry>
+		<entry lang="KAZ">Тақырып</entry>
+		<entry lang="ENG">Subject</entry>
+		<entry lang="BG">Тема</entry>
+	</sentence>
+	<sentence mode="on" keyword="message_text">
+		<entry lang="RUS">Сообщение</entry>
+		<entry lang="KAZ">Мәтін</entry>
+		<entry lang="ENG">Message</entry>
+		<entry lang="BG">Сообщение</entry>
+	</sentence>
+	<sentence mode="on" keyword="send_message">
+		<entry lang="RUS">Отправить сообщение</entry>
+		<entry lang="KAZ">Хабар жіберу</entry>
+		<entry lang="ENG">Send message</entry>
+		<entry lang="BG">Отправить сообщение</entry>
+	</sentence>
+	<sentence mode="on" keyword="address">
+		<entry lang="RUS">Адрес</entry>
+		<entry lang="KAZ">Мекен жайымыз</entry>
+		<entry lang="ENG">Address</entry>
+		<entry lang="BG">Адрес</entry>
+	</sentence>
+	<sentence mode="on" keyword="phone">
+		<entry lang="RUS">Телефон</entry>
+		<entry lang="KAZ">Телефон</entry>
+		<entry lang="ENG">Phone</entry>
+		<entry lang="BG">Телефон</entry>
+	</sentence>
 </vocabulary>
