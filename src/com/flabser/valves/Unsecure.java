@@ -31,55 +31,60 @@ public class Unsecure extends ValveBase {
 	@Override
 	public void invoke(Request request, Response response) throws IOException, ServletException {
 		http = request;
-		Site site = Environment.availableTemplates.get(ru.getAppType());
-		if (site == null){
-			String rh = http.getServerName();
-			site = Environment.availableTemplates.get(rh);
-		}
+		if (!ru.getUrl().equals("/")) {
+			Site site = Environment.availableTemplates.get(ru.getAppType());
+			if (site == null) {
+				String rh = http.getServerName();
+				site = Environment.availableTemplates.get(rh);
+			}
 
-		if (site != null) {
-			ru.setAppType(site.getAppBase());
-			if (ru.isAuthRequest()) {
-				if (http.getMethod().equalsIgnoreCase("POST")) {
-					HttpSession jses = http.getSession(true);
-					jses.setAttribute(EnvConst.SESSION_ATTR, new UserSession(new User()));
-					getNext().getNext().invoke(request, response);
-				} else {
-					((Secure) getNext()).invoke(request, response, ru);
-				}
-			} else {
-				if (ru.isProtected()) {
-					if (ru.isPage()) {
-						try {
-							if (site.getAppTemlate().ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
-								gettingSession(request, response);
-								getNext().getNext().invoke(request, response);
-							} else {
-								((Secure) getNext()).invoke(request, response, ru);
-							}
-
-						} catch (RuleException e) {
-							Server.logger.errorLogEntry(e.getMessage());
-							ApplicationException ae = new ApplicationException(ru.getAppType(), e.getMessage());
-							response.setStatus(ae.getCode());
-							response.getWriter().println(ae.getHTMLMessage());
-						}
+			if (site != null) {
+				ru.setAppType(site.getAppBase());
+				if (ru.isAuthRequest()) {
+					if (http.getMethod().equalsIgnoreCase("POST")) {
+						HttpSession jses = http.getSession(true);
+						jses.setAttribute(EnvConst.SESSION_ATTR, new UserSession(new User()));
+						getNext().getNext().invoke(request, response);
 					} else {
 						((Secure) getNext()).invoke(request, response, ru);
 					}
 				} else {
-					gettingSession(request, response);
-					getNext().getNext().invoke(request, response);
+					if (ru.isProtected()) {
+						if (ru.isPage()) {
+							try {
+								if (site.getAppTemlate().ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
+									gettingSession(request, response);
+									getNext().getNext().invoke(request, response);
+								} else {
+									((Secure) getNext()).invoke(request, response, ru);
+								}
+
+							} catch (RuleException e) {
+								Server.logger.errorLogEntry(e.getMessage());
+								ApplicationException ae = new ApplicationException(ru.getAppType(), e.getMessage());
+								response.setStatus(ae.getCode());
+								response.getWriter().println(ae.getHTMLMessage());
+							}
+						} else {
+							((Secure) getNext()).invoke(request, response, ru);
+						}
+					} else {
+						gettingSession(request, response);
+						getNext().getNext().invoke(request, response);
+					}
 				}
+			} else if (ru.getAppType().equals(EnvConst.SHARED_RESOURCES_NAME)
+					|| ru.getAppType().equals(EnvConst.ADMIN_APP_NAME)) {
+				getNext().getNext().invoke(request, response);
+			} else {
+				String msg = "Unknown application type \"" + ru.getAppType() + "\"";
+				Server.logger.warningLogEntry(msg);
+				ApplicationException ae = new ApplicationException(ru.getAppType(), msg);
+				response.setStatus(ae.getCode());
+				response.getWriter().println(ae.getHTMLMessage());
 			}
-		} else if (ru.getAppType().equals(EnvConst.SHARED_RESOURCES_NAME) || ru.getAppType().equals(EnvConst.ADMIN_APP_NAME)) {
+		} else  {
 			getNext().getNext().invoke(request, response);
-		} else {
-			String msg = "Unknown application type \"" + ru.getAppType() + "\"";
-			Server.logger.warningLogEntry(msg);
-			ApplicationException ae = new ApplicationException(ru.getAppType(), msg);
-			response.setStatus(ae.getCode());
-			response.getWriter().println(ae.getHTMLMessage());
 		}
 	}
 

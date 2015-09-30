@@ -47,9 +47,6 @@ public class RuleProvider {
 			rule = pageRuleMap.get(ruleID);
 		} else {
 			docFile = new File(global.rulePath + File.separator + "Page" + File.separator + ruleID + ".xml");
-			if (!docFile.exists()) {
-				docFile = new File(global.primaryRulePath + File.separator + "Page" + File.separator + ruleID + ".xml");
-			}
 			PageRule pageRule = new PageRule(env, docFile);
 			pageRuleMap.put(ruleID.toLowerCase(), pageRule);
 			rule = pageRule;

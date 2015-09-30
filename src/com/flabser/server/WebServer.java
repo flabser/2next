@@ -228,6 +228,9 @@ public class WebServer implements IWebServer {
 			context = tomcat.addContext(appHost, "", docBase);
 			context.setDisplayName(templateName);
 			context.setName(templateName);
+			for (int i = 0; i < defaultWelcomeList.length; i++) {
+				context.addWelcomeFile(defaultWelcomeList[i]);
+			}
 			appHost.addChild(context);
 
 			String srDocBase = EnvConst.SHARED_RESOURCES_NAME;
