@@ -41,8 +41,7 @@
 				<script src="/SharedResources/vendor/jquery/jquery-2.1.4.min.js"></script>
 				<script src="/SharedResources/vendor/bootstrap/js/bootstrap.min.js"></script>
 				<script src="/SharedResources/vendor/jquery/jquery.waypoints.min.js"></script>
-				
-				<!-- <script src="js/contact.js"></script> -->
+
 				<script src="js/app.js"></script>
 
 				<script type="text/javascript">
