@@ -24,9 +24,9 @@
     }
 }
 
-.promo__heading {
+.heading.promo__heading {
     font-family: 'Dosis', sans-serif;
-    color: #f3f3f3;
+    color: #FFCA00;
     font-size: 48px;
     font-weight: 400;
     line-height: 54px;
@@ -34,10 +34,17 @@
     text-transform: uppercase;
 }
 
-.promo__heading + .promo-heading__sub {
+.heading__sub.promo-heading__sub {
     color: rgba(255, 255, 255, 0.9);
     font-family: 'Dosis', sans-serif;
-    font-size: 18px;
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.heading__sub.promo-heading__experience {
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Dosis', sans-serif;
+    font-size: 24px;
     margin: 10px 0 40px;
 }
 

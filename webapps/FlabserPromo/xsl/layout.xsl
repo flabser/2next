@@ -24,9 +24,9 @@
 				<link rel="stylesheet" href="/SharedResources/vendor/bootstrap/css/bootstrap.min.css" />
 				<link rel="stylesheet" href="/SharedResources/css/animate.css" />
 
-				<link rel="stylesheet" href="css/common.css" />
 				<link rel="stylesheet" href="css/layout.css" />
 				<link rel="stylesheet" href="css/navbar.css" />
+				<link rel="stylesheet" href="css/heading.css" />
 				<link rel="stylesheet" href="css/promo.css" />
 				<link rel="stylesheet" href="css/about.css" />
 				<link rel="stylesheet" href="css/skills.css" />

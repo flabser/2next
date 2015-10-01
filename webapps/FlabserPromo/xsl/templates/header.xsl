@@ -69,6 +69,9 @@
 						<p class="heading__sub promo-heading__sub animated fadeInUp delay_1">
 							<xsl:value-of select="//captions/promo_heading_sub/@caption" />
 						</p>
+						<p class="heading__sub promo-heading__experience animated fadeInUp delay_1">
+							<xsl:value-of select="//captions/promo_experience/@caption" />
+						</p>
 						<a href="#contact" class="promo__btn btn btn-lg btn-primary animated fadeInUp delay_2">
 							<xsl:value-of select="//captions/contact_us/@caption" />
 						</a>
