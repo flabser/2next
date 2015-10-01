@@ -1,6 +1,6 @@
 /* Auto close navbar on click */
 
-$('.navbar-nav > li > a').click(function() {
+$('.navbar-brand, .navbar-nav > li > a').click(function() {
     if (!$(this).hasClass('dropdown-toggle')) {
         $('.navbar-collapse').collapse('hide');
     }

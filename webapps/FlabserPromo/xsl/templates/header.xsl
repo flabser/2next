@@ -18,7 +18,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="?id=welcome">
+					<a class="navbar-brand" href="#home">
 						<xsl:value-of select="//captions/brand/@caption" />
 					</a>
 				</div>
