@@ -19,6 +19,12 @@
 		<entry lang="ENG">We are a team of talented, experienced and motivated developers</entry>
 		<entry lang="BG">Ние сме екип от талантливи, опитни и мотивирани програмисти-разработчици</entry>
 	</sentence>
+	<sentence mode="on" keyword="promo_experience">
+		<entry lang="RUS">Больше 10 лет на рынке ИТ</entry>
+		<entry lang="KAZ">Больше 10 лет на рынке ИТ</entry>
+		<entry lang="ENG">More than 10 years in the IT</entry>
+		<entry lang="BG">Больше 10 лет на рынке ИТ</entry>
+	</sentence>
 
 	<sentence mode="on" keyword="find_out_more">
 		<entry lang="RUS">Узнать больше</entry>
