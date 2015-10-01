@@ -40,7 +40,7 @@ $(function() {
                 target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
                 if (target.length) {
                     $('html,body').animate({
-                        scrollTop: (target.offset().top - 49) // 50px offset for navbar menu
+                        scrollTop: (target.offset().top - 49) // 50px navbar height
                     }, 500);
                     return false;
                 }
@@ -54,7 +54,7 @@ $(function() {
 
 $(document).ready(function(e) {
     $('form[name=contact_us]').submit(function(e) {
-        $form = $(this);
+        var $form = $(this);
         $.ajax({
             url: '?id=sendmail',
             type: 'POST',
@@ -67,31 +67,31 @@ $(document).ready(function(e) {
                 $('.help-block', $form).html('');
                 $('#form_message').removeClass('alert-success').html('');
             },
-            success: function(json, status) {
-                if (json.error) {
+            success: function(response, status) {
+                if (response.error) {
                     // Error messages
-                    if (json.error.name) {
+                    if (response.error.name) {
                         $('input[name=name]', $form).parent().addClass('has-error');
-                        $('input[name=name]', $form).next('.help-block').html(json.error.name);
+                        $('input[name=name]', $form).next('.help-block').html(response.error.name);
                     }
-                    if (json.error.email) {
+                    if (response.error.email) {
                         $('input[name=email]', $form).parent().addClass('has-error');
-                        $('input[name=email]', $form).next('.help-block').html(json.error.email);
+                        $('input[name=email]', $form).next('.help-block').html(response.error.email);
                     }
-                    if (json.error.message) {
+                    if (response.error.message) {
                         $('textarea[name=message]', $form).parent().addClass('has-error');
-                        $('textarea[name=message]', $form).next('.help-block').html(json.error.message);
+                        $('textarea[name=message]', $form).next('.help-block').html(response.error.message);
                     }
-                    if (json.error.recaptcha) {
+                    if (response.error.recaptcha) {
                         $('#form-captcha .help-block').addClass('has-error');
-                        $('#form-captcha .help-block').html(json.error.recaptcha);
+                        $('#form-captcha .help-block').html(response.error.recaptcha);
                     }
                 }
                 // Refresh Captcha
-                // grecaptcha.reset();
+                grecaptcha.reset();
                 //
-                if (json.success) {
-                    $('#form_message').addClass('alert-success').html(json.success);
+                if (response.success) {
+                    $('#form_message').addClass('alert-success').html(response.success);
                     setTimeout(function() {
                         $('#form_message').removeClass('alert-success').html('');
                     }, 4000);

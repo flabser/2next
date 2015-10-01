@@ -51,11 +51,7 @@
         text-align: left;
         margin-top: 0;
     }
-    .contact-form__btn .g-recaptcha {
-        float: left;
-    }
-    .contact-form__btn .btn-contact {
-        float: right;
-        margin-top: 0;
+    .contact-form__btn {
+        text-align: left;
     }
 }
