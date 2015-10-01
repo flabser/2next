@@ -8,7 +8,7 @@ import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
 
 
-public class Welcome extends _DoScript {
+public class Index extends _DoScript {
 
 	@Override
 	public void doGet(_Session session, _WebFormData formData, String lang) throws _Exception {
@@ -28,6 +28,7 @@ public class Welcome extends _DoScript {
 
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
+		// action send mail
 	}
 
 	@Override

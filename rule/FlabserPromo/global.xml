@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rule mode="on" type="global">
 	<description></description>
-	<entrypoint>Provider?id=welcome</entrypoint>
-	<defaultredirecturl>Provider?id=welcome</defaultredirecturl>
+	<entrypoint>Provider?id=index</entrypoint>
+	<defaultredirecturl>Provider?id=index</defaultredirecturl>
 
 	<langs>
 		<entry id="ENG">English</entry>

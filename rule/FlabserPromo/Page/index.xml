@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rule type="page" id="welcome" mode="on" anonymous="on">
+<rule type="page" id="index" mode="on" anonymous="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
-	<xsltfile>pages/welcome.xsl</xsltfile>
+	<xsltfile>pages/index.xsl</xsltfile>
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="java_class">flabserpromo.page.Welcome</doscript>
+			<doscript source="java_class">flabserpromo.page.Index</doscript>
 		</events>
 	</element>
 
