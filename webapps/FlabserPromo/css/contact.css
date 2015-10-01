@@ -42,8 +42,20 @@
     text-align: center;
 }
 
+.contact-form__btn .btn-contact {
+    margin-top: 15px;
+}
+
 @media (min-width: 768px) {
     .contact-form__btn {
         text-align: left;
+        margin-top: 0;
+    }
+    .contact-form__btn .g-recaptcha {
+        float: left;
+    }
+    .contact-form__btn .btn-contact {
+        float: right;
+        margin-top: 0;
     }
 }

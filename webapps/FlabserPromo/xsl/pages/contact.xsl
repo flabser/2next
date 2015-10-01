@@ -42,6 +42,7 @@
 								<span class="help-block"></span>
 							</div>
 							<div class="contact-form__btn">
+								<div class="g-recaptcha" data-sitekey="6Lf34Q0TAAAAAAwtko0WWibX6oUEs_i80q70XGab"></div>
 								<button type="submit" class="btn btn-contact">
 									<xsl:value-of select="//captions/send_message/@caption" />
 								</button>
