@@ -21,17 +21,31 @@
 						<h4>
 							<xsl:value-of select="//captions/message_title/@caption" />
 						</h4>
-						<form method="post" action="contact">
-							<input type="text" name="email" placeholder="Email" class="form-control contact-email contact-error" required="required" />
-							<input type="text" name="subject" class="form-control contact-subject contact-error" required="required">
-								<xsl:attribute name="placeholder" select="//captions/message_subject/@caption" />
-							</input>
-							<textarea name="message" class="form-control contact-error" required="required">
-								<xsl:attribute name="placeholder" select="//captions/message_text/@caption" />
-							</textarea>
-							<button type="submit" class="btn btn-contact">
-								<xsl:value-of select="//captions/send_message/@caption" />
-							</button>
+						<!-- Alert message -->
+						<div class="alert contact-form__alert" id="form_message" role="alert"></div>
+						<!-- Contact form -->
+						<form method="post" action="contact" name="contact_us">
+							<div class="form-group">
+								<input type="email" name="email" placeholder="Email" class="form-control contact-email contact-error" required="required" />
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group">
+								<input type="text" name="subject" class="form-control contact-subject contact-error" required="required">
+									<xsl:attribute name="placeholder" select="//captions/message_subject/@caption" />
+								</input>
+								<span class="help-block"></span>
+							</div>
+							<div class="form-group">
+								<textarea name="message" class="form-control contact-error" required="required">
+									<xsl:attribute name="placeholder" select="//captions/message_text/@caption" />
+								</textarea>
+								<span class="help-block"></span>
+							</div>
+							<div class="contact-form__btn">
+								<button type="submit" class="btn btn-contact">
+									<xsl:value-of select="//captions/send_message/@caption" />
+								</button>
+							</div>
 						</form>
 					</div>
 					<div class="col-sm-5 contact-address">

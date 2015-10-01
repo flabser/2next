@@ -2,6 +2,18 @@
     position: relative;
 }
 
+.contact-form {
+    margin-bottom: 30px;
+}
+
+.contact-form__alert {
+    display: none;
+}
+
+.contact-form__alert.alert-success {
+    display: block;
+}
+
 .form-control {
     border: none;
     border-bottom: 2px solid #ccc;
@@ -14,6 +26,7 @@
 }
 
 .form-control:focus {
+    border-color: #EA8B7D;
     box-shadow: none;
 }
 
@@ -23,4 +36,14 @@
     background: #DB4A35;
     border-color: #CE0000;
     color: #FFFFFF;
+}
+
+.contact-form__btn {
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .contact-form__btn {
+        text-align: left;
+    }
 }

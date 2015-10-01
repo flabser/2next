@@ -1,52 +1,31 @@
-var promoApp = {
-    toggleNavbar: function(wp) {
-        var $nav = $(".navbar");
-        if (wp === 'down') {
-            $nav.removeClass("js-navbar-top");
-            $nav.removeClass("navbar-default").addClass("navbar-inverse");
-        } else if (wp === 'up') {
-            if (!$nav.hasClass('js-show')) {
-                $nav.addClass("js-navbar-top");
-                $nav.addClass("navbar-default").removeClass("navbar-inverse");
-            }
-        }
-    }
-};
-
-/**
- * Navigation
- */
-
 /* Auto close navbar on click */
 
-$(".navbar-nav > li > a").click(function() {
+$('.navbar-nav > li > a').click(function() {
     if (!$(this).hasClass('dropdown-toggle')) {
-        $(".navbar-collapse").collapse('hide');
+        $('.navbar-collapse').collapse('hide');
     }
 });
 
 /* Change navbar class on scroll */
 
-$(".wrapper").waypoint(function(wp) {
-    promoApp.toggleNavbar(wp);
+$('.wrapper').waypoint(function(wp) {
+    $('.navbar').toggleClass('js-navbar-top');
+    $('.navbar.js-toggle-class').toggleClass('navbar-default navbar-inverse');
     return false;
 }, {
-    offset: "-20px"
+    offset: '-20px'
 });
 
 /* Change navbar class on collapse/uncollapse in its top position */
 
-$('.wrapper .navbar-collapse').on('show.bs.collapse', function() {
-    $(".navbar.js-navbar-top").toggleClass("navbar-default navbar-inverse");
-    $(".navbar").toggleClass("js-show");
+$('.navbar .navbar-collapse').on('show.bs.collapse', function() {
+    $('.navbar.js-navbar-top').toggleClass('navbar-default navbar-inverse');
+    $('.navbar').toggleClass('js-toggle-class');
 });
 
-$('.wrapper .navbar-collapse').on('hide.bs.collapse', function() {
-    $(".navbar.js-navbar-top").toggleClass("navbar-default navbar-inverse");
-    $(".navbar").toggleClass("js-show");
-    if (window.pageYOffset < 20) {
-        promoApp.toggleNavbar('up');
-    }
+$('.navbar .navbar-collapse').on('hide.bs.collapse', function() {
+    $('.navbar.js-navbar-top').toggleClass('navbar-default navbar-inverse');
+    $('.navbar').toggleClass('js-toggle-class');
 });
 
 /**
@@ -67,4 +46,64 @@ $(function() {
                 }
             }
         });
+});
+
+/**
+ * Contact form
+ */
+
+$(document).ready(function(e) {
+    $('form[name=contact_us]').submit(function(e) {
+        $form = $(this);
+        $.ajax({
+            url: '?id=sendmail',
+            type: 'POST',
+            data: $form.serialize(),
+            dataType: 'json',
+            beforeSend: function(xhr) {
+                $form.fadeTo('slow', 0.33);
+                $('button', $form).attr('disabled', true);
+                $('.has-error', $form).removeClass('has-error');
+                $('.help-block', $form).html('');
+                $('#form_message').removeClass('alert-success').html('');
+            },
+            success: function(json, status) {
+                if (json.error) {
+                    // Error messages
+                    if (json.error.name) {
+                        $('input[name=name]', $form).parent().addClass('has-error');
+                        $('input[name=name]', $form).next('.help-block').html(json.error.name);
+                    }
+                    if (json.error.email) {
+                        $('input[name=email]', $form).parent().addClass('has-error');
+                        $('input[name=email]', $form).next('.help-block').html(json.error.email);
+                    }
+                    if (json.error.message) {
+                        $('textarea[name=message]', $form).parent().addClass('has-error');
+                        $('textarea[name=message]', $form).next('.help-block').html(json.error.message);
+                    }
+                    if (json.error.recaptcha) {
+                        $('#form-captcha .help-block').addClass('has-error');
+                        $('#form-captcha .help-block').html(json.error.recaptcha);
+                    }
+                }
+                // Refresh Captcha
+                // grecaptcha.reset();
+                //
+                if (json.success) {
+                    $('#form_message').addClass('alert-success').html(json.success);
+                    setTimeout(function() {
+                        $('#form_message').removeClass('alert-success').html('');
+                    }, 4000);
+                }
+
+            },
+            complete: function(xhr, status) {
+                $form.fadeTo('fast', 1);
+                $('button', $form).attr('disabled', false);
+            }
+        });
+
+        return false;
+    });
 });

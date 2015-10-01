@@ -9,17 +9,16 @@
 	</xsl:template>
 
 	<xsl:template name="navbar">
-		<nav class="navbar navbar-fixed-top navbar-default js-navbar-top">
+		<nav class="navbar navbar-fixed-top navbar-default js-navbar-top js-toggle-class">
 			<div class="container">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-						aria-expanded="false" aria-controls="navbar">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#home">
+					<a class="navbar-brand" href="?id=welcome">
 						<xsl:value-of select="//captions/brand/@caption" />
 					</a>
 				</div>
