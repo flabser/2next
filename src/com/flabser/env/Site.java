@@ -73,7 +73,7 @@ public class Site implements _IContent{
 	@Override
 	public StringBuffer toXML() throws _Exception {
 		StringBuffer output = new StringBuffer(1000);
-		return output.append("<entry><apptype>" + appBase + "</apptype></entry>");
+		return output.append("<apptype>" + appBase + "</apptype><description>" + appTemlate.globalSetting.description + "</description>");
 	}
 
 	public String getFullPathAppBase(){

@@ -1,7 +1,6 @@
 package com.flabser.script;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 import com.flabser.apptemplate.AppTemplate;
@@ -55,15 +54,14 @@ public class _AppEntourage {
 		return list;
 	}
 
-	public Collection<com.flabser.env.Site> getAvailableTemplates() {
-		HashMap<String, com.flabser.env.Site> at = new HashMap<String, com.flabser.env.Site>();
+	public HashMap<String, Site> getAvailableTemplates() {
+		HashMap<String, Site> at = new HashMap<String, Site>();
 		for(Site site : Environment.availableTemplates.values()){
 			if (site.getAppTemlate().globalSetting.getWorkMode() == WorkModeType.CLOUD){
-				at.put(site.getAppBase(), site);
+				at.put(site.getAppBase(),site);
 			}
 		}
-
-		return at.values();
+		return at;
 	}
 
 }

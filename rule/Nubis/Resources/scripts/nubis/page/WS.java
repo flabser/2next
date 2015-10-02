@@ -18,7 +18,7 @@ public class WS extends _DoScript {
 		publishElement("apps", list.values());
 
 		_AppEntourage ent = session.getAppEntourage();
-		publishElement("templates", ent.getAvailableTemplates());
+		publishElement("templates", ent.getAvailableTemplates().values());
 	}
 
 	@Override

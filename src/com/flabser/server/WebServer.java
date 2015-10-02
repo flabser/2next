@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.Container;
 import org.apache.catalina.Context;
 import org.apache.catalina.Engine;
 import org.apache.catalina.Host;
@@ -62,8 +63,6 @@ public class WebServer implements IWebServer {
 
 		initSharedResources();
 	}
-
-
 
 	public Context initSharedResources() throws LifecycleException, MalformedURLException {
 		String URLPath = "/" + EnvConst.SHARED_RESOURCES_NAME;
@@ -142,22 +141,31 @@ public class WebServer implements IWebServer {
 		try {
 			String parent = site.getParent();
 			if (!parent.equals("")) {
+
 				Site parentApp = Environment.availableTemplates.get(parent);
 				Host appHost = parentApp.getHost();
-				context = new StandardContext();
-				context = tomcat.addContext(appHost, URLPath, db);
-				context.setDisplayName(appID);
-				context.setName(appID);
-				context.setConfigured(true);
-				appHost.addChild(context);
-
+				Container c = appHost.findChild(appID);
+				if (c == null) {
+					context = new StandardContext();
+					context = tomcat.addContext(appHost, URLPath, db);
+					context.setDisplayName(appID);
+					context.setName(appID);
+					context.setConfigured(true);
+					appHost.addChild(context);
+				}else{
+					return null;
+				}
 
 				// engine.addChild(appHost);
 			} else {
-				context = tomcat.addContext(URLPath, db);
-				context.setDisplayName(URLPath);
+				if (tomcat.getHost().findChild(appID) == null) {
+					context = tomcat.addContext(URLPath, db);
+					context.setDisplayName(URLPath);
+					context.setName(appID);
+				}else{
+					return null;
+				}
 			}
-
 
 			initErrorPages(context);
 			addFilterToContext(context, CacheControlFilter.class, "CacheControlFilter", "/*");
@@ -187,11 +195,16 @@ public class WebServer implements IWebServer {
 			w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 			context.addServletMapping("/rest/*", "Jersey REST Service");
 			context.setTldValidation(false);
+			context.getServletContext().setAttribute(EnvConst.TEMPLATE_ATTR, site.getAppTemlate());
 		} catch (IllegalArgumentException iae) {
-			Server.logger.warningLogEntry("Context \"" + URLPath + "\" has not been initialized");
-			throw new ServletException("Context \"" + URLPath + "\" has not been initialized");
+			if (!iae.getMessage().contains("is not unique")){
+				Server.logger.warningLogEntry("Context \"" + URLPath + "\" has not been initialized");
+				throw new ServletException("Context \"" + URLPath + "\" has not been initialized");
+			}else{
+				Server.logger.warningLogEntry("Context \"" + URLPath + "\" has been already initialized");
+			}
 		}
-		context.getServletContext().setAttribute(EnvConst.TEMPLATE_ATTR, site.getAppTemlate());
+
 
 		return context;
 	}
@@ -220,7 +233,6 @@ public class WebServer implements IWebServer {
 				context = tomcat.addContext("/" + templateName, docBase);
 				context.setDisplayName(templateName);
 			}
-
 
 		} else {
 			Host appHost = site.getHost();

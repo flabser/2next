@@ -61,7 +61,6 @@ public class UserService extends RestProvider {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(User user) throws ClassNotFoundException, SQLException, InstantiationException, DatabasePoolException,
 	IllegalAccessException {
-		System.out.println("POST " + user);
 		user.setRegDate(new Date());
 		user.lastURL = "";
 		user.setStatus(UserStatusType.REGISTERED);

@@ -65,7 +65,7 @@ public class _Session {
 		if (userSession.getAuthMode() == AuthModeType.DIRECT_LOGIN) {
 			return env.getUrl() + "/Provider?id=login";
 		} else {
-			return env.getWorkspaceURL();
+			return env.getLoginURL();
 		}
 	}
 

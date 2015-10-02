@@ -40,7 +40,7 @@ public class InvitationService extends RestProvider {
 		User user = getUserSession().currentUser;
 		ApplicationProfile ap = user.getApplicationProfile(getAppID());
 		User tempUser = _UsersHelper.regTempApplicationUser(ap, m.getEmail());
-		if (tempUser.save()) {
+		if (tempUser != null) {
 			InvitationEMail sve = new InvitationEMail(session, user, m.getMessage(), tempUser);
 			if (sve.send()) {
 				tempUser.setStatus(UserStatusType.WAITING_FIRST_ENTERING_AFTER_INVITATION);

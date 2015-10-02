@@ -33,6 +33,7 @@ import com.flabser.env.SessionPool;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.scheduler.tasks.TempFileCleaner;
+import com.flabser.script._Session;
 import com.flabser.server.Server;
 import com.flabser.servlets.ServletUtil;
 import com.flabser.users.User;
@@ -40,7 +41,7 @@ import com.flabser.users.UserSession;
 import com.flabser.users.UserStatusType;
 
 @Path("/session")
-public class SessionService {
+public class SessionService extends RestProvider {
 
 	@Context
 	ServletContext context;
@@ -51,7 +52,7 @@ public class SessionService {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getSession() {
+	public Response getCurrentSession() {
 		HttpSession jses = request.getSession(false);
 		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 		AppUser au = null;
@@ -175,16 +176,18 @@ public class SessionService {
 
 	@DELETE
 	public Response destroySession() {
-		HttpSession jses = request.getSession(true);
-		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
+		UserSession userSession = getUserSession();
+		_Session session = new _Session(getAppTemplate(), userSession);
+		String url = session.getLoginURL();
 		if (userSession != null) {
-			jses.removeAttribute(EnvConst.SESSION_ATTR);
+			request.getSession(false).removeAttribute(EnvConst.SESSION_ATTR);
 			SessionPool.remove(userSession);
 			userSession = null;
 			// jses.invalidate();
 		}
+
 		NewCookie cookie = new NewCookie(EnvConst.AUTH_COOKIE_NAME, "", "/", null, null, 0, false);
-		return Response.status(HttpServletResponse.SC_OK).cookie(cookie).build();
+		return Response.status(HttpServletResponse.SC_OK).entity(url).cookie(cookie).build();
 
 	}
 
