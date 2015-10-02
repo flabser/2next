@@ -2,7 +2,7 @@ package com.flabser.apptemplate;
 
 
 public enum WorkModeType {
-	UNKNOWN(0), COMMON(205), CLOUD(206), MIXED(207);
+	UNKNOWN(0), COMMON(205), CLOUD(206), MIXED(207), SIMPLE(208);
 
 	private int code;
 

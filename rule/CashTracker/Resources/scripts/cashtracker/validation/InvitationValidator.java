@@ -1,7 +1,7 @@
 package cashtracker.validation;
 
-import cashtracker.pojo.Invitation;
 
+import com.flabser.dataengine.system.entities.Invitation;
 import com.flabser.script._Validator;
 
 

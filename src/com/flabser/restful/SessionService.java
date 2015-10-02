@@ -149,7 +149,7 @@ public class SessionService {
 		if (user.getStatus() == UserStatusType.REGISTERED) {
 			authUser = userSession.getUserPOJO();
 			authUser.setDefaultApp(appID);
-		} else if (user.getStatus() == UserStatusType.WAITING_FOR_FIRST_ENTERING) {
+		} else if (user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING_AFTER_INVITATION) {
 			authUser.setRedirect("tochangepwd");
 		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED) {
 			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION);

@@ -1,31 +1,38 @@
 package com.flabser.users;
 
-import com.flabser.dataengine.pool.DatabasePoolException;
-import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.exception.WebFormValueException;
-import com.flabser.util.Util;
-
-import java.sql.SQLException;
 import java.util.Date;
+
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.server.Server;
+import com.flabser.util.Util;
 
 public class _UsersHelper {
 
-    public static User regApplicationUser(ApplicationProfile ap, String login, String email, String userName) throws WebFormValueException, ClassNotFoundException, SQLException, InstantiationException, DatabasePoolException, IllegalAccessException {
-        User user = new User();
-        user.setLogin(login);
-        user.setUserName(userName);
-        user.setPwd(Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890_", 5));
-        user.setPasswordHash("");
-        user.setEmail(email);
-        user.setStatus(UserStatusType.WAITING_FOR_FIRST_ENTERING);
-        user.setRegDate(new Date());
-        user.setVerifyCode("");
-        user.addApplication(ap);
+	public static User regApplicationUser(ApplicationProfile ap, String login, String email, String userName, String pwd){
+		try {
+			User user = new User();
+			user.setLogin(login);
+			user.setUserName(userName);
+			user.setPwd(pwd);
+			user.setPasswordHash("");
+			user.setEmail(email);
+			user.setRegDate(new Date());
+			user.setVerifyCode("");
+			user.addApplication(ap);
 
-        user.save();
-        return user;
+			user.save();
+			return user;
+		} catch (Exception e) {
+			Server.logger.errorLogEntry(e);
+		}
+		return null;
 
-    }
+	}
 
+	public static User regTempApplicationUser(ApplicationProfile ap, String email) {
+		return regApplicationUser(ap, email, email, "",
+				Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 10));
+
+	}
 
 }

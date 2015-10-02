@@ -2,6 +2,7 @@
 <rule mode="on" type="global">
 	<description></description>
 	<entrypoint>Provider?id=index</entrypoint>
+		<workmode>SIMPLE</workmode>
 	<defaultredirecturl>Provider?id=index</defaultredirecturl>
 
 	<langs>

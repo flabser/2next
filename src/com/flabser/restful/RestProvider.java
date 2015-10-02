@@ -54,7 +54,7 @@ public class RestProvider {
 	@Context
 	protected HttpServletResponse response;
 
-	public AppTemplate getAppEnv() {
+	public AppTemplate getAppTemplate() {
 		return (AppTemplate) context.getAttribute(EnvConst.TEMPLATE_ATTR);
 
 	}
@@ -66,12 +66,18 @@ public class RestProvider {
 
 	}
 
+	public String getAppID() {
+		HttpServletRequest http = request;
+		return (String) http.getAttribute("appid");
+
+	}
+
 	public _Session getSession() {
 		UserSession userSession = getUserSession();
 		if (userSession == null) {
 			return null;
 		} else {
-			return new _Session(getAppEnv(), userSession);
+			return new _Session(getAppTemplate(), userSession);
 		}
 	}
 
@@ -82,7 +88,7 @@ public class RestProvider {
 	AuthFailedException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		System.out.println("get page id=" + id);
 		MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
-		AppTemplate env = getAppEnv();
+		AppTemplate env = getAppTemplate();
 		IRule rule = env.ruleProvider.getRule(id);
 		_Page result = null;
 
@@ -114,7 +120,7 @@ public class RestProvider {
 			throws RuleException, AuthFailedException, ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
 		System.out.println("get page id=" + id);
-		AppTemplate env = getAppEnv();
+		AppTemplate env = getAppTemplate();
 		IRule rule = env.ruleProvider.getRule(id);
 		_Page result = null;
 

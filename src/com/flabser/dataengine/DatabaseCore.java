@@ -17,6 +17,7 @@ import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.EnvConst;
 import com.flabser.exception.ApplicationException;
+import com.flabser.server.Server;
 import com.flabser.users.User;
 
 
@@ -27,7 +28,7 @@ public abstract class DatabaseCore {
 	protected static EntityManager entityManager;
 
 	protected void initConnectivity(String driver, ApplicationProfile appProfile) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+	IllegalAccessException, ClassNotFoundException, DatabasePoolException {
 		pool = new DBConnectionPool();
 		String dbLogin = null;
 		String dbPwd = null;
@@ -46,7 +47,7 @@ public abstract class DatabaseCore {
 			dbPwd = EnvConst.DB_PWD;
 		} else {
 			throw new ApplicationException(appProfile.appType, "The mode \"" + appProfile.getMode()
-					+ "\" of the pplication does not support");
+					+ "\" of the application does not support");
 		}
 
 		pool.initConnectionPool(driver, appProfile.getURI(), dbLogin, dbPwd);
@@ -63,11 +64,13 @@ public abstract class DatabaseCore {
 		properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "createDDL.jdbc");
 		properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "dropDDL.jdbc");
 
-		System.out.println(appProfile.appType);
-
 		PersistenceProvider pp = new PersistenceProvider();
 		EntityManagerFactory factory = pp.createEntityManagerFactory(appProfile.appType, properties);
-		entityManager = factory.createEntityManager();
+		if (factory != null){
+			entityManager = factory.createEntityManager();
+		}else{
+			Server.logger.warningLogEntry("the entity manager of \"" + appProfile.appType + "\" has not been initialized");
+		}
 	}
 
 	public void generatePersistStorage() {

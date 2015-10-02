@@ -43,6 +43,17 @@ public class DDEScripts {
 			+ "lasterror varchar(256), "
 			+ "CONSTRAINT apps_pkey PRIMARY KEY (ID))";
 
+	public static final String INVITATIONS_DDE = "create table INVITATIONS("
+			+ "ID serial NOT NULL, "
+			+ "regdate timestamp without time zone, "
+			+ "EMAIL varchar(32), "
+			+ "APPTYPE varchar(16), "
+			+ "APPID varchar(16), "
+			+ "MESSAGE varchar(64), "
+			+ "AUTHOR integer, "
+			+ "TEMPLOGIN int, "
+			+ "CONSTRAINT invs_pkey PRIMARY KEY (ID))";
+
 	public static final String USERS_ACTIVITY_DDE = "create table USERSACTIVITY(ID serial NOT NULL, "
 			+ " TYPE int NOT NULL," + " DBURI varchar(128), "
 			+ " USERID varchar(32), " + " CLIENTIP char(15), "

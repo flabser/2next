@@ -28,10 +28,10 @@ import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.env.Site;
 import com.flabser.restful.ResourceLoader;
-import com.flabser.valves.AccessGuard;
 import com.flabser.valves.Logging;
 import com.flabser.valves.Secure;
 import com.flabser.valves.Unsecure;
+import com.flabser.web.filter.AccessGuard;
 import com.flabser.web.filter.CacheControlFilter;
 
 public class WebServer implements IWebServer {

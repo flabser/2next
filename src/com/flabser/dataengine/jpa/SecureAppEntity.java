@@ -1,16 +1,10 @@
 package com.flabser.dataengine.jpa;
 
-import java.util.List;
-
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class SecureAppEntity extends AppEntity {
-	@ElementCollection
+	/*	@ElementCollection
 	@CollectionTable(name = "editors1",joinColumns =  @JoinColumn(name = "fk_parent"))
 	@Column(name = "editors")
 	List<String> editors;
@@ -31,7 +25,7 @@ public abstract class SecureAppEntity extends AppEntity {
 	}
 	public void setReaders(List<String> readers) {
 		this.readers = readers;
-	}
+	}*/
 
 
 }

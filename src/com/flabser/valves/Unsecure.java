@@ -40,6 +40,7 @@ public class Unsecure extends ValveBase {
 
 			if (site != null) {
 				ru.setAppType(site.getAppBase());
+				http.setAttribute("appid", ru.getAppID());
 				if (ru.isAuthRequest()) {
 					if (http.getMethod().equalsIgnoreCase("POST")) {
 						HttpSession jses = http.getSession(true);

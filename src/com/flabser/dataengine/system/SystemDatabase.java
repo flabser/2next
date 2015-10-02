@@ -30,6 +30,7 @@ import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.Invitation;
 import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.EnvConst;
@@ -51,6 +52,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		HashMap<String, String> queries = new HashMap<>();
 		queries.put("USERS", DDEScripts.USERS_DDE);
 		queries.put("APPS", DDEScripts.APPS_DDE);
+		queries.put("INVITATIONS", DDEScripts.INVITATIONS_DDE);
 		queries.put("USERSACTIVITY", DDEScripts.USERS_ACTIVITY_DDE);
 		queries.put("HOLIDAYS", DDEScripts.HOLIDAYS_DDE);
 		queries.put("GROUPS", DDEScripts.GROUPS_DDE);
@@ -853,6 +855,69 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 			return null;
+		} finally {
+			pool.returnConnection(conn);
+		}
+	}
+
+	@Override
+	public int insert(Invitation inv) {
+		Connection conn = pool.getConnection();
+
+		try (PreparedStatement pst = conn
+				.prepareStatement(
+						"insert into INVITATIONS(REGDATE, EMAIL, APPTYPE, APPID, MESSAGE, AUTHOR, TEMPLOGIN) "
+								+ "values(?, ?, ?, ?, ?, ?, ?);",
+								PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+			pst.setTimestamp(1, inv.getRegDate() != null ? new java.sql.Timestamp(inv.getRegDate().getTime()) : null);
+			pst.setString(2, inv.getEmail());
+			pst.setString(3, inv.getAppType());
+			pst.setString(4, inv.getAppID());
+			pst.setString(5, inv.getMessage());
+			pst.setLong(6, inv.getAuthor());
+			pst.setLong(7, inv.getTempLogin());
+
+			pst.executeUpdate();
+
+			try (ResultSet rs = pst.getGeneratedKeys()) {
+				if (rs.next()) {
+					inv.setId(rs.getInt(1));
+				}
+			}
+
+			conn.commit();
+			return inv.getId();
+		} catch (SQLException e) {
+			DatabaseUtil.debugErrorPrint(e);
+			return -1;
+		} finally {
+			pool.returnConnection(conn);
+		}
+	}
+
+	@Override
+	public int update(Invitation invitation) {
+		Connection conn = pool.getConnection();
+
+		try (PreparedStatement pst = conn
+				.prepareStatement("UPDATE INVITATIONS SET EMAIL = ?, APPTYPE = ?, APPID = ?, MESSAGE = ?,  AUTHOR = ?, TEMPLOGIN = ? WHERE ID = ?;")) {
+
+			pst.setString(1, invitation.getEmail());
+			pst.setString(2, invitation.getAppType());
+			pst.setString(3, invitation.getAppID());
+			pst.setString(4, invitation.getMessage());
+			pst.setLong(5, invitation.getAuthor());
+			pst.setLong(6, invitation.getTempLogin());
+			pst.setInt(7, invitation.getId());
+
+			pst.executeUpdate();
+
+			conn.commit();
+			return invitation.getId();
+		} catch (SQLException e) {
+			DatabaseUtil.debugErrorPrint(e);
+			return -1;
 		} finally {
 			pool.returnConnection(conn);
 		}

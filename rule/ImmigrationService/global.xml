@@ -3,6 +3,7 @@
 	<description></description>
 	<entrypoint>Provider?id=welcome</entrypoint>
 	<defaultredirecturl>index.html</defaultredirecturl>
+			<workmode>SIMPLE</workmode>
 	<langs>
 		<entry id="ENG">English</entry>
 		<entry id="RUS">Русский</entry>

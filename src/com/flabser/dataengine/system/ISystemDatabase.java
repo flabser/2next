@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.Invitation;
 import com.flabser.users.User;
 
 public interface ISystemDatabase {
@@ -48,5 +49,9 @@ public interface ISystemDatabase {
 	User getUser(long id);
 
 	byte[] getUserAvatarStream(long id);
+
+	int insert(Invitation user);
+
+	int update(Invitation invitation);
 
 }
