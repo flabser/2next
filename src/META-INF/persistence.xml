@@ -5,7 +5,6 @@
 	<persistence-unit name="CashTracker" transaction-type="RESOURCE_LOCAL">
 		<class>cashtracker.model.Account</class>
 		<class>cashtracker.model.Budget</class>
-		<class>cashtracker.model.constants.converter.BudgetStateConverter</class>
 		<class>cashtracker.model.Category</class>
 		<class>cashtracker.model.CostCenter</class>
 		<class>cashtracker.model.Tag</class>
