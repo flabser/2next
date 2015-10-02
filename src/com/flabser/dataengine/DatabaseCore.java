@@ -19,13 +19,15 @@ import com.flabser.env.EnvConst;
 import com.flabser.exception.ApplicationException;
 import com.flabser.users.User;
 
+
 public abstract class DatabaseCore {
+
 	protected ApplicationProfile appProfile;
 	protected IDBConnectionPool pool;
 	protected static EntityManager entityManager;
 
 	protected void initConnectivity(String driver, ApplicationProfile appProfile) throws InstantiationException,
-	IllegalAccessException, ClassNotFoundException, DatabasePoolException {
+			IllegalAccessException, ClassNotFoundException, DatabasePoolException {
 		pool = new DBConnectionPool();
 		String dbLogin = null;
 		String dbPwd = null;
@@ -39,7 +41,7 @@ public abstract class DatabaseCore {
 				throw new ApplicationException(appProfile.appType,
 						"Owner of the application cannot get access to database \"" + appProfile.getURI() + "\"");
 			}
-		}else if (appProfile.getMode() == WorkModeType.COMMON) {
+		} else if (appProfile.getMode() == WorkModeType.COMMON) {
 			dbLogin = EnvConst.DB_USER;
 			dbPwd = EnvConst.DB_PWD;
 		} else {
@@ -47,30 +49,28 @@ public abstract class DatabaseCore {
 					+ "\" of the pplication does not support");
 		}
 
-
 		pool.initConnectionPool(driver, appProfile.getURI(), dbLogin, dbPwd);
-		Map<String, String> properties = new HashMap<String, String>();
+		Map <String, String> properties = new HashMap <String, String>();
 		properties.put(PersistenceUnitProperties.JDBC_DRIVER, driver);
 		properties.put(PersistenceUnitProperties.JDBC_USER, dbLogin);
 		properties.put(PersistenceUnitProperties.JDBC_PASSWORD, dbPwd);
 		properties.put(PersistenceUnitProperties.JDBC_URL, appProfile.getURI());
 
 		properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "");
-		properties.put(PersistenceUnitProperties.DDL_GENERATION,PersistenceUnitProperties.CREATE_ONLY);
-		properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE,"createDDL.jdbc");
-		properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE,"dropDDL.jdbc");
+		properties.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_OR_EXTEND);
+		// for CREATE_OR_EXTEND need DDL_GENERATION_MODE = (DDL_BOTH_GENERATION | DATABASE)
+		properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_BOTH_GENERATION);
+		properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "createDDL.jdbc");
+		properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "dropDDL.jdbc");
 
 		System.out.println(appProfile.appType);
 
 		PersistenceProvider pp = new PersistenceProvider();
 		EntityManagerFactory factory = pp.createEntityManagerFactory(appProfile.appType, properties);
 		entityManager = factory.createEntityManager();
-
-
-
 	}
 
-	public void generatePersistStorage(){
+	public void generatePersistStorage() {
 		// properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "");
 		// properties.put(PersistenceUnitProperties.DDL_GENERATION,
 		// "drop-and-create-tables");
@@ -81,6 +81,4 @@ public abstract class DatabaseCore {
 		// properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE,
 		// "both");
 	}
-
-
 }
