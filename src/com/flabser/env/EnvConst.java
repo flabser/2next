@@ -12,7 +12,7 @@ public class EnvConst {
 	public static final String ERROR_XSLT = "xsl" + File.separator + "errors" + File.separator + "error.xsl";
 	public static String DATABASE_HOST = "localhost";
 	public static String DATABASE_NAME = "2Next";
-	public static String CONN_PORT = "5433";
+	public static String CONN_PORT = "5432";
 	public static final String CONN_URI = "jdbc:postgresql://" + DATABASE_HOST + ":" + CONN_PORT + "/" + DATABASE_NAME;
 	public static String DB_USER = "postgres";
 	public static String DB_PWD = "smartdoc";
