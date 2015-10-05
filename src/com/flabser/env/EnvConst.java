@@ -15,7 +15,7 @@ public class EnvConst {
 	public static final String CONN_PORT = "5433";
 	public static final String CONN_URI = "jdbc:postgresql://" + DATABASE_HOST + ":" + CONN_PORT + "/" + DATABASE_NAME;
 	public static final String DB_USER = "postgres";
-	public static final String DB_PWD = "smartdoc";
+	public static final String DB_PWD = "caramba689tyy";
 	public static final String TEMPLATE_ATTR = "template";
 	public final static String SESSION_ATTR = "usersession";
 	public final static String SHARED_RESOURCES_NAME = "SharedResources";
