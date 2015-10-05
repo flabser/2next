@@ -20,7 +20,7 @@ public class ApplicationDatabase implements IApplicationDatabase {
 	ApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		props.setProperty("user", EnvConst.DB_USER);
 		props.setProperty("password", EnvConst.DB_PWD);
-		dbURL = EnvConst.CONN_URI;
+		dbURL = "jdbc:postgresql://" + EnvConst.DATABASE_HOST + ":" + EnvConst.CONN_PORT + "/" + EnvConst.DATABASE_NAME;
 		Class.forName(SystemDatabase.jdbcDriver).newInstance();
 	}
 

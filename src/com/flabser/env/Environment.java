@@ -205,8 +205,11 @@ public class Environment implements ICache {
 			prop.load(input);
 			Field[] declaredFields = EnvConst.class.getDeclaredFields();
 			for (Field field : declaredFields) {
-				if (Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())) {
-					field.set(String.class, prop.getProperty(field.getName()));
+				if (Modifier.isStatic(field.getModifiers())) {
+					String value = prop.getProperty(field.getName());
+					if (value != null) {
+						field.set(String.class, prop.getProperty(field.getName()));
+					}
 				}
 			}
 		}catch(Exception e){

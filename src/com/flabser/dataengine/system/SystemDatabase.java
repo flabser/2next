@@ -47,7 +47,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException,
 	ClassNotFoundException {
 		pool = new com.flabser.dataengine.pool.DBConnectionPool();
-		pool.initConnectionPool(jdbcDriver, EnvConst.CONN_URI, EnvConst.DB_USER, EnvConst.DB_PWD);
+		pool.initConnectionPool(jdbcDriver, "jdbc:postgresql://" + EnvConst.DATABASE_HOST + ":" + EnvConst.CONN_PORT + "/" + EnvConst.DATABASE_NAME, EnvConst.DB_USER, EnvConst.DB_PWD);
 
 		HashMap<String, String> queries = new HashMap<>();
 		queries.put("USERS", DDEScripts.USERS_DDE);

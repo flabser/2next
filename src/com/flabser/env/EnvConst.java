@@ -10,12 +10,6 @@ public class EnvConst {
 	public static final String VOCABULARY_FILE = "vocabulary.xml";
 	public static final String SUPPOSED_CODE_PAGE = "utf-8";
 	public static final String ERROR_XSLT = "xsl" + File.separator + "errors" + File.separator + "error.xsl";
-	public static String DATABASE_HOST = "localhost";
-	public static String DATABASE_NAME = "2Next";
-	public static String CONN_PORT = "5432";
-	public static final String CONN_URI = "jdbc:postgresql://" + DATABASE_HOST + ":" + CONN_PORT + "/" + DATABASE_NAME;
-	public static String DB_USER = "postgres";
-	public static String DB_PWD = "smartdoc";
 	public static final String TEMPLATE_ATTR = "template";
 	public final static String SESSION_ATTR = "usersession";
 	public final static String SHARED_RESOURCES_NAME = "SharedResources";
@@ -24,6 +18,10 @@ public class EnvConst {
 	public static final String LANG_COOKIE_NAME = "lang";
 	public static final String DEFAULT_PAGE = "index";
 
-
+	public static String DATABASE_HOST = "localhost";
+	public static String DATABASE_NAME = "2Next";
+	public static String CONN_PORT = "5432";
+	public static String DB_USER = "postgres";
+	public static String DB_PWD = "smartdoc";
 
 }
