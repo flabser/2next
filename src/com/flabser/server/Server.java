@@ -32,7 +32,7 @@ public class Server {
 				+ System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
 
 		Environment.init();
-		if (!compilationTime.equalsIgnoreCase("")) {
+		if (compilationTime !=null && !compilationTime.equalsIgnoreCase("")) {
 			logger.verboseLogEntry("build: " + compilationTime);
 		}
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
