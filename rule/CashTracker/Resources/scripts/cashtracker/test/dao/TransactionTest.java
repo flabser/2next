@@ -119,7 +119,7 @@ public class TransactionTest extends InitEnv {
 	public void deleteTest() {
 		List <Transaction> list = dao.find(new PageRequest(0, 100, "", ""), null);
 		for (Transaction t : list) {
-			dao.delete(t);
+			// dao.delete(t);
 		}
 	}
 
@@ -127,6 +127,13 @@ public class TransactionTest extends InitEnv {
 	public void findAllByTagsTest() {
 		TagDAO tagDao = new TagDAO(ses);
 		dao.findAllByTags(tagDao.findAll().subList(0, 1));
+	}
+
+	@Test
+	public void getCountByType() {
+		System.out.println(dao.getCountByType(TransactionType.EXPENSE));
+		System.out.println(dao.getCountByType(TransactionType.INCOME));
+		System.out.println(dao.getCountByType(TransactionType.TRANSFER));
 	}
 
 	@Test
