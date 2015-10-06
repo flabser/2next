@@ -18,13 +18,13 @@ public class AccountDAO extends DAO <Account, Long> {
 	}
 
 	public List <Account> findAllEnabled() {
-		String jpql = "SELECT a FROM Account AS a WHERE a.enabled = true ORDER BY a.name";
+		String jpql = "SELECT a FROM cashtracker.model.Account AS a WHERE a.enabled = true ORDER BY a.name";
 		TypedQuery <Account> q = em.createQuery(jpql, Account.class);
 		return q.getResultList();
 	}
 
 	public boolean existsTransactionByAccount(Account m) {
-		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.account = :account OR t.transferAccount = :account";
+		String jpql = "SELECT t.id FROM cashtracker.model.Transaction AS t WHERE t.account = :account OR t.transferAccount = :account";
 		Query q = em.createQuery(jpql);
 		q.setParameter("account", m);
 		q.setMaxResults(1);

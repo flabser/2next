@@ -26,7 +26,7 @@ public class TagDAO extends DAO <Tag, Long> {
 	}
 
 	public boolean existsTransactionByTag(Tag m) {
-		String jpql = "SELECT t.id FROM Transaction AS t WHERE :tag MEMBER OF t.tags";
+		String jpql = "SELECT t.id FROM cashtracker.model.Transaction AS t WHERE :tag MEMBER OF t.tags";
 		Query q = em.createQuery(jpql);
 		q.setParameter("tag", m);
 		q.setMaxResults(1);

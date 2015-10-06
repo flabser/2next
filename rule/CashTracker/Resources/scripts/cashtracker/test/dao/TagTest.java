@@ -31,8 +31,8 @@ public class TagTest extends InitEnv {
 
 	@Test
 	public void insertTest() {
-		int size = dao.findAll().size();
-		int iteration = size + 50;
+		int size = dao.findAll().size() + 1;
+		int iteration = size + 10;
 
 		for (int i = size; i < iteration; i++) {
 			Tag m = new Tag();

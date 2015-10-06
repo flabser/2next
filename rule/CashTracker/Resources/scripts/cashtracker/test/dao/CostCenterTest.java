@@ -32,7 +32,7 @@ public class CostCenterTest extends InitEnv {
 	@Test
 	public void insertTest() {
 		int size = dao.findAll().size() + 1;
-		int iteration = size + 50;
+		int iteration = size + 10;
 
 		for (int i = size; i < iteration; i++) {
 			CostCenter m = new CostCenter();

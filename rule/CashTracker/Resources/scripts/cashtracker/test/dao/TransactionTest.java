@@ -52,7 +52,7 @@ public class TransactionTest extends InitEnv {
 
 		PageRequest pr = new PageRequest(0, 5, "", "");
 		int size = dao.find(pr, null).size();
-		int iteration = size + 25;
+		int iteration = size + 15;
 		long ctime = System.currentTimeMillis() - ((60 * 60 * 24) * 1000);
 
 		for (int i = size; i < iteration; i++) {

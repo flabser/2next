@@ -19,14 +19,14 @@ public class CategoryDAO extends DAO <Category, Long> {
 	}
 
 	public List <Category> findByTransactionType(TransactionType type) {
-		String jpql = "SELECT c FROM Category AS c WHERE c.parent IS NULL AND :type MEMBER OF c.transactionTypes ORDER BY c.name";
+		String jpql = "SELECT c FROM cashtracker.model.Category AS c WHERE c.parent IS NULL AND :type MEMBER OF c.transactionTypes ORDER BY c.name";
 		TypedQuery <Category> q = em.createQuery(jpql, Category.class);
 		q.setParameter("type", type);
 		return q.getResultList();
 	}
 
 	public boolean existsTransactionByCategory(Category m) {
-		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.category = :category";
+		String jpql = "SELECT t.id FROM cashtracker.model.Transaction AS t WHERE t.category = :category";
 		Query q = em.createQuery(jpql);
 		q.setParameter("category", m);
 		q.setMaxResults(1);
@@ -34,7 +34,7 @@ public class CategoryDAO extends DAO <Category, Long> {
 	}
 
 	public boolean existsChildCategory(Category m) {
-		String jpql = "SELECT c FROM Category AS c WHERE c.parent = :category";
+		String jpql = "SELECT c FROM cashtracker.model.Category AS c WHERE c.parent = :category";
 		Query q = em.createQuery(jpql);
 		q.setParameter("category", m);
 		q.setMaxResults(1);

@@ -26,7 +26,7 @@ public class CostCenterDAO extends DAO <CostCenter, Long> {
 	}
 
 	public boolean existsTransactionByCostCenter(CostCenter m) {
-		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.costCenter = :costCenter";
+		String jpql = "SELECT t.id FROM cashtracker.model.Transaction AS t WHERE t.costCenter = :costCenter";
 		Query q = em.createQuery(jpql);
 		q.setParameter("costCenter", m);
 		q.setMaxResults(1);
