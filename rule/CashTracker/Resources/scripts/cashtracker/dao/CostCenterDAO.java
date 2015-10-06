@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 
 import cashtracker.helper.PageRequest;
 import cashtracker.model.CostCenter;
+import cashtracker.model.Transaction;
 
 import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
@@ -26,8 +27,8 @@ public class CostCenterDAO extends DAO <CostCenter, Long> {
 	}
 
 	public boolean existsTransactionByCostCenter(CostCenter m) {
-		String jpql = "SELECT t.id FROM cashtracker.model.Transaction AS t WHERE t.costCenter = :costCenter";
-		Query q = em.createQuery(jpql);
+		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.costCenter = :costCenter";
+		Query q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("costCenter", m);
 		q.setMaxResults(1);
 		return !q.getResultList().isEmpty();

@@ -6,6 +6,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import cashtracker.model.Account;
+import cashtracker.model.Transaction;
 
 import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
@@ -18,14 +19,14 @@ public class AccountDAO extends DAO <Account, Long> {
 	}
 
 	public List <Account> findAllEnabled() {
-		String jpql = "SELECT a FROM cashtracker.model.Account AS a WHERE a.enabled = true ORDER BY a.name";
+		String jpql = "SELECT a FROM Account AS a WHERE a.enabled = true ORDER BY a.name";
 		TypedQuery <Account> q = em.createQuery(jpql, Account.class);
 		return q.getResultList();
 	}
 
 	public boolean existsTransactionByAccount(Account m) {
-		String jpql = "SELECT t.id FROM cashtracker.model.Transaction AS t WHERE t.account = :account OR t.transferAccount = :account";
-		Query q = em.createQuery(jpql);
+		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.account = :account OR t.transferAccount = :account";
+		Query q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("account", m);
 		q.setMaxResults(1);
 		return !q.getResultList().isEmpty();

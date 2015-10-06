@@ -37,9 +37,9 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 	public List <Transaction> find(PageRequest pr, TransactionType type) {
 		String jpql;
 		if (type == null) {
-			jpql = "SELECT t FROM cashtracker.model.Transaction AS t ORDER BY t.date ASC";
+			jpql = "SELECT t FROM Transaction AS t ORDER BY t.date ASC";
 		} else {
-			jpql = "SELECT t FROM cashtracker.model.Transaction AS t WHERE t.transactionType = :type ORDER BY t.date ASC";
+			jpql = "SELECT t FROM Transaction AS t WHERE t.transactionType = :type ORDER BY t.date ASC";
 		}
 
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
@@ -53,49 +53,49 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 	}
 
 	public List <Transaction> findAllByAccount(Account m) {
-		String jpql = "SELECT t FROM cashtracker.model.Transaction AS t WHERE t.account = :account";
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.account = :account";
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("account", m);
 		return q.getResultList();
 	}
 
 	public List <Transaction> findAllByTransferAccount(Account m) {
-		String jpql = "SELECT t FROM cashtracker.model.Transaction AS t WHERE t.transferAccount = :account";
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.transferAccount = :account";
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("account", m);
 		return q.getResultList();
 	}
 
 	public List <Transaction> findAllByCostCenter(CostCenter m) {
-		String jpql = "SELECT t FROM cashtracker.model.Transaction AS t WHERE t.costCenter = :costCenter";
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.costCenter = :costCenter";
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("costCenter", m);
 		return q.getResultList();
 	}
 
 	public List <Transaction> findAllByCategory(Category m) {
-		String jpql = "SELECT t FROM cashtracker.model.Transaction AS t WHERE t.category = :category";
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.category = :category";
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("category", m);
 		return q.getResultList();
 	}
 
 	public List <Transaction> findAllByTags(List <Tag> tags) {
-		String jpql = "SELECT t FROM cashtracker.model.Transaction AS t WHERE t.tags IN :tags";
+		String jpql = "SELECT t FROM Transaction AS t WHERE t.tags IN :tags";
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		q.setParameter("tags", tags);
 		return q.getResultList();
 	}
 
 	public int getCountByType(TransactionType type) {
-		Query q = em
-				.createQuery("SELECT count(t) FROM cashtracker.model.Transaction AS t WHERE t.transactionType = :type");
+		Query q = em.createQuery("SELECT count(t) FROM Transaction AS t WHERE t.transactionType = :type",
+				Transaction.class);
 		q.setParameter("type", type);
 		return ((Long) q.getSingleResult()).intValue();
 	}
 
 	public List <Transaction> find(TransactionFilter filter, PageRequest pr) {
-		String all = "SELECT t FROM cashtracker.model.Transaction AS t";
+		String all = "SELECT t FROM Transaction AS t";
 		String accouns = "";
 		String categories = "";
 		String costCenters = "";

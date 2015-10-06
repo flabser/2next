@@ -14,7 +14,7 @@ public class BudgetDAO extends DAO <Budget, Long> {
 
 	public void delete() {
 		em.getTransaction().begin();
-		em.createQuery("DELETE FROM cashtracker.model.Budget as m").executeUpdate();
+		em.createQuery("DELETE FROM Budget as m", Budget.class).executeUpdate();
 		em.getTransaction().commit();
 	}
 }
