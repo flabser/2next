@@ -24,6 +24,7 @@ import org.apache.commons.io.FileUtils;
 
 import cashtracker.dao.TransactionDAO;
 import cashtracker.helper.PageRequest;
+import cashtracker.helper.TransactionFilter;
 import cashtracker.model.Transaction;
 import cashtracker.model.TransactionFile;
 import cashtracker.model.constants.TransactionType;
@@ -52,18 +53,20 @@ public class TransactionService extends RestProvider {
 			@QueryParam("order_by") String orderBy, @QueryParam("direction") String direction,
 			@QueryParam("type") String trType) {
 
+		TransactionFilter filter = new TransactionFilter();
 		PageRequest pr = new PageRequest((page - 1) * limit, limit, orderBy, direction);
 		TransactionDAO dao = new TransactionDAO(getSession());
-		TransactionType type = null;
 		int count;
+
 		if (trType != null && !trType.isEmpty()) {
-			type = TransactionType.typeOf(trType.substring(0, 1).toUpperCase());
+			TransactionType type = TransactionType.typeOf(trType.substring(0, 1).toUpperCase());
+			filter.addTransactionType(type);
 			count = dao.getCountByType(type);
 		} else {
 			count = dao.getCount().intValue();
 		}
-		//
-		List <Transaction> list = dao.find(pr, type);
+
+		List <Transaction> list = dao.find(filter, pr);
 		_Response _resp = new _Response("success", list, new Meta(count, pr.getLimit(), pr.getOffset(), page));
 
 		ObjectMapper om = new ObjectMapper();

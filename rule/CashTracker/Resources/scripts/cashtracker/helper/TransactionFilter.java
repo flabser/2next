@@ -1,5 +1,6 @@
 package cashtracker.helper;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,15 +21,23 @@ public class TransactionFilter {
 	private Date[] dateRange = new Date[2];
 
 	public TransactionFilter() {
-
+		transactionTypes = new ArrayList <TransactionType>();
+		accounts = new ArrayList <Account>();
+		categories = new ArrayList <Category>();
+		costCenters = new ArrayList <CostCenter>();
+		tags = new ArrayList <Tag>();
 	}
 
 	public List <TransactionType> getTransactionTypes() {
 		return transactionTypes;
 	}
 
-	public void setTypes(List <TransactionType> types) {
+	public void setTransactionTypes(List <TransactionType> types) {
 		this.transactionTypes = types;
+	}
+
+	public void addTransactionType(TransactionType type) {
+		transactionTypes.add(type);
 	}
 
 	public List <Account> getAccounts() {

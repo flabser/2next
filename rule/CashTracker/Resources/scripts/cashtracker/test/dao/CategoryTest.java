@@ -102,7 +102,7 @@ public class CategoryTest extends InitEnv {
 		assertTrue(dao.existsTransactionByCategory(list.get(0)));
 	}
 
-	// @Test
+	@Test
 	public void deleteTest() {
 		List <Category> list = dao.findAll();
 

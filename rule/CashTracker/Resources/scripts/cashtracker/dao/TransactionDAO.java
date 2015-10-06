@@ -30,72 +30,13 @@ import com.flabser.server.Server;
 
 public class TransactionDAO extends DAO <Transaction, Long> {
 
+	private final static String SELECT_ALL = "SELECT t FROM Transaction AS t";
+
 	public TransactionDAO(_Session session) {
 		super(Transaction.class, session);
 	}
 
-	public List <Transaction> find(PageRequest pr, TransactionType type) {
-		String jpql;
-		if (type == null) {
-			jpql = "SELECT t FROM Transaction AS t ORDER BY t.date ASC";
-		} else {
-			jpql = "SELECT t FROM Transaction AS t WHERE t.transactionType = :type ORDER BY t.date ASC";
-		}
-
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		if (type != null) {
-			q.setParameter("type", type);
-		}
-		q.setFirstResult(pr.getOffset());
-		q.setMaxResults(pr.getLimit());
-
-		return q.getResultList();
-	}
-
-	public List <Transaction> findAllByAccount(Account m) {
-		String jpql = "SELECT t FROM Transaction AS t WHERE t.account = :account";
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("account", m);
-		return q.getResultList();
-	}
-
-	public List <Transaction> findAllByTransferAccount(Account m) {
-		String jpql = "SELECT t FROM Transaction AS t WHERE t.transferAccount = :account";
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("account", m);
-		return q.getResultList();
-	}
-
-	public List <Transaction> findAllByCostCenter(CostCenter m) {
-		String jpql = "SELECT t FROM Transaction AS t WHERE t.costCenter = :costCenter";
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("costCenter", m);
-		return q.getResultList();
-	}
-
-	public List <Transaction> findAllByCategory(Category m) {
-		String jpql = "SELECT t FROM Transaction AS t WHERE t.category = :category";
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("category", m);
-		return q.getResultList();
-	}
-
-	public List <Transaction> findAllByTags(List <Tag> tags) {
-		String jpql = "SELECT t FROM Transaction AS t WHERE t.tags IN :tags";
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("tags", tags);
-		return q.getResultList();
-	}
-
-	public int getCountByType(TransactionType type) {
-		Query q = em.createQuery("SELECT count(t) FROM Transaction AS t WHERE t.transactionType = :type",
-				Transaction.class);
-		q.setParameter("type", type);
-		return ((Long) q.getSingleResult()).intValue();
-	}
-
 	public List <Transaction> find(TransactionFilter filter, PageRequest pr) {
-		String all = "SELECT t FROM Transaction AS t";
 		String accouns = "";
 		String categories = "";
 		String costCenters = "";
@@ -104,34 +45,34 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 		String dateRange = "";
 		boolean hasWhere = false;
 
-		if (filter.getAccounts() != null) {
+		if (!filter.getAccounts().isEmpty()) {
 			accouns = " t.account IN :accounts";
 			hasWhere = true;
 		}
-		if (filter.getCategories() != null) {
+		if (!filter.getCategories().isEmpty()) {
 			categories = (hasWhere ? " AND " : "") + " t.category IN :categories";
 			hasWhere = true;
 		}
-		if (filter.getCostCenters() != null) {
+		if (!filter.getCostCenters().isEmpty()) {
 			costCenters = (hasWhere ? " AND " : "") + " t.costCenter IN :costCenters";
 			hasWhere = true;
 		}
-		if (filter.getTags() != null) {
+		if (!filter.getTags().isEmpty()) {
 			tags = (hasWhere ? " AND " : "") + " t.tags IN :tags";
 			hasWhere = true;
 		}
-		if (filter.getTransactionTypes() != null) {
+		if (!filter.getTransactionTypes().isEmpty()) {
 			transactionTypes = (hasWhere ? " AND " : "") + " t.transactionType IN :transactionTypes";
 			hasWhere = true;
 		}
-		if (filter.getDateRange() != null) {
+		if (filter.getDateRange()[0] != null) {
 			dateRange = (hasWhere ? " AND " : "") + " t.date > :sdate AND t.date < :edate";
 			hasWhere = true;
 		}
 
 		//
-		String jpql = all + (hasWhere ? " WHERE " : "") + accouns + categories + costCenters + tags + transactionTypes
-				+ dateRange + " ORDER BY t.date ASC";
+		String jpql = SELECT_ALL + (hasWhere ? " WHERE " : "") + accouns + categories + costCenters + tags
+				+ transactionTypes + dateRange + " ORDER BY t.date ASC";
 
 		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 		if (!accouns.isEmpty()) {
@@ -158,6 +99,48 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 		q.setMaxResults(pr.getLimit());
 
 		return q.getResultList();
+	}
+
+	public List <Transaction> findAllByAccount(Account m) {
+		String jpql = SELECT_ALL + " WHERE t.account = :account";
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+		q.setParameter("account", m);
+		return q.getResultList();
+	}
+
+	public List <Transaction> findAllByTransferAccount(Account m) {
+		String jpql = SELECT_ALL + " WHERE t.transferAccount = :account";
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+		q.setParameter("account", m);
+		return q.getResultList();
+	}
+
+	public List <Transaction> findAllByCostCenter(CostCenter m) {
+		String jpql = SELECT_ALL + " WHERE t.costCenter = :costCenter";
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+		q.setParameter("costCenter", m);
+		return q.getResultList();
+	}
+
+	public List <Transaction> findAllByCategory(Category m) {
+		String jpql = SELECT_ALL + " WHERE t.category = :category";
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+		q.setParameter("category", m);
+		return q.getResultList();
+	}
+
+	public List <Transaction> findAllByTags(List <Tag> tags) {
+		String jpql = SELECT_ALL + " WHERE t.tags IN :tags";
+		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+		q.setParameter("tags", tags);
+		return q.getResultList();
+	}
+
+	public int getCountByType(TransactionType type) {
+		Query q = em.createQuery("SELECT count(t) FROM Transaction AS t WHERE t.transactionType = :type",
+				Transaction.class);
+		q.setParameter("type", type);
+		return ((Long) q.getSingleResult()).intValue();
 	}
 
 	@Override

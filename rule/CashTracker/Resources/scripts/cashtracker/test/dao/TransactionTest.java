@@ -51,7 +51,7 @@ public class TransactionTest extends InitEnv {
 		CategoryDAO categoryDAO = new CategoryDAO(ses);
 
 		PageRequest pr = new PageRequest(0, 5, "", "");
-		int size = dao.find(pr, null).size();
+		int size = dao.find(new TransactionFilter(), pr).size();
 		int iteration = size + 15;
 		long ctime = System.currentTimeMillis() - ((60 * 60 * 24) * 1000);
 
@@ -96,18 +96,26 @@ public class TransactionTest extends InitEnv {
 
 	@Test
 	public void selectTest() {
-		List <Transaction> ts = dao.find(new PageRequest(50000, 20, "", ""), TransactionType.EXPENSE);
+		TransactionFilter filter = new TransactionFilter();
+		filter.addTransactionType(TransactionType.EXPENSE);
+
+		List <Transaction> ts = dao.find(filter, new PageRequest(50000, 20, "", ""));
 		for (Transaction t : ts) {
 			t.getTags().forEach(Tag::getId);
 		}
 		//
-		ts = dao.find(new PageRequest(10000, 20, "", ""), TransactionType.INCOME);
-		ts = dao.find(new PageRequest(20000, 20, "", ""), TransactionType.TRANSFER);
+		TransactionFilter filter2 = new TransactionFilter();
+		filter2.addTransactionType(TransactionType.INCOME);
+		ts = dao.find(filter2, new PageRequest(10000, 20, "", ""));
+		//
+		TransactionFilter filter3 = new TransactionFilter();
+		filter3.addTransactionType(TransactionType.INCOME);
+		ts = dao.find(filter3, new PageRequest(20000, 20, "", ""));
 	}
 
 	@Test
 	public void updateTest() {
-		List <Transaction> list = dao.find(new PageRequest(0, 20, "", ""), null);
+		List <Transaction> list = dao.find(new TransactionFilter(), new PageRequest(0, 20, "", ""));
 
 		for (Transaction m : list) {
 			m.setAmount(m.getAmount().add(new BigDecimal(1)));
@@ -117,7 +125,7 @@ public class TransactionTest extends InitEnv {
 
 	@Test
 	public void deleteTest() {
-		List <Transaction> list = dao.find(new PageRequest(0, 100, "", ""), null);
+		List <Transaction> list = dao.find(new TransactionFilter(), new PageRequest(0, 100, "", ""));
 		for (Transaction t : list) {
 			// dao.delete(t);
 		}
@@ -160,7 +168,7 @@ public class TransactionTest extends InitEnv {
 		List <TransactionType> types = new ArrayList <TransactionType>();
 		types.add(TransactionType.EXPENSE);
 		types.add(TransactionType.INCOME);
-		tf.setTypes(types);
+		tf.setTransactionTypes(types);
 
 		Date sd = new Date(System.currentTimeMillis() - (86400000L * 3));
 		Date ed = new Date(System.currentTimeMillis() - (86400000L));
