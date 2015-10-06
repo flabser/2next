@@ -15,6 +15,10 @@ export default Em.Component.extend({
 
     uploadService: Em.inject.service('upload'),
 
+    didInsertElement: function() {
+        this.initJqFileUpload();
+    },
+
     initJqFileUpload: function() {
         const PATH = 'rest/file/upload';
         var _this = this;
@@ -122,9 +126,5 @@ export default Em.Component.extend({
                 }
             });*/
         }
-    },
-
-    didInsertElement: function() {
-        this.initJqFileUpload();
     }
 });

@@ -26,7 +26,7 @@
     margin: 0;
     max-width: 100%;
     min-height: 28px;
-    overflow: hidden;
+    /* overflow: hidden; */
     padding: 8px 0;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .form-group .control-label {
-    color: #555;
+    color: #000;
     display: block;
     float: left;
     font-size: 1em;
@@ -67,7 +67,7 @@
     margin: 0 0 0 240px;
     max-width: 100%;
     min-height: inherit;
-    overflow: hidden;
+    /* overflow: hidden; */
     padding: 0px;
 }
 

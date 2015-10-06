@@ -77,14 +77,13 @@
                         {{t 'currency'}}
                     </div>
                     <div class="controls">
-                        {{select-2
+                        {{ember-selectize
                             content=currencies
-                            value=account.currencyCode
-                            optionIdPath='value'
-                            optionValuePath='value'
-                            optionLabelPath='name'
-                            placeholder='Currencies'
-                        }}
+                            optionValuePath="value"
+                            optionLabelPath="name"
+                            selection=account.currencyCode
+                            placeholder="-"
+                            class='span5' }}
                         {{#each errors.currencyCode as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -115,13 +114,13 @@
                         {{t 'writers'}}
                     </div>
                     <div class="controls">
-                        {{select-2
+                        {{ember-selectize
                             content=users
-                            value=account.owner
-                            optionValuePath='id'
-                            optionLabelPath='userName'
-                            placeholder='owner'
-                        }}
+                            optionValuePath="id"
+                            optionLabelPath="userName"
+                            selection=account.owner
+                            placeholder="-"
+                            class='span5' }}
                         <p class="hint">
                             {{t 'writers_hint'}}
                         </p>
@@ -132,14 +131,14 @@
                         {{t 'readers'}}
                     </div>
                     <div class="controls">
-                        {{select-2
+                        {{ember-selectize
                             content=users
-                            value=account.observers
-                            optionValuePath='id'
-                            optionLabelPath='userName'
-                            placeholder='observers'
                             multiple=true
-                        }}
+                            optionValuePath="id"
+                            optionLabelPath="userName"
+                            selection=account.observers
+                            placeholder="-"
+                            class='span5' }}
                         <p class="hint">
                             {{t 'readers_hint'}}
                         </p>

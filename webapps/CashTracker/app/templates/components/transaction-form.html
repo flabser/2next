@@ -37,8 +37,8 @@
                         {{t 'date'}}
                     </div>
                     <div class="controls">
-                        <!-- {{pikaday-input value=transaction.date format='YYYY-MM-DD' class='span2'}} -->
-                        {{input value=transaction.date class='span2'}}
+                        {{pikaday-input value=transaction.date format='YYYY-MM-DD' class='span2'}}
+                        <!-- {{input value=transaction.date class='span2'}} -->
                         {{#each errors.date as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -49,13 +49,29 @@
                         {{t 'account'}}
                     </div>
                     <div class="controls">
-                        {{select-2
+                        {{ember-selectize
+                            content=accounts
+                            optionValuePath="id"
+                            optionLabelPath="name"
+                            selection=transaction.account
+                            placeholder="-"
+                            class='span5' }}
+
+
+                        <!-- {{tn-select-native
+                            content=accounts
+                            optionValuePath='id'
+                            optionLabelPath='name'
+                            selection=transaction.account
+                            value=transaction.account
+                            prompt='-'
+                        }} -->
+                        <!-- {{select-2
                             content=accounts
                             value=transaction.account
                             
                             optionLabelPath='name'
-                            placeholder='account'
-                        }}
+                        }} -->
                         {{#each errors.account as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -68,13 +84,26 @@
                             {{t 'tranfer_to_account'}}
                         </div>
                         <div class="controls">
-                            {{select-2
+                            {{ember-selectize
+                                content=accounts
+                                optionValuePath="id"
+                                optionLabelPath="name"
+                                selection=transaction.transferAccount
+                                placeholder="-"
+                                class='span5' }}
+
+                            <!-- {{tn-select-native
+                                content=accounts
+                                optionValuePath='id'
+                                optionLabelPath='name'
+                                prompt='-'
+                            }} -->
+                            <!-- {{select-2
                                 content=accounts
                                 value=transaction.transferAccount
                                 
                                 optionLabelPath='name'
-                                placeholder='transfer_account'
-                            }}
+                            }} -->
                             {{#each errors.transferAccount as |error|}}
                                 <div class="error-message">{{error.message}}</div>
                             {{/each}}
@@ -87,13 +116,26 @@
                         {{t 'category'}}
                     </div>
                     <div class="controls">
-                        {{select-2
+                        {{ember-selectize
+                            content=categories
+                            optionValuePath="id"
+                            optionLabelPath="name"
+                            selection=transaction.category
+                            placeholder="-"
+                            class='span5' }}
+
+                        <!-- {{tn-select-native
+                            content=categories
+                            optionValuePath='id'
+                            optionLabelPath='name'
+                            prompt='-'
+                        }} -->
+                        <!-- {{select-2
                             content=categories
                             value=transaction.category
                             
                             optionLabelPath='name'
-                            placeholder='Category'
-                        }}
+                        }} -->
                     </div>
                 </div>
                 <div class="form-group {{if errors.amount 'has-error'}}">
@@ -117,13 +159,26 @@
                         {{t 'cost_center'}}
                     </div>
                     <div class="controls">
-                        {{select-2
+                        {{ember-selectize
+                            content=costCenters
+                            optionValuePath="id"
+                            optionLabelPath="name"
+                            selection=transaction.category
+                            placeholder="-"
+                            class='span5' }}
+
+                        <!-- {{tn-select-native
+                            content=costCenters
+                            optionValuePath='id'
+                            optionLabelPath='name'
+                            prompt='-'
+                        }} -->
+                        <!-- {{select-2
                             content=costCenters
                             value=transaction.costCenter
                             
                             optionLabelPath='name'
-                            placeholder='Cost center'
-                        }}
+                        }} -->
                     </div>
                 </div>
                 <div class="form-group">
@@ -131,14 +186,29 @@
                         {{t 'tags'}}
                     </div>
                     <div class="controls">
-                        {{select-2
+                        {{ember-selectize
+                            content=tags
+                            multiple=true
+                            optionValuePath="id"
+                            optionLabelPath="name"
+                            selection=transaction.tags
+                            placeholder="-"
+                            class='span5' }}
+
+                        <!-- {{tn-select-native
+                            content=tags
+                            optionValuePath='id'
+                            optionLabelPath='name'
+                            value=transaction.tags
+                            prompt='-'
+                        }} -->
+                        <!-- {{select-2
                             content=tags
                             value=transaction.tags
                             
                             optionLabelPath='name'
-                            placeholder='Tags'
                             multiple=true
-                        }}
+                        }} -->
                     </div>
                 </div>
                 <div class="form-group {{if errors.name 'has-error'}}">

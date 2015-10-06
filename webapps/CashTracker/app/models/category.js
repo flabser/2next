@@ -4,8 +4,7 @@ export default DS.Model.extend({
     transactionTypes: DS.attr(),
     parent: DS.belongsTo('category'),
     children: DS.hasMany('category', {
-        inverse: 'parent',
-        embedded: 'always'
+        inverse: 'parent'
     }),
     name: DS.attr('string'),
     enabled: DS.attr('boolean', {

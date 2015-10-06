@@ -55,13 +55,13 @@
                         {{t 'parent_category'}}
                     </div>
                     <div class="controls">
-                        {{select-2
+                        {{ember-selectize
                             content=categories
-                            value=category.parent
-                            optionValuePath='id'
-                            optionLabelPath='name'
-                            placeholder='Parent category'
-                        }}
+                            optionValuePath="id"
+                            optionLabelPath="name"
+                            selection=category.parent
+                            placeholder="-"
+                            class='span5' }}
                     </div>
                 </div>
                 <div class="form-group {{if errors.note 'has-error'}}">
