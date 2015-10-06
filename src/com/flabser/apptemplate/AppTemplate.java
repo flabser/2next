@@ -85,10 +85,15 @@ public class AppTemplate implements ICache, _IContent {
 			parent = parentSite.getAppTemlate();
 		}
 		try {
-			Server.logger.normalLogEntry("# init application template \"" + templateType + "\"");
+
 			ruleProvider = new RuleProvider(this);
 			ruleProvider.initAppTemplate(site.getGlobal());
 			globalSetting = ruleProvider.global;
+			String t = "";
+			if (globalSetting.getWorkMode() == WorkModeType.CLOUD) {
+				t = " template";
+			}
+			Server.logger.normalLogEntry("# init" + t + " \"" + templateType + "\"");
 			if (globalSetting.isOn == RunMode.ON) {
 				if (globalSetting.langsList.size() > 0) {
 					Server.logger.normalLogEntry("dictionary is loading...");

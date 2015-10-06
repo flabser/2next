@@ -214,7 +214,11 @@ public class WebServer implements IWebServer {
 		Context context = null;
 
 		String templateName = site.getAppBase();
-		Server.logger.normalLogEntry("load \"" + templateName + "\" application template...");
+		String h = "";
+		if (!site.getVirtualHostName().equals("")) {
+			h = "(" + site.getVirtualHostName() + ")";
+		}
+		Server.logger.normalLogEntry("load \"" + templateName + h + "\"");
 		String docBase = site.getFullPathAppBase();
 
 		if (site.getVirtualHostName().equals("")) {
@@ -263,16 +267,17 @@ public class WebServer implements IWebServer {
 
 		initErrorPages(context);
 
-		for (int i = 0; i < defaultInfoList.length; i++) {
+		/*		for (int i = 0; i < defaultInfoList.length; i++) {
 			context.addWelcomeFile(defaultInfoList[i]);
-		}
+		}*/
 
 		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 		context.addServletMapping("/", "default");
 
 		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 		context.addServletMapping("/Provider", "Provider");
-		context.addServletMapping("/info.html", "Provider");
+		context.addServletMapping("/index.html", "Provider");
+		//context.addServletMapping("/info.html", "Provider");
 
 		Wrapper w = Tomcat.addServlet(context, "PortalInit", "com.flabser.servlets.PortalInit");
 		w.setLoadOnStartup(1);
@@ -301,9 +306,9 @@ public class WebServer implements IWebServer {
 		Context context = tomcat.addContext(tomcat.getHost(), "", db);
 		context.setDisplayName("root");
 
-		for (int i = 0; i < defaultInfoList.length; i++) {
+		/*	for (int i = 0; i < defaultInfoList.length; i++) {
 			context.addWelcomeFile(defaultInfoList[i]);
-		}
+		}*/
 
 		engine.getPipeline().addValve(new Logging());
 		engine.getPipeline().addValve(new Unsecure());

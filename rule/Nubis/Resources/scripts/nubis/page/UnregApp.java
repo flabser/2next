@@ -34,6 +34,7 @@ public class UnregApp extends _DoScript {
 				ap.setStatus(ApplicationStatusType.READY_TO_REMOVE);
 				if (ap.save()) {
 					publishElement("process", "application-ready-to-remove");
+
 				} else {
 					publishElement("error", "save-error");
 				}

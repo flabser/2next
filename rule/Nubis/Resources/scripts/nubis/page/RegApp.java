@@ -1,6 +1,7 @@
 package nubis.page;
 
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.env.Environment;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
@@ -27,7 +28,7 @@ public class RegApp extends _DoScript {
 			vis = VisibiltyType.PUBLIC;
 		}
 
-		if (appType != null) {
+		if (appType != null && 	Environment.availableTemplates.containsKey(appType)) {
 			ApplicationProfile ap = new ApplicationProfile();
 			ap.appType = appType;
 			ap.appName = appName;
@@ -47,6 +48,8 @@ public class RegApp extends _DoScript {
 			} else {
 				publishElement("error", "save-error");
 			}
+		}else{
+			publishElement("error", "unknown-template");
 		}
 	}
 

@@ -45,8 +45,8 @@ public class UserSession implements ICache {
 					appProfile.save();
 				}
 			} else {
-				throw new ApplicationException(appProfile.appType, "application \"" + appProfile.appType + "/" + appProfile.getAppID()
-						+ "\" cannot init its database");
+				throw new ApplicationException(appProfile.appType, "application \"" + appProfile.appType + "/"
+						+ appProfile.getAppID() + "\" cannot init its database");
 			}
 		}
 	}
@@ -101,7 +101,8 @@ public class UserSession implements ICache {
 	}
 
 	@Override
-	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException, WebFormValueException {
+	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
+	WebFormValueException {
 		String cid = page.getID() + "_";
 		Object obj = getObject(cid);
 		String c[] = formData.get("cache");
@@ -170,8 +171,6 @@ public class UserSession implements ICache {
 	public String toString() {
 		return currentUser + ", authMode=" + authMode.name() + ", lang=" + lang;
 	}
-
-
 
 	public class ActiveApplication {
 		private IDatabase db;

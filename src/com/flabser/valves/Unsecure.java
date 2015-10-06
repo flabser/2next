@@ -85,6 +85,7 @@ public class Unsecure extends ValveBase {
 				response.getWriter().println(ae.getHTMLMessage());
 			}
 		} else  {
+			gettingSession(request, response);
 			getNext().getNext().invoke(request, response);
 		}
 	}
