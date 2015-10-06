@@ -1,5 +1,5 @@
 .promo {
-    background: url(../img/flabser-promo-bg.png);
+    background: url(../img/lego-man.jpg);
     background-position: center 0;
     background-repeat: no-repeat;
     background-size: cover;
@@ -27,8 +27,8 @@
 .heading.promo__heading {
     font-family: 'Dosis', sans-serif;
     color: #FFCA00;
-    font-size: 48px;
-    font-weight: 400;
+    font-size: 64px;
+    font-weight: 600;
     line-height: 54px;
     margin: 10px 0 30px 0;
     text-transform: uppercase;
@@ -37,14 +37,14 @@
 .heading__sub.promo-heading__sub {
     color: rgba(255, 255, 255, 0.9);
     font-family: 'Dosis', sans-serif;
-    font-size: 24px;
+    font-size: 32px;
     margin: 10px 0;
 }
 
 .heading__sub.promo-heading__experience {
     color: rgba(255, 255, 255, 0.9);
     font-family: 'Dosis', sans-serif;
-    font-size: 24px;
+    font-size: 32px;
     margin: 10px 0 40px;
 }
 
