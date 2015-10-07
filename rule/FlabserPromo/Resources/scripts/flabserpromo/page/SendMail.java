@@ -1,9 +1,12 @@
 package flabserpromo.page;
 
+import java.util.ArrayList;
+
 import com.flabser.script._Exception;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
+import com.flabser.script.mail._MailAgent;
 
 
 public class SendMail extends _DoScript {
@@ -11,6 +14,16 @@ public class SendMail extends _DoScript {
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
 		System.out.println(formData);
+		String email = formData.getValueSilently("email");
+		String subj = formData.getValueSilently("subject");
+		String msg = formData.getValueSilently("message");
+
+		ArrayList<String> recipients = new ArrayList<String>();
+		recipients.add(email);
+
+		_MailAgent ma = session.getMailAgent();
+		ma.sendMail(recipients, subj, msg, false);
+
 	}
 
 	@Override
