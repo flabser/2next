@@ -96,7 +96,7 @@
 
 	<xsl:template match="value" mode="lang">
 		<li>
-			<a class="lang" href="?id={//request/@id}&amp;lang={entry[2]}">
+			<a class="lang" href="Provider?id={//request/@id}&amp;lang={entry[2]}">
 				<i>
 					<xsl:attribute name="class">
 						<xsl:value-of select="concat('lang-icon-', lower-case(entry[2]))" />
