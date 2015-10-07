@@ -12,16 +12,18 @@ export default Em.Route.extend(ModelRoute, {
         return this.store.findAll('user');
     }.property(),
 
-    currencies: [{
-        'value': 'KZT',
-        'name': 'Kazakhstani Tenge'
-    }, {
-        'value': 'USD',
-        'name': 'US Dollar'
-    }, {
-        'value': 'RUB',
-        'name': 'Russian Ruble'
-    }],
+    currencies: function() {
+        return [{
+            'code': 'KZT',
+            'name': 'Kazakhstani Tenge'
+        }, {
+            'code': 'USD',
+            'name': 'US Dollar'
+        }, {
+            'code': 'RUB',
+            'name': 'Russian Ruble'
+        }];
+    }.property(),
 
     setupController: function(controller, model) {
         controller.set('account', model);

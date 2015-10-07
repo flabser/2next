@@ -16,8 +16,7 @@
                             options=transactionTypes
                             labelProperty='name'
                             valueProperty='code'
-                            selection=category.transactionTypes
-                        }}
+                            selection=category.transactionTypes}}
                         <p class="hint">
                             {{t 'category_transaction_type_hint'}}
                         </p>
@@ -32,8 +31,7 @@
                             value=category.name
                             key-up='validateName'
                             maxlength='64'
-                            class='span5'
-                        }}
+                            class='span5'}}
                         {{#each errors.name as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -42,7 +40,7 @@
                 <div class="form-group">
                     <div class="controls">
                         <label>
-                            {{input type='checkbox' checked=category.enabled }}
+                            {{input type='checkbox' checked=category.enabled}}
                             {{t 'active'}}
                         </label>
                         <p class="hint">
@@ -57,11 +55,11 @@
                     <div class="controls">
                         {{ember-selectize
                             content=categories
-                            optionValuePath="id"
-                            optionLabelPath="name"
+                            optionValuePath='id'
+                            optionLabelPath='name'
                             selection=category.parent
-                            placeholder="-"
-                            class='span5' }}
+                            placeholder='-'
+                            class='span5'}}
                     </div>
                 </div>
                 <div class="form-group {{if errors.note 'has-error'}}">
@@ -73,8 +71,7 @@
                             value=category.note
                             key-up='validateNote'
                             maxlength='256'
-                            class='span5'
-                        }}
+                            class='span5'}}
                         {{count-down-characters category.note 256}}
                         {{#each errors.note as |error|}}
                             <div class="error-message">{{error.message}}</div>

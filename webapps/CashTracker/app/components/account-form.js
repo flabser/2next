@@ -8,9 +8,18 @@ const noteMaxLen = 256;
 export default Em.Component.extend(ModelForm, {
     account: null,
     users: null,
+    currencies: null,
+
+    currencyCode: Em.computed('account', function() {
+        let code = this.get('account').get('currencyCode');
+        return code;
+    }),
 
     actions: {
         save: function() {
+            let code = this.get('currencyCode');
+            this.get('account').set('currencyCode', code);
+
             if (this.validate()) {
                 this.sendAction('saveRecord', this.get('account'));
             }
@@ -18,6 +27,15 @@ export default Em.Component.extend(ModelForm, {
 
         close: function() {
             this.sendAction('close');
+        },
+
+        selectizeInitCurrencyAction: function() {
+            let code = this.get('currencyCode');
+            this.get('account').set('currencyCode', code);
+        },
+
+        selectizeSelectCurrencyItemAction: function(selection) {
+            this.get('account').set('currencyCode', selection.code);
         },
 
         validateName: function() {

@@ -6,7 +6,8 @@ body {
 }
 
 body {
-    background: #FFF; /*  url(../img/bg-lb.jpg) bottom repeat-x fixed; */
+    background: #FFF;
+    /*  url(../img/bg-lb.jpg) bottom repeat-x fixed; */
     font: 13px/1.43 Verdana, Arial, Helvetica, sans-serif;
 }
 
@@ -138,9 +139,12 @@ table {
     white-space: nowrap;
 }
 
-.hint,
-.text-muted {
+.hint {
     color: #555;
+}
+
+.text-muted {
+    color: #888;
 }
 
 .hint {

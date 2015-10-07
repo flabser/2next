@@ -19,8 +19,7 @@
                             value=account.name
                             key-up='validateName'
                             maxlength='64'
-                            class='span5'
-                        }}
+                            class='span5'}}
                         {{#each errors.name as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -29,7 +28,7 @@
                 <div class="form-group">
                     <div class="controls">
                         <label>
-                            {{input type='checkbox' checked=account.enabled }}
+                            {{input type='checkbox' checked=account.enabled}}
                             {{t 'active'}}
                         </label>
                         <p class="hint">
@@ -46,8 +45,7 @@
                             type='number'
                             value=account.openingBalance
                             key-up='validateOpeningBalance'
-                            class='span2'
-                        }}
+                            class='span2'}}
                         {{#each errors.openingBalance as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -62,8 +60,7 @@
                             type='number'
                             value=account.amountControl
                             key-up='validateAmountControl'
-                            class='span2'
-                        }}
+                            class='span2'}}
                         {{#each errors.amountControl as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -79,11 +76,14 @@
                     <div class="controls">
                         {{ember-selectize
                             content=currencies
-                            optionValuePath="value"
-                            optionLabelPath="name"
+                            optionValuePath='content.code'
+                            optionLabelPath='content.name'
                             selection=account.currencyCode
-                            placeholder="-"
-                            class='span5' }}
+                            value=currencyCode
+                            placeholder='-'
+                            class='span5'
+                            select-item='selectizeSelectCurrencyItemAction'
+                            on-init='selectizeInitCurrencyAction'}}
                         {{#each errors.currencyCode as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -98,8 +98,7 @@
                             value=account.note
                             key-up='validateNote'
                             maxlength='256'
-                            class='span5'
-                        }}
+                            class='span5'}}
                         {{count-down-characters account.note 256}}
                         {{#each errors.note as |error|}}
                             <div class="error-message">{{error.message}}</div>
@@ -116,11 +115,11 @@
                     <div class="controls">
                         {{ember-selectize
                             content=users
-                            optionValuePath="id"
-                            optionLabelPath="userName"
+                            optionValuePath='id'
+                            optionLabelPath='userName'
                             selection=account.owner
-                            placeholder="-"
-                            class='span5' }}
+                            placeholder='-'
+                            class='span5'}}
                         <p class="hint">
                             {{t 'writers_hint'}}
                         </p>
@@ -134,11 +133,11 @@
                         {{ember-selectize
                             content=users
                             multiple=true
-                            optionValuePath="id"
-                            optionLabelPath="userName"
+                            optionValuePath='id'
+                            optionLabelPath='userName'
                             selection=account.observers
-                            placeholder="-"
-                            class='span5' }}
+                            placeholder='-'
+                            class='span5'}}
                         <p class="hint">
                             {{t 'readers_hint'}}
                         </p>

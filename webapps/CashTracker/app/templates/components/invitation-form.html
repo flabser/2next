@@ -20,8 +20,7 @@
                             value=invitation.email
                             focus-out='validateEmail'
                             maxlength='64'
-                            class='span5'
-                        }}
+                            class='span5'}}
                         {{#each errors.email as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -39,8 +38,7 @@
                             value=invitation.message
                             key-up='validateMessage'
                             maxlength='256'
-                            class='span5'
-                        }}
+                            class='span5'}}
                         {{count-down-characters invitation.message 256}}
                         {{#each errors.message as |error|}}
                             <div class="error-message">{{error.message}}</div>

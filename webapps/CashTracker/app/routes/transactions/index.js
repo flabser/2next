@@ -13,7 +13,6 @@ export default Em.Route.extend(InfinityRoute, {
     },
 
     model: function(params) {
-        console.log(params);
         //return this.store.query('transaction', params);
 
         return this.infinityModel("transaction", {
