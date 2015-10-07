@@ -17,6 +17,12 @@ public class AccountValidator {
 			ve.addError("name", "invalid", "too_long");
 		}
 
+		if (m.getCurrencyCode() == null || m.getCurrencyCode().isEmpty()) {
+			ve.addError("currencyCode", "required", "required");
+		} else if (m.getCurrencyCode().length() > 3) {
+			ve.addError("currencyCode", "invalid", "too_long");
+		}
+
 		return ve;
 	}
 }
