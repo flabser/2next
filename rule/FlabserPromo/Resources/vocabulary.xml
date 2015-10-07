@@ -23,21 +23,21 @@
 		<entry lang="RUS">Больше 10 лет на рынке ИТ</entry>
 		<entry lang="KAZ">Больше 10 лет на рынке ИТ</entry>
 		<entry lang="ENG">More than 10 years in the IT</entry>
-		<entry lang="BG">Больше 10 лет на рынке ИТ</entry>
+		<entry lang="BG">Повече от 10 години в ИТ сектора</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="find_out_more">
 		<entry lang="RUS">Узнать больше</entry>
 		<entry lang="KAZ">Көбірек білгім келеді</entry>
-		<entry lang="ENG">Find out more</entry>
-		<entry lang="BG">Узнать больше</entry>
+		<entry lang="ENG">More</entry>
+		<entry lang="BG">Повече информация</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="home">
 		<entry lang="RUS">Главная</entry>
 		<entry lang="KAZ">Басты бет</entry>
 		<entry lang="ENG">Home</entry>
-		<entry lang="BG">Главная</entry>
+		<entry lang="BG">Основните</entry>
 	</sentence>
 	<sentence mode="on" keyword="about">
 		<entry lang="RUS">О нас</entry>
@@ -49,7 +49,7 @@
 		<entry lang="RUS">О нашей компании</entry>
 		<entry lang="KAZ">Біздің ұйым жайлы</entry>
 		<entry lang="ENG">About our company</entry>
-		<entry lang="BG">О нашей компании</entry>
+		<entry lang="BG">За нашата фирма</entry>
 	</sentence>
 	<sentence mode="on" keyword="skills">
 		<entry lang="RUS">Наши умения</entry>
@@ -67,14 +67,14 @@
 		<entry lang="RUS">Свяжитесь с нами</entry>
 		<entry lang="KAZ">Бізбен хабарласыңыз</entry>
 		<entry lang="ENG">Contact Us</entry>
-		<entry lang="BG">Свяжитесь с нами</entry>
+		<entry lang="BG">Свържете се с нас</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="contact_us_on_lang">
 		<entry lang="RUS">Можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
 		<entry lang="KAZ">Можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
 		<entry lang="ENG">You can contact us on the Russian, Bulgarian and English.</entry>
-		<entry lang="BG">Можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
+		<entry lang="BG">Можете да се свържете с нас на руски, български и английски език.</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="message_title">
@@ -93,13 +93,13 @@
 		<entry lang="RUS">Сообщение</entry>
 		<entry lang="KAZ">Мәтін</entry>
 		<entry lang="ENG">Message</entry>
-		<entry lang="BG">Сообщение</entry>
+		<entry lang="BG">Съобщение</entry>
 	</sentence>
 	<sentence mode="on" keyword="send_message">
 		<entry lang="RUS">Отправить сообщение</entry>
 		<entry lang="KAZ">Хабар жіберу</entry>
 		<entry lang="ENG">Send message</entry>
-		<entry lang="BG">Отправить сообщение</entry>
+		<entry lang="BG">Изпрати съобщение</entry>
 	</sentence>
 	<sentence mode="on" keyword="address">
 		<entry lang="RUS">Адрес</entry>
