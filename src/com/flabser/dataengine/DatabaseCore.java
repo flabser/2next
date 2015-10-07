@@ -58,7 +58,7 @@ public abstract class DatabaseCore {
 		properties.put(PersistenceUnitProperties.JDBC_URL, appProfile.getURI());
 
 		properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "");
-		properties.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_OR_EXTEND);
+		properties.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
 		// for CREATE_OR_EXTEND need DDL_GENERATION_MODE = (DDL_BOTH_GENERATION | DATABASE)
 		properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_BOTH_GENERATION);
 		properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "createDDL.jdbc");
