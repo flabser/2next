@@ -111,9 +111,9 @@
 
 @media ( max-width: 540px) {
     .form-group .control-label {
-        width: 110px;
+        width: 90px;
     }
     .form-group .controls {
-        margin-left: 115px;
+        margin-left: 95px;
     }
 }

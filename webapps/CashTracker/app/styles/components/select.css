@@ -1,0 +1,5 @@
+@media ( max-width: 768px) {
+    .selectize-control.ember-selectize {
+        width: 100%;
+    }
+}
