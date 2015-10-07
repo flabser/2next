@@ -17,7 +17,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-7 form-group contact-form">
+					<div class="col-md-6 col-md-offset-3 form-group contact-form">
 						<h4>
 							<xsl:value-of select="//captions/message_title/@caption" />
 						</h4>
@@ -51,7 +51,7 @@
 							</div>
 						</form>
 					</div>
-					<div class="col-sm-5 contact-address">
+					<!-- <div class="col-sm-5 contact-address">
 						<h4>
 							<xsl:value-of select="//captions/address/@caption" />
 						</h4>
@@ -63,7 +63,7 @@
 							<i class="fa fa-phone"></i>
 							<xsl:value-of select="//captions/phone/@caption" />: +7 xxx xxx xx xx
 						</p>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</section>
