@@ -74,9 +74,9 @@ $(document).ready(function(e) {
                         $('input[name=email]', $form).parent().addClass('has-error');
                         $('input[name=email]', $form).next('.help-block').html(response.error.email);
                     }
-                    if (response.error.name) {
+                    if (response.error.subject) {
                         $('input[name=subject]', $form).parent().addClass('has-error');
-                        $('input[name=subject]', $form).next('.help-block').html(response.error.name);
+                        $('input[name=subject]', $form).next('.help-block').html(response.error.subject);
                     }
                     if (response.error.message) {
                         $('textarea[name=message]', $form).parent().addClass('has-error');

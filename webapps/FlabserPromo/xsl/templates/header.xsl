@@ -24,7 +24,7 @@
 				</div>
 				<div id="navbar" class="collapse navbar-collapse" aria-expanded="false">
 					<ul class="nav navbar-nav navbar-right ">
-						<li class="active">
+						<!-- <li class="active">
 							<a href="#home">
 								<xsl:value-of select="//captions/home/@caption" />
 							</a>
@@ -43,10 +43,14 @@
 							<a href="#contact">
 								<xsl:value-of select="//captions/contact_us/@caption" />
 							</a>
-						</li>
+						</li> -->
 						<li class="dropdown dropdown-lang">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<xsl:value-of select="//@lang" />
+								<i>
+									<xsl:attribute name="class">
+										<xsl:value-of select="concat('lang-icon-', lower-case(//@lang))" />
+									</xsl:attribute>
+								</i>
 							</a>
 							<ul class="dropdown-menu">
 								<xsl:apply-templates select="//availablelangs" />
@@ -93,6 +97,11 @@
 	<xsl:template match="value" mode="lang">
 		<li>
 			<a class="lang" href="?id={//request/@id}&amp;lang={entry[2]}">
+				<i>
+					<xsl:attribute name="class">
+						<xsl:value-of select="concat('lang-icon-', lower-case(entry[2]))" />
+					</xsl:attribute>
+				</i>
 				<xsl:value-of select="entry[3]" />
 			</a>
 		</li>

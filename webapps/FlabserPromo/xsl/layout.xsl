@@ -31,6 +31,7 @@
 				<link rel="stylesheet" href="css/about.css" />
 				<link rel="stylesheet" href="css/skills.css" />
 				<link rel="stylesheet" href="css/contact.css" />
+				<link rel="stylesheet" href="css/icons-lang.css" />
 			</head>
 			<body data-spy="scroll" data-target=".navbar" data-offset="51">
 				<div class="layout wrapper">
