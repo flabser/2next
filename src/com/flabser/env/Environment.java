@@ -213,7 +213,7 @@ public class Environment implements ICache {
 				}
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			//	e.printStackTrace();
 
 		}
 	}
