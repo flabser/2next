@@ -47,7 +47,8 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException,
 	ClassNotFoundException {
 		pool = new com.flabser.dataengine.pool.DBConnectionPool();
-		pool.initConnectionPool(jdbcDriver, "jdbc:postgresql://" + EnvConst.DATABASE_HOST + ":" + EnvConst.CONN_PORT + "/" + EnvConst.DATABASE_NAME, EnvConst.DB_USER, EnvConst.DB_PWD);
+		pool.initConnectionPool(jdbcDriver, "jdbc:postgresql://" + EnvConst.DATABASE_HOST + ":" + EnvConst.CONN_PORT
+				+ "/" + EnvConst.DATABASE_NAME, EnvConst.DB_USER, EnvConst.DB_PWD);
 
 		HashMap<String, String> queries = new HashMap<>();
 		queries.put("USERS", DDEScripts.USERS_DDE);
@@ -646,9 +647,16 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		}
 
 		Connection conn = pool.getConnection();
-		try (Statement s = conn.createStatement();
-				ResultSet rs = s.executeQuery("select ARRAY(select ID from USERS " + wherePiece + " LIMIT " + pageSize
-						+ " OFFSET " + calcStartEntry + ") as IDS;")) {
+		try {
+
+			Statement s = conn.createStatement();
+			ResultSet rs = null;
+			if (pageSize == 0) {
+				rs = s.executeQuery("select ARRAY(select ID from USERS " + wherePiece + ") as IDS;");
+			} else {
+				rs = s.executeQuery("select ARRAY(select ID from USERS " + wherePiece + " LIMIT " + pageSize
+						+ " OFFSET " + calcStartEntry + ") as IDS;");
+			}
 
 			if (rs.next()) {
 				users = (ArrayList<User>) getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
@@ -841,10 +849,11 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		try {
 			Statement s = conn.createStatement();
 			ResultSet rs = null;
-			if (pageSize == 0){
-				rs = s.executeQuery("select * from APPS " + wherePiece) ;
-			}else{
-				rs = s.executeQuery("select * from APPS " + wherePiece + " LIMIT " + pageSize + " OFFSET " + calcStartEntry) ;
+			if (pageSize == 0) {
+				rs = s.executeQuery("select * from APPS " + wherePiece);
+			} else {
+				rs = s.executeQuery("select * from APPS " + wherePiece + " LIMIT " + pageSize + " OFFSET "
+						+ calcStartEntry);
 			}
 			while (rs.next()) {
 				apps.add(new ApplicationProfile(rs));
@@ -864,11 +873,9 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	public int insert(Invitation inv) {
 		Connection conn = pool.getConnection();
 
-		try (PreparedStatement pst = conn
-				.prepareStatement(
-						"insert into INVITATIONS(REGDATE, EMAIL, APPTYPE, APPID, MESSAGE, AUTHOR, TEMPLOGIN) "
-								+ "values(?, ?, ?, ?, ?, ?, ?);",
-								PreparedStatement.RETURN_GENERATED_KEYS)) {
+		try (PreparedStatement pst = conn.prepareStatement(
+				"insert into INVITATIONS(REGDATE, EMAIL, APPTYPE, APPID, MESSAGE, AUTHOR, TEMPLOGIN) "
+						+ "values(?, ?, ?, ?, ?, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			pst.setTimestamp(1, inv.getRegDate() != null ? new java.sql.Timestamp(inv.getRegDate().getTime()) : null);
 			pst.setString(2, inv.getEmail());

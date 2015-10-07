@@ -37,7 +37,7 @@ public class InitEnv {
 		Server.logger = new SimpleLogger();
 		Environment.systemBase = new com.flabser.dataengine.system.SystemDatabase();
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
-		user = systemDatabase.checkUserHash("medin_84@mail.ru", "1", null);
+		user = systemDatabase.checkUserHash("k-zone@ya.ru", "galant387", null);
 		us = new UserSession(user);
 		HashMap <String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(appType);
 		if (hh != null) {

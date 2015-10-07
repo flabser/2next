@@ -245,9 +245,10 @@ public class User {
 
 	}
 
+
 	@Override
 	public String toString() {
-		return "userID=" + login + ", email=" + email;
+		return "userID=" + login + ", email=" + email + ", " + status.name();
 	}
 
 	public void setLogin(String l) {

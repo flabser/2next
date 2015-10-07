@@ -10,7 +10,7 @@ public class SendMail extends _DoScript {
 
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
-		// action send mail
+		System.out.println(formData);
 	}
 
 	@Override

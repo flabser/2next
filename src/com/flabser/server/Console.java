@@ -17,6 +17,7 @@ import com.flabser.env.SessionPool;
 import com.flabser.scheduler.PeriodicalServices;
 import com.flabser.scheduler.tasks.DatabaseRemover;
 import com.flabser.users.ApplicationStatusType;
+import com.flabser.users.User;
 import com.flabser.users.UserSession;
 
 public class Console implements Runnable {
@@ -48,12 +49,18 @@ public class Console implements Runnable {
 				if (command.contains("database remover")) {
 					new DatabaseRemover().process(ApplicationStatusType.DATABASE_NOT_CREATED);
 				}
-			} else if (command.contains("show") || command.equalsIgnoreCase("sh")) {
-				if (command.contains("applications") || command.equalsIgnoreCase("apps")) {
+			} else if (command.contains("show") || command.contains("sh")) {
+				if (command.contains("applications") || command.contains("apps")) {
 					ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
 					ArrayList<ApplicationProfile> apps = sysDb.getAllApps("", 0,0);
 					for(ApplicationProfile ap : apps){
 						System.out.println(ap);
+					}
+				}else if (command.contains("users") || command.contains("us")) {
+					ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
+					ArrayList<User> users = sysDb.getAllUsers("", 0,0);
+					for(User u : users){
+						System.out.println(u);
 					}
 				}
 			} else if (command.contains("delete") || command.contains("del")) {
