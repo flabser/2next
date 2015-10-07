@@ -56,7 +56,7 @@ $(document).ready(function(e) {
     $('form[name=contact_us]').submit(function(e) {
         var $form = $(this);
         $.ajax({
-            url: '?id=sendmail',
+            url: 'Provider?id=sendmail',
             type: 'POST',
             data: $form.serialize(),
             dataType: 'json',
@@ -70,13 +70,13 @@ $(document).ready(function(e) {
             success: function(response, status) {
                 if (response.error) {
                     // Error messages
-                    if (response.error.name) {
-                        $('input[name=name]', $form).parent().addClass('has-error');
-                        $('input[name=name]', $form).next('.help-block').html(response.error.name);
-                    }
                     if (response.error.email) {
                         $('input[name=email]', $form).parent().addClass('has-error');
                         $('input[name=email]', $form).next('.help-block').html(response.error.email);
+                    }
+                    if (response.error.name) {
+                        $('input[name=subject]', $form).parent().addClass('has-error');
+                        $('input[name=subject]', $form).next('.help-block').html(response.error.name);
                     }
                     if (response.error.message) {
                         $('textarea[name=message]', $form).parent().addClass('has-error');
