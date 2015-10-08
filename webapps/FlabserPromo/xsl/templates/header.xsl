@@ -12,18 +12,18 @@
 		<nav class="navbar navbar-fixed-top navbar-default js-navbar-top js-toggle-class">
 			<div class="container">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
-					</button>
+					</button> -->
 					<a class="navbar-brand" href="#home">
 						<xsl:value-of select="//captions/brand/@caption" />
 					</a>
 				</div>
-				<div id="navbar" class="collapse navbar-collapse" aria-expanded="false">
-					<ul class="nav navbar-nav navbar-right ">
+				<!-- <div id="navbar" class="collapse navbar-collapse" aria-expanded="false"> -->
+					<!-- <ul class="nav navbar-nav navbar-right "> -->
 						<!-- <li class="active">
 							<a href="#home">
 								<xsl:value-of select="//captions/home/@caption" />
@@ -44,7 +44,7 @@
 								<xsl:value-of select="//captions/contact_us/@caption" />
 							</a>
 						</li> -->
-						<li class="dropdown dropdown-lang">
+						<div class="dropdown dropdown-lang">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<i>
 									<xsl:attribute name="class">
@@ -55,9 +55,9 @@
 							<ul class="dropdown-menu">
 								<xsl:apply-templates select="//availablelangs" />
 							</ul>
-						</li>
-					</ul>
-				</div>
+						</div>
+					<!-- </ul> -->
+				<!-- </div> -->
 			</div>
 		</nav>
 	</xsl:template>

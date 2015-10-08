@@ -3,9 +3,10 @@
 $(function() {
     var prevYOffset = 0,
         hideYOffset = 0,
-        scrollTopDiff = 150,
+        scrollTopDiff = 120,
         isHidden = false;
     var $bar = $('.navbar');
+    var navBarHeight = $bar.height();
 
     $(window).scroll(scrollSpyBar);
     scrollSpyBar();
@@ -20,7 +21,7 @@ $(function() {
             }
             hideYOffset = window.pageYOffset;
         } else {
-            if (isHidden && (window.pageYOffset < 50 || (hideYOffset - window.pageYOffset > scrollTopDiff))) {
+            if (isHidden && (window.pageYOffset < navBarHeight || (hideYOffset - window.pageYOffset > scrollTopDiff))) {
                 $bar.removeClass('navbar-scroll-hide');
                 isHidden = false;
             }

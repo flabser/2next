@@ -16,6 +16,24 @@
     padding-top: 20px;
 }
 
+.navbar-header {
+    float: left;
+}
+
+.dropdown-lang {
+    float: right;
+    margin-top: 15px;
+}
+
+.dropdown-lang .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+.dropdown-lang .dropdown-menu a.lang {
+    padding: 8px 20px;
+}
+
 .navbar-brand {
     font-weight: 700;
 }
