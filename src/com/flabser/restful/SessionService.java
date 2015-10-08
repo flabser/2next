@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -15,7 +13,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -43,13 +40,6 @@ import com.flabser.users.UserStatusType;
 
 @Path("/session")
 public class SessionService extends RestProvider {
-
-	@Context
-	ServletContext context;
-	@Context
-	HttpServletRequest request;
-	@Context
-	HttpServletResponse response;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

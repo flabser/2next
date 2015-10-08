@@ -48,7 +48,7 @@ import com.flabser.users.UserSession;
 public class RestProvider {
 
 	@Context
-	private ServletContext context;
+	protected ServletContext context;
 	@Context
 	public HttpServletRequest request;
 	@Context

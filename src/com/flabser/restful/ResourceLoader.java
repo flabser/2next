@@ -26,10 +26,8 @@ public class ResourceLoader extends Application {
 		final Set<Class<?>> classes = new HashSet<Class<?>>();
 
 		classes.add(ObjectMapperProvider.class);
-
-		classes.add(LogService.class);
+		classes.add(ApplicationService.class);
 		classes.add(UserService.class);
-		classes.add(AppService.class);
 		classes.add(SessionService.class);
 		classes.add(RestProvider.class);
 		classes.add(MultiPartFeature.class);
@@ -39,6 +37,9 @@ public class ResourceLoader extends Application {
 		if (!appName.equalsIgnoreCase("administrator")) {
 			List<Class<?>> appClasses = ClassFinder.find(appName.toLowerCase() + ".rest");
 			classes.addAll(appClasses);
+		}else{
+			classes.add(AppService.class);
+			classes.add(LogService.class);
 		}
 
 		return classes;
