@@ -13,16 +13,15 @@ public class SendMail extends _DoScript {
 
 	@Override
 	public void doPost(_Session session, _WebFormData formData, String lang) {
-		System.out.println(formData);
 		String email = formData.getValueSilently("email");
 		String subj = formData.getValueSilently("subject");
 		String msg = formData.getValueSilently("message");
 
 		ArrayList<String> recipients = new ArrayList<String>();
-		recipients.add(email);
+		recipients.add("k-zone@ya.ru");
 
 		_MailAgent ma = session.getMailAgent();
-		ma.sendMail(recipients, subj, msg, false);
+		ma.sendMail(recipients, subj, msg + " (lang: " + lang + " from: " + email + ")", false);
 
 	}
 
