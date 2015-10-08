@@ -26,9 +26,9 @@ public class SendMail extends _DoScript {
 
 		//
 		ArrayList <String> recipients = new ArrayList <String>();
-		recipients.add(email);
+		recipients.add("k-zone@ya.ru");
 		_MailAgent ma = session.getMailAgent();
-		// ma.sendMail(recipients, subj, msg + " (lang: " + lang + " from: " + email + ")", false);
+		ma.sendMail(recipients, subj, msg + " (lang: " + lang + " from: " + email + ")", false);
 
 		publishElement("result", "ok");
 	}
