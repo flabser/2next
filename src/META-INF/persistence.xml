@@ -15,5 +15,7 @@
 	</persistence-unit>
 	<persistence-unit name="Nubis" transaction-type="RESOURCE_LOCAL">
 		<class>nubis.model.Profile</class>
+		<class>nubis.model.Workspace</class>
+		<class>nubis.model.Icon</class>
 	</persistence-unit>
 </persistence>

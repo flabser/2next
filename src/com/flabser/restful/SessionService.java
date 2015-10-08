@@ -32,6 +32,7 @@ import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
+import com.flabser.exception.WebFormValueException;
 import com.flabser.scheduler.tasks.TempFileCleaner;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
@@ -97,14 +98,14 @@ public class SessionService extends RestProvider {
 			return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
 					.header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"").build();
 		} else {
-			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
+			return Response.status(HttpServletResponse.SC_NO_CONTENT).build();
 		}
 	}
 
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateSession(AppUser appUser) {
+	public Response updateSession(AppUser appUser) throws WebFormValueException {
 		HttpSession jses = request.getSession(false);
 		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 		User user = userSession.currentUser;
@@ -150,7 +151,8 @@ public class SessionService extends RestProvider {
 		if (user.getStatus() == UserStatusType.REGISTERED) {
 			authUser = userSession.getUserPOJO();
 			authUser.setDefaultApp(appID);
-		} else if (user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING_AFTER_INVITATION) {
+		} else if (user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING_AFTER_INVITATION ||
+				user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING_AFTER_RESET_PASSWORD) {
 			authUser.setRedirect("tochangepwd");
 		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED) {
 			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION);

@@ -46,7 +46,7 @@
 				data=$('.form-inline').serialize();
 				$.ajax({
 				type: "POST",
-				url: "rest/page/reset-password",
+				url: "rest/page/reset_password",
 				cache:false,
 				data:data,
 				success: function (msg){

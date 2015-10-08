@@ -14,7 +14,6 @@ public class _UsersHelper {
 			user.setLogin(login);
 			user.setUserName(userName);
 			user.setPwd(pwd);
-			user.setPasswordHash("");
 			user.setEmail(email);
 			user.setRegDate(new Date());
 			user.setVerifyCode("");
