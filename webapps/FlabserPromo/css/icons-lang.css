@@ -1,5 +1,3 @@
-/* lang-icon */
-
 [class^="lang-icon-"] {
     background: url(../img/ui-sprite.png) 32px 32px no-repeat transparent;
     border: 1px solid #DDD;
@@ -7,6 +5,7 @@
     height: 18px;
     line-height: 18px;
     margin: 0;
+    vertical-align: middle;
     width: 24px;
 }
 

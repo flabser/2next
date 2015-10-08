@@ -55,10 +55,10 @@
 				</script>
 				<!-- JavaScript
 				======================== -->
-				<script src="https://www.google.com/recaptcha/api.js"></script>
 				<script src="/SharedResources/vendor/jquery/jquery-2.1.4.min.js"></script>
 				<script src="/SharedResources/vendor/bootstrap/js/bootstrap.min.js"></script>
 				<script src="/SharedResources/vendor/jquery/jquery.waypoints.min.js"></script>
+				<script src="https://www.google.com/recaptcha/api.js"></script>
 				<!-- app
 				======================== -->
 				<script src="js/app.js"></script>

@@ -1,3 +1,31 @@
+/* scrollSpyNavBar */
+
+$(function() {
+    var offsetTop = 0;
+    var isHidden = false;
+    var $bar = $('.navbar');
+
+    $(window).scroll(scrollSpyBar);
+    scrollSpyBar();
+
+    function scrollSpyBar() {
+        if (window.pageYOffset > offsetTop) {
+            if (!isHidden) {
+                $bar.addClass('navbar-scroll-hide');
+                $('.navbar .open .dropdown-toggle').dropdown('toggle');
+                $('.navbar .navbar-collapse').collapse('hide');
+                isHidden = true;
+            }
+        } else {
+            if (isHidden) {
+                $bar.removeClass('navbar-scroll-hide');
+                isHidden = false;
+            }
+        }
+        offsetTop = window.pageYOffset;
+    }
+});
+
 /* Auto close navbar on click */
 
 $('.navbar-brand, .navbar-nav > li > a').click(function() {
@@ -40,7 +68,7 @@ $(function() {
                 target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
                 if (target.length) {
                     $('html,body').animate({
-                        scrollTop: (target.offset().top - 49) // 50px navbar height
+                        scrollTop: (target.offset().top) // 50px navbar height
                     }, 500);
                     return false;
                 }
