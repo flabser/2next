@@ -88,7 +88,7 @@ $(document).ready(function(e) {
     $('form[name=contact_us]').submit(function(e) {
         var $form = $(this);
         $.ajax({
-            url: 'Provider?id=sendmail',
+            url: 'rest/page/sendmail',
             type: 'POST',
             data: $form.serialize(),
             dataType: 'json',
@@ -100,39 +100,40 @@ $(document).ready(function(e) {
                 $('#form_message').removeClass('alert-success').html('');
             },
             success: function(response, status) {
-                if (response.error) {
+                var hasErrors = response._Page.elements[0].name === 'errors';
+                if (hasErrors) {
+                    var errors = response._Page.elements[0].value;
                     // Error messages
-                    if (response.error.email) {
+                    if (errors.indexOf('email') != -1) {
                         $('input[name=email]', $form).parent().addClass('has-error');
-                        $('input[name=email]', $form).next('.help-block').html(response.error.email);
+                        $('input[name=email]', $form).next('.help-block').html('error.email');
                     }
-                    if (response.error.subject) {
+                    if (errors.indexOf('subject') != -1) {
                         $('input[name=subject]', $form).parent().addClass('has-error');
-                        $('input[name=subject]', $form).next('.help-block').html(response.error.subject);
+                        $('input[name=subject]', $form).next('.help-block').html('error.subject');
                     }
-                    if (response.error.message) {
+                    if (errors.indexOf('message') != -1) {
                         $('textarea[name=message]', $form).parent().addClass('has-error');
-                        $('textarea[name=message]', $form).next('.help-block').html(response.error.message);
+                        $('textarea[name=message]', $form).next('.help-block').html('error.message');
                     }
-                    if (response.error.recaptcha) {
-                        $('#form-captcha .help-block').addClass('has-error');
-                        $('#form-captcha .help-block').html(response.error.recaptcha);
+                    if (errors.indexOf('recaptcha') != -1) {
+                        $('.form-captcha .help-block').addClass('has-error');
+                        $('.form-captcha .help-block').html('error.recaptcha');
                     }
                 }
-                // Refresh Captcha
-                grecaptcha.reset();
                 //
-                if (response.success) {
-                    $('#form_message').addClass('alert-success').html(response.success);
+                if (response._Page.elements[0].name === 'result') {
+                    $('#form_message').addClass('alert-success').html(response._Page.elements[0].value);
                     setTimeout(function() {
                         $('#form_message').removeClass('alert-success').html('');
-                    }, 4000);
+                    }, 5000);
                 }
-
             },
             complete: function(xhr, status) {
                 $form.fadeTo('fast', 1);
                 $('button', $form).attr('disabled', false);
+                // Refresh Captcha
+                grecaptcha.reset();
             }
         });
 

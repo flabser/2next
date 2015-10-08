@@ -44,6 +44,7 @@
 							<div class="contact-form__btn">
 								<div class="form-captcha">
 									<div class="g-recaptcha" data-sitekey="6Lf34Q0TAAAAAAwtko0WWibX6oUEs_i80q70XGab"></div>
+									<div class="help-block"></div>
 								</div>
 								<button type="submit" class="btn btn-contact">
 									<xsl:value-of select="//captions/send_message/@caption" />
