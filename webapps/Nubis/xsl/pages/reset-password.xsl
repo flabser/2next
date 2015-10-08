@@ -41,14 +41,34 @@
 					<xsl:value-of select="//password-reset//process" />
 				</xsl:if>
 			</div>
+			<script>
+				function reset_password(){
+				data=$('.form-inline').serialize();
+				$.ajax({
+				type: "POST",
+				url: "rest/page/reset-password",
+				cache:false,
+				data:data,
+				success: function (msg){
+				//window.location.reload()
+				},
+				error: function(data,status,xhr) {
+				}
+				})
+				}
+			</script>
 			<form class="form-inline" method="POST">
-				<input type="hidden" name="id" value="reset_password" />
+
 				<div class="form-group">
 					<input type="email" class="form-control" name="email" value="{//email}" placeholder="email" required="required" />
 				</div>
-				<button type="submit" class="btn btn-success" name="action" value="send">
+				<button type="button" class="btn btn-success" name="action" onclick="javascript:reset_password()">
 					<xsl:value-of select="//captions/pwd_reset_send_btn/@caption" />
 				</button>
+<!--				<button type="submit" class="btn btn-success" name="action" value="send">
+					<xsl:value-of select="//captions/pwd_reset_send_btn/@caption" />
+				</button>-->
+				<!--<input type="hidden" name="id" value="reset_password" />-->
 			</form>
 		</section>
 	</xsl:template>
