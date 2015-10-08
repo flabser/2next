@@ -1,28 +1,31 @@
 /* scrollSpyNavBar */
 
 $(function() {
-    var offsetTop = 0;
-    var isHidden = false;
+    var prevYOffset = 0,
+        hideYOffset = 0,
+        scrollTopDiff = 150,
+        isHidden = false;
     var $bar = $('.navbar');
 
     $(window).scroll(scrollSpyBar);
     scrollSpyBar();
 
     function scrollSpyBar() {
-        if (window.pageYOffset > offsetTop) {
+        if (window.pageYOffset > prevYOffset) {
             if (!isHidden) {
                 $bar.addClass('navbar-scroll-hide');
                 $('.navbar .open .dropdown-toggle').dropdown('toggle');
                 $('.navbar .navbar-collapse').collapse('hide');
                 isHidden = true;
             }
+            hideYOffset = window.pageYOffset;
         } else {
-            if (isHidden) {
+            if (isHidden && (window.pageYOffset < 50 || (hideYOffset - window.pageYOffset > scrollTopDiff))) {
                 $bar.removeClass('navbar-scroll-hide');
                 isHidden = false;
             }
         }
-        offsetTop = window.pageYOffset;
+        prevYOffset = window.pageYOffset;
     }
 });
 
