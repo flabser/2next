@@ -292,6 +292,7 @@ public class User {
 		if (!"".equalsIgnoreCase(password)) {
 			if (Util.pwdIsCorrect(password)) {
 				this.password = password;
+				setPasswordHash(password);
 			} else {
 				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
 			}
@@ -346,11 +347,12 @@ public class User {
 		this.isSupervisor = isSupervisor;
 	}
 
-	public void refresh(AppUser appUser) {
+	public void refresh(AppUser appUser) throws WebFormValueException {
 		login = appUser.getLogin();
 		userName = appUser.getName();
 		if (!appUser.getPwdNew().equals("") && appUser.getPwdNew().equals(appUser.getPwdRepeat())){
-			password = appUser.getPwdNew();
+			setPwd(appUser.getPwdNew());
+			status = UserStatusType.REGISTERED;
 		}
 		email = appUser.getEmail();
 		avatar = appUser.getAttachedFile();

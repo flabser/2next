@@ -16,6 +16,10 @@ public class ResetPassword extends _DoScript {
 	@Override
 	public void doGet(_Session session, _WebFormData formData, String lang) {
 
+	}
+
+	@Override
+	public void doPost(_Session session, _WebFormData formData, String lang) {
 		String code = formData.getValueSilently("email");
 		User user = DatabaseFactory.getSysDatabase().getUser(code);
 		if (user != null) {
@@ -38,8 +42,8 @@ public class ResetPassword extends _DoScript {
 				} catch (WebFormValueException e) {
 					publishElement("error", "unknown-status");
 				}
-			} else if (user.getStatus() == UserStatusType.REGISTERED) {
-				publishElement("process", "already-registered");
+			} else if (user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING_AFTER_RESET_PASSWORD) {
+				publishElement("process", "already-send-reset-password");
 				publishElement("email", user.getEmail());
 			} else {
 				publishElement("error", "unknown-status");
@@ -48,10 +52,6 @@ public class ResetPassword extends _DoScript {
 			publishElement("error", "user-not-found");
 			return;
 		}
-	}
-
-	@Override
-	public void doPost(_Session session, _WebFormData formData, String lang) {
 	}
 
 	@Override

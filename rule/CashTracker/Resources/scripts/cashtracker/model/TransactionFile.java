@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flabser.dataengine.jpa.SimpleAppEntity;
 
+//TODO it is  necessary more convenient and unified working with attachment
 
 @Entity
 @Table(name = "transaction_files")

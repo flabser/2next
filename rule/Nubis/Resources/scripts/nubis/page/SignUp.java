@@ -54,7 +54,6 @@ public class SignUp extends _DoScript {
 		user.setLogin(regForm.email);
 		user.setUserName(regForm.userName);
 		user.setPwd(regForm.pwd);
-		user.setPasswordHash(regForm.pwd);
 		user.setEmail(regForm.email);
 		user.setStatus(UserStatusType.NOT_VERIFIED);
 		user.setRegDate(new Date());
