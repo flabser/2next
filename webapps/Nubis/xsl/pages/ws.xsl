@@ -84,7 +84,7 @@
 	<xsl:template match="entry" mode="template">
 		<div class="tn-tpl js-app-create" data-app-type="{apptype}">
 			<span class="tn-tpl-logo">
-				<img class="tn-tpl-logo" src="/{.}/img/logo.png" alt="logo" />
+				<img class="tn-tpl-logo" src="/{apptype}/img/logo.png" alt="logo" />
 			</span>
 			<span class="tn-tpl-type">
 				<xsl:value-of select="apptype" />
