@@ -42,6 +42,7 @@
 			<link rel="stylesheet" href="css/layout.css" />
 			<link rel="stylesheet" href="css/header.css" />
 			<link rel="stylesheet" href="css/content.css" />
+			<link rel="stylesheet" href="css/icons-lang.css" />
 			<link rel="stylesheet" href="css/ws.css" />
 
 			<script type="text/javascript" src="/SharedResources/vendor/jquery/jquery-2.1.4.min.js"></script>
@@ -108,6 +109,18 @@
 								</ul>
 							</li>
 						</xsl:if>
+						<li class="dropdown dropdown-lang">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<i>
+									<xsl:attribute name="class">
+										<xsl:value-of select="concat('lang-icon-', lower-case(//@lang))" />
+									</xsl:attribute>
+								</i>
+							</a>
+							<ul class="dropdown-menu">
+								<xsl:apply-templates select="//availablelangs" mode="lang" />
+							</ul>
+						</li>
 					</ul>
 					<xsl:if test="//@userid != 'anonymous'">
 						<form class="navbar-form navbar-right" role="search" onsubmit="alert('кручу-верчу найти хочу'); return false;">
@@ -117,6 +130,27 @@
 				</nav>
 			</div>
 		</header>
+	</xsl:template>
+
+	<xsl:template match="availablelangs" />
+
+	<xsl:template match="availablelangs" mode="lang">
+		<xsl:if test="count(value[entry = 'ON']) > 1">
+			<xsl:apply-templates select="value[entry[1] = 'ON']" mode="lang" />
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template match="value" mode="lang">
+		<li>
+			<a class="lang" href="Provider?id={//request/@id}&amp;lang={entry[2]}">
+				<i>
+					<xsl:attribute name="class">
+						<xsl:value-of select="concat('lang-icon-', lower-case(entry[2]))" />
+					</xsl:attribute>
+				</i>
+				<xsl:value-of select="entry[3]" />
+			</a>
+		</li>
 	</xsl:template>
 
 	<xsl:template name="main-footer">

@@ -4,5 +4,11 @@
 	<caching>CACHING_IN_APPLICATION_SCOPE</caching>
 	<xsltfile>pages/about.xsl</xsltfile>
 
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="java_class">nubis.page.Site</doscript>
+		</events>
+	</element>
+
 	<caption name="about" />
 </rule>

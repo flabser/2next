@@ -4,6 +4,12 @@
 	<caching>NO_CACHING</caching>
 	<xsltfile>pages/login.xsl</xsltfile>
 
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="java_class">nubis.page.Site</doscript>
+		</events>
+	</element>
+
 	<element mode="ON" type="INCLUDED_PAGE">
 		<value>captions</value>
 	</element>
