@@ -47,7 +47,7 @@ public class CacheControlFilter implements Filter {
 	}
 
 	private boolean cacheResources(String requestUri) {
-		String[] pattern = new String[] { ".ico", ".jpg", ".jpeg", ".png", ".gif", ".js", ".css", ".woff2" };
+		String[] pattern = new String[] { ".ico", ".jpg", ".jpeg", ".png", ".gif", ".js", ".css" };
 
 		for (String p : pattern) {
 			if (requestUri.endsWith(p)) {
