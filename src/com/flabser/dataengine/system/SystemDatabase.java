@@ -40,7 +40,7 @@ import com.flabser.server.Server;
 import com.flabser.users.User;
 import com.flabser.users.UserStatusType;
 
-@SuppressWarnings({ "SqlDialectInspection", "SqlNoDataSourceInspection" })
+@SuppressWarnings({ })
 public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	public static final String jdbcDriver = "org.postgresql.Driver";
 
@@ -302,7 +302,6 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		return null;
 	}
 
-	@SuppressWarnings("unused")
 	public User getUserByEmail(String email) {
 
 		Connection conn = pool.getConnection();

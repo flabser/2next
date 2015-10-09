@@ -133,6 +133,8 @@ public class ApplicationProfile implements _IContent {
 			} catch (DatabasePoolException e) {
 				Server.logger.errorLogEntry(e.getMessage());
 			}
+		default:
+			break;
 		}
 		return db;
 	}

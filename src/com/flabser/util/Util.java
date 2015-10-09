@@ -380,8 +380,8 @@ public class Util {
 		return Long.toString(sec);
 	}
 
-	public static boolean pwdIsCorrect(String email) {
-
+	public static boolean pwdIsStrong(String email) {
+		//TODO need to check weaking of the password
 		return true;
 
 	}

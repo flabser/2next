@@ -11,19 +11,22 @@ import org.apache.catalina.realm.RealmBase;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.DatabaseUtil;
-import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
+import com.flabser.env.Environment;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.AppUser;
+import com.flabser.rule.Role;
+import com.flabser.rule.constants.RunMode;
 import com.flabser.server.Server;
 import com.flabser.util.Util;
 
@@ -56,7 +59,7 @@ public class User {
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private String dbPwd;
-	private String defaultApp;
+	//	private String defaultApp;
 	private Attachment avatar;
 
 	public User() {
@@ -99,12 +102,12 @@ public class User {
 	@JsonIgnore
 	public void setPasswordHash(String password) throws WebFormValueException {
 		if (!"".equalsIgnoreCase(password)) {
-			if (Util.pwdIsCorrect(password)) {
+			if (Util.pwdIsStrong(password)) {
 				this.passwordHash = password.hashCode() + "";
 				// this.passwordHash = getMD5Hash(password);
 				this.passwordHash = RealmBase.Digest(password, "MD5", "UTF-8");
 			} else {
-				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
+				throw new WebFormValueException(WebFormValueExceptionType.WEAK_PASSWORD, "password");
 			}
 		}
 	}
@@ -206,16 +209,14 @@ public class User {
 							try {
 								int res = appDb.createDatabase(appProfile.getDbName(), getDBLogin());
 								if (res == 0 || res == 1) {
-									IDatabase dataBase = appProfile.getDatabase();
-									//IDeployer ad = dataBase.getDeployer();
-									//Class<?> appDatabaseInitializerClass = Class.forName(appProfile.getDbInitializerClass());
-									//IAppDatabaseInit dbInitializer = (IAppDatabaseInit) appDatabaseInitializerClass.newInstance();
-									//dbInitializer.initApplication(appProfile.getPOJO());
-									//								if (ad.deploy(dbInitializer) == 0) {
+									appProfile.getDatabase();
 									appProfile.setStatus(ApplicationStatusType.ON_LINE);
-									//								} else {
-									//									appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
-									//								}
+									AppTemplate app = Environment.availableTemplates.get(appProfile.appType).getAppTemlate();
+									for (Role role:app.globalSetting.roleCollection.getRolesList()){
+										if (role.isOn == RunMode.ON){
+											appProfile.addRole(role.name, role.description);
+										}
+									}
 									appProfile.save();
 								} else {
 									appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
@@ -290,7 +291,7 @@ public class User {
 
 	public void setPwd(String password) throws WebFormValueException {
 		if (!"".equalsIgnoreCase(password)) {
-			if (Util.pwdIsCorrect(password)) {
+			if (Util.pwdIsStrong(password)) {
 				this.password = password;
 				setPasswordHash(password);
 			} else {

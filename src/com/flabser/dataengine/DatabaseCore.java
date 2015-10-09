@@ -61,8 +61,8 @@ public abstract class DatabaseCore {
 		properties.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
 		// for CREATE_OR_EXTEND need DDL_GENERATION_MODE = (DDL_BOTH_GENERATION | DATABASE)
 		properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE, PersistenceUnitProperties.DDL_BOTH_GENERATION);
-		properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "createDDL.jdbc");
-		properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "dropDDL.jdbc");
+		//properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE, "createDDL.jdbc");
+		//properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "dropDDL.jdbc");
 
 		PersistenceProvider pp = new PersistenceProvider();
 		EntityManagerFactory factory = pp.createEntityManagerFactory(appProfile.appType, properties);
