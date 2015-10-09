@@ -5,11 +5,12 @@
 		<section class="section contact" id="contact">
 
 			<!-- CONTACT -->
-			<div class="container">
+			<div class="container animated fadeIn">
 				<div class="row">
 					<div class="col-sm-12">
 						<h3 class="heading">
 							<xsl:value-of select="//captions/contact_us/@caption" />
+							<hr />
 						</h3>
 						<p class="heading__sub" style="margin-bottom:40px">
 							<xsl:value-of select="//captions/contact_us_on_lang/@caption" />

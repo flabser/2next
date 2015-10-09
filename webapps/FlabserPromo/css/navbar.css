@@ -28,6 +28,11 @@
 .dropdown-lang .dropdown-menu {
     left: auto;
     right: 0;
+    top: 35px;
+}
+
+.dropdown-lang .dropdown-toggle {
+    padding: 15px 15px;
 }
 
 .dropdown-lang .dropdown-menu a.lang {
@@ -121,7 +126,7 @@
 }
 
 .navbar-default .dropdown-menu {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9);
 }
 
 .navbar-inverse .dropdown-menu {

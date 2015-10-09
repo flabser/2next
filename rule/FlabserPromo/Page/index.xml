@@ -18,10 +18,18 @@
 	<caption name="find_out_more" />
 
 	<caption name="home" />
-	<caption name="about" />
-	<caption name="about_title" />
+
+	<caption name="about_company" />
+	<caption name="about_us" />
+	<caption name="about_us_text" />
+	<caption name="about_experience_text" />
+
 	<caption name="skills" />
 	<caption name="skills_title" />
+	<caption name="skills_prog_lang" />
+	<caption name="skills_db" />
+	<caption name="skills_mobile_tech" />
+	<caption name="skills_dev_tools" />
 
 	<caption name="contact_us" />
 	<caption name="contact_us_on_lang" />

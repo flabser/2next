@@ -31,7 +31,7 @@
 						</li>
 						<li class="">
 							<a href="#about">
-								<xsl:value-of select="//captions/about/@caption" />
+								<xsl:value-of select="//captions/about_us/@caption" />
 							</a>
 						</li>
 						<li class="">
@@ -46,7 +46,7 @@
 						</li> -->
 						<div class="dropdown dropdown-lang">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<i>
+								<i class="fa fa-globe">
 									<xsl:attribute name="class">
 										<xsl:value-of select="concat('lang-icon-', lower-case(//@lang))" />
 									</xsl:attribute>

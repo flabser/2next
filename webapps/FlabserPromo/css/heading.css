@@ -5,19 +5,24 @@
 
 .heading {
     font-family: 'Dosis', sans-serif;
-    font-size: 32px;
+    font-size: 22px;
     font-weight: normal;
-    line-height: 36px;
+    line-height: 22px;
     margin-top: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     position: relative;
     text-transform: uppercase;
+}
+
+.heading > hr {
+    border-color: #CCC;
+    width: 150px;
 }
 
 .heading + .heading__sub {
     margin-top: -20px;
     margin-bottom: 40px;
-    color: #9a9a9a;
+    color: #666;
 }
 
 .heading__sub + .heading__btn {
@@ -27,12 +32,14 @@
 
 @media (min-width: 768px) {
     .heading {
+        font-size: 36px;
+        line-height: 36px;
         margin-top: 80px;
-        margin-bottom: 80px;
+        margin-bottom: 60px;
     }
     .heading + .heading__sub {
         margin-top: -40px;
         margin-bottom: 80px;
-        color: #9a9a9a;
+        color: #666;
     }
 }

@@ -39,13 +39,13 @@
 		<entry lang="ENG">Home</entry>
 		<entry lang="BG">Основните</entry>
 	</sentence>
-	<sentence mode="on" keyword="about">
+	<sentence mode="on" keyword="about_us">
 		<entry lang="RUS">О нас</entry>
 		<entry lang="KAZ">Біз жайлы</entry>
-		<entry lang="ENG">About</entry>
+		<entry lang="ENG">About us</entry>
 		<entry lang="BG">О нас</entry>
 	</sentence>
-	<sentence mode="on" keyword="about_title">
+	<sentence mode="on" keyword="about_company">
 		<entry lang="RUS">О нашей компании</entry>
 		<entry lang="KAZ">Біздің ұйым жайлы</entry>
 		<entry lang="ENG">About our company</entry>
@@ -101,6 +101,7 @@
 		<entry lang="ENG">Send message</entry>
 		<entry lang="BG">Изпрати съобщение</entry>
 	</sentence>
+
 	<sentence mode="on" keyword="address">
 		<entry lang="RUS">Адрес</entry>
 		<entry lang="KAZ">Мекен жайымыз</entry>
@@ -112,5 +113,75 @@
 		<entry lang="KAZ">Телефон</entry>
 		<entry lang="ENG">Phone</entry>
 		<entry lang="BG">Телефон</entry>
+	</sentence>
+
+	<!-- -->
+	<sentence mode="on" keyword="about_us_text">
+		<entry lang="RUS">Мы являемся командой талантливых,
+			опытных и мотивированных программистов-разработчиков имеющих опыт в
+			реализации
+			многофункциональных ИТ-решений, для полномасштабной информационной среды корпоративного управления.
+		</entry>
+		<entry lang="KAZ">Мы являемся командой талантливых,
+			опытных и мотивированных программистов-разработчиков имеющих опыт в
+			реализации
+			многофункциональных ИТ-решений, для полномасштабной информационной среды корпоративного управления.
+		</entry>
+		<entry lang="ENG">We are a team of talented, experienced and motivated developers thoroughly versed in the
+			implementation of
+			multipurpose IT solutions, from mobile applications to full blown corporate management environments.
+		</entry>
+		<entry lang="BG">Мы являемся командой талантливых,
+			опытных и мотивированных программистов-разработчиков имеющих опыт в
+			реализации
+			многофункциональных ИТ-решений, для полномасштабной информационной среды корпоративного управления.
+		</entry>
+	</sentence>
+	<sentence mode="on" keyword="about_experience_text">
+		<entry lang="RUS">На протяжении многих лет, мы накопили обширные знания и техническое мастерство в хорошо
+			зарекомендовавших
+			технологиях,
+			библиотеках, инфраструктурах и платформах.
+		</entry>
+		<entry lang="KAZ">На протяжении многих лет, мы накопили обширные знания и техническое мастерство в хорошо
+			зарекомендовавших
+			технологиях,
+			библиотеках, инфраструктурах и платформах.
+		</entry>
+		<entry lang="ENG">Over the years, we have amassed extensive knowledge and technical prowess in well established
+			languages,
+			libraries, frameworks and platforms.
+		</entry>
+		<entry lang="BG">На протяжении многих лет, мы накопили обширные знания и техническое мастерство в хорошо
+			зарекомендовавших
+			технологиях,
+			библиотеках, инфраструктурах и платформах.
+		</entry>
+	</sentence>
+
+	<!-- -->
+	<sentence mode="on" keyword="skills_prog_lang">
+		<entry lang="RUS">Programming languages, libraries and frameworks</entry>
+		<entry lang="KAZ">Programming languages, libraries and frameworks</entry>
+		<entry lang="ENG">Programming languages, libraries and frameworks</entry>
+		<entry lang="BG">Programming languages, libraries and frameworks</entry>
+	</sentence>
+	<sentence mode="on" keyword="skills_db">
+		<entry lang="RUS">Database backends</entry>
+		<entry lang="KAZ">Database backends</entry>
+		<entry lang="ENG">Database backends</entry>
+		<entry lang="BG">Database backends</entry>
+	</sentence>
+	<sentence mode="on" keyword="skills_mobile_tech">
+		<entry lang="RUS">Mobile technologies</entry>
+		<entry lang="KAZ">Mobile technologies</entry>
+		<entry lang="ENG">Mobile technologies</entry>
+		<entry lang="BG">Mobile technologies</entry>
+	</sentence>
+	<sentence mode="on" keyword="skills_dev_tools">
+		<entry lang="RUS">Development environments and tools</entry>
+		<entry lang="KAZ">Development environments and tools</entry>
+		<entry lang="ENG">Development environments and tools</entry>
+		<entry lang="BG">Development environments and tools</entry>
 	</sentence>
 </vocabulary>

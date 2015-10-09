@@ -7,29 +7,43 @@
 			<!-- ABOUT -->
 			<div class="container">
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="col-xs-12 animated fadeIn">
 						<h3 class="heading">
-							<xsl:value-of select="//captions/about_title/@caption" />
+							<xsl:value-of select="//captions/about_company/@caption" />
+							<hr />
 						</h3>
-						<p class="heading__sub">
-							<xsl:value-of select="//captions/about_title_sub/@caption" />
-						</p>
 					</div>
 				</div>
-			</div>
-
-			<!-- FEATURES -->
-			<div class="container">
 				<div class="row">
-					<div class="col-xs-12">
-						Мы являемся командой талантливых, опытных и мотивированных программистов-разработчиков имеющих опыт
-						в реализации многофункциональных ИТ-решений, для полномасштабной информационной среды корпоративного управления.
-						На протяжении многих лет, мы накопили обширные знания и техническое мастерство в хорошо зарекомендовавших
-						технологиях, библиотеках, инфраструктурах и платформах.
-					</div>
+					<xsl:call-template name="about_feature" />
 				</div>
 			</div>
 		</section>
+	</xsl:template>
+
+	<xsl:template name="about_feature">
+		<div class="feature_box col-md-6">
+			<div class="inner animated fadeIn">
+				<i class="fa fa-university"></i>
+				<h3>
+					<xsl:value-of select="//captions/about_us/@caption" />
+				</h3>
+				<p>
+					<xsl:value-of select="//captions/about_us_text/@caption" />
+				</p>
+			</div>
+		</div>
+		<div class="feature_box col-md-6">
+			<div class="inner animated fadeIn">
+				<i class="fa fa-hourglass"></i>
+				<h3>
+					<xsl:value-of select="//captions/promo_experience/@caption" />
+				</h3>
+				<p>
+					<xsl:value-of select="//captions/about_experience_text/@caption" />
+				</p>
+			</div>
+		</div>
 	</xsl:template>
 
 </xsl:stylesheet>
