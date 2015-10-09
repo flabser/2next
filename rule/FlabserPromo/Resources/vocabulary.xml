@@ -131,10 +131,7 @@
 			implementation of
 			multipurpose IT solutions, from mobile applications to full blown corporate management environments.
 		</entry>
-		<entry lang="BG">Мы являемся командой талантливых,
-			опытных и мотивированных программистов-разработчиков имеющих опыт в
-			реализации
-			многофункциональных ИТ-решений, для полномасштабной информационной среды корпоративного управления.
+		<entry lang="BG">Ние сме екип от талантливи, опитни и мотивирани програмисти-разработчици с дългогодишен опит в изпълнението на многофункционални IT решения, за широкомащабна информационна среда на корпоративно управление.
 		</entry>
 	</sentence>
 	<sentence mode="on" keyword="about_experience_text">
@@ -152,36 +149,34 @@
 			languages,
 			libraries, frameworks and platforms.
 		</entry>
-		<entry lang="BG">На протяжении многих лет, мы накопили обширные знания и техническое мастерство в хорошо
-			зарекомендовавших
-			технологиях,
-			библиотеках, инфраструктурах и платформах.
+		<entry lang="BG">В продължение на много години, ние сме натрупали големи знания и технически умения в добре реализирани IT разработки, бази данни, библиотеки, инфраструктури и платформи.
+
 		</entry>
 	</sentence>
 
 	<!-- -->
 	<sentence mode="on" keyword="skills_prog_lang">
-		<entry lang="RUS">Programming languages, libraries and frameworks</entry>
+		<entry lang="RUS">Языки программирования, библиотеки и программные каркасы</entry>
 		<entry lang="KAZ">Programming languages, libraries and frameworks</entry>
 		<entry lang="ENG">Programming languages, libraries and frameworks</entry>
-		<entry lang="BG">Programming languages, libraries and frameworks</entry>
+		<entry lang="BG">Езици за програмиране, библиотеки и програмни рамки</entry>
 	</sentence>
 	<sentence mode="on" keyword="skills_db">
-		<entry lang="RUS">Database backends</entry>
+		<entry lang="RUS">Базы данных</entry>
 		<entry lang="KAZ">Database backends</entry>
 		<entry lang="ENG">Database backends</entry>
-		<entry lang="BG">Database backends</entry>
+		<entry lang="BG">Бази данни</entry>
 	</sentence>
 	<sentence mode="on" keyword="skills_mobile_tech">
-		<entry lang="RUS">Mobile technologies</entry>
+		<entry lang="RUS">Мобильные технологии</entry>
 		<entry lang="KAZ">Mobile technologies</entry>
 		<entry lang="ENG">Mobile technologies</entry>
-		<entry lang="BG">Mobile technologies</entry>
+		<entry lang="BG">Мобилни технологии</entry>
 	</sentence>
 	<sentence mode="on" keyword="skills_dev_tools">
-		<entry lang="RUS">Development environments and tools</entry>
+		<entry lang="RUS">Среды разработки и инструменты</entry>
 		<entry lang="KAZ">Development environments and tools</entry>
 		<entry lang="ENG">Development environments and tools</entry>
-		<entry lang="BG">Development environments and tools</entry>
+		<entry lang="BG">Среди за разработки и инструменти</entry>
 	</sentence>
 </vocabulary>
