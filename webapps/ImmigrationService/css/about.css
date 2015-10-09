@@ -1,0 +1,52 @@
+.feature_box .inner {
+    margin: 0 0 40px 0;
+    padding: 0;
+    position: relative;
+}
+
+.feature_box .inner i {
+    color: #888;
+    height: 48px;
+    float: left;
+    font-size: 32px;
+    text-align: center;
+    text-shadow: none;
+    line-height: 1;
+    width: 48px;
+}
+
+.feature_box h3 {
+    color: #000;
+    margin-bottom: 15px;
+    margin-left: 58px;
+}
+
+.feature_box p {
+    clear: both;
+    color: #666;
+    font-size: 1.2em;
+    line-height: 1.8em;
+    margin-left: 0px;
+    text-align: left;
+    text-indent: 10px;
+}
+
+@media (min-width: 768px) {
+    .feature_box .inner {
+        margin: 8px;
+        padding: 8px;
+    }
+    .feature_box .inner i {
+        height: 68px;
+        line-height: 68px;
+        width: 68px;
+    }
+    .feature_box h3 {
+        margin-left: 80px;
+    }
+    .feature_box p {
+        font-size: 1.4em;
+        margin-left: 80px;
+        text-align: left;
+    }
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="sendmail" mode="on" anonymous="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="java_class">flabserpromo.page.SendMail</doscript>
+		</events>
+	</element>
+</rule>

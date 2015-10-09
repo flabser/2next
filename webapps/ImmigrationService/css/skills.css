@@ -1,0 +1,54 @@
+.skills {
+    background: #F8F8F8;
+}
+
+.skills_box {
+    color: #FFF;
+    min-height: 120px;
+    padding: 10px;
+}
+
+.skills_box-prog {
+    background: #A23F52;
+}
+
+.skills_box-db {
+    background: #45BBC5;
+}
+
+.skills_box-mobile {
+    background: #EB9151;
+}
+
+.skills_box-dev-tools {
+    background: #7DB58D;
+}
+
+.skills_box h3 {
+    margin: 10px;
+}
+
+@media (max-width: 767px) {
+    .skills_box {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .skills_box {
+        border-radius: 6px;
+        min-height: 205px;
+    }
+    .skills_box-prog:after {
+        background: white;
+        bottom: -15px;
+        border-radius: 15px;
+        content: '';
+        display: block;
+        height: 30px;
+        position: absolute;
+        right: -15px;
+        width: 30px;
+        z-index: 9;
+    }
+}

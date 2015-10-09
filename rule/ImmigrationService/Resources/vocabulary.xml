@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <vocabulary>
 	<sentence mode="on" keyword="brand">
-		<entry lang="RUS">Flabser</entry>
-		<entry lang="KAZ">Flabser</entry>
-		<entry lang="ENG">Flabser</entry>
-		<entry lang="BG">Flabser</entry>
+		<entry lang="RUS">ImmigrationService</entry>
+		<entry lang="KAZ">ImmigrationService</entry>
+		<entry lang="ENG">ImmigrationService</entry>
+		<entry lang="BG">ImmigrationService</entry>
 	</sentence>
-	
 </vocabulary>

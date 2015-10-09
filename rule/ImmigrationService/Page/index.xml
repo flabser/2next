@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" id="index" mode="on" anonymous="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/index.xsl</xsltfile>
+
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="java_class">flabserpromo.page.Index</doscript>
+		</events>
+	</element>
+
+	<caption name="brand" />
+
+	<caption name="promo_heading" />
+	<caption name="promo_heading_sub" />
+	<caption name="promo_experience" />
+	<caption name="find_out_more" />
+
+	<caption name="home" />
+
+	<caption name="about_company" />
+	<caption name="about_us" />
+	<caption name="about_us_text" />
+	<caption name="about_experience_text" />
+
+	<caption name="skills" />
+	<caption name="skills_title" />
+	<caption name="skills_prog_lang" />
+	<caption name="skills_db" />
+	<caption name="skills_mobile_tech" />
+	<caption name="skills_dev_tools" />
+
+	<caption name="contact_us" />
+	<caption name="contact_us_on_lang" />
+	<caption name="message_title" />
+	<caption name="message_subject" />
+	<caption name="message_text" />
+	<caption name="send_message" />
+
+	<caption name="address" />
+	<caption name="phone" />
+</rule>

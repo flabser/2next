@@ -1,0 +1,84 @@
+.promo {
+    background: url(../img/bloup.jpg);
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    padding: 110px 0 80px;
+    text-align: center;
+}
+
+.promo::before {
+    background: rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.heading.promo__heading {
+    font-family: 'Dosis', sans-serif;
+    color: #FFCA00;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 54px;
+    margin: 10px 0 30px 0;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, .35);
+    text-transform: uppercase;
+}
+
+.heading__sub.promo-heading__sub {
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Dosis', sans-serif;
+    font-size: 22px;
+    margin: 10px 0;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, .35);
+}
+
+.heading__sub.promo-heading__experience {
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Dosis', sans-serif;
+    font-size: 22px;
+    margin: 10px 0 40px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, .35);
+}
+
+.promo__btn {
+    margin: 10px 0 0;
+}
+
+.promo__btn.btn-link {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.promo__btn.btn-primary {
+    background: transparent;
+    border-color: #F9FF00;
+    border-radius: 3px;
+    color: #F9FF00;
+}
+
+.promo__btn.btn-primary:hover,
+.promo__btn.btn-primary:focus {
+    background: #F9FF00;
+    border-color: #FFF340;
+    color: #383838;
+}
+
+@media (min-width: 768px) {
+    .promo {
+        padding: 220px 0 150px;
+    }
+    .heading.promo__heading {
+        font-size: 64px;
+    }
+    .heading__sub.promo-heading__sub {
+        font-size: 28px;
+    }
+    .heading__sub.promo-heading__experience {
+        font-size: 28px;
+    }
+}
