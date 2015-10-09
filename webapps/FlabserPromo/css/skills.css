@@ -28,10 +28,16 @@
     margin: 10px;
 }
 
+@media (max-width: 767px) {
+    .skills_box {
+        width: 100%;
+    }
+}
+
 @media (min-width: 768px) {
     .skills_box {
         border-radius: 6px;
-        min-height: 200px;
+        min-height: 205px;
     }
     .skills_box-prog:after {
         background: white;

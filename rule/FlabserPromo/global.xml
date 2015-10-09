@@ -2,13 +2,15 @@
 <rule mode="on" type="global">
 	<description></description>
 	<entrypoint>Provider?id=index</entrypoint>
-		<workmode>SIMPLE</workmode>
 	<defaultredirecturl>Provider?id=index</defaultredirecturl>
+	<workmode>SIMPLE</workmode>
 
 	<langs>
 		<entry id="ENG">English</entry>
 		<entry id="RUS">Русский</entry>
 		<entry id="KAZ">Қазақша</entry>
 		<entry id="BG">Българский</entry>
+		<entry id="POR">Português</entry>
+		<entry id="SPA">Español</entry>
 	</langs>
 </rule>

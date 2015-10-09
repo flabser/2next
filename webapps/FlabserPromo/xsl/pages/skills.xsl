@@ -21,7 +21,7 @@
 
 	<xsl:template name="skills_feature">
 		<div class="row">
-			<div class="skills_box skills_box-prog col-md-6">
+			<div class="skills_box skills_box-prog col-xs-6">
 				<div class="inner">
 					<h3>
 						<xsl:value-of select="//captions/skills_prog_lang/@caption" />
@@ -34,7 +34,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="skills_box skills_box-db col-md-6">
+			<div class="skills_box skills_box-db col-xs-6">
 				<div class="inner">
 					<h3>
 						<xsl:value-of select="//captions/skills_db/@caption" />
@@ -47,7 +47,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="skills_box skills_box-mobile col-md-6">
+			<div class="skills_box skills_box-mobile col-xs-6">
 				<div class="inner">
 					<h3>
 						<xsl:value-of select="//captions/skills_mobile_tech/@caption" />
@@ -58,7 +58,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="skills_box skills_box-dev-tools col-md-6">
+			<div class="skills_box skills_box-dev-tools col-xs-6">
 				<div class="inner">
 					<h3>
 						<xsl:value-of select="//captions/skills_dev_tools/@caption" />
