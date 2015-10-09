@@ -45,12 +45,13 @@
 							</a>
 						</li> -->
 						<div class="dropdown dropdown-lang">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<a href="#" class="dropdown-toggle animated fadeInRight" data-toggle="dropdown">
 								<i class="fa fa-globe">
-									<xsl:attribute name="class">
+									<!-- <xsl:attribute name="class">
 										<xsl:value-of select="concat('lang-icon-', lower-case(//@lang))" />
-									</xsl:attribute>
+									</xsl:attribute> -->
 								</i>
+								<xsl:value-of select="upper-case(//@lang)" />
 							</a>
 							<ul class="dropdown-menu">
 								<xsl:apply-templates select="//availablelangs" />
@@ -97,11 +98,11 @@
 	<xsl:template match="value" mode="lang">
 		<li>
 			<a class="lang" href="Provider?id={//request/@id}&amp;lang={entry[2]}">
-				<i>
+				<!-- <i>
 					<xsl:attribute name="class">
 						<xsl:value-of select="concat('lang-icon-', lower-case(entry[2]))" />
 					</xsl:attribute>
-				</i>
+				</i> -->
 				<xsl:value-of select="entry[3]" />
 			</a>
 		</li>
