@@ -3,7 +3,9 @@ package com.flabser.valves;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class RequestURL {
+
 	private String appType = "";
 	private String appID = "";
 	private String url;
@@ -23,8 +25,9 @@ public class RequestURL {
 			return;
 		}
 
-		for (String pageIdRegex : new String[] { "^.*/page/([\\w\\-~\\.]+)",
-		"^.*/Provider\\?[\\w\\-~\\.=&]*id=([\\w\\-~\\.]+)[\\w\\-~\\.=&]*" }) {
+		for (String pageIdRegex : new String[] {
+				"^.*/page/([\\w\\-~\\.]+)",
+				"^.*/Provider\\?[\\w\\-~\\.=&]*id=([\\w\\-~\\.]+)[\\w\\-~\\.=&]*" }) {
 			if (urlVal.matches(pageIdRegex)) {
 				pageID = urlVal.replaceAll(pageIdRegex, "$1");
 				break;
@@ -66,6 +69,9 @@ public class RequestURL {
 	}
 
 	public boolean isProtected() {
+		if (url.startsWith("/SharedResources")) {
+			return false;
+		}
 		return !appType.equals("") && !appID.equals("") || !(isDefault() || url.matches(".*/[\\w\\.-]+$"));
 	}
 
@@ -78,5 +84,4 @@ public class RequestURL {
 	public String toString() {
 		return url;
 	}
-
 }
