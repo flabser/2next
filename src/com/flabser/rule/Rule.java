@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -62,7 +63,10 @@ public abstract class Rule implements IElement, IRule {
 			scriptDirPath = env.globalSetting.rulePath + File.separator + "Resources" + File.separator + "scripts";
 			primaryScriptDirPath = Environment.primaryAppDir + scriptDirPath;
 
-			id = XMLUtil.getTextContent(doc, "/rule/@id");
+			id = XMLUtil.getTextContent(doc, "/rule/@id",true);
+			if (id.equals("")){
+				id = FilenameUtils.removeExtension(docFile.getName());
+			}
 			Server.logger.verboseLogEntry("load rule: " + this.getClass().getSimpleName() + ", id=" + id);
 			if (XMLUtil.getTextContent(doc, "/rule/@mode").equalsIgnoreCase("off")) {
 				isOn = RunMode.OFF;
