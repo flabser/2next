@@ -164,25 +164,25 @@
 		<entry lang="RUS">Шаблоны</entry>
 		<entry lang="KAZ">Шаблоны</entry>
 		<entry lang="ENG">Templates</entry>
-		<entry lang="BG">Шаблоны</entry>
+		<entry lang="BG">Шаблони</entry>
 	</sentence>
 	<sentence mode="on" keyword="templates_description">
 		<entry lang="RUS">На основе шаблонов создаются приложения</entry>
 		<entry lang="KAZ">На основе шаблонов создаются приложения</entry>
-		<entry lang="ENG">На основе шаблонов создаются приложения</entry>
-		<entry lang="BG">На основе шаблонов создаются приложения</entry>
+		<entry lang="ENG">Aplications are created with templates</entry>
+		<entry lang="BG">Приложениата са създадени с шаблони</entry>
 	</sentence>
 	<sentence mode="on" keyword="create_app">
 		<entry lang="RUS">Создать приложение</entry>
 		<entry lang="KAZ">Создать приложение</entry>
 		<entry lang="ENG">Create application</entry>
-		<entry lang="BG">Создать приложение</entry>
+		<entry lang="BG">Създаване на приложение</entry>
 	</sentence>
 	<sentence mode="on" keyword="app_сreation">
 		<entry lang="RUS">Создание...</entry>
 		<entry lang="KAZ">Создание...</entry>
 		<entry lang="ENG">Creation...</entry>
-		<entry lang="BG">Создание...</entry>
+		<entry lang="BG">Създаване...</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="type">
@@ -195,7 +195,7 @@
 		<entry lang="RUS">Название</entry>
 		<entry lang="KAZ">Название</entry>
 		<entry lang="ENG">Name</entry>
-		<entry lang="BG">Название</entry>
+		<entry lang="BG">Име</entry>
 	</sentence>
 	<sentence mode="on" keyword="description">
 		<entry lang="RUS">Описание</entry>
@@ -203,4 +203,25 @@
 		<entry lang="ENG">Description</entry>
 		<entry lang="BG">Описание</entry>
 	</sentence>
+	
+		<!-- reset-password -->
+		<sentence mode="on" keyword="pwd_reset_title">
+		<entry lang="RUS">Сброс пароля</entry>
+		<entry lang="KAZ">Сброс пароля</entry>
+		<entry lang="ENG">Reset password</entry>
+		<entry lang="BG">Reset password</entry>
+	</sentence>
+		<sentence mode="on" keyword="pwd_reset_description">
+		<entry lang="RUS">Введите ваш e-mail, который вы указали при регистрации</entry>
+		<entry lang="KAZ">Введите ваш e-mail, который вы указали при регистрации</entry>
+		<entry lang="ENG">Enter e-mail address that was specified at registration</entry>
+		<entry lang="BG">Въведете вашия имейл, който сте посочили при регистрацията</entry>
+	</sentence>
+		<sentence mode="on" keyword="pwd_reset_send_btn">
+		<entry lang="RUS">Отправить запрос</entry>
+		<entry lang="KAZ">Отправить запрос</entry>
+		<entry lang="ENG">Send request</entry>
+		<entry lang="BG">Изпратете запитване</entry>
+	</sentence>
+		
 </vocabulary>

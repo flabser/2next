@@ -12,10 +12,6 @@ public class ClassFinder {
 	private static final String CLASS_SUFFIX = ".class";
 	private static final String INNER_CLASS_SPLITTER = "$";
 
-	/*
-	 * private static final String BAD_PACKAGE_ERROR =
-	 * "Unable to get classes from path \"%s\"";
-	 */
 
 	public static List<Class<?>> find(String scannedPackage) {
 		String scannedPath = scannedPackage.replace(DOT, File.pathSeparatorChar);

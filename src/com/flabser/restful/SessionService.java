@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
@@ -192,8 +192,8 @@ public class SessionService extends RestProvider {
 	@POST
 	@Path("/resetpassword")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response resetPassword(@PathParam("email") String email){
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response resetPassword(@FormParam("email") String email){
 		User user = DatabaseFactory.getSysDatabase().getUser(email);
 		Outcome res = new Outcome();
 		if (user != null) {
