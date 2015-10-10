@@ -36,7 +36,7 @@
 		<entry lang="RUS">Регистрация</entry>
 		<entry lang="KAZ">Тіркелу</entry>
 		<entry lang="ENG">Sign up</entry>
-		<entry lang="BG">Регистрация</entry>
+		<entry lang="BG">Регистрирай се</entry>
 	</sentence>
 	<sentence mode="on" keyword="signup_title">
 		<entry lang="RUS">Регистрация</entry>
@@ -48,7 +48,7 @@
 		<entry lang="RUS">Sign up</entry>
 		<entry lang="KAZ">Тіркелу</entry>
 		<entry lang="ENG">Sign up</entry>
-		<entry lang="BG">Регистрация</entry>
+		<entry lang="BG">Регистрирай се</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="password">
@@ -67,33 +67,33 @@
 		<entry lang="RUS">Ваш профиль</entry>
 		<entry lang="KAZ">Ваш профиль</entry>
 		<entry lang="ENG">Your profile</entry>
-		<entry lang="BG">Ваш профиль</entry>
+		<entry lang="BG">Вашият профил</entry>
 	</sentence>
 
 	<!-- verify_email -->
 	<sentence mode="on" keyword="verify_email_title">
-		<entry lang="RUS" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
-		<entry lang="KAZ" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
-		<entry lang="ENG" hint="Подтверждение E-mail">Подтверждение E-mail</entry>
-		<entry lang="BG">Подтверждение E-mail</entry>
+		<entry lang="RUS">Подтверждение E-mail</entry>
+		<entry lang="KAZ">Подтверждение E-mail</entry>
+		<entry lang="ENG">E-mail confirm</entry>
+		<entry lang="BG">Е-мейл за потвърждение</entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_error">
-		<entry lang="RUS" hint="Не верные данные">Не верные данные</entry>
-		<entry lang="KAZ" hint="Не верные данные">Не верные данные</entry>
-		<entry lang="ENG" hint="Не верные данные">Не верные данные</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS" >Не верные данные</entry>
+		<entry lang="KAZ">Не верные данные</entry>
+		<entry lang="ENG">Incorrect value</entry>
+		<entry lang="BG" >Неправилна стойност</entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_done">
-		<entry lang="RUS" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
-		<entry lang="KAZ" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
-		<entry lang="ENG" hint="Проверка прошла успешно. Теперь вы можете войти.">Проверка прошла успешно. Теперь вы можете войти.</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">Проверка прошла успешно. Теперь вы можете войти.</entry>
+		<entry lang="KAZ">Проверка прошла успешно. Теперь вы можете войти.</entry>
+		<entry lang="ENG">The confirmation has been succesfully. Now you can enter</entry>
+		<entry lang="BG">Потвърждението е било успешно. Сега можете да въведете</entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_already">
-		<entry lang="RUS" hint="Вы уже зарегистрированы">Вы уже зарегистрированы</entry>
-		<entry lang="KAZ" hint="Вы уже зарегистрированы">Вы уже зарегистрированы</entry>
-		<entry lang="ENG" hint="You are already registered">You are already registered</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="RUS">Вы уже зарегистрированы</entry>
+		<entry lang="KAZ">Вы уже зарегистрированы</entry>
+		<entry lang="ENG">You are already registered</entry>
+		<entry lang="BG" hint="">Вие вече сте регистрирани</entry>
 	</sentence>
 
 	<!-- retry_send_verify_email -->
@@ -106,8 +106,8 @@
 	<sentence mode="on" keyword="retry_send_verify_email_btn_send">
 		<entry lang="RUS" hint="Отправить">Отправить</entry>
 		<entry lang="KAZ" hint="Отправить">Отправить</entry>
-		<entry lang="ENG" hint="Отправить">Отправить</entry>
-		<entry lang="BG" hint=""></entry>
+		<entry lang="ENG" hint="Отправить">Send</entry>
+		<entry lang="BG" hint="">Изпращам</entry>
 	</sentence>
 	<sentence mode="on" keyword="retry_send_verify_email_send_ok">
 		<entry lang="RUS" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>

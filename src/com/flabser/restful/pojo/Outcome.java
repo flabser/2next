@@ -1,37 +1,44 @@
 package com.flabser.restful.pojo;
 
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.exception.WebFormValueException;
 
 @JsonRootName("outcome")
 public class Outcome {
 	OutcomeType type = OutcomeType.OK;
-	String message;
+	ArrayList<String> message = new ArrayList<String>();
 
 	public OutcomeType getType() {
 		return type;
 	}
 
-	public void setType(OutcomeType type) {
+	public Outcome setType(OutcomeType type) {
 		this.type = type;
+		return this;
 	}
 
-	public String getMessage() {
+	public ArrayList<String> getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public Outcome addMessage(String message) {
+		this.message.add(message);
+		return this;
 	}
 
-	public void setError(boolean b) {
+	public Outcome setError(boolean b) {
 		type = OutcomeType.ERROR;
+		return this;
 
 	}
 
-	public void setErrorMsg(WebFormValueException e) {
-		message = e.getMessage();
-
+	public Outcome setError(WebFormValueException e) {
+		type = OutcomeType.ERROR;
+		message.add(e.getMessage());
+		return this;
 	}
+
 
 }

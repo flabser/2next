@@ -89,7 +89,7 @@ nubis.signUp = function(form) {
 		method: 'POST',
 		datatype: 'text',
 		// url: 'Provider?client=' + screen.height + 'x' + screen.width,
-		url: 'rest/page/signup',
+		url: 'rest/session/signup',
 		data: $(form).serialize(),
 		success: function(result) {
 			console.log(result);

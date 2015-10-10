@@ -3,6 +3,7 @@ package com.flabser.restful;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 import nubis.page.app.ResetPasswordEMail;
+import nubis.page.app.VerifyEMail;
 
 import org.apache.commons.io.FileUtils;
 import org.omg.CORBA.UserException;
@@ -36,7 +38,9 @@ import com.flabser.exception.WebFormValueException;
 import com.flabser.restful.pojo.AppUser;
 import com.flabser.restful.pojo.Outcome;
 import com.flabser.scheduler.tasks.TempFileCleaner;
+import com.flabser.script._Helper;
 import com.flabser.script._Session;
+import com.flabser.script._Validator;
 import com.flabser.server.Server;
 import com.flabser.servlets.ServletUtil;
 import com.flabser.users.User;
@@ -190,6 +194,60 @@ public class SessionService extends RestProvider {
 	}
 
 	@POST
+	@Path("/signup")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response signUp(@FormParam("email") String email, @FormParam("pwd") String pwd){
+		Outcome res = new Outcome();
+
+		if (!_Validator.checkEmail(email)) {
+			return Response.status(HttpServletResponse.SC_OK).entity(res.setError(true).addMessage("email is incorrect")).build();
+		}
+
+		if (!_Validator.checkPwdWeakness(pwd, 8)) {
+			return Response.status(HttpServletResponse.SC_OK).entity(res.setError(true).addMessage("pwd is weak")).build();
+		}
+
+
+		ISystemDatabase sdb = com.flabser.dataengine.DatabaseFactory.getSysDatabase();
+		User userExists = sdb.getUser(email);
+		if (userExists != null) {
+			Server.logger.verboseLogEntry("User \"" + email + "\" is exist");
+			return Response.status(HttpServletResponse.SC_OK).entity(res.setError(true).addMessage("user is exists")).build();
+		}
+
+		_Session session = getSession();
+		com.flabser.users.User user = session.getAppUser();
+		user.setLogin(email);
+		try {
+			user.setPwd(pwd);
+			user.setEmail(email);
+		} catch (WebFormValueException e) {
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(e)).build();
+		}
+
+		user.setStatus(UserStatusType.NOT_VERIFIED);
+		user.setRegDate(new Date());
+		user.setVerifyCode(_Helper.getRandomValue());
+
+		if (!user.save()) {
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(true).addMessage("user save error")).build();
+		}
+
+		VerifyEMail sve = new VerifyEMail(session, user);
+		if (sve.send()) {
+			user.setStatus(UserStatusType.WAITING_FOR_VERIFYCODE);
+			if (!user.save()) {
+				return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(true).addMessage("user save error")).build();
+			}
+		} else {
+			return Response.status(HttpServletResponse.SC_OK).entity(res.setError(true).addMessage("verify email sending error")).build();
+
+		}
+		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
+	}
+
+	@POST
 	@Path("/resetpassword")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -207,29 +265,28 @@ public class SessionService extends RestProvider {
 							user.setStatus(UserStatusType.WAITING_FIRST_ENTERING_AFTER_RESET_PASSWORD);
 							if (!user.save()) {
 								res.setError(true);
-								res.setMessage("user has not saved");
+								res.addMessage("user has not saved");
 							}
 						} else {
 							user.setStatus(UserStatusType.RESET_PASSWORD_NOT_SENT);
 							user.save();
 							res.setError(true);
-							res.setMessage("reset password has been not sent");
+							res.addMessage("reset password has been not sent");
 						}
 					}
 				} catch (WebFormValueException e) {
-					res.setError(true);
-					res.setErrorMsg(e);
+					return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(e)).build();
 				}
 			} else if (user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING_AFTER_RESET_PASSWORD) {
 				res.setError(true);
-				res.setMessage("reset password alrady sent");
+				res.addMessage("reset password alrady sent");
 			} else {
 				res.setError(true);
-				res.setMessage("unknow user status");
+				res.addMessage("unknow user status");
 			}
 		} else {
 			res.setError(true);
-			res.setMessage("the user has not found");
+			res.addMessage("the user has not found");
 		}
 		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
 	}

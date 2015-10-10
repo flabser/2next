@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 public class Workspace{
 
 
-	private List <Icon> icons;
+	private List <Application> icons;
 
 
 	@Override
