@@ -10,12 +10,12 @@
 	</sentence>
 
 	<sentence mode="on" keyword="promo_heading">
-		<entry lang="RUS">Flabser</entry>
-		<entry lang="KAZ">Flabser</entry>
-		<entry lang="ENG">Flabser</entry>
-		<entry lang="BG">Flabser</entry>
-		<entry lang="POR">Flabser</entry>
-		<entry lang="SPA">Flabser</entry>
+		<entry lang="RUS">команда Flabser</entry>
+		<entry lang="KAZ">Flabser командасы</entry>
+		<entry lang="ENG">Flabser team</entry>
+		<entry lang="BG">Екипът Flabser</entry>
+		<entry lang="POR">equipe Flabser</entry>
+		<entry lang="SPA">equipo Flabser</entry>
 	</sentence>
 	<sentence mode="on" keyword="promo_heading_sub">
 		<entry lang="RUS">Мы команда талантливых, опытных и мотивированных программистов-разработчиков</entry>
@@ -60,12 +60,12 @@
 		<entry lang="SPA">Acerca de nosotros</entry>
 	</sentence>
 	<sentence mode="on" keyword="about_company">
-		<entry lang="RUS">О нашей компании</entry>
-		<entry lang="KAZ">Біздің ұйым жайлы</entry>
-		<entry lang="ENG">About our company</entry>
-		<entry lang="BG">За нашата фирма</entry>
-		<entry lang="POR">Sobre a nossa empresa</entry>
-		<entry lang="SPA">Sobre nuestra compañía</entry>
+		<entry lang="RUS">О нас</entry>
+		<entry lang="KAZ">Біз жайлы</entry>
+		<entry lang="ENG">About us</entry>
+		<entry lang="BG">О нас</entry>
+		<entry lang="POR">Sobre nós</entry>
+		<entry lang="SPA">Acerca de nosotros</entry>
 	</sentence>
 	<sentence mode="on" keyword="skills">
 		<entry lang="RUS">Наши умения</entry>
@@ -93,8 +93,8 @@
 	</sentence>
 
 	<sentence mode="on" keyword="contact_us_on_lang">
-		<entry lang="RUS">Можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
-		<entry lang="KAZ">Можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
+		<entry lang="RUS">Вы можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
+		<entry lang="KAZ">Вы можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
 		<entry lang="ENG">You can contact us on the Russian, Bulgarian and English.</entry>
 		<entry lang="BG">Можете да се свържете с нас на руски, български и английски език.</entry>
 		<entry lang="POR">A nossa equipa internacional permite-nos proporcionar servicios em Russo, Búlgaro e Inglês.</entry>
