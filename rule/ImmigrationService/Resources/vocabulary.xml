@@ -5,5 +5,186 @@
 		<entry lang="KAZ">ImmigrationService</entry>
 		<entry lang="ENG">ImmigrationService</entry>
 		<entry lang="BG">ImmigrationService</entry>
+		<entry lang="CHO">移民服務</entry>
+	</sentence>
+	
+	<sentence mode="on" keyword="promo_heading">
+		<entry lang="RUS">Иммиграционный сервис</entry>
+		<entry lang="KAZ">Иммиграционный сервис</entry>
+		<entry lang="ENG">Immigration service</entry>
+		<entry lang="BG">Имиграционната служба</entry>
+		<entry lang="CHO">移民服務</entry>
+	</sentence>
+	<sentence mode="on" keyword="promo_heading_sub">
+		<entry lang="RUS">Мы команда опытных специалистов</entry>
+		<entry lang="KAZ">Мы команда опытных специалистов</entry>
+		<entry lang="ENG">We are a team of experienced specialists</entry>
+		<entry lang="BG">Ние сме екип от опитни специалисти</entry>
+		<entry lang="CHO">我們是一個團隊經驗豐富的專家</entry>
+	</sentence>
+	<sentence mode="on" keyword="promo_experience">
+		<entry lang="RUS">Больше 10 лет на рынке</entry>
+		<entry lang="KAZ">Больше 10 лет на рынке</entry>
+		<entry lang="ENG">More than 10 years in the market</entry>
+		<entry lang="BG">Повече от 10 години в този сектора</entry>
+		<entry lang="CHO">十餘年來，在市場</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="find_out_more">
+		<entry lang="RUS">Узнать больше</entry>
+		<entry lang="KAZ">Көбірек білгім келеді</entry>
+		<entry lang="ENG">More</entry>
+		<entry lang="BG">Повече информация</entry>
+		<entry lang="CHO">更加</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="home">
+		<entry lang="RUS">Главная</entry>
+		<entry lang="KAZ">Басты бет</entry>
+		<entry lang="ENG">Home</entry>
+		<entry lang="BG">Основните</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="about_us">
+		<entry lang="RUS">О нас</entry>
+		<entry lang="KAZ">Біз жайлы</entry>
+		<entry lang="ENG">About us</entry>
+		<entry lang="BG">О нас</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="about_company">
+		<entry lang="RUS">О нас</entry>
+		<entry lang="KAZ">Біз жайлы</entry>
+		<entry lang="ENG">About us</entry>
+		<entry lang="BG">О нас</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="skills">
+		<entry lang="RUS">Наши умения</entry>
+		<entry lang="KAZ">Біздің қабілетіміз</entry>
+		<entry lang="ENG">Skills</entry>
+		<entry lang="BG">Наши умения</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="skills_title">
+		<entry lang="RUS">Наш текущий список базовых компетенции</entry>
+		<entry lang="KAZ">Біздің басты қабілетіміз</entry>
+		<entry lang="ENG">Our current list of specialities includes</entry>
+		<entry lang="BG">Нашият актуален списък на базови компетенции</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="contact_us">
+		<entry lang="RUS">Свяжитесь с нами</entry>
+		<entry lang="KAZ">Бізбен хабарласыңыз</entry>
+		<entry lang="ENG">Contact Us</entry>
+		<entry lang="BG">Свържете се с нас</entry>
+		<entry lang="CHO">聯繫我們</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="contact_us_on_lang">
+		<entry lang="RUS">Вы можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
+		<entry lang="KAZ">Вы можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
+		<entry lang="ENG">You can contact us on the Russian, Bulgarian and English.</entry>
+		<entry lang="BG">Можете да се свържете с нас на руски, български и английски език.</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+
+	<sentence mode="on" keyword="message_title">
+		<entry lang="RUS">Сообщение</entry>
+		<entry lang="KAZ">Хабар</entry>
+		<entry lang="ENG">Message</entry>
+		<entry lang="BG">Сообщение</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="message_subject">
+		<entry lang="RUS">Тема</entry>
+		<entry lang="KAZ">Тақырып</entry>
+		<entry lang="ENG">Subject</entry>
+		<entry lang="BG">Тема</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="message_text">
+		<entry lang="RUS">Сообщение</entry>
+		<entry lang="KAZ">Мәтін</entry>
+		<entry lang="ENG">Message</entry>
+		<entry lang="BG">Съобщение</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="send_message">
+		<entry lang="RUS">Отправить сообщение</entry>
+		<entry lang="KAZ">Хабар жіберу</entry>
+		<entry lang="ENG">Send message</entry>
+		<entry lang="BG">Изпрати съобщение</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+
+	<sentence mode="on" keyword="address">
+		<entry lang="RUS">Адрес</entry>
+		<entry lang="KAZ">Мекен жайымыз</entry>
+		<entry lang="ENG">Address</entry>
+		<entry lang="BG">Адрес</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="phone">
+		<entry lang="RUS">Телефон</entry>
+		<entry lang="KAZ">Телефон</entry>
+		<entry lang="ENG">Phone</entry>
+		<entry lang="BG">Телефон</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+
+	<!-- -->
+	<sentence mode="on" keyword="about_us_text">
+		<entry lang="RUS">Мы являемся командой талантливых,
+			опытных и мотивированных 
+		</entry>
+		<entry lang="KAZ">Мы являемся командой талантливых,
+			опытных и мотивированных 
+		</entry>
+		<entry lang="ENG">We are a team of talented, experienced and motivated
+		</entry>
+		<entry lang="BG">Ние сме екип от талантливи, опитни и мотивирани 
+		</entry>
+	<entry lang="CHO"></entry>
+		</sentence>
+	<sentence mode="on" keyword="about_experience_text">
+		<entry lang="RUS">На протяжении многих лет, мы накопили обширные знания 
+		</entry>
+		<entry lang="KAZ">На протяжении многих лет,
+		</entry>
+		<entry lang="ENG">Over the years, we have amassed extensive knowledge and 
+		</entry>
+		<entry lang="BG">В продължение на много години, ние сме натрупали големи знания 		</entry>
+<entry lang="CHO"></entry>	</sentence>
+
+	<!-- -->
+	<sentence mode="on" keyword="skills_prog_lang">
+		<entry lang="RUS">Услуги</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="BG"></entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="skills_db">
+		<entry lang="RUS">Услуги</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="BG"></entry>
+		<entry lang="CHO"></entry>
+		
+	</sentence>
+	<sentence mode="on" keyword="skills_mobile_tech">
+			<entry lang="RUS">Услуги</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="BG"></entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="skills_dev_tools">
+		<entry lang="RUS">Услуги</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="BG"></entry>
+		<entry lang="CHO"></entry>
 	</sentence>
 </vocabulary>
