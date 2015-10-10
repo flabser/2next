@@ -7,7 +7,7 @@ import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.localization.LanguageType;
-import com.flabser.restful.AppUser;
+import com.flabser.restful.pojo.AppUser;
 import com.flabser.rule.Role;
 import com.flabser.script.actions._ActionBar;
 import com.flabser.script.mail._MailAgent;

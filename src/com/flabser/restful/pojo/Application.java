@@ -1,4 +1,4 @@
-package com.flabser.restful;
+package com.flabser.restful.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flabser.dataengine.system.entities.ApplicationProfile;

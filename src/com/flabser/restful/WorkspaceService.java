@@ -11,9 +11,18 @@ import javax.ws.rs.core.Response;
 public class WorkspaceService  extends RestProvider  {
 
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response get() {
+
+		return Response.status(HttpServletResponse.SC_OK).build();
+	}
+
+	@GET
 	@Path("/url")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getURL() {
 		return Response.status(HttpServletResponse.SC_OK).entity(getSession().getWorkspaceURL()).build();
 	}
+
+
 }

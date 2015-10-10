@@ -5,6 +5,8 @@
 		<entry lang="KAZ">Flabser</entry>
 		<entry lang="ENG">Flabser</entry>
 		<entry lang="BG">Flabser</entry>
+		<entry lang="POR">Flabser</entry>
+		<entry lang="SPA">Flabser</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="promo_heading">
@@ -12,18 +14,24 @@
 		<entry lang="KAZ">Flabser</entry>
 		<entry lang="ENG">Flabser</entry>
 		<entry lang="BG">Flabser</entry>
+		<entry lang="POR">Flabser</entry>
+		<entry lang="SPA">Flabser</entry>
 	</sentence>
 	<sentence mode="on" keyword="promo_heading_sub">
 		<entry lang="RUS">Мы команда талантливых, опытных и мотивированных программистов-разработчиков</entry>
 		<entry lang="KAZ">Мы команда талантливых, опытных и мотивированных программистов-разработчиков</entry>
 		<entry lang="ENG">We are a team of talented, experienced and motivated developers</entry>
 		<entry lang="BG">Ние сме екип от талантливи, опитни и мотивирани програмисти-разработчици</entry>
+		<entry lang="POR">Somos uma equipe de desenvolvedores talentosos, experientes e motivados</entry>
+		<entry lang="SPA">Somos un equipo de desarrolladores talentosos, experimentados y motivados</entry>
 	</sentence>
 	<sentence mode="on" keyword="promo_experience">
 		<entry lang="RUS">Больше 10 лет на рынке ИТ</entry>
 		<entry lang="KAZ">Больше 10 лет на рынке ИТ</entry>
 		<entry lang="ENG">More than 10 years in the IT</entry>
 		<entry lang="BG">Повече от 10 години в ИТ сектора</entry>
+		<entry lang="POR">Mais de 10 anos em TI</entry>
+		<entry lang="SPA">Más de 10 años en la TI</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="find_out_more">
@@ -31,6 +39,8 @@
 		<entry lang="KAZ">Көбірек білгім келеді</entry>
 		<entry lang="ENG">More</entry>
 		<entry lang="BG">Повече информация</entry>
+		<entry lang="POR">Mais</entry>
+		<entry lang="SPA">Más</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="home">
@@ -38,36 +48,48 @@
 		<entry lang="KAZ">Басты бет</entry>
 		<entry lang="ENG">Home</entry>
 		<entry lang="BG">Основните</entry>
+		<entry lang="POR">Casa</entry>
+		<entry lang="SPA">Casa</entry>
 	</sentence>
 	<sentence mode="on" keyword="about_us">
 		<entry lang="RUS">О нас</entry>
 		<entry lang="KAZ">Біз жайлы</entry>
 		<entry lang="ENG">About us</entry>
 		<entry lang="BG">О нас</entry>
+		<entry lang="POR">Sobre nós</entry>
+		<entry lang="SPA">Acerca de nosotros</entry>
 	</sentence>
 	<sentence mode="on" keyword="about_company">
 		<entry lang="RUS">О нашей компании</entry>
 		<entry lang="KAZ">Біздің ұйым жайлы</entry>
 		<entry lang="ENG">About our company</entry>
 		<entry lang="BG">За нашата фирма</entry>
+		<entry lang="POR">Sobre a nossa empresa</entry>
+		<entry lang="SPA">Sobre nuestra compañía</entry>
 	</sentence>
 	<sentence mode="on" keyword="skills">
 		<entry lang="RUS">Наши умения</entry>
 		<entry lang="KAZ">Біздің қабілетіміз</entry>
 		<entry lang="ENG">Skills</entry>
 		<entry lang="BG">Наши умения</entry>
+		<entry lang="POR">Habilidades</entry>
+		<entry lang="SPA">Habilidades</entry>
 	</sentence>
 	<sentence mode="on" keyword="skills_title">
 		<entry lang="RUS">Наш текущий список базовых компетенции</entry>
 		<entry lang="KAZ">Біздің басты қабілетіміз</entry>
 		<entry lang="ENG">Our current list of specialities includes</entry>
 		<entry lang="BG">Нашият актуален списък на базови компетенции</entry>
+		<entry lang="POR">A nossa lista atual de especialidades inclui</entry>
+		<entry lang="SPA">Nuestro listado actual de especialidades incluye</entry>
 	</sentence>
 	<sentence mode="on" keyword="contact_us">
 		<entry lang="RUS">Свяжитесь с нами</entry>
 		<entry lang="KAZ">Бізбен хабарласыңыз</entry>
 		<entry lang="ENG">Contact Us</entry>
 		<entry lang="BG">Свържете се с нас</entry>
+		<entry lang="POR">Contate-nos</entry>
+		<entry lang="SPA">Contáctenos</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="contact_us_on_lang">
@@ -75,6 +97,8 @@
 		<entry lang="KAZ">Можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
 		<entry lang="ENG">You can contact us on the Russian, Bulgarian and English.</entry>
 		<entry lang="BG">Можете да се свържете с нас на руски, български и английски език.</entry>
+		<entry lang="POR">A nossa equipa internacional permite-nos proporcionar servicios em Russo, Búlgaro e Inglês.</entry>
+		<entry lang="SPA">Nuestro equipo internacional nos permite ofrecer servicios en Ruso, Búlgaro e Inglés.</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="message_title">
@@ -82,24 +106,32 @@
 		<entry lang="KAZ">Хабар</entry>
 		<entry lang="ENG">Message</entry>
 		<entry lang="BG">Сообщение</entry>
+		<entry lang="POR">Mensagem</entry>
+		<entry lang="SPA">Mensaje</entry>
 	</sentence>
 	<sentence mode="on" keyword="message_subject">
 		<entry lang="RUS">Тема</entry>
 		<entry lang="KAZ">Тақырып</entry>
 		<entry lang="ENG">Subject</entry>
 		<entry lang="BG">Тема</entry>
+		<entry lang="POR">Assunto</entry>
+		<entry lang="SPA">Sujeto</entry>
 	</sentence>
 	<sentence mode="on" keyword="message_text">
 		<entry lang="RUS">Сообщение</entry>
 		<entry lang="KAZ">Мәтін</entry>
 		<entry lang="ENG">Message</entry>
 		<entry lang="BG">Съобщение</entry>
+		<entry lang="POR">Mensagem</entry>
+		<entry lang="SPA">Mensaje</entry>
 	</sentence>
 	<sentence mode="on" keyword="send_message">
 		<entry lang="RUS">Отправить сообщение</entry>
 		<entry lang="KAZ">Хабар жіберу</entry>
 		<entry lang="ENG">Send message</entry>
 		<entry lang="BG">Изпрати съобщение</entry>
+		<entry lang="POR">Enviar mensagem</entry>
+		<entry lang="SPA">Enviar mensaje</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="address">
@@ -107,12 +139,16 @@
 		<entry lang="KAZ">Мекен жайымыз</entry>
 		<entry lang="ENG">Address</entry>
 		<entry lang="BG">Адрес</entry>
+		<entry lang="POR">Endereço</entry>
+		<entry lang="SPA">Dirección</entry>
 	</sentence>
 	<sentence mode="on" keyword="phone">
 		<entry lang="RUS">Телефон</entry>
 		<entry lang="KAZ">Телефон</entry>
 		<entry lang="ENG">Phone</entry>
 		<entry lang="BG">Телефон</entry>
+		<entry lang="POR">Telefone</entry>
+		<entry lang="SPA">Teléfono</entry>
 	</sentence>
 
 	<!-- -->
@@ -133,6 +169,8 @@
 		</entry>
 		<entry lang="BG">Ние сме екип от талантливи, опитни и мотивирани програмисти-разработчици с дългогодишен опит в изпълнението на многофункционални IT решения, за широкомащабна информационна среда на корпоративно управление.
 		</entry>
+			<entry lang="POR">Somos un equipo de desarrolladores talentosos, conocedores y motivados, con amplia experiencia ​​en la implementación de soluciones TIC orientadas a múltiples escenarios de uso, desde aplicaciones móviles hasta avanzados entornos de gestión corporativa.</entry>
+		<entry lang="SPA">Somos un equipo de desarrolladores talentosos, conocedores y motivados, con amplia experiencia ​​en la implementación de soluciones TIC orientadas a múltiples escenarios de uso, desde aplicaciones móviles a avanzados entornos de gestión corporativa.</entry>
 	</sentence>
 	<sentence mode="on" keyword="about_experience_text">
 		<entry lang="RUS">На протяжении многих лет, мы накопили обширные знания и техническое мастерство в хорошо
@@ -152,6 +190,8 @@
 		<entry lang="BG">В продължение на много години, ние сме натрупали големи знания и технически умения в добре реализирани IT разработки, бази данни, библиотеки, инфраструктури и платформи.
 
 		</entry>
+		<entry lang="POR">Ao longo de mais de uma década no mercado, aperfeiçoámos habilidades e conhecimentos técnicos em linguagens de programação, bibliotecas, ambientes e plataformas de desenvolvimento.</entry>
+		<entry lang="SPA">A lo largo de más de una década en el mercado, hemos perfeccionado competencias y destreza técnica en vários lenguajes de programación, librerías, entornos y plataformas de desarrollo.</entry>
 	</sentence>
 
 	<!-- -->
@@ -160,23 +200,32 @@
 		<entry lang="KAZ">Programming languages, libraries and frameworks</entry>
 		<entry lang="ENG">Programming languages, libraries and frameworks</entry>
 		<entry lang="BG">Езици за програмиране, библиотеки и програмни рамки</entry>
+		<entry lang="POR">Linguagens de programação, bibliotecas e plataformas de desenvolvimento</entry>
+		<entry lang="SPA">Lenguajes de programación, librerías y entornos de desarrollo</entry>
 	</sentence>
 	<sentence mode="on" keyword="skills_db">
 		<entry lang="RUS">Базы данных</entry>
 		<entry lang="KAZ">Database backends</entry>
 		<entry lang="ENG">Database backends</entry>
 		<entry lang="BG">Бази данни</entry>
+		<entry lang="POR">Bases de dados</entry>
+		<entry lang="SPA">Bases de datos</entry>
+		
 	</sentence>
 	<sentence mode="on" keyword="skills_mobile_tech">
 		<entry lang="RUS">Мобильные технологии</entry>
 		<entry lang="KAZ">Mobile technologies</entry>
 		<entry lang="ENG">Mobile technologies</entry>
 		<entry lang="BG">Мобилни технологии</entry>
+		<entry lang="POR">Tecnologias móveis</entry>
+		<entry lang="SPA">Tecnologías móviles</entry>
 	</sentence>
 	<sentence mode="on" keyword="skills_dev_tools">
 		<entry lang="RUS">Среды разработки и инструменты</entry>
 		<entry lang="KAZ">Development environments and tools</entry>
 		<entry lang="ENG">Development environments and tools</entry>
 		<entry lang="BG">Среди за разработки и инструменти</entry>
+		<entry lang="POR">Ambientes e ferramentas de desenvolvimento</entry>
+		<entry lang="SPA">Entornos y herramientas de desarrollo</entry>
 	</sentence>
 </vocabulary>

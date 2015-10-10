@@ -14,7 +14,7 @@ import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.EnvConst;
-import com.flabser.restful.Application;
+import com.flabser.restful.pojo.Application;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.script._IContent;
 import com.flabser.server.Server;

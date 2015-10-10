@@ -24,7 +24,7 @@ import com.flabser.env.Environment;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.localization.LanguageType;
-import com.flabser.restful.AppUser;
+import com.flabser.restful.pojo.AppUser;
 import com.flabser.rule.Role;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.server.Server;

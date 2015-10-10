@@ -1,11 +1,7 @@
-package nubis.model;
+package com.flabser.restful.pojo;
 
-import javax.persistence.Entity;
 
-import com.flabser.dataengine.jpa.AppEntity;
-
-@Entity
-public class Icon extends AppEntity {
+public class Icon{
 
 	private String appID;
 	private int position;

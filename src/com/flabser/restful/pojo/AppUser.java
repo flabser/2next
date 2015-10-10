@@ -1,4 +1,4 @@
-package com.flabser.restful;
+package com.flabser.restful.pojo;
 
 import java.util.ArrayList;
 import java.util.HashMap;

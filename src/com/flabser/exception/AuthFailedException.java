@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
-import com.flabser.restful.AppUser;
+import com.flabser.restful.pojo.AppUser;
 
 @SuppressWarnings("serial")
 public class AuthFailedException extends ApplicationException {

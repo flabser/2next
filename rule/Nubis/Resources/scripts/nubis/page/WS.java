@@ -2,7 +2,7 @@ package nubis.page;
 
 import java.util.HashMap;
 
-import com.flabser.restful.Application;
+import com.flabser.restful.pojo.Application;
 import com.flabser.script._AppEntourage;
 import com.flabser.script._Exception;
 import com.flabser.script._Session;

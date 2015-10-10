@@ -12,10 +12,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+
+import nubis.page.app.ResetPasswordEMail;
 
 import org.apache.commons.io.FileUtils;
 import org.omg.CORBA.UserException;
@@ -30,6 +33,8 @@ import com.flabser.env.SessionPool;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.exception.WebFormValueException;
+import com.flabser.restful.pojo.AppUser;
+import com.flabser.restful.pojo.Outcome;
 import com.flabser.scheduler.tasks.TempFileCleaner;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
@@ -37,6 +42,7 @@ import com.flabser.servlets.ServletUtil;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.users.UserStatusType;
+import com.flabser.util.Util;
 
 @Path("/session")
 public class SessionService extends RestProvider {
@@ -183,4 +189,48 @@ public class SessionService extends RestProvider {
 
 	}
 
+	@POST
+	@Path("/resetpassword")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response resetPassword(@PathParam("email") String email){
+		User user = DatabaseFactory.getSysDatabase().getUser(email);
+		Outcome res = new Outcome();
+		if (user != null) {
+			if (user.getStatus() == UserStatusType.REGISTERED) {
+				try {
+					user.setPwd(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 10));
+					if (user.save()){
+						_Session session = getSession();
+						ResetPasswordEMail sve = new ResetPasswordEMail(session, user);
+						if (sve.send()) {
+							user.setStatus(UserStatusType.WAITING_FIRST_ENTERING_AFTER_RESET_PASSWORD);
+							if (!user.save()) {
+								res.setError(true);
+								res.setMessage("user has not saved");
+							}
+						} else {
+							user.setStatus(UserStatusType.RESET_PASSWORD_NOT_SENT);
+							user.save();
+							res.setError(true);
+							res.setMessage("reset password has been not sent");
+						}
+					}
+				} catch (WebFormValueException e) {
+					res.setError(true);
+					res.setErrorMsg(e);
+				}
+			} else if (user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING_AFTER_RESET_PASSWORD) {
+				res.setError(true);
+				res.setMessage("reset password alrady sent");
+			} else {
+				res.setError(true);
+				res.setMessage("unknow user status");
+			}
+		} else {
+			res.setError(true);
+			res.setMessage("the user has not found");
+		}
+		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
+	}
 }
