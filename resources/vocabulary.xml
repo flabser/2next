@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- System vocabulary -->
+<vocabulary>
+	<sentence mode="on" keyword="brand">
+		<entry lang="RUS"></entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="BG"></entry>
+	</sentence>
+
+	
+		
+</vocabulary>

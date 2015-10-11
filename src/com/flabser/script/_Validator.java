@@ -45,10 +45,6 @@ public class _Validator {
 	}
 
 	public static boolean checkURL(String value) {
-		// String validate =
-		// "(http||https)://((((www\\.)||())[a-z0-9]{2,}\\.[a-z]{2,4})||(([0-9]{1,3}\\.){3,3}[0-9]{1,3}))"
-		// +
-		// "((:[0-9]{1,})||())((/.*)||())";
 		String validate = "(http||https)://(((([a-z0-9]{2,}\\.)||())[a-z0-9]{2,}\\.[a-z]{2,4})||(([0-9]{1,3}\\.){3,3}[0-9]{1,3}))"
 				+ "((:[0-9]{1,})||())((/.*)||())";
 

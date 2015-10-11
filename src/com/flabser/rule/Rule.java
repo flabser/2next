@@ -21,7 +21,6 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
-import com.flabser.exception.WebFormValueExceptionType;
 import com.flabser.rule.constants.RuleType;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.rule.page.ElementRule;
@@ -111,13 +110,6 @@ public abstract class Rule implements IElement, IRule {
 
 	}
 
-	protected String[] getWebFormValue(String fieldName, Map<String, String[]> fields) throws WebFormValueException {
-		try {
-			return fields.get(fieldName);
-		} catch (Exception e) {
-			throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, fieldName);
-		}
-	}
 
 	protected void setIsOn(String isOnAsText) {
 		if (isOnAsText.equalsIgnoreCase("on")) {

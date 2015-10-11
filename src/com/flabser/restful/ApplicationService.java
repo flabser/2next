@@ -12,7 +12,9 @@ import javax.ws.rs.core.Response;
 
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
+import com.flabser.exception.ServerServiceExceptionType;
 import com.flabser.restful.pojo.Outcome;
+import com.flabser.script._Session;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
@@ -39,6 +41,9 @@ public class ApplicationService extends RestProvider {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response regApp(@FormParam("apptype") String appType, @FormParam("appname") String appName, @FormParam("visibilty") String visibilty, @FormParam("description") String description){
 		Outcome res = new Outcome();
+		_Session session = getSession();
+		String lang = session.getLang();
+
 		VisibiltyType vis = VisibiltyType.ONLY_MEMBERS;
 		User user = getUserSession().currentUser;
 
@@ -60,13 +65,13 @@ public class ApplicationService extends RestProvider {
 				if (user.save()) {
 					return Response.status(HttpServletResponse.SC_OK).entity(res.addMessage(ap.getStatus().name())).build();
 				} else {
-					return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(true).addMessage("user save error")).build();
+					return Response.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).entity(res.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
 				}
 			} else {
-				return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(true).addMessage("application save error")).build();
+				return Response.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).entity(res.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
 			}
 		}else{
-			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(true).addMessage("unknown template")).build();
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setMessage(ServerServiceExceptionType.UNKNOWN_APPLICATION_TEMPLATE, lang)).build();
 		}
 	}
 

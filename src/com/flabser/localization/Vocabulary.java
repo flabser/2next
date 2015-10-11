@@ -28,19 +28,15 @@ public class Vocabulary {
 		}
 	}
 
-	public String[] getWord(String keyWord, String lang) {
-		String returnVal[] = new String[2];
+
+	public String getWord(String keyWord, String lang) {
 		Sentence sent = words.get(keyWord);
 		if (sent == null) {
 			logger.warningLogEntry("translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");
-			returnVal[0] = keyWord;
-			returnVal[1] = "";
-			return returnVal;
+			return keyWord;
 		} else {
 			SentenceCaption caption = sent.words.get(lang);
-			returnVal[0] = caption.word;
-			returnVal[1] = caption.hint;
-			return returnVal;
+			return caption.word;
 		}
 	}
 

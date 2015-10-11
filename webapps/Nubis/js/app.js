@@ -91,46 +91,49 @@ nubis.signUp = function(form) {
 		// url: 'Provider?client=' + screen.height + 'x' + screen.width,
 		url: 'rest/session/signup',
 		data: $(form).serialize(),
-		success: function(result) {
-			console.log(result);
-			var pr = result.split(',');
-			if (pr.indexOf('email') != -1) {
-				$('input[name=email]', form).addClass('invalid');
-				$('.reg-email-invalid').css('height', 'auto');
-				alert('reg-email-invalid');
-			}
-			if (pr.indexOf('user-exists') != -1) {
-				$('.reg-email-exists', form).css('height', 'auto');
-				alert('reg-email-exists');
-			}
-			if (pr.indexOf('pwd-weak') != -1) {
-				$('input[name=pwd]', form).addClass('invalid');
-				$('.reg-pwd-weak', form).css('height', 'auto');
-			}
-			//
-			var isReg = false;
-			if (pr.indexOf('user-reg') != -1) {
-				console.log('user-reg');
-				isReg = true;
-				$('input[name=pwd]', form).val('');
-			}
-			if (pr.indexOf('ok') != -1) {
-				console.log('ok');
-			}
+		success: function(result) {			
+			console.log(result.outcome);
+			
+			if (result.outcome.type == 'ERROR') {
+				var errorId = result.outcomе.errorId;
+				if (errorId == 'EMAIL_IS_INCORRECT') {
+					$('input[name=email]', form).addClass('invalid');
+					$('.reg-email-invalid').css('height', 'auto');
+					alert(result.outcome.message[0]);
+				}else if (errorId == 'USER_EXISTS') {
+					$('.reg-email-exists', form).css('height', 'auto');
+					alert(result.outcome.message[0]);
+				}else if (errorId == 'WEAK_PASSWORD') {
+					$('input[name=pwd]', form).addClass('invalid');
+					$('.reg-pwd-weak', form).css('height', 'auto');
+				}
+			}else if (result.outcome.type == 'WARNING') {
+				if (result.outcomе.warningId == 'VERIFY_EMAIL_SENDING_ERROR') {
+					alert(result.outcome.message[0]);
+				}
+			}else{
+				var isReg = false;
+				//if (pr.indexOf('user-reg') != -1) {
+					console.log('user-reg');
+					isReg = true;
+					$('input[name=pwd]', form).val('');
+				//}
+				//if (pr.indexOf('ok') != -1) {
+					console.log('ok');
+				//}
 			//
 
-			if (pr.indexOf('verify-email-send') != -1) {
-				var $msg = $('.reg-result-ok');
-				$msg.css({
-					'display': 'block'
-				});
-				form.reset();
-
-				setTimeout(function() {
-					$('.reg-result-ok').css({
-						'display': 'none'
+				if (pr == 'verify email sending error') {
+					var $msg = $('.reg-result-ok');
+					$msg.css({
+						'display': 'block'
 					});
-				}, 1000 * 60);
+					form.reset();
+
+					setTimeout(function() {
+						$('.reg-result-ok').css({'display': 'none'});
+					}, 1000 * 60);
+				}
 			}
 		},
 		error: function(err) {

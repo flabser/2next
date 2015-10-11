@@ -22,7 +22,7 @@ import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.Environment;
 import com.flabser.exception.WebFormValueException;
-import com.flabser.exception.WebFormValueExceptionType;
+import com.flabser.exception.ServerServiceExceptionType;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.pojo.AppUser;
 import com.flabser.rule.Role;
@@ -107,7 +107,7 @@ public class User {
 				// this.passwordHash = getMD5Hash(password);
 				this.passwordHash = RealmBase.Digest(password, "MD5", "UTF-8");
 			} else {
-				throw new WebFormValueException(WebFormValueExceptionType.WEAK_PASSWORD, "password");
+				throw new WebFormValueException(ServerServiceExceptionType.WEAK_PASSWORD, "password");
 			}
 		}
 	}
@@ -279,7 +279,7 @@ public class User {
 			} else if (Util.addrIsCorrect(email)) {
 				this.email = email;
 			} else {
-				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "email");
+				throw new WebFormValueException(ServerServiceExceptionType.FORMDATA_INCORRECT, "email");
 			}
 		}
 	}
@@ -295,7 +295,7 @@ public class User {
 				this.password = password;
 				setPasswordHash(password);
 			} else {
-				throw new WebFormValueException(WebFormValueExceptionType.FORMDATA_INCORRECT, "password");
+				throw new WebFormValueException(ServerServiceExceptionType.FORMDATA_INCORRECT, "password");
 			}
 		}
 	}

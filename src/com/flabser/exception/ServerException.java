@@ -1,5 +1,6 @@
 package com.flabser.exception;
 
+@Deprecated
 public class ServerException extends Exception {
 	public int id;
 	public String user;

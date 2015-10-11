@@ -386,4 +386,8 @@ public class Util {
 
 	}
 
+	public static int getLineNumber() {
+		return Thread.currentThread().getStackTrace()[1].getLineNumber();
+	}
+
 }

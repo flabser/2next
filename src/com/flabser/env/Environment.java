@@ -26,6 +26,7 @@ import org.xml.sax.SAXException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
+import com.flabser.localization.Vocabulary;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.scheduler.PeriodicalServices;
@@ -60,7 +61,10 @@ public class Environment implements ICache {
 	public static String smtpPassword;
 	public static Boolean mailEnable = false;
 	public static String workspaceName;
+	public static Vocabulary vocabulary;
+
 	private static HashMap<String, Object> cache = new HashMap<String, Object>();
+
 
 	public static void init() {
 		loadProperties();

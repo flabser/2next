@@ -19,9 +19,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
-import nubis.page.app.ResetPasswordEMail;
-import nubis.page.app.VerifyEMail;
-
 import org.apache.commons.io.FileUtils;
 import org.omg.CORBA.UserException;
 
@@ -34,6 +31,8 @@ import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
+import com.flabser.exception.ServerServiceExceptionType;
+import com.flabser.exception.ServerServiceWarningType;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.restful.pojo.AppUser;
 import com.flabser.restful.pojo.Outcome;
@@ -47,6 +46,9 @@ import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.users.UserStatusType;
 import com.flabser.util.Util;
+
+import nubis.page.app.ResetPasswordEMail;
+import nubis.page.app.VerifyEMail;
 
 @Path("/session")
 public class SessionService extends RestProvider {
@@ -199,31 +201,31 @@ public class SessionService extends RestProvider {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response signUp(@FormParam("email") String email, @FormParam("pwd") String pwd){
 		Outcome res = new Outcome();
-
+		_Session session = getSession();
+		String lang = session.getLang();
 		if (!_Validator.checkEmail(email)) {
-			return Response.status(HttpServletResponse.SC_OK).entity(res.setError(true).addMessage("email is incorrect")).build();
+			return Response.status(HttpServletResponse.SC_OK).entity(res.setMessage(ServerServiceExceptionType.EMAIL_IS_INCORRECT, lang)).build();
 		}
 
 		if (!_Validator.checkPwdWeakness(pwd, 8)) {
-			return Response.status(HttpServletResponse.SC_OK).entity(res.setError(true).addMessage("pwd is weak")).build();
+			return Response.status(HttpServletResponse.SC_OK).entity(res.setMessage(ServerServiceExceptionType.WEAK_PASSWORD, lang)).build();
 		}
 
 
 		ISystemDatabase sdb = com.flabser.dataengine.DatabaseFactory.getSysDatabase();
 		User userExists = sdb.getUser(email);
 		if (userExists != null) {
-			Server.logger.verboseLogEntry("User \"" + email + "\" is exist");
-			return Response.status(HttpServletResponse.SC_OK).entity(res.setError(true).addMessage("user is exists")).build();
+			return Response.status(HttpServletResponse.SC_OK).entity(res.setMessage(ServerServiceExceptionType.USER_EXISTS, lang)).build();
 		}
 
-		_Session session = getSession();
+
 		com.flabser.users.User user = session.getAppUser();
 		user.setLogin(email);
 		try {
 			user.setPwd(pwd);
 			user.setEmail(email);
 		} catch (WebFormValueException e) {
-			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(e)).build();
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(e, lang)).build();
 		}
 
 		user.setStatus(UserStatusType.NOT_VERIFIED);
@@ -231,17 +233,17 @@ public class SessionService extends RestProvider {
 		user.setVerifyCode(_Helper.getRandomValue());
 
 		if (!user.save()) {
-			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(true).addMessage("user save error")).build();
+			return Response.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).entity(res.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
 		}
 
 		VerifyEMail sve = new VerifyEMail(session, user);
 		if (sve.send()) {
 			user.setStatus(UserStatusType.WAITING_FOR_VERIFYCODE);
 			if (!user.save()) {
-				return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(true).addMessage("user save error")).build();
+				return Response.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).entity(res.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
 			}
 		} else {
-			return Response.status(HttpServletResponse.SC_OK).entity(res.setError(true).addMessage("verify email sending error")).build();
+			return Response.status(HttpServletResponse.SC_OK).entity(res.setMessage(ServerServiceWarningType.VERIFY_EMAIL_SENDING_ERROR, lang)).build();
 
 		}
 		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
@@ -254,39 +256,36 @@ public class SessionService extends RestProvider {
 	public Response resetPassword(@FormParam("email") String email){
 		User user = DatabaseFactory.getSysDatabase().getUser(email);
 		Outcome res = new Outcome();
+		_Session session = getSession();
+		String lang = session.getLang();
+
 		if (user != null) {
 			if (user.getStatus() == UserStatusType.REGISTERED) {
 				try {
 					user.setPwd(Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 10));
 					if (user.save()){
-						_Session session = getSession();
 						ResetPasswordEMail sve = new ResetPasswordEMail(session, user);
 						if (sve.send()) {
 							user.setStatus(UserStatusType.WAITING_FIRST_ENTERING_AFTER_RESET_PASSWORD);
 							if (!user.save()) {
-								res.setError(true);
-								res.addMessage("user has not saved");
+								return Response.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).entity(res.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
 							}
 						} else {
 							user.setStatus(UserStatusType.RESET_PASSWORD_NOT_SENT);
 							user.save();
-							res.setError(true);
-							res.addMessage("reset password has been not sent");
+							return Response.status(HttpServletResponse.SC_OK).entity(res.setMessage(ServerServiceWarningType.RESET_PASSWORD_SENDING_ERROR, lang)).build();
 						}
 					}
 				} catch (WebFormValueException e) {
-					return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(e)).build();
+					return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(e, lang)).build();
 				}
 			} else if (user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING_AFTER_RESET_PASSWORD) {
-				res.setError(true);
-				res.addMessage("reset password alrady sent");
+				return Response.status(HttpServletResponse.SC_OK).entity(res.setMessage(ServerServiceWarningType.RESET_PASSWORD_ALREADY_SENT, lang)).build();
 			} else {
-				res.setError(true);
-				res.addMessage("unknow user status");
+				return Response.status(HttpServletResponse.SC_OK).entity(res.setMessage(ServerServiceWarningType.UNKNOWN_USER_STATUS, lang)).build();
 			}
 		} else {
-			res.setError(true);
-			res.addMessage("the user has not found");
+			return Response.status(HttpServletResponse.SC_OK).entity(res.setMessage(ServerServiceExceptionType.USER_NOT_FOUND, lang)).build();
 		}
 		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
 	}

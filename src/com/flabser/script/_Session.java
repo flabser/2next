@@ -100,6 +100,10 @@ public class _Session {
 		return env.templateType;
 	}
 
+	public String getLocalizedWord(String word){
+		return env.vocabulary.getWord(word, userSession.getLang());
+	}
+
 	@Override
 	public String toString() {
 		return "userid=" + userSession.currentUser.getLogin() + ", database=" + dataBase.toString();
