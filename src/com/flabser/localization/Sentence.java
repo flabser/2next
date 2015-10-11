@@ -18,16 +18,13 @@ public class Sentence {
 
 	}
 
-	Sentence(Node node, String primaryLang){
+	Sentence(Node node){
 		try{
 			if (!XMLUtil.getTextContent(node,"@mode", false).equals("on")){
 				isOn = false;
 				return;
 			}
 			keyWord = XMLUtil.getTextContent(node,"@keyword", false);
-			String primaryHint = XMLUtil.getTextContent(node,"@hint", false);
-			SentenceCaption primary = new SentenceCaption(keyWord, keyWord, primaryHint);
-			words.put(primaryLang, primary);
 			NodeList entries =  XMLUtil.getNodeList(node,"entry");
 			for(int i = 0; i < entries.getLength(); i++){
 				Node wordNode = entries.item(i);
@@ -42,6 +39,7 @@ public class Sentence {
 		}
 	}
 
+	@Override
 	public String toString(){
 		return "keyword=" + keyWord + ", words=" + words;
 	}

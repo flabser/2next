@@ -26,6 +26,8 @@ import org.xml.sax.SAXException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
+import com.flabser.localization.Localizator;
+import com.flabser.localization.LocalizatorException;
 import com.flabser.localization.Vocabulary;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
@@ -100,6 +102,10 @@ public class Environment implements ICache {
 			if (!primaryAppDir.equalsIgnoreCase("")) {
 				primaryAppDir = primaryAppDir + File.separator;
 			}
+
+			Localizator l = new Localizator();
+			String vocabuarFilePath = "resources" + File.separator + "vocabulary.xml";
+			vocabulary = l.populate(vocabuarFilePath);
 
 			workspaceName = XMLUtil.getTextContent(xmlDocument, "/tn/applications/@workspace", false, "", true);
 
@@ -196,6 +202,8 @@ public class Environment implements ICache {
 			Server.logger.errorLogEntry(pce);
 		} catch (IOException ioe) {
 			Server.logger.errorLogEntry(ioe);
+		} catch (LocalizatorException e) {
+			Server.logger.errorLogEntry(e);
 		}
 	}
 

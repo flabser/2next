@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.flabser.env.Environment;
 import com.flabser.exception.ServerServiceExceptionType;
 import com.flabser.exception.ServerServiceWarningType;
 import com.flabser.exception.WebFormValueException;
@@ -43,8 +44,6 @@ public class Outcome {
 	}
 
 	public Outcome setMessage(String s,  String lang) {
-		//TODO system vocabulary
-		//message.add(Environment.vocabulary.getWord(e.name(), lang));
 		message.clear();
 		addMessage(s);
 		return this;
@@ -53,18 +52,14 @@ public class Outcome {
 	public Outcome setMessage(ServerServiceExceptionType e,  String lang) {
 		type = OutcomeType.ERROR;
 		errorId = e.name();
-		//TODO system vocabulary
-		//message.add(Environment.vocabulary.getWord(e.name(), lang));
-		message.add(e.name());
+		message.add(Environment.vocabulary.getWord(e.name(), lang));
 		return this;
 	}
 
 	public Outcome setMessage(ServerServiceWarningType w, String lang) {
 		type = OutcomeType.WARNING;
 		warningId = w.name();
-		//TODO system vocabulary
-		//message.add(Environment.vocabulary.getWord(e.name(), lang));
-		message.add(w.name());
+		message.add(Environment.vocabulary.getWord(w.name(), lang));
 		return this;
 	}
 

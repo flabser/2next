@@ -8,6 +8,12 @@
 		<entry lang="BG"></entry>
 	</sentence>
 
-	
+	<!-- errors -->
+	<sentence mode="on" keyword="USER_EXISTS">
+		<entry lang="RUS">Пользователь уже зарегестрирован</entry>
+		<entry lang="KAZ">Пользователь уже зарегестрирован</entry>
+		<entry lang="ENG">User was already registered</entry>
+		<entry lang="BG">Потребителят вече е регистриран</entry>
+	</sentence>
 		
 </vocabulary>

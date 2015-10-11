@@ -11,22 +11,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import com.flabser.rule.GlobalSetting;
 import com.flabser.server.Server;
 
 public class Localizator {
-	private GlobalSetting globalSetting;
 
-	public Localizator(GlobalSetting globalSetting) {
-		try {
-			this.globalSetting = globalSetting;
-		} catch (Exception ne) {
-			Server.logger.errorLogEntry(ne);
-		}
-	}
-
-	public Vocabulary populate(String vocabular) throws LocalizatorException {
-		String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator + vocabular + ".xml";
+	public Vocabulary populate(String vocabuarFilePath) throws LocalizatorException {
 		try {
 			File docFile = new File(vocabuarFilePath);
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -36,7 +25,7 @@ public class Localizator {
 			if (queryDoc == null) {
 				throw new LocalizatorException(LocalizatorExceptionType.VOCABULAR_NOT_FOUND);
 			}
-			return new Vocabulary(queryDoc, vocabular, globalSetting);
+			return new Vocabulary(queryDoc);
 		} catch (FileNotFoundException e) {
 			Server.logger.errorLogEntry("file not found, filepath=" + vocabuarFilePath + ", the vocabulary file has not loaded");
 		} catch (ParserConfigurationException e) {

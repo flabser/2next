@@ -75,4 +75,28 @@ public class ApplicationService extends RestProvider {
 		}
 	}
 
+	@POST
+	@Path("/unregapp")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response unregApp(@FormParam("app") String appId){
+		Outcome res = new Outcome();
+		_Session session = getSession();
+		String lang = session.getLang();
+
+		User user = session.getAppUser();
+		ApplicationProfile ap = user.getApplicationProfile(appId);
+
+		if (ap != null) {
+			if (ap.owner.equals(user.getLogin())) {
+				ap.setStatus(ApplicationStatusType.READY_TO_REMOVE);
+				if (!ap.save()) {
+					return Response.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).entity(res.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
+				}
+			}
+			return Response.status(HttpServletResponse.SC_OK).entity(res.addMessage(ap.getStatus().name())).build();
+		}
+		return Response.status(HttpServletResponse.SC_OK).build();
+	}
+
 }

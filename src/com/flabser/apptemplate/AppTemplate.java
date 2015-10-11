@@ -56,8 +56,9 @@ public class AppTemplate implements ICache, _IContent {
 					Server.logger.normalLogEntry("dictionary is loading...");
 
 					try {
-						Localizator l = new Localizator(globalSetting);
-						vocabulary = l.populate("vocabulary");
+						Localizator l = new Localizator();
+						String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator + "vocabulary.xml";
+						vocabulary = l.populate(vocabuarFilePath);
 						if (vocabulary != null) {
 							Server.logger.normalLogEntry("dictionary has loaded");
 						}
@@ -99,8 +100,9 @@ public class AppTemplate implements ICache, _IContent {
 					Server.logger.normalLogEntry("dictionary is loading...");
 
 					try {
-						Localizator l = new Localizator(globalSetting);
-						vocabulary = l.populate("vocabulary");
+						Localizator l = new Localizator();
+						String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator + "vocabulary.xml";
+						vocabulary = l.populate(vocabuarFilePath);
 						if (vocabulary != null) {
 							Server.logger.normalLogEntry("dictionary has loaded");
 						}
