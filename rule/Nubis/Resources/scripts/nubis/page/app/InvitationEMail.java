@@ -21,6 +21,7 @@ public class InvitationEMail {
 		if (userName == null){
 			userName = user.getLogin();
 		}
+
 		subj = "Invitation to participate as user in \"" + session.getAppType() + "\" application";
 		msg = "<h3>" + message + "<h3><h5>Additional info from the service: The cloud service invite you to participate as regular user in \"" + session.getAppType() + "\" application."
 				+ "You was invited by \"" + userName + "\" and the service send you temporary login and password to your first entry. The login and password"
