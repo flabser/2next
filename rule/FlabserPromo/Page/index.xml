@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rule type="page" id="index" mode="on" anonymous="on">
+<rule type="page" mode="on" anonymous="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
 	<xsltfile>pages/index.xsl</xsltfile>
