@@ -8,13 +8,13 @@ import java.util.List;
 import com.flabser.server.Server;
 
 public class ClassFinder {
-	private static final char DOT = '.';
+	private static final String DOT = ".";
 	private static final String CLASS_SUFFIX = ".class";
 	private static final String INNER_CLASS_SPLITTER = "$";
 
 
 	public static List<Class<?>> find(String scannedPackage) {
-		String scannedPath = scannedPackage.replace(DOT, File.pathSeparatorChar);
+		String scannedPath = scannedPackage.replace(DOT, "/");
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 		URL scannedUrl = Thread.currentThread().getContextClassLoader().getResource(scannedPath);
 		if (scannedUrl == null) {
