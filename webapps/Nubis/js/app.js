@@ -87,7 +87,7 @@ nubis.signUp = function(form) {
 
 	$.ajax({
 		method: 'POST',
-		datatype: 'text',
+		dataType: 'json',
 		// url: 'Provider?client=' + screen.height + 'x' + screen.width,
 		url: 'rest/session/signup',
 		data: $(form).serialize(),
@@ -95,7 +95,7 @@ nubis.signUp = function(form) {
 			console.log(result.outcome);
 			
 			if (result.outcome.type == 'ERROR') {
-				var errorId = result.outcomе.errorId;
+				var errorId = result.outcome.errorId;
 				if (errorId == 'EMAIL_IS_INCORRECT') {
 					$('input[name=email]', form).addClass('invalid');
 					$('.reg-email-invalid').css('height', 'auto');
@@ -108,10 +108,12 @@ nubis.signUp = function(form) {
 					$('.reg-pwd-weak', form).css('height', 'auto');
 				}
 			}else if (result.outcome.type == 'WARNING') {
-				if (result.outcomе.warningId == 'VERIFY_EMAIL_SENDING_ERROR') {
+				if (result.outcome.warningId == 'VERIFY_EMAIL_SENDING_ERROR') {
 					alert(result.outcome.message[0]);
 				}
 			}else{
+				alert('result ' + result.outcome.type);
+
 				var isReg = false;
 				//if (pr.indexOf('user-reg') != -1) {
 					console.log('user-reg');
@@ -123,7 +125,7 @@ nubis.signUp = function(form) {
 				//}
 			//
 
-				if (pr == 'verify email sending error') {
+				/*if (pr == 'verify email sending error') {
 					var $msg = $('.reg-result-ok');
 					$msg.css({
 						'display': 'block'
@@ -133,7 +135,7 @@ nubis.signUp = function(form) {
 					setTimeout(function() {
 						$('.reg-result-ok').css({'display': 'none'});
 					}, 1000 * 60);
-				}
+				}*/
 			}
 		},
 		error: function(err) {
