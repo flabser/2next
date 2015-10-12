@@ -1,8 +1,10 @@
 package com.flabser.util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
@@ -388,6 +390,37 @@ public class Util {
 
 	public static int getLineNumber() {
 		return Thread.currentThread().getStackTrace()[1].getLineNumber();
+	}
+
+	public static String readFile(String file) {
+		BufferedReader reader = null;
+		try {
+			File f = new File(file);
+			reader = new BufferedReader(new FileReader(file));
+			String line = null;
+			StringBuilder stringBuilder = new StringBuilder();
+			String ls = System.getProperty("line.separator");
+
+			while ((line = reader.readLine()) != null) {
+				stringBuilder.append(line);
+				stringBuilder.append(ls);
+			}
+
+			return stringBuilder.toString();
+		} catch (FileNotFoundException e) {
+			Server.logger.errorLogEntry(e);
+		} catch (IOException e) {
+			Server.logger.errorLogEntry(e);
+		}finally{
+			try {
+				if (reader !=null) {
+					reader.close();
+				}
+			} catch (IOException e) {
+				Server.logger.errorLogEntry(e);
+			}
+		}
+		return "";
 	}
 
 }

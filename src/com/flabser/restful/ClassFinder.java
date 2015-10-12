@@ -8,19 +8,19 @@ import java.util.List;
 import com.flabser.server.Server;
 
 public class ClassFinder {
-	private static final char DOT = '.';
+	private static final String DOT = ".";
 	private static final String CLASS_SUFFIX = ".class";
 	private static final String INNER_CLASS_SPLITTER = "$";
 
 
 	public static List<Class<?>> find(String scannedPackage) {
-		String scannedPath = scannedPackage.replace(DOT, File.pathSeparatorChar);
+		String scannedPath = scannedPackage.replace(DOT, File.separator);
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 		URL scannedUrl = Thread.currentThread().getContextClassLoader().getResource(scannedPath);
 		if (scannedUrl == null) {
 			/* Server.logger.errorLogEntry(BAD_PACKAGE_ERROR); */
 		} else {
-			File scannedDir = new File(scannedUrl.getFile());
+			File scannedDir = new File(scannedUrl.getFile().replace("%5c", File.separator));
 			for (File file : scannedDir.listFiles()) {
 				classes.addAll(find(file, scannedPackage));
 			}

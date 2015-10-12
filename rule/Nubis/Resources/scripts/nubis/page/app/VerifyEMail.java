@@ -1,10 +1,17 @@
 package nubis.page.app;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.flabser.script._Session;
 import com.flabser.script.mail._MailAgent;
 import com.flabser.users.User;
+import com.flabser.util.Util;
 
 public class VerifyEMail {
 
@@ -27,5 +34,18 @@ public class VerifyEMail {
 	public boolean send() {
 		_MailAgent ma = session.getMailAgent();
 		return ma.sendMail(recipients, subj, msg, false);
+	}
+
+
+	public static void main(String[] args){
+		String file = "resources" + File.separator + "memos" + File.separator + "verifyemail.html";
+		String html = Util.readFile(file);
+		Document document = Jsoup.parse(html);
+		System.out.println(html);
+		Elements divs = document.select("div*");
+		for (Element div : divs) {
+			System.out.println(div.ownText());
+		}
+
 	}
 }
