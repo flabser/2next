@@ -49,7 +49,6 @@ public class Page {
 			SentenceCaption sc = captionTextSupplier.getValueAsCaption(cap.captionID);
 			String c[] = new String[2];
 			c[0] = sc.word;
-			c[1] = sc.hint;
 			captionsList.put(cap.captionID, c);
 		}
 		return captionsList;

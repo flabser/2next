@@ -15,5 +15,54 @@
 		<entry lang="ENG">User was already registered</entry>
 		<entry lang="BG">Потребителят вече е регистриран</entry>
 	</sentence>
-		
+	<sentence mode="on" keyword="EMAIL_IS_INCORRECT">
+		<entry lang="RUS">Неверный электронный почтовый адрес</entry>
+		<entry lang="KAZ">Неверный электронный почтовый адрес</entry>
+		<entry lang="ENG">Incorrect email</entry>
+		<entry lang="BG">Неправилно електронна поща</entry>
+	</sentence>
+	<sentence mode="on" keyword="WEAK_PASSWORD">
+		<entry lang="RUS">Слабый пароль</entry>
+		<entry lang="KAZ">Слабый пароль</entry>
+		<entry lang="ENG">Weak password</entry>
+		<entry lang="BG">Слаба парола</entry>
+	</sentence>
+	<sentence mode="on" keyword="SERVER_ERROR">
+		<entry lang="RUS">Ошибка серевера</entry>
+		<entry lang="KAZ">Ошибка серевера</entry>
+		<entry lang="ENG">Server error</entry>
+		<entry lang="BG">Грешка в сървъра</entry>
+	</sentence>
+	<sentence mode="on" keyword="USER_NOT_FOUND">
+		<entry lang="RUS">Пользователь не найден</entry>
+		<entry lang="KAZ">Пользователь не найден</entry>
+		<entry lang="ENG">User has not found</entry>
+		<entry lang="BG">Потребителят все още не е намерено</entry>
+	</sentence>
+	
+	<!-- warnings -->	
+	<sentence mode="on" keyword="VERIFY_EMAIL_SENDING_ERROR">
+		<entry lang="RUS">Ошибка при отправке письма с кодом верификации</entry>
+		<entry lang="KAZ">Ошибка при отправке письма с кодом верификации</entry>
+		<entry lang="ENG"></entry>
+		<entry lang="BG"></entry>
+	</sentence>
+	<sentence mode="on" keyword="RESET_PASSWORD_SENDING_ERROR">
+		<entry lang="RUS"></entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="BG"></entry>
+	</sentence>
+	<sentence mode="on" keyword="UNKNOWN_USER_STATUS">
+		<entry lang="RUS"></entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="BG"></entry>
+	</sentence>
+	<sentence mode="on" keyword="RESET_PASSWORD_ALREADY_SENT">
+		<entry lang="RUS"></entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="BG"></entry>
+	</sentence>
 </vocabulary>

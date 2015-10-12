@@ -1,10 +1,6 @@
 package com.flabser.server;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
@@ -19,6 +15,7 @@ import com.flabser.scheduler.tasks.DatabaseRemover;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
+import com.flabser.util.Util;
 
 public class Console implements Runnable {
 
@@ -93,43 +90,12 @@ public class Console implements Runnable {
 					new DatabaseRemover().process(ApplicationStatusType.READY_TO_DEPLOY);
 				}
 			} else if (command.equals("help") || command.equalsIgnoreCase("h")) {
-				System.out.println(readFile("resources" + File.separator + "console_commands.txt"));
+				System.out.println(Util.readFile("resources" + File.separator + "console_commands.txt"));
 			} else {
 				if (!command.trim().equalsIgnoreCase("")) {
 					System.err.println("command \"" + command + "\" is not recognized");
 				}
 			}
 		}
-	}
-
-	private String readFile(String file) {
-		BufferedReader reader = null;
-		try {
-			File f = new File(file);
-			reader = new BufferedReader(new FileReader(file));
-			String line = null;
-			StringBuilder stringBuilder = new StringBuilder();
-			String ls = System.getProperty("line.separator");
-
-			while ((line = reader.readLine()) != null) {
-				stringBuilder.append(line);
-				stringBuilder.append(ls);
-			}
-
-			return stringBuilder.toString();
-		} catch (FileNotFoundException e) {
-			Server.logger.errorLogEntry(e);
-		} catch (IOException e) {
-			Server.logger.errorLogEntry(e);
-		}finally{
-			try {
-				if (reader !=null) {
-					reader.close();
-				}
-			} catch (IOException e) {
-				Server.logger.errorLogEntry(e);
-			}
-		}
-		return "";
 	}
 }
