@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rule type="page" id="app-captions" mode="on">
+<rule type="page" mode="on">
 	<description>app-captions</description>
 
 	<caption name="brand" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rule type="page" id="retry-send-verify-email" mode="on">
+<rule type="page" mode="on">
 	<description></description>
 	<caching>NO_CACHING</caching>
 	<xsltfile>pages/retry-send-verify-email.xsl</xsltfile>
