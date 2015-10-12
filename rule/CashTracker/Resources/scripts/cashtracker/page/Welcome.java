@@ -17,6 +17,8 @@ public class Welcome extends _DoScript {
 		try {
 			if (toLang.length() > 0) {
 				session.switchLang(LanguageType.valueOf(toLang.toUpperCase()));
+			} else if (session.getLang() == null || session.getLang().isEmpty()) {
+				session.switchLang(LanguageType.ENG);
 			}
 		} catch (Exception e) {
 			publishElement("error", "the " + toLang + " language is not available");
@@ -28,7 +30,6 @@ public class Welcome extends _DoScript {
 		publishElement("appname", ent.getAppName());
 		publishElement("availablelangs", ent.getAvailableLangs());
 		publishElement("availableapps", ent.getAvailableApps());
-
 	}
 
 	@Override
