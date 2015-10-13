@@ -49,6 +49,9 @@ export default Em.Component.extend(ModelForm, {
         } else {
             this.set('errors', DS.Errors.create());
 
+            if (Validate.isEmpty(this.get('category.transactionTypes'))) {
+                this.get('errors').add('transactionTypes', i18n.t('validation_empty'));
+            }
             if (Validate.isEmpty(this.get('category.name'))) {
                 this.get('errors').add('name', i18n.t('validation_empty'));
             }

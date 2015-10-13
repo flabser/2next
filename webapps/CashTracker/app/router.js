@@ -1,9 +1,6 @@
 import Em from 'ember';
-// import config from './config/environment';
 
-var Router = Em.Router.extend({
-    // location: config.locationType
-});
+var Router = Em.Router.extend();
 
 Router.map(function() {
 

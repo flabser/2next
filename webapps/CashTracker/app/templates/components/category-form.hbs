@@ -17,6 +17,9 @@
                             labelProperty='name'
                             valueProperty='code'
                             selection=category.transactionTypes}}
+                        {{#each errors.transactionTypes as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
                         <p class="hint">
                             {{t 'category_transaction_type_hint'}}
                         </p>
