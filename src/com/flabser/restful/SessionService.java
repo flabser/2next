@@ -2,6 +2,7 @@ package com.flabser.restful;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -18,6 +19,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.io.FileUtils;
 import org.omg.CORBA.UserException;
@@ -26,6 +28,8 @@ import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.Invitation;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
@@ -45,8 +49,10 @@ import com.flabser.servlets.ServletUtil;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.users.UserStatusType;
+import com.flabser.users._UsersHelper;
 import com.flabser.util.Util;
 
+import nubis.page.app.InvitationEMail;
 import nubis.page.app.ResetPasswordEMail;
 import nubis.page.app.VerifyEMail;
 
@@ -179,10 +185,13 @@ public class SessionService extends RestProvider {
 	}
 
 	@DELETE
-	public Response destroySession() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response destroySession() throws URISyntaxException {
 		UserSession userSession = getUserSession();
 		_Session session = new _Session(getAppTemplate(), userSession);
 		String url = session.getLoginURL();
+		Outcome res = new Outcome();
+		res.addMessage(url);
 		if (userSession != null) {
 			request.getSession(false).removeAttribute(EnvConst.SESSION_ATTR);
 			SessionPool.remove(userSession);
@@ -191,7 +200,8 @@ public class SessionService extends RestProvider {
 		}
 
 		NewCookie cookie = new NewCookie(EnvConst.AUTH_COOKIE_NAME, "", "/", null, null, 0, false);
-		return Response.status(HttpServletResponse.SC_OK).entity(url).cookie(cookie).build();
+		//return Response.seeOther(new URI(url)).cookie(cookie).build();
+		return Response.status(HttpServletResponse.SC_OK).entity(res).cookie(cookie).build();
 
 	}
 
@@ -288,5 +298,52 @@ public class SessionService extends RestProvider {
 			return Response.status(HttpServletResponse.SC_OK).entity(res.setMessage(ServerServiceExceptionType.USER_NOT_FOUND, lang)).build();
 		}
 		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
+	}
+
+	@POST
+	@Path("/invite")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response invite(Invitation ivitation){
+		Outcome result = new Outcome();
+		_Session session = getSession();
+		String lang = session.getLang();
+
+		if (!_Validator.checkEmail(ivitation.getEmail())) {
+			return Response.status(HttpServletResponse.SC_OK).entity(result.setMessage(ServerServiceExceptionType.EMAIL_IS_INCORRECT, lang)).build();
+		}
+
+		if (ivitation.getMessage() == null || ivitation.getMessage().isEmpty()) {
+			return Response.status(HttpServletResponse.SC_OK).entity(result.setMessage(ServerServiceExceptionType.VALUE_IS_EMPTY, lang)).build();
+		}
+
+		User user = getUserSession().currentUser;
+		ApplicationProfile ap = user.getApplicationProfile(getAppID());
+		User tempUser = _UsersHelper.regTempApplicationUser(ap, ivitation.getEmail());
+		if (tempUser != null) {
+			InvitationEMail sve = new InvitationEMail(session, user, ivitation.getMessage(), tempUser);
+			if (sve.send()) {
+				tempUser.setStatus(UserStatusType.WAITING_FIRST_ENTERING_AFTER_INVITATION);
+				if (!tempUser.save()) {
+					return Response.status(Status.BAD_REQUEST).entity(result.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
+				}
+			} else {
+				tempUser.setStatus(UserStatusType.INVITATTION_NOT_SENT);
+				tempUser.save();
+				return Response.status(HttpServletResponse.SC_OK).entity(result.setMessage(ServerServiceWarningType.INVITATION_SENDING_ERROR, lang)).build();
+			}
+			ivitation.setAppType(ap.appType);
+			ivitation.setAppID(ap.appID);
+			ivitation.setTempLogin(tempUser.id);
+			ivitation.setAuthor(user.id);
+			if (ivitation.save()){
+				return Response.status(Status.OK).entity(tempUser).build();
+			}else{
+				return Response.status(Status.BAD_REQUEST).entity(result.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
+			}
+
+		} else {
+			return Response.status(Status.BAD_REQUEST).entity(result.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
+		}
 	}
 }
