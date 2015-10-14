@@ -5,10 +5,9 @@ import java.util.HashMap;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import com.flabser.log.Log4jLogger;
+import com.flabser.server.Server;
 
 public class Vocabulary {
-	com.flabser.log.ILogger logger = new Log4jLogger("Vocabulary");
 	public HashMap<String, Sentence> words = new HashMap<String, Sentence>();
 
 
@@ -28,7 +27,7 @@ public class Vocabulary {
 	public String getWord(String keyWord, String lang) {
 		Sentence sent = words.get(keyWord);
 		if (sent == null) {
-			logger.warningLogEntry("translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");
+			Server.logger.warningLogEntry("translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");
 			return keyWord;
 		} else {
 			SentenceCaption caption = sent.words.get(lang);
@@ -39,7 +38,7 @@ public class Vocabulary {
 	public SentenceCaption getSentenceCaption(String keyWord, String lang) {
 		Sentence sent = words.get(keyWord.trim());
 		if (sent == null) {
-			logger.warningLogEntry("translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");
+			Server.logger.warningLogEntry("translation of word \"" + keyWord + "\" to " + lang + ", has not found in vocabulary");
 			// System.out.println("Translation of word \"" + keyWord + "\" to "
 			// + lang + ", has not found in vocabulary");
 			SentenceCaption primary = new SentenceCaption(keyWord, keyWord, keyWord);

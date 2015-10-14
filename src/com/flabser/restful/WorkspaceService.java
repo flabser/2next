@@ -1,5 +1,8 @@
 package com.flabser.restful;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,8 +23,9 @@ public class WorkspaceService  extends RestProvider  {
 	@GET
 	@Path("/url")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getURL() {
-		return Response.status(HttpServletResponse.SC_OK).entity(getSession().getWorkspaceURL()).build();
+	public Response getURL() throws URISyntaxException {
+		String redirectURL = getSession().getWorkspaceURL();
+		return Response.seeOther(new URI(redirectURL)).build();
 	}
 
 

@@ -138,7 +138,8 @@ public class AppTemplate implements ICache, _IContent {
 		if (parent != null) {
 			return parent.getUrl() + "/Provider?id=ws";
 		} else {
-			return url + "/Provider?id=ws";
+			Site site = Environment.availableTemplates.get(Environment.getWorkspaceName());
+			return site.getAppTemlate().url + "/Provider?id=ws";
 		}
 	}
 

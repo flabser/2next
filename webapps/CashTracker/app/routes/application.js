@@ -96,15 +96,11 @@ export default Route.extend({
     actions: {
         logout: function() {
             // var route = this;
-            var authMode = this.get('session.user.authMode');
-            this.get('session').logout().then(function() {
+        	this.get('session').logout().then(function(response) {
                 // route.transitionTo('index');
-                if (authMode === 'DIRECT_LOGIN') {
-                    window.location.href = '/CashTracker/Provider?id=welcome';
-                } else {
-                    window.location.href = '/Nubis/Provider?id=login';
-                }
-            });
+            	//console.log(response.outcome.message[0]);
+                window.location.href = response.outcome.message[0]
+          });
         },
 
         goBack: function() {
