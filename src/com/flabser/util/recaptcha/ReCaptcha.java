@@ -14,9 +14,7 @@ public class ReCaptcha {
 
 	}
 
-	public static ReCaptchaResponse validate(String captcha) {
-		// TODO need secure secret
-		String secret = "6Lf34Q0TAAAAAG5Yca5N4rbibH5YFrE0A5iXZd35";
+	public static ReCaptchaResponse validate(String secret, String captcha) {
 		String verUri = "https://www.google.com/recaptcha/api/siteverify?secret=" + secret + "&response=" + captcha;
 
 		Client client = ClientBuilder.newClient();

@@ -5,7 +5,7 @@
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="java_class">flabserpromo.page.SendMail</doscript>
+			<doscript source="java_class">immis.page.SendMail</doscript>
 		</events>
 	</element>
 </rule>
