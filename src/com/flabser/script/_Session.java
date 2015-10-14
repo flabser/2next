@@ -6,6 +6,8 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.env.Environment;
+import com.flabser.env.Site;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.pojo.AppUser;
 import com.flabser.rule.Role;
@@ -67,7 +69,8 @@ public class _Session {
 		if (userSession.getAuthMode() == AuthModeType.DIRECT_LOGIN) {
 			return env.getUrl() + "/Provider?id=login";
 		} else {
-			return env.getLoginURL();
+			Site site = Environment.availableTemplates.get(Environment.getWorkspaceName());
+			return site.getAppTemlate().getLoginURL();
 		}
 	}
 
