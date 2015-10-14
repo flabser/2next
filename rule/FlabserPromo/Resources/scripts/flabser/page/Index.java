@@ -1,4 +1,4 @@
-package flabserpromo.page;
+package flabser.page;
 
 import com.flabser.localization.LanguageType;
 import com.flabser.script._AppEntourage;
