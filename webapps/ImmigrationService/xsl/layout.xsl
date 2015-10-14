@@ -29,35 +29,18 @@
 				<link rel="stylesheet" href="css/heading.css" />
 				<link rel="stylesheet" href="css/promo.css" />
 				<link rel="stylesheet" href="css/about.css" />
-				<link rel="stylesheet" href="css/skills.css" />
+				<link rel="stylesheet" href="css/how-it-works.css" />
 				<link rel="stylesheet" href="css/contact.css" />
 				<link rel="stylesheet" href="css/icons-lang.css" />
 			</head>
-			<body><!-- data-spy="scroll" data-target=".navbar" data-offset="51" -->
+			<body>
 				<div class="layout wrapper">
 					<xsl:call-template name="_content" />
 				</div>
-				<!-- fonts.googleapis
-				======================== -->
-				<script type="text/javascript">
-					<![CDATA[
-					(function() {
-						var link_element = document.createElement("link"),
-							s = document.getElementsByTagName("script")[0];
-						if (window.location.protocol !== "http:" && window.location.protocol !== "https:") {
-							link_element.href = "http:";
-						}
-						link_element.href += "//fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800";
-						link_element.rel = "stylesheet";
-						link_element.type = "text/css";
-						s.parentNode.insertBefore(link_element, s);
-					})();]]>
-				</script>
-				<!-- JavaScript
+				<!-- js libs
 				======================== -->
 				<script src="/SharedResources/vendor/jquery/jquery-2.1.4.min.js"></script>
 				<script src="/SharedResources/vendor/bootstrap/js/bootstrap.min.js"></script>
-				<script src="/SharedResources/vendor/jquery/jquery.waypoints.min.js"></script>
 				<script src="https://www.google.com/recaptcha/api.js"></script>
 				<!-- app
 				======================== -->

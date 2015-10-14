@@ -4,16 +4,8 @@
 	<xsl:template name="about">
 		<section class="section about" id="about">
 
-			<!-- ABOUT -->
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12 animated fadeIn">
-						<h3 class="heading">
-							<xsl:value-of select="//captions/about_company/@caption" />
-							<hr />
-						</h3>
-					</div>
-				</div>
+			<!-- about -->
+			<div class="container animated fadeIn">
 				<div class="row">
 					<xsl:call-template name="about_feature" />
 				</div>
@@ -22,25 +14,17 @@
 	</xsl:template>
 
 	<xsl:template name="about_feature">
-		<div class="feature_box col-md-6">
-			<div class="inner animated fadeIn">
-				<i class="fa fa-university"></i>
-				<h3>
-					<xsl:value-of select="//captions/about_us/@caption" />
-				</h3>
+		<div class="feature_box col-md-12">
+			<div class="inner">
 				<p>
-					<xsl:value-of select="//captions/about_us_text/@caption" />
+					<xsl:value-of select="//captions/about_text1/@caption" />
 				</p>
 			</div>
 		</div>
-		<div class="feature_box col-md-6">
-			<div class="inner animated fadeIn">
-				<i class="fa fa-hourglass"></i>
-				<h3>
-					<xsl:value-of select="//captions/promo_experience/@caption" />
-				</h3>
+		<div class="feature_box col-md-12">
+			<div class="inner">
 				<p>
-					<xsl:value-of select="//captions/about_experience_text/@caption" />
+					<xsl:value-of select="//captions/about_text2/@caption" />
 				</p>
 			</div>
 		</div>

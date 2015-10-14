@@ -4,7 +4,7 @@
 	<xsl:template name="contact">
 		<section class="section contact" id="contact">
 
-			<!-- CONTACT -->
+			<!-- contact -->
 			<div class="container animated fadeIn">
 				<div class="row">
 					<div class="col-sm-12">

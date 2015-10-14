@@ -4,7 +4,6 @@
 }
 
 .heading {
-    font-family: 'Dosis', sans-serif;
     font-size: 22px;
     font-weight: normal;
     line-height: 22px;
@@ -32,10 +31,10 @@
 
 @media (min-width: 768px) {
     .heading {
-        font-size: 36px;
-        line-height: 36px;
-        margin-top: 80px;
-        margin-bottom: 60px;
+        font-size: 32px;
+        line-height: 32px;
+        margin-top: 60px;
+        margin-bottom: 40px;
     }
     .heading + .heading__sub {
         margin-top: -40px;

@@ -1,6 +1,29 @@
-header {
+body {
+    color: #767676;
+    background: #FFF;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.header {
+    background: url(../img/bloup.jpg);
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: cover;
     margin: 0;
+    position: relative;
     padding: 0;
+}
+
+.header::before {
+    background: rgba(0, 0, 0, 0.3);
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 footer {

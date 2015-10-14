@@ -1,64 +1,45 @@
 .promo {
-    background: url(../img/bloup.jpg);
     background-position: center 0;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
-    padding: 110px 0 80px;
+    padding: 40px 0;
     text-align: center;
 }
 
-.promo::before {
-    background: rgba(0, 0, 0, 0.3);
-    content: '';
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-
 .heading.promo__heading {
-    font-family: 'Dosis', sans-serif;
     color: #FFCA00;
-    font-size: 48px;
+    font-size: 24px;
     font-weight: 600;
-    line-height: 54px;
+    line-height: 32px;
     margin: 10px 0 30px 0;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, .35);
     text-transform: uppercase;
 }
 
 .heading__sub.promo-heading__sub {
-    color: rgba(255, 255, 255, 0.9);
-    font-family: 'Dosis', sans-serif;
+    color: #FFF;
     font-size: 22px;
     margin: 10px 0;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, .35);
 }
 
-.heading__sub.promo-heading__experience {
-    color: rgba(255, 255, 255, 0.9);
-    font-family: 'Dosis', sans-serif;
-    font-size: 22px;
-    margin: 10px 0 40px;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, .35);
+.promo__heading span,
+.promo-heading__sub span {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 3px;
+    display: inline-block;
+    padding: 12px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .35);
 }
 
 .promo__btn {
-    margin: 10px 0 0;
-}
-
-.promo__btn.btn-link {
-    background: transparent;
-    color: rgba(255, 255, 255, 0.9);
+    border-radius: 3px;
+    margin: 10px 3px 0;
 }
 
 .promo__btn.btn-primary {
-    background: transparent;
+    background: rgba(249, 255, 0, 0.9);
     border-color: #F9FF00;
-    border-radius: 3px;
-    color: #F9FF00;
+    color: #000000;
 }
 
 .promo__btn.btn-primary:hover,
@@ -68,17 +49,40 @@
     color: #383838;
 }
 
+.promo__btn.btn-link {
+    background: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.96);
+    text-decoration: none;
+}
+
+.promo__btn.btn-link:hover,
+.promo__btn.btn-link:focus {
+    background: #F2F2F2;
+    color: #222;
+}
+
 @media (min-width: 768px) {
     .promo {
-        padding: 220px 0 150px;
+        padding: 90px 0 70px;
     }
     .heading.promo__heading {
-        font-size: 64px;
+        font-size: 36px;
+        line-height: 36px;
     }
     .heading__sub.promo-heading__sub {
         font-size: 28px;
     }
-    .heading__sub.promo-heading__experience {
-        font-size: 28px;
+}
+
+@media (min-width: 1024px) {
+    .promo {
+        padding: 110px 0 90px;
+    }
+    .heading.promo__heading {
+        font-size: 54px;
+        line-height: 54px;
+    }
+    .heading__sub.promo-heading__sub {
+        font-size: 32px;
     }
 }

@@ -1,0 +1,12 @@
+.how-it-works {
+    background: #F1F2F7;
+    padding: 20px;
+}
+
+.how-it-works__heading {
+    border-bottom: 1px solid #DDD;
+    font-size: 18px;
+    margin: 0 0 20px 0;
+    padding: 6px;
+    text-align: center;
+}

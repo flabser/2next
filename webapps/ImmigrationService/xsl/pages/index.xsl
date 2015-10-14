@@ -4,7 +4,7 @@
 	<xsl:import href="../layout.xsl" />
 	<xsl:import href="../templates/header.xsl" />
 	<xsl:import href="about.xsl" />
-	<xsl:import href="skills.xsl" />
+	<xsl:import href="how-it-works.xsl" />
 	<xsl:import href="contact.xsl" />
 	<xsl:import href="../templates/footer.xsl" />
 
@@ -15,9 +15,7 @@
 	<xsl:template name="_content">
 		<xsl:call-template name="header" />
 		<xsl:call-template name="about" />
-		<div class="section_divider"></div>
-		<xsl:call-template name="skills" />
-		<div class="section_divider"></div>
+		<xsl:call-template name="how-it-works" />
 		<xsl:call-template name="contact" />
 		<xsl:call-template name="footer" />
 	</xsl:template>
