@@ -16,7 +16,7 @@
 				<xsl:with-param name="w_title" select="$w_title" />
 				<xsl:with-param name="include" select="$include" />
 			</xsl:call-template>
-			<body class="wlc no_transition {$body_class}">
+			<body class="wlc {$body_class}">
 				<div class="content-overlay" id="content-overlay"></div>
 				<div class="main-load" id="main-load"></div>
 				<div class="layout">
