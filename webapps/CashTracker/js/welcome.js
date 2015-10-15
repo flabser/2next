@@ -119,7 +119,7 @@ nbApp.login = function(form) {
         data: JSON.stringify({
             "authUser": {
                 login: form.login.value,
-                pwd: form.pwd.value
+                pwd: form.pwd.value,
             }
         }),
         success: function(result) {
@@ -131,11 +131,7 @@ nbApp.login = function(form) {
                     $('#login-error').hide();
                 }, 5000);
             } else {
-                var appId;
-                for (var key in result.authUser.applications) {
-                    appId = key;
-                }
-                location.href = appId;
+                location.href = 'index.html';
             }
         },
         error: function(err) {

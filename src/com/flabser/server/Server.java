@@ -74,6 +74,9 @@ public class Server {
 
 		Environment.periodicalServices = new PeriodicalServices();
 
+
+		new Thread(new ContexLoader()).start();
+
 		//TODO rerun thread
 		Thread thread = new Thread(new Console());
 		thread.setPriority(Thread.MIN_PRIORITY);

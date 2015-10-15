@@ -36,7 +36,7 @@ public class Logging extends ValveBase {
 		//	}
 		//	System.out.println("-------------");
 
-		//Server.logger.normalLogEntry(ru.getUrl());
+		//	Server.logger.normalLogEntry(ru.getUrl() + " ---- ispage=" + ru.isPage() + ", isprotected=" + ru.isProtected() + ", isdeafult=" + ru.isDefault() + ", isauth=" + ru.isAuthRequest());
 		((Unsecure) getNext()).invoke(request, response, ru);
 		return;
 	}

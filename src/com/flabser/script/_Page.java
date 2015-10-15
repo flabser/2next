@@ -3,6 +3,7 @@ package com.flabser.script;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
 import com.flabser.rule.page.CachingStrategyType;
 import com.flabser.runtimeobj.page.Page;
 
@@ -65,9 +66,9 @@ public class _Page {
 	public StringBuffer toXML() throws _Exception {
 		StringBuffer output = new StringBuffer(5000);
 		output.append("<page id=\"" + id + "\" cache=\"" + caching + "\" elapsed_time = \"" + elapsed_time + "\" >");
-		
-		for (_IContent e : elementsList) {	
-			output.append(e.toXML());		
+
+		for (_IContent e : elementsList) {
+			output.append(e.toXML());
 		}
 
 		for (_Page p : includedPages) {
@@ -76,8 +77,7 @@ public class _Page {
 
 		StringBuffer captionsText = new StringBuffer("<captions>");
 		for (Entry <String, String[]> entry : captions.entrySet()) {
-			captionsText.append("<" + entry.getKey() + " caption=\"" + entry.getValue()[0] + "\" hint=\""
-					+ entry.getValue()[1] + "\" />");
+			captionsText.append("<" + entry.getKey() + " caption=\"" + entry.getValue()[0] + "\" />");
 		}
 
 		captionsText.append("</captions>");

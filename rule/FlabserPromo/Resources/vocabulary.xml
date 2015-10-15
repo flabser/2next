@@ -19,7 +19,7 @@
 	</sentence>
 	<sentence mode="on" keyword="promo_heading_sub">
 		<entry lang="RUS">Мы команда талантливых, опытных и мотивированных программистов-разработчиков</entry>
-		<entry lang="KAZ">Мы команда талантливых, опытных и мотивированных программистов-разработчиков</entry>
+		<entry lang="KAZ">Біз талантты, тәжиребелі және дәлельді шешим шығарушы жоспар жасаушы</entry>
 		<entry lang="ENG">We are a team of talented, experienced and motivated developers</entry>
 		<entry lang="BG">Ние сме екип от талантливи, опитни и мотивирани програмисти-разработчици</entry>
 		<entry lang="POR">Somos uma equipe de desenvolvedores talentosos, experientes e motivados</entry>
@@ -94,7 +94,7 @@
 
 	<sentence mode="on" keyword="contact_us_on_lang">
 		<entry lang="RUS">Вы можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
-		<entry lang="KAZ">Вы можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
+		<entry lang="KAZ">Біз орыс, ағылшын,болгар тілдеринде солеймиз.</entry>
 		<entry lang="ENG">You can contact us on the Russian, Bulgarian and English.</entry>
 		<entry lang="BG">Можете да се свържете с нас на руски, български и английски език.</entry>
 		<entry lang="POR">A nossa equipa internacional permite-nos proporcionar servicios em Russo, Búlgaro e Inglês.</entry>
@@ -158,10 +158,8 @@
 			реализации
 			многофункциональных ИТ-решений, для полномасштабной информационной среды корпоративного управления.
 		</entry>
-		<entry lang="KAZ">Мы являемся командой талантливых,
-			опытных и мотивированных программистов-разработчиков имеющих опыт в
-			реализации
-			многофункциональных ИТ-решений, для полномасштабной информационной среды корпоративного управления.
+		<entry lang="KAZ">Біз талантты, тәжиребелі және дәлельді шешим шығарушы жоспар жасаушы, үлкен тәжиребесі бар, көп атқарымды, ақпараттық технологиялық шешім, 
+						толық масштабты, ақпараттық ортадағы, корпоративтік басқармамыз.
 		</entry>
 		<entry lang="ENG">We are a team of talented, experienced and motivated developers thoroughly versed in the
 			implementation of
@@ -178,10 +176,7 @@
 			технологиях,
 			библиотеках, инфраструктурах и платформах.
 		</entry>
-		<entry lang="KAZ">На протяжении многих лет, мы накопили обширные знания и техническое мастерство в хорошо
-			зарекомендовавших
-			технологиях,
-			библиотеках, инфраструктурах и платформах.
+		<entry lang="KAZ">Көп жылдар аралығында, біздер үлкен толық білімді техникалық өнер шебері жағынан, технологиялық жиынтық инфра-қурылымдық және платформалық жағынан ұсынамыз.
 		</entry>
 		<entry lang="ENG">Over the years, we have amassed extensive knowledge and technical prowess in well established
 			languages,
@@ -197,7 +192,7 @@
 	<!-- -->
 	<sentence mode="on" keyword="skills_prog_lang">
 		<entry lang="RUS">Языки программирования, библиотеки и программные каркасы</entry>
-		<entry lang="KAZ">Programming languages, libraries and frameworks</entry>
+		<entry lang="KAZ">Тілдік жоспарлау, жиынтық жоспарлық негізгі қаңқа</entry>
 		<entry lang="ENG">Programming languages, libraries and frameworks</entry>
 		<entry lang="BG">Езици за програмиране, библиотеки и програмни рамки</entry>
 		<entry lang="POR">Linguagens de programação, bibliotecas e plataformas de desenvolvimento</entry>
@@ -205,7 +200,7 @@
 	</sentence>
 	<sentence mode="on" keyword="skills_db">
 		<entry lang="RUS">Базы данных</entry>
-		<entry lang="KAZ">Database backends</entry>
+		<entry lang="KAZ">Базалық мәліметтер</entry>
 		<entry lang="ENG">Database backends</entry>
 		<entry lang="BG">Бази данни</entry>
 		<entry lang="POR">Bases de dados</entry>
@@ -214,7 +209,7 @@
 	</sentence>
 	<sentence mode="on" keyword="skills_mobile_tech">
 		<entry lang="RUS">Мобильные технологии</entry>
-		<entry lang="KAZ">Mobile technologies</entry>
+		<entry lang="KAZ">Мобильдік технологиялар қосымша жалғаулар</entry>
 		<entry lang="ENG">Mobile technologies</entry>
 		<entry lang="BG">Мобилни технологии</entry>
 		<entry lang="POR">Tecnologias móveis</entry>
@@ -222,7 +217,7 @@
 	</sentence>
 	<sentence mode="on" keyword="skills_dev_tools">
 		<entry lang="RUS">Среды разработки и инструменты</entry>
-		<entry lang="KAZ">Development environments and tools</entry>
+		<entry lang="KAZ">Жасаушы және инструменнтер аралығында</entry>
 		<entry lang="ENG">Development environments and tools</entry>
 		<entry lang="BG">Среди за разработки и инструменти</entry>
 		<entry lang="POR">Ambientes e ferramentas de desenvolvimento</entry>

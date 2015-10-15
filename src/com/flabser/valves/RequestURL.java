@@ -27,7 +27,7 @@ public class RequestURL {
 
 		for (String pageIdRegex : new String[] {
 				"^.*/page/([\\w\\-~\\.]+)",
-				"^.*/Provider\\?[\\w\\-~\\.=&]*id=([\\w\\-~\\.]+)[\\w\\-~\\.=&]*" }) {
+		"^.*/Provider\\?[\\w\\-~\\.=&]*id=([\\w\\-~\\.]+)[\\w\\-~\\.=&]*" }) {
 			if (urlVal.matches(pageIdRegex)) {
 				pageID = urlVal.replaceAll(pageIdRegex, "$1");
 				break;
@@ -60,10 +60,6 @@ public class RequestURL {
 		return pageID;
 	}
 
-	public boolean isAnonymousPage() {
-		return false;
-	}
-
 	public String getUrl() {
 		return url;
 	}
@@ -72,7 +68,8 @@ public class RequestURL {
 		if (url.startsWith("/SharedResources")) {
 			return false;
 		}
-		return !appType.equals("") && !appID.equals("") || !(isDefault() || url.matches(".*/[\\w\\.-]+$"));
+		//return !appType.equals("") && !appID.equals("") || !(isDefault() || url.matches(".*/[\\w\\.-]+$"));
+		return false;
 	}
 
 	public void setAppType(String templateType) {

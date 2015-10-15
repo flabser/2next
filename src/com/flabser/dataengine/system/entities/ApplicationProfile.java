@@ -6,24 +6,26 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
+import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.env.EnvConst;
+import com.flabser.env.Environment;
 import com.flabser.restful.pojo.Application;
+import com.flabser.rule.Role;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.script._IContent;
 import com.flabser.server.Server;
 import com.flabser.solutions.DatabaseType;
 import com.flabser.users.ApplicationStatusType;
+import com.flabser.users.User;
 import com.flabser.users.VisibiltyType;
 import com.flabser.util.Util;
 
-@JsonRootName("applicationProfile")
 public class ApplicationProfile implements _IContent {
 	public int id;
 	public Date regDate;
@@ -62,7 +64,8 @@ public class ApplicationProfile implements _IContent {
 	}
 
 	public ApplicationProfile(int id, String appType, String appID, String appName, String owner, int dbType,
-			String dbHost, String dbName, int status, Date statusDate, ArrayList<UserRole> roles, Date regDate, String descr, String lastError, int v) {
+			String dbHost, String dbName, int status, Date statusDate, ArrayList<UserRole> roles, Date regDate,
+			String descr, String lastError, int v) {
 		this.id = id;
 		this.appType = appType;
 		this.appID = appID;
@@ -141,6 +144,7 @@ public class ApplicationProfile implements _IContent {
 
 	public boolean save() {
 		ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
+		boolean result = true;
 
 		if (id == 0) {
 			regDate = new Date();
@@ -150,17 +154,43 @@ public class ApplicationProfile implements _IContent {
 		}
 
 		if (id < 0) {
-			return false;
+			result = false;
 		} else {
-			return true;
+			if (getStatus() == ApplicationStatusType.READY_TO_DEPLOY) {
+				try {
+					User userOwner = sysDatabase.getUser(owner);
+					IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
+					appDb.registerUser(userOwner.getDBLogin(), userOwner.getDbPwd());
+					int res = appDb.createDatabase(getDbName(), userOwner.getDBLogin());
+					if (res == 0 || res == 1) {
+						IDatabase db = getDatabase();
+						if (db != null) {
+							setStatus(ApplicationStatusType.ON_LINE);
+							AppTemplate app = Environment.availableTemplates.get(appType).getAppTemlate();
+							for (Role role:app.globalSetting.roleCollection.getRolesList()){
+								if (role.isOn == RunMode.ON){
+									addRole(role.name, role.description);
+								}
+							}
+						} else {
+							setStatus(ApplicationStatusType.DEPLOING_FAILED);
+							result = false;
+						}
+					}else{
+						setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
+						result = false;
+					}
+				} catch (Exception e) {
+					Server.logger.errorLogEntry(e);
+					setStatus(ApplicationStatusType.DEPLOING_FAILED);
+				}
+				sysDatabase.update(this);
+				if (id < 0) {
+					result = false;
+				}
+			}
 		}
-	}
-
-	@JsonIgnore
-	public String getDbInitializerClass() {
-		return appType.toLowerCase() + ".init.FirstAction";
-		// TODO Need to write a class resolver that is implementation of
-		// IAppDatabaseInit
+		return result;
 	}
 
 	@Deprecated
@@ -185,7 +215,7 @@ public class ApplicationProfile implements _IContent {
 	}
 
 	@JsonIgnore
-	public String appId() {
+	public String getAppId() {
 		if (appID == null || appID.isEmpty()) {
 			appID = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
 			return appID;
@@ -266,7 +296,7 @@ public class ApplicationProfile implements _IContent {
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return appID + "," + appType + "," + owner + "," + status.toString();
 	}
 

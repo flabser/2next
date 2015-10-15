@@ -50,30 +50,30 @@ public class Unsecure extends ValveBase {
 						((Secure) getNext()).invoke(request, response, ru);
 					}
 				} else {
-					if (ru.isProtected()) {
-						if (ru.isPage()) {
-							try {
-								if (site.getAppTemlate().ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
-									gettingSession(request, response);
-									getNext().getNext().invoke(request, response);
-								} else {
-									((Secure) getNext()).invoke(request, response, ru);
-								}
-
-							} catch (RuleException e) {
-								Server.logger.errorLogEntry(e.getMessage());
-								ApplicationException ae = new ApplicationException(ru.getAppType(), e.getMessage());
-								response.setStatus(ae.getCode());
-								response.getWriter().println(ae.getHTMLMessage());
+					if (ru.isPage()) {
+						try {
+							if (site.getAppTemlate().ruleProvider.getRule(ru.getPageID()).isAnonymousAllowed()) {
+								gettingSession(request, response);
+								getNext().getNext().invoke(request, response);
+							} else {
+								((Secure) getNext()).invoke(request, response, ru);
 							}
-						} else {
-							((Secure) getNext()).invoke(request, response, ru);
+
+						} catch (RuleException e) {
+							Server.logger.errorLogEntry(e.getMessage());
+							ApplicationException ae = new ApplicationException(ru.getAppType(), e.getMessage());
+							response.setStatus(ae.getCode());
+							response.getWriter().println(ae.getHTMLMessage());
 						}
+					}else if (ru.isProtected()) {
+						((Secure) getNext()).invoke(request, response, ru);
 					} else {
 						gettingSession(request, response);
 						getNext().getNext().invoke(request, response);
 					}
 				}
+
+
 			} else if (ru.getAppType().equals(EnvConst.SHARED_RESOURCES_NAME)
 					|| ru.getAppType().equals(EnvConst.ADMIN_APP_NAME)) {
 				getNext().getNext().invoke(request, response);
@@ -84,10 +84,13 @@ public class Unsecure extends ValveBase {
 				response.setStatus(ae.getCode());
 				response.getWriter().println(ae.getHTMLMessage());
 			}
-		} else  {
+		}else
+
+		{
 			gettingSession(request, response);
 			getNext().getNext().invoke(request, response);
 		}
+
 	}
 
 	private void gettingSession(Request request, Response response) {

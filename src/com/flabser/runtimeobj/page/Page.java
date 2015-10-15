@@ -35,11 +35,14 @@ public class Page {
 	protected Map<String, String[]> fields = new HashMap<String, String[]>();
 	protected UserSession userSession;
 
-	public Page(AppTemplate env, UserSession userSession, PageRule rule, String httpMethod) throws AuthFailedException {
+	private String context;
+
+	public Page(AppTemplate env, UserSession userSession, PageRule rule, String httpMethod, String context) throws AuthFailedException {
 		this.userSession = userSession;
 		this.env = env;
 		this.rule = rule;
 		this.httpMethod = httpMethod;
+		this.context = context;
 
 	}
 
@@ -95,7 +98,7 @@ public class Page {
 				switch (elementRule.type) {
 				case SCRIPT:
 					ScriptResponse scriptResp = null;
-					DoProcessor sProcessor = new DoProcessor(env, userSession, userSession.getLang(), fields);
+					DoProcessor sProcessor = new DoProcessor(env, userSession, userSession.getLang(), fields, context);
 					switch (elementRule.doClassName.getType()) {
 					case GROOVY_FILE:
 						scriptResp = sProcessor.processGroovyScript(elementRule.doClassName.getClassName(), httpMethod);
@@ -123,7 +126,7 @@ public class Page {
 
 				case INCLUDED_PAGE:
 					PageRule rule = (PageRule) env.ruleProvider.getRule(elementRule.value);
-					IncludedPage page = new IncludedPage(env, userSession, rule, httpMethod);
+					IncludedPage page = new IncludedPage(env, userSession, rule, httpMethod, context);
 					pp.addPage(page.process(fields));
 					break;
 				default:

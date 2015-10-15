@@ -4,19 +4,19 @@ import java.util.ArrayList;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.apptemplate.WorkModeType;
+import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.env.Environment;
-import com.flabser.env.Site;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.pojo.AppUser;
 import com.flabser.rule.Role;
 import com.flabser.script.actions._ActionBar;
 import com.flabser.script.mail._MailAgent;
+import com.flabser.server.Server;
+import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.AuthModeType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
-import com.flabser.users.UserSession.ActiveApplication;
 
 
 public class _Session {
@@ -25,15 +25,17 @@ public class _Session {
 	private AppTemplate env;
 	private UserSession userSession;
 
-	public _Session(AppTemplate env, UserSession userSession) {
+	public _Session(AppTemplate env, UserSession userSession, String contextID) {
 		this.env = env;
 		if (env.globalSetting.getWorkMode() == WorkModeType.COMMON) {
 			ApplicationProfile app = new ApplicationProfile(env);
 			dataBase = app.getDatabase();
 		} else {
-			ActiveApplication aa = userSession.getActiveApplication(env.templateType);
-			if (aa != null) {
-				dataBase = aa.getDataBase();
+			ApplicationProfile ap = DatabaseFactory.getSysDatabase().getApp(contextID);
+			if (ap != null && ap.getStatus() == ApplicationStatusType.ON_LINE){
+				dataBase = ap.getDatabase();
+			}else{
+				Server.logger.errorLogEntry("database not available or user has not had permissions to access to this one");
 			}
 		}
 		this.userSession = userSession;
@@ -54,7 +56,7 @@ public class _Session {
 	}
 
 	public String getBaseAppURL() {
-		return env.getUrl();
+		return env.getHostName();
 	}
 
 	public String getWorkspaceURL() {
@@ -62,15 +64,6 @@ public class _Session {
 			return "";
 		} else {
 			return env.getWorkspaceURL();
-		}
-	}
-
-	public String getLoginURL() {
-		if (userSession.getAuthMode() == AuthModeType.DIRECT_LOGIN) {
-			return env.getUrl() + "/Provider?id=login";
-		} else {
-			Site site = Environment.availableTemplates.get(Environment.getWorkspaceName());
-			return site.getAppTemlate().getLoginURL();
 		}
 	}
 

@@ -25,7 +25,6 @@ public class AppUser {
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private AuthFailedExceptionType error;
 	private String redirect;
-	private String defaultApp;
 	private AuthModeType authMode;
 	private ArrayList<String> appRoles = new ArrayList<String>();
 	private HashMap<String, Application> applications = new HashMap<String, Application>();
@@ -129,13 +128,6 @@ public class AppUser {
 		this.applications = applications;
 	}
 
-	public String getDefaultApp() {
-		return defaultApp;
-	}
-
-	public void setDefaultApp(String defaultApp) {
-		this.defaultApp = defaultApp;
-	}
 
 	@JsonIgnore
 	public void setRoles(HashSet<UserRole> roles) {
@@ -163,5 +155,6 @@ public class AppUser {
 	public String toString() {
 		return login + ", email=" + email;
 	}
+
 
 }

@@ -131,11 +131,13 @@ public class WebServer implements IWebServer {
 		return context;
 	}
 
+
+
 	@Override
 	public Context addApplication(String appID, Site site) throws ServletException {
 		Context context = null;
 
-		Server.logger.normalLogEntry("add context \"" + site.getAppBase() + "/" + appID + "\" application...");
+		//Server.logger.normalLogEntry("add context \"" + site.getAppBase() + "/" + appID + "\" application...");
 		String db = site.getFullPathAppBase();
 		String URLPath = "/" + site.getAppBase() + "/" + appID;
 		try {
