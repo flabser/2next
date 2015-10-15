@@ -43,7 +43,8 @@ export default Em.Component.extend(ModelForm, {
 
         saveUserProfile: function() {
             this.get('session').saveUserProfile().then(() => {
-                this.rerender();
+                // this.rerender();
+                this.sendAction('close');
             });
         },
 

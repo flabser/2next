@@ -7,7 +7,6 @@ const {
 export default Route.extend({
     navProfileIsExpanded: false,
     hasAddAction: false,
-    // loginThroughToken: false,
 
     session: inject.service(),
 
@@ -32,13 +31,10 @@ export default Route.extend({
 
     model: function() {
         var sessionService = this.get('session');
-        return sessionService.getSession().then(function() {
-            return sessionService.get('user');
-        });
+        return sessionService.getSession().then(() => sessionService.get('user'));
     },
 
     afterModel: function(user) {
-        // this.set('i18n.locale', user.get('locale'));
         if (!this.get('session').isAuthenticated()) {
             // window.location.href = 'Provider?id=login';
         } else {
@@ -53,6 +49,7 @@ export default Route.extend({
 
     setupController: function(controller, model) {
         controller.set('model', model);
+        // loginThroughToken - show link rest/workspace/url if LOGIN_THROUGH_TOKEN
         controller.set('loginThroughToken', model.authMode === 'LOGIN_THROUGH_TOKEN');
 
         setTimeout(this.initScrollSpySide, 200);
@@ -95,12 +92,9 @@ export default Route.extend({
 
     actions: {
         logout: function() {
-            // var route = this;
-        	this.get('session').logout().then(function(response) {
-                // route.transitionTo('index');
-            	//console.log(response.outcome.message[0]);
-                window.location.href = response.outcome.message[0]
-          });
+            this.get('session').logout().then(function(response) {
+                window.location.href = response.outcome.message[0];
+            });
         },
 
         goBack: function() {
