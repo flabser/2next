@@ -169,13 +169,13 @@ public class Provider extends HttpServlet {
 
 	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule,
 			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,
-			_Exception, WebFormValueException {
+	_Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		HashMap <String, String[]> fields = new HashMap <String, String[]>();
 		Map <String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
-		Page page = new Page(env, userSession, pageRule, request.getMethod());
+		Page page = new Page(env, userSession, pageRule, request.getMethod(), (String) request.getAttribute("appid"));
 		result.output.append(page.process(fields).toXML());
 		if (page.fileGenerated) {
 			result.publishAs = PublishAsType.OUTPUTSTREAM;
@@ -186,7 +186,7 @@ public class Provider extends HttpServlet {
 	}
 
 	private ProviderResult search(HttpServletRequest request, UserSession userSession) throws RuleException,
-			UnsupportedEncodingException {
+	UnsupportedEncodingException {
 		ProviderResult result = new ProviderResult(PublishAsType.HTML, "searchres.xsl");
 		try {
 			Integer.parseInt(request.getParameter("page"));

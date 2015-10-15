@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.connector.Request;
@@ -44,25 +43,11 @@ public class Secure extends ValveBase {
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 				if (us != null && !us.currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
-					if (!us.isBootstrapped(appID) && !appType.equalsIgnoreCase(Environment.workspaceName)) {
+					if (!appType.equalsIgnoreCase(Environment.workspaceName)) {
 						Site site = Environment.availableTemplates.get(appType);
 						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(site.getAppBase());
 						if (hh != null) {
-							Server.logger.verboseLogEntry("start application initializing ...");
-							try {
-								us.init(appID);
-
-								((HttpServletResponse) response).sendRedirect(ru.getUrl());
-							} catch (ApplicationException e) {
-								Server.logger.errorLogEntry(e.getMessage());
-								response.setStatus(e.getCode());
-								response.getWriter().println(e.getHTMLMessage());
-							} catch (Exception e) {
-								Server.logger.errorLogEntry(e.getMessage());
-								ApplicationException ae = new ApplicationException(ru.getAppType(), e.getMessage());
-								response.setStatus(ae.getCode());
-								response.getWriter().println(ae.getHTMLMessage());
-							}
+							getNext().invoke(request, response);
 						} else {
 							String msg = "\"" + site.getAppBase() + "\" has not set for \"" + us.currentUser.getLogin() + "\" (" + ru + ")";
 							Server.logger.warningLogEntry(msg);

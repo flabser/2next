@@ -1,6 +1,5 @@
 package com.flabser.users;
 
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,23 +10,16 @@ import org.apache.catalina.realm.RealmBase;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.DatabaseFactory;
-import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.jpa.Attachment;
-import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
-import com.flabser.env.Environment;
-import com.flabser.exception.WebFormValueException;
 import com.flabser.exception.ServerServiceExceptionType;
+import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.pojo.AppUser;
-import com.flabser.rule.Role;
-import com.flabser.rule.constants.RunMode;
-import com.flabser.server.Server;
 import com.flabser.util.Util;
 
 @JsonRootName("user")
@@ -183,67 +175,25 @@ public class User {
 	}
 
 	public boolean save() {
-		try {
-			if (id == 0) {
-				primaryRegDate = new Date();
-				lastUpdateDate = primaryRegDate;
-				loginHash = (login + password).hashCode();
-				if (dbPwd == null) {
-					dbPwd = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
-				}
-				id = sysDatabase.insert(this);
-			} else {
-				lastUpdateDate = new Date();
-				id = sysDatabase.update(this);
-			}
 
-			if (id < 0) {
-				return false;
-			} else {
-				IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
-				appDb.registerUser(getDBLogin(), dbPwd);
-
-				for (HashMap<String, ApplicationProfile> apps : getEnabledApps().values()) {
-					for (ApplicationProfile appProfile : apps.values()) {
-						if (appProfile.getStatus() == ApplicationStatusType.READY_TO_DEPLOY) {
-							try {
-								int res = appDb.createDatabase(appProfile.getDbName(), getDBLogin());
-								if (res == 0 || res == 1) {
-									appProfile.getDatabase();
-									appProfile.setStatus(ApplicationStatusType.ON_LINE);
-									AppTemplate app = Environment.availableTemplates.get(appProfile.appType).getAppTemlate();
-									for (Role role:app.globalSetting.roleCollection.getRolesList()){
-										if (role.isOn == RunMode.ON){
-											appProfile.addRole(role.name, role.description);
-										}
-									}
-									appProfile.save();
-								} else {
-									appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
-									appProfile.save();
-									return false;
-								}
-							} catch (Exception e) {
-								Server.logger.errorLogEntry(e);
-								appProfile.setLastError(e.getMessage().substring(0,255));
-								appProfile.setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
-								appProfile.save();
-								return false;
-							}
-						}
-					}
-				}
+		if (id == 0) {
+			primaryRegDate = new Date();
+			lastUpdateDate = primaryRegDate;
+			loginHash = (login + password).hashCode();
+			if (dbPwd == null) {
+				dbPwd = Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890");
 			}
-			return true;
-		} catch (InstantiationException | ClassNotFoundException e) {
-			Server.logger.errorLogEntry(e);
-		} catch (SQLException e) {
-			DatabaseUtil.debugErrorPrint(e);
-		} catch (IllegalAccessException e1) {
-			Server.logger.errorLogEntry(e1);
+			id = sysDatabase.insert(this);
+		} else {
+			lastUpdateDate = new Date();
+			id = sysDatabase.update(this);
 		}
-		return false;
 
+		if (id < 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 
@@ -372,10 +322,6 @@ public class User {
 
 	public HashMap<String, HashMap<String, ApplicationProfile>> getEnabledApps() {
 		return applicationsMap;
-	}
-
-	public void setEnabledApps(HashMap<String, HashMap<String, ApplicationProfile>> enabledApps) {
-		this.applicationsMap = enabledApps;
 	}
 
 	public HashSet<UserRole> getUserRoles() {

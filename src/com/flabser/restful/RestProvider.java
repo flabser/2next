@@ -77,7 +77,7 @@ public class RestProvider {
 		if (userSession == null) {
 			return null;
 		} else {
-			return new _Session(getAppTemplate(), userSession);
+			return new _Session(getAppTemplate(), userSession, getAppID());
 		}
 	}
 
@@ -181,9 +181,9 @@ public class RestProvider {
 
 	private _Page page(AppTemplate env, Map<String, String[]> parMap, HttpServletRequest request, IRule rule,
 			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,
-			_Exception, WebFormValueException {
+	_Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
-		return new Page(env, userSession, pageRule, request.getMethod()).process(parMap);
+		return new Page(env, userSession, pageRule, request.getMethod(), context.getServletContextName()).process(parMap);
 	}
 
 	private _Page page(AppTemplate env, MultivaluedMap<String, String> formParams, HttpServletRequest request2,
@@ -195,6 +195,6 @@ public class RestProvider {
 			v[0] = formParams.getFirst(e);
 			parMap.put(e, v);
 		}
-		return new Page(env, userSession, pageRule, request.getMethod()).process(parMap);
+		return new Page(env, userSession, pageRule, request.getMethod(), context.getServletContextName()).process(parMap);
 	}
 }

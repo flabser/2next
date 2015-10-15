@@ -7,10 +7,11 @@ import com.flabser.users.UserSession;
 
 public class IncludedPage extends Page {
 
-	public IncludedPage(AppTemplate env, UserSession userSession, PageRule rule, String httpMethod) {
-		super(env, userSession, rule, httpMethod);
+	public IncludedPage(AppTemplate env, UserSession userSession, PageRule rule, String httpMethod, String context) {
+		super(env, userSession, rule, httpMethod, context);
 	}
 
+	@Override
 	public String getID() {
 		return "INCLUDED_PAGE_" + rule.id;
 	}

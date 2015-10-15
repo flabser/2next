@@ -11,7 +11,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.Environment;
 import com.flabser.env.Site;
 import com.flabser.exception.ServerServiceExceptionType;
@@ -20,8 +22,6 @@ import com.flabser.script._Session;
 import com.flabser.server.Server;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.User;
-import com.flabser.users.UserSession;
-import com.flabser.users.UserSession.ActiveApplication;
 import com.flabser.users.VisibiltyType;
 
 @Path("/application")
@@ -31,10 +31,12 @@ public class ApplicationService extends RestProvider {
 	@Path("/roles")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRoles() {
-		UserSession userSession = getUserSession();
-		ActiveApplication aa = userSession.getActiveApplication(getAppTemplate().templateType);
-		ApplicationProfile ap = aa.getParent();
-		return Response.status(HttpServletResponse.SC_OK).entity(ap.getRoles()).build();
+		Outcome res = new Outcome();
+		ApplicationProfile ap = DatabaseFactory.getSysDatabase().getApp(context.getServletContextName());
+		for(UserRole role: ap.getRoles()){
+			res.addMessage(role.getName());
+		}
+		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
 	}
 
 	@POST
@@ -62,7 +64,7 @@ public class ApplicationService extends RestProvider {
 			ap.setVisibilty(vis);
 			ap.setDesciption(description);
 			ap.owner = user.getLogin();
-			ap.dbName = ap.appType.toLowerCase() + ap.appId();
+			ap.dbName = ap.appType.toLowerCase() + ap.getAppId();
 			ap.setStatus(ApplicationStatusType.READY_TO_DEPLOY);
 			if (ap.save()) {
 				user.addApplication(ap);

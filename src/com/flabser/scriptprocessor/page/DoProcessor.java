@@ -1,7 +1,5 @@
 package com.flabser.scriptprocessor.page;
 
-import groovy.lang.GroovyObject;
-
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -16,6 +14,8 @@ import com.flabser.script._WebFormDataRest;
 import com.flabser.users.UserSession;
 import com.flabser.util.ScriptResponse;
 
+import groovy.lang.GroovyObject;
+
 public class DoProcessor {
 
 	public ArrayList<IQuerySaveTransaction> transactionToPost = new ArrayList<IQuerySaveTransaction>();
@@ -25,8 +25,8 @@ public class DoProcessor {
 	private Vocabulary vocabulary;
 	private _WebFormData webFormData;
 
-	public DoProcessor(AppTemplate env, UserSession u, String currentLang, Map<String, String[]> formData) {
-		ses = new _Session(env, u);
+	public DoProcessor(AppTemplate env, UserSession u, String currentLang, Map<String, String[]> formData, String context) {
+		ses = new _Session(env, u, context);
 		vocabulary = env.vocabulary;
 		lang = currentLang;
 		if (formData instanceof MultivaluedMap) {

@@ -46,6 +46,8 @@ public interface ISystemDatabase {
 
 	ArrayList<ApplicationProfile> getAllApps(String string, int calcStartEntry, int pageSize);
 
+	ApplicationProfile getApp(String string);
+
 	User getUser(long id);
 
 	byte[] getUserAvatarStream(long id);

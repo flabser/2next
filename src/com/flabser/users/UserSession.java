@@ -3,10 +3,8 @@ package com.flabser.users;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.env.Environment;
-import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.restful.pojo.AppUser;
@@ -21,7 +19,6 @@ public class UserSession implements ICache {
 	public int pageSize;
 
 	private AuthModeType authMode;
-	private HashMap<String, ActiveApplication> acitveApps = new HashMap<String, ActiveApplication>();
 
 	private String lang;
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
@@ -29,26 +26,6 @@ public class UserSession implements ICache {
 	public UserSession(User user) {
 		currentUser = user;
 		authMode = AuthModeType.DIRECT_LOGIN;
-	}
-
-	public void init(String appID) throws ApplicationException {
-		ApplicationProfile appProfile = currentUser.getApplicationProfile(appID);
-		if (appProfile != null) {
-			if (appProfile.getStatus() == ApplicationStatusType.ON_LINE) {
-				IDatabase db = appProfile.getDatabase();
-				if (db != null) {
-					ActiveApplication aa = new ActiveApplication(appProfile, db);
-					acitveApps.put(appProfile.appType, aa);
-					acitveApps.put(appProfile.appID, aa);
-				} else {
-					appProfile.setStatus(ApplicationStatusType.DEPLOING_FAILED);
-					appProfile.save();
-				}
-			} else {
-				throw new ApplicationException(appProfile.appType, "application \"" + appProfile.appType + "/"
-						+ appProfile.getAppID() + "\" cannot init its database");
-			}
-		}
 	}
 
 	public void setLang(String lang) {
@@ -71,25 +48,11 @@ public class UserSession implements ICache {
 		}
 	}
 
-	public boolean isBootstrapped(String appID) {
-		ActiveApplication aa = acitveApps.get(appID);
-		if (aa == null) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
 	@Override
 	public void flush() {
 		if (cache != null) {
 			cache.clear();
 		}
-	}
-
-	public ActiveApplication getActiveApplication(String appType) {
-		ActiveApplication aa = acitveApps.get(appType);
-		return aa;
 	}
 
 	public AuthModeType getAuthMode() {
@@ -170,27 +133,6 @@ public class UserSession implements ICache {
 	@Override
 	public String toString() {
 		return currentUser + ", authMode=" + authMode.name() + ", lang=" + lang;
-	}
-
-	public class ActiveApplication {
-		private IDatabase db;
-		private ApplicationProfile appProfile;
-
-		ActiveApplication(ApplicationProfile appProfile, IDatabase db) {
-			this.appProfile = appProfile;
-			this.db = db;
-
-		}
-
-		public IDatabase getDataBase() {
-			return db;
-		}
-
-		public ApplicationProfile getParent() {
-			return appProfile;
-
-		}
-
 	}
 
 }
