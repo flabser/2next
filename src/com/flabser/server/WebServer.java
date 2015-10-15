@@ -15,7 +15,6 @@ import org.apache.catalina.Wrapper;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.AprLifecycleListener;
 import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.core.StandardHost;
 import org.apache.catalina.core.StandardServer;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.descriptor.web.ErrorPage;
@@ -24,7 +23,6 @@ import org.apache.tomcat.util.descriptor.web.FilterMap;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
-import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.env.Site;
@@ -43,7 +41,7 @@ public class WebServer implements IWebServer {
 	private static Tomcat tomcat;
 	private static Engine engine;
 	private static final String defaultWelcomeList[] = { "index.html" };
-	private static final String defaultInfoList[] = { "info.html" };
+
 
 	@Override
 	public void init(String defaultHostName) throws MalformedURLException, LifecycleException {
@@ -401,21 +399,6 @@ public class WebServer implements IWebServer {
 		context.addFilterMap(filterMap);
 	}
 
-	private Context initContex(String siteName, AppTemplate env, String appID) {
-		String db = new File("webapps/" + env.templateType).getAbsolutePath();
-
-		Host appHost = new StandardHost();
-		appHost.setName(appID + "." + siteName);
-		// appHost.setAppBase(db);
-		Context context = new StandardContext();
-		context = tomcat.addContext(appHost, "/" + appID, db);
-
-		context.setDocBase(db);
-		context.setDisplayName(appID);
-		context.setName(appID);
-		context.setPath("");
-		return context;
-	}
 
 	private void initErrorPages(Context context) {
 		ErrorPage er = new ErrorPage();

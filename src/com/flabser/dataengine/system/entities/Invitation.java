@@ -5,6 +5,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.dataengine.system.entities.constants.InvitationStatusType;
 
 
 @JsonRootName("invitation")
@@ -20,6 +21,7 @@ public class Invitation {
 	private long author;
 
 	private long tempLogin;
+	private InvitationStatusType status = InvitationStatusType.UNKNOWN;
 	//
 
 	public int getId() {
@@ -84,6 +86,14 @@ public class Invitation {
 
 	public void setTempLogin(long tempLogin) {
 		this.tempLogin = tempLogin;
+	}
+
+	public InvitationStatusType getStatus() {
+		return status;
+	}
+
+	public void setStatus(InvitationStatusType status) {
+		this.status = status;
 	}
 
 	@Override

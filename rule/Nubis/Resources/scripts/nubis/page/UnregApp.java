@@ -24,7 +24,7 @@ public class UnregApp extends _DoScript {
 
 	@Override
 	public void doDelete(_Session session, _WebFormData formData, String lang) {
-		User user = session.getAppUser();
+		User user = session.getUser();
 		String appID = formData.getValueSilently("app");
 		ApplicationProfile ap = user.getApplicationProfile(appID);
 

@@ -29,8 +29,10 @@ public class _UsersHelper {
 	}
 
 	public static User regTempApplicationUser(ApplicationProfile ap, String email) {
-		return regApplicationUser(ap, email, email, "",
+		User user = regApplicationUser(ap, email, email, "",
 				Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm1234567890", 10));
+		user.setStatus(UserStatusType.TEMPORARY);
+		return user;
 
 	}
 

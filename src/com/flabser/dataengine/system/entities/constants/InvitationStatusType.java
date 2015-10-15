@@ -1,12 +1,12 @@
 package com.flabser.dataengine.system.entities.constants;
 
 
-public enum InvitationType {
+public enum InvitationStatusType {
 	UNKNOWN(0), WAITING(456), EXPIRED(457), SENDING_FAILED(458), SAVING_FAILED(459);
 
 	private int code;
 
-	InvitationType(int code){
+	InvitationStatusType(int code){
 		this.code = code;
 	}
 
@@ -14,8 +14,8 @@ public enum InvitationType {
 		return code;
 	}
 
-	public static InvitationType getType(int code){
-		for (InvitationType type : values()){
+	public static InvitationStatusType getType(int code){
+		for (InvitationStatusType type : values()){
 			if (type.code == code){
 				return type;
 			}

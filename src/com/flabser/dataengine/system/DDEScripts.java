@@ -22,9 +22,9 @@ public class DDEScripts {
 			+ "apps integer[], "
 			+ "roles integer[], "
 			+ "groups integer[], "
-			+ "CONSTRAINT users_pkey PRIMARY KEY (ID));" +
-			"" +
-			"create index users_login_hash on users using hash(login text_ops); ";
+			+ "CONSTRAINT users_pkey PRIMARY KEY (ID)),"
+			+ "CONSTRAINT unique_email UNIQUE (email),"
+			+ "create index users_login_hash on users using hash(login text_ops); ";
 
 	public static final String APPS_DDE = "create table APPS("
 			+ "ID serial NOT NULL, "
@@ -52,6 +52,7 @@ public class DDEScripts {
 			+ "MESSAGE varchar(64), "
 			+ "AUTHOR integer, "
 			+ "TEMPLOGIN int, "
+			+ "status integer, "
 			+ "CONSTRAINT invs_pkey PRIMARY KEY (ID))";
 
 	public static final String USERS_ACTIVITY_DDE = "create table USERSACTIVITY(ID serial NOT NULL, "

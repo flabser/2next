@@ -44,7 +44,7 @@ public class _AppEntourage {
 	}
 
 	public ArrayList<String[]> getAvailableApps() throws _Exception {
-		User user = ses.getAppUser();
+		User user = ses.getUser();
 		ArrayList<String[]> list = new ArrayList<String[]>();
 
 		for (ApplicationProfile app : user.getApplications()) {

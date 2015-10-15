@@ -96,7 +96,7 @@ public class ApplicationService extends RestProvider {
 		_Session session = getSession();
 		String lang = session.getLang();
 
-		User user = session.getAppUser();
+		User user = session.getUser();
 		ApplicationProfile ap = user.getApplicationProfile(appId);
 
 		if (ap != null) {

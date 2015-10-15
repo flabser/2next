@@ -17,7 +17,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 	protected User user;
 
 	public DAO(Class <T> entityClass, _Session session) {
-		this.user = session.getAppUser();
+		this.user = session.getUser();
 		this.em = session.getDatabase().getEntityManager();
 		this.entityClass = entityClass;
 	}

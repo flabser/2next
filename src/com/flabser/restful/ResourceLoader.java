@@ -9,6 +9,7 @@ import javax.ws.rs.core.Application;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 import com.flabser.restful.admin.AppService;
+import com.flabser.restful.admin.InvService;
 import com.flabser.restful.admin.LogService;
 import com.flabser.restful.admin.UserService;
 import com.flabser.restful.provider.ObjectMapperProvider;
@@ -28,6 +29,7 @@ public class ResourceLoader extends Application {
 		classes.add(ObjectMapperProvider.class);
 		classes.add(ApplicationService.class);
 		classes.add(UserService.class);
+		classes.add(InvService.class);
 		classes.add(SessionService.class);
 		classes.add(RestProvider.class);
 		classes.add(MultiPartFeature.class);

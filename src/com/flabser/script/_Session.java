@@ -31,7 +31,9 @@ public class _Session {
 			ApplicationProfile app = new ApplicationProfile(env);
 			dataBase = app.getDatabase();
 		} else {
+			//			System.out.println(contextID);
 			ApplicationProfile ap = DatabaseFactory.getSysDatabase().getApp(contextID);
+
 			if (ap != null && ap.getStatus() == ApplicationStatusType.ON_LINE){
 				dataBase = ap.getDatabase();
 			}else{
@@ -75,12 +77,11 @@ public class _Session {
 		return new _MailAgent(this);
 	}
 
-	@Deprecated
-	public User getAppUser() {
+	public User getUser() {
 		return userSession.currentUser;
 	}
 
-	public AppUser getUser() {
+	public AppUser getAppUser() {
 		return userSession.getUserPOJO();
 	}
 

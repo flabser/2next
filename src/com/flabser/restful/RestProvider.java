@@ -2,7 +2,6 @@ package com.flabser.restful;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +36,6 @@ import com.flabser.rule.IRule;
 import com.flabser.rule.page.PageRule;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.scheduler.tasks.TempFileCleaner;
-import com.flabser.script._Exception;
 import com.flabser.script._Page;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
@@ -67,8 +65,7 @@ public class RestProvider {
 	}
 
 	public String getAppID() {
-		HttpServletRequest http = request;
-		return (String) http.getAttribute("appid");
+		return (String) request.getAttribute("appid");
 
 	}
 
@@ -96,15 +93,11 @@ public class RestProvider {
 			try {
 				try {
 
-					result = page(env, (Map) queryParams, request, rule, getUserSession());
+					result = page(env, queryParams, request, rule, getUserSession());
 				} catch (WebFormValueException e) {
 					return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(result).build();
 				}
-			} catch (final UnsupportedEncodingException e) {
-				e.printStackTrace();
 			} catch (final ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (final _Exception e) {
 				e.printStackTrace();
 			}
 
@@ -119,7 +112,6 @@ public class RestProvider {
 	public Response proPage(@PathParam("id") String id, MultivaluedMap<String, String> formParams)
 			throws RuleException, AuthFailedException, ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
-		System.out.println("get page id=" + id);
 		AppTemplate env = getAppTemplate();
 		IRule rule = env.ruleProvider.getRule(id);
 		_Page result = null;
@@ -179,12 +171,12 @@ public class RestProvider {
 		throw new WebApplicationException(msg, HttpServletResponse.SC_NOT_FOUND);
 	}
 
-	private _Page page(AppTemplate env, Map<String, String[]> parMap, HttpServletRequest request, IRule rule,
+	/*	private _Page page(AppTemplate env, Map<String, String[]> parMap, HttpServletRequest request, IRule rule,
 			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,
 	_Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		return new Page(env, userSession, pageRule, request.getMethod(), context.getServletContextName()).process(parMap);
-	}
+	}*/
 
 	private _Page page(AppTemplate env, MultivaluedMap<String, String> formParams, HttpServletRequest request2,
 			IRule rule, UserSession userSession) throws ClassNotFoundException, RuleException, WebFormValueException {

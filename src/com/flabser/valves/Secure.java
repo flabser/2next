@@ -36,7 +36,6 @@ public class Secure extends ValveBase {
 	public void invoke(Request request, Response response) throws IOException, ServletException {
 		HttpServletRequest http = request;
 		String appType = ru.getAppType();
-		String appID = ru.getAppID();
 
 		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(EnvConst.ADMIN_APP_NAME)) {
 			HttpSession jses = http.getSession(false);

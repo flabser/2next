@@ -3,10 +3,10 @@ package cashtracker.page;
 import java.util.Date;
 
 import nubis.page.app.RegWebForm;
-import nubis.page.app.VerifyEMail;
 
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.WebFormValueException;
+import com.flabser.mail.message.VerifyEMail;
 import com.flabser.script._Helper;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
@@ -50,7 +50,7 @@ public class SignUp extends _DoScript {
 			return;
 		}
 
-		com.flabser.users.User user = session.getAppUser();
+		com.flabser.users.User user = session.getUser();
 		user.setLogin(regForm.email);
 		user.setUserName(regForm.userName);
 		user.setPwd(regForm.pwd);
