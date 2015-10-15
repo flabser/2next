@@ -5,8 +5,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.flabser.server.Server;
-
 public class ClassFinder {
 	private static final String DOT = ".";
 	private static final String CLASS_SUFFIX = ".class";
@@ -39,7 +37,7 @@ public class ClassFinder {
 			int endIndex = resource.length() - CLASS_SUFFIX.length();
 			String className = resource.substring(0, endIndex);
 			try {
-				Server.logger.verboseLogEntry("register REST handler \"" + className + "\"");
+				//				Server.logger.verboseLogEntry("register REST handler \"" + className + "\"");
 				classes.add(Class.forName(className));
 			} catch (ClassNotFoundException ignore) {
 			}

@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response.Status;
 import org.apache.commons.io.FileUtils;
 import org.omg.CORBA.UserException;
 
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
@@ -33,6 +34,7 @@ import com.flabser.dataengine.system.entities.Invitation;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
+import com.flabser.env.Site;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.exception.ServerServiceExceptionType;
@@ -46,6 +48,7 @@ import com.flabser.script._Session;
 import com.flabser.script._Validator;
 import com.flabser.server.Server;
 import com.flabser.servlets.ServletUtil;
+import com.flabser.users.AuthModeType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
 import com.flabser.users.UserStatusType;
@@ -133,11 +136,10 @@ public class SessionService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createSession(AppUser authUser) throws ClassNotFoundException, InstantiationException,
-	DatabasePoolException, UserException, IllegalAccessException, SQLException {
+	DatabasePoolException, UserException, IllegalAccessException, SQLException, URISyntaxException {
 		UserSession userSession = null;
 		HttpSession jses;
-		String appID = authUser.getDefaultApp();
-		context.getAttribute(EnvConst.TEMPLATE_ATTR);
+		//		String appID = authUser.getAppId();
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		String login = authUser.getLogin();
 		Server.logger.normalLogEntry(login + " is attempting to signin");
@@ -149,16 +151,18 @@ public class SessionService extends RestProvider {
 			throw new AuthFailedException(authUser);
 		}
 
+
 		String userID = user.getLogin();
 		jses = request.getSession(true);
 
-		Server.logger.normalLogEntry(userID + " has connected");
+		Server.logger.normalLogEntry(userID + " has connected (" + context.getContextPath() + ")");
 		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
 		userSession = new UserSession(user);
+
 		if (user.getStatus() == UserStatusType.REGISTERED) {
 			authUser = userSession.getUserPOJO();
-			authUser.setDefaultApp(appID);
+			//	authUser.setAppId(appID);
 		} else if (user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING_AFTER_INVITATION ||
 				user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING_AFTER_RESET_PASSWORD) {
 			authUser.setRedirect("tochangepwd");
@@ -188,8 +192,14 @@ public class SessionService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response destroySession() throws URISyntaxException {
 		UserSession userSession = getUserSession();
-		_Session session = new _Session(getAppTemplate(), userSession);
-		String url = session.getLoginURL();
+		AppTemplate env = getAppTemplate();
+		String url = "";
+		if (userSession.getAuthMode() == AuthModeType.DIRECT_LOGIN) {
+			url =  env.getHostName() + "/" + env.templateType + "/" +  getAppID() + "/Provider?id=login";;
+		} else {
+			Site site = Environment.availableTemplates.get(Environment.getWorkspaceName());
+			url =  site.getAppTemlate().getHostName() + "/Provider?id=login";
+		}
 		Outcome res = new Outcome();
 		res.addMessage(url);
 		if (userSession != null) {

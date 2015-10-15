@@ -50,9 +50,8 @@ public class Secure extends ValveBase {
 						if (hh != null) {
 							Server.logger.verboseLogEntry("start application initializing ...");
 							try {
-								Server.webServerInst.addApplication(appID, site);
 								us.init(appID);
-								Server.logger.verboseLogEntry("application ready on: " + ru.getUrl());
+
 								((HttpServletResponse) response).sendRedirect(ru.getUrl());
 							} catch (ApplicationException e) {
 								Server.logger.errorLogEntry(e.getMessage());

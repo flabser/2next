@@ -9,6 +9,8 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
 
+import com.flabser.server.Server;
+
 public class Logging extends ValveBase {
 
 	public Logging() {
@@ -36,7 +38,7 @@ public class Logging extends ValveBase {
 		//	}
 		//	System.out.println("-------------");
 
-		//Server.logger.normalLogEntry(ru.getUrl());
+		Server.logger.normalLogEntry(ru.getUrl() + " ---- ispage=" + ru.isPage() + ", isprotected=" + ru.isProtected() + ", isdeafult=" + ru.isDefault() + ", isauth=" + ru.isAuthRequest());
 		((Unsecure) getNext()).invoke(request, response, ru);
 		return;
 	}

@@ -34,7 +34,7 @@ public class AppTemplate implements ICache, _IContent {
 
 	public String templateType = "undefined";
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
-	private String url;
+	private String hostName;
 
 	private AppTemplate parent;
 
@@ -113,10 +113,9 @@ public class AppTemplate implements ICache, _IContent {
 				}
 
 				if (site.getVirtualHostName().equals("")) {
-					url = WebServer.httpSchema + "://" + Environment.hostName + ":" + Environment.httpPort + "/"
-							+ templateType;
+					hostName = WebServer.httpSchema + "://" + Environment.hostName + ":" + Environment.httpPort;
 				} else {
-					url = WebServer.httpSchema + "://" + site.getVirtualHostName() + ":" + Environment.httpPort;
+					hostName = WebServer.httpSchema + "://" + site.getVirtualHostName() + ":" + Environment.httpPort;
 				}
 
 				isValid = true;
@@ -130,24 +129,16 @@ public class AppTemplate implements ICache, _IContent {
 		}
 	}
 
-	public String getUrl() {
-		return url;
+	public String getHostName() {
+		return hostName;
 	}
 
 	public String getWorkspaceURL() {
 		if (parent != null) {
-			return parent.getUrl() + "/Provider?id=ws";
+			return parent.getHostName() + "/Provider?id=ws";
 		} else {
 			Site site = Environment.availableTemplates.get(Environment.getWorkspaceName());
-			return site.getAppTemlate().url + "/Provider?id=ws";
-		}
-	}
-
-	public String getLoginURL() {
-		if (parent != null) {
-			return parent.getUrl() + "/Provider?id=login";
-		} else {
-			return url + "/Provider?id=login";
+			return site.getAppTemlate().hostName + "/Provider?id=ws";
 		}
 	}
 

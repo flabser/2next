@@ -223,14 +223,12 @@ nubis.createApp = function(form) {
 
 	$.ajax({
 		method: 'POST',
-		url: 'rest/page/reg-app',
+		url: 'rest/application/regapp',
 		data: $(form).serialize(),
 		success: function(resp) {
 			var appReg = false;
-			for (var i = 0; i < resp._Page.elements.length; i++) {
-				if ('application-registered' === resp._Page.elements[i].value) {
-					appReg = true;
-				}
+			if (resp.outcome.type == 'OK') {
+					appReg = true;				
 			}
 
 			if (appReg) {
