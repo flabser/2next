@@ -2,8 +2,6 @@ package com.flabser.solutions.postgresql;
 
 import java.text.SimpleDateFormat;
 
-import javax.persistence.EntityManager;
-
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.ft.IFTIndexEngine;
@@ -22,12 +20,6 @@ public class Database extends DatabaseCore implements IDatabase {
 		super.appProfile = appProfile;
 		initConnectivity(driver, appProfile);
 	}
-
-	@Override
-	public EntityManager getEntityManager() {
-		return factory.createEntityManager();
-	}
-
 
 	@Override
 	public int getVersion() {

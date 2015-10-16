@@ -14,21 +14,12 @@ import com.flabser.users.User;
 public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 
 	protected EntityManagerFactory factory;
-	/**
-	 * em was deprecated Use factory instead this one to get the EntityManager
-	 * in a body of the method
-	 *
-	 * @deprecated
-	 */
-	@Deprecated
-	protected EntityManager em;
 	private Class<T> entityClass;
 	protected User user;
 
 	public DAO(Class<T> entityClass, _Session session) {
 		this.user = session.getUser();
 		factory = session.getDatabase().getEntityManagerFactory();
-		this.em = session.getDatabase().getEntityManager();
 		this.entityClass = entityClass;
 	}
 
