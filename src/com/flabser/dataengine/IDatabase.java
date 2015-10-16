@@ -1,6 +1,7 @@
 package com.flabser.dataengine;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
@@ -16,6 +17,7 @@ public interface IDatabase {
 
 	IDeployer getDeployer();
 
+	@Deprecated
 	EntityManager getEntityManager();
 
 
@@ -25,4 +27,6 @@ public interface IDatabase {
 	IDBConnectionPool getPool();
 
 	IFTIndexEngine getFTSearchEngine();
+
+	EntityManagerFactory getEntityManagerFactory();
 }

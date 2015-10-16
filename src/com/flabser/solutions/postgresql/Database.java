@@ -26,7 +26,7 @@ public class Database extends DatabaseCore implements IDatabase {
 
 	@Override
 	public EntityManager getEntityManager() {
-		return entityManager;
+		return factory.createEntityManager();
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package com.flabser.dataengine;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.eclipse.persistence.config.PersistenceUnitProperties;
@@ -25,7 +24,7 @@ public abstract class DatabaseCore {
 
 	protected ApplicationProfile appProfile;
 	protected IDBConnectionPool pool;
-	protected static EntityManager entityManager;
+	protected EntityManagerFactory factory;
 
 	protected void initConnectivity(String driver, ApplicationProfile appProfile) throws InstantiationException,
 	IllegalAccessException, ClassNotFoundException, DatabasePoolException {
@@ -47,7 +46,7 @@ public abstract class DatabaseCore {
 			dbPwd = EnvConst.DB_PWD;
 		} else {
 			throw new ApplicationException(appProfile.appType, "The mode \"" + appProfile.getMode()
-					+ "\" of the application does not support");
+			+ "\" of the application does not support");
 		}
 
 		pool.initConnectionPool(driver, appProfile.getURI(), dbLogin, dbPwd);
@@ -65,12 +64,14 @@ public abstract class DatabaseCore {
 		//properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE, "dropDDL.jdbc");
 
 		PersistenceProvider pp = new PersistenceProvider();
-		EntityManagerFactory factory = pp.createEntityManagerFactory(appProfile.appType, properties);
-		if (factory != null){
-			entityManager = factory.createEntityManager();
-		}else{
+		factory = pp.createEntityManagerFactory(appProfile.appType, properties);
+		if (factory == null){
 			Server.logger.warningLogEntry("the entity manager of \"" + appProfile.appType + "\" has not been initialized");
 		}
+	}
+
+	public EntityManagerFactory getEntityManagerFactory(){
+		return factory;
 	}
 
 	public void generatePersistStorage() {
