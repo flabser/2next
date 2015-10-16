@@ -885,8 +885,8 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		Connection conn = pool.getConnection();
 
 		try (PreparedStatement pst = conn
-				.prepareStatement("insert into INVITATIONS(REGDATE, EMAIL, APPTYPE, APPID, MESSAGE, AUTHOR, TEMPLOGIN) "
-						+ "values(?, ?, ?, ?, ?, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
+				.prepareStatement("insert into INVITATIONS(REGDATE, EMAIL, APPTYPE, APPID, MESSAGE, AUTHOR, TEMPLOGIN, STATUS) "
+						+ "values(?, ?, ?, ?, ?, ?, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			pst.setTimestamp(1, inv.getRegDate() != null ? new java.sql.Timestamp(inv.getRegDate().getTime()) : null);
 			pst.setString(2, inv.getEmail());
@@ -895,6 +895,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			pst.setString(5, inv.getMessage());
 			pst.setLong(6, inv.getAuthor());
 			pst.setLong(7, inv.getTempLogin());
+			pst.setLong(8, inv.getStatus().getCode());
 
 			pst.executeUpdate();
 
@@ -919,7 +920,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		Connection conn = pool.getConnection();
 
 		try (PreparedStatement pst = conn.prepareStatement(
-				"UPDATE INVITATIONS SET EMAIL = ?, APPTYPE = ?, APPID = ?, MESSAGE = ?,  AUTHOR = ?, TEMPLOGIN = ? WHERE ID = ?;")) {
+				"UPDATE INVITATIONS SET EMAIL = ?, APPTYPE = ?, APPID = ?, MESSAGE = ?,  AUTHOR = ?, TEMPLOGIN = ?, STATUS = ? WHERE ID = ?")) {
 
 			pst.setString(1, invitation.getEmail());
 			pst.setString(2, invitation.getAppType());
@@ -927,7 +928,9 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			pst.setString(4, invitation.getMessage());
 			pst.setLong(5, invitation.getAuthor());
 			pst.setLong(6, invitation.getTempLogin());
-			pst.setInt(7, invitation.getId());
+			pst.setInt(7, invitation.getStatus().getCode());
+			pst.setInt(8, invitation.getId());
+
 
 			pst.executeUpdate();
 

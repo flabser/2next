@@ -19,8 +19,6 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.EnvConst;
 import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
-import com.flabser.exception.ServerException;
-import com.flabser.exception.ServerExceptionType;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.rule.IRule;
 import com.flabser.rule.page.PageRule;
@@ -157,8 +155,7 @@ public class Provider extends HttpServlet {
 				}
 
 			} else {
-				throw new ServerException(ServerExceptionType.APPTEMPLATE_HAS_NOT_INITIALIZED, "context="
-						+ context.getServletContextName());
+				throw new ApplicationException(context.getServletContextName(), "context has not found");
 			}
 		} catch (Exception e) {
 			ApplicationException ae = new ApplicationException(env.templateType, e.toString(), e);

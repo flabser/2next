@@ -1,8 +1,7 @@
 package cashtracker.page;
 
-import nubis.page.app.VerifyEMail;
-
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.mail.message.VerifyEMail;
 import com.flabser.script._Session;
 import com.flabser.script._Validator;
 import com.flabser.script._WebFormData;

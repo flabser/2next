@@ -59,7 +59,7 @@ public class AppService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(User user) throws ClassNotFoundException, SQLException, InstantiationException, DatabasePoolException,
-			IllegalAccessException {
+	IllegalAccessException {
 		System.out.println("POST " + user);
 		user.setRegDate(new Date());
 		user.lastURL = "";
@@ -90,6 +90,7 @@ public class AppService extends RestProvider {
 
 	@JsonRootName("apps")
 	class AppsList extends ArrayList<ApplicationProfile> {
+		private static final long serialVersionUID = -5831473279550384891L;
 		public AppsList(Collection<? extends ApplicationProfile> m) {
 			addAll(m);
 		}

@@ -1,4 +1,4 @@
-package nubis.page.app;
+package com.flabser.mail.message;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import com.flabser.script.mail._MailAgent;
 import com.flabser.users.User;
 import com.flabser.util.Util;
 
-public class VerifyEMail {
+public class VerifyEMail implements IEMail {
 
 	private _Session session;
 	private ArrayList<String> recipients = new ArrayList<String>();
@@ -31,6 +31,7 @@ public class VerifyEMail {
 		recipients.add(user.getEmail());
 	}
 
+	@Override
 	public boolean send() {
 		_MailAgent ma = session.getMailAgent();
 		return ma.sendMail(recipients, subj, msg, false);

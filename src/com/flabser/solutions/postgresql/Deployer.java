@@ -27,10 +27,8 @@ public class Deployer extends DatabaseCore implements IDeployer {
 	@Override
 	public void init(IDatabase parentDb) {
 		pool = parentDb.getPool();
-		entityManager = parentDb.getEntityManager();
 	}
 
-	@SuppressWarnings("SqlNoDataSourceInspection")
 	@Override
 	public int deploy(IAppDatabaseInit dbInit) {
 		Connection conn = pool.getConnection();
