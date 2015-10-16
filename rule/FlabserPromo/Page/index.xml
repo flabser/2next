@@ -40,4 +40,6 @@
 
 	<caption name="address" />
 	<caption name="phone" />
+
+	<caption name="cookieconsent_message" />
 </rule>
