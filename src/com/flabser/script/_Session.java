@@ -30,7 +30,7 @@ public class _Session {
 		if (env.globalSetting.getWorkMode() == WorkModeType.COMMON) {
 			ApplicationProfile app = new ApplicationProfile(env);
 			dataBase = app.getDatabase();
-		} else {
+		} else if (env.globalSetting.getWorkMode() == WorkModeType.CLOUD){
 			//			System.out.println(contextID);
 			ApplicationProfile ap = DatabaseFactory.getSysDatabase().getApp(contextID);
 

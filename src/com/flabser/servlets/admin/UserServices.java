@@ -6,7 +6,6 @@ import java.util.Iterator;
 
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
-import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
@@ -34,8 +33,8 @@ public class UserServices {
 
 		if (user.getLogin() != null) {
 			xmlContent += "<login>" + user.getLogin() + "</login><id>" + user.id + "</id>" + "<username>" + user.getUserName()
-					+ "</username><email>" + user.getEmail() + "</email>" + "<password>" + user.getPwd() + "</password><isadmin>"
-					+ user.isSupervisor() + "</isadmin>" + "<hash>" + user.getLoginHash() + "</hash><enabledapps>" + ea + "</enabledapps>";
+			+ "</username><email>" + user.getEmail() + "</email>" + "<password>" + user.getPwd() + "</password><isadmin>"
+			+ user.isSupervisor() + "</isadmin>" + "<hash>" + user.getLoginHash() + "</hash><enabledapps>" + ea + "</enabledapps>";
 
 		}
 
@@ -64,7 +63,7 @@ public class UserServices {
 		while (it.hasNext()) {
 			User user = it.next();
 			xmlFragment += "<entry id=\"" + user.id + "\" ><login>" + user.getLogin() + "</login>" + "<issupervisor>" + user.isSupervisor()
-					+ "</issupervisor><email>" + user.getEmail() + "</email><username>" + user.getUserName() + "</username></entry>";
+			+ "</issupervisor><email>" + user.getEmail() + "</email><username>" + user.getUserName() + "</username></entry>";
 		}
 
 		return xmlFragment;
@@ -83,8 +82,7 @@ public class UserServices {
 			int res = appDb.createDatabase(appProfile.getDbName(), appProfile.owner);
 			if (res == 0 || res == 1) {
 				IDatabase dataBase = appProfile.getDatabase();
-				IDeployer ad = dataBase.getDeployer();
-				ad.init(null);
+				;
 				//	ad.deploy(null);
 			}
 		}
