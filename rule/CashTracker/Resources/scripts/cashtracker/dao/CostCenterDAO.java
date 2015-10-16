@@ -2,6 +2,7 @@ package cashtracker.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -20,17 +21,28 @@ public class CostCenterDAO extends DAO <CostCenter, Long> {
 	}
 
 	public List <CostCenter> find(PageRequest pr) {
-		TypedQuery <CostCenter> q = em.createNamedQuery("CostCenter.findAll", CostCenter.class);
-		q.setFirstResult(pr.getOffset());
-		q.setMaxResults(pr.getLimit());
-		return q.getResultList();
+		EntityManager em = factory.createEntityManager();
+		try {
+			TypedQuery <CostCenter> q = em.createNamedQuery("CostCenter.findAll", CostCenter.class);
+			q.setFirstResult(pr.getOffset());
+			q.setMaxResults(pr.getLimit());
+			return q.getResultList();
+		} finally {
+			em.close();
+		}
 	}
 
 	public boolean existsTransactionByCostCenter(CostCenter m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.costCenter = :costCenter";
-		Query q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("costCenter", m);
-		q.setMaxResults(1);
-		return !q.getResultList().isEmpty();
+
+		EntityManager em = factory.createEntityManager();
+		try {
+			Query q = em.createQuery(jpql, Transaction.class);
+			q.setParameter("costCenter", m);
+			q.setMaxResults(1);
+			return !q.getResultList().isEmpty();
+		} finally {
+			em.close();
+		}
 	}
 }

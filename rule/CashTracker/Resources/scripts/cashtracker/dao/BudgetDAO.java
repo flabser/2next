@@ -1,5 +1,8 @@
 package cashtracker.dao;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
 import cashtracker.model.Budget;
 
 import com.flabser.dataengine.jpa.DAO;
@@ -13,8 +16,20 @@ public class BudgetDAO extends DAO <Budget, Long> {
 	}
 
 	public void delete() {
-		em.getTransaction().begin();
-		em.createQuery("DELETE FROM Budget as m", Budget.class).executeUpdate();
-		em.getTransaction().commit();
+		EntityManager em = factory.createEntityManager();
+		try {
+			EntityTransaction t = em.getTransaction();
+			try {
+				t.begin();
+				em.createQuery("DELETE FROM Budget as m", Budget.class).executeUpdate();
+				t.commit();
+			} finally {
+				if (t.isActive()) {
+					t.rollback();
+				}
+			}
+		} finally {
+			em.close();
+		}
 	}
 }

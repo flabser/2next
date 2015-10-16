@@ -2,6 +2,7 @@ package cashtracker.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -20,15 +21,27 @@ public class AccountDAO extends DAO <Account, Long> {
 
 	public List <Account> findAllEnabled() {
 		String jpql = "SELECT a FROM Account AS a WHERE a.enabled = true ORDER BY a.name";
-		TypedQuery <Account> q = em.createQuery(jpql, Account.class);
-		return q.getResultList();
+
+		EntityManager em = factory.createEntityManager();
+		try {
+			TypedQuery <Account> q = em.createQuery(jpql, Account.class);
+			return q.getResultList();
+		} finally {
+			em.close();
+		}
 	}
 
 	public boolean existsTransactionByAccount(Account m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.account = :account OR t.transferAccount = :account";
-		Query q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("account", m);
-		q.setMaxResults(1);
-		return !q.getResultList().isEmpty();
+
+		EntityManager em = factory.createEntityManager();
+		try {
+			Query q = em.createQuery(jpql, Transaction.class);
+			q.setParameter("account", m);
+			q.setMaxResults(1);
+			return !q.getResultList().isEmpty();
+		} finally {
+			em.close();
+		}
 	}
 }

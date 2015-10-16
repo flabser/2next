@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -74,104 +75,166 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 		String jpql = SELECT_ALL + (hasWhere ? " WHERE " : "") + accouns + categories + costCenters + tags
 				+ transactionTypes + dateRange + " ORDER BY t.date ASC";
 
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		if (!accouns.isEmpty()) {
-			q.setParameter("accounts", filter.getAccounts());
-		}
-		if (!categories.isEmpty()) {
-			q.setParameter("categories", filter.getCategories());
-		}
-		if (!costCenters.isEmpty()) {
-			q.setParameter("costCenters", filter.getCostCenters());
-		}
-		if (!tags.isEmpty()) {
-			q.setParameter("tags", filter.getTags());
-		}
-		if (!transactionTypes.isEmpty()) {
-			q.setParameter("transactionTypes", filter.getTransactionTypes());
-		}
-		if (!dateRange.isEmpty()) {
-			q.setParameter("sdate", filter.getDateRange()[0]);
-			q.setParameter("edate", filter.getDateRange()[1]);
-		}
+		EntityManager em = factory.createEntityManager();
+		try {
+			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+			if (!accouns.isEmpty()) {
+				q.setParameter("accounts", filter.getAccounts());
+			}
+			if (!categories.isEmpty()) {
+				q.setParameter("categories", filter.getCategories());
+			}
+			if (!costCenters.isEmpty()) {
+				q.setParameter("costCenters", filter.getCostCenters());
+			}
+			if (!tags.isEmpty()) {
+				q.setParameter("tags", filter.getTags());
+			}
+			if (!transactionTypes.isEmpty()) {
+				q.setParameter("transactionTypes", filter.getTransactionTypes());
+			}
+			if (!dateRange.isEmpty()) {
+				q.setParameter("sdate", filter.getDateRange()[0]);
+				q.setParameter("edate", filter.getDateRange()[1]);
+			}
 
-		q.setFirstResult(pr.getOffset());
-		q.setMaxResults(pr.getLimit());
+			q.setFirstResult(pr.getOffset());
+			q.setMaxResults(pr.getLimit());
 
-		return q.getResultList();
+			return q.getResultList();
+		} finally {
+			em.close();
+		}
 	}
 
 	public List <Transaction> findAllByAccount(Account m) {
 		String jpql = SELECT_ALL + " WHERE t.account = :account";
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("account", m);
-		return q.getResultList();
+
+		EntityManager em = factory.createEntityManager();
+		try {
+			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+			q.setParameter("account", m);
+			return q.getResultList();
+		} finally {
+			em.close();
+		}
 	}
 
 	public List <Transaction> findAllByTransferAccount(Account m) {
 		String jpql = SELECT_ALL + " WHERE t.transferAccount = :account";
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("account", m);
-		return q.getResultList();
+
+		EntityManager em = factory.createEntityManager();
+		try {
+			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+			q.setParameter("account", m);
+			return q.getResultList();
+		} finally {
+			em.close();
+		}
 	}
 
 	public List <Transaction> findAllByCostCenter(CostCenter m) {
 		String jpql = SELECT_ALL + " WHERE t.costCenter = :costCenter";
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("costCenter", m);
-		return q.getResultList();
+
+		EntityManager em = factory.createEntityManager();
+		try {
+			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+			q.setParameter("costCenter", m);
+			return q.getResultList();
+		} finally {
+			em.close();
+		}
 	}
 
 	public List <Transaction> findAllByCategory(Category m) {
 		String jpql = SELECT_ALL + " WHERE t.category = :category";
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("category", m);
-		return q.getResultList();
+
+		EntityManager em = factory.createEntityManager();
+		try {
+			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+			q.setParameter("category", m);
+			return q.getResultList();
+		} finally {
+			em.close();
+		}
 	}
 
 	public List <Transaction> findAllByTags(List <Tag> tags) {
 		String jpql = SELECT_ALL + " WHERE t.tags IN :tags";
-		TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("tags", tags);
-		return q.getResultList();
+
+		EntityManager em = factory.createEntityManager();
+		try {
+			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
+			q.setParameter("tags", tags);
+			return q.getResultList();
+		} finally {
+			em.close();
+		}
 	}
 
 	public int getCountByType(TransactionType type) {
-		Query q = em.createQuery("SELECT count(t) FROM Transaction AS t WHERE t.transactionType = :type",
-				Transaction.class);
-		q.setParameter("type", type);
-		return ((Long) q.getSingleResult()).intValue();
+		EntityManager em = factory.createEntityManager();
+		try {
+			Query q = em.createQuery("SELECT count(t) FROM Transaction AS t WHERE t.transactionType = :type",
+					Transaction.class);
+			q.setParameter("type", type);
+			return ((Long) q.getSingleResult()).intValue();
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override
 	public Transaction add(Transaction entity) {
-		EntityTransaction transact = em.getTransaction();
-		transact.begin();
-		entity.setAuthor(user.id);
-		//
-		Set <TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
-		if (files != null) {
-			entity.setAttachments(files);
+		EntityManager em = factory.createEntityManager();
+		try {
+			EntityTransaction transact = em.getTransaction();
+			try {
+				transact.begin();
+				entity.setAuthor(user.id);
+				//
+				Set <TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
+				if (files != null) {
+					entity.setAttachments(files);
+				}
+				//
+				em.persist(entity);
+				transact.commit();
+				return entity;
+			} finally {
+				if (transact.isActive()) {
+					transact.rollback();
+				}
+			}
+		} finally {
+			em.close();
 		}
-		//
-		em.persist(entity);
-		transact.commit();
-		return entity;
 	}
 
 	@Override
 	public Transaction update(Transaction entity) {
-		EntityTransaction transact = em.getTransaction();
-		transact.begin();
-		//
-		Set <TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
-		if (files != null) {
-			entity.setAttachments(files);
+		EntityManager em = factory.createEntityManager();
+		try {
+			EntityTransaction transact = em.getTransaction();
+			try {
+				transact.begin();
+				//
+				Set <TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
+				if (files != null) {
+					entity.setAttachments(files);
+				}
+				//
+				em.merge(entity);
+				transact.commit();
+				return entity;
+			} finally {
+				if (transact.isActive()) {
+					transact.rollback();
+				}
+			}
+		} finally {
+			em.close();
 		}
-		//
-		em.merge(entity);
-		transact.commit();
-		return entity;
 	}
 
 	protected Set <TransactionFile> proccesAttachments(Transaction entity, Set <TransactionFile> attachments) {

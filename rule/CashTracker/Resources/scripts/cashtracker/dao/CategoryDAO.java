@@ -2,6 +2,7 @@ package cashtracker.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -21,24 +22,42 @@ public class CategoryDAO extends DAO <Category, Long> {
 
 	public List <Category> findByTransactionType(TransactionType type) {
 		String jpql = "SELECT c FROM Category AS c WHERE c.parent IS NULL AND :type MEMBER OF c.transactionTypes ORDER BY c.name";
-		TypedQuery <Category> q = em.createQuery(jpql, Category.class);
-		q.setParameter("type", type);
-		return q.getResultList();
+
+		EntityManager em = factory.createEntityManager();
+		try {
+			TypedQuery <Category> q = em.createQuery(jpql, Category.class);
+			q.setParameter("type", type);
+			return q.getResultList();
+		} finally {
+			em.close();
+		}
 	}
 
 	public boolean existsTransactionByCategory(Category m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.category = :category";
-		Query q = em.createQuery(jpql, Transaction.class);
-		q.setParameter("category", m);
-		q.setMaxResults(1);
-		return !q.getResultList().isEmpty();
+
+		EntityManager em = factory.createEntityManager();
+		try {
+			Query q = em.createQuery(jpql, Transaction.class);
+			q.setParameter("category", m);
+			q.setMaxResults(1);
+			return !q.getResultList().isEmpty();
+		} finally {
+			em.close();
+		}
 	}
 
 	public boolean existsChildCategory(Category m) {
 		String jpql = "SELECT c FROM Category AS c WHERE c.parent = :category";
-		Query q = em.createQuery(jpql, Category.class);
-		q.setParameter("category", m);
-		q.setMaxResults(1);
-		return !q.getResultList().isEmpty();
+
+		EntityManager em = factory.createEntityManager();
+		try {
+			Query q = em.createQuery(jpql, Category.class);
+			q.setParameter("category", m);
+			q.setMaxResults(1);
+			return !q.getResultList().isEmpty();
+		} finally {
+			em.close();
+		}
 	}
 }
