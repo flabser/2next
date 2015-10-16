@@ -25,6 +25,7 @@ public class DoProcessor {
 	private Vocabulary vocabulary;
 	private _WebFormData webFormData;
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public DoProcessor(AppTemplate env, UserSession u, String currentLang, Map<String, String[]> formData, String context) {
 		ses = new _Session(env, u, context);
 		vocabulary = env.vocabulary;
