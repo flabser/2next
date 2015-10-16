@@ -11,24 +11,17 @@ import javax.persistence.TypedQuery;
 import com.flabser.script._Session;
 import com.flabser.users.User;
 
-public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
+
+public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 
 	protected EntityManagerFactory factory;
-	/**
-	 * em was deprecated Use factory instead this one to get the EntityManager
-	 * in a body of the method
-	 *
-	 * @deprecated
-	 */
-	@Deprecated
-	protected EntityManager em;
-	private Class<T> entityClass;
+
+	private Class <T> entityClass;
 	protected User user;
 
-	public DAO(Class<T> entityClass, _Session session) {
-		this.user = session.getUser();
+	public DAO(Class <T> entityClass, _Session session) {
+		user = session.getUser();
 		factory = session.getDatabase().getEntityManagerFactory();
-		this.em = session.getDatabase().getEntityManager();
 		this.entityClass = entityClass;
 	}
 
@@ -37,7 +30,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 		EntityManager em = factory.createEntityManager();
 		try {
 			String jpql = "SELECT m FROM " + entityClass.getName() + " AS m WHERE m.id = :id";
-			TypedQuery<T> q = em.createQuery(jpql, entityClass);
+			TypedQuery <T> q = em.createQuery(jpql, entityClass);
 			q.setParameter("id", id);
 			return q.getSingleResult();
 		} finally {
@@ -46,10 +39,10 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 	}
 
 	@Override
-	public List<T> findAll() {
+	public List <T> findAll() {
 		EntityManager em = factory.createEntityManager();
 		try {
-			TypedQuery<T> q = em.createNamedQuery(getQueryNameForAll(), entityClass);
+			TypedQuery <T> q = em.createNamedQuery(getQueryNameForAll(), entityClass);
 			return q.getResultList();
 		} finally {
 			em.close();
@@ -104,6 +97,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO<T, K> {
 			EntityTransaction t = em.getTransaction();
 			try {
 				t.begin();
+				entity = em.merge(entity);
 				em.remove(entity);
 				t.commit();
 			} finally {
