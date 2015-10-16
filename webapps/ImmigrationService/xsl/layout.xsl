@@ -42,6 +42,18 @@
 				<script src="/SharedResources/vendor/jquery/jquery-2.1.4.min.js"></script>
 				<script src="/SharedResources/vendor/bootstrap/js/bootstrap.min.js"></script>
 				<script src="https://www.google.com/recaptcha/api.js"></script>
+				<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+				<script type="text/javascript">
+				    window.cookieconsent_options = {
+				    	"message":"<xsl:value-of select="//captions/cookieconsent_message/@caption" />",
+				    	"dismiss":"OK",
+				    	"learnMore":"",
+				    	"link":null,
+				    	"theme":"dark-bottom"
+				    };
+				</script>
+				<script type="text/javascript" src="//s3.amazonaws.com/cc.silktide.com/cookieconsent.latest.min.js"></script>
+				<!-- End Cookie Consent plugin -->
 				<!-- app
 				======================== -->
 				<script src="js/app.js"></script>
