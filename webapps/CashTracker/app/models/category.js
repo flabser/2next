@@ -1,8 +1,8 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-    transactionTypes: DS.attr('', {
-        defaultValue: []
+    transactionTypes: DS.attr({
+        defaultValue: () => []
     }),
     parent: DS.belongsTo('category'),
     children: DS.hasMany('category', {
