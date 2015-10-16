@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.IDatabase;
-import com.flabser.dataengine.IDeployer;
 import com.flabser.dataengine.ft.IFTIndexEngine;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.pool.IDBConnectionPool;
@@ -29,12 +28,6 @@ public class Database extends DatabaseCore implements IDatabase {
 		return factory.createEntityManager();
 	}
 
-	@Override
-	public IDeployer getDeployer() {
-		Deployer d = new Deployer();
-		d.init(this);
-		return d;
-	}
 
 	@Override
 	public int getVersion() {

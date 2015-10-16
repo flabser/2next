@@ -15,8 +15,6 @@ public interface IDatabase {
 
 	int getVersion();
 
-	IDeployer getDeployer();
-
 	@Deprecated
 	EntityManager getEntityManager();
 
