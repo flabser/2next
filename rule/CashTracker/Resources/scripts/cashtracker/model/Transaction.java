@@ -1,6 +1,7 @@
 package cashtracker.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -182,15 +183,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.category = category;
 	}
 
-	/*@JsonGetter("category")
-	public Long getCategoryId() {
-		if (category != null) {
-			return category.getId();
-		}
-		return null;
-	}*/
-
-	// @JsonSetter("category")
+	@JsonSetter("category")
 	public void setCategoryById(Long id) {
 		Category category = null;
 		if (id != null) {
@@ -211,15 +204,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.account = account;
 	}
 
-	/*@JsonGetter("account")
-	public Long getAccountId() {
-		if (account != null) {
-			return account.getId();
-		}
-		return null;
-	}*/
-
-	// @JsonSetter("account")
+	@JsonSetter("account")
 	public void setAccountById(Long id) {
 		Account account = null;
 		if (id != null) {
@@ -240,15 +225,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.transferAccount = account;
 	}
 
-	/*@JsonGetter("transferAccount")
-	public Long getTransferAccountId() {
-		if (transferAccount != null) {
-			return transferAccount.getId();
-		}
-		return null;
-	}*/
-
-	// @JsonSetter("transferAccount")
+	@JsonSetter("transferAccount")
 	public void setTransferAccountById(Long id) {
 		Account transferAccount = null;
 		if (id != null) {
@@ -269,15 +246,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.costCenter = costCenter;
 	}
 
-	/*@JsonGetter("costCenter")
-	public Long getCostCenterId() {
-		if (costCenter != null) {
-			return costCenter.getId();
-		}
-		return null;
-	}*/
-
-	// @JsonSetter("costCenter")
+	@JsonSetter("costCenter")
 	public void setCostCenterById(Long id) {
 		CostCenter costCenter = null;
 		if (id != null) {
@@ -295,15 +264,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		this.tags = tags;
 	}
 
-	/*@JsonGetter("tags")
-	public List <Long> getTagsId() {
-		if (tags != null) {
-			return tags.stream().map(Tag::getId).collect(Collectors.toList());
-		}
-		return null;
-	}*/
-
-	/*@JsonSetter("tags")
+	@JsonSetter("tags")
 	public void setTagsId(List <Long> ids) {
 		if (ids != null) {
 			List <Tag> _tags = new ArrayList <Tag>();
@@ -316,7 +277,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 		} else {
 			setTags(null);
 		}
-	}*/
+	}
 
 	public Date getDate() {
 		return date;

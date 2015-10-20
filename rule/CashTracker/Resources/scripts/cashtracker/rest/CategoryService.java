@@ -55,12 +55,18 @@ public class CategoryService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Category m) {
+		CategoryDAO dao = new CategoryDAO(getSession());
+
+		// parent category
+		if (m.getParent() != null) {
+			m.setParent(dao.findById(m.getParent().getId()));
+		}
+
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
-		CategoryDAO dao = new CategoryDAO(getSession());
 		return Response.ok(dao.add(m)).build();
 	}
 
@@ -69,14 +75,20 @@ public class CategoryService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, Category m) {
+		CategoryDAO dao = new CategoryDAO(getSession());
+
 		m.setId(id);
+
+		// parent category
+		if (m.getParent() != null) {
+			m.setParent(dao.findById(m.getParent().getId()));
+		}
 
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
-		CategoryDAO dao = new CategoryDAO(getSession());
 		Category pm = dao.findById(id);
 		//
 		if (pm == null) {

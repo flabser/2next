@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -22,9 +23,14 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.io.FileUtils;
 
+import cashtracker.dao.AccountDAO;
+import cashtracker.dao.CategoryDAO;
+import cashtracker.dao.CostCenterDAO;
+import cashtracker.dao.TagDAO;
 import cashtracker.dao.TransactionDAO;
 import cashtracker.helper.PageRequest;
 import cashtracker.helper.TransactionFilter;
+import cashtracker.model.Tag;
 import cashtracker.model.Transaction;
 import cashtracker.model.TransactionFile;
 import cashtracker.model.constants.TransactionType;
@@ -98,6 +104,25 @@ public class TransactionService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Transaction m) {
+		//
+		if (m.getAccount() != null) {
+			AccountDAO accountDao = new AccountDAO(getSession());
+			m.setAccount(accountDao.findById(m.getAccount().getId()));
+		}
+		if (m.getCategory() != null) {
+			CategoryDAO categoryDao = new CategoryDAO(getSession());
+			m.setCategory(categoryDao.findById(m.getCategory().getId()));
+		}
+		if (m.getCostCenter() != null) {
+			CostCenterDAO costCenterDao = new CostCenterDAO(getSession());
+			m.setCostCenter(costCenterDao.findById(m.getCostCenter().getId()));
+		}
+		if (m.getTags() != null && !m.getTags().isEmpty()) {
+			TagDAO tagDao = new TagDAO(getSession());
+			List <Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
+			m.setTags(tagDao.findByIds(ids));
+		}
+
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();
@@ -113,6 +138,25 @@ public class TransactionService extends RestProvider {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, Transaction m) {
 		m.setId(id);
+		//
+		if (m.getAccount() != null) {
+			AccountDAO accountDao = new AccountDAO(getSession());
+			m.setAccount(accountDao.findById(m.getAccount().getId()));
+		}
+		if (m.getCategory() != null) {
+			CategoryDAO categoryDao = new CategoryDAO(getSession());
+			m.setCategory(categoryDao.findById(m.getCategory().getId()));
+		}
+		if (m.getCostCenter() != null) {
+			CostCenterDAO costCenterDao = new CostCenterDAO(getSession());
+			m.setCostCenter(costCenterDao.findById(m.getCostCenter().getId()));
+		}
+		if (m.getTags() != null && !m.getTags().isEmpty()) {
+			TagDAO tagDao = new TagDAO(getSession());
+			List <Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
+			m.setTags(tagDao.findByIds(ids));
+		}
+
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();

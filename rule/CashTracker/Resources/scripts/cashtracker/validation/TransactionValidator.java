@@ -30,11 +30,9 @@ public class TransactionValidator {
 
 		if (m.getAccount() == null) {
 			ve.addError("account", "required", "required");
-		}
-
-		/*if (!m.getAccount().isEnabled()) {
+		} else if (!m.getAccount().isEnabled()) {
 			ve.addError("account", "invalid", "disabled");
-		}*/
+		}
 
 		if (m.getTransferAccount() != null && !m.getTransferAccount().isEnabled()) {
 			ve.addError("transferAccount", "invalid", "disabled");
