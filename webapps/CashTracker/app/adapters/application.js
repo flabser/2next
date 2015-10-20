@@ -13,12 +13,12 @@ export default DS.RESTAdapter.extend({
                 return 'categories';
             case 'budget':
                 return 'budget';
+            case 'role':
+                return 'application/roles'
             default:
                 return type + 's';
         }
     },
 
-    shouldReloadAll: function() {
-        return false;
-    }
+    shouldReloadAll: () => false
 });

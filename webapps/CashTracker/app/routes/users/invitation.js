@@ -6,8 +6,13 @@ export default Em.Route.extend(ModelRoute, {
         return this.store.createRecord('invitation');
     },
 
+    roles: function() {
+        return this.store.findAll('role');
+    }.property(),
+
     setupController: function(controller, model) {
         controller.set('invitation', model);
+        controller.set('roles', this.get('roles'));
     },
 
     actions: {

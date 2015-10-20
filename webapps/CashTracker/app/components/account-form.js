@@ -35,7 +35,8 @@ export default Em.Component.extend(ModelForm, {
         },
 
         selectizeSelectCurrencyItemAction: function(selection) {
-            this.get('account').set('currencyCode', selection.code);
+            this.get('account').set('currencyCode', (selection ? selection.code : ''));
+            this.validate('currencyCode');
         },
 
         validateName: function() {
