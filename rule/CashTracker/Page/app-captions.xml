@@ -99,6 +99,7 @@
 	<caption name="add_user" />
 	<caption name="invitation_title" />
 	<caption name="invitation_email_hint" />
+	<caption name="invitation_roles_hint" />
 	<caption name="message" />
 	<caption name="send_invite" />
 

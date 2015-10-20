@@ -882,6 +882,12 @@
 		<entry lang="ENG">Invited user's email </entry>
 		<entry lang="BG">Адрес электронной почты приглашаемого пользователя</entry>
 	</sentence>
+	<sentence mode="on" keyword="invitation_roles_hint">
+		<entry lang="RUS">Укажите роли которые хотите дать пользователю</entry>
+		<entry lang="KAZ">Укажите роли которые хотите дать пользователю</entry>
+		<entry lang="ENG">Укажите роли которые хотите дать пользователю</entry>
+		<entry lang="BG">Укажите роли которые хотите дать пользователю</entry>
+	</sentence>
 	<sentence mode="on" keyword="message">
 		<entry lang="RUS">Сообщение</entry>
 		<entry lang="KAZ">Сообщение</entry>
