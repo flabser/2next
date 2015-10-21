@@ -7,6 +7,8 @@ public interface IDAO<T, K> {
 
 	T findById(K id);
 
+	List <T> findByIds(List <K> ids);
+
 	List <T> findAll();
 
 	T add(T entity);

@@ -16,9 +16,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 
 	protected EntityManagerFactory factory;
 
-	private Class<T> entityClass;
-
-
+	private Class <T> entityClass;
 
 	protected User user;
 
@@ -36,6 +34,19 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 			TypedQuery <T> q = em.createQuery(jpql, entityClass);
 			q.setParameter("id", id);
 			return q.getSingleResult();
+		} finally {
+			em.close();
+		}
+	}
+
+	@Override
+	public List <T> findByIds(List <K> ids) {
+		EntityManager em = factory.createEntityManager();
+		try {
+			String jpql = "SELECT m FROM " + entityClass.getName() + " AS m WHERE m.id IN :ids";
+			TypedQuery <T> q = em.createQuery(jpql, entityClass);
+			q.setParameter("ids", ids);
+			return q.getResultList();
 		} finally {
 			em.close();
 		}
