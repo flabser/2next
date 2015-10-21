@@ -7,6 +7,10 @@ const noteMaxLen = 256;
 
 export default Em.Component.extend(ModelForm, {
     transaction: null,
+    accounts: null,
+    categories: null,
+    costCenters: null,
+    tags: null,
 
     isTransfer: Em.computed('transaction.transactionType', function() {
         return this.get('transaction.transactionType') === 'T';
@@ -28,7 +32,7 @@ export default Em.Component.extend(ModelForm, {
         },
         removeAttach: function(tid) {
             this.get('transaction.attachments').forEach((attach) => {
-                if (attach && tid == attach.get('tempID')) {
+                if (attach && tid === attach.get('tempID')) {
                     console.log(tid, attach);
                     attach.destroyRecord();
                 }
@@ -64,8 +68,8 @@ export default Em.Component.extend(ModelForm, {
                     }
                     break;
                 case 'note':
-                    if (this.get('transaction.note') && this.get('transaction.note').length > 256) {
-                        this.get('errors').add('note', i18n.t('validation_long', 256));
+                    if (this.get('transaction.note') && this.get('transaction.note').length > noteMaxLen) {
+                        this.get('errors').add('note', i18n.t('validation_long', noteMaxLen));
                     }
                     break;
             }
@@ -78,8 +82,8 @@ export default Em.Component.extend(ModelForm, {
             if (!Validate.isNumeric(this.get('transaction.amount'))) {
                 this.get('errors').add('amount', i18n.t('validation_numeric'));
             }
-            if (this.get('transaction.note') && this.get('transaction.note').length > 256) {
-                this.get('errors').add('note', i18n.t('validation_long', 256));
+            if (this.get('transaction.note') && this.get('transaction.note').length > noteMaxLen) {
+                this.get('errors').add('note', i18n.t('validation_long', noteMaxLen));
             }
         }
 

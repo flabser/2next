@@ -20,9 +20,7 @@
                 {{category.name}}
             </span>
             <span class="vcat-types">
-                {{#each category.transactionTypes as |transactionType|}}
-                    {{transaction-icon transactionType}}
-                {{/each}}
+                {{transaction-icon category.transactionType}}
             </span>
             <span>
                 {{category.note}}

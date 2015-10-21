@@ -10,13 +10,10 @@
         </header>
         <section class="content-body">
             <fieldset class="fieldset">
-                <div class="form-group form-group-no-label select-transaction-type">
-                    <div class="controls">
-                        {{select-transaction-type
-                            required=true
-                            multi=true
-                            value=category.transactionTypes}}
-                        {{#each errors.transactionTypes as |error|}}
+                <div class="form-group form-group-no-label">
+                    <div class="controls select-transaction-type">
+                        {{select-transaction-type value=category.transactionType}}
+                        {{#each errors.transactionType as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
                         <p class="hint">

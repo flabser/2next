@@ -1,16 +1,16 @@
-import Ember from 'ember';
+import Em from 'ember';
 
-export default Ember.Component.extend({
+export default Em.Component.extend({
     content: null,
     prompt: null,
     optionValuePath: 'id',
     optionLabelPath: 'title',
     selection: null,
-    action: Ember.K, // action to fire on change
+    action: Em.K, // action to fire on change
 
     // shadow the passed-in `selection` to avoid
     // leaking changes to it via a 2-way binding
-    _selection: Ember.computed.reads('selection'),
+    _selection: Em.computed.reads('selection'),
 
     actions: {
         change: function() {

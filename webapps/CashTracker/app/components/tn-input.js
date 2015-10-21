@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Em from 'ember';
 import TextInputMixin from '../mixins/text-input';
 
-var Input = Ember.TextField.extend(TextInputMixin, {
+var Input = Em.TextField.extend(TextInputMixin, {
     classNames: 'input'
 });
 

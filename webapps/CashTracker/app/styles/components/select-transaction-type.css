@@ -8,6 +8,20 @@
 .select-transaction-type > .btn {
     opacity: .7;
     padding: 4px 8px 4px 4px;
+    position: relative;
+}
+
+.select-transaction-type.multi .btn.active:after {
+    background: #9E9E9E;
+    border-top: 8px solid transparent;
+    border-right: 8px solid #FFF;
+    content: '';
+    display: block;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 0;
 }
 
 .select-transaction-type > .btn:hover {

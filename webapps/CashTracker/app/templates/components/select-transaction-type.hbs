@@ -1,4 +1,4 @@
-<div class="select-transaction-type">
+<div class="select-transaction-type {{if multi 'multi'}}">
     <button type="button" class="btn {{if isExpense 'active'}}" {{action 'toggle' 'E'}}>
         <i class="fa fa-caret-down red"></i>
         <span>{{t 'expense'}}</span>

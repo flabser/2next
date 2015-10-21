@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Em from 'ember';
 
-let Checkbox = Ember.Object.extend({
-    isSelected: Ember.computed('value', 'selection', {
+let Checkbox = Em.Object.extend({
+    isSelected: Em.computed('value', 'selection', {
         get() {
             return this.get('selection').contains(this.get('value'));
         },
@@ -20,14 +20,14 @@ let Checkbox = Ember.Object.extend({
     })
 });
 
-export default Ember.Component.extend({
+export default Em.Component.extend({
     classNames: ['multiselect-checkboxes'],
 
     tagName: 'ul',
 
-    options: Ember.A(),
+    options: Em.A(),
 
-    selection: Ember.A(),
+    selection: Em.A(),
 
     labelProperty: null,
 
@@ -35,10 +35,10 @@ export default Ember.Component.extend({
 
     disabled: false,
 
-    checkboxes: Ember.computed('options', 'labelProperty', 'valueProperty', 'selection', function() {
+    checkboxes: Em.computed('options', 'labelProperty', 'valueProperty', 'selection', function() {
         let labelProperty = this.get('labelProperty');
         let valueProperty = this.get('valueProperty');
-        let selection = this.get('selection') || Ember.A();
+        let selection = this.get('selection') || Em.A();
 
         let checkboxes = this.get('options').map((option) => {
             let label, value;
@@ -70,6 +70,6 @@ export default Ember.Component.extend({
             });
         });
 
-        return Ember.A(checkboxes);
+        return Em.A(checkboxes);
     })
 });

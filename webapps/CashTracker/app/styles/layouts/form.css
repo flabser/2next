@@ -26,8 +26,16 @@
     margin: 0;
     max-width: 100%;
     min-height: 28px;
-    /* overflow: hidden; */
     padding: 8px 0;
+}
+
+.form-group:after {
+    content: ' ';
+    clear: both;
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
 }
 
 .form-group:last-child {
@@ -68,14 +76,6 @@
     max-width: 100%;
     min-height: inherit;
     padding: 0px;
-}
-
-.form-group .controls:after {
-    clear: both;
-    content: '';
-    display: block;
-    height: 0;
-    width: 0;
 }
 
 .form-group.vertical {
