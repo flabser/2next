@@ -67,8 +67,15 @@
     margin: 0 0 0 240px;
     max-width: 100%;
     min-height: inherit;
-    /* overflow: hidden; */
     padding: 0px;
+}
+
+.form-group .controls:after {
+    clear: both;
+    content: '';
+    display: block;
+    height: 0;
+    width: 0;
 }
 
 .form-group.vertical {
@@ -107,6 +114,9 @@
     .form-group .controls {
         margin-left: 140px;
     }
+    .form-group.form-group-no-label .controls {
+        margin-left: 0px;
+    }
 }
 
 @media ( max-width: 540px) {
@@ -115,5 +125,8 @@
     }
     .form-group .controls {
         margin-left: 95px;
+    }
+    .form-group.form-group-no-label .controls {
+        margin-left: 0px;
     }
 }

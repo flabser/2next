@@ -1,17 +1,49 @@
 .select-transaction-type {}
 
+.tablet .select-transaction-type,
+.phone .select-transaction-type {
+    text-align: center;
+}
+
 .select-transaction-type > .btn {
-    opacity: .5;
-    padding: 6px 12px 6px 6px;
+    opacity: .7;
+    padding: 4px 8px 4px 4px;
+}
+
+.select-transaction-type > .btn:hover {
+    opacity: 1;
 }
 
 .select-transaction-type > .btn.active {
     border-color: #888;
+    /* #FFC100; */
+    /* box-shadow: 0px 0px 3px #FFE000; */
     opacity: 1;
 }
 
-.select-transaction-type > .btn .fa {}
+.select-transaction-type > .btn.active span {
+    text-decoration: none;
+}
 
-.select-transaction-type > .btn.active .fa {}
+.select-transaction-type > .btn .fa {
+    font-size: 16px;
+    line-height: 14px;
+    /* border: 2px solid transparent;
+    height: 22px;
+    line-height: 20px;
+    width: 22px; */
+}
 
-.select-transaction-type > button:not(.active) .fa {}
+.tablet .select-transaction-type > .btn .fa,
+.phone .select-transaction-type > .btn .fa {
+    margin: 0 3px;
+}
+
+.select-transaction-type > .btn.active .fa {
+    /* border: 2px solid #aaa;
+    border-radius: 50%; */
+}
+
+.select-transaction-type > button:not(.active) .fa {
+    color: #999;
+}

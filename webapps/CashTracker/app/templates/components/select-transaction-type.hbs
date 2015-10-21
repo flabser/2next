@@ -1,14 +1,14 @@
 <div class="select-transaction-type">
     <button type="button" class="btn {{if isExpense 'active'}}" {{action 'toggle' 'E'}}>
         <i class="fa fa-caret-down red"></i>
-        {{t 'expense'}}
+        <span>{{t 'expense'}}</span>
     </button>
     <button type="button" class="btn {{if isIncome 'active'}}" {{action 'toggle' 'I'}}>
         <i class="fa fa-caret-up green"></i>
-        {{t 'income'}}
+        <span>{{t 'income'}}</span>
     </button>
     <button type="button" class="btn {{if isTransfer 'active'}}" {{action 'toggle' 'T'}}>
         <i class="fa fa-retweet blue"></i>
-        {{t 'transfer'}}
+        <span>{{t 'transfer'}}</span>
     </button>
 </div>
