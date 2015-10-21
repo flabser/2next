@@ -97,7 +97,7 @@ public class CategoryService extends RestProvider {
 		//
 		pm.setName(m.getName());
 		pm.setParent(m.getParent());
-		pm.setTransactionTypes(m.getTransactionTypes());
+		pm.setTransactionType(m.getTransactionType());
 		pm.setNote(m.getNote());
 		pm.setColor(m.getColor());
 		pm.setEnabled(m.isEnabled());

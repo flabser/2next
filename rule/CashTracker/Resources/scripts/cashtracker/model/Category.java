@@ -1,12 +1,9 @@
 package cashtracker.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -43,11 +40,9 @@ public class Category extends AppEntity {
 	@Column(nullable = false, length = 64)
 	private String name;
 
-	@ElementCollection
 	@Convert(converter = TransactionTypeConverter.class)
-	@CollectionTable(name = "category_transactiontypes", joinColumns = @JoinColumn(name = "category_id"))
-	@Column(name = "transaction_types", length = 3)
-	private List <TransactionType> transactionTypes;
+	@Column(name = "transaction_type", nullable = false, length = 3)
+	private TransactionType transactionType = TransactionType.EXPENSE;
 
 	private boolean enabled;
 
@@ -98,30 +93,25 @@ public class Category extends AppEntity {
 		this.name = name;
 	}
 
-	public List <TransactionType> getTransactionTypes() {
-		return transactionTypes;
+	public TransactionType getTransactionType() {
+		return transactionType;
 	}
 
-	public void setTransactionTypes(List <TransactionType> transactionTypes) {
-		this.transactionTypes = transactionTypes;
+	public void setTransactionType(TransactionType transactionType) {
+		this.transactionType = transactionType;
 	}
 
-	@JsonGetter("transactionTypes")
-	public List <String> getTransactionTypesValue() {
-		List <String> values = new ArrayList <String>();
-		if (transactionTypes != null) {
-			transactionTypes.forEach(type -> values.add(type.toValue()));
+	@JsonGetter("transactionType")
+	public String getTransactionTypeValue() {
+		if (transactionType == null) {
+			return null;
 		}
-		return values;
+		return transactionType.toValue();
 	}
 
-	@JsonSetter("transactionTypes")
-	public void setTransactionTypesByValues(List <String> values) {
-		List <TransactionType> types = new ArrayList <TransactionType>();
-		if (values != null) {
-			values.forEach(value -> types.add(TransactionType.typeOf(value)));
-		}
-		setTransactionTypes(types);
+	@JsonSetter("transactionType")
+	public void setTransactionTypeByValue(String value) {
+		setTransactionType(TransactionType.typeOf(value));
 	}
 
 	public boolean isEnabled() {
@@ -150,7 +140,7 @@ public class Category extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "Category[" + id + ", " + name + ", " + enabled + ", " + parent + ", " + transactionTypes + ", "
+		return "Category[" + id + ", " + name + ", " + enabled + ", " + parent + ", " + transactionType + ", "
 				+ getAuthor() + ", " + getRegDate() + "]";
 	}
 }

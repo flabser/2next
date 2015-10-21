@@ -40,7 +40,7 @@ public class TransactionValidator {
 
 		Category c = m.getCategory();
 		if (c != null && !ve.hasError()) {
-			if (!c.getTransactionTypes().contains(tt)) {
+			if (c.getTransactionType() != tt) {
 				ve.addError("category", "invalid", "selection_error");
 			}
 		}

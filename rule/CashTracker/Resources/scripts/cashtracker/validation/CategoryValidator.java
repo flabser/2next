@@ -24,7 +24,7 @@ public class CategoryValidator {
 		if (m.getParentId() != null) {
 			if (m.getParentId().equals(m.getId())) {
 				ve.addError("parent", "invalid", "cross_reference");
-			} else if (!m.getParent().getTransactionTypes().containsAll(m.getTransactionTypes())) {
+			} else if (m.getParent().getTransactionType() != m.getTransactionType()) {
 				ve.addError("transactionTypes", "invalid", "selection_invalid");
 			}
 		}
