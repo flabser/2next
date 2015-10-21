@@ -1,0 +1,17 @@
+.select-transaction-type {}
+
+.select-transaction-type > .btn {
+    opacity: .5;
+    padding: 6px 12px 6px 6px;
+}
+
+.select-transaction-type > .btn.active {
+    border-color: #888;
+    opacity: 1;
+}
+
+.select-transaction-type > .btn .fa {}
+
+.select-transaction-type > .btn.active .fa {}
+
+.select-transaction-type > button:not(.active) .fa {}

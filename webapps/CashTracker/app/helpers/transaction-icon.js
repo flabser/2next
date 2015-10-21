@@ -1,8 +1,8 @@
 import Em from "ember";
 
 export default Em.Helper.helper(function(params) {
-    let type = params[0],
-        el = document.createElement('span');
+    let [type] = params,
+    el = document.createElement('span');
 
     switch (type) {
         case 'I':

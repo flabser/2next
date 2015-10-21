@@ -12,24 +12,9 @@
             <fieldset class="fieldset">
                 <div class="form-group {{if errors.name 'has-error'}}">
                     <div class="controls">
-                        <label>
-                            {{tn-input-radio
-                                value='E'
-                                groupValue=transaction.transactionType}}
-                            {{t 'expense'}}
-                        </label>
-                        <label>
-                            {{tn-input-radio
-                                value='I'
-                                groupValue=transaction.transactionType}}
-                            {{t 'income'}}
-                        </label>
-                        <label>
-                            {{tn-input-radio
-                                value='T'
-                                groupValue=transaction.transactionType}}
-                            {{t 'transfer'}}
-                        </label>
+                        {{select-transaction-type
+                            required=true
+                            value=transaction.transactionType}}
                     </div>
                 </div>
                 <div class="form-group {{if errors.date 'has-error'}}">

@@ -1,33 +1,28 @@
 import Em from 'ember';
 
-export default Em.Helper.helper(function(arr /* hashParams */ ) {
-    var el,
-        content,
-        maxCharacters,
-        length;
+export default Em.Helper.helper(function(params) {
+    var [content, maxChar] = params;
+    var el, length;
 
-    if (!arr || arr.length < 2) {
+    if (!content || !maxChar) {
         return;
     }
 
-    content = arr[0] || '';
-    maxCharacters = arr[1];
     length = content.length;
-
-    if (length === 0 || maxCharacters <= length) {
+    if (length === 0 || maxChar <= length) {
         return;
     }
 
     el = document.createElement('div');
     el.className = 'char-left text-muted';
 
-    /*if (length > maxCharacters) {
+    /*if (length > maxChar) {
         el.style.color = '#E25440';
     } else {
         el.style.color = '#9FBB58';
     }*/
 
-    el.innerHTML = maxCharacters - length;
+    el.innerHTML = maxChar - length;
 
     return Em.String.htmlSafe(el.outerHTML);
 });

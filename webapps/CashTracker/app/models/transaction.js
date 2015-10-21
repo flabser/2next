@@ -3,11 +3,11 @@ import DS from 'ember-data';
 export default DS.Model.extend({
     account: DS.belongsTo('account'),
     transferAccount: DS.belongsTo('account'),
-    amount: DS.attr('number'),
-    date: DS.attr('date'),
     category: DS.belongsTo('category'),
     costCenter: DS.belongsTo('costCenter'),
     tags: DS.hasMany('tag'),
+    amount: DS.attr('number'),
+    date: DS.attr('date'),
     transactionState: DS.attr('string'),
     transactionType: DS.attr('string', {
         defaultValue: 'E'

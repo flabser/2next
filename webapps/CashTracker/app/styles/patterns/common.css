@@ -173,14 +173,17 @@ table {
     transition: all .2s ease-in-out;
 }
 
-.green {
+.green,
+.fa.green {
     color: green;
 }
 
-.red {
+.red,
+.fa.red {
     color: red;
 }
 
-.blue {
+.blue,
+.fa.blue {
     color: blue;
 }

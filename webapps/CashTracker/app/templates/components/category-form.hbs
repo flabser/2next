@@ -12,11 +12,10 @@
             <fieldset class="fieldset">
                 <div class="form-group">
                     <div class="controls">
-                        {{multiselect-checkboxes
-                            options=transactionTypes
-                            labelProperty='name'
-                            valueProperty='code'
-                            selection=category.transactionTypes}}
+                        {{select-transaction-type
+                            required=true
+                            multi=true
+                            value=category.transactionTypes}}
                         {{#each errors.transactionTypes as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
