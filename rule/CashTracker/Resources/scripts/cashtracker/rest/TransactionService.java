@@ -120,7 +120,7 @@ public class TransactionService extends RestProvider {
 		if (m.getTags() != null && !m.getTags().isEmpty()) {
 			TagDAO tagDao = new TagDAO(getSession());
 			List <Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
-			m.setTags(tagDao.findByIds(ids));
+			m.setTags(tagDao.findAllByIds(ids));
 		}
 
 		ValidationError ve = validator.validate(m);
@@ -154,7 +154,7 @@ public class TransactionService extends RestProvider {
 		if (m.getTags() != null && !m.getTags().isEmpty()) {
 			TagDAO tagDao = new TagDAO(getSession());
 			List <Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
-			m.setTags(tagDao.findByIds(ids));
+			m.setTags(tagDao.findAllByIds(ids));
 		}
 
 		ValidationError ve = validator.validate(m);

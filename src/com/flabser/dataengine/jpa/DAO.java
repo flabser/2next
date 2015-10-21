@@ -40,7 +40,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 	}
 
 	@Override
-	public List <T> findByIds(List <K> ids) {
+	public List <T> findAllByIds(List <K> ids) {
 		EntityManager em = factory.createEntityManager();
 		try {
 			String jpql = "SELECT m FROM " + entityClass.getName() + " AS m WHERE m.id IN :ids";
