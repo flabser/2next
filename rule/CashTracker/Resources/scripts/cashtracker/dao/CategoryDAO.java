@@ -21,7 +21,7 @@ public class CategoryDAO extends DAO <Category, Long> {
 	}
 
 	public List <Category> findByTransactionType(TransactionType type) {
-		String jpql = "SELECT c FROM Category AS c WHERE c.parent IS NULL AND :type MEMBER OF c.transactionTypes ORDER BY c.name";
+		String jpql = "SELECT c FROM Category AS c WHERE c.parent IS NULL AND c.transactionType = :type ORDER BY c.name";
 
 		EntityManager em = factory.createEntityManager();
 		try {
