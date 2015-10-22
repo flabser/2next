@@ -24,3 +24,11 @@
 .header .navbar-toggle .icon-bar {
     background-color: #666;
 }
+
+.navbar-brand>img {
+    float: left;
+    height: 50px;
+    margin-right: 3px;
+    margin-top: -15px;
+    max-height: 50px;
+}

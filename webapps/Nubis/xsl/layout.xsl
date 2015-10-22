@@ -65,6 +65,7 @@
 						<span class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="?id=ws">
+						<img src="img/logo.png" alt="logo" />
 						<xsl:value-of select="//captions/brand/@caption" />
 					</a>
 				</div>

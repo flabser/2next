@@ -54,6 +54,11 @@ a:hover:visited {
     color: #2222CC;
 }
 
+img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
 .page-header small {
     margin-left: .5em;
 }
