@@ -9,6 +9,15 @@
 			<name mode="on" sitename="nubis.com" >Nubis</name>
 		</app>
 		<app>
+			<name mode="on" parent="Nubis" >Project</name>
+		</app>
+		<app>
+			<name mode="on" parent="Nubis" >FinPlanning</name>
+		</app>
+		<app>
+			<name mode="on" parent="Nubis" >Schedule</name>
+		</app>
+		<app>
 			<name mode="on" parent="Nubis" >CashTracker</name>
 		</app>
 		<app>

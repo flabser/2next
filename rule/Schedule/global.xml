@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rule mode="on" type="global">
+	<description></description>
+	<entrypoint>Provider?id=index</entrypoint>
+	<defaultredirecturl>Provider?id=index</defaultredirecturl>
+	<workmode>CLOUD</workmode>
+
+	<langs>
+		<entry id="ENG">English</entry>
+		<entry id="RUS">Русский</entry>
+		<entry id="KAZ">Қазақша</entry>
+		<entry id="BG">Българский</entry>
+	</langs>
+</rule>

@@ -7,15 +7,14 @@ import java.util.Map.Entry;
 import com.flabser.rule.page.CachingStrategyType;
 import com.flabser.runtimeobj.page.Page;
 
-
 public class _Page {
 	private String id;
 	private CachingStrategyType caching;
 	private String elapsed_time;
-	private ArrayList <_Page> includedPages = new ArrayList <_Page>();
-	private HashMap <String, _IContent> elementsMap = new HashMap <String, _IContent>();
-	private ArrayList <_IContent> elementsList = new ArrayList <_IContent>();
-	private HashMap <String, String[]> captions;
+	private ArrayList<_Page> includedPages = new ArrayList<_Page>();
+	private HashMap<String, _IContent> elementsMap = new HashMap<String, _IContent>();
+	private ArrayList<_IContent> elementsList = new ArrayList<_IContent>();
+	private HashMap<String, String[]> captions;
 
 	public _Page(Page page, _WebFormData webFormData) {
 
@@ -42,26 +41,25 @@ public class _Page {
 		elementsList.add(element);
 	}
 
-	public void addElements(ArrayList <_IContent> elements) {
+	public void addElements(ArrayList<_IContent> elements) {
 		elementsList.addAll(elements);
 	}
 
-	public ArrayList <_Page> getIncludedPages() {
+	public ArrayList<_Page> getIncludedPages() {
 		return includedPages;
 	}
 
-	public ArrayList <_IContent> getElements() {
+	public ArrayList<_IContent> getElements() {
 		return elementsList;
 	}
 
-	public void setCaptions(HashMap <String, String[]> captions) {
+	public void setCaptions(HashMap<String, String[]> captions) {
 		this.captions = captions;
 	}
 
-	public HashMap <String, String[]> getCaptions() {
+	public HashMap<String, String[]> getCaptions() {
 		return captions;
 	}
-
 
 	public StringBuffer toXML() throws _Exception {
 		StringBuffer output = new StringBuffer(5000);
@@ -76,7 +74,7 @@ public class _Page {
 		}
 
 		StringBuffer captionsText = new StringBuffer("<captions>");
-		for (Entry <String, String[]> entry : captions.entrySet()) {
+		for (Entry<String, String[]> entry : captions.entrySet()) {
 			captionsText.append("<" + entry.getKey() + " caption=\"" + entry.getValue()[0] + "\" />");
 		}
 

@@ -42,7 +42,8 @@ public class ServiceHandler {
 
 		xmlFragment += "</applications>";
 
-		xmlFragment = "<document doctype = \"system\"" + " viewtext=\"" + viewText + "\" >" + xmlFragment + "</document>";
+		xmlFragment = "<document doctype = \"system\"" + " viewtext=\"" + viewText + "\" >" + xmlFragment
+				+ "</document>";
 		return xmlFragment;
 	}
 
@@ -50,7 +51,7 @@ public class ServiceHandler {
 		StringBuffer xmlFragment = new StringBuffer(1000);
 		xmlFragment.append("<application>" + env.templateType + "</application>");
 		xmlFragment.append("<mode>" + env.globalSetting.isOn + "</mode>");
-		xmlFragment.append("<description>" + env.globalSetting.description + "</description>");
+		xmlFragment.append("<description>" + env.globalSetting.getDescription() + "</description>");
 		xmlFragment.append("<availablelangs>");
 		for (Lang lang : env.globalSetting.langsList) {
 			xmlFragment.append("<entry>" + lang.toXML() + "</entry>");
@@ -65,7 +66,8 @@ public class ServiceHandler {
 
 		xmlFragment.append("<xslt>");
 		for (Entry<String, File> entry : env.xsltFileMap.entrySet()) {
-			xmlFragment.append("<entry><key>" + entry.getKey() + "</key><file>" + entry.getValue().getPath() + "</file></entry>");
+			xmlFragment.append(
+					"<entry><key>" + entry.getKey() + "</key><file>" + entry.getValue().getPath() + "</file></entry>");
 		}
 		xmlFragment.append("</xslt>");
 
@@ -94,8 +96,8 @@ public class ServiceHandler {
 		Iterator<File> it = fl.iterator();
 		while (it.hasNext()) {
 			File logFile = it.next();
-			fieldsAsXML += "<entry><name>" + logFile.getName() + "</name>" + "<length>" + logFile.length() + "</length>" + "<lastmodified>"
-					+ logFile.lastModified() + "</lastmodified>" + "</entry>";
+			fieldsAsXML += "<entry><name>" + logFile.getName() + "</name>" + "<length>" + logFile.length() + "</length>"
+					+ "<lastmodified>" + logFile.lastModified() + "</lastmodified>" + "</entry>";
 		}
 
 		int maxPage = length / pageSize;
@@ -104,8 +106,8 @@ public class ServiceHandler {
 		}
 
 		LogFiles logs = new LogFiles();
-		return "<view count=\"" + fl.size() + "\" currentpage=\"" + pageNum + "\" maxpage=\"" + maxPage + "\" path=\"" + logs.logDir
-				+ "\">" + fieldsAsXML + "</view>";
+		return "<view count=\"" + fl.size() + "\" currentpage=\"" + pageNum + "\" maxpage=\"" + maxPage + "\" path=\""
+				+ logs.logDir + "\">" + fieldsAsXML + "</view>";
 	}
 
 	public String getLogsListWrapper(LogFiles logs) {
@@ -115,8 +117,8 @@ public class ServiceHandler {
 		Iterator<File> it = fl.iterator();
 		while (it.hasNext()) {
 			File logFile = it.next();
-			fieldsAsXML += "<entry><name>" + logFile.getName() + "</name>" + "<length>" + logFile.length() + "</length>" + "<lastmodified>"
-					+ logFile.lastModified() + "</lastmodified>" + "</entry>";
+			fieldsAsXML += "<entry><name>" + logFile.getName() + "</name>" + "<length>" + logFile.length() + "</length>"
+					+ "<lastmodified>" + logFile.lastModified() + "</lastmodified>" + "</entry>";
 		}
 
 		return fieldsAsXML;

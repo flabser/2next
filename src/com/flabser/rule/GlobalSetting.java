@@ -20,7 +20,7 @@ import com.flabser.users.UserRoleCollection;
 import com.flabser.util.XMLUtil;
 
 public class GlobalSetting {
-	public String description;
+
 	public String rulePath;
 	public String primaryRulePath;
 	public RunMode isOn;
@@ -31,7 +31,7 @@ public class GlobalSetting {
 	public String vocabulary = EnvConst.VOCABULARY_FILE;
 	public UserRoleCollection roleCollection = new UserRoleCollection();
 	private WorkModeType workMode;
-
+	private String description;
 
 	public GlobalSetting() {
 
@@ -49,18 +49,16 @@ public class GlobalSetting {
 			db = dbf.newDocumentBuilder();
 			doc = db.parse(path);
 
-			if (XMLUtil.getTextContent(doc, "/rule/@mode").equalsIgnoreCase(
-					"on")) {
+			if (XMLUtil.getTextContent(doc, "/rule/@mode").equalsIgnoreCase("on")) {
 				isOn = RunMode.ON;
 				isValid = true;
 			}
 
 			description = XMLUtil.getTextContent(doc, "/rule/description");
-			workMode =  WorkModeType.valueOf(XMLUtil.getTextContent(doc,"/rule/workmode", true, "CLOUD", true));
+			workMode = WorkModeType.valueOf(XMLUtil.getTextContent(doc, "/rule/workmode", true, "CLOUD", true));
 			entryPoint = XMLUtil.getTextContent(doc, "/rule/entrypoint");
 
-			defaultRedirectURL = XMLUtil.getTextContent(doc,
-					"/rule/defaultredirecturl");
+			defaultRedirectURL = XMLUtil.getTextContent(doc, "/rule/defaultredirecturl");
 			if (defaultRedirectURL.equalsIgnoreCase("")) {
 				defaultRedirectURL = "Error?type=default_url_not_defined";
 			}
@@ -81,8 +79,8 @@ public class GlobalSetting {
 					if (!role.name.equalsIgnoreCase("supervisor")) {
 						roleCollection.put(role);
 					} else {
-						Server.logger
-						.warningLogEntry("A role name \"supervisor\" is reserved name of system roles. The role has not added to application");
+						Server.logger.warningLogEntry(
+								"A role name \"supervisor\" is reserved name of system roles. The role has not added to application");
 					}
 				}
 			}
@@ -102,5 +100,12 @@ public class GlobalSetting {
 		this.workMode = workMode;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }

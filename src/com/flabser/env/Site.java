@@ -9,7 +9,7 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.script._Exception;
 import com.flabser.script._IContent;
 
-public class Site implements _IContent{
+public class Site implements _IContent {
 	private String virtualHostName;
 	private String appBase;
 	private String global = "global.xml";
@@ -52,11 +52,11 @@ public class Site implements _IContent{
 	}
 
 	public Host getHost() {
-		if (virtualHost == null){
+		if (virtualHost == null) {
 			virtualHost = new StandardHost();
 			virtualHost.setName(virtualHostName);
 			return virtualHost;
-		}else{
+		} else {
 			return virtualHost;
 		}
 
@@ -73,15 +73,16 @@ public class Site implements _IContent{
 	@Override
 	public StringBuffer toXML() throws _Exception {
 		StringBuffer output = new StringBuffer(1000);
-		return output.append("<apptype>" + appBase + "</apptype><description>" + appTemlate.globalSetting.description + "</description>");
+		return output.append("<apptype>" + appBase + "</apptype><description>"
+				+ appTemlate.globalSetting.getDescription() + "</description>");
 	}
 
-	public String getFullPathAppBase(){
+	public String getFullPathAppBase() {
 		return new File(Environment.primaryAppDir + "webapps/" + appBase).getAbsolutePath();
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return "[appBase=\"" + appBase + "\", virtualHostName=\"" + virtualHostName + "\" , parent=\"" + parent + "\"]";
 	}
 
