@@ -14,7 +14,7 @@ import com.flabser.log.Log4jLogger;
 import com.flabser.scheduler.PeriodicalServices;
 
 public class Server {
-	public static com.flabser.log.ILogger logger;
+	public static com.flabser.log.ILogger logger  = new Log4jLogger("Server");
 	public static final String serverVersion = "1.0.0";
 	public static String compilationTime = "";
 	public static final String serverTitle = "2Next " + serverVersion;
@@ -23,7 +23,6 @@ public class Server {
 	public static IWebServer webServerInst;
 
 	public static void start() throws MalformedURLException, LifecycleException, URISyntaxException {
-		logger = new Log4jLogger("");
 		logger.normalLogEntry(serverTitle + " start");
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 

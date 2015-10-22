@@ -12,8 +12,8 @@
 	</appender>
 
 
-	<appender name="file" class="com.flabser.log.DailyRollingFileAppender">
-		<param name="File" value="logs/today.log" />
+	<appender name="server_main" class="com.flabser.log.DailyRollingFileAppender">
+		<param name="File" value="logs/server/today.log" />
 		<param name="DatePattern" value="dd-MM-yyyy'.log'" />
     	 <param name="MaxFileSize" value="60KB"/>
 		<param name="maxBackupIndex" value="30" />
@@ -23,14 +23,39 @@
 		</layout>
 	</appender>
 
-	
+	 <appender name="requests" class="com.flabser.log.DailyRollingFileAppender">
+ 		 <param name="File" value="logs/request/today.log" />
+ 		<param name="DatePattern" value="dd-MM-yyyy'.log'" />
+    	 <param name="MaxFileSize" value="60KB"/>
+		<param name="maxBackupIndex" value="30" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%t] %C{2} - %m%n" />
+		</layout>
+ 	</appender>
+ 
 	<logger name="org.quartz">
 		<level value="INFO" />
+		<appender-ref ref="server_main"/>
+  		<appender-ref ref="console" />
 	</logger>
 	
+	 <logger name="Server">
+  		<level value="INFO"/>
+  		<appender-ref ref="server_main"/>
+  		<appender-ref ref="console"/>
+ 	</logger>
+ 	
+	 <logger name="Logging">
+  		<level value="INFO"/>
+  		<appender-ref ref="requests"/>
+ 	</logger>
+ 	
+ 	
 	<root>
-		<priority value="debug" />
-		<appender-ref ref="console" />
-		<appender-ref ref="file" />
+		<priority value="debug" />	
+
 	</root>
+	
+	
 </log4j:configuration>

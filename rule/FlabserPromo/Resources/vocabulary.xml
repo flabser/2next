@@ -11,10 +11,10 @@
 
 	<!-- cookieconsent -->
 	<sentence mode="on" keyword="cookieconsent_message">
-		<entry lang="RUS">Этот веб-сайт использует куки для того, чтобы  нашем сайте</entry>
-		<entry lang="KAZ">This website uses cookies to ensure you get the best experience on our website</entry>
+		<entry lang="RUS">Сайт использует файлы cookie, запоминая ваши предпочтения, что бы затем  предоставлять вам персонализированную информацию</entry>
+		<entry lang="KAZ">Сайт использует файлы cookie, запоминая ваши предпочтения, что бы затем  предоставлять вам персонализированную информацию</entry>
 		<entry lang="ENG">This website uses cookies to ensure you get the best experience on our website</entry>
-		<entry lang="BG">This website uses cookies to ensure you get the best experience on our website</entry>
+		<entry lang="BG">Продължавайки нататък, вие се съгласявате с нашата политика за използване на бисквитки</entry>
 		<entry lang="POR">This website uses cookies to ensure you get the best experience on our website</entry>
 		<entry lang="SPA">This website uses cookies to ensure you get the best experience on our website</entry>
 	</sentence>

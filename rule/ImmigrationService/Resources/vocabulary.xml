@@ -7,47 +7,65 @@
 		<entry lang="BG">Immigration Service</entry>
 		<entry lang="CHO">移民服務</entry>
 	</sentence>
-
-	<!-- cookieconsent -->
-	<sentence mode="on" keyword="cookieconsent_message">
-		<entry lang="RUS">This website uses cookies to ensure you get the best experience on our website</entry>
-		<entry lang="KAZ">This website uses cookies to ensure you get the best experience on our website</entry>
-		<entry lang="ENG">This website uses cookies to ensure you get the best experience on our website</entry>
-		<entry lang="BG">This website uses cookies to ensure you get the best experience on our website</entry>
-		<entry lang="POR">This website uses cookies to ensure you get the best experience on our website</entry>
-		<entry lang="SPA">This website uses cookies to ensure you get the best experience on our website</entry>
-	</sentence>
-
+	
 	<sentence mode="on" keyword="promo_heading">
 		<entry lang="RUS">Иммиграционный сервис</entry>
 		<entry lang="KAZ">Иммиграционный сервис</entry>
 		<entry lang="ENG">Immigration service</entry>
-		<entry lang="BG">Имиграционната служба</entry>
 		<entry lang="CHO">移民服務</entry>
 	</sentence>
 	<sentence mode="on" keyword="promo_heading_sub">
-		<entry lang="RUS">Интересует вид на жительство в Болгарии?</entry>
-		<entry lang="KAZ">Интересует вид на жительство в Болгарии?</entry>
-		<entry lang="ENG">Интересует вид на жительство в Болгарии?</entry>
-		<entry lang="BG">Интересует вид на жительство в Болгарии?</entry>
-		<entry lang="CHO">Интересует вид на жительство в Болгарии?</entry>
+		<entry lang="RUS">Наш сервис предлагает индивидуальные решения чтобы Вы смогли жить с комфортом и без границ</entry>
+		<entry lang="KAZ">Наш сервис предлагает индивидуальные решения чтобы Вы смогли жить с комфортом и без границ</entry>
+		<entry lang="ENG">Our service offers customized solutions so that You can live comfortably and without borders</entry>
+		<entry lang="CHO">我們是一個團隊經驗豐富的專家</entry>
+	</sentence>
+	<sentence mode="on" keyword="Quality guarantee 100 %">
+		<entry lang="RUS">Гарантия качества 100 %</entry>
+		<entry lang="KAZ">Гарантия качества 100 %</entry>
+		<entry lang="ENG">Quality guarantee 100 %</entry>
+		<entry lang="CHO">十餘年來，在市場</entry>
 	</sentence>
 
-	<sentence mode="on" keyword="learn_more">
+	<sentence mode="on" keyword="find_out_more">
 		<entry lang="RUS">Узнать больше</entry>
 		<entry lang="KAZ">Көбірек білгім келеді</entry>
-		<entry lang="ENG">Learn more</entry>
+		<entry lang="ENG">More</entry>
 		<entry lang="BG">Повече информация</entry>
 		<entry lang="CHO">更加</entry>
 	</sentence>
-	<sentence mode="on" keyword="how_it_works">
-		<entry lang="RUS">Как это работает</entry>
-		<entry lang="KAZ">Как это работает</entry>
-		<entry lang="ENG">How it works</entry>
-		<entry lang="BG">Как это работает</entry>
+
+	<sentence mode="on" keyword="home">
+		<entry lang="RUS">Главная</entry>
+		<entry lang="KAZ">Басты бет</entry>
+		<entry lang="ENG">Home</entry>
+		<entry lang="BG">Основните</entry>
 		<entry lang="CHO"></entry>
 	</sentence>
-
+	<sentence mode="on" keyword="ВНЖ в Болгарии">
+		<entry lang="RUS">ВНЖ в Болгарии</entry>
+		<entry lang="KAZ">ВНЖ в Болгарии</entry>
+		<entry lang="ENG">Residence permit in Bulgaria</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="Residence permit in Bulgaria">
+		<entry lang="RUS">ВНЖ в Болгарии</entry>
+		<entry lang="KAZ">ВНЖ в Болгарии</entry>
+		<entry lang="ENG">Residence permit in Bulgaria</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="send a request">
+		<entry lang="RUS">Подать заявку</entry>
+		<entry lang="KAZ">Подать заявку</entry>
+		<entry lang="ENG">send a request</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="skills_title">
+		<entry lang="RUS">Вид на жительство в Болгарии – это просто, не дорого и гарантировано</entry>
+		<entry lang="KAZ">Вид на жительство в Болгарии – это просто, не дорого и гарантировано</entry>
+		<entry lang="ENG">Residence permit in Bulgaria is simple, not expensive and guaranteed</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
 	<sentence mode="on" keyword="contact_us">
 		<entry lang="RUS">Свяжитесь с нами</entry>
 		<entry lang="KAZ">Бізбен хабарласыңыз</entry>
@@ -55,6 +73,7 @@
 		<entry lang="BG">Свържете се с нас</entry>
 		<entry lang="CHO">聯繫我們</entry>
 	</sentence>
+
 	<sentence mode="on" keyword="contact_us_on_lang">
 		<entry lang="RUS">Вы можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
 		<entry lang="KAZ">Вы можете обратиться к нам на Русском, Болгарском и Английском языках.</entry>
@@ -108,38 +127,50 @@
 	</sentence>
 
 	<!-- -->
-	<sentence mode="on" keyword="about_text1">
-		<entry lang="RUS">На территории Болгарии и Казахстана наш сервис предоставит Вам полное сопровождение в подготовке
-			документов и оснований, для получения иммиграционной визы и оформления вида на жительство (ВНЖ) в Болгарии.
+	<sentence mode="on" keyword="about_us_text">
+		<entry lang="RUS">У нас есть готовые решения для каждого заявителя! Позвоните сейчас и получите ответы на все интересующие вопросы. На территории Болгарии и Казахстана наш сервис предоставит Вам полное сопровождение в подготовке документов и оснований, для получения иммиграционной визы и оформления вида на жительство в Болгарии. 
 		</entry>
-		<entry lang="KAZ">На территории Болгарии и Казахстана наш сервис предоставит Вам полное сопровождение в подготовке
-			документов и оснований, для получения иммиграционной визы и оформления вида на жительство (ВНЖ) в Болгарии.
+		<entry lang="KAZ">У нас есть готовые решения для каждого заявителя! Позвоните сейчас и получите ответы на все интересующие вопросы. На территории Болгарии и Казахстана наш сервис предоставит Вам полное сопровождение в подготовке документов и оснований, для получения иммиграционной визы и оформления вида на жительство в Болгарии. 
 		</entry>
-		<entry lang="ENG">На территории Болгарии и Казахстана наш сервис предоставит Вам полное сопровождение в подготовке
-			документов и оснований, для получения иммиграционной визы и оформления вида на жительство (ВНЖ) в Болгарии.
+		<entry lang="ENG">We have ready solutions for each applicant! Call now and get answers to all your questions. On the territory of Bulgaria and Kazakhstan our service will provide You full support in the preparation of documents and grounds for immigration visa and a residence permit in Bulgaria
 		</entry>
-		<entry lang="BG">На территории Болгарии и Казахстана наш сервис предоставит Вам полное сопровождение в подготовке
-			документов и оснований, для получения иммиграционной визы и оформления вида на жительство (ВНЖ) в Болгарии.
+
+	<entry lang="CHO"></entry>
+		</sentence>
+	<sentence mode="on" keyword="about_experience_text">
+		<entry lang="RUS">Бесплатная консультация по телефону.
+Подготовка документов для получения визы Д
+Полное сопровождение на получение внж в Болгарии</entry>
+		<entry lang="KAZ">На протяжении многих лет,
 		</entry>
-		<entry lang="CHO">На территории Болгарии и Казахстана наш сервис предоставит Вам полное сопровождение в подготовке
-			документов и оснований, для получения иммиграционной визы и оформления вида на жительство (ВНЖ) в Болгарии.
+		<entry lang="ENG">Over the years, we have amassed extensive knowledge and 
 		</entry>
+<entry lang="CHO"></entry>	</sentence>
+
+	<!-- -->
+	<sentence mode="on" keyword="skills_prog_lang">
+		<entry lang="RUS">Услуги</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="CHO"></entry>
 	</sentence>
-	<sentence mode="on" keyword="about_text2">
-		<entry lang="RUS">Сервис предоставит профессиональные услуги в процедуре иммиграции в Болгарию и получении ВНЖ в
-			Болгарии для граждан Казахстана, в соответствии с иммиграционным законодательством Болгарии.
-		</entry>
-		<entry lang="KAZ">Сервис предоставит профессиональные услуги в процедуре иммиграции в Болгарию и получении ВНЖ в
-			Болгарии для граждан Казахстана, в соответствии с иммиграционным законодательством Болгарии.
-		</entry>
-		<entry lang="ENG">Сервис предоставит профессиональные услуги в процедуре иммиграции в Болгарию и получении ВНЖ в
-			Болгарии для граждан Казахстана, в соответствии с иммиграционным законодательством Болгарии.
-		</entry>
-		<entry lang="BG">Сервис предоставит профессиональные услуги в процедуре иммиграции в Болгарию и получении ВНЖ в
-			Болгарии для граждан Казахстана, в соответствии с иммиграционным законодательством Болгарии.
-		</entry>
-		<entry lang="CHO">Сервис предоставит профессиональные услуги в процедуре иммиграции в Болгарию и получении ВНЖ в
-			Болгарии для граждан Казахстана, в соответствии с иммиграционным законодательством Болгарии.
-		</entry>
+	<sentence mode="on" keyword="skills_db">
+		<entry lang="RUS">Услуги</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="CHO"></entry>
+		
+	</sentence>
+	<sentence mode="on" keyword="skills_mobile_tech">
+			<entry lang="RUS">Услуги</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="skills_dev_tools">
+		<entry lang="RUS">Услуги</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG"></entry>
+		<entry lang="CHO"></entry>
 	</sentence>
 </vocabulary>

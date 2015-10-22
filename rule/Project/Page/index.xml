@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" mode="on" anonymous="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/index.xsl</xsltfile>
+
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="java_class">immis.page.Index</doscript>
+		</events>
+	</element>
+
+	<caption name="brand" />
+
+	<caption name="promo_heading" />
+	<caption name="promo_heading_sub" />
+
+	<caption name="learn_more" />
+	<caption name="how_it_works" />
+
+	<caption name="about_text1" />
+	<caption name="about_text2" />
+
+	<caption name="contact_us" />
+	<caption name="contact_us_on_lang" />
+	<caption name="message_title" />
+	<caption name="message_subject" />
+	<caption name="message_text" />
+	<caption name="send_message" />
+
+	<caption name="address" />
+	<caption name="phone" />
+
+	<caption name="cookieconsent_message" />
+</rule>
