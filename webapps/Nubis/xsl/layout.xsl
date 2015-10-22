@@ -158,7 +158,7 @@
 		<div class="footer-spacer"></div>
 		<footer class="footer">
 			<div class="container">
-				© 2015 Flabser.com
+				© 2015 <a href="//flabser.com">Flabser.com</a>
 			</div>
 		</footer>
 	</xsl:template>
