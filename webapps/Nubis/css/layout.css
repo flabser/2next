@@ -23,13 +23,14 @@ body {
 
 .footer-spacer {
     display: block;
-    height: 50px;
+    height: 60px;
 }
 
 .footer {
     background: #F6F5F3;
     border-top: 1px solid #F2F2F2;
     bottom: 0;
+    padding: 20px 0;
     position: absolute;
     width: 100%;
 }

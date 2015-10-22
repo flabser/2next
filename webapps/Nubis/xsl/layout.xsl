@@ -158,7 +158,7 @@
 		<div class="footer-spacer"></div>
 		<footer class="footer">
 			<div class="container">
-				@
+				© Flabs 2015
 			</div>
 		</footer>
 	</xsl:template>
