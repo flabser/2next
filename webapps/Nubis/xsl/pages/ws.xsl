@@ -137,7 +137,6 @@
 								<input type="hidden" name="visibilty" value="public" required="required" />
 								<input type="text" class="form-control" name="apptype" required="required" disabled="disabled" />
 							</div>
-							<div class="form-group" id="app-description"></div>
 							<div class="form-group">
 								<label for="recipient-name" class="control-label">
 									<xsl:value-of select="//captions/name/@caption" />

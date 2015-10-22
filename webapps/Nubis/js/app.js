@@ -4,7 +4,7 @@ nubis.init = function() {
 
     $('#main-load').hide();
     $('#login-error').hide();
-    $('[data-toggle="popover"]').popover()
+    $('[data-toggle="popover"]').popover();
 
     $('.js-app-edit').click(function(e) {
         $('.tn-app.edit').removeClass('edit');
@@ -36,10 +36,12 @@ nubis.init = function() {
 
         var appType = $(this).data('app-type');
         var appDesc = $(this).parent('.tn-tpl').find('.tn-tpl-description').data('content');
-        $('#app-description').html(appDesc);
         $('[name=apptype]', '#form-app').val(appType);
         $('[name=appname]', '#form-app').val('');
-        $('[name=description]', '#form-app').val('');
+        $('[name=description]', '#form-app').val(appDesc);
+        $('[name=description]', '#form-app').one('focus', function() {
+            $(this).select();
+        });
     });
 
     // reg form
