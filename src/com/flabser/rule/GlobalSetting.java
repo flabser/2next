@@ -55,6 +55,9 @@ public class GlobalSetting {
 			}
 
 			description = XMLUtil.getTextContent(doc, "/rule/description");
+			if (description.equals("")) {
+				description = env.templateType + "_description";
+			}
 			workMode = WorkModeType.valueOf(XMLUtil.getTextContent(doc, "/rule/workmode", true, "CLOUD", true));
 			entryPoint = XMLUtil.getTextContent(doc, "/rule/entrypoint");
 

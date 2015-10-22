@@ -88,7 +88,7 @@ public class ApplicationProfile implements _IContent {
 	}
 
 	@Override
-	public StringBuffer toXML() {
+	public StringBuffer toXML(String lang) {
 		StringBuffer output = new StringBuffer(1000);
 		return output.append("<entry><appname>" + appName + "</appname><owner>" + owner + "</owner><dbhost>" + dbHost
 				+ "</dbhost><dbname>" + dbName + "</dbname></entry>");
@@ -167,8 +167,8 @@ public class ApplicationProfile implements _IContent {
 						if (db != null) {
 							setStatus(ApplicationStatusType.ON_LINE);
 							AppTemplate app = Environment.availableTemplates.get(appType).getAppTemlate();
-							for (Role role:app.globalSetting.roleCollection.getRolesList()){
-								if (role.isOn == RunMode.ON){
+							for (Role role : app.globalSetting.roleCollection.getRolesList()) {
+								if (role.isOn == RunMode.ON) {
 									addRole(role.name, role.description);
 								}
 							}
@@ -176,7 +176,7 @@ public class ApplicationProfile implements _IContent {
 							setStatus(ApplicationStatusType.DEPLOING_FAILED);
 							result = false;
 						}
-					}else{
+					} else {
 						setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 						result = false;
 					}

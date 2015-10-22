@@ -61,7 +61,7 @@ public class _Element implements _IContent {
 	}
 
 	@Override
-	public StringBuffer toXML() throws _Exception {
+	public StringBuffer toXML(String lang) throws _Exception {
 		StringBuffer output = new StringBuffer(1000);
 
 		if (!name.equalsIgnoreCase("")) {
@@ -70,7 +70,7 @@ public class _Element implements _IContent {
 
 		// System.out.println(value.getClass().getName() + " " + name);
 		if (value instanceof _IContent) {
-			output.append(((_IContent) value).toXML());
+			output.append(((_IContent) value).toXML(lang));
 		} else if (value instanceof ArrayList) {
 			ArrayList<String[]> list = (ArrayList) value;
 			for (Object[] e : list) {
@@ -83,7 +83,7 @@ public class _Element implements _IContent {
 		} else if (value instanceof Collection) {
 			Collection<_IContent> list = (Collection) value;
 			for (_IContent e : list) {
-				output.append("<entry>" + e.toXML() + "</entry>");
+				output.append("<entry>" + e.toXML(lang) + "</entry>");
 
 			}
 		} else if (value instanceof Map) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rule mode="on" type="global">
-	<description>SmartFinance</description>
+	<description></description>
 	<entrypoint>Provider?id=welcome</entrypoint>
 	<defaultredirecturl>index.html</defaultredirecturl>
 	<langs>

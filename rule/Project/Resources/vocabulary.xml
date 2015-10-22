@@ -6,6 +6,11 @@
 		<entry lang="ENG">Project</entry>
 		<entry lang="BG">Project</entry>
 	</sentence>
-	
+	<sentence mode="on" keyword="Project_description">
+		<entry lang="RUS">Приложение для введение вашего проекта. Создайте проект, дайте доступ к вашему проекту другим пользователям, выдавайте задания и осуществляйте контроль</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG">The application for monitoring your project. Create a project, give access to your project to other users, issue and monitor tasks</entry>
+		<entry lang="BG"></entry>
+	</sentence>
 	
 </vocabulary>

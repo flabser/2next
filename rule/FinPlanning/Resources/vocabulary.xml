@@ -6,6 +6,12 @@
 		<entry lang="ENG">FinPlanning</entry>
 		<entry lang="BG">FinPlanning</entry>
 	</sentence>
-	
-	
+	<sentence mode="on" keyword="FinPlanning_description">
+		<entry lang="RUS">Приложение для планирования ваших расходов и доходов. Вы можете дать доступ к вашему будущему бюджету другим пользователям для просмотра или операции над вашим бюджетом
+	</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG">Application for planning your expenses and income. You can give access to your future budgets to other users to view or operations on your budget</entry>
+		<entry lang="BG"></entry>
+	</sentence>
+
 </vocabulary>

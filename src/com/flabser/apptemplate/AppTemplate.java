@@ -57,7 +57,8 @@ public class AppTemplate implements ICache, _IContent {
 
 					try {
 						Localizator l = new Localizator();
-						String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator + "vocabulary.xml";
+						String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator
+								+ "vocabulary.xml";
 						vocabulary = l.populate(vocabuarFilePath);
 						if (vocabulary != null) {
 							Server.logger.normalLogEntry("dictionary has loaded");
@@ -101,7 +102,8 @@ public class AppTemplate implements ICache, _IContent {
 
 					try {
 						Localizator l = new Localizator();
-						String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator + "vocabulary.xml";
+						String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator
+								+ "vocabulary.xml";
 						vocabulary = l.populate(vocabuarFilePath);
 						if (vocabulary != null) {
 							Server.logger.normalLogEntry("dictionary has loaded");
@@ -148,8 +150,8 @@ public class AppTemplate implements ICache, _IContent {
 	}
 
 	@Override
-	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
-	WebFormValueException {
+	public _Page getPage(Page page, Map<String, String[]> formData)
+			throws ClassNotFoundException, RuleException, WebFormValueException {
 		boolean reload = false;
 		Object obj = cache.get(page.getID());
 		String p[] = formData.get("cache");
@@ -175,7 +177,7 @@ public class AppTemplate implements ICache, _IContent {
 	}
 
 	@Override
-	public StringBuffer toXML() throws _Exception {
+	public StringBuffer toXML(String lang) throws _Exception {
 		StringBuffer output = new StringBuffer(1000);
 		return output.append("<entry><apptype>" + templateType + "</apptype></entry>");
 	}
