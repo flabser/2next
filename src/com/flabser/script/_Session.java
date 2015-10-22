@@ -10,14 +10,12 @@ import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.pojo.AppUser;
 import com.flabser.rule.Role;
-import com.flabser.script.actions._ActionBar;
 import com.flabser.script.mail._MailAgent;
 import com.flabser.server.Server;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.AuthModeType;
 import com.flabser.users.User;
 import com.flabser.users.UserSession;
-
 
 public class _Session {
 
@@ -30,14 +28,15 @@ public class _Session {
 		if (env.globalSetting.getWorkMode() == WorkModeType.COMMON) {
 			ApplicationProfile app = new ApplicationProfile(env);
 			dataBase = app.getDatabase();
-		} else if (env.globalSetting.getWorkMode() == WorkModeType.CLOUD){
-			//			System.out.println(contextID);
+		} else if (env.globalSetting.getWorkMode() == WorkModeType.CLOUD) {
+			// System.out.println(contextID);
 			ApplicationProfile ap = DatabaseFactory.getSysDatabase().getApp(contextID);
 
-			if (ap != null && ap.getStatus() == ApplicationStatusType.ON_LINE){
+			if (ap != null && ap.getStatus() == ApplicationStatusType.ON_LINE) {
 				dataBase = ap.getDatabase();
-			}else{
-				Server.logger.errorLogEntry("database not available or user has not had permissions to access to this one");
+			} else {
+				Server.logger
+						.errorLogEntry("database not available or user has not had permissions to access to this one");
 			}
 		}
 		this.userSession = userSession;
@@ -51,9 +50,9 @@ public class _Session {
 		return dataBase;
 	}
 
-	public ArrayList <Role> getRolesList() {
+	public ArrayList<Role> getRolesList() {
 		@SuppressWarnings("unchecked")
-		ArrayList <Role> rolesList = (ArrayList <Role>) env.globalSetting.roleCollection.getRolesList().clone();
+		ArrayList<Role> rolesList = (ArrayList<Role>) env.globalSetting.roleCollection.getRolesList().clone();
 		return rolesList;
 	}
 
@@ -67,10 +66,6 @@ public class _Session {
 		} else {
 			return env.getWorkspaceURL();
 		}
-	}
-
-	public _ActionBar createActionBar() {
-		return new _ActionBar(this);
 	}
 
 	public _MailAgent getMailAgent() {
@@ -97,7 +92,7 @@ public class _Session {
 		return env.templateType;
 	}
 
-	public String getLocalizedWord(String word){
+	public String getLocalizedWord(String word) {
 		return env.vocabulary.getWord(word, userSession.getLang());
 	}
 

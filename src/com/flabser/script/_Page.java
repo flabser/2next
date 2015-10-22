@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import com.flabser.rule.page.CachingStrategyType;
 import com.flabser.runtimeobj.page.Page;
 
-public class _Page {
+public class _Page implements _IContent {
 	private String id;
 	private CachingStrategyType caching;
 	private String elapsed_time;
@@ -61,16 +61,17 @@ public class _Page {
 		return captions;
 	}
 
-	public StringBuffer toXML() throws _Exception {
+	@Override
+	public StringBuffer toXML(String lang) throws _Exception {
 		StringBuffer output = new StringBuffer(5000);
 		output.append("<page id=\"" + id + "\" cache=\"" + caching + "\" elapsed_time = \"" + elapsed_time + "\" >");
 
 		for (_IContent e : elementsList) {
-			output.append(e.toXML());
+			output.append(e.toXML(lang));
 		}
 
 		for (_Page p : includedPages) {
-			output.append(p.toXML());
+			output.append(p.toXML(lang));
 		}
 
 		StringBuffer captionsText = new StringBuffer("<captions>");

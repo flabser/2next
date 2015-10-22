@@ -64,10 +64,11 @@ public class Application implements _IContent {
 	}
 
 	@Override
-	public StringBuffer toXML() {
+	public StringBuffer toXML(String lang) {
 		StringBuffer output = new StringBuffer(1000);
-		return output.append("<apptype>" + appType + "</apptype><appname>" + getAppName() + "</appname>" + "<owner>" + getOwner() + "</owner><appid>"
-				+ getAppID() + "</appid><status>" + status + "</status><description>" + description + "</description>");
+		return output.append("<apptype>" + appType + "</apptype><appname>" + getAppName() + "</appname>" + "<owner>"
+				+ getOwner() + "</owner><appid>" + getAppID() + "</appid><status>" + status + "</status><description>"
+				+ description + "</description>");
 	}
 
 	public void setAppID(String appID) {

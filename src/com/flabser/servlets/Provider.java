@@ -28,7 +28,6 @@ import com.flabser.server.Server;
 import com.flabser.servlets.sitefiles.AttachmentHandler;
 import com.flabser.users.UserSession;
 
-
 public class Provider extends HttpServlet {
 
 	private static final long serialVersionUID = 2352885167311108325L;
@@ -166,14 +165,14 @@ public class Provider extends HttpServlet {
 
 	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule,
 			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,
-	_Exception, WebFormValueException {
+					_Exception, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
-		HashMap <String, String[]> fields = new HashMap <String, String[]>();
-		Map <String, String[]> parMap = request.getParameterMap();
+		HashMap<String, String[]> fields = new HashMap<String, String[]>();
+		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
 		Page page = new Page(env, userSession, pageRule, request.getMethod(), (String) request.getAttribute("appid"));
-		result.output.append(page.process(fields).toXML());
+		result.output.append(page.process(fields).toXML(userSession.getLang()));
 		if (page.fileGenerated) {
 			result.publishAs = PublishAsType.OUTPUTSTREAM;
 			result.filePath = page.generatedFilePath;
@@ -182,12 +181,13 @@ public class Provider extends HttpServlet {
 		return result;
 	}
 
-	private ProviderResult search(HttpServletRequest request, UserSession userSession) throws RuleException,
-	UnsupportedEncodingException {
+	private ProviderResult search(HttpServletRequest request, UserSession userSession)
+			throws RuleException, UnsupportedEncodingException {
 		ProviderResult result = new ProviderResult(PublishAsType.HTML, "searchres.xsl");
 		try {
 			Integer.parseInt(request.getParameter("page"));
-		} catch (NumberFormatException nfe) {}
+		} catch (NumberFormatException nfe) {
+		}
 		String keyWord = request.getParameter("keyword");
 		keyWord = new String(keyWord.getBytes("ISO-8859-1"), "UTF-8");
 		// FTSearchRequest ftRequest = new FTSearchRequest(env,
