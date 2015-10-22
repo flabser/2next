@@ -208,7 +208,7 @@ public class IpToCountry {
 		}
 	}
 
-	static String getCountryCode(long addressLong, long[] entryFrom, long[] entryTo, String[] entryCode) {
+	public static String getCountryCode(long addressLong, long[] entryFrom, long[] entryTo, String[] entryCode) {
 		// Binary search for the highest entryFrom that's less than or equal to
 		// the specified address.
 		int min = 0, max = entryFrom.length == 0 ? 0 : entryFrom.length - 1;
@@ -242,7 +242,7 @@ public class IpToCountry {
 		}
 	}
 
-	static long getAddressAsLong(byte[] bytes) throws IllegalArgumentException {
+	public static long getAddressAsLong(byte[] bytes) throws IllegalArgumentException {
 		if (bytes.length != 4) {
 			throw new IllegalArgumentException("Input must be 4 bytes");
 		}
@@ -250,7 +250,7 @@ public class IpToCountry {
 		return (long) i0 << 24 | (long) i1 << 16 | (long) i2 << 8 | i3;
 	}
 
-	static byte[] get4ByteAddress(InetAddress address) throws IllegalArgumentException {
+	public static byte[] get4ByteAddress(InetAddress address) throws IllegalArgumentException {
 		byte[] actual = address.getAddress();
 		if (actual.length == 4) {
 			return actual;
@@ -271,15 +271,15 @@ public class IpToCountry {
 		throw new IllegalArgumentException("Unknown address type: " + address.getHostAddress());
 	}
 
-	File getFile() {
+	public File getFile() {
 		return new File(folder, FILE_NAME);
 	}
 
-	File getDownloadFile() {
+	public File getDownloadFile() {
 		return new File(folder, FILE_NAME + ".download");
 	}
 
-	File getOldFile() {
+	public File getOldFile() {
 		return new File(folder, FILE_NAME + ".old");
 	}
 
@@ -287,7 +287,7 @@ public class IpToCountry {
 		return fileLastModified + expireTime < getCurrentTime();
 	}
 
-	void loadFile(File file) throws IOException {
+	protected void loadFile(File file) throws IOException {
 		BufferedReader reader = null;
 		try {
 			// String-sharing buffer
@@ -399,7 +399,7 @@ public class IpToCountry {
 		return System.currentTimeMillis();
 	}
 
-	void downloadFile() throws IOException {
+	public void downloadFile() throws IOException {
 		File downloadFile = getDownloadFile();
 		GZIPInputStream in = null;
 		FileOutputStream out = null;
@@ -461,7 +461,7 @@ public class IpToCountry {
 		}
 	}
 
-	void renameDownloadedToReal() throws IOException {
+	public void renameDownloadedToReal() throws IOException {
 		File downloadFile = getDownloadFile();
 		File file = getFile();
 		File oldFile = getOldFile();

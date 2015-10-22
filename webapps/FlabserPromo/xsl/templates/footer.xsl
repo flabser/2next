@@ -6,7 +6,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12">
-						© 2015 Flabser.com. All Rights Reserved.
+						© 2015 flabser.com. All Rights Reserved.
 					</div>
 				</div>
 			</div>
