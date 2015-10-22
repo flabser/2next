@@ -45,7 +45,13 @@
 					<xsl:value-of select="owner" />
 				</span>
 			</a>
-			<button class="tn-app-description js-app-open-description">
+			<button class="tn-app-description"
+					data-trigger="focus"
+					data-container="body"
+					data-toggle="popover"
+					data-placement="right"
+					title="{apptype}"
+					data-content="{description}">
 				<i class="fa fa-info-circle" />
 			</button>
 			<xsl:if test="status = 'ON_LINE'">
@@ -82,19 +88,27 @@
 	</xsl:template>
 
 	<xsl:template match="entry" mode="template">
-		<div class="tn-tpl js-app-create" data-app-type="{apptype}">
-			<span class="tn-tpl-logo">
-				<img class="tn-tpl-logo" src="/{apptype}/img/logo.png" alt="logo" />
-			</span>
-			<span class="tn-tpl-type">
-				<xsl:value-of select="apptype" />
-			</span>
-			<span class="tn-tpl-description">
-				<xsl:value-of select="description" />
-			</span>
-			<button class="tn-tpl-create">
-				<i class="fa fa-plus" />
-				<xsl:value-of select="//captions/create_app/@caption" />
+		<div class="tn-tpl">
+			<div class="js-app-create" data-app-type="{apptype}">
+				<span class="tn-tpl-logo">
+					<img class="tn-tpl-logo" src="/{apptype}/img/logo.png" alt="logo" />
+				</span>
+				<span class="tn-tpl-type">
+					<xsl:value-of select="apptype" />
+				</span>
+				<button class="tn-tpl-create">
+					<i class="fa fa-plus" />
+					<xsl:value-of select="//captions/create_app/@caption" />
+				</button>
+			</div>
+			<button class="tn-tpl-description"
+					data-trigger="focus"
+					data-container="body"
+					data-toggle="popover"
+					data-placement="top"
+					title="{apptype}"
+					data-content="{description}">
+				<i class="fa fa-info-circle" />
 			</button>
 		</div>
 	</xsl:template>
@@ -123,6 +137,7 @@
 								<input type="hidden" name="visibilty" value="public" required="required" />
 								<input type="text" class="form-control" name="apptype" required="required" disabled="disabled" />
 							</div>
+							<div class="form-group" id="app-description"></div>
 							<div class="form-group">
 								<label for="recipient-name" class="control-label">
 									<xsl:value-of select="//captions/name/@caption" />
