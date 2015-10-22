@@ -18,7 +18,8 @@
 	<caption name="name" />
 	<caption name="description" />
 
-
+	<caption name="applications" />
+	<caption name="applications_description" />
 	<caption name="templates" />
 	<caption name="templates_description" />
 	<caption name="create_app" />

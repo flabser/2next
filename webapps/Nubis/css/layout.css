@@ -1,68 +1,67 @@
-html, body {
-	height: 100%;
-	font: 13px/1.43 Verdana, Arial, Helvetica, sans-serif;
+html,
+body {
+    height: 100%;
+    font: 13px/1.43 Verdana, Arial, Helvetica, sans-serif;
 }
 
 .layout {
-	background: none;
-	box-shadow: none;
-	max-width: 100%;
-	min-height: 100%;
-	position: relative;
+    background: none;
+    box-shadow: none;
+    max-width: 100%;
+    min-height: 100%;
+    position: relative;
 }
 
 .header {
-	background: #FFF;
-	border-bottom: 1px solid #F2F2F2;
-	box-shadow: none;
-	margin: 0;
+    background: #FFF;
+    border-bottom: 1px solid #F2F2F2;
+    box-shadow: none;
+    margin: 0;
 }
 
-.content {
-	
-}
+.content {}
 
 .footer-spacer {
-	display: block;
-	height: 50px;
+    display: block;
+    height: 50px;
 }
 
 .footer {
-	background: #F6F5F3;
-	border-top: 1px solid #F2F2F2;
-	bottom: 0;
-	position: absolute;
-	width: 100%;
+    background: #F6F5F3;
+    border-top: 1px solid #F2F2F2;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
 }
 
 .container {
-	max-width: 100%;
-	width: 980px;
+    max-width: 100%;
+    width: 980px;
 }
 
 a {
-	color: #2222CC;
-	margin: auto;
-	text-decoration: none;
+    color: #2222CC;
+    margin: auto;
+    text-decoration: none;
 }
 
 a:hover {
-	color: #2222CC;
-	text-decoration: underline;
+    color: #2222CC;
+    text-decoration: underline;
 }
 
 a:hover:visited {
-	color: #2222CC;
+    color: #2222CC;
 }
 
 .page-header small {
-	margin-left: .5em;
+    margin-left: .5em;
 }
 
-@media ( max-width : 768px) {
-	.page-header small {
-		display: block;
-		margin-left: 0;
-		padding-top: 8px;
-	}
+@media ( max-width: 768px) {
+    .page-header small {
+        display: block;
+        margin-left: 0;
+        padding-top: 8px;
+    }
 }

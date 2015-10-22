@@ -78,10 +78,10 @@
 		<entry lang="BG">Е-мейл за потвърждение</entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_error">
-		<entry lang="RUS" >Не верные данные</entry>
+		<entry lang="RUS">Не верные данные</entry>
 		<entry lang="KAZ">Не верные данные</entry>
 		<entry lang="ENG">Incorrect value</entry>
-		<entry lang="BG" >Неправилна стойност</entry>
+		<entry lang="BG">Неправилна стойност</entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_done">
 		<entry lang="RUS">Проверка прошла успешно. Теперь вы можете войти.</entry>
@@ -160,6 +160,19 @@
 		<entry lang="BG">Удалить</entry>
 	</sentence>
 
+	<sentence mode="on" keyword="applications">
+		<entry lang="RUS">Приложения</entry>
+		<entry lang="KAZ">Приложения</entry>
+		<entry lang="ENG">Applications</entry>
+		<entry lang="BG">Приложения</entry>
+	</sentence>
+	<sentence mode="on" keyword="applications_description">
+		<entry lang="RUS">Доступные или созданные вами приложения</entry>
+		<entry lang="KAZ">Доступные или созданные вами приложения</entry>
+		<entry lang="ENG">Available applications</entry>
+		<entry lang="BG">Доступные или созданные вами приложения</entry>
+	</sentence>
+
 	<sentence mode="on" keyword="templates">
 		<entry lang="RUS">Шаблоны</entry>
 		<entry lang="KAZ">Шаблоны</entry>
@@ -203,25 +216,25 @@
 		<entry lang="ENG">Description</entry>
 		<entry lang="BG">Описание</entry>
 	</sentence>
-	
-		<!-- reset-password -->
-		<sentence mode="on" keyword="pwd_reset_title">
+
+	<!-- reset-password -->
+	<sentence mode="on" keyword="pwd_reset_title">
 		<entry lang="RUS">Сброс пароля</entry>
 		<entry lang="KAZ">Сброс пароля</entry>
 		<entry lang="ENG">Reset password</entry>
 		<entry lang="BG">Reset password</entry>
 	</sentence>
-		<sentence mode="on" keyword="pwd_reset_description">
+	<sentence mode="on" keyword="pwd_reset_description">
 		<entry lang="RUS">Введите ваш e-mail, который вы указали при регистрации</entry>
 		<entry lang="KAZ">Введите ваш e-mail, который вы указали при регистрации</entry>
 		<entry lang="ENG">Enter e-mail address that was specified at registration</entry>
 		<entry lang="BG">Въведете вашия имейл, който сте посочили при регистрацията</entry>
 	</sentence>
-		<sentence mode="on" keyword="pwd_reset_send_btn">
+	<sentence mode="on" keyword="pwd_reset_send_btn">
 		<entry lang="RUS">Отправить запрос</entry>
 		<entry lang="KAZ">Отправить запрос</entry>
 		<entry lang="ENG">Send request</entry>
 		<entry lang="BG">Изпратете запитване</entry>
 	</sentence>
-		
+
 </vocabulary>

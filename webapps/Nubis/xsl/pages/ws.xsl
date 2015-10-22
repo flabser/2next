@@ -17,6 +17,14 @@
 	<xsl:template match="apps">
 		<section class="tn-apps">
 			<div class="container">
+				<div class="page-header">
+					<h1>
+						<xsl:value-of select="//captions/applications/@caption" />
+						<small>
+							<xsl:value-of select="//captions/applications_description/@caption" />
+						</small>
+					</h1>
+				</div>
 				<xsl:apply-templates select="entry" mode="app" />
 			</div>
 		</section>
