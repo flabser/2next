@@ -133,7 +133,7 @@ public class SessionService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createSession(AppUser authUser) throws ClassNotFoundException, InstantiationException,
-	DatabasePoolException, UserException, IllegalAccessException, SQLException, URISyntaxException {
+			DatabasePoolException, UserException, IllegalAccessException, SQLException, URISyntaxException {
 		UserSession userSession = null;
 		HttpSession jses;
 		// String appID = authUser.getAppId();
@@ -209,6 +209,40 @@ public class SessionService extends RestProvider {
 		// return Response.seeOther(new URI(url)).cookie(cookie).build();
 		return Response.status(HttpServletResponse.SC_OK).entity(res).cookie(cookie).build();
 
+	}
+
+	@POST
+	@Path("/verify")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response verify(@FormParam("code") String code) {
+		Outcome res = new Outcome();
+		_Session session = getSession();
+		String lang = session.getLang();
+		User user = DatabaseFactory.getSysDatabase().getUserByVerifyCode(code);
+		if (user != null) {
+			if (user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE
+					|| user.getStatus() == UserStatusType.NOT_VERIFIED) {
+				user.setStatus(UserStatusType.REGISTERED);
+				if (user.save()) {
+					return Response.status(HttpServletResponse.SC_OK).entity(res.addMessage(user.getEmail())).build();
+				} else {
+					return Response.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+							.entity(res.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
+				}
+			} else if (user.getStatus() == UserStatusType.REGISTERED) {
+				return Response.status(HttpServletResponse.SC_OK).entity(res
+						.setMessage(ServerServiceWarningType.USER_ALREADY_REGISTERED, lang).addMessage(user.getEmail()))
+						.build();
+			} else {
+				return Response.status(HttpServletResponse.SC_OK).entity(
+						res.setMessage(ServerServiceWarningType.UNKNOWN_USER_STATUS, lang).addMessage(user.getEmail()))
+						.build();
+			}
+		} else {
+			return Response.status(HttpServletResponse.SC_OK)
+					.entity(res.setMessage(ServerServiceExceptionType.USER_NOT_FOUND, lang)).build();
+		}
 	}
 
 	@POST
