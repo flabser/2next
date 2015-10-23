@@ -10,7 +10,7 @@ import com.flabser.exception.ServerServiceWarningType;
 import com.flabser.exception.WebFormValueException;
 
 @JsonRootName("outcome")
-@JsonPropertyOrder({"type", "warningId", "errorId", "message"})
+@JsonPropertyOrder({ "type", "warningId", "errorId", "message" })
 public class Outcome {
 	private OutcomeType type = OutcomeType.OK;
 	private String errorId;
@@ -30,12 +30,12 @@ public class Outcome {
 		return message;
 	}
 
-	public Outcome addMessage(String message) {
-		this.message.add(message);
+	public Outcome addMessage(String message, String lang) {
+		this.message.add(Environment.vocabulary.getWord(message, lang));
 		return this;
 	}
 
-	public Outcome setError(WebFormValueException e,  String lang) {
+	public Outcome setError(WebFormValueException e, String lang) {
 		return setMessage(e.id, lang);
 	}
 
@@ -43,13 +43,13 @@ public class Outcome {
 		return errorId;
 	}
 
-	public Outcome setMessage(String s,  String lang) {
+	public Outcome setMessage(String s, String lang) {
 		message.clear();
-		addMessage(s);
+		addMessage(s, lang);
 		return this;
 	}
 
-	public Outcome setMessage(ServerServiceExceptionType e,  String lang) {
+	public Outcome setMessage(ServerServiceExceptionType e, String lang) {
 		type = OutcomeType.ERROR;
 		errorId = e.name();
 		message.add(Environment.vocabulary.getWord(e.name(), lang));
@@ -65,5 +65,11 @@ public class Outcome {
 
 	public String getWarningId() {
 		return warningId;
+	}
+
+	public Outcome addMessage(String msg) {
+		this.message.add(msg);
+		return this;
+
 	}
 }

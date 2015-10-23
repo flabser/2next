@@ -197,7 +197,9 @@ public class SessionService extends RestProvider {
 			url = site.getAppTemlate().getHostName() + "/Provider?id=login";
 		}
 		Outcome res = new Outcome();
-		res.addMessage(url);
+		_Session session = getSession();
+		String lang = session.getLang();
+		res.addMessage(url, lang);
 		if (userSession != null) {
 			request.getSession(false).removeAttribute(EnvConst.SESSION_ATTR);
 			SessionPool.remove(userSession);
@@ -225,18 +227,21 @@ public class SessionService extends RestProvider {
 					|| user.getStatus() == UserStatusType.NOT_VERIFIED) {
 				user.setStatus(UserStatusType.REGISTERED);
 				if (user.save()) {
-					return Response.status(HttpServletResponse.SC_OK).entity(res.addMessage(user.getEmail())).build();
+					return Response.status(HttpServletResponse.SC_OK).entity(res.addMessage(user.getEmail(), lang))
+							.build();
 				} else {
 					return Response.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
 							.entity(res.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
 				}
 			} else if (user.getStatus() == UserStatusType.REGISTERED) {
-				return Response.status(HttpServletResponse.SC_OK).entity(res
-						.setMessage(ServerServiceWarningType.USER_ALREADY_REGISTERED, lang).addMessage(user.getEmail()))
+				return Response.status(HttpServletResponse.SC_OK)
+						.entity(res.setMessage(ServerServiceWarningType.USER_ALREADY_REGISTERED, lang)
+								.addMessage(user.getEmail(), lang))
 						.build();
 			} else {
-				return Response.status(HttpServletResponse.SC_OK).entity(
-						res.setMessage(ServerServiceWarningType.UNKNOWN_USER_STATUS, lang).addMessage(user.getEmail()))
+				return Response.status(HttpServletResponse.SC_OK)
+						.entity(res.setMessage(ServerServiceExceptionType.UNKNOWN_USER_STATUS, lang)
+								.addMessage(user.getEmail(), lang))
 						.build();
 			}
 		} else {
@@ -283,24 +288,20 @@ public class SessionService extends RestProvider {
 		user.setRegDate(new Date());
 		user.setVerifyCode(_Helper.getRandomValue());
 
-		if (!user.save()) {
-			return Response.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
-					.entity(res.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
-		}
-
 		VerifyEMail sve = new VerifyEMail(session, user);
 		if (sve.send()) {
 			user.setStatus(UserStatusType.WAITING_FOR_VERIFYCODE);
-			if (!user.save()) {
-				return Response.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
-						.entity(res.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
-			}
 		} else {
-			return Response.status(HttpServletResponse.SC_OK)
-					.entity(res.setMessage(ServerServiceWarningType.VERIFY_EMAIL_SENDING_ERROR, lang)).build();
-
+			user.setStatus(UserStatusType.VERIFYCODE_NOT_SENT);
+			res.setMessage(ServerServiceWarningType.VERIFY_EMAIL_SENDING_ERROR, lang);
 		}
-		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
+
+		if (user.save()) {
+			return Response.status(HttpServletResponse.SC_OK).entity(res).build();
+		} else {
+			return Response.status(HttpServletResponse.SC_INTERNAL_SERVER_ERROR)
+					.entity(res.setMessage(ServerServiceExceptionType.SERVER_ERROR, lang)).build();
+		}
 	}
 
 	@POST
@@ -341,7 +342,7 @@ public class SessionService extends RestProvider {
 						.entity(res.setMessage(ServerServiceWarningType.RESET_PASSWORD_ALREADY_SENT, lang)).build();
 			} else {
 				return Response.status(HttpServletResponse.SC_OK)
-						.entity(res.setMessage(ServerServiceWarningType.UNKNOWN_USER_STATUS, lang)).build();
+						.entity(res.setMessage(ServerServiceExceptionType.UNKNOWN_USER_STATUS, lang)).build();
 			}
 		} else {
 			return Response.status(HttpServletResponse.SC_OK)
