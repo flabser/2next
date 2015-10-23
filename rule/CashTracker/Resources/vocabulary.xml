@@ -569,10 +569,10 @@
 		<entry lang="ENG">Account</entry>
 		<entry lang="BG">Счет</entry>
 	</sentence>
-	<sentence mode="on" keyword="tranfer_to_account">
+	<sentence mode="on" keyword="transfer_to_account">
 		<entry lang="RUS">Перевод в счет</entry>
 		<entry lang="KAZ">Перевод в счет</entry>
-		<entry lang="ENG">Tranfer to account</entry>
+		<entry lang="ENG">Transfer to account</entry>
 		<entry lang="BG">Перевод в счет</entry>
 	</sentence>
 	<sentence mode="on" keyword="transaction_type">
