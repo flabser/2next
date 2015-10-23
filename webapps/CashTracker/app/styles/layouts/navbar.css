@@ -17,26 +17,24 @@
 }
 
 .navbar-brand {
-    color: #494949;
     display: inline-block;
-    font-size: 1.6em;
-    height: inherit;
     padding: 0 4px;
-    text-decoration: none;
     vertical-align: top;
 }
 
 .brand-logo {
-    line-height: 60px;
-    margin: 0 4px;
-    max-height: 58px;
-    vertical-align: middle;
+    line-height: 50px;
+    max-height: 50px;
+    vertical-align: top;
 }
 
 .brand-title {
-    font-size: 1em;
-    line-height: 60px;
-    vertical-align: middle;
+    color: #646464;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 50px;
+    vertical-align: top;
 }
 
 .navbar-title {
@@ -61,7 +59,7 @@
     background: transparent;
     border: 0;
     display: inline-block;
-    height: 60px;
+    height: 50px;
     margin: 0;
     min-width: 48px;
     outline: 0;
@@ -70,11 +68,6 @@
     text-align: center;
     vertical-align: top;
     width: 48px;
-}
-
-.tablet .nav-item,
-.phone .nav-item {
-    height: 50px;
 }
 
 .nav-item:hover,
@@ -299,23 +292,6 @@
     display: block;
     height: 8px;
     margin-top: 4px;
-}
-
-@media ( max-width: 768px) {
-    .navbar .brand {
-        width: auto;
-    }
-    .navbar .brand-logo {
-        line-height: 50px;
-        max-width: 32px;
-    }
-    .navbar .brand-title {
-        line-height: 50px;
-        font-size: .8em;
-    }
-    .nav-search .search-toggle-back {
-        display: inline-block;
-    }
 }
 
 @media ( max-width: 360px) {

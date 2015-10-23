@@ -7,6 +7,11 @@
     height: 48px;
 }
 
+.tablet .nav-profile > header,
+.phone .nav-profile > header {
+    height: 50px;
+}
+
 .nav-profile > header > a {
     color: #222;
     display: block;

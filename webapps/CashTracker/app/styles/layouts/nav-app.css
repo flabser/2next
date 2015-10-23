@@ -83,8 +83,7 @@ li.nav-separator {
 
 .side-nav li > a {
     border: 1px solid transparent;
-    /* border-radius: 2px; */
-    color: #222;
+    color: #303333;
     display: block;
     font-weight: normal;
     margin: 0;

@@ -29,9 +29,8 @@
 }
 
 .select-transaction-type > .btn.active {
-    border-color: #888;
-    /* #FFC100; */
-    /* box-shadow: 0px 0px 3px #FFE000; */
+    background-image: linear-gradient(to bottom, #fefefe, #f2f2f2);
+    border-color: #aaa;
     opacity: 1;
 }
 

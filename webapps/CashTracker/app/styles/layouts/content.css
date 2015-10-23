@@ -52,7 +52,8 @@
 /* header-title */
 
 .header-title {
-    font-size: 22px;
+    color: #303333;
+    font-size: 20px;
     font-weight: normal;
     line-height: 48px;
     margin: 0;
