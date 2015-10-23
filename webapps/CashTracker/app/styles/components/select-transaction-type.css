@@ -1,4 +1,6 @@
-.select-transaction-type {}
+.select-transaction-type {
+    font-size: 0;
+}
 
 .tablet .select-transaction-type,
 .phone .select-transaction-type {
@@ -6,21 +8,27 @@
 }
 
 .select-transaction-type > .btn {
+    background: none !important;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    font-size: 13px;
+    margin: 0;
     opacity: .7;
-    padding: 4px 8px 4px 4px;
+    padding: 8px 8px 8px 4px;
     position: relative;
 }
 
 .select-transaction-type.multi .btn.active:after {
-    background: #9E9E9E;
-    border-top: 8px solid transparent;
+    background: #888;
     border-right: 8px solid #FFF;
+    border-bottom: 8px solid transparent;
     content: '';
     display: block;
     left: 0;
     overflow: hidden;
     position: absolute;
-    top: 0;
+    /* top: 0; */
     width: 0;
 }
 
@@ -29,8 +37,8 @@
 }
 
 .select-transaction-type > .btn.active {
-    background-image: linear-gradient(to bottom, #fefefe, #f2f2f2);
-    border-color: #aaa;
+    border-bottom: 2px solid #999;
+    bottom: 1px;
     opacity: 1;
 }
 
