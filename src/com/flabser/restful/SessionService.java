@@ -259,19 +259,19 @@ public class SessionService extends RestProvider {
 		_Session session = getSession();
 		String lang = session.getLang();
 		if (!_Validator.checkEmail(email)) {
-			return Response.status(HttpServletResponse.SC_OK)
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST)
 					.entity(res.setMessage(ServerServiceExceptionType.EMAIL_IS_INCORRECT, lang)).build();
 		}
 
 		if (!_Validator.checkPwdWeakness(pwd, 8)) {
-			return Response.status(HttpServletResponse.SC_OK)
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST)
 					.entity(res.setMessage(ServerServiceExceptionType.WEAK_PASSWORD, lang)).build();
 		}
 
 		ISystemDatabase sdb = com.flabser.dataengine.DatabaseFactory.getSysDatabase();
 		User userExists = sdb.getUser(email);
 		if (userExists != null) {
-			return Response.status(HttpServletResponse.SC_OK)
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST)
 					.entity(res.setMessage(ServerServiceExceptionType.USER_EXISTS, lang)).build();
 		}
 
