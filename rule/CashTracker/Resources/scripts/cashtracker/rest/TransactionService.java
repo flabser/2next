@@ -143,6 +143,10 @@ public class TransactionService extends RestProvider {
 			AccountDAO accountDao = new AccountDAO(getSession());
 			m.setAccount(accountDao.findById(m.getAccount().getId()));
 		}
+		if (m.getTransferAccount() != null) {
+			AccountDAO accountDao = new AccountDAO(getSession());
+			m.setTransferAccount(accountDao.findById(m.getTransferAccount().getId()));
+		}
 		if (m.getCategory() != null) {
 			CategoryDAO categoryDao = new CategoryDAO(getSession());
 			m.setCategory(categoryDao.findById(m.getCategory().getId()));
