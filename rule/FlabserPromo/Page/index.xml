@@ -6,7 +6,7 @@
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="java_class">flabser.page.Index</doscript>
+			<doscript source="java_class">flabserpromo.page.Index</doscript>
 		</events>
 	</element>
 

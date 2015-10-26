@@ -6,7 +6,7 @@
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="java_class">immis.page.Index</doscript>
+			<doscript source="java_class">immigrationservice.page.Index</doscript>
 		</events>
 	</element>
 
