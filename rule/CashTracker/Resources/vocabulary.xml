@@ -12,13 +12,22 @@
 		<entry lang="ENG">@copyright</entry>
 		<entry lang="BG">@copyright</entry>
 	</sentence>
+
 	<sentence mode="on" keyword="CashTracker_description">
-		<entry lang="RUS">Приложение для контроля ваших расходов и доходов. Вы можете дать доступ к вашему бюджету другим пользователям для просмотра или операции над вашим бюджетом</entry>
-		<entry lang="KAZ">Приложение для контроля ваших расходов и доходов. Вы можете дать доступ к вашему бюджету другим пользователям для просмотра или операции над вашим бюджетом</entry>
-		<entry lang="ENG">The application to control your expenses and income. You can give access to your budget to other users to view or operations on your budget</entry>
-		<entry lang="BG">Програмата да контролирате своите разходи и приходи. Можете да дадете достъп до бюджета си за другите потребители да видите или операции от бюджета си</entry>
+		<entry lang="RUS">Приложение для контроля ваших расходов и доходов. Вы можете дать доступ к вашему бюджету другим
+			пользователям для просмотра или операции над вашим бюджетом
+		</entry>
+		<entry lang="KAZ">Приложение для контроля ваших расходов и доходов. Вы можете дать доступ к вашему бюджету другим
+			пользователям для просмотра или операции над вашим бюджетом
+		</entry>
+		<entry lang="ENG">The application to control your expenses and income. You can give access to your budget to other
+			users to view or operations on your budget
+		</entry>
+		<entry lang="BG">Програмата да контролирате своите разходи и приходи. Можете да дадете достъп до бюджета си за
+			другите потребители да видите или операции от бюджета си
+		</entry>
 	</sentence>
-	
+
 	<!-- promo -->
 	<sentence mode="on" keyword="promo_line1">
 		<entry lang="RUS">Сервис для учета и планирования</entry>
@@ -742,6 +751,12 @@
 		<entry lang="KAZ">Неактивные категории скрыты</entry>
 		<entry lang="ENG">Not active categories have hidden</entry>
 		<entry lang="BG">Неактивные категории скрыты</entry>
+	</sentence>
+	<sentence mode="on" keyword="category_color_hint">
+		<entry lang="RUS">Название категории в представлении будет выведено с выбранным цветом</entry>
+		<entry lang="KAZ">Название категории в представлении будет выведено с выбранным цветом</entry>
+		<entry lang="ENG">The name of the category in the presentation will be displayed with the selected color</entry>
+		<entry lang="BG">Название категории в представлении будет выведено с выбранным цветом</entry>
 	</sentence>
 	<sentence mode="on" keyword="account_active_hint">
 		<entry lang="RUS">Неактивные счета скрыты</entry>

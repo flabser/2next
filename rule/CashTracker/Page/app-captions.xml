@@ -95,6 +95,7 @@
 	<caption name="account_active_hint" />
 	<caption name="category_active_hint" />
 	<caption name="category_transaction_type_hint" />
+	<caption name="category_color_hint" />
 
 	<caption name="add_user" />
 	<caption name="invitation_title" />
