@@ -33,11 +33,14 @@
 
 .op-head .op-amount {
     background-color: transparent !important;
-    text-align: center;
 }
 
-.op-amount-minus {
+.op-amount.E {
     color: #E02117;
+}
+
+.op-amount.T {
+    color: #0000FF;
 }
 
 .op-costcenter {
@@ -112,7 +115,7 @@
     width: auto;
 }
 
-.phone .op-amount.op-amount-minus {
+.phone .op-amount.E {
     color: #FFF;
     background-color: #E74C3D;
 }

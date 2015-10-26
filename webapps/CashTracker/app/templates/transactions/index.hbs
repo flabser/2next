@@ -58,10 +58,10 @@
                             <span class="op-account">
                                 {{transaction.account.name}}
                             </span>
-                            <span class="op-cat">
+                            <span class="op-cat" style="color:{{transaction.category.color}};">
                                 {{transaction.category.name}}
                             </span>
-                            <span class="op-amount">
+                            <span class="op-amount {{transaction.transactionType}}">
                                 {{transaction.amount}}
                             </span>
                             <span class="op-type">

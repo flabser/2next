@@ -10,7 +10,7 @@
         </label>
         {{#link-to 'categories.category' category class='entry-link'}}
         <div class="entry-fields">
-            <span class="vcat-name {{if category.parent 'indent'}}">
+            <span class="vcat-name {{if category.parent 'indent'}}" style="color:{{category.color}};">
                 {{#if category.children}}
                     <i class="has-child"></i>
                 {{/if}}

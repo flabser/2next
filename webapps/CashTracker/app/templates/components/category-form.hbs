@@ -82,7 +82,10 @@
                         {{t 'color'}}
                     </div>
                     <div class="controls">
-                        {{input type='color' value=category.color class='span3'}}
+                        {{tn-select-color value=category.color}}
+                        <p class="hint">
+                            {{t 'category_color_hint'}}
+                        </p>
                     </div>
                 </div>
             </fieldset>
