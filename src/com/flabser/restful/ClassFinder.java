@@ -13,13 +13,17 @@ public class ClassFinder {
 	private static final String INNER_CLASS_SPLITTER = "$";
 
 	public static List<Class<?>> find(String scannedPackage) {
+		Server.logger.errorLogEntry(scannedPackage);
 		String scannedPath = scannedPackage.replace(DOT, File.separator);
+		Server.logger.errorLogEntry(scannedPath);
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 		URL scannedUrl = Thread.currentThread().getContextClassLoader().getResource(scannedPath);
+		Server.logger.errorLogEntry(scannedUrl.toString());
 		if (scannedUrl == null) {
 			Server.logger.errorLogEntry("Packpage error");
 		} else {
 			File scannedDir = new File(scannedUrl.getFile().replace("%5c", File.separator));
+			Server.logger.errorLogEntry(scannedDir.toString());
 			for (File file : scannedDir.listFiles()) {
 				Server.logger.errorLogEntry("error " + file);
 				classes.addAll(find(file, scannedPackage));
