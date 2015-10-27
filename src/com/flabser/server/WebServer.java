@@ -245,7 +245,6 @@ public class WebServer implements IWebServer {
 				context.addWelcomeFile(defaultWelcomeList[i]);
 			}
 			appHost.addChild(context);
-			Server.logger.normalLogEntry("213213");
 			String srDocBase = EnvConst.SHARED_RESOURCES_NAME;
 			Context shContext = new StandardContext();
 			String sharedResDb = new File("webapps/" + EnvConst.SHARED_RESOURCES_NAME).getAbsolutePath();
@@ -254,7 +253,6 @@ public class WebServer implements IWebServer {
 			shContext.setName(srDocBase);
 			Tomcat.addServlet(shContext, "default", "org.apache.catalina.servlets.DefaultServlet");
 			shContext.addServletMapping("/", "default");
-			Server.logger.normalLogEntry("321");
 			shContext.addMimeMapping("css", "text/css");
 			shContext.addMimeMapping("js", "text/javascript");
 			shContext.setConfigured(true);
@@ -263,7 +261,7 @@ public class WebServer implements IWebServer {
 		}
 
 		initErrorPages(context);
-		Server.logger.normalLogEntry("434");
+
 		/*
 		 * for (int i = 0; i < defaultInfoList.length; i++) {
 		 * context.addWelcomeFile(defaultInfoList[i]); }
@@ -284,7 +282,6 @@ public class WebServer implements IWebServer {
 
 		Tomcat.addServlet(context, "Error", "com.flabser.servlets.Error");
 		context.addServletMapping("/Error", "Error");
-		Server.logger.normalLogEntry("43235");
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
@@ -294,7 +291,6 @@ public class WebServer implements IWebServer {
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
 		context.setTldValidation(false);
-		Server.logger.normalLogEntry("898");
 		return null;
 	}
 

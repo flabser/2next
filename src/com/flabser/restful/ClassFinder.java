@@ -18,15 +18,17 @@ public class ClassFinder {
 		Server.logger.errorLogEntry(scannedPath);
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 		URL scannedUrl = Thread.currentThread().getContextClassLoader().getResource(scannedPath);
-		Server.logger.errorLogEntry(scannedUrl.toString());
-		if (scannedUrl == null) {
-			Server.logger.errorLogEntry("Packpage error");
-		} else {
-			File scannedDir = new File(scannedUrl.getFile().replace("%5c", File.separator));
-			Server.logger.errorLogEntry(scannedDir.toString());
-			for (File file : scannedDir.listFiles()) {
-				Server.logger.errorLogEntry("error " + file);
-				classes.addAll(find(file, scannedPackage));
+		if (scannedUrl != null) {
+			Server.logger.errorLogEntry(scannedUrl.toString());
+			if (scannedUrl == null) {
+				Server.logger.errorLogEntry("Packpage error");
+			} else {
+				File scannedDir = new File(scannedUrl.getFile().replace("%5c", File.separator));
+				Server.logger.errorLogEntry(scannedDir.toString() + " " + scannedDir.listFiles().length);
+				for (File file : scannedDir.listFiles()) {
+					Server.logger.errorLogEntry("file " + file);
+					classes.addAll(find(file, scannedPackage));
+				}
 			}
 		}
 		return classes;
