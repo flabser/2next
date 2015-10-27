@@ -36,7 +36,7 @@ public class ResourceLoader extends Application {
 		classes.add(UploadFileService.class);
 		classes.add(WorkspaceService.class);
 		if (!appName.equalsIgnoreCase("administrator")) {
-			List<Class<?>> appClasses = ClassFinder.find(appName.toLowerCase() + ".rest");
+			List<Class<?>> appClasses = new ClassFinder().find(appName.toLowerCase() + ".rest");
 			classes.addAll(appClasses);
 		} else {
 			classes.add(AppService.class);
