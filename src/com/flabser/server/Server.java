@@ -14,7 +14,7 @@ import com.flabser.log.Log4jLogger;
 import com.flabser.scheduler.PeriodicalServices;
 
 public class Server {
-	public static com.flabser.log.ILogger logger  = new Log4jLogger("Server");
+	public static com.flabser.log.ILogger logger = new Log4jLogger("Server");
 	public static final String serverVersion = "1.0.0";
 	public static String compilationTime = "";
 	public static final String serverTitle = "2Next " + serverVersion;
@@ -23,6 +23,7 @@ public class Server {
 	public static IWebServer webServerInst;
 
 	public static void start() throws MalformedURLException, LifecycleException, URISyntaxException {
+		logger.infoLogEntry("#");
 		logger.infoLogEntry(serverTitle + " start");
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 
@@ -31,7 +32,7 @@ public class Server {
 				+ System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
 
 		Environment.init();
-		if (compilationTime !=null && !compilationTime.equalsIgnoreCase("")) {
+		if (compilationTime != null && !compilationTime.equalsIgnoreCase("")) {
 			logger.debugLogEntry("build: " + compilationTime);
 		}
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
@@ -73,10 +74,9 @@ public class Server {
 
 		Environment.periodicalServices = new PeriodicalServices();
 
-
 		new Thread(new ContexLoader()).start();
 
-		//TODO rerun thread
+		// TODO rerun thread
 		Thread thread = new Thread(new Console());
 		thread.setPriority(Thread.MIN_PRIORITY);
 		thread.start();

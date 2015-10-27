@@ -1,4 +1,4 @@
-quit (q) - stop server safely;
+quit, exit (q) - stop server with safety;
 sessions(us) - show a list of the session pool;
 job list (jl) - show a list of the current scheduled jobs;
 force database remover - start database remover immediately;
