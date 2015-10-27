@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <tn>
     <adminapp mode="on"/>
-    <hostname>localhost</hostname>
-    <port></port>
+    <hostname></hostname>
+    <port>80</port>
       
     <applications workspace="Nubis">
     	<app>
-			<name mode="on" >Nubis</name>
+			<name mode="off" >Nubis</name>
 		</app>
 		<app>
 			<name mode="on" >Project</name>

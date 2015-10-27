@@ -13,6 +13,7 @@ import com.flabser.util.RestUtil;
 
 @Path("service")
 public class Service extends RestProvider {
+	private static final String RECEPIENT_EMAIL = "k-zone@ya.ru";
 
 	@POST
 	@Path("/sendmail")
@@ -20,7 +21,7 @@ public class Service extends RestProvider {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response create(@FormParam("email") String email, @FormParam("subject") String subj,
 			@FormParam("message") String msg, @FormParam("g-recaptcha-response") String grecaptcha) {
-		return RestUtil.processSimpleMessage(getSession(), "k-zone@ya.ru", email, subj, msg, grecaptcha);
+		return RestUtil.processSimpleMessage(getSession(), RECEPIENT_EMAIL, email, subj, msg, grecaptcha);
 	}
 
 }

@@ -42,7 +42,6 @@ public class WebServer implements IWebServer {
 	private static Engine engine;
 	private static final String defaultWelcomeList[] = { "index.html" };
 
-
 	@Override
 	public void init(String defaultHostName) throws MalformedURLException, LifecycleException {
 		Server.logger.verboseLogEntry("init webserver ...");
@@ -129,13 +128,12 @@ public class WebServer implements IWebServer {
 		return context;
 	}
 
-
-
 	@Override
 	public Context addApplication(String appID, Site site) throws ServletException {
 		Context context = null;
 
-		//Server.logger.normalLogEntry("add context \"" + site.getAppBase() + "/" + appID + "\" application...");
+		// Server.logger.normalLogEntry("add context \"" + site.getAppBase() +
+		// "/" + appID + "\" application...");
 		String db = site.getFullPathAppBase();
 		String URLPath = "/" + site.getAppBase() + "/" + appID;
 		try {
@@ -152,7 +150,7 @@ public class WebServer implements IWebServer {
 					context.setName(appID);
 					context.setConfigured(true);
 					appHost.addChild(context);
-				}else{
+				} else {
 					return null;
 				}
 
@@ -162,7 +160,7 @@ public class WebServer implements IWebServer {
 					context = tomcat.addContext(URLPath, db);
 					context.setDisplayName(URLPath);
 					context.setName(appID);
-				}else{
+				} else {
 					return null;
 				}
 			}
@@ -197,14 +195,13 @@ public class WebServer implements IWebServer {
 			context.setTldValidation(false);
 			context.getServletContext().setAttribute(EnvConst.TEMPLATE_ATTR, site.getAppTemlate());
 		} catch (IllegalArgumentException iae) {
-			if (!iae.getMessage().contains("is not unique")){
+			if (!iae.getMessage().contains("is not unique")) {
 				Server.logger.warningLogEntry("Context \"" + URLPath + "\" has not been initialized");
 				throw new ServletException("Context \"" + URLPath + "\" has not been initialized");
-			}else{
+			} else {
 				Server.logger.warningLogEntry("Context \"" + URLPath + "\" has been already initialized");
 			}
 		}
-
 
 		return context;
 	}
@@ -248,7 +245,7 @@ public class WebServer implements IWebServer {
 				context.addWelcomeFile(defaultWelcomeList[i]);
 			}
 			appHost.addChild(context);
-
+			Server.logger.normalLogEntry("213213");
 			String srDocBase = EnvConst.SHARED_RESOURCES_NAME;
 			Context shContext = new StandardContext();
 			String sharedResDb = new File("webapps/" + EnvConst.SHARED_RESOURCES_NAME).getAbsolutePath();
@@ -257,7 +254,7 @@ public class WebServer implements IWebServer {
 			shContext.setName(srDocBase);
 			Tomcat.addServlet(shContext, "default", "org.apache.catalina.servlets.DefaultServlet");
 			shContext.addServletMapping("/", "default");
-
+			Server.logger.normalLogEntry("321");
 			shContext.addMimeMapping("css", "text/css");
 			shContext.addMimeMapping("js", "text/javascript");
 			shContext.setConfigured(true);
@@ -266,10 +263,11 @@ public class WebServer implements IWebServer {
 		}
 
 		initErrorPages(context);
-
-		/*		for (int i = 0; i < defaultInfoList.length; i++) {
-			context.addWelcomeFile(defaultInfoList[i]);
-		}*/
+		Server.logger.normalLogEntry("434");
+		/*
+		 * for (int i = 0; i < defaultInfoList.length; i++) {
+		 * context.addWelcomeFile(defaultInfoList[i]); }
+		 */
 
 		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 		context.addServletMapping("/", "default");
@@ -277,7 +275,7 @@ public class WebServer implements IWebServer {
 		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 		context.addServletMapping("/Provider", "Provider");
 		context.addServletMapping("/index.html", "Provider");
-		//context.addServletMapping("/info.html", "Provider");
+		// context.addServletMapping("/info.html", "Provider");
 
 		Wrapper w = Tomcat.addServlet(context, "PortalInit", "com.flabser.servlets.PortalInit");
 		w.setLoadOnStartup(1);
@@ -286,7 +284,7 @@ public class WebServer implements IWebServer {
 
 		Tomcat.addServlet(context, "Error", "com.flabser.servlets.Error");
 		context.addServletMapping("/Error", "Error");
-
+		Server.logger.normalLogEntry("43235");
 		context.addMimeMapping("css", "text/css");
 		context.addMimeMapping("js", "text/javascript");
 
@@ -296,7 +294,7 @@ public class WebServer implements IWebServer {
 		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
 		context.addServletMapping("/rest/*", "Jersey REST Service");
 		context.setTldValidation(false);
-
+		Server.logger.normalLogEntry("898");
 		return null;
 	}
 
@@ -306,9 +304,10 @@ public class WebServer implements IWebServer {
 		Context context = tomcat.addContext(tomcat.getHost(), "", db);
 		context.setDisplayName("root");
 
-		/*	for (int i = 0; i < defaultInfoList.length; i++) {
-			context.addWelcomeFile(defaultInfoList[i]);
-		}*/
+		/*
+		 * for (int i = 0; i < defaultInfoList.length; i++) {
+		 * context.addWelcomeFile(defaultInfoList[i]); }
+		 */
 
 		engine.getPipeline().addValve(new Logging());
 		engine.getPipeline().addValve(new Unsecure());
@@ -398,7 +397,6 @@ public class WebServer implements IWebServer {
 		context.addFilterDef(filterDef);
 		context.addFilterMap(filterMap);
 	}
-
 
 	private void initErrorPages(Context context) {
 		ErrorPage er = new ErrorPage();
