@@ -26,31 +26,33 @@
 						<div class="alert contact-form__alert" id="form_message" role="alert"></div>
 						<!-- Contact form -->
 						<form method="post" action="contact" name="contact_us">
-							<div class="form-group">
-								<input type="email" name="email" placeholder="Email" class="form-control contact-email contact-error" required="required" />
-								<span class="help-block"></span>
-							</div>
-							<div class="form-group">
-								<input type="text" name="subject" class="form-control contact-subject contact-error" required="required">
-									<xsl:attribute name="placeholder" select="//captions/message_subject/@caption" />
-								</input>
-								<span class="help-block"></span>
-							</div>
-							<div class="form-group">
-								<textarea name="message" class="form-control contact-error" required="required">
-									<xsl:attribute name="placeholder" select="//captions/message_text/@caption" />
-								</textarea>
-								<span class="help-block"></span>
-							</div>
-							<div class="contact-form__btn">
-								<div class="form-captcha">
-									<div class="g-recaptcha" data-sitekey="6Lf34Q0TAAAAAAwtko0WWibX6oUEs_i80q70XGab"></div>
-									<div class="help-block"></div>
+							<fieldset>
+								<div class="form-group">
+									<input type="email" name="email" placeholder="Email" class="form-control contact-email contact-error" required="required" />
+									<span class="help-block"></span>
 								</div>
-								<button type="submit" class="btn btn-contact">
-									<xsl:value-of select="//captions/send_message/@caption" />
-								</button>
-							</div>
+								<div class="form-group">
+									<input type="text" name="subject" class="form-control contact-subject contact-error" required="required">
+										<xsl:attribute name="placeholder" select="//captions/message_subject/@caption" />
+									</input>
+									<span class="help-block"></span>
+								</div>
+								<div class="form-group">
+									<textarea name="message" class="form-control contact-error" required="required">
+										<xsl:attribute name="placeholder" select="//captions/message_text/@caption" />
+									</textarea>
+									<span class="help-block"></span>
+								</div>
+								<div class="contact-form__btn">
+									<div class="form-captcha">
+										<div class="g-recaptcha" data-sitekey="6Lf34Q0TAAAAAAwtko0WWibX6oUEs_i80q70XGab"></div>
+										<div class="help-block"></div>
+									</div>
+									<button type="submit" class="btn btn-contact">
+										<xsl:value-of select="//captions/send_message/@caption" />
+									</button>
+								</div>
+							</fieldset>
 						</form>
 					</div>
 					<!-- <div class="col-sm-5 contact-address">
