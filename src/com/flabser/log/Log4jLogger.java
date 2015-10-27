@@ -57,27 +57,27 @@ public class Log4jLogger implements ILogger {
 	}
 
 	@Override
-	public void normalLogEntry(String logtext) {
+	public void infoLogEntry(String logtext) {
 		log4jLogger.info(logtext);
 
 	}
 
 	@Override
-	public void normalLogEntry(String agent, String logtext) {
+	public void infoLogEntry(String agent, String logtext) {
 		log4jLogger.info(agent + "-" + logtext);
 
 
 	}
 
 	@Override
-	public void verboseLogEntry(String logtext) {
+	public void debugLogEntry(String logtext) {
 
 		log4jLogger.debug(logtext);
 
 	}
 
 	@Override
-	public void verboseLogEntry(String agent, String logtext) {
+	public void debugLogEntry(String agent, String logtext) {
 
 		log4jLogger.debug(agent + "-" + logtext);
 

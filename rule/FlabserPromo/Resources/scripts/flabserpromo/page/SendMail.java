@@ -1,4 +1,4 @@
-package immis.page;
+package flabserpromo.page;
 
 import java.util.ArrayList;
 

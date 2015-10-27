@@ -48,7 +48,7 @@ public class Logging extends ValveBase {
 			clientIpAddress = request.getRemoteAddr();
 		}
 
-		logger.normalLogEntry(clientIpAddress + " " + ru.toString());
+		logger.infoLogEntry(clientIpAddress + " " + ru.toString());
 		((Unsecure) getNext()).invoke(request, response, ru);
 		return;
 	}

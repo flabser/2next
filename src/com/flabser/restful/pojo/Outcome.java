@@ -72,4 +72,11 @@ public class Outcome {
 		return this;
 
 	}
+
+	public Object setMessages(ArrayList<String> e, String lang) {
+		for (String msg : e) {
+			addMessage(msg, lang);
+		}
+		return this;
+	}
 }

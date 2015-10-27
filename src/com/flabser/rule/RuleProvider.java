@@ -72,11 +72,11 @@ public class RuleProvider {
 	}
 
 	public boolean resetRules() {
-		Server.logger.normalLogEntry("Reload application rules ...");
+		Server.logger.infoLogEntry("Reload application rules ...");
 
 		pageRuleMap.clear();
 
-		Server.logger.normalLogEntry("Application rules have been reloaded");
+		Server.logger.infoLogEntry("Application rules have been reloaded");
 		return true;
 	}
 
@@ -110,7 +110,7 @@ public class RuleProvider {
 					if (attr.equalsIgnoreCase("page")) {
 						PageRule ruleObj = new PageRule(env, file);
 						if (ruleObj.isOn != RunMode.ON) {
-							Server.logger.verboseLogEntry("rule " + ruleObj.id + " turn off ");
+							Server.logger.debugLogEntry("rule " + ruleObj.id + " turn off ");
 						}
 
 						pageRuleMap.put(ruleObj.id.toLowerCase(), ruleObj);

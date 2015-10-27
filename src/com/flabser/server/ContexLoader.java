@@ -25,7 +25,7 @@ public class ContexLoader  implements Runnable {
 				}
 			}
 		}
-		Server.logger.normalLogEntry("users contexts are ready");
+		Server.logger.infoLogEntry("users contexts are ready");
 
 	}
 

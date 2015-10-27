@@ -21,7 +21,7 @@ public class TempFileCleaner implements Job {
 
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-		Server.logger.normalLogEntry("start temp file cleaner tasks");
+		Server.logger.infoLogEntry("start temp file cleaner tasks");
 		ac = 0;
 		if (isFirstStart){
 			File folder = new File(Environment.tmpDir);
@@ -46,7 +46,7 @@ public class TempFileCleaner implements Job {
 			}
 		}
 		if (ac > 0){
-			Server.logger.verboseLogEntry(ac + " temporary files were deleted");
+			Server.logger.debugLogEntry(ac + " temporary files were deleted");
 		}
 
 	}

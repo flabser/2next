@@ -47,13 +47,13 @@ public class AppTemplate implements ICache, _IContent {
 	public AppTemplate(String appType, String globalFileName) {
 		this.templateType = appType;
 		try {
-			Server.logger.normalLogEntry("# init application template \"" + appType + "\"");
+			Server.logger.infoLogEntry("init application template \"" + appType + "\"");
 			ruleProvider = new RuleProvider(this);
 			ruleProvider.initAppTemplate(globalFileName);
 			globalSetting = ruleProvider.global;
 			if (globalSetting.isOn == RunMode.ON) {
 				if (globalSetting.langsList.size() > 0) {
-					Server.logger.normalLogEntry("dictionary is loading...");
+					Server.logger.infoLogEntry("dictionary is loading...");
 
 					try {
 						Localizator l = new Localizator();
@@ -61,10 +61,10 @@ public class AppTemplate implements ICache, _IContent {
 								+ "vocabulary.xml";
 						vocabulary = l.populate(vocabuarFilePath);
 						if (vocabulary != null) {
-							Server.logger.normalLogEntry("dictionary has loaded");
+							Server.logger.infoLogEntry("dictionary has loaded");
 						}
 					} catch (LocalizatorException le) {
-						Server.logger.verboseLogEntry(le.getMessage());
+						Server.logger.debugLogEntry(le.getMessage());
 					}
 
 				}
@@ -95,21 +95,21 @@ public class AppTemplate implements ICache, _IContent {
 			if (globalSetting.getWorkMode() == WorkModeType.CLOUD) {
 				t = " template";
 			}
-			Server.logger.normalLogEntry("# init" + t + " \"" + templateType + "\"");
+			Server.logger.infoLogEntry("# init" + t + " \"" + templateType + "\"");
 			if (globalSetting.isOn == RunMode.ON) {
 				if (globalSetting.langsList.size() > 0) {
-					Server.logger.normalLogEntry("dictionary is loading...");
+					// Server.logger.normalLogEntry("dictionary is loading...");
 
 					try {
 						Localizator l = new Localizator();
 						String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator
 								+ "vocabulary.xml";
 						vocabulary = l.populate(vocabuarFilePath);
-						if (vocabulary != null) {
-							Server.logger.normalLogEntry("dictionary has loaded");
+						if (vocabulary == null) {
+							Server.logger.warningLogEntry("dictionary has not loaded");
 						}
 					} catch (LocalizatorException le) {
-						Server.logger.verboseLogEntry(le.getMessage());
+						Server.logger.debugLogEntry(le.getMessage());
 					}
 
 				}

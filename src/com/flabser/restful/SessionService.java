@@ -139,7 +139,7 @@ public class SessionService extends RestProvider {
 		// String appID = authUser.getAppId();
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		String login = authUser.getLogin();
-		Server.logger.normalLogEntry(login + " is attempting to signin");
+		Server.logger.infoLogEntry(login + " is attempting to signin");
 		User user = systemDatabase.checkUserHash(login, authUser.getPwd(), null);
 		authUser.setPwd(null);
 		if (!user.isAuthorized) {
@@ -151,7 +151,7 @@ public class SessionService extends RestProvider {
 		String userID = user.getLogin();
 		jses = request.getSession(true);
 
-		Server.logger.normalLogEntry(userID + " has connected (" + context.getContextPath() + ")");
+		Server.logger.infoLogEntry(userID + " has connected (" + context.getContextPath() + ")");
 		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
 		userSession = new UserSession(user);

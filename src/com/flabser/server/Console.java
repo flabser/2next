@@ -26,7 +26,7 @@ public class Console implements Runnable {
 		while (in.hasNext()) {
 			final String command = in.nextLine();
 			System.out.println("> " + command);
-			if (command.equalsIgnoreCase("quit") || command.equalsIgnoreCase("q")) {
+			if (command.equalsIgnoreCase("quit") || command.equalsIgnoreCase("q") || command.equalsIgnoreCase("exit")) {
 				Server.shutdown();
 				in.close();
 			} else if (command.equalsIgnoreCase("sessions") || command.equalsIgnoreCase("us")) {
@@ -49,14 +49,14 @@ public class Console implements Runnable {
 			} else if (command.contains("show") || command.contains("sh")) {
 				if (command.contains("applications") || command.contains("apps")) {
 					ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
-					ArrayList<ApplicationProfile> apps = sysDb.getAllApps("", 0,0);
-					for(ApplicationProfile ap : apps){
+					ArrayList<ApplicationProfile> apps = sysDb.getAllApps("", 0, 0);
+					for (ApplicationProfile ap : apps) {
 						System.out.println(ap);
 					}
-				}else if (command.contains("users") || command.contains("us")) {
+				} else if (command.contains("users") || command.contains("us")) {
 					ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
-					ArrayList<User> users = sysDb.getAllUsers("", 0,0);
-					for(User u : users){
+					ArrayList<User> users = sysDb.getAllUsers("", 0, 0);
+					for (User u : users) {
 						System.out.println(u);
 					}
 				}
@@ -64,23 +64,23 @@ public class Console implements Runnable {
 				if (command.contains("application") || command.contains("app")) {
 					ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
 					if (command.contains("all")) {
-						ArrayList<ApplicationProfile> apps = sysDb.getAllApps("", 0,0);
+						ArrayList<ApplicationProfile> apps = sysDb.getAllApps("", 0, 0);
 						int count = 0;
-						for(ApplicationProfile ap : apps){
+						for (ApplicationProfile ap : apps) {
 							String app = ap.toString();
 							int stat = sysDb.deleteApplicationProfile(ap.id);
-							if (stat == 0){
+							if (stat == 0) {
 								System.out.println(app + " has been deleted");
-								count ++;
-							}else{
+								count++;
+							} else {
 								System.out.println(app + " has not been deleted");
 							}
 						}
 						System.out.println("was deleted " + count + " applications");
-					}else{
+					} else {
 						System.err.println("command \"" + command + "\" is not recognized");
 					}
-				}else{
+				} else {
 					System.err.println("command \"" + command + "\" is not recognized");
 				}
 			} else if (command.contains("command")) {

@@ -66,7 +66,7 @@ public abstract class Rule implements IElement, IRule {
 			if (id.equals("")){
 				id = FilenameUtils.removeExtension(docFile.getName());
 			}
-			Server.logger.verboseLogEntry("load rule: " + this.getClass().getSimpleName() + ", id=" + id);
+			Server.logger.debugLogEntry("load rule: " + this.getClass().getSimpleName() + ", id=" + id);
 			if (XMLUtil.getTextContent(doc, "/rule/@mode").equalsIgnoreCase("off")) {
 				isOn = RunMode.OFF;
 				isValid = false;

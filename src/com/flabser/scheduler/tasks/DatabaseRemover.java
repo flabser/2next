@@ -27,19 +27,19 @@ public class DatabaseRemover implements Job {
 	}
 
 	public void process(ApplicationStatusType type){
-		Server.logger.normalLogEntry("start database remover task");
+		Server.logger.infoLogEntry("start database remover task");
 		ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
 		//ArrayList<ApplicationProfile> apps = sysDb.getAllApps("status=" + type.getCode(), 0, 100);
 		ArrayList<ApplicationProfile> apps = sysDb.getAllApps("status=" + type.getCode() + " or status=" + ApplicationStatusType.DATABASE_NOT_CREATED.getCode(), 0, 100);
 		for (ApplicationProfile ap : apps) {
 			String appID = ap.appID;
-			Server.logger.normalLogEntry("application " + appID + " prepared to delete. It will be try to deleted");
+			Server.logger.infoLogEntry("application " + appID + " prepared to delete. It will be try to deleted");
 			try {
 				IApplicationDatabase appDb = sysDb.getApplicationDatabase();
 
 				if (appDb.removeDatabase(ap.dbName) == 0) {
 					if (sysDb.deleteApplicationProfile(ap.id) == 0) {
-						Server.logger.normalLogEntry("application " + appID + " has been deleted completly");
+						Server.logger.infoLogEntry("application " + appID + " has been deleted completly");
 					} else {
 						Server.logger.warningLogEntry("application profile " + appID + " has not been deleted");
 					}

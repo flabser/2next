@@ -23,5 +23,6 @@ public class EnvConst {
 	public static String CONN_PORT = "5433";
 	public static String DB_USER = "postgres";
 	public static String DB_PWD = "smartdoc";
+	public static String REST_HANDLERS_JAR_FILE = "2next.jar";
 
 }

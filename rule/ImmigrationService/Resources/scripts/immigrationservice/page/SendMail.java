@@ -1,4 +1,4 @@
-package flabser.page;
+package immigrationservice.page;
 
 import java.util.ArrayList;
 

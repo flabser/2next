@@ -23,16 +23,16 @@ public class Server {
 	public static IWebServer webServerInst;
 
 	public static void start() throws MalformedURLException, LifecycleException, URISyntaxException {
-		logger.normalLogEntry(serverTitle + " start");
+		logger.infoLogEntry(serverTitle + " start");
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 
-		logger.normalLogEntry("copyright(c) the F developers team 2015. All Right Reserved");
-		logger.normalLogEntry("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "("
+		logger.infoLogEntry("copyright(c) the F developers team 2015. All Right Reserved");
+		logger.infoLogEntry("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "("
 				+ System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
 
 		Environment.init();
 		if (compilationTime !=null && !compilationTime.equalsIgnoreCase("")) {
-			logger.verboseLogEntry("build: " + compilationTime);
+			logger.debugLogEntry("build: " + compilationTime);
 		}
 		webServerInst = WebServerFactory.getServer(Environment.serverVersion);
 		webServerInst.init(Environment.hostName);
@@ -68,7 +68,7 @@ public class Server {
 		webServerInst.initDefaultURL();
 
 		String info = webServerInst.initConnectors();
-		Server.logger.normalLogEntry("webserver start (" + info + ")");
+		Server.logger.infoLogEntry("webserver start (" + info + ")");
 		webServerInst.startContainer();
 
 		Environment.periodicalServices = new PeriodicalServices();
@@ -95,10 +95,10 @@ public class Server {
 	}
 
 	public static void shutdown() {
-		logger.normalLogEntry("server is stopping ... ");
+		logger.infoLogEntry("server is stopping ... ");
 		Environment.shutdown();
 		webServerInst.stopContainer();
-		logger.normalLogEntry("bye, bye... ");
+		logger.infoLogEntry("bye, bye... ");
 		System.exit(0);
 	}
 }

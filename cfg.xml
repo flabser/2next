@@ -6,19 +6,19 @@
       
     <applications workspace="Nubis">
     	<app>
-			<name mode="on" sitename="nubis.com" >Nubis</name>
+			<name mode="on" >Nubis</name>
 		</app>
 		<app>
-			<name mode="on" parent="Nubis" >Project</name>
+			<name mode="on" >Project</name>
 		</app>
 		<app>
-			<name mode="on" parent="Nubis" >FinPlanning</name>
+			<name mode="on"  >FinPlanning</name>
 		</app>
 		<app>
-			<name mode="on" parent="Nubis" >Schedule</name>
+			<name mode="on"  >Schedule</name>
 		</app>
 		<app>
-			<name mode="on" parent="Nubis" >CashTracker</name>
+			<name mode="on" >CashTracker</name>
 		</app>
 		<app>
 			<name mode="on" sitename="flabser.com">FlabserPromo</name>
@@ -34,7 +34,8 @@
     	<certfile>server.crt</certfile>
     	<certkeyfile>server.key</certkeyfile>    	
     </tls>
-   
+	
+	
     <mailagent mode="on">
 		<smtphost>smtp.mail.ru</smtphost>
 		<defaultsender>mynameis.m@mail.ru</defaultsender>
