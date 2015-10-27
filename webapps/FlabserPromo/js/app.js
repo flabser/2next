@@ -124,6 +124,7 @@ $(document).ready(function(e) {
                 //
                 if (response._Page.elements[0].name === 'result') {
                     $('#form_message').addClass('alert-success').html(response._Page.elements[0].value);
+                    $form[0].reset();
                     setTimeout(function() {
                         $('#form_message').removeClass('alert-success').html('');
                     }, 5000);
@@ -131,7 +132,7 @@ $(document).ready(function(e) {
             },
             complete: function(xhr, status) {
                 $form.fadeTo('fast', 1);
-                $('button', $form).attr('disabled', false);
+                $('button', $form).removeAttr('disabled');
                 // Refresh Captcha
                 grecaptcha.reset();
             }
