@@ -35,25 +35,25 @@ public class SimpleLogger implements ILogger {
 	}
 	
 	
-	public void normalLogEntry(String logtext) {
+	public void infoLogEntry(String logtext) {
 		System.out.println(logtext);	
 		
 	}
 
 
-	public void normalLogEntry(String agent, String logtext) {
-		System.out.println(logtext);	
-		
-	}
-
-	
-	public void verboseLogEntry(String logtext) {
+	public void infoLogEntry(String agent, String logtext) {
 		System.out.println(logtext);	
 		
 	}
 
 	
-	public void verboseLogEntry(String agent, String logtext) {
+	public void debugLogEntry(String logtext) {
+		System.out.println(logtext);	
+		
+	}
+
+	
+	public void debugLogEntry(String agent, String logtext) {
 		System.out.println(logtext);	
 		
 	}

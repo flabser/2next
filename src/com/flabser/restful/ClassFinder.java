@@ -14,23 +14,14 @@ public class ClassFinder {
 
 	public static List<Class<?>> find(String scannedPackage) {
 		String scannedPath = scannedPackage.replace(DOT, File.separator);
+		Server.logger.debugLogEntry("scan REST handlers " + scannedPath + "...");
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 		URL scannedUrl = Thread.currentThread().getContextClassLoader().getResource(scannedPath);
 		if (scannedUrl != null) {
-			Server.logger.errorLogEntry(scannedUrl.toString());
-			if (scannedUrl == null) {
-				// Server.logger.errorLogEntry("Packpage error");
-			} else {
+			if (scannedUrl != null) {
 				File scannedDir = new File(scannedUrl.getFile().replace("%5c", File.separator));
-				Server.logger.errorLogEntry(scannedDir.toString());
-				if (scannedDir != null) {
-					Server.logger.errorLogEntry(scannedDir.toString() + " " + scannedDir.listFiles().length);
-					for (File file : scannedDir.listFiles()) {
-						Server.logger.errorLogEntry("file " + file);
-						classes.addAll(find(file, scannedPackage));
-					}
-				} else {
-					Server.logger.errorLogEntry(" scannedDir is NULL  ");
+				for (File file : scannedDir.listFiles()) {
+					classes.addAll(find(file, scannedPackage));
 				}
 			}
 		}
@@ -48,7 +39,7 @@ public class ClassFinder {
 			int endIndex = resource.length() - CLASS_SUFFIX.length();
 			String className = resource.substring(0, endIndex);
 			try {
-				Server.logger.verboseLogEntry("register REST handler \"" + className + "\"");
+				Server.logger.debugLogEntry("register REST handler \"" + className + "\"");
 				classes.add(Class.forName(className));
 			} catch (ClassNotFoundException ignore) {
 			}

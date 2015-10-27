@@ -53,7 +53,7 @@ public class Logout extends HttpServlet {
 					IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 					ua.postLogout(ServletUtil.getClientIpAddr(request), user);
 					jses.removeAttribute(EnvConst.SESSION_ATTR);
-					Server.logger.normalLogEntry(userID + " logout");
+					Server.logger.infoLogEntry(userID + " logout");
 				}
 			}
 			response.sendRedirect(getRedirect());

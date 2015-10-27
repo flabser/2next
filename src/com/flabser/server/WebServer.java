@@ -44,7 +44,7 @@ public class WebServer implements IWebServer {
 
 	@Override
 	public void init(String defaultHostName) throws MalformedURLException, LifecycleException {
-		Server.logger.verboseLogEntry("init webserver ...");
+		Server.logger.debugLogEntry("init webserver ...");
 
 		tomcat = new Tomcat();
 		tomcat.setPort(Environment.httpPort);
@@ -132,8 +132,7 @@ public class WebServer implements IWebServer {
 	public Context addApplication(String appID, Site site) throws ServletException {
 		Context context = null;
 
-		// Server.logger.normalLogEntry("add context \"" + site.getAppBase() +
-		// "/" + appID + "\" application...");
+		Server.logger.debugLogEntry("add context \"" + site.getAppBase() + "/" + appID + "\" application...");
 		String db = site.getFullPathAppBase();
 		String URLPath = "/" + site.getAppBase() + "/" + appID;
 		try {
@@ -215,7 +214,7 @@ public class WebServer implements IWebServer {
 		if (!site.getVirtualHostName().equals("")) {
 			h = "(" + site.getVirtualHostName() + ")";
 		}
-		Server.logger.normalLogEntry("load \"" + templateName + h + "\"");
+		Server.logger.infoLogEntry("load \"" + templateName + h + "\"");
 		String docBase = site.getFullPathAppBase();
 
 		if (site.getVirtualHostName().equals("")) {
@@ -321,7 +320,7 @@ public class WebServer implements IWebServer {
 
 		if (Environment.isTLSEnable) {
 			Connector secureConnector = null;
-			Server.logger.normalLogEntry("TLS has been enabled");
+			Server.logger.infoLogEntry("TLS has been enabled");
 			secureConnector = tomcat.getConnector();
 			secureConnector.setPort(Environment.secureHttpPort);
 			secureConnector.setScheme(httpSecureSchema);

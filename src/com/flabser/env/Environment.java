@@ -83,7 +83,7 @@ public class Environment implements ICache {
 			saxParser.parse(file, cfgXMLhandler);
 			Document xmlDocument = getDocument();
 
-			Server.logger.normalLogEntry("initialize runtime environment");
+			Server.logger.infoLogEntry("initialize runtime environment");
 
 			hostName = XMLUtil.getTextContent(xmlDocument, "/tn/hostname");
 			if (hostName.trim().equals("")) {
@@ -93,9 +93,9 @@ public class Environment implements ICache {
 			String portAsText = XMLUtil.getTextContent(xmlDocument, "/tn/port");
 			try {
 				httpPort = Integer.parseInt(portAsText);
-				Server.logger.normalLogEntry("webServer will use port: " + httpPort);
+				Server.logger.infoLogEntry("webServer will use port: " + httpPort);
 			} catch (NumberFormatException nfe) {
-				Server.logger.normalLogEntry("webServer will use standart port");
+				Server.logger.infoLogEntry("webServer will use standart port");
 			}
 
 			primaryAppDir = XMLUtil.getTextContent(xmlDocument, "/tn/primaryappdir");
@@ -152,11 +152,11 @@ public class Environment implements ICache {
 					certFile = XMLUtil.getTextContent(xmlDocument, "/tn/tls/certfile");
 					certKeyFile = XMLUtil.getTextContent(xmlDocument, "/tn/tls/certkeyfile");
 
-					Server.logger.normalLogEntry("TLS is enabled");
+					Server.logger.infoLogEntry("TLS is enabled");
 					httpPort = secureHttpPort;
 				}
 			} catch (Exception ex) {
-				Server.logger.normalLogEntry("TLS configuration error");
+				Server.logger.infoLogEntry("TLS configuration error");
 				isTLSEnable = false;
 				certFile = "";
 				certKeyFile = "";
@@ -172,12 +172,12 @@ public class Environment implements ICache {
 					smtpUser = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtpuser");
 					smtpPassword = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtppassword");
 					smtpPort = XMLUtil.getTextContent(xmlDocument, "/tn/mailagent/smtpport");
-					Server.logger.normalLogEntry("mailAgent will redirect some messages to host: " + SMTPHost);
+					Server.logger.infoLogEntry("mailAgent will redirect some messages to host: " + SMTPHost);
 				} else {
-					Server.logger.normalLogEntry("mailAgent is switch off");
+					Server.logger.infoLogEntry("mailAgent is switch off");
 				}
 			} catch (NumberFormatException nfe) {
-				Server.logger.normalLogEntry("mailAgent is not set");
+				Server.logger.infoLogEntry("mailAgent is not set");
 				SMTPHost = "";
 				defaultSender = "";
 			}

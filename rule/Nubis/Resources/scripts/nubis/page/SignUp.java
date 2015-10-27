@@ -45,7 +45,7 @@ public class SignUp extends _DoScript {
 		ISystemDatabase sdb = com.flabser.dataengine.DatabaseFactory.getSysDatabase();
 		User userExists = sdb.getUser(regForm.email);
 		if (userExists != null) {
-			Server.logger.verboseLogEntry("User \"" + regForm.email + "\" is exist");
+			Server.logger.debugLogEntry("User \"" + regForm.email + "\" is exist");
 			publishElement("error", "user-exists");
 			return;
 		}
