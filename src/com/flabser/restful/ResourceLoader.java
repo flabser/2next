@@ -13,12 +13,14 @@ import com.flabser.restful.admin.InvService;
 import com.flabser.restful.admin.LogService;
 import com.flabser.restful.admin.UserService;
 import com.flabser.restful.provider.ObjectMapperProvider;
+import com.flabser.server.Server;
 
 public class ResourceLoader extends Application {
 	private String appName;
 
 	public ResourceLoader(String appName) {
 		super();
+		Server.logger.normalLogEntry("6576");
 		this.appName = appName;
 	}
 
@@ -35,11 +37,12 @@ public class ResourceLoader extends Application {
 		classes.add(MultiPartFeature.class);
 		classes.add(UploadFileService.class);
 		classes.add(WorkspaceService.class);
-
+		Server.logger.normalLogEntry("85492");
 		if (!appName.equalsIgnoreCase("administrator")) {
+			Server.logger.normalLogEntry("6f576");
 			List<Class<?>> appClasses = ClassFinder.find(appName.toLowerCase() + ".rest");
 			classes.addAll(appClasses);
-		}else{
+		} else {
 			classes.add(AppService.class);
 			classes.add(LogService.class);
 		}

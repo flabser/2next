@@ -17,10 +17,11 @@ public class ClassFinder {
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 		URL scannedUrl = Thread.currentThread().getContextClassLoader().getResource(scannedPath);
 		if (scannedUrl == null) {
-			/* Server.logger.errorLogEntry(BAD_PACKAGE_ERROR); */
+			Server.logger.errorLogEntry("Packpage error");
 		} else {
 			File scannedDir = new File(scannedUrl.getFile().replace("%5c", File.separator));
 			for (File file : scannedDir.listFiles()) {
+				Server.logger.errorLogEntry("error " + file);
 				classes.addAll(find(file, scannedPackage));
 			}
 		}
