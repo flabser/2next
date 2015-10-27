@@ -23,6 +23,8 @@ $(function() {
  */
 
 $(document).ready(function(e) {
+    $('button').removeAttr('disabled');
+
     $('form[name=contact_us]').submit(function(e) {
         var $form = $(this);
         $.ajax({
@@ -66,6 +68,12 @@ $(document).ready(function(e) {
                     setTimeout(function() {
                         $('#form_message').removeClass('alert-success').html('');
                     }, 5000);
+                }
+            },
+            error: function(err) {
+                console.log(err.outcome);
+                if (err.outcome.type == 'ERROR') {
+
                 }
             },
             complete: function(xhr, status) {

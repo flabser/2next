@@ -100,7 +100,7 @@ $(document).ready(function(e) {
                 $('#form_message').removeClass('alert-success').html('');
             },
             success: function(response, status) {
-            	 
+
                 var hasErrors = response._Page.elements[0].name === 'errors';
                 if (hasErrors) {
                     var errors = response._Page.elements[0].value;
@@ -132,13 +132,12 @@ $(document).ready(function(e) {
                 }
             },
             error: function(err) {
-            	 console.log(err.outcome);
+                console.log(err.outcome);
                 if (err.outcome.type == 'ERROR') {
-                	
+
                 }
             },
             complete: function(xhr, status) {
-            	
                 $form.fadeTo('fast', 1);
                 $('button', $form).removeAttr('disabled');
                 // Refresh Captcha
