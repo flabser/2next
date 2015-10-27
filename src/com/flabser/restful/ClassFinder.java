@@ -13,21 +13,24 @@ public class ClassFinder {
 	private static final String INNER_CLASS_SPLITTER = "$";
 
 	public static List<Class<?>> find(String scannedPackage) {
-		Server.logger.errorLogEntry(scannedPackage);
 		String scannedPath = scannedPackage.replace(DOT, File.separator);
-		Server.logger.errorLogEntry(scannedPath);
 		List<Class<?>> classes = new ArrayList<Class<?>>();
 		URL scannedUrl = Thread.currentThread().getContextClassLoader().getResource(scannedPath);
 		if (scannedUrl != null) {
 			Server.logger.errorLogEntry(scannedUrl.toString());
 			if (scannedUrl == null) {
-				Server.logger.errorLogEntry("Packpage error");
+				// Server.logger.errorLogEntry("Packpage error");
 			} else {
 				File scannedDir = new File(scannedUrl.getFile().replace("%5c", File.separator));
-				Server.logger.errorLogEntry(scannedDir.toString() + " " + scannedDir.listFiles().length);
-				for (File file : scannedDir.listFiles()) {
-					Server.logger.errorLogEntry("file " + file);
-					classes.addAll(find(file, scannedPackage));
+				Server.logger.errorLogEntry(scannedDir.toString());
+				if (scannedDir != null) {
+					Server.logger.errorLogEntry(scannedDir.toString() + " " + scannedDir.listFiles().length);
+					for (File file : scannedDir.listFiles()) {
+						Server.logger.errorLogEntry("file " + file);
+						classes.addAll(find(file, scannedPackage));
+					}
+				} else {
+					Server.logger.errorLogEntry(" scannedDir is NULL  ");
 				}
 			}
 		}
