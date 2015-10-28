@@ -41,7 +41,6 @@ public class Environment implements ICache {
 	public static String hostName;
 	public static int httpPort = EnvConst.DEFAULT_HTTP_PORT;
 
-
 	public static ISystemDatabase systemBase;
 	public static String defaultSender = "";
 	public static String primaryAppDir;
@@ -66,7 +65,6 @@ public class Environment implements ICache {
 	public static Vocabulary vocabulary;
 
 	private static HashMap<String, Object> cache = new HashMap<String, Object>();
-
 
 	public static void init() {
 		loadProperties();
@@ -123,7 +121,7 @@ public class Environment implements ICache {
 						site.setVirtualHostName(vh);
 						if (vh.equals("")) {
 							site.setParent(XMLUtil.getTextContent(appNode, "name/@parent", false));
-						}else{
+						} else {
 							site.setParent("");
 						}
 
@@ -133,8 +131,10 @@ public class Environment implements ICache {
 						}
 
 						availableTemplates.put(appName, site);
-						if(!site.getVirtualHostName().equals("")) {
+						if (!site.getVirtualHostName().equals("")) {
 							availableTemplates.put(site.getVirtualHostName(), site);
+							// TODO
+							availableTemplates.put("www." + site.getVirtualHostName(), site);
 						}
 					}
 				}
@@ -207,7 +207,7 @@ public class Environment implements ICache {
 		}
 	}
 
-	private static void loadProperties(){
+	private static void loadProperties() {
 		Properties prop = new Properties();
 		InputStream input = null;
 
@@ -224,8 +224,8 @@ public class Environment implements ICache {
 					}
 				}
 			}
-		}catch(Exception e){
-			//	e.printStackTrace();
+		} catch (Exception e) {
+			// e.printStackTrace();
 
 		}
 	}
@@ -262,8 +262,8 @@ public class Environment implements ICache {
 	}
 
 	@Override
-	public _Page getPage(Page page, Map<String, String[]> formData) throws ClassNotFoundException, RuleException,
-	WebFormValueException {
+	public _Page getPage(Page page, Map<String, String[]> formData)
+			throws ClassNotFoundException, RuleException, WebFormValueException {
 		Object obj = cache.get(page.getID());
 		String cacheParam = formData.get("cache")[0];
 		if (obj == null || cacheParam.equalsIgnoreCase("reload")) {
