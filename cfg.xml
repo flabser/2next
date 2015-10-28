@@ -6,7 +6,7 @@
       
     <applications workspace="Nubis">
     	<app>
-			<name mode="on" >Nubis</name>
+			<name mode="on" sitename="benexus1.net">Nubis</name>
 		</app>
 		<app>
 			<name mode="on" >Project</name>
@@ -18,7 +18,7 @@
 			<name mode="on"  >Schedule</name>
 		</app>
 		<app>
-			<name mode="on" >CashTracker</name>
+			<name mode="on" parent="Nubis">CashTracker</name>
 		</app>
 		<app>
 			<name mode="on" sitename="flabser.com">FlabserPromo</name>
