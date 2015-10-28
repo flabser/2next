@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rule mode="on" type="global">
-	<description>Nubis</description>
-	<templatetype>Nubis</templatetype>
+	<description>benexus workspace</description>
+	<templatetype>benexus</templatetype>
 	<workmode>COMMON</workmode>
 	<entrypoint>Provider?id=login</entrypoint>
 	<defaultredirecturl>Provider?id=ws</defaultredirecturl>
