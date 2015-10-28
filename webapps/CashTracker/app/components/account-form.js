@@ -1,6 +1,6 @@
 import Em from 'ember';
 import DS from 'ember-data';
-import ModelForm from '../mixins/model-form';
+import ModelForm from '../mixins/components/form';
 import Validate from '../utils/validator';
 
 export default Em.Component.extend(ModelForm, {
@@ -33,7 +33,7 @@ export default Em.Component.extend(ModelForm, {
         },
 
         selectizeSelectCurrencyItemAction: function(selection) {
-            this.set('account.currencyCode', (selection ? selection.code : ''));
+            this.get('account').set('currencyCode', (selection ? selection.code : ''));
             this.validate('currencyCode');
         },
 

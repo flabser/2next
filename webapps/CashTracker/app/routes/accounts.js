@@ -13,6 +13,8 @@ export default Em.Route.extend({
         saveRecord: function(account) {
             account.save().then(() => {
                 this.transitionTo('accounts');
+            }, function(resp) {
+                console.log(arguments);
             });
         },
 

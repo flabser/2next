@@ -97,8 +97,28 @@ export default Route.extend({
             });
         },
 
-        goBack: function() {
-            history.back(-1);
+        transitionToTransactions: function(type) {
+            this.transitionTo('transactions');
+        },
+
+        transitionToAccounts: function() {
+            this.transitionTo('accounts');
+        },
+
+        transitionToCategories: function() {
+            this.transitionTo('categories');
+        },
+
+        transitionToCostCenters: function() {
+            this.transitionTo('cost_centers');
+        },
+
+        transitionToTags: function() {
+            this.transitionTo('tags');
+        },
+
+        transitionToUsers: function() {
+            this.transitionTo('users');
         },
 
         toggleDevice: function() {

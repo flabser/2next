@@ -1,6 +1,6 @@
 import Em from 'ember';
 import DS from 'ember-data';
-import ModelForm from '../mixins/model-form';
+import ModelForm from '../mixins/components/form';
 import Validate from '../utils/validator';
 
 export default Em.Component.extend(ModelForm, {
@@ -26,9 +26,9 @@ export default Em.Component.extend(ModelForm, {
 
     actions: {
         save: function() {
-            if (this.validate()) {
+            // if (this.validate()) {
                 this.sendAction('saveRecord', this.get('category'));
-            }
+            // }
         },
 
         close: function() {

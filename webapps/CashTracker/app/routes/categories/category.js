@@ -1,5 +1,5 @@
 import Em from 'ember';
-import ModelRoute from '../../mixins/model-route';
+import ModelRoute from '../../mixins/routes/model';
 
 export default Em.Route.extend(ModelRoute, {
     templateName: 'categories/category',

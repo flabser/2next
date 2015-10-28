@@ -7,9 +7,10 @@ export default Em.Mixin.create({
         this._super();
 
         let model = this.currentModel;
-        if ((model.get('isNew') && model.get('isSaving') === false) ||
-            (!model.get('isNew') && model.get('hasDirtyAttributes'))) {
+        if (model.get('isNew') && model.get('isSaving') === false) {
             model.deleteRecord();
+        } else if (!model.get('isNew') && model.get('hasDirtyAttributes')) {
+            model.rollbackAttributes();
         }
     },
 

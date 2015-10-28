@@ -90,7 +90,6 @@
 
 .app-loading {
     background: #FFF;
-    /* url(../img/loader-mini.gif) center center no-repeat; */
     height: 100%;
     left: 0;
     padding-top: 50px;
@@ -104,4 +103,16 @@
 .app-loading img {
     display: inline-block;
     margin: auto;
+}
+
+.loading {
+    background: #FFF url(../img/loader-mini.gif) center center no-repeat;
+    height: 100%;
+    left: 0;
+    padding-top: 50px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 999;
 }

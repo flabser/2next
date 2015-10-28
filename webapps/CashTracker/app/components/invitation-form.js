@@ -1,6 +1,6 @@
 import Em from 'ember';
 import DS from 'ember-data';
-import ModelForm from '../mixins/model-form';
+import ModelForm from '../mixins/components/form';
 import Validate from '../utils/validator';
 
 export default Em.Component.extend(ModelForm, {
