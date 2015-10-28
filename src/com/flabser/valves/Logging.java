@@ -31,16 +31,18 @@ public class Logging extends ValveBase {
 
 		RequestURL ru = new RequestURL(requestURI);
 
-		//	System.out.println("-------------" + ru.getUrl());
-		//	Enumeration<String> headerNames = request.getHeaderNames();
-		//	while (headerNames.hasMoreElements()) {
-		//		String key = headerNames.nextElement();
-		//		String value = request.getHeader(key);
-		//		System.out.println(key + "=" + value);
-		//	}
-		//	System.out.println("-------------");
+		// System.out.println("-------------" + ru.getUrl());
+		// Enumeration<String> headerNames = request.getHeaderNames();
+		// while (headerNames.hasMoreElements()) {
+		// String key = headerNames.nextElement();
+		// String value = request.getHeader(key);
+		// System.out.println(key + "=" + value);
+		// }
+		// System.out.println("-------------");
 
-		//	Server.logger.normalLogEntry(ru.getUrl() + " ---- ispage=" + ru.isPage() + ", isprotected=" + ru.isProtected() + ", isdeafult=" + ru.isDefault() + ", isauth=" + ru.isAuthRequest());
+		// Server.logger.normalLogEntry(ru.getUrl() + " ---- ispage=" +
+		// ru.isPage() + ", isprotected=" + ru.isProtected() + ", isdeafult=" +
+		// ru.isDefault() + ", isauth=" + ru.isAuthRequest());
 
 		String clientIpAddress = request.getHeader("X-FORWARDED-FOR");
 
@@ -48,7 +50,8 @@ public class Logging extends ValveBase {
 			clientIpAddress = request.getRemoteAddr();
 		}
 
-		logger.infoLogEntry(clientIpAddress + " " + ru.toString());
+		logger.infoLogEntry(clientIpAddress + " " + ru.toString() + ", apptype=" + ru.getAppType() + ", servername="
+				+ request.getServerName());
 		((Unsecure) getNext()).invoke(request, response, ru);
 		return;
 	}

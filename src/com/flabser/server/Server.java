@@ -23,7 +23,7 @@ public class Server {
 	public static IWebServer webServerInst;
 
 	public static void start() throws MalformedURLException, LifecycleException, URISyntaxException {
-		logger.infoLogEntry("#");
+		logger.infoLogEntry(":-)");
 		logger.infoLogEntry(serverTitle + " start");
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 
