@@ -1,5 +1,5 @@
 import Em from 'ember';
-import InfinityRoute from "ember-infinity/mixins/route";
+import InfinityRoute from 'ember-infinity/mixins/route';
 
 export default Em.Route.extend(InfinityRoute, {
     perPageParam: "limit", // instead of "per_page"
@@ -44,6 +44,8 @@ export default Em.Route.extend(InfinityRoute, {
         saveRecord: function(transaction) {
             transaction.save().then(() => {
                 this.transitionTo('transactions');
+            }, function(resp) {
+                console.log(arguments);
             });
         },
 

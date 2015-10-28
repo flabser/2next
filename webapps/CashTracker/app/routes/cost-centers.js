@@ -13,6 +13,8 @@ export default Em.Route.extend({
         saveRecord: function(costCenter) {
             costCenter.save().then(() => {
                 this.transitionTo('cost_centers');
+            }, function(resp) {
+                console.log(arguments);
             });
         },
 
