@@ -1,4 +1,4 @@
-import Em from "ember";
+import Em from 'ember';
 
 export default Em.Helper.helper(function(params) {
     let [type] = params,

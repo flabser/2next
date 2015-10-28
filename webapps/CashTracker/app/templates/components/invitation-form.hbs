@@ -37,9 +37,9 @@
                         {{textarea
                             value=invitation.message
                             key-up='validateMessage'
-                            maxlength='256'
+                            maxlength=messageMaxLen
                             class='span5'}}
-                        {{count-down-characters invitation.message 256}}
+                        {{count-down-characters invitation.message messageMaxLen}}
                         {{#each errors.message as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}

@@ -1,22 +1,8 @@
 import Em from 'ember';
-import InfinityRoute from "ember-infinity/mixins/route";
 
-export default Em.Route.extend(InfinityRoute, {
-    perPageParam: "limit", // instead of "per_page"
-    pageParam: "page", // instead of "page"
-    totalPagesParam: "meta.total", // instead of "meta.total_pages"
-
+export default Em.Route.extend({
     model: function() {
-        // return this.store.findAll('tag');
-        return this.infinityModel("tag", {
-            perPage: 20,
-            startingPage: 1
-        });
-    },
-
-    deactivate: function() {
-        this._super();
-        this.store.unloadAll('tag');
+        return this.store.findAll('tag');
     },
 
     actions: {
@@ -24,7 +10,7 @@ export default Em.Route.extend(InfinityRoute, {
             this.transitionTo('tags.new');
         },
 
-        saveTag: function(tag) {
+        saveRecord: function(tag) {
             tag.save().then(() => {
                 this.transitionTo('tags');
             });

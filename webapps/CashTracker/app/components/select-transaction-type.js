@@ -1,66 +1,37 @@
 import Em from 'ember';
 
 export default Em.Component.extend({
-    tagName: '',
-
+    tagName: 'div',
+    classNames: ['select-transaction-type'],
     value: null,
-    multi: false,
 
-    isExpense: false,
-    isIncome: false,
-    isTransfer: false,
+    types: [{
+        code: 'E',
+        name: 'expense'
+    }, {
+        code: 'I',
+        name: 'income'
+    }, {
+        code: 'T',
+        name: 'transfer'
+    }],
 
-    _types: [
-        [
-            'E', 'isExpense'
-        ],
-        [
-            'I', 'isIncome'
-        ],
-        [
-            'T', 'isTransfer'
-        ]
-    ],
-
-    willInsertElement: function() {
-        this._toggleState();
-    },
-
-    _toggleState: function() {
-        var value = this.get('value');
-        if (this.get('multi')) {
-            this._types.forEach((t) => {
-                if (value.contains(t[0])) {
-                    this.set(t[1], true);
-                } else {
-                    this.set(t[1], false);
-                }
-            });
-        } else {
-            this._types.forEach((t) => {
-                if (t[0] === value) {
-                    this.set(t[1], true);
-                } else {
-                    this.set(t[1], false);
-                }
-            });
+    didInsertElement: function() {
+        var type = this.get('value');
+        if (type) {
+            this.send('toggle', type);
         }
     },
 
     actions: {
         toggle: function(type) {
-            if (this.get('multi')) {
-                var value = this.get('value');
-                if (value.contains(type)) {
-                    value.removeObject(type);
-                } else {
-                    value.addObject(type);
-                }
-            } else {
+            var el = Em.$('[data-type=' + type + ']:not(.active)', this.element);
+
+            if (el.length) {
+                Em.$('.active', this.element).removeClass('active');
+                el.addClass('active');
                 this.set('value', type);
             }
-
-            this._toggleState();
         }
     }
 });

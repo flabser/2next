@@ -3,22 +3,20 @@ import DS from 'ember-data';
 import ModelForm from '../mixins/model-form';
 import Validate from '../utils/validator';
 
-const noteMaxLen = 256;
-
 export default Em.Component.extend(ModelForm, {
     account: null,
     users: null,
     currencies: null,
+    noteMaxLen: 256,
 
     currencyCode: Em.computed('account', function() {
-        let code = this.get('account').get('currencyCode');
-        return code;
+        return this.get('account.currencyCode');
     }),
 
     actions: {
         save: function() {
             let code = this.get('currencyCode');
-            this.get('account').set('currencyCode', code);
+            this.set('account.currencyCode', code);
 
             if (this.validate()) {
                 this.sendAction('saveRecord', this.get('account'));
@@ -31,11 +29,11 @@ export default Em.Component.extend(ModelForm, {
 
         selectizeInitCurrencyAction: function() {
             let code = this.get('currencyCode');
-            this.get('account').set('currencyCode', code);
+            this.set('account.currencyCode', code);
         },
 
         selectizeSelectCurrencyItemAction: function(selection) {
-            this.get('account').set('currencyCode', (selection ? selection.code : ''));
+            this.set('account.currencyCode', (selection ? selection.code : ''));
             this.validate('currencyCode');
         },
 
@@ -57,6 +55,7 @@ export default Em.Component.extend(ModelForm, {
     },
 
     validate: function(fieldName) {
+        const noteMaxLen = this.noteMaxLen;
         var i18n = this.get('i18n');
 
         if (fieldName) {

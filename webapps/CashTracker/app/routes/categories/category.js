@@ -8,12 +8,8 @@ export default Em.Route.extend(ModelRoute, {
         return this.store.find('category', params.category_id);
     },
 
-    categories: function() {
-        return this.store.findAll('category');
-    }.property(),
-
     setupController: function(controller, model) {
         controller.set('category', model);
-        controller.set('categories', this.get('categories'));
+        controller.set('categories', this.store.findAll('category'));
     }
 });

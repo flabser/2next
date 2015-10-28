@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import moment from 'moment';
 
 var MomentDate = DS.Transform.extend({
     deserialize: function(serialized) {

@@ -8,26 +8,20 @@ export default Em.Route.extend(ModelRoute, {
         return this.store.find('account', params.account_id);
     },
 
-    users: function() {
-        return this.store.findAll('user');
-    }.property(),
-
-    currencies: function() {
-        return [{
-            'code': 'KZT',
-            'name': 'Kazakhstani Tenge'
-        }, {
-            'code': 'USD',
-            'name': 'US Dollar'
-        }, {
-            'code': 'RUB',
-            'name': 'Russian Ruble'
-        }];
-    }.property(),
+    currencies: [{
+        'code': 'KZT',
+        'name': 'Kazakhstani Tenge'
+    }, {
+        'code': 'USD',
+        'name': 'US Dollar'
+    }, {
+        'code': 'RUB',
+        'name': 'Russian Ruble'
+    }],
 
     setupController: function(controller, model) {
         controller.set('account', model);
-        controller.set('users', this.get('users'));
-        controller.set('currencies', this.get('currencies'));
+        controller.set('users', this.store.findAll('user'));
+        controller.set('currencies', this.currencies);
     }
 });

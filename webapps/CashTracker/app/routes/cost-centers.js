@@ -1,22 +1,8 @@
 import Em from 'ember';
-import InfinityRoute from "ember-infinity/mixins/route";
 
-export default Em.Route.extend(InfinityRoute, {
-    perPageParam: "limit", // instead of "per_page"
-    pageParam: "page", // instead of "page"
-    totalPagesParam: "meta.total", // instead of "meta.total_pages"
-
+export default Em.Route.extend({
     model: function() {
-        // return this.store.findAll('cost-center');
-        return this.infinityModel("cost-center", {
-            perPage: 20,
-            startingPage: 1
-        });
-    },
-
-    deactivate: function() {
-        this._super();
-        this.store.unloadAll('cost-center');
+        return this.store.findAll('cost-center');
     },
 
     actions: {
@@ -24,7 +10,7 @@ export default Em.Route.extend(InfinityRoute, {
             this.transitionTo('cost_centers.new');
         },
 
-        saveCostCenter: function(costCenter) {
+        saveRecord: function(costCenter) {
             costCenter.save().then(() => {
                 this.transitionTo('cost_centers');
             });

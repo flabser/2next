@@ -35,7 +35,7 @@
                     </div>
                     <div class="controls">
                         {{ember-selectize
-                            content=accounts
+                            content=mainAccounts
                             optionValuePath='id'
                             optionLabelPath='name'
                             selection=transaction.account
@@ -54,7 +54,7 @@
                         </div>
                         <div class="controls">
                             {{ember-selectize
-                                content=accounts
+                                content=transferAccounts
                                 optionValuePath='id'
                                 optionLabelPath='name'
                                 selection=transaction.transferAccount
@@ -73,7 +73,7 @@
                     </div>
                     <div class="controls">
                         {{ember-selectize
-                            content=categories
+                            content=categoriesByType
                             optionValuePath='id'
                             optionLabelPath='name'
                             selection=transaction.category
@@ -133,9 +133,9 @@
                         {{textarea
                             value=transaction.note
                             key-up='validateNote'
-                            maxlength='256'
+                            maxlength=noteMaxLen
                             class='span5'}}
-                        {{count-down-characters transaction.note 256}}
+                        {{count-down-characters transaction.note noteMaxLen}}
                         {{#each errors.note as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
