@@ -13,7 +13,7 @@ public class EnvConst {
 	public static final String TEMPLATE_ATTR = "template";
 	public final static String SESSION_ATTR = "usersession";
 	public final static String SHARED_RESOURCES_NAME = "SharedResources";
-	public final static String ADMIN_APP_NAME = "Administrator";
+	public final static String ADMIN_APP_NAME = "administrator";
 	public static final String AUTH_COOKIE_NAME = "2nses";
 	public static final String LANG_COOKIE_NAME = "lang";
 	public static final String DEFAULT_PAGE = "index";

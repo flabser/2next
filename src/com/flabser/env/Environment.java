@@ -134,7 +134,8 @@ public class Environment implements ICache {
 						if (!site.getVirtualHostName().equals("")) {
 							availableTemplates.put(site.getVirtualHostName(), site);
 							// TODO
-							availableTemplates.put("www." + site.getVirtualHostName(), site);
+							// availableTemplates.put("www." +
+							// site.getVirtualHostName(), site);
 						}
 					}
 				}
