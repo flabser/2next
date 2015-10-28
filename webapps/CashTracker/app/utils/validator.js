@@ -1,4 +1,5 @@
 import Em from 'ember';
+import moment from 'moment';
 
 function isEmpty(str) {
     return Em.isEmpty(str); // (!str || 0 === str.length || !str.trim());

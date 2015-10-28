@@ -3,10 +3,26 @@ import DS from 'ember-data';
 import ModelForm from '../mixins/model-form';
 import Validate from '../utils/validator';
 
-const noteMaxLen = 256;
-
 export default Em.Component.extend(ModelForm, {
     category: null,
+    categories: null,
+    noteMaxLen: 256,
+
+    parentCategories: Em.computed('categories', 'category.transactionType', function() {
+        let list = this.get('categories');
+        let transactionType = this.get('category.transactionType');
+        let categoryId = this.get('category.id') || -1;
+        return list.filter((c) => {
+            let c_isNew = c.get('isNew');
+            let c_tt = c.get('transactionType');
+            let c_id = c.get('id');
+            return !c_isNew && transactionType === c_tt && categoryId !== c_id;
+        });
+    }),
+
+    didInsertElement: function() {
+        this.get('category.transactionType'); // compute parentCategories
+    },
 
     actions: {
         save: function() {
@@ -28,6 +44,7 @@ export default Em.Component.extend(ModelForm, {
     },
 
     validate: function(fieldName) {
+        const noteMaxLen = this.noteMaxLen;
         var i18n = this.get('i18n');
 
         if (fieldName) {

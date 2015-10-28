@@ -1,14 +1,6 @@
-<div class="select-transaction-type {{if multi 'multi'}}">
-    <button type="button" class="btn {{if isExpense 'active'}}" {{action 'toggle' 'E'}}>
-        <i class="fa fa-caret-down red"></i>
-        <span>{{t 'expense'}}</span>
+{{#each-in types as |index type|}}
+    <button type="button" data-type={{type.code}} class="btn" {{action 'toggle' type.code}}>
+        {{transaction-icon type.code}}
+        <span>{{t type.name}}</span>
     </button>
-    <button type="button" class="btn {{if isIncome 'active'}}" {{action 'toggle' 'I'}}>
-        <i class="fa fa-caret-up green"></i>
-        <span>{{t 'income'}}</span>
-    </button>
-    <button type="button" class="btn {{if isTransfer 'active'}}" {{action 'toggle' 'T'}}>
-        <i class="fa fa-retweet blue"></i>
-        <span>{{t 'transfer'}}</span>
-    </button>
-</div>
+{{/each-in}}

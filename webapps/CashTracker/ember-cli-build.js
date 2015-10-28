@@ -8,7 +8,7 @@ module.exports = function(defaults) {
 
     app.import('bower_components/jq_plugins/jquery.ui.widget.js');
     app.import('bower_components/jq_plugins/jquery.fileupload.js');
-    app.import('bower_components/moment/moment.js');
+    // app.import('bower_components/moment/moment.js');
     // app.import('bower_components/fastclick/lib/fastclick.js');
 
     // Use `app.import` to add additional libraries to the generated

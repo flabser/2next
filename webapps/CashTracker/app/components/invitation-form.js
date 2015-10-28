@@ -3,10 +3,9 @@ import DS from 'ember-data';
 import ModelForm from '../mixins/model-form';
 import Validate from '../utils/validator';
 
-const noteMaxLen = 256;
-
 export default Em.Component.extend(ModelForm, {
     invitation: null,
+    messageMaxLen: 256,
 
     actions: {
         sendInvite: function() {
@@ -28,6 +27,7 @@ export default Em.Component.extend(ModelForm, {
     },
 
     validate: function(fieldName) {
+        const messageMaxLen = this.messageMaxLen;
         var i18n = this.get('i18n');
 
         if (fieldName) {
@@ -42,6 +42,8 @@ export default Em.Component.extend(ModelForm, {
                 case 'message':
                     if (Validate.isEmpty(this.get('invitation.message'))) {
                         this.get('errors').add('message', i18n.t('validation_empty'));
+                    } else if (this.get('invitation.message.length') > messageMaxLen) {
+                        this.get('errors').add('message', i18n.t('validation_long', messageMaxLen));
                     }
                     break;
             }
@@ -53,6 +55,8 @@ export default Em.Component.extend(ModelForm, {
             }
             if (Validate.isEmpty(this.get('invitation.message'))) {
                 this.get('errors').add('message', i18n.t('validation_empty'));
+            } else if (this.get('invitation.message.length') > messageMaxLen) {
+                this.get('errors').add('message', i18n.t('validation_long', messageMaxLen));
             }
         }
 

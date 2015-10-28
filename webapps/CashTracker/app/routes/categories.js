@@ -5,19 +5,16 @@ export default Em.Route.extend({
         return this.store.findAll('category');
     },
 
-    deactivate: function() {
-        this._super();
-        this.store.unloadAll('category');
-    },
-
     actions: {
         composeRecord: function() {
             this.transitionTo('categories.new');
         },
 
-        saveCategory: function(category) {
+        saveRecord: function(category) {
             category.save().then(() => {
                 this.transitionTo('categories');
+            }, function(resp) {
+                console.log(arguments);
             });
         },
 

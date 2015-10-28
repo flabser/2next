@@ -3,14 +3,37 @@ import DS from 'ember-data';
 import ModelForm from '../mixins/model-form';
 import Validate from '../utils/validator';
 
-const noteMaxLen = 256;
-
 export default Em.Component.extend(ModelForm, {
     transaction: null,
     accounts: null,
     categories: null,
     costCenters: null,
     tags: null,
+    noteMaxLen: 256,
+
+    mainAccounts: Em.computed('accounts', 'transaction.transferAccount', function() {
+        let list = this.get('accounts');
+        let taId = this.get('transaction.transferAccount.id');
+        if (taId) {
+            return list.filter((a) => {
+                return taId !== a.get('id');
+            });
+        }
+        return list;
+    }),
+
+    transferAccounts: Em.computed('accounts', 'transaction.account', function() {
+        let list = this.get('accounts');
+        let aId = this.get('transaction.account.id');
+        return list.filter((a) => {
+            return aId !== a.get('id');
+        });
+    }),
+
+    categoriesByType: Em.computed('categories', 'transaction.transactionType', function() {
+        let c = this.get('categories');
+        return c.filterBy('transactionType', this.get('transaction.transactionType'));
+    }),
 
     isTransfer: Em.computed('transaction.transactionType', function() {
         return this.get('transaction.transactionType') === 'T';
@@ -51,6 +74,7 @@ export default Em.Component.extend(ModelForm, {
     },
 
     validate: function(fieldName) {
+        const noteMaxLen = this.noteMaxLen;
         var i18n = this.get('i18n');
 
         if (fieldName) {

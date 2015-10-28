@@ -97,9 +97,9 @@
                         {{textarea
                             value=account.note
                             key-up='validateNote'
-                            maxlength='256'
+                            maxlength=noteMaxLen
                             class='span5'}}
-                        {{count-down-characters account.note 256}}
+                        {{count-down-characters account.note noteMaxLen}}
                         {{#each errors.note as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}

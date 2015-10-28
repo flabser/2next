@@ -6,7 +6,7 @@ export default DS.Model.extend({
         readOnly: true
     }),
     owner: DS.belongsTo('user', {
-        async: false,
+        async: true,
         readOnly: true
     }),
     status: DS.attr('number', {
