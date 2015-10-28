@@ -4,9 +4,9 @@
     <hostname>localhost</hostname>
     <port></port>
       
-    <applications workspace="Nubis">
+    <applications workspace="benexus">
     	<app>
-			<name mode="on" sitename="benexus1.net">Nubis</name>
+			<name mode="on" sitename="benexus1.net">benexus</name>
 		</app>
 		<app>
 			<name mode="on" >Project</name>
@@ -18,7 +18,7 @@
 			<name mode="on"  >Schedule</name>
 		</app>
 		<app>
-			<name mode="on" parent="Nubis">CashTracker</name>
+			<name mode="on" parent="benexus">CashTracker</name>
 		</app>
 		<app>
 			<name mode="on" sitename="flabser.com">FlabserPromo</name>

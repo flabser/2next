@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <vocabulary>
 	<sentence mode="on" keyword="brand">
-		<entry lang="RUS">Nubis</entry>
-		<entry lang="KAZ">Nubis</entry>
-		<entry lang="ENG">Nubis</entry>
-		<entry lang="BG">Nubis</entry>
+		<entry lang="RUS">benexus</entry>
+		<entry lang="KAZ">benexus</entry>
+		<entry lang="ENG">benexus</entry>
+		<entry lang="BG">benexus</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="login">
@@ -141,10 +141,10 @@
 	</sentence>
 
 	<sentence mode="on" keyword="about">
-		<entry lang="RUS">Добро пожаловать в Nubis. Для начала работы необходимо авторизоваться</entry>
-		<entry lang="KAZ">Добро пожаловать в Nubis. Для начала работы необходимо авторизоваться</entry>
-		<entry lang="ENG"> Welcome to Nubis cloud to order to work you have to authorize.</entry>
-		<entry lang="BG">Добро пожаловать в Nubis. Для начала работы необходимо авторизоваться</entry>
+		<entry lang="RUS">Добро пожаловать в benexus. Для начала работы необходимо авторизоваться</entry>
+		<entry lang="KAZ">Добро пожаловать в benexus. Для начала работы необходимо авторизоваться</entry>
+		<entry lang="ENG"> Welcome to benexus cloud to order to work you have to authorize.</entry>
+		<entry lang="BG">Добро пожаловать в benexus. Для начала работы необходимо авторизоваться</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="cancel">
