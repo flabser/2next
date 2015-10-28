@@ -15,10 +15,6 @@ import org.apache.commons.io.FileUtils;
 
 import cashtracker.helper.PageRequest;
 import cashtracker.helper.TransactionFilter;
-import cashtracker.model.Account;
-import cashtracker.model.Category;
-import cashtracker.model.CostCenter;
-import cashtracker.model.Tag;
 import cashtracker.model.Transaction;
 import cashtracker.model.TransactionFile;
 import cashtracker.model.constants.TransactionType;
@@ -101,71 +97,6 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 			q.setFirstResult(pr.getOffset());
 			q.setMaxResults(pr.getLimit());
 
-			return q.getResultList();
-		} finally {
-			em.close();
-		}
-	}
-
-	public List <Transaction> findAllByAccount(Account m) {
-		String jpql = SELECT_ALL + " WHERE t.account = :account";
-
-		EntityManager em = factory.createEntityManager();
-		try {
-			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-			q.setParameter("account", m);
-			return q.getResultList();
-		} finally {
-			em.close();
-		}
-	}
-
-	public List <Transaction> findAllByTransferAccount(Account m) {
-		String jpql = SELECT_ALL + " WHERE t.transferAccount = :account";
-
-		EntityManager em = factory.createEntityManager();
-		try {
-			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-			q.setParameter("account", m);
-			return q.getResultList();
-		} finally {
-			em.close();
-		}
-	}
-
-	public List <Transaction> findAllByCostCenter(CostCenter m) {
-		String jpql = SELECT_ALL + " WHERE t.costCenter = :costCenter";
-
-		EntityManager em = factory.createEntityManager();
-		try {
-			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-			q.setParameter("costCenter", m);
-			return q.getResultList();
-		} finally {
-			em.close();
-		}
-	}
-
-	public List <Transaction> findAllByCategory(Category m) {
-		String jpql = SELECT_ALL + " WHERE t.category = :category";
-
-		EntityManager em = factory.createEntityManager();
-		try {
-			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-			q.setParameter("category", m);
-			return q.getResultList();
-		} finally {
-			em.close();
-		}
-	}
-
-	public List <Transaction> findAllByTags(List <Tag> tags) {
-		String jpql = SELECT_ALL + " WHERE t.tags IN :tags";
-
-		EntityManager em = factory.createEntityManager();
-		try {
-			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
-			q.setParameter("tags", tags);
 			return q.getResultList();
 		} finally {
 			em.close();
