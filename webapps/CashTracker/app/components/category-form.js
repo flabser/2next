@@ -12,23 +12,20 @@ export default Em.Component.extend(ModelForm, {
         let list = this.get('categories');
         let transactionType = this.get('category.transactionType');
         let categoryId = this.get('category.id') || -1;
+
         return list.filter((c) => {
             let c_isNew = c.get('isNew');
             let c_tt = c.get('transactionType');
             let c_id = c.get('id');
-            return !c_isNew && transactionType === c_tt && categoryId !== c_id;
+            return !c_isNew && c.get('enabled') && c_tt === transactionType && c_id !== categoryId;
         });
     }),
 
-    didInsertElement: function() {
-        this.get('category.transactionType'); // compute parentCategories
-    },
-
     actions: {
         save: function() {
-            // if (this.validate()) {
+            if (this.validate()) {
                 this.sendAction('saveRecord', this.get('category'));
-            // }
+            }
         },
 
         close: function() {

@@ -13,26 +13,35 @@ export default Em.Component.extend(ModelForm, {
 
     mainAccounts: Em.computed('accounts', 'transaction.transferAccount', function() {
         let list = this.get('accounts');
-        let taId = this.get('transaction.transferAccount.id');
-        if (taId) {
+        let ttaId = this.get('transaction.transferAccount.id');
+
+        if (ttaId) {
             return list.filter((a) => {
-                return taId !== a.get('id');
+                return a.get('enabled') && ttaId !== a.get('id');
+            });
+        } else {
+            return list.filter((a) => {
+                return a.get('enabled');
             });
         }
-        return list;
     }),
 
     transferAccounts: Em.computed('accounts', 'transaction.account', function() {
         let list = this.get('accounts');
-        let aId = this.get('transaction.account.id');
+        let taId = this.get('transaction.account.id');
+
         return list.filter((a) => {
-            return aId !== a.get('id');
+            return a.get('enabled') && taId !== a.get('id');
         });
     }),
 
     categoriesByType: Em.computed('categories', 'transaction.transactionType', function() {
-        let c = this.get('categories');
-        return c.filterBy('transactionType', this.get('transaction.transactionType'));
+        let list = this.get('categories');
+        let tType = this.get('transaction.transactionType');
+
+        return list.filter((c) => {
+            return c.get('enabled') && tType === c.get('transactionType');
+        });
     }),
 
     isTransfer: Em.computed('transaction.transactionType', function() {

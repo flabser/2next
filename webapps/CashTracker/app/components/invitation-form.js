@@ -5,6 +5,7 @@ import Validate from '../utils/validator';
 
 export default Em.Component.extend(ModelForm, {
     invitation: null,
+    roles: null,
     messageMaxLen: 256,
 
     actions: {
