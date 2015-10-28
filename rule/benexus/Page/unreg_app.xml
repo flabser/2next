@@ -5,7 +5,7 @@
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="java_class">nubis.page.UnregApp</doscript>
+			<doscript source="java_class">benexus.page.UnregApp</doscript>
 		</events>
 	</element>
 </rule>

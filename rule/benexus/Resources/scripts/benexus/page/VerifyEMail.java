@@ -1,4 +1,4 @@
-package nubis.page;
+package benexus.page;
 
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.script._Session;

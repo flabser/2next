@@ -1,4 +1,4 @@
-package nubis.page;
+package benexus.page;
 
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.mail.message.VerifyEMail;

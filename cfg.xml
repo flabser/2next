@@ -2,7 +2,7 @@
 <tn>
     <adminapp mode="on"/>
     <hostname>localhost</hostname>
-    <port></port>
+    <port>80</port>
       
     <applications workspace="benexus">
     	<app>
@@ -21,10 +21,10 @@
 			<name mode="on" parent="benexus">CashTracker</name>
 		</app>
 		<app>
-			<name mode="on" sitename="flabser.com">FlabserPromo</name>
+			<name mode="on" sitename="flabser1.com">FlabserPromo</name>
 		</app>
 		<app>
-			<name mode="on" sitename="aikonamedia.kz">ImmigrationService</name>
+			<name mode="on" sitename="aikonamedia1.kz">ImmigrationService</name>
 		</app>
 	</applications>
 		

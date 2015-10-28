@@ -5,13 +5,13 @@
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="java_class">nubis.page.Site</doscript>
+			<doscript source="java_class">benexus.page.Site</doscript>
 		</events>
 	</element>
 
 	<element mode="ON" type="SCRIPT">
 		<events>
-			<doscript source="java_class">nubis.page.VerifyEMail</doscript>
+			<doscript source="java_class">benexus.page.VerifyEMail</doscript>
 		</events>
 	</element>
 

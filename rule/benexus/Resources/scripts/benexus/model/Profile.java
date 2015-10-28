@@ -1,4 +1,4 @@
-package nubis.model;
+package benexus.model;
 
 import java.util.Date;
 
