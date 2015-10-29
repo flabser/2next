@@ -1,13 +1,13 @@
 var gulp = require('gulp');
-var jshint = require('gulp-jshint');
+// var jshint = require('gulp-jshint');
 var concat = require('gulp-concat');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
+// var rename = require('gulp-rename');
+// var uglify = require('gulp-uglify');
 var csso = require('gulp-csso');
-var emberTemplates = require('gulp-ember-templates');
-var replace = require('gulp-replace');
-var babel = require('gulp-babel');
-var transpiler = require('gulp-es6-module-transpiler');
+// var emberTemplates = require('gulp-ember-templates');
+// var replace = require('gulp-replace');
+// var babel = require('gulp-babel');
+// var transpiler = require('gulp-es6-module-transpiler');
 
 
 // js lib
@@ -137,7 +137,12 @@ gulp.task('default', function() {
     // gulp.run('em_minify_js_babel');
 
     // gulp.run('lint', 'em_lint', 'em_templates_compile', 'em_minify_js', 'minify_js', 'minify_css');
-    gulp.run('minify_css', 'minify_app_css');
+    // gulp.run('minify_css', 'minify_app_css');
+
+    gulp.run('minify_app_css');
+    /*gulp.watch(css_files, function(event) {
+        gulp.run('minify_css');
+    });*/
 
     // gulp.watch(em_templates, function(event) {
     //    gulp.run('em_templates_trim');
