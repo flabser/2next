@@ -20,7 +20,7 @@
 }
 
 .select-transaction-type.multi .btn.active:after {
-    background: #888;
+    background: #999;
     border-right: 8px solid #FFF;
     border-bottom: 8px solid transparent;
     content: '';
@@ -37,9 +37,9 @@
 }
 
 .select-transaction-type > .btn.active {
-    border-bottom: 2px solid #999;
-    bottom: 1px;
+    border-bottom: 1px solid #999;
     opacity: 1;
+    box-shadow: inset 0px -1px 0 #999;
 }
 
 .select-transaction-type > .btn.active span {

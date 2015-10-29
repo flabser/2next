@@ -37,15 +37,24 @@ export default Em.Component.extend(ModelForm, {
 
     categoriesByType: Em.computed('categories', 'transaction.transactionType', function() {
         let list = this.get('categories');
-        let tType = this.get('transaction.transactionType');
+        let tType = this.get('transaction.transactionType') || false;
 
         return list.filter((c) => {
-            return c.get('enabled') && tType === c.get('transactionType');
+            if (tType) {
+                return c.get('enabled') && tType === c.get('transactionType');
+            } else {
+                return c.get('enabled');
+            }
         });
     }),
 
     isTransfer: Em.computed('transaction.transactionType', function() {
         return this.get('transaction.transactionType') === 'T';
+    }),
+
+    _catTrTypeObserver: Em.observer('transaction.category', function() {
+        let ctt = this.get('transaction.category.transactionType');
+        this.get('transaction').set('transactionType', ctt);
     }),
 
     actions: {

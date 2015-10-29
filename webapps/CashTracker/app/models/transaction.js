@@ -11,9 +11,7 @@ export default DS.Model.extend({
         defaultValue: () => new Date()
     }),
     transactionState: DS.attr('string'),
-    transactionType: DS.attr('string', {
-        defaultValue: 'E'
-    }),
+    transactionType: DS.attr('string'),
     exchangeRate: DS.attr('number'),
     repeat: DS.attr('boolean', {
         defaultValue: false

@@ -2,7 +2,7 @@ import TransactionRoute from './transaction';
 
 export default TransactionRoute.extend({
     model: function(params, transition) {
-        var type = 'E';
+        var type = '';
         if (transition.queryParams) {
             if (transition.queryParams.type === 'expense') {
                 type = 'E';

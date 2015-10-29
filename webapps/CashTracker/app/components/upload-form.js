@@ -12,6 +12,8 @@ export default Em.Component.extend({
     maxSize: 3,
     fieldName: 'files',
     attachments: [],
+    modelPath: '',
+    modelId: null,
 
     uploadService: Em.inject.service('upload'),
 

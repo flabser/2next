@@ -15,10 +15,20 @@ export default Em.Component.extend(ModelForm, {
 
         return list.filter((c) => {
             let c_isNew = c.get('isNew');
-            let c_tt = c.get('transactionType');
             let c_id = c.get('id');
-            return !c_isNew && c.get('enabled') && c_tt === transactionType && c_id !== categoryId;
+
+            if (transactionType) {
+                let c_tt = c.get('transactionType');
+                return !c_isNew && c.get('enabled') && c_tt === transactionType && c_id !== categoryId;
+            } else {
+                return !c_isNew && c.get('enabled') && c_id !== categoryId;
+            }
         });
+    }),
+
+    _parentCatTrTypeObserver: Em.observer('category.parent', function() {
+        let pctt = this.get('category.parent.transactionType');
+        this.get('category').set('transactionType', pctt);
     }),
 
     actions: {

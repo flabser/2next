@@ -1,9 +1,7 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-    transactionType: DS.attr('string', {
-        defaultValue: 'E'
-    }),
+    transactionType: DS.attr('string'),
     parent: DS.belongsTo('category'),
     children: DS.hasMany('category', {
         inverse: 'parent'

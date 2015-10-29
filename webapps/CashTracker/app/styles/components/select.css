@@ -34,7 +34,7 @@
 
 .selectize-control.multi .selectize-input [data-value],
 .selectize-control.multi .selectize-input [data-value].active {
-    background: none;
+    background: #F3F3F3;
     border-radius: 3px;
     box-shadow: none;
     text-shadow: none;
