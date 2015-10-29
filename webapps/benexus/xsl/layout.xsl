@@ -79,7 +79,7 @@
 									</a>
 								</li>
 							</xsl:if>
-							<xsl:if test="//@id = 'login' or //@id = 'reset_password' or //@id = 'verify_email'">
+							<xsl:if test="//@id = 'index' or //@id = 'login' or //@id = 'reset_password' or //@id = 'verify_email'">
 								<li class="signup">
 									<a href="?id=signup">
 										<xsl:value-of select="//captions/signup/@caption" />
