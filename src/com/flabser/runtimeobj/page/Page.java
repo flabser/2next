@@ -46,13 +46,11 @@ public class Page {
 
 	}
 
-	public HashMap<String, String[]> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
-		HashMap<String, String[]> captionsList = new HashMap<String, String[]>();
+	public HashMap<String, String> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
+		HashMap<String, String> captionsList = new HashMap<String, String>();
 		for (Caption cap : captions) {
 			SentenceCaption sc = captionTextSupplier.getValueAsCaption(cap.captionID);
-			String c[] = new String[2];
-			c[0] = sc.word;
-			captionsList.put(cap.captionID, c);
+			captionsList.put(cap.captionID, sc.word);
 		}
 		return captionsList;
 	}

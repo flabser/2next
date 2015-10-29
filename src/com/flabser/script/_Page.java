@@ -14,7 +14,7 @@ public class _Page implements _IContent {
 	private ArrayList<_Page> includedPages = new ArrayList<_Page>();
 	private HashMap<String, _IContent> elementsMap = new HashMap<String, _IContent>();
 	private ArrayList<_IContent> elementsList = new ArrayList<_IContent>();
-	private HashMap<String, String[]> captions;
+	private HashMap<String, String> captions;
 
 	public _Page(Page page, _WebFormData webFormData) {
 
@@ -53,11 +53,11 @@ public class _Page implements _IContent {
 		return elementsList;
 	}
 
-	public void setCaptions(HashMap<String, String[]> captions) {
+	public void setCaptions(HashMap<String, String> captions) {
 		this.captions = captions;
 	}
 
-	public HashMap<String, String[]> getCaptions() {
+	public HashMap<String, String> getCaptions() {
 		return captions;
 	}
 
@@ -75,8 +75,8 @@ public class _Page implements _IContent {
 		}
 
 		StringBuffer captionsText = new StringBuffer("<captions>");
-		for (Entry<String, String[]> entry : captions.entrySet()) {
-			captionsText.append("<" + entry.getKey() + " caption=\"" + entry.getValue()[0] + "\" />");
+		for (Entry<String, String> entry : captions.entrySet()) {
+			captionsText.append("<" + entry.getKey() + " caption=\"" + entry.getValue() + "\" />");
 		}
 
 		captionsText.append("</captions>");
