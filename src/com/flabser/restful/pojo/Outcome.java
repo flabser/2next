@@ -79,4 +79,5 @@ public class Outcome {
 		}
 		return this;
 	}
+
 }

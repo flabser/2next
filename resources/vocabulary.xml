@@ -39,6 +39,18 @@
 		<entry lang="ENG">User has not found</entry>
 		<entry lang="BG">Потребителят все още не е намерено</entry>
 	</sentence>
+	<sentence mode="on" keyword="FORMDATA_INCORRECT">
+		<entry lang="RUS">Значение формы не корректно</entry>
+		<entry lang="KAZ">Значение формы не корректно</entry>
+		<entry lang="ENG">Form data is incorrect</entry>
+		<entry lang="BG">Данни форми е неправилно</entry>
+	</sentence>
+	<sentence mode="on" keyword="MESSAGE_HAS_NOT_SENT">
+		<entry lang="RUS">Сообщение не отправлено</entry>
+		<entry lang="KAZ">Сообщение не отправлено</entry>
+		<entry lang="ENG">The message has not been send</entry>
+		<entry lang="BG">В съобщението не е било изпратите</entry>
+	</sentence>
 	
 	<!-- warnings -->	
 	<sentence mode="on" keyword="VERIFY_EMAIL_SENDING_ERROR">
@@ -72,4 +84,30 @@
 		<entry lang="BG">Грешка по време на изпращането на покана</entry>
 	</sentence>
 	
+	<!-- other messages -->
+	<sentence mode="on" keyword="subject_incorrect">
+		<entry lang="RUS">Текст темы слишком короткий</entry>
+		<entry lang="KAZ">Текст темы слишком короткий</entry>
+		<entry lang="ENG">Subject text is too short</entry>
+		<entry lang="BG">Темата е твърде кратък</entry>
+	</sentence>	
+	<sentence mode="on" keyword="message_incorrect">
+		<entry lang="RUS">Текст сообщения слишком короткий</entry>
+		<entry lang="KAZ">Текст сообщения слишком короткий</entry>
+		<entry lang="ENG">Message text is too short</entry>
+		<entry lang="BG">Съобщението е твърде кратък</entry>
+	</sentence>	
+	<sentence mode="on" keyword="captcha_incorrect">
+		<entry lang="RUS">Каптча не верна</entry>
+		<entry lang="KAZ">Каптча не верна</entry>
+		<entry lang="ENG">Captcha is wrong</entry>
+		<entry lang="BG">Каптча е наред</entry>
+	</sentence>	
+	<sentence mode="on" keyword="message_has_sent_succesfully">
+		<entry lang="RUS">Сообщение не отправлено</entry>
+		<entry lang="KAZ">Сообщение не отправлено</entry>
+		<entry lang="ENG">The message has been sent </entry>
+		<entry lang="BG">Съобщението е изпратено</entry>
+	</sentence>	
+
 </vocabulary>
