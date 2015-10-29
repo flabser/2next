@@ -44,7 +44,7 @@ export default Em.Route.extend(InfinityRoute, {
         saveRecord: function(transaction) {
             transaction.save().then(() => {
                 this.transitionTo('transactions');
-            }, function(resp) {
+            }, function() {
                 console.log(arguments);
             });
         },

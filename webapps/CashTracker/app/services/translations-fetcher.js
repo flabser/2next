@@ -19,7 +19,7 @@ export default Service.extend({
         var captions = json._Page.captions;
 
         for (var key in captions) {
-            tr[key] = captions[key][0];
+            tr[key] = captions[key];
         }
 
         this.get('i18n').addTranslations('en', tr);

@@ -13,7 +13,7 @@ export default Em.Route.extend({
         saveRecord: function(tag) {
             tag.save().then(() => {
                 this.transitionTo('tags');
-            }, function(resp) {
+            }, function() {
                 console.log(arguments);
             });
         },

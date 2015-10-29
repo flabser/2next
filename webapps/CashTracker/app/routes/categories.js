@@ -13,7 +13,7 @@ export default Em.Route.extend({
         saveRecord: function(category) {
             category.save().then(() => {
                 this.transitionTo('categories');
-            }, function(resp) {
+            }, function() {
                 console.log(arguments);
             });
         },
