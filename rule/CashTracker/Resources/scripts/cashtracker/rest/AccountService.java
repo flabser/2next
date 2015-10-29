@@ -37,7 +37,7 @@ public class AccountService extends RestProvider {
 	public Response get() {
 		AccountDAO dao = new AccountDAO(getSession());
 		List <Account> list = dao.findAll();
-		_Response resp = new _Response("success", list, new Meta(list.size(), 20, 0, 1));
+		_Response resp = new _Response(list, new Meta(list.size(), 20, 0, 1));
 
 		ObjectMapper om = new ObjectMapper();
 		om.disable(SerializationFeature.WRAP_ROOT_VALUE);
@@ -128,12 +128,10 @@ public class AccountService extends RestProvider {
 
 	class _Response {
 
-		public String status;
 		public List <Account> accounts;
 		public Meta meta;
 
-		public _Response(String status, List <Account> list, Meta meta) {
-			this.status = status;
+		public _Response(List <Account> list, Meta meta) {
 			this.accounts = list;
 			this.meta = meta;
 		}

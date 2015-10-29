@@ -23,7 +23,7 @@ public class CategoryDAO extends DAO <Category, Long> {
 	public List <Category> findByTransactionType(TransactionType type) {
 		String jpql = "SELECT c FROM Category AS c WHERE c.parent IS NULL AND c.transactionType = :type ORDER BY c.name";
 
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			TypedQuery <Category> q = em.createQuery(jpql, Category.class);
 			q.setParameter("type", type);
@@ -36,7 +36,7 @@ public class CategoryDAO extends DAO <Category, Long> {
 	public boolean existsTransactionByCategory(Category m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.category = :category";
 
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			Query q = em.createQuery(jpql, Transaction.class);
 			q.setParameter("category", m);
@@ -50,7 +50,7 @@ public class CategoryDAO extends DAO <Category, Long> {
 	public boolean existsChildCategory(Category m) {
 		String jpql = "SELECT c FROM Category AS c WHERE c.parent = :category";
 
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			Query q = em.createQuery(jpql, Category.class);
 			q.setParameter("category", m);

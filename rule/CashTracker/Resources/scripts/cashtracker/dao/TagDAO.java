@@ -21,7 +21,7 @@ public class TagDAO extends DAO <Tag, Long> {
 	}
 
 	public List <Tag> find(PageRequest pr) {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			TypedQuery <Tag> q = em.createNamedQuery("Tag.findAll", Tag.class);
 			q.setFirstResult(pr.getOffset());
@@ -35,7 +35,7 @@ public class TagDAO extends DAO <Tag, Long> {
 	public boolean existsTransactionByTag(Tag m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE :tag MEMBER OF t.tags";
 
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			Query q = em.createQuery(jpql, Transaction.class);
 			q.setParameter("tag", m);

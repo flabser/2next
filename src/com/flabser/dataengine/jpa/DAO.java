@@ -14,21 +14,24 @@ import com.flabser.users.User;
 
 public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 
-	protected EntityManagerFactory factory;
-
 	private Class <T> entityClass;
+	private EntityManagerFactory emf;
 
 	protected User user;
 
 	public DAO(Class <T> entityClass, _Session session) {
-		user = session.getUser();
-		factory = session.getDatabase().getEntityManagerFactory();
 		this.entityClass = entityClass;
+		emf = session.getDatabase().getEntityManagerFactory();
+		user = session.getUser();
+	}
+
+	public EntityManagerFactory getEntityManagerFactory() {
+		return emf;
 	}
 
 	@Override
 	public T findById(K id) {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			String jpql = "SELECT m FROM " + entityClass.getName() + " AS m WHERE m.id = :id";
 			TypedQuery <T> q = em.createQuery(jpql, entityClass);
@@ -41,7 +44,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 
 	@Override
 	public List <T> findAllByIds(List <K> ids) {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			String jpql = "SELECT m FROM " + entityClass.getName() + " AS m WHERE m.id IN :ids";
 			TypedQuery <T> q = em.createQuery(jpql, entityClass);
@@ -54,7 +57,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 
 	@Override
 	public List <T> findAll() {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			TypedQuery <T> q = em.createNamedQuery(getQueryNameForAll(), entityClass);
 			return q.getResultList();
@@ -65,7 +68,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 
 	@Override
 	public T add(T entity) {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			EntityTransaction t = em.getTransaction();
 			try {
@@ -86,7 +89,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 
 	@Override
 	public T update(T entity) {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			EntityTransaction t = em.getTransaction();
 			try {
@@ -106,7 +109,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 
 	@Override
 	public void delete(T entity) {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			EntityTransaction t = em.getTransaction();
 			try {
@@ -125,7 +128,7 @@ public abstract class DAO<T extends IAppEntity, K> implements IDAO <T, K> {
 	}
 
 	public Long getCount() {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			Query q = em.createQuery("SELECT count(m) FROM " + entityClass.getName() + " AS m");
 			return (Long) q.getSingleResult();

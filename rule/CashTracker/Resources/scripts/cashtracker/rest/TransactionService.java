@@ -73,7 +73,7 @@ public class TransactionService extends RestProvider {
 		}
 
 		List <Transaction> list = dao.find(filter, pr);
-		_Response _resp = new _Response("success", list, new Meta(count, pr.getLimit(), pr.getOffset(), page));
+		_Response _resp = new _Response(list, new Meta(count, pr.getLimit(), pr.getOffset(), page));
 
 		ObjectMapper om = new ObjectMapper();
 		om.disable(SerializationFeature.WRAP_ROOT_VALUE);
@@ -251,12 +251,10 @@ public class TransactionService extends RestProvider {
 
 	class _Response {
 
-		public String status;
 		public List <Transaction> transactions;
 		public Meta meta;
 
-		public _Response(String status, List <Transaction> list, Meta meta) {
-			this.status = status;
+		public _Response(List <Transaction> list, Meta meta) {
 			this.transactions = list;
 			this.meta = meta;
 		}

@@ -41,7 +41,7 @@ public class TagService extends RestProvider {
 
 		PageRequest pr = new PageRequest((page - 1) * limit, limit, "", "");
 		List <Tag> list = dao.find(pr);
-		_Response resp = new _Response("success", list, new Meta(dao.getCount().intValue(), 20, 0, page));
+		_Response resp = new _Response(list, new Meta(dao.getCount().intValue(), 20, 0, page));
 
 		ObjectMapper om = new ObjectMapper();
 		om.disable(SerializationFeature.WRAP_ROOT_VALUE);
@@ -125,12 +125,10 @@ public class TagService extends RestProvider {
 
 	class _Response {
 
-		public String status;
 		public List <Tag> tags;
 		public Meta meta;
 
-		public _Response(String status, List <Tag> list, Meta meta) {
-			this.status = status;
+		public _Response(List <Tag> list, Meta meta) {
 			this.tags = list;
 			this.meta = meta;
 		}

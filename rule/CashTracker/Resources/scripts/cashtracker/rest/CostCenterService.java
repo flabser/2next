@@ -43,7 +43,7 @@ public class CostCenterService extends RestProvider {
 		CostCenterDAO dao = new CostCenterDAO(getSession());
 		PageRequest pr = new PageRequest((page - 1) * limit, limit, "", "");
 		List <CostCenter> list = dao.find(pr);
-		_Response resp = new _Response("success", list, new Meta(dao.getCount().intValue(), 20, 0, page));
+		_Response resp = new _Response(list, new Meta(dao.getCount().intValue(), 20, 0, page));
 
 		ObjectMapper om = new ObjectMapper();
 		om.disable(SerializationFeature.WRAP_ROOT_VALUE);
@@ -137,12 +137,10 @@ public class CostCenterService extends RestProvider {
 
 	class _Response {
 
-		public String status;
 		public List <CostCenter> costCenters;
 		public Meta meta;
 
-		public _Response(String status, List <CostCenter> list, Meta meta) {
-			this.status = status;
+		public _Response(List <CostCenter> list, Meta meta) {
 			this.costCenters = list;
 			this.meta = meta;
 		}

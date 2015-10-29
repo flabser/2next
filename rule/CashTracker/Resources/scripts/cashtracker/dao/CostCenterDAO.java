@@ -21,7 +21,7 @@ public class CostCenterDAO extends DAO <CostCenter, Long> {
 	}
 
 	public List <CostCenter> find(PageRequest pr) {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			TypedQuery <CostCenter> q = em.createNamedQuery("CostCenter.findAll", CostCenter.class);
 			q.setFirstResult(pr.getOffset());
@@ -35,7 +35,7 @@ public class CostCenterDAO extends DAO <CostCenter, Long> {
 	public boolean existsTransactionByCostCenter(CostCenter m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.costCenter = :costCenter";
 
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			Query q = em.createQuery(jpql, Transaction.class);
 			q.setParameter("costCenter", m);

@@ -71,7 +71,7 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 		String jpql = SELECT_ALL + (hasWhere ? " WHERE " : "") + accouns + categories + costCenters + tags
 				+ transactionTypes + dateRange + " ORDER BY t.date ASC";
 
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			TypedQuery <Transaction> q = em.createQuery(jpql, Transaction.class);
 			if (!accouns.isEmpty()) {
@@ -104,7 +104,7 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 	}
 
 	public int getCountByType(TransactionType type) {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			Query q = em.createQuery("SELECT count(t) FROM Transaction AS t WHERE t.transactionType = :type",
 					Transaction.class);
@@ -117,7 +117,7 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 
 	@Override
 	public Transaction add(Transaction entity) {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			EntityTransaction transact = em.getTransaction();
 			try {
@@ -144,7 +144,7 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 
 	@Override
 	public Transaction update(Transaction entity) {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			EntityTransaction transact = em.getTransaction();
 			try {

@@ -16,7 +16,7 @@ public class BudgetDAO extends DAO <Budget, Long> {
 	}
 
 	public void delete() {
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			EntityTransaction t = em.getTransaction();
 			try {

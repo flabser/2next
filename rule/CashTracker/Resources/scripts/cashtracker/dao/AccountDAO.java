@@ -22,7 +22,7 @@ public class AccountDAO extends DAO <Account, Long> {
 	public List <Account> findAllEnabled() {
 		String jpql = "SELECT a FROM Account AS a WHERE a.enabled = true ORDER BY a.name";
 
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			TypedQuery <Account> q = em.createQuery(jpql, Account.class);
 			return q.getResultList();
@@ -34,7 +34,7 @@ public class AccountDAO extends DAO <Account, Long> {
 	public boolean existsTransactionByAccount(Account m) {
 		String jpql = "SELECT t.id FROM Transaction AS t WHERE t.account = :account OR t.transferAccount = :account";
 
-		EntityManager em = factory.createEntityManager();
+		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			Query q = em.createQuery(jpql, Transaction.class);
 			q.setParameter("account", m);
