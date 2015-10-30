@@ -15,7 +15,7 @@
 	</persistence-unit>
 	<persistence-unit name="Task" transaction-type="RESOURCE_LOCAL">
 		<class>task.model.Task</class>
-		<class>task.model.Issues</class>
+		<class>task.model.Issue</class>
 	</persistence-unit>
 	<persistence-unit name="benexus" transaction-type="RESOURCE_LOCAL">
 		<class>nubis.model.Workspace</class>
