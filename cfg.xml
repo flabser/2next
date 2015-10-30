@@ -9,13 +9,13 @@
 			<name mode="on" sitename="benexus1.net">benexus</name>
 		</app>
 		<app>
-			<name mode="on" >Project</name>
+			<name mode="on" parent="benexus">Task</name>
 		</app>
 		<app>
-			<name mode="on"  >FinPlanning</name>
+			<name mode="off"  >FinPlanning</name>
 		</app>
 		<app>
-			<name mode="on"  >Schedule</name>
+			<name mode="off"  >Schedule</name>
 		</app>
 		<app>
 			<name mode="on" parent="benexus">CashTracker</name>

@@ -213,6 +213,15 @@ public class SessionService extends RestProvider {
 
 	}
 
+	@PUT
+	@Path("/lang")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	public Response changeLang(@FormParam("code") String code) {
+		return null;
+
+	}
+
 	@POST
 	@Path("/verify")
 	@Produces(MediaType.APPLICATION_JSON)
