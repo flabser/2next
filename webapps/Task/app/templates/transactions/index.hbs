@@ -1,0 +1,87 @@
+<div class="view view_op">
+    <header class="content-header">
+        <h1 class="header-title">{{t 'transactions'}}</h1>
+        <nav class="content-actions on-desktop">
+            <button class="btn" {{action 'composeRecord'}}>
+                <i class="fa fa-plus"></i>{{t 'add'}}
+            </button>
+        </nav>
+    </header>
+    <section class="content-body">
+        <header class="entries-head">
+            <div class="head-wrap op-head">
+                <label class="entry-select">
+                    <input type="checkbox" class="all" {{action 'selectAll'}} />
+                </label>
+                <div class="entry-captions">
+                    <span class="op-icon-att">
+                        <i class="fa fa-paperclip" />
+                    </span>
+                    <span class="op-date">
+                        {{t 'date'}}
+                    </span>
+                    <span class="op-account">
+                        {{t 'account'}}
+                    </span>
+                    <span class="op-cat">
+                        {{t 'category'}}
+                    </span>
+                    <span class="op-amount">
+                        {{t 'amount'}}
+                    </span>
+                    <span class="op-type"></span>
+                    <span class="op-costcenter">
+                        {{t 'cost_center'}}
+                    </span>
+                </div>
+            </div>
+        </header>
+        <div class="entries">
+            {{#each model as |transaction|}}
+                {{#unless transaction.isNew}}
+                <div class="entry-wrap">
+                    <div class="entry-actions">
+                        <button class="entry-action action-delete" {{action 'deleteRecord' transaction}}>
+                            <i class="fa fa-trash" />
+                        </button>
+                    </div>
+                    {{#tn-swipe-entry class='entry'}}
+                        <label class="entry-select">
+                            <input type="checkbox" value="{{transaction.id}}" {{action 'selectOne'}} />
+                        </label>
+                        {{#link-to 'transactions.transaction' transaction class='entry-link'}}
+                        <div class="entry-fields">
+                            <span class="op-icon-att" {{hasattach}}></span>
+                            <span class="op-date">
+                                {{format-date transaction.date}}
+                            </span>
+                            <span class="op-account">
+                                {{transaction.account.name}}
+                            </span>
+                            <span class="op-cat" style="color:{{transaction.category.color}};">
+                                {{transaction.category.name}}
+                            </span>
+                            <span class="op-amount {{transaction.transactionType}}">
+                                {{transaction.amount}}
+                            </span>
+                            <span class="op-type">
+                                {{transaction-icon transaction.transactionType}}
+                            </span>
+                            <span class="op-costcenter">
+                                {{transaction.costCenter.name}}
+                            </span>
+                            <span class="op-vt">
+                                <span>
+                                    {{transaction.note}}
+                                </span>
+                            </span>
+                        </div>
+                        {{/link-to}}
+                    {{/tn-swipe-entry}}
+                </div>
+                {{/unless}}
+            {{/each}}
+            {{infinity-loader infinityModel=model}}
+        </div>
+    </section>
+</div>

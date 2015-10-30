@@ -1,0 +1,37 @@
+<div class="view">
+    <header class="content-header">
+        <h1 class="header-title">{{t 'categories'}}</h1>
+        <nav class="content-actions on-desktop">
+            <button class="btn" {{action 'composeRecord'}}>
+                <i class="fa fa-plus"></i>{{t 'add'}}
+            </button>
+        </nav>
+    </header>
+    <section class="content-body">
+        <header class="entries-head">
+            <div class="head-wrap">
+                <label class="entry-select">
+                    <input type="checkbox" class="all" {{action 'selectAll'}} />
+                </label>
+                <div class="entry-captions">
+                    <span class="vcat-name">
+                        {{t 'name'}}
+                    </span>
+                    <span class="vcat-types"></span>
+                    <span>
+                        {{t 'note'}}
+                    </span>
+                </div>
+            </div>
+        </header>
+        <div class="entries">
+            {{#each model as |category|}}
+                {{#unless category.isNew}}
+                    {{#unless category.parent}}
+                        {{category-view-row category=category tagName='' deleteRecord='deleteRecord'}}
+                    {{/unless}}
+                {{/unless}}
+            {{/each}}
+        </div>
+    </section>
+</div>

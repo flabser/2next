@@ -1,0 +1,34 @@
+<div class="view">
+    <header class="content-header">
+        <h1 class="header-title">{{t 'users'}}</h1>
+        <nav class="content-actions on-desktop">
+            <button class="btn" {{action 'composeRecord'}}>
+                {{t 'add_user'}}
+            </button>
+        </nav>
+    </header>
+    <section class="content-body">
+        <div class="entries">
+            {{#each model as |user|}}
+                {{#unless user.isNew}}
+                <div class="entry-wrap">
+                    <div class="entry-actions">
+                        <button class="entry-action action-delete" {{action 'deleteRecord' user}}>
+                            <i class="fa fa-trash" />
+                        </button>
+                    </div>
+                    {{#tn-swipe-entry class='entry'}}
+                    <div class="entry-link">
+                        <div class="entry-fields">
+                            <span>
+                                {{user.login}}
+                            </span>
+                        </div>
+                    </div>
+                    {{/tn-swipe-entry}}
+                </div>
+                {{/unless}}
+            {{/each}}
+        </div>
+    </section>
+</div>

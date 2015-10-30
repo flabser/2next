@@ -1,0 +1,78 @@
+<div class="form-wrapper">
+    <form {{action 'sendInvite' on='submit' }}>
+        <header class="content-header">
+            <button class="btn-back" {{action 'close'}}>
+                <i class="fa fa-chevron-left"></i>
+            </button>
+            <h1 class="header-title">
+                {{t 'invitation_title'}}
+            </h1>
+        </header>
+        <section class="content-body">
+            <fieldset class="fieldset">
+                <div class="form-group {{if errors.email 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'email'}}
+                    </div>
+                    <div class="controls">
+                        {{tn-input
+                            type='email'
+                            value=invitation.email
+                            focus-out='validateEmail'
+                            maxlength='64'
+                            class='span5'}}
+                        {{#each errors.email as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                        <p class="hint">
+                            {{t 'invitation_email_hint'}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group {{if errors.message 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'message'}}
+                    </div>
+                    <div class="controls">
+                        {{textarea
+                            value=invitation.message
+                            key-up='validateMessage'
+                            maxlength=messageMaxLen
+                            class='span5'}}
+                        {{count-down-characters invitation.message messageMaxLen}}
+                        {{#each errors.message as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="form-group {{if errors.roles 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'roles'}}
+                    </div>
+                    <div class="controls">
+                        {{ember-selectize
+                            content=tags
+                            multiple=true
+                            optionValuePath='name'
+                            optionLabelPath='name'
+                            selection=invitation.roles
+                            placeholder='-'
+                            class='span5'}}
+                        {{#each errors.roles as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                        <p class="hint">
+                            {{t 'invitation_roles_hint'}}
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+        <footer class="content-actions">
+            <button class="btn" {{action 'close'}}>{{t 'close'}}</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-send-o"></i>{{t 'send_invite'}}
+            </button>
+        </footer>
+    </form>
+</div>

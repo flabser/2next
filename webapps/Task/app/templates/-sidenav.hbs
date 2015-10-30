@@ -1,0 +1,116 @@
+<aside class="aside nav-app" id="nav-app">
+    <nav class="side-nav">
+        <div class="nav-profile {{navProfileClass}}">
+            <header>
+                <a href="#" {{action 'toggleNavProfile'}}>
+                    <span class="nav-i user-avatar">
+                        <i class="fa fa-user"></i>
+                    </span>
+                    <span class="user-name">{{model.login}}</span>
+                    <i class="fa expand"></i>
+                </a>
+            </header>
+            <section>
+                <ul>
+                    <li>
+                        {{#link-to 'user_profile'}}
+                            <span class="nav-i"><i class="fa fa-cog"></i></span>
+                            <span class="nav-t">{{t 'user_profile'}}</span>
+                        {{/link-to}}
+                    </li>
+                    {{#if loginThroughToken}}
+                        <li>
+                            <a href="rest/workspace/url" class="ws">
+                                <span class="nav-i"><i class="fa fa-desktop"></i></span>
+                                <span class="nav-t">{{t 'workspace'}}</span>
+                            </a>
+                        </li>
+                    {{/if}}
+                    <li>
+                        <a href="#" {{action 'logout'}} class="logout">
+                            <span class="nav-i"><i class="fa fa-sign-out"></i></span>
+                            <span class="nav-t">{{t 'logout'}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <ul>
+            <li>
+                {{#link-to 'dashboard'}}
+                    <span class="nav-i"><i class="fa fa-dashboard"></i></span>
+                    <span class="nav-t">{{t 'dashboard'}}</span>
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'transactions' (query-params type='')}}
+                    <span class="nav-i"><i class="fa fa-tasks"></i></span>
+                    <span class="nav-t">{{t 'transactions'}}</span>
+                {{/link-to}}
+                <ul>
+                    <li>
+                        {{#link-to 'transactions' (query-params type='income')}}
+                            <span class="nav-i"><i class="fa fa-caret-up green"></i></span>
+                            <span class="nav-t">{{t 'incomes'}}</span>
+                        {{/link-to}}
+                    </li>
+                    <li>
+                        {{#link-to 'transactions' (query-params type='expense')}}
+                            <span class="nav-i"><i class="fa fa-caret-down red"></i></span>
+                            <span class="nav-t">{{t 'expenses'}}</span>
+                        {{/link-to}}
+                    </li>
+                    <li>
+                        {{#link-to 'transactions' (query-params type='transfer')}}
+                            <span class="nav-i"><i class="fa fa-retweet blue"></i></span>
+                            <span class="nav-t">{{t 'transfers'}}</span>
+                        {{/link-to}}
+                    </li>
+                </ul>
+            </li>
+            <li>
+                {{#link-to 'reports'}}
+                    <span class="nav-i"><i class="fa fa-bar-chart-o"></i></span>
+                    <span class="nav-t">{{t 'reports'}}</span>
+                {{/link-to}}
+            </li>
+            <li class="nav-separator"></li>
+            <li>
+                {{#link-to 'budget'}}
+                    <span class="nav-i"><i class="fa fa-calculator"></i></span>
+                    <span class="nav-t">{{t 'budget'}}</span>
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'accounts'}}
+                    <span class="nav-i"><i class="fa fa-credit-card"></i></span>
+                    <span class="nav-t">{{t 'accounts'}}</span>
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'categories'}}
+                    <span class="nav-i"><i class="fa fa-sitemap"></i></span>
+                    <span class="nav-t">{{t 'categories'}}</span>
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'cost_centers'}}
+                    <span class="nav-i"><i class="fa fa-map-marker"></i></span>
+                    <span class="nav-t">{{t 'cost_center_short'}}</span>
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'tags'}}
+                    <span class="nav-i"><i class="fa fa-tags"></i></span>
+                    <span class="nav-t">{{t 'tags'}}</span>
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'users'}}
+                    <span class="nav-i"><i class="fa fa-users"></i></span>
+                    <span class="nav-t">{{t 'users'}}</span>
+                {{/link-to}}
+            </li>
+        </ul>
+    </nav>
+</aside>

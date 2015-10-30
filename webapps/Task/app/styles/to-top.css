@@ -1,0 +1,53 @@
+/* to_top */
+.to_top {
+	bottom: 0;
+	display: none;
+	left: 0;
+	opacity: 0.5;
+	position: fixed;
+	top: 0;
+	width: 50%;
+	z-index: 2;
+}
+
+.to_top:hover {
+	background-color: #EEE;
+	cursor: pointer;
+	opacity: 0.9;
+}
+
+.tablet .to_top, .phone .to_top {
+	display: none !important;
+}
+
+.to_top .to_top-panel {
+	color: #4D7285;
+	height: 100%;
+	padding-top: 10px;
+	position: relative;
+	width: 100%;
+}
+
+.to_top .to_top-button {
+	background-color: #EEE;
+	color: #45688E;
+	font-size: 13px;
+	left: 0;
+	line-height: 45px;
+	padding: 4px;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 45px;
+}
+
+@media ( max-width : 1366px ) {
+	.to_top {
+		width: 45px;
+		z-index: 4;
+	}
+	.to_top .to_top-button {
+		bottom: 0;
+		top: auto;
+	}
+}

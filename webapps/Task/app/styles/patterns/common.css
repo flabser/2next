@@ -1,0 +1,191 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #FFF;
+    /*  url(../img/bg-lb.jpg) bottom repeat-x fixed; */
+    font: 13px/1.43 Verdana, Arial, Helvetica, sans-serif;
+}
+
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+
+/* on-desktop */
+
+.on-desktop {}
+
+html body.tablet .on-desktop,
+html body.phone .on-desktop {
+    display: none !important;
+}
+
+
+/* no-desktop */
+
+html body .no-desktop {
+    display: none;
+}
+
+html body.tablet .no-desktop,
+html body.phone .no-desktop {
+    display: block;
+}
+
+a {
+    color: #2222CC;
+    margin: auto;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #EE0000;
+    text-decoration: underline;
+}
+
+
+/* fix: content overflow */
+
+fieldset {
+    display: block;
+    /* chrome */
+    min-width: inherit;
+}
+
+
+/* fix: content overflow */
+
+@-moz-document url-prefix () {
+    fieldset {
+        /* moz */
+        display: table-column !important;
+    }
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+button+button {
+    margin-left: 3px;
+}
+
+button {
+    cursor: pointer;
+}
+
+button img {
+    margin-right: .3em;
+    max-height: 1.3em;
+    vertical-align: middle;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.no_transition * {
+    transition: none !important;
+}
+
+
+/* position */
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+
+/* clearfix */
+
+.clearfix:after {
+    content: ' ';
+    clear: both;
+    display: block !important;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.clearfix {
+    display: inline-block;
+}
+
+* html .clearfix {
+    height: 1%;
+}
+
+.clearfix {
+    display: block !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.wsnowrap {
+    white-space: nowrap;
+}
+
+.hint {
+    color: #767676;
+    font-size: 13px;
+}
+
+.text-muted {
+    color: #888;
+}
+
+.hint {
+    margin: 2px 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.error-message {
+    color: #DD3207;
+    font-size: 13px;
+}
+
+.img-thumbnail {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: inline-block;
+    height: auto;
+    line-height: 1.42857143;
+    max-width: 100%;
+    padding: 4px;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.green,
+.fa.green {
+    color: green;
+}
+
+.red,
+.fa.red {
+    color: red;
+}
+
+.blue,
+.fa.blue {
+    color: blue;
+}

@@ -1,0 +1,28 @@
+.saldo {
+	font-size: 18px;
+	font-weight: 400;
+}
+
+.tablet .saldo, .phone .saldo {
+	font-size: 13px;
+}
+
+.saldo>span {
+	padding: 2px;
+	margin-right: .3em;
+}
+
+.saldo-sum {
+	border: 1px solid #CCC;
+	color: #000;
+}
+
+.saldo-plus {
+	border-color: #CCC;
+	color: #129029;
+}
+
+.saldo-minus {
+	border-color: #CCC;
+	color: red;
+}

@@ -1,0 +1,6 @@
+{{#each colors as |color|}}
+    <li class="select-color__color"
+        data-color="{{color}}"
+        style="background-color:{{color}}"
+        {{action 'setColor' color}}></li>
+{{/each}}

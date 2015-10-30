@@ -1,0 +1,42 @@
+.view_accounts {}
+
+.vacc-name {
+    min-width: 110px;
+    width: 25%;
+}
+
+.vacc-own {
+    color: #666;
+    width: 20%;
+}
+
+.vacc-obs {
+    width: 25%;
+}
+
+.vacc-cur {
+    color: #666;
+    text-align: center;
+    width: 3em;
+}
+
+.vacc-initial {
+    color: #3F51B5;
+    text-align: right;
+    width: 140px;
+}
+
+.vacc-amount-ctrl {
+    color: #E02117;
+    text-align: right;
+    width: 120px;
+}
+
+@media ( max-width: 570px) {
+    .view_accounts .vacc-obs {
+        display: none;
+    }
+    .view_accounts .vacc-amount-ctrl {
+        text-align: left;
+    }
+}

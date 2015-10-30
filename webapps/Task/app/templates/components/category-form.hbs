@@ -1,0 +1,98 @@
+<div class="form-wrapper">
+    <form {{action 'save' on='submit' }}>
+        <header class="content-header">
+            <button class="btn-back" {{action 'close'}}>
+                <i class="fa fa-chevron-left"></i>
+            </button>
+            <h1 class="header-title">
+                {{t 'category'}}
+            </h1>
+        </header>
+        <section class="content-body">
+            <fieldset class="fieldset">
+                <div class="form-group form-group-no-label">
+                    <div class="controls select-transaction-type">
+                        {{select-transaction-type value=category.transactionType}}
+                        {{#each errors.transactionType as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                        <p class="hint">
+                            {{t 'category_transaction_type_hint'}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group {{if errors.name 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'name'}}
+                    </div>
+                    <div class="controls">
+                        {{tn-input
+                            value=category.name
+                            key-up='validateName'
+                            maxlength='64'
+                            class='span5'}}
+                        {{#each errors.name as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="controls">
+                        <label>
+                            {{input type='checkbox' checked=category.enabled}}
+                            {{t 'active'}}
+                        </label>
+                        <p class="hint">
+                            {{t 'category_active_hint'}}
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label">
+                        {{t 'parent_category'}}
+                    </div>
+                    <div class="controls">
+                        {{ember-selectize
+                            content=parentCategories
+                            optionValuePath='id'
+                            optionLabelPath='name'
+                            selection=category.parent
+                            placeholder='-'
+                            class='span5'}}
+                    </div>
+                </div>
+                <div class="form-group {{if errors.note 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'note'}}
+                    </div>
+                    <div class="controls">
+                        {{textarea
+                            value=category.note
+                            key-up='validateNote'
+                            maxlength=noteMaxLen
+                            class='span5'}}
+                        {{count-down-characters category.note noteMaxLen}}
+                        {{#each errors.note as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label">
+                        {{t 'color'}}
+                    </div>
+                    <div class="controls">
+                        {{tn-select-color value=category.color}}
+                        <p class="hint">
+                            {{t 'category_color_hint'}}
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+        <footer class="content-actions">
+            <button class="btn" {{action 'close'}}>{{t 'close'}}</button>
+            <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
+        </footer>
+    </form>
+</div>

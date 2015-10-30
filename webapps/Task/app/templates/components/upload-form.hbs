@@ -1,0 +1,24 @@
+<ul class="uploads {{unless uploadVisible 'hidden'}}">
+    <li class="drop">
+        <a {{action 'browse'}}>{{t 'upload_browse'}}</a>
+        <span class="drop-label">{{t 'upload_drop_here'}}</span>
+        <input type="file" name="file" />
+    </li>
+</ul>
+<ul class="attachments">
+    {{#each attachments as |attach|}}
+        {{#unless attach.isNew}}
+            {{#unless attach.isDeleted}}
+            <li>
+                <p>
+                    <a href="rest/{{modelPath}}/{{modelId}}/{{attach.fieldName}}/{{attach.realFileName}}">
+                        {{attach.realFileName}}
+                    </a>
+                    <i>{{attach.size}}</i>
+                    <a href="#" class="remove" {{action 'removeAttach' attach}}>{{t 'remove'}}</a>
+                </p>
+            </li>
+            {{/unless}}
+        {{/unless}}
+    {{/each}}
+</ul>
