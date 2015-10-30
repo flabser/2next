@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
 
 
-@Path("task")
+@Path("tasks")
 public class TaskService extends RestProvider {
 
 	private TaskValidator validator = new TaskValidator();

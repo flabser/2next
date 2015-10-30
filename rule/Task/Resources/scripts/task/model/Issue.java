@@ -4,6 +4,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -17,8 +20,9 @@ import com.flabser.dataengine.jpa.AppEntity;
 @NamedQuery(name = "Issue.findAll", query = "SELECT t FROM Issue AS t ORDER BY t.deadline")
 public class Issue extends AppEntity {
 
-	/*@Column(nullable = false)
-	private Task task;*/
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "task")
+	private Task task;
 
 	@Column(nullable = false)
 	private Long executor;
@@ -30,13 +34,13 @@ public class Issue extends AppEntity {
 	private String note;
 
 	//
-	/*public Task getTask() {
+	public Task getTask() {
 		return task;
 	}
 
 	public void setTask(Task task) {
 		this.task = task;
-	}*/
+	}
 
 	public Long getExecutor() {
 		return executor;
