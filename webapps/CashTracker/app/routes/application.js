@@ -97,6 +97,10 @@ export default Route.extend({
             });
         },
 
+        goBack: function() {
+            window.history.back();
+        },
+
         transitionToTransactions: function(type) {
             this.transitionTo('transactions');
         },
