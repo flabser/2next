@@ -2,13 +2,13 @@ import Em from 'ember';
 import ModelRoute from '../../mixins/routes/model';
 
 export default Em.Route.extend(ModelRoute, {
-    templateName: 'tags/tag',
+    templateName: 'issues/issue',
 
     model: function(params) {
-        return this.store.find('tag', params.tag_id);
+        return this.store.find('issue', params.issue_id);
     },
 
     setupController: function(controller, model) {
-        controller.set('tag', model);
+        controller.set('issue', model);
     }
 });

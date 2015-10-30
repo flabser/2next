@@ -2,13 +2,13 @@ import Em from 'ember';
 import ModelRoute from '../../mixins/routes/model';
 
 export default Em.Route.extend(ModelRoute, {
-    templateName: 'cost-centers/cost-center',
+    templateName: 'tasks/task',
 
     model: function(params) {
-        return this.store.find('cost_center', params.costcenter_id);
+        return this.store.find('task', params.task_id);
     },
 
     setupController: function(controller, model) {
-        controller.set('costCenter', model);
+        controller.set('task', model);
     }
 });
