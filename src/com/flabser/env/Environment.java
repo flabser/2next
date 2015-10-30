@@ -103,7 +103,7 @@ public class Environment implements ICache {
 
 			Localizator l = new Localizator();
 			String vocabuarFilePath = "resources" + File.separator + "vocabulary.xml";
-			vocabulary = l.populate(vocabuarFilePath);
+			vocabulary = l.populate(vocabuarFilePath, "");
 
 			workspaceName = XMLUtil.getTextContent(xmlDocument, "/tn/applications/@workspace", false, "", true);
 

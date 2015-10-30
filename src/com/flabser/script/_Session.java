@@ -26,10 +26,11 @@ public class _Session {
 	public _Session(AppTemplate env, UserSession userSession, String contextID) {
 		this.env = env;
 		if (env.globalSetting.getWorkMode() == WorkModeType.COMMON) {
-			ApplicationProfile app = new ApplicationProfile(env);
-			dataBase = app.getDatabase();
+			// TODO commented till a common application will be use some
+			// database
+			// ApplicationProfile app = new ApplicationProfile(env);
+			// dataBase = app.getDatabase();
 		} else if (env.globalSetting.getWorkMode() == WorkModeType.CLOUD) {
-			// System.out.println(contextID);
 			ApplicationProfile ap = DatabaseFactory.getSysDatabase().getApp(contextID);
 
 			if (ap != null && ap.getStatus() == ApplicationStatusType.ON_LINE) {

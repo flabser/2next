@@ -15,7 +15,7 @@ import com.flabser.server.Server;
 
 public class Localizator {
 
-	public Vocabulary populate(String vocabuarFilePath) throws LocalizatorException {
+	public Vocabulary populate(String vocabuarFilePath, String templateType) throws LocalizatorException {
 		try {
 			File docFile = new File(vocabuarFilePath);
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -25,9 +25,10 @@ public class Localizator {
 			if (queryDoc == null) {
 				throw new LocalizatorException(LocalizatorExceptionType.VOCABULAR_NOT_FOUND);
 			}
-			return new Vocabulary(queryDoc);
+			return new Vocabulary(queryDoc, templateType);
 		} catch (FileNotFoundException e) {
-			Server.logger.errorLogEntry("file not found, filepath=" + vocabuarFilePath + ", the vocabulary file has not loaded");
+			Server.logger.errorLogEntry(
+					"file not found, filepath=" + vocabuarFilePath + ", the vocabulary file has not loaded");
 		} catch (ParserConfigurationException e) {
 			Server.logger.errorLogEntry(e);
 		} catch (IOException e) {

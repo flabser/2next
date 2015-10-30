@@ -13,8 +13,7 @@
 		<class>cashtracker.model.constants.converter.TransactionTypeConverter</class>
 		<class>cashtracker.model.constants.converter.TransactionStateConverter</class>
 	</persistence-unit>
-	<persistence-unit name="Nubis" transaction-type="RESOURCE_LOCAL">
-		<class>nubis.model.Profile</class>
+	<persistence-unit name="benexus" transaction-type="RESOURCE_LOCAL">
 		<class>nubis.model.Workspace</class>
 		<class>nubis.model.Icon</class>
 	</persistence-unit>
