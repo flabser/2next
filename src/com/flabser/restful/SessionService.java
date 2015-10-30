@@ -37,6 +37,7 @@ import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.exception.ServerServiceExceptionType;
 import com.flabser.exception.ServerServiceWarningType;
 import com.flabser.exception.WebFormValueException;
+import com.flabser.localization.LanguageType;
 import com.flabser.mail.message.ResetPasswordEMail;
 import com.flabser.mail.message.VerifyEMail;
 import com.flabser.restful.pojo.AppUser;
@@ -217,8 +218,14 @@ public class SessionService extends RestProvider {
 	@Path("/lang")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response changeLang(@FormParam("code") String code) {
-		return null;
+	public Response changeLang(@FormParam("lang") String lang) {
+		_Session ses = getSession();
+		User user = ses.getUser();
+		user.setPreferredLang(LanguageType.valueOf(lang));
+		user.save();
+		int maxAge = -1;
+		NewCookie cookie = new NewCookie(EnvConst.LANG_COOKIE_NAME, lang, "/", null, null, maxAge, false);
+		return Response.status(HttpServletResponse.SC_OK).cookie(cookie).build();
 
 	}
 

@@ -28,6 +28,7 @@ public class User {
 	public boolean isValid = false;
 	public boolean isAuthorized;
 	public String lastURL;
+	// TODO need to save in sys database
 	public LanguageType preferredLang = LanguageType.ENG;
 	public final static String ANONYMOUS_USER = "anonymous";
 
@@ -51,7 +52,7 @@ public class User {
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private String dbPwd;
-	//	private String defaultApp;
+	// private String defaultApp;
 	private Attachment avatar;
 
 	public User() {
@@ -59,9 +60,10 @@ public class User {
 		login = ANONYMOUS_USER;
 	}
 
-	public User(int id, String userName, Date primaryRegDate, Date regDate, String login, String email, boolean isSupervisor,
-			String password, String passwordHash, String defaultDbPwd, int loginHash, String verifyCode, UserStatusType status,
-			HashSet<UserGroup> groups, HashSet<UserRole> roles, List<ApplicationProfile> applications, boolean isValid, String avatarName) {
+	public User(int id, String userName, Date primaryRegDate, Date regDate, String login, String email,
+			boolean isSupervisor, String password, String passwordHash, String defaultDbPwd, int loginHash,
+			String verifyCode, UserStatusType status, HashSet<UserGroup> groups, HashSet<UserRole> roles,
+			List<ApplicationProfile> applications, boolean isValid, String avatarName) {
 		this.sysDatabase = DatabaseFactory.getSysDatabase();
 		this.id = id;
 		this.userName = userName;
@@ -160,6 +162,14 @@ public class User {
 		return applications.values();
 	}
 
+	public LanguageType getPreferredLang() {
+		return preferredLang;
+	}
+
+	public void setPreferredLang(LanguageType preferredLang) {
+		this.preferredLang = preferredLang;
+	}
+
 	public void setPersistentValue(String key, String lang) {
 		persistentValues.put(key, new PersistentValue(key, lang));
 
@@ -195,7 +205,6 @@ public class User {
 			return true;
 		}
 	}
-
 
 	@Override
 	public String toString() {
@@ -301,13 +310,13 @@ public class User {
 	public void refresh(AppUser appUser) throws WebFormValueException {
 		login = appUser.getLogin();
 		userName = appUser.getName();
-		if (!appUser.getPwdNew().equals("") && appUser.getPwdNew().equals(appUser.getPwdRepeat())){
+		if (!appUser.getPwdNew().equals("") && appUser.getPwdNew().equals(appUser.getPwdRepeat())) {
 			setPwd(appUser.getPwdNew());
 			status = UserStatusType.REGISTERED;
 		}
 		email = appUser.getEmail();
 		avatar = appUser.getAttachedFile();
-		//defaultApp = authUser.getDefaultApp();
+		// defaultApp = authUser.getDefaultApp();
 
 	}
 
