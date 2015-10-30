@@ -1,6 +1,6 @@
 <div class="view">
     <header class="content-header">
-        <h1 class="header-title">{{t 'tags'}}</h1>
+        <h1 class="header-title">{{t 'tasks'}}</h1>
         <nav class="content-actions on-desktop">
             <button class="btn" {{action 'composeRecord'}}>
                 <i class="fa fa-plus"></i>{{t 'add'}}
@@ -21,22 +21,22 @@
             </div>
         </header>
         <div class="entries">
-            {{#each model as |tag|}}
-                {{#unless tag.isNew}}
+            {{#each model as |task|}}
+                {{#unless task.isNew}}
                 <div class="entry-wrap">
                     <div class="entry-actions">
-                        <button class="entry-action action-delete" {{action 'deleteRecord' tag}}>
+                        <button class="entry-action action-delete" {{action 'deleteRecord' task}}>
                             <i class="fa fa-trash" />
                         </button>
                     </div>
                     {{#tn-swipe-entry class='entry'}}
                         <label class="entry-select">
-                            <input type="checkbox" value="{{tag.id}}" {{action 'selectOne'}} />
+                            <input type="checkbox" value="{{task.id}}" {{action 'selectOne'}} />
                         </label>
-                        {{#link-to 'tags.tag' tag class='entry-link'}}
+                        {{#link-to 'tasks.task' task class='entry-link'}}
                         <div class="entry-fields">
                             <span>
-                                {{tag.name}}
+                                {{task.name}}
                             </span>
                         </div>
                         {{/link-to}}

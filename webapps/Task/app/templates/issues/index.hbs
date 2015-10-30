@@ -1,6 +1,6 @@
 <div class="view">
     <header class="content-header">
-        <h1 class="header-title">{{t 'cost_centers'}}</h1>
+        <h1 class="header-title">{{t 'issues'}}</h1>
         <nav class="content-actions on-desktop">
             <button class="btn" {{action 'composeRecord'}}>
                 <i class="fa fa-plus"></i>{{t 'add'}}
@@ -21,22 +21,22 @@
             </div>
         </header>
         <div class="entries">
-            {{#each model as |costCenter|}}
-                {{#unless costCenter.isNew}}
+            {{#each model as |issue|}}
+                {{#unless issue.isNew}}
                 <div class="entry-wrap">
                     <div class="entry-actions">
-                        <button class="entry-action action-delete" {{action 'deleteRecord' costCenter}}>
+                        <button class="entry-action action-delete" {{action 'deleteRecord' issue}}>
                             <i class="fa fa-trash" />
                         </button>
                     </div>
                     {{#tn-swipe-entry class='entry'}}
                         <label class="entry-select">
-                            <input type="checkbox" value="{{costCenter.id}}" {{action 'selectOne'}} />
+                            <input type="checkbox" value="{{issue.id}}" {{action 'selectOne'}} />
                         </label>
-                        {{#link-to 'cost_centers.cost_center' costCenter class='entry-link'}}
+                        {{#link-to 'cost_centers.cost_center' issue class='entry-link'}}
                         <div class="entry-fields">
                             <span>
-                                {{costCenter.name}}
+                                {{issue.name}}
                             </span>
                         </div>
                         {{/link-to}}

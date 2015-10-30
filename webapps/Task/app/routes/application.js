@@ -34,19 +34,6 @@ export default Route.extend({
         return sessionService.getSession().then(() => sessionService.get('user'));
     },
 
-    afterModel: function(user) {
-        if (!this.get('session').isAuthenticated()) {
-            // window.location.href = 'Provider?id=login';
-        } else {
-            if (this.get('session').get('user.redirect') === 'setup') {
-                this.controllerFor('budget').set('isEditMode', true);
-                this.transitionTo('budget');
-            } else {
-                // this.controllerFor('budget').send('check');
-            }
-        }
-    },
-
     setupController: function(controller, model) {
         controller.set('model', model);
         // loginThroughToken - show link rest/workspace/url if LOGIN_THROUGH_TOKEN
@@ -101,24 +88,8 @@ export default Route.extend({
             window.history.back();
         },
 
-        transitionToTransactions: function(type) {
-            this.transitionTo('transactions');
-        },
-
-        transitionToAccounts: function() {
-            this.transitionTo('accounts');
-        },
-
-        transitionToCategories: function() {
-            this.transitionTo('categories');
-        },
-
-        transitionToCostCenters: function() {
-            this.transitionTo('cost_centers');
-        },
-
-        transitionToTags: function() {
-            this.transitionTo('tags');
+        transitionToTasks: function(type) {
+            this.transitionTo('tasks');
         },
 
         transitionToUsers: function() {

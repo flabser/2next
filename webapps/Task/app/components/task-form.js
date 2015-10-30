@@ -4,12 +4,12 @@ import ModelForm from '../mixins/components/form';
 import Validate from '../utils/validator';
 
 export default Em.Component.extend(ModelForm, {
-    tag: null,
+    task: null,
 
     actions: {
         save: function() {
             if (this.validate()) {
-                this.sendAction('saveRecord', this.get('tag'));
+                this.sendAction('saveRecord', this.get('task'));
             }
         },
 
@@ -25,7 +25,7 @@ export default Em.Component.extend(ModelForm, {
     validate: function() {
         this.set('errors', DS.Errors.create());
 
-        if (Validate.isEmpty(this.get('tag.name'))) {
+        if (Validate.isEmpty(this.get('task.name'))) {
             this.get('errors').add('name', this.get('i18n').t('validation_empty'));
         }
 

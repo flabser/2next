@@ -4,12 +4,12 @@ import ModelForm from '../mixins/components/form';
 import Validate from '../utils/validator';
 
 export default Em.Component.extend(ModelForm, {
-    costCenter: null,
+    issue: null,
 
     actions: {
         save: function() {
             if (this.validate()) {
-                this.sendAction('saveRecord', this.get('costCenter'));
+                this.sendAction('saveRecord', this.get('issue'));
             }
         },
 
@@ -25,7 +25,7 @@ export default Em.Component.extend(ModelForm, {
     validate: function() {
         this.set('errors', DS.Errors.create());
 
-        if (Validate.isEmpty(this.get('costCenter.name'))) {
+        if (Validate.isEmpty(this.get('issue.name'))) {
             this.get('errors').add('name', this.get('i18n').t('validation_empty'));
         }
 
