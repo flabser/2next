@@ -1,10 +1,8 @@
 .navbar {
-    background: #FEEA84 url(../img/yellow_background.png) 0 0 no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    color: #494949;
+    background-color: #4CAF50;
+    border-bottom: 1px solid #008805;
+    color: #FFF;
+    font-size: 0;
     margin: 0;
     padding: 0;
     vertical-align: top;
@@ -18,22 +16,22 @@
 
 .navbar-brand {
     display: inline-block;
-    padding: 0 4px;
+    padding: 1px 4px;
     vertical-align: top;
 }
 
 .brand-logo {
-    line-height: 50px;
-    max-height: 50px;
+    line-height: 48px;
+    max-height: 48px;
     vertical-align: top;
 }
 
 .brand-title {
-    color: #646464;
+    /* color: #FFF; */
     font-size: 13px;
     text-transform: uppercase;
     font-weight: bold;
-    line-height: 50px;
+    line-height: 48px;
     vertical-align: top;
 }
 
@@ -72,7 +70,7 @@
 
 .nav-item:hover,
 .nav-app-side-toggle:hover {
-    background-color: rgba(255, 214, 1, .5);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .navbar button {
@@ -85,7 +83,7 @@
 }
 
 .navbar .fa {
-    color: #646464;
+    color: #FFF;
     font-size: 24px;
     vertical-align: middle;
 }
@@ -127,7 +125,7 @@
 
 .tablet .nav-search,
 .phone .nav-search {
-    background: #fff59d url(../img/yellow_background.png) 0 0 no-repeat;
+    background: #fff59d;
     display: none;
     left: 0;
     position: absolute;
@@ -246,8 +244,8 @@
 }
 
 .nav-app-toggle:before {
-    border-bottom: 3px solid #666;
-    border-top: 3px solid #666;
+    border-bottom: 3px solid #FFF;
+    border-top: 3px solid #FFF;
     content: '';
     display: block;
     padding: 2px 0;
@@ -255,7 +253,7 @@
 }
 
 .nav-app-toggle:after {
-    border-top: 3px solid #666;
+    border-top: 3px solid #FFF;
     content: '';
     display: block;
     margin-top: 4px;
@@ -278,16 +276,16 @@
 }
 
 .nav-ws-toggle:before {
-    border-left: 8px solid #666;
-    border-right: 8px solid #666;
+    border-left: 8px solid #FFF;
+    border-right: 8px solid #FFF;
     content: '';
     display: block;
     height: 8px;
 }
 
 .nav-ws-toggle:after {
-    border-left: 8px solid #666;
-    border-right: 8px solid #666;
+    border-left: 8px solid #FFF;
+    border-right: 8px solid #FFF;
     content: '';
     display: block;
     height: 8px;
