@@ -18,7 +18,7 @@
 		<class>task.model.Issue</class>
 	</persistence-unit>
 	<persistence-unit name="benexus" transaction-type="RESOURCE_LOCAL">
-		<class>nubis.model.Workspace</class>
-		<class>nubis.model.Icon</class>
+		<class>benexus.model.Workspace</class>
+		<class>benexus.model.Icon</class>
 	</persistence-unit>
 </persistence>
