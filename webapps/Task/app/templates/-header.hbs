@@ -9,17 +9,28 @@
                 <span class="brand-title">{{t 'brand'}}</span>
             </div>
         </div>
-        <div class="navbar-title hidden">
-            {{windowTitle}}
-        </div>
+        <nav class="navbar-nav navbar-link">
+            {{#link-to 'dashboard' class='nav-item'}}
+                <i class="fa fa-dashboard"></i>
+                <span>{{t 'dashboard'}}</span>
+            {{/link-to}}
+            {{#link-to 'tasks' class='nav-item'}}
+                <i class="fa fa-tasks"></i>
+                <span>{{t 'tasks'}}</span>
+            {{/link-to}}
+            {{#link-to 'users' class='nav-item'}}
+                <i class="fa fa-users"></i>
+                <span>{{t 'users'}}</span>
+            {{/link-to}}
+        </nav>
         <nav class="navbar-nav navbar-right">
-            <button class="nav-item" type="button" {{action 'toggleDevice'}}>
+            <button class="nav-item nav-btn" type="button" {{action 'toggleDevice'}}>
                 <i class="fa fa-mobile"></i>
             </button>
-            <button class="nav-item compose-new" type="button" {{action 'composeRecord'}}>
+            <button class="nav-item nav-btn compose-new" type="button" {{action 'composeRecord'}}>
                 <i class="fa fa-plus"></i>
             </button>
-            <button class="nav-item nav-search-toggle" type="button" {{action 'toggleSearchForm' on='mouseDown' }}>
+            <button class="nav-item nav-btn nav-search-toggle" type="button" {{action 'toggleSearchForm' on='mouseDown' }}>
                 <i class="fa fa-search"></i>
             </button>
             <div class="nav-item nav-search" id="head-search-block">
@@ -32,6 +43,41 @@
                         <i class="fa fa-search"></i>
                     </button>
                 </form>
+            </div>
+            <div class="nav-item nav-profile {{navProfileClass}}">
+                <header>
+                    <a href="#" {{action 'toggleNavProfile'}}>
+                        <span class="nav-i user-avatar">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        <span class="user-name">{{model.login}}</span>
+                        <i class="fa expand"></i>
+                    </a>
+                </header>
+                <section>
+                    <ul>
+                        <li>
+                            {{#link-to 'user_profile'}}
+                                <span class="nav-i"><i class="fa fa-cog"></i></span>
+                                <span class="nav-t">{{t 'user_profile'}}</span>
+                            {{/link-to}}
+                        </li>
+                        {{#if loginThroughToken}}
+                            <li>
+                                <a href="rest/workspace/url" class="ws">
+                                    <span class="nav-i"><i class="fa fa-desktop"></i></span>
+                                    <span class="nav-t">{{t 'workspace'}}</span>
+                                </a>
+                            </li>
+                        {{/if}}
+                        <li>
+                            <a href="#" {{action 'logout'}} class="logout">
+                                <span class="nav-i"><i class="fa fa-sign-out"></i></span>
+                                <span class="nav-t">{{t 'logout'}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
             </div>
         </nav>
     </div>

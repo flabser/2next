@@ -14,6 +14,12 @@
     float: left;
 }
 
+@media ( min-width: 768px) {
+    .navbar-header {
+        min-width: 230px;
+    }
+}
+
 .navbar-brand {
     display: inline-block;
     padding: 1px 4px;
@@ -37,6 +43,7 @@
 
 .navbar-title {
     display: inline-block;
+    font-size: 13px;
     margin: 0;
     padding: 0;
     vertical-align: top;
@@ -73,6 +80,19 @@
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+.nav-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-link .nav-item {
+    padding: 0 8px;
+    width: auto;
+}
+
+.navbar a {
+    font-size: 13px;
+}
+
 .navbar button {
     background: transparent;
     border: 0;
@@ -86,6 +106,10 @@
     color: #FFF;
     font-size: 24px;
     vertical-align: middle;
+}
+
+.phone .navbar .nav-t {
+    display: none;
 }
 
 
@@ -169,7 +193,7 @@
 }
 
 .search-form .search-keyword {
-    background: transparent;
+    background: rgba(255, 255, 255, 0.2);
     border: 1px solid transparent;
     border-radius: 2px;
     box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.196), inset 0px 1px 1px rgba(0, 0, 0, 0.102);

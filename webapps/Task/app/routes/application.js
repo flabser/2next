@@ -88,7 +88,11 @@ export default Route.extend({
             window.history.back();
         },
 
-        transitionToTasks: function(type) {
+        transitionToDashboard: function() {
+            this.transitionTo('dashboard');
+        },
+
+        transitionToTasks: function() {
             this.transitionTo('tasks');
         },
 

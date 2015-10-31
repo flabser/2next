@@ -1,6 +1,6 @@
 .container {
     margin: 0px auto;
-    max-width: 1440px;
+    max-width: 1024px;
 }
 
 .layout_wide .container {
@@ -23,7 +23,7 @@
     height: 50px;
     line-height: 50px;
     max-width: inherit;
-    position: relative;
+    position: fixed;
     width: 100%;
     z-index: 5;
 }
@@ -65,9 +65,9 @@
     background: #FFF;
     border: none;
     height: auto;
-    margin: 0 0 10px 230px;
+    margin: 0 0 10px 0px;
     padding: 0 0 20px 0;
-    /* padding-top: 60px; */
+    padding-top: 50px;
     position: relative;
 }
 
