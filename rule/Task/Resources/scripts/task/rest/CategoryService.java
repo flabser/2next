@@ -15,33 +15,34 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import task.dao.IssueDAO;
-import task.model.Issue;
-import task.validation.IssueValidator;
+import task.dao.CategoryDAO;
+import task.model.Category;
+import task.pojo.Errors;
+import task.validation.CategoryValidator;
 import task.validation.ValidationError;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
 
 
-@Path("issues")
-public class IssueService extends RestProvider {
+@Path("categories")
+public class CategoryService extends RestProvider {
 
-	private IssueValidator validator = new IssueValidator();
+	private CategoryValidator validator = new CategoryValidator();
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get() {
-		IssueDAO dao = new IssueDAO(getSession());
-		return Response.ok(new Issues(dao.findAll())).build();
+		CategoryDAO dao = new CategoryDAO(getSession());
+		return Response.ok(new Categories(dao.findAll())).build();
 	}
 
 	@GET
-	@Path("{id}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") long id) {
-		IssueDAO dao = new IssueDAO(getSession());
-		Issue m = dao.findById(id);
+		CategoryDAO dao = new CategoryDAO(getSession());
+		Category m = dao.findById(id);
 		//
 		if (m == null) {
 			return Response.noContent().status(Status.NOT_FOUND).build();
@@ -53,13 +54,19 @@ public class IssueService extends RestProvider {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(Issue m) {
+	public Response create(Category m) {
+		CategoryDAO dao = new CategoryDAO(getSession());
+
+		// parent category
+		if (m.getParent() != null) {
+			m.setParent(dao.findById(m.getParent().getId()));
+		}
+
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
-		IssueDAO dao = new IssueDAO(getSession());
 		return Response.ok(dao.add(m)).build();
 	}
 
@@ -67,22 +74,32 @@ public class IssueService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") long id, Issue m) {
+	public Response update(@PathParam("id") long id, Category m) {
+		CategoryDAO dao = new CategoryDAO(getSession());
+
 		m.setId(id);
+
+		// parent category
+		if (m.getParent() != null) {
+			m.setParent(dao.findById(m.getParent().getId()));
+		}
 
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
-		IssueDAO dao = new IssueDAO(getSession());
-		Issue pm = dao.findById(id);
+		Category pm = dao.findById(id);
 		//
 		if (pm == null) {
 			return Response.noContent().status(Status.NOT_FOUND).build();
 		}
 		//
-		pm.setBody(m.getBody());
+		pm.setName(m.getName());
+		pm.setParent(m.getParent());
+		pm.setNote(m.getNote());
+		pm.setColor(m.getColor());
+		pm.setEnabled(m.isEnabled());
 		//
 		return Response.ok(dao.update(pm)).build();
 	}
@@ -91,18 +108,26 @@ public class IssueService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
-		IssueDAO dao = new IssueDAO(getSession());
-		Issue m = dao.findById(id);
-		dao.delete(m);
+		CategoryDAO dao = new CategoryDAO(getSession());
+		Category m = dao.findById(id);
+		if (m != null) {
+			if (dao.existsChildCategory(m)) {
+				Errors msg = new Errors();
+				msg.setMessage("exists_child");
+				return Response.status(Status.BAD_REQUEST).entity(msg).build();
+			} else {
+				dao.delete(m);
+			}
+		}
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
-	@JsonRootName("issues")
-	class Issues extends ArrayList <Issue> {
+	@JsonRootName("categories")
+	class Categories extends ArrayList <Category> {
 
 		private static final long serialVersionUID = 1L;
 
-		public Issues(Collection <? extends Issue> m) {
+		public Categories(Collection <? extends Category> m) {
 			addAll(m);
 		}
 	}

@@ -20,9 +20,16 @@ import com.flabser.dataengine.jpa.AppEntity;
 @NamedQuery(name = "Issue.findAll", query = "SELECT t FROM Issue AS t ORDER BY t.deadline")
 public class Issue extends AppEntity {
 
+	public enum Status {
+		DRAFT, PROCESS, CLOSE;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "task")
 	private Task task;
+
+	@Column(nullable = false)
+	private Status status;
 
 	@Column(nullable = false)
 	private Long executor;
@@ -30,16 +37,27 @@ public class Issue extends AppEntity {
 	@Column(nullable = false)
 	private Date deadline;
 
-	@Column(nullable = false, length = 1000)
-	private String note;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category")
+	private Category category;
 
-	//
+	@Column(length = 2000)
+	private String body;
+
 	public Task getTask() {
 		return task;
 	}
 
 	public void setTask(Task task) {
 		this.task = task;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public Long getExecutor() {
@@ -58,12 +76,20 @@ public class Issue extends AppEntity {
 		this.deadline = deadline;
 	}
 
-	public String getNote() {
-		return note;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setNote(String note) {
-		this.note = note;
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
 	}
 
 	@Override

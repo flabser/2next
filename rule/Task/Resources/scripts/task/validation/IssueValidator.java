@@ -11,9 +11,9 @@ public class IssueValidator {
 	public ValidationError validate(Issue m) {
 		ValidationError ve = new ValidationError();
 
-		if (m.getNote() == null || m.getNote().isEmpty()) {
+		if (m.getBody() == null || m.getBody().isEmpty()) {
 			ve.addError("note", "required", "required");
-		} else if (m.getNote().length() > 1000) {
+		} else if (m.getBody().length() > 2000) {
 			ve.addError("note", "invalid", "too_long");
 		}
 

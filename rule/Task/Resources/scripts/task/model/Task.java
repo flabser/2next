@@ -37,12 +37,10 @@ public class Task extends AppEntity {
 	@OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List <Issue> issues;
 
-	//
 	public List <Issue> getIssues() {
 		return issues;
 	}
 
-	//
 	public String getName() {
 		return name;
 	}
