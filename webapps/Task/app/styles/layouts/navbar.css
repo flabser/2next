@@ -1,7 +1,7 @@
 .navbar {
-    background-color: #4CAF50;
-    border-bottom: 1px solid #008805;
-    color: #FFF;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ccc;
+    color: #303030;
     font-size: 0;
     margin: 0;
     padding: 0;
@@ -27,9 +27,8 @@
 }
 
 .brand-logo {
-    line-height: 48px;
-    max-height: 48px;
-    vertical-align: top;
+    max-height: 32px;
+    vertical-align: middle;
 }
 
 .brand-title {
@@ -78,11 +77,11 @@
 
 .nav-item:hover,
 .nav-app-side-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(204, 204, 204, 0.2);
 }
 
 .nav-item.active {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(214, 214, 214, 0.4);
 }
 
 .navbar-link .nav-item {
@@ -104,8 +103,8 @@
 }
 
 .navbar .fa {
-    color: #FFF;
-    font-size: 24px;
+    color: #646464;
+    font-size: 18px;
     vertical-align: middle;
 }
 
