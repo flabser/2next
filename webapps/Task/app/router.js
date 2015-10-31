@@ -24,6 +24,13 @@ Router.map(function() {
         });
     });
 
+    this.route('categories', function() {
+        this.route('new');
+        this.route('category', {
+            path: '/:category_id'
+        });
+    });
+
     this.route('users', function() {
         this.route('invitation');
     });

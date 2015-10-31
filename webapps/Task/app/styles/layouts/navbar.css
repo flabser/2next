@@ -9,6 +9,14 @@
     white-space: nowrap;
 }
 
+.navbar .dropdown-menu {
+    top: 50px;
+}
+
+.nav-profile .dropdown-menu {
+    right: 4px;
+}
+
 .navbar-header {
     display: inline-block;
     float: left;
@@ -112,6 +120,9 @@
     display: none;
 }
 
+.phone .navbar .dropdown-menu .nav-t {
+    display: inline-block;
+}
 
 /* compose-new */
 

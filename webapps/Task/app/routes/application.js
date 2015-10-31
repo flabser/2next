@@ -47,6 +47,21 @@ export default Route.extend({
         $('body').removeClass('no_transition');
         $('#app-loading').hide();
 
+        // init dropdown
+        $('[data-toggle=dropdown]').click(function() {
+            let $dropdown = $(this).parent('.dropdown');
+            if ($dropdown.hasClass('open')) {
+                $dropdown.removeClass('open');
+            } else {
+                $dropdown.addClass('open');
+                setTimeout(function() {
+                    $('body').one('click', function() {
+                        $dropdown.removeClass('open');
+                    });
+                }, 100);
+            }
+        });
+
         var offsetTop = 0;
         var sideOnTop = false;
         var $side = $('#nav-app');
@@ -100,6 +115,10 @@ export default Route.extend({
             this.transitionTo('users');
         },
 
+        toggleDropdown: function(el) {
+            console.log(arguments);
+        },
+
         toggleDevice: function() {
             $('body').toggleClass('phone');
         },
@@ -134,6 +153,7 @@ export default Route.extend({
 
         willTransition: function(transition) {
             $('body').removeClass('nav-app-open nav-ws-open');
+            $('.dropdown.open').removeClass('open');
         },
 
         error: function(_error /*, transition*/ ) {
