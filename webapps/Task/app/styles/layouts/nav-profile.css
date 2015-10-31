@@ -5,6 +5,7 @@
 
 .nav-profile > header {
     height: 48px;
+    line-height: 1;
 }
 
 .tablet .nav-profile > header,
@@ -20,8 +21,10 @@
 }
 
 .nav-profile > section {
+    background: #FFF;
     max-height: 0px;
     overflow: hidden;
+    position: absolute;
     transition: max-height 200ms;
 }
 

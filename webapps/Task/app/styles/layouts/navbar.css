@@ -16,7 +16,7 @@
 
 @media ( min-width: 768px) {
     .navbar-header {
-        min-width: 230px;
+        min-width: 180px;
     }
 }
 
@@ -33,6 +33,7 @@
 }
 
 .brand-title {
+    display: none;
     /* color: #FFF; */
     font-size: 13px;
     text-transform: uppercase;
@@ -72,7 +73,7 @@
     position: relative;
     text-align: center;
     vertical-align: top;
-    width: 48px;
+    /* width: 48px; */
 }
 
 .nav-item:hover,
