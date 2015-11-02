@@ -5,6 +5,8 @@
 		<entry lang="KAZ">benexus</entry>
 		<entry lang="ENG">benexus</entry>
 		<entry lang="BG">benexus</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 	<sentence mode="on" keyword="login">
@@ -12,24 +14,32 @@
 		<entry lang="KAZ">Авторизация</entry>
 		<entry lang="ENG">Authorization</entry>
 		<entry lang="BG">Упълномощаване</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="login_title">
 		<entry lang="RUS">Авторизация</entry>
 		<entry lang="KAZ">Авторизация</entry>
 		<entry lang="ENG">Authorization</entry>
 		<entry lang="BG">Упълномощаване</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="login_btn">
 		<entry lang="RUS">Войти</entry>
 		<entry lang="KAZ">Кіру</entry>
 		<entry lang="ENG">Sign in</entry>
 		<entry lang="BG">Влизане</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="logout">
 		<entry lang="RUS">Выйти</entry>
 		<entry lang="KAZ">Шығу</entry>
 		<entry lang="ENG">Log out</entry>
 		<entry lang="BG">Изход</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 	<sentence mode="on" keyword="signup">
@@ -37,18 +47,24 @@
 		<entry lang="KAZ">Тіркелу</entry>
 		<entry lang="ENG">Sign up</entry>
 		<entry lang="BG">Регистрирай се</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="signup_title">
 		<entry lang="RUS">Регистрация</entry>
 		<entry lang="KAZ">Тіркелу</entry>
 		<entry lang="ENG">Sign up</entry>
 		<entry lang="BG">Регистрация</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="signup_btn">
 		<entry lang="RUS">Sign up</entry>
 		<entry lang="KAZ">Тіркелу</entry>
 		<entry lang="ENG">Sign up</entry>
 		<entry lang="BG">Регистрирай се</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 	<sentence mode="on" keyword="password">
@@ -56,18 +72,24 @@
 		<entry lang="KAZ">Пароль</entry>
 		<entry lang="ENG">Password</entry>
 		<entry lang="BG">Парола</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="forgot_password">
 		<entry lang="RUS">Забыли пароль?</entry>
 		<entry lang="KAZ">Құпия сөзді ұмыттыңыз ба?</entry>
 		<entry lang="ENG">Forgot your password?</entry>
 		<entry lang="BG">Забравихте ли паролата си?</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="your_profile">
 		<entry lang="RUS">Ваш профиль</entry>
 		<entry lang="KAZ">Ваш профиль</entry>
 		<entry lang="ENG">Your profile</entry>
 		<entry lang="BG">Вашият профил</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 	<!-- verify_email -->
@@ -76,24 +98,32 @@
 		<entry lang="KAZ">Подтверждение E-mail</entry>
 		<entry lang="ENG">E-mail confirm</entry>
 		<entry lang="BG">Е-мейл за потвърждение</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_error">
 		<entry lang="RUS">Не верные данные</entry>
 		<entry lang="KAZ">Не верные данные</entry>
 		<entry lang="ENG">Incorrect value</entry>
 		<entry lang="BG">Неправилна стойност</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_done">
 		<entry lang="RUS">Проверка прошла успешно. Теперь вы можете войти.</entry>
 		<entry lang="KAZ">Проверка прошла успешно. Теперь вы можете войти.</entry>
 		<entry lang="ENG">The confirmation has been succesfully. Now you can enter</entry>
 		<entry lang="BG">Потвърждението е било успешно. Сега можете да въведете</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="verify_email_already">
 		<entry lang="RUS">Вы уже зарегистрированы</entry>
 		<entry lang="KAZ">Вы уже зарегистрированы</entry>
 		<entry lang="ENG">You are already registered</entry>
 		<entry lang="BG" hint="">Вие вече сте регистрирани</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 	<!-- retry_send_verify_email -->
@@ -102,42 +132,54 @@
 		<entry lang="KAZ" hint="Повторная отправка письма для удостоверения e-mail">Повторная отправка письма для удостоверения e-mail</entry>
 		<entry lang="ENG" hint="Повторная отправка письма для удостоверения e-mail">Повторная отправка письма для удостоверения e-mail</entry>
 		<entry lang="BG" hint=""></entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="retry_send_verify_email_btn_send">
 		<entry lang="RUS" hint="Отправить">Отправить</entry>
 		<entry lang="KAZ" hint="Отправить">Отправить</entry>
 		<entry lang="ENG" hint="Отправить">Send</entry>
 		<entry lang="BG" hint="">Изпращам</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="retry_send_verify_email_send_ok">
 		<entry lang="RUS" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
 		<entry lang="KAZ" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
 		<entry lang="ENG" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
 		<entry lang="BG" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="no_user">
 		<entry lang="RUS" hint="Пользователь не найден">Пользователь не найден</entry>
 		<entry lang="KAZ" hint="Пользователь не найден">Пользователь не найден</entry>
-		<entry lang="ENG" hint="Пользователь не найден">Пользователь не найден</entry>
+		<entry lang="ENG" hint="Пользователь не найден">User not found</entry>
 		<entry lang="BG" hint="Пользователь не найден">Пользователь не найден</entry>
 	</sentence>
 	<sentence mode="on" keyword="invalid_email">
 		<entry lang="RUS" hint="Не корректный e-mail">Не корректный e-mail</entry>
 		<entry lang="KAZ" hint="Не корректный e-mail">Не корректный e-mail</entry>
-		<entry lang="ENG" hint="Не корректный e-mail">Не корректный e-mail</entry>
+		<entry lang="ENG" hint="Не корректный e-mail">Incorrect e-mail address</entry>
 		<entry lang="BG" hint="Не корректный e-mail">Не корректный e-mail</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="user_already_verified">
 		<entry lang="RUS" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
 		<entry lang="KAZ" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
 		<entry lang="ENG" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
 		<entry lang="BG" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="error_verify_email">
 		<entry lang="RUS" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
 		<entry lang="KAZ" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
 		<entry lang="ENG" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
 		<entry lang="BG" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 	<sentence mode="on" keyword="about">
@@ -145,6 +187,8 @@
 		<entry lang="KAZ">Добро пожаловать в benexus. Для начала работы необходимо авторизоваться</entry>
 		<entry lang="ENG"> Welcome to benexus cloud to order to work you have to authorize.</entry>
 		<entry lang="BG">Добро пожаловать в benexus. Для начала работы необходимо авторизоваться</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 	<sentence mode="on" keyword="cancel">
@@ -152,12 +196,16 @@
 		<entry lang="KAZ">Бодырмау</entry>
 		<entry lang="ENG">Cancel</entry>
 		<entry lang="BG">Отмена</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="remove">
 		<entry lang="RUS">Удалить</entry>
 		<entry lang="KAZ">Удалить</entry>
 		<entry lang="ENG">Remove</entry>
 		<entry lang="BG">Удалить</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 	<sentence mode="on" keyword="applications">
@@ -165,12 +213,16 @@
 		<entry lang="KAZ">Приложения</entry>
 		<entry lang="ENG">Applications</entry>
 		<entry lang="BG">Приложения</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="applications_description">
 		<entry lang="RUS">Доступные или созданные вами приложения</entry>
 		<entry lang="KAZ">Доступные или созданные вами приложения</entry>
 		<entry lang="ENG">Available applications</entry>
 		<entry lang="BG">Доступные или созданные вами приложения</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 	<sentence mode="on" keyword="templates">
@@ -178,24 +230,32 @@
 		<entry lang="KAZ">Шаблоны</entry>
 		<entry lang="ENG">Templates</entry>
 		<entry lang="BG">Шаблони</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="templates_description">
 		<entry lang="RUS">На основе шаблонов создаются приложения</entry>
 		<entry lang="KAZ">На основе шаблонов создаются приложения</entry>
 		<entry lang="ENG">Aplications are created with templates</entry>
 		<entry lang="BG">Приложениата са създадени с шаблони</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="create_app">
 		<entry lang="RUS">Создать приложение</entry>
 		<entry lang="KAZ">Создать приложение</entry>
 		<entry lang="ENG">Create application</entry>
 		<entry lang="BG">Създаване на приложение</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="app_сreation">
 		<entry lang="RUS">Создание...</entry>
 		<entry lang="KAZ">Создание...</entry>
 		<entry lang="ENG">Creation...</entry>
 		<entry lang="BG">Създаване...</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 	<sentence mode="on" keyword="type">
@@ -203,18 +263,24 @@
 		<entry lang="KAZ">Тип</entry>
 		<entry lang="ENG">Type</entry>
 		<entry lang="BG">Тип</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="name">
 		<entry lang="RUS">Название</entry>
 		<entry lang="KAZ">Название</entry>
 		<entry lang="ENG">Name</entry>
 		<entry lang="BG">Име</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="description">
 		<entry lang="RUS">Описание</entry>
 		<entry lang="KAZ">Описание</entry>
 		<entry lang="ENG">Description</entry>
 		<entry lang="BG">Описание</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 	<!-- reset-password -->
@@ -223,18 +289,24 @@
 		<entry lang="KAZ">Сброс пароля</entry>
 		<entry lang="ENG">Reset password</entry>
 		<entry lang="BG">Reset password</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="pwd_reset_description">
 		<entry lang="RUS">Введите ваш e-mail, который вы указали при регистрации</entry>
 		<entry lang="KAZ">Введите ваш e-mail, который вы указали при регистрации</entry>
 		<entry lang="ENG">Enter e-mail address that was specified at registration</entry>
 		<entry lang="BG">Въведете вашия имейл, който сте посочили при регистрацията</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 	<sentence mode="on" keyword="pwd_reset_send_btn">
 		<entry lang="RUS">Отправить запрос</entry>
 		<entry lang="KAZ">Отправить запрос</entry>
 		<entry lang="ENG">Send request</entry>
 		<entry lang="BG">Изпратете запитване</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
 	</sentence>
 
 </vocabulary>

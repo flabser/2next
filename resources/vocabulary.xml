@@ -2,12 +2,12 @@
 <!-- System vocabulary -->
 <vocabulary>
 	<sentence mode="on" keyword="brand">
-		<entry lang="ENG"></entry>
-		<entry lang="RUS"></entry>
-		<entry lang="KAZ"></entry>
-		<entry lang="BG"></entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="ENG">benexus workspace</entry>
+		<entry lang="RUS">benexus workspace</entry>
+		<entry lang="KAZ">benexus workspace</entry>
+		<entry lang="BG">benexus workspace</entry>
+		<entry lang="POR">benexus workspace</entry>
+		<entry lang="SPA">benexus workspace</entry>	
 	</sentence>
 
 	<!-- errors -->
@@ -75,6 +75,31 @@
 		<entry lang="POR"></entry>
 		<entry lang="SPA"></entry>		
 	</sentence>
+	<sentence mode="on" keyword="PASSWORD_OR_LOGIN_INCORRECT">
+		<entry lang="ENG">The password or login is incorrect</entry>
+		<entry lang="RUS">Статус не определен</entry>
+		<entry lang="KAZ">Статус не определен</entry>	
+		<entry lang="BG">Неизвестен статус</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>		
+	</sentence>
+	<sentence mode="on" keyword="INCOMPLETE_REGISTRATION">
+		<entry lang="ENG">The registration was incompleted. Probably you have not verifed your email</entry>
+		<entry lang="RUS">Регистрация не закончена, возможно вы не подтвердили свой электронны адрес</entry>
+		<entry lang="KAZ">Статус не определен</entry>	
+		<entry lang="BG">Неизвестен статус</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>		
+	</sentence>
+	<sentence mode="on" keyword="USER_WAS_DELETED">
+		<entry lang="ENG">The user accpunt was deleted</entry>
+		<entry lang="RUS">Профиль пользователя был удален</entry>
+		<entry lang="KAZ"></entry>	
+		<entry lang="BG"></entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>		
+	</sentence>
+	
 	
 	<!-- warnings -->	
 	<sentence mode="on" keyword="VERIFY_EMAIL_SENDING_ERROR">

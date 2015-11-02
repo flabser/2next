@@ -167,8 +167,8 @@ public class SessionService extends RestProvider {
 		} else if (user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
 			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION, lang);
 			return Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(authUser).build();
-		} else if (user.getStatus() == UserStatusType.DELETED) {
-			authUser.setError(AuthFailedExceptionType.NOT_FOUND, lang);
+		} else if (user.getStatus() == UserStatusType.USER_WAS_DELETED) {
+			authUser.setError(AuthFailedExceptionType.USER_WAS_DELETED, lang);
 			return Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(authUser).build();
 		} else {
 			authUser.setError(AuthFailedExceptionType.UNKNOWN_STATUS, lang);
