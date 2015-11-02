@@ -9,8 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import task.serializers.JsonDateSerializer;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.flabser.dataengine.jpa.AppEntity;
 
 
@@ -34,6 +39,8 @@ public class Issue extends AppEntity {
 	@Column(nullable = false)
 	private Long executor;
 
+	@JsonSerialize(using = JsonDateSerializer.class)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Date deadline;
 
