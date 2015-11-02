@@ -10,17 +10,6 @@
         </header>
         <section class="content-body">
             <fieldset class="fieldset">
-                <div class="form-group form-group-no-label">
-                    <div class="controls select-transaction-type">
-                        {{select-transaction-type value=category.transactionType}}
-                        {{#each errors.transactionType as |error|}}
-                            <div class="error-message">{{error.message}}</div>
-                        {{/each}}
-                        <p class="hint">
-                            {{t 'category_transaction_type_hint'}}
-                        </p>
-                    </div>
-                </div>
                 <div class="form-group {{if errors.name 'has-error'}}">
                     <div class="control-label">
                         {{t 'name'}}

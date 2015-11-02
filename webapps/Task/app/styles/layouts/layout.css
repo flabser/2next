@@ -1,6 +1,7 @@
 .container {
     margin: 0px auto;
     max-width: 1024px;
+    position: relative;
 }
 
 .layout_wide .container {
@@ -18,23 +19,12 @@
 
 .header {
     border: none;
-    box-shadow: 0 0px 2px rgba(0,0,0,.2);
+    box-shadow: 0 0px 2px rgba(0, 0, 0, .2);
     display: block;
-    height: 50px;
-    line-height: 50px;
     max-width: inherit;
     position: fixed;
     width: 100%;
     z-index: 5;
-}
-
-.tablet .header,
-.phone .header {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    height: 50px;
-    line-height: 50px;
-    position: fixed;
-    top: 0;
 }
 
 .main {
@@ -85,7 +75,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 6;
+    z-index: 4;
 }
 
 .app-loading {

@@ -1,6 +1,7 @@
 .dropdown {}
 
 .dropdown-toggle {
+    cursor: pointer;
     display: block;
 }
 
@@ -13,7 +14,7 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
     display: none;
     float: left;
-    font-size: 14px;
+    font-size: 13px;
     list-style: none;
     margin: 2px 0 0;
     min-width: 160px;
@@ -26,6 +27,10 @@
 
 .open > .dropdown-menu {
     display: block;
+}
+
+.dropdown-menu.right {
+    right: 2px;
 }
 
 .dropdown-menu:before {
@@ -59,7 +64,7 @@
 }
 
 .dropdown-menu .divider {
-    background-color: #CCC;
+    background-color: #E6E6E6;
     display: block !important;
     height: 1px;
     margin: 9px 0 !important;

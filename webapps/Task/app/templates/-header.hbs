@@ -1,40 +1,33 @@
 <header class="header navbar">
     <div class="container">
+        {{content-overlay action='hideOpenedNav'}}
         <div class="navbar-header">
-            <button class="nav-app-side-toggle" type="button" {{action 'navAppMenuToggle' }}>
-                <i class="nav-app-toggle"></i>
-            </button>
+            <button class="sidebar-toggle" type="button" {{action 'navAppMenuToggle' }}></button>
             <div class="navbar-brand">
                 <img alt="logo" src="img/logo.png" class="brand-logo" />
                 <span class="brand-title">{{t 'brand'}}</span>
             </div>
         </div>
-        <nav class="navbar-nav navbar-link">
+        <nav class="navbar-nav navbar-link nav-app">
             {{#link-to 'dashboard' class='nav-item'}}
-                <span class="nav-i"><i class="fa fa-dashboard"></i></span>
-                <span class="nav-t">{{t 'dashboard'}}</span>
+                <i class="fa fa-dashboard"></i><span>{{t 'dashboard'}}</span>
             {{/link-to}}
             {{#link-to 'tasks' class='nav-item'}}
-                <span class="nav-i"><i class="fa fa-check-square-o"></i></span>
-                <span class="nav-t">{{t 'tasks'}}</span>
+                <i class="fa fa-check-square-o"></i><span>{{t 'tasks'}}</span>
             {{/link-to}}
             <div class="nav-item dropdown">
                 <div class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="user-avatar">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
+                    <i class="fa fa-caret-down"></i>
                 </div>
                 <ul class="dropdown-menu">
                     <li>
                         {{#link-to 'categories'}}
-                            <span class="nav-i"><i class="fa fa-sitemap"></i></span>
-                            <span class="nav-t">{{t 'categories'}}</span>
+                            <i class="fa fa-sitemap"></i><span>{{t 'categories'}}</span>
                         {{/link-to}}
                     </li>
                     <li>
                         {{#link-to 'users'}}
-                            <span class="nav-i"><i class="fa fa-users"></i></span>
-                            <span class="nav-t">{{t 'users'}}</span>
+                            <i class="fa fa-users"></i><span>{{t 'users'}}</span>
                         {{/link-to}}
                     </li>
                 </ul>
@@ -68,27 +61,23 @@
                     </span>
                 </div>
                 <ul class="dropdown-menu right">
-                    <li>
-                        <span class="user-name">{{model.login}}</span>
-                    </li>
-                    <li>
+                    <li class="profile">
                         {{#link-to 'user_profile'}}
-                            <span class="nav-i"><i class="fa fa-cog"></i></span>
-                            <span class="nav-t">{{t 'user_profile'}}</span>
+                            <i class="fa fa-cog"></i><span>{{model.login}}</span>
                         {{/link-to}}
                     </li>
                     {{#if loginThroughToken}}
+                        <li class="divider"></li>
                         <li>
                             <a href="rest/workspace/url" class="ws">
-                                <span class="nav-i"><i class="fa fa-desktop"></i></span>
-                                <span class="nav-t">{{t 'workspace'}}</span>
+                                <i class="fa fa-desktop"></i><span>{{t 'workspace'}}</span>
                             </a>
                         </li>
                     {{/if}}
+                    <li class="divider"></li>
                     <li>
                         <a href="#" {{action 'logout'}} class="logout">
-                            <span class="nav-i"><i class="fa fa-sign-out"></i></span>
-                            <span class="nav-t">{{t 'logout'}}</span>
+                            <i class="fa fa-sign-out"></i><span>{{t 'logout'}}</span>
                         </a>
                     </li>
                 </ul>

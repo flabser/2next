@@ -1,12 +1,16 @@
-.nav-app {
-    border-right: 1px solid #E6E6E6;
-    position: fixed;
-    width: 230px;
-}
+.nav-app {}
 
 .tablet .nav-app,
 .phone .nav-app {
+    background: #FFF;
     left: -230px;
+    height: 100%;
+    overflow-y: auto;
+    padding: 8px 0;
+    position: fixed;
+    transition: all .15s;
+    width: 230px;
+    z-index: 7;
 }
 
 body.nav-app-open {
@@ -25,97 +29,78 @@ body.nav-app-open {
     transform: translate3d(230px, 0, 0);
 }
 
-.nav-app .fa {
-    color: #5C5C5C;
-    font-size: 1.3em;
-}
-
-.nav-app .fa.green {
-    color: green;
-}
-
-.nav-app .fa.red {
-    color: red;
-}
-
-.nav-app .fa.blue {
-    color: blue;
-}
-
-
-/* side-nav */
-
-.side-nav {
-    padding: 0;
-    word-wrap: normal;
-}
-
-.side-nav ul {
+.phone .nav-app .nav-item {
+    border: 0;
     display: block;
-    list-style: none;
-    margin: 0 0 5px 1.1em;
-    padding: 0;
-}
-
-.side-nav > ul {
-    margin-left: 0;
-}
-
-.side-nav li {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
-
-li.nav-separator {
-    background-color: #F5F5F5;
-    border: none;
-    height: 1px;
-    margin: 5px 0;
-    overflow: hidden;
-    padding: 0;
-}
-
-.side-nav li > a.active {
-    background-color: #F5F5F5;
-    font-weight: bold;
-}
-
-.side-nav li > a {
-    border: 1px solid transparent;
-    color: #303333;
-    display: block;
-    font-weight: normal;
-    margin: 0;
-    overflow: hidden;
-    padding: 8px 16px;
-    text-decoration: none;
+    height: auto;
+    line-height: 1;
+    padding: 13px 16px;
+    text-align: left;
     white-space: nowrap;
 }
 
-.tablet .side-nav li > a,
-.phone .side-nav li > a {
-    padding: 8px 16px;
-}
-
-.side-nav li > a i {
-    margin-right: .5em;
-}
-
-.side-nav li > a:active {
-    background-color: #F5F5F5 !important;
-}
-
-.side-nav li > a:hover {
+.phone .nav-app .nav-item:hover,
+.phone .nav-app .nav-item.active {
     background-color: #F9F9F9;
+    border: 0;
 }
 
-.side-nav .nav-i {
-    display: inline-block;
+.phone .nav-app .nav-item.active {
+    background-color: #F5F5F5;
+}
+
+.phone .nav-app .nav-item.dropdown:hover {
+    background: none;
+}
+
+.phone .nav-app .nav-item > i {
     text-align: left;
-    width: 26px;
 }
 
-.side-nav .nav-t {
+.phone .nav-app .nav-item > span {
+    color: #303333;
     display: inline-block;
+}
+
+.phone .nav-app .dropdown:before {
+    background-color: #F5F5F5;
+    content: '';
+    display: block;
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+}
+
+.phone .nav-app .dropdown > .dropdown-toggle {
+    display: none;
+}
+
+.phone .nav-app .dropdown-menu {
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    display: block;
+    float: none;
+    font-size: inherit;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    text-align: left;
+    top: auto;
+    z-index: 0;
+}
+
+.phone .nav-app .dropdown-menu:before,
+.phone .nav-app .dropdown-menu:after {
+    display: none;
+}
+
+.phone .nav-app .dropdown-menu a {
+    padding: 13px 16px;
+}
+
+.phone .nav-app .dropdown-menu a.active {
+    background-color: #F9F9F9;
 }

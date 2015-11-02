@@ -8,27 +8,16 @@ export default Em.Component.extend(ModelForm, {
     categories: null,
     noteMaxLen: 256,
 
-    parentCategories: Em.computed('categories', 'category.transactionType', function() {
+    parentCategories: Em.computed('categories', function() {
         let list = this.get('categories');
-        let transactionType = this.get('category.transactionType');
         let categoryId = this.get('category.id') || -1;
 
         return list.filter((c) => {
             let c_isNew = c.get('isNew');
             let c_id = c.get('id');
 
-            if (transactionType) {
-                let c_tt = c.get('transactionType');
-                return !c_isNew && c.get('enabled') && c_tt === transactionType && c_id !== categoryId;
-            } else {
-                return !c_isNew && c.get('enabled') && c_id !== categoryId;
-            }
+            return !c_isNew && c.get('enabled') && c_id !== categoryId;
         });
-    }),
-
-    _parentCatTrTypeObserver: Em.observer('category.parent', function() {
-        let pctt = this.get('category.parent.transactionType');
-        this.get('category').set('transactionType', pctt);
     }),
 
     actions: {
@@ -72,9 +61,6 @@ export default Em.Component.extend(ModelForm, {
         } else {
             this.set('errors', DS.Errors.create());
 
-            if (Validate.isEmpty(this.get('category.transactionType'))) {
-                this.get('errors').add('transactionType', i18n.t('validation_empty'));
-            }
             if (Validate.isEmpty(this.get('category.name'))) {
                 this.get('errors').add('name', i18n.t('validation_empty'));
             }

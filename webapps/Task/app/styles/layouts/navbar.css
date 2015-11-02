@@ -3,18 +3,12 @@
     border-bottom: 1px solid #ccc;
     color: #303030;
     font-size: 0;
+    height: 50px;
+    line-height: 50px;
     margin: 0;
     padding: 0;
     vertical-align: top;
     white-space: nowrap;
-}
-
-.navbar .dropdown-menu {
-    top: 50px;
-}
-
-.nav-profile .dropdown-menu {
-    right: 4px;
 }
 
 .navbar-header {
@@ -24,41 +18,39 @@
 
 @media ( min-width: 768px) {
     .navbar-header {
-        min-width: 180px;
+        margin-right: 20px;
     }
 }
 
 .navbar-brand {
     display: inline-block;
-    padding: 1px 4px;
+    padding: 0 4px;
     vertical-align: top;
 }
 
+@media ( max-width: 360px) {
+    .navbar-brand {
+        width: 48px;
+    }
+}
+
 .brand-logo {
+    border-radius: 3px;
     max-height: 32px;
-    vertical-align: middle;
+}
+
+@media ( max-width: 360px) {
+    .navbar-brand .brand-logo {
+        /* display: none; */
+    }
 }
 
 .brand-title {
     display: none;
-    /* color: #FFF; */
     font-size: 13px;
     text-transform: uppercase;
     font-weight: bold;
-    line-height: 48px;
     vertical-align: top;
-}
-
-.navbar-title {
-    display: inline-block;
-    font-size: 13px;
-    margin: 0;
-    padding: 0;
-    vertical-align: top;
-}
-
-.navbar-right {
-    float: right;
 }
 
 .navbar-nav {
@@ -68,28 +60,36 @@
     vertical-align: top;
 }
 
+.navbar-right {
+    float: right;
+}
+
 .nav-item {
     background: transparent;
     border: 0;
     display: inline-block;
+    font-size: 13px;
     height: 50px;
     margin: 0;
-    min-width: 48px;
     outline: 0;
     padding: 0;
     position: relative;
     text-align: center;
     vertical-align: top;
-    /* width: 48px; */
 }
 
-.nav-item:hover,
-.nav-app-side-toggle:hover {
-    background-color: rgba(204, 204, 204, 0.2);
+.navbar-nav .nav-item {
+    min-width: 48px;
+}
+
+.nav-item:hover {
+    background: #F3F3F3;
+    border-bottom: 1px solid #ccc;
 }
 
 .nav-item.active {
-    background-color: rgba(214, 214, 214, 0.4);
+    background: #eee;
+    border-bottom: 1px solid #999;
 }
 
 .navbar-link .nav-item {
@@ -97,32 +97,28 @@
     width: auto;
 }
 
-.navbar a {
-    font-size: 13px;
+.navbar a,
+.navbar a:hover {
+    color: #303333;
+    text-decoration: none;
 }
 
 .navbar button {
     background: transparent;
     border: 0;
     cursor: pointer;
-    display: inline-block;
     outline: 0;
     vertical-align: top;
 }
 
-.navbar .fa {
+.navbar i.fa {
     color: #646464;
+    display: inline-block;
     font-size: 18px;
     vertical-align: middle;
+    width: 28px;
 }
 
-.phone .navbar .nav-t {
-    display: none;
-}
-
-.phone .navbar .dropdown-menu .nav-t {
-    display: inline-block;
-}
 
 /* compose-new */
 
@@ -250,88 +246,38 @@
 }
 
 
-/* nav-app-side-toggle */
+/* sidebar-toggle */
 
-.navbar .nav-app-side-toggle {
+.sidebar-toggle {
+    cursor: pointer;
     display: none;
     height: 50px;
-    width: 30px;
-}
-
-.tablet .nav-app-side-toggle,
-.phone .nav-app-side-toggle {
-    display: inline-block;
-}
-
-
-/* nav-app-toggle */
-
-.nav-app-toggle {
-    display: none;
-}
-
-.tablet .nav-app-toggle,
-.phone .nav-app-toggle {
-    cursor: pointer;
-    display: inline-block;
     position: relative;
-    width: 16px;
 }
 
-.nav-app-toggle:before {
-    border-bottom: 3px solid #FFF;
-    border-top: 3px solid #FFF;
+.tablet .sidebar-toggle,
+.phone .sidebar-toggle {
+    display: inline-block;
+}
+
+.sidebar-toggle:hover:before,
+.sidebar-toggle:hover:after {
+    border-color: #888;
+}
+
+.sidebar-toggle:before {
+    border-bottom: 3px solid #AAA;
+    border-top: 3px solid #AAA;
     content: '';
     display: block;
     padding: 2px 0;
     width: 16px;
 }
 
-.nav-app-toggle:after {
-    border-top: 3px solid #FFF;
+.sidebar-toggle:after {
+    border-top: 3px solid #AAA;
     content: '';
     display: block;
     margin-top: 4px;
     width: 16px;
-}
-
-
-/* nav-ws-toggle */
-
-.nav-ws-toggle {
-    cursor: pointer;
-    display: inline-block;
-    vertical-align: middle;
-    width: 20px;
-}
-
-.nav-ws-toggle:hover,
-.nav-ws-toggle:focus {
-    box-shadow: 0 0 3px #999;
-}
-
-.nav-ws-toggle:before {
-    border-left: 8px solid #FFF;
-    border-right: 8px solid #FFF;
-    content: '';
-    display: block;
-    height: 8px;
-}
-
-.nav-ws-toggle:after {
-    border-left: 8px solid #FFF;
-    border-right: 8px solid #FFF;
-    content: '';
-    display: block;
-    height: 8px;
-    margin-top: 4px;
-}
-
-@media ( max-width: 360px) {
-    .navbar-brand {
-        width: 48px;
-    }
-    .navbar-brand .brand-logo {
-        display: none;
-    }
 }

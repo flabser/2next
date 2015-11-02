@@ -1,0 +1,39 @@
+.navbar .nav-item.dropdown {
+    padding: 0;
+}
+
+.navbar .dropdown > .dropdown-toggle {
+    padding: 0 8px;
+}
+
+.navbar .dropdown-menu {
+    line-height: 1;
+    top: 50px;
+}
+
+.navbar .dropdown-menu a {
+    display: block;
+    padding: 8px 16px;
+    text-align: left;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.navbar .dropdown-menu a:hover {
+    background: #F3F3F3;
+    text-decoration: none;
+}
+
+.navbar .dropdown-menu a.active {
+    background: #eee;
+}
+
+.navbar .dropdown-menu a > i {
+    text-align: left;
+}
+
+.navbar .dropdown-menu a > span {
+    color: #303333;
+    display: inline-block;
+    text-decoration: none;
+}

@@ -115,10 +115,6 @@ export default Route.extend({
             this.transitionTo('users');
         },
 
-        toggleDropdown: function(el) {
-            console.log(arguments);
-        },
-
         toggleDevice: function() {
             $('body').toggleClass('phone');
         },
