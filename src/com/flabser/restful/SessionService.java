@@ -32,7 +32,6 @@ import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.env.Site;
-import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.exception.ServerServiceExceptionType;
 import com.flabser.exception.ServerServiceWarningType;
@@ -135,9 +134,8 @@ public class SessionService extends RestProvider {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createSession(AppUser authUser) throws ClassNotFoundException, InstantiationException,
 			DatabasePoolException, UserException, IllegalAccessException, SQLException, URISyntaxException {
-		UserSession userSession = null;
-		HttpSession jses;
-		// String appID = authUser.getAppId();
+		_Session session = getSession();
+		String lang = session.getLang();
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		String login = authUser.getLogin();
 		Server.logger.infoLogEntry(login + " is attempting to signin");
@@ -145,17 +143,18 @@ public class SessionService extends RestProvider {
 		authUser.setPwd(null);
 		if (!user.isAuthorized) {
 			Server.logger.warningLogEntry("signin of " + login + " was failed");
-			authUser.setError(AuthFailedExceptionType.PASSWORD_OR_LOGIN_INCORRECT);
-			throw new AuthFailedException(authUser);
+			authUser.setError(AuthFailedExceptionType.PASSWORD_OR_LOGIN_INCORRECT, lang);
+			return Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(authUser).build();
+			// throw new AuthFailedException(authUser);
 		}
 
 		String userID = user.getLogin();
-		jses = request.getSession(true);
+		HttpSession jses = request.getSession(true);
 
 		Server.logger.infoLogEntry(userID + " has connected (" + context.getContextPath() + ")");
 		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
-		userSession = new UserSession(user);
+		UserSession userSession = new UserSession(user);
 
 		if (user.getStatus() == UserStatusType.REGISTERED) {
 			authUser = userSession.getUserPOJO();
@@ -163,17 +162,17 @@ public class SessionService extends RestProvider {
 		} else if (user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING) {
 			authUser.setRedirect("tochangepwd");
 		} else if (user.getStatus() == UserStatusType.NOT_VERIFIED) {
-			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION);
-			throw new AuthFailedException(authUser);
+			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION, lang);
+			return Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(authUser).build();
 		} else if (user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE) {
-			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION);
-			throw new AuthFailedException(authUser);
+			authUser.setError(AuthFailedExceptionType.INCOMPLETE_REGISTRATION, lang);
+			return Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(authUser).build();
 		} else if (user.getStatus() == UserStatusType.DELETED) {
-			authUser.setError(AuthFailedExceptionType.NOT_FOUND);
-			throw new AuthFailedException(authUser);
+			authUser.setError(AuthFailedExceptionType.NOT_FOUND, lang);
+			return Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(authUser).build();
 		} else {
-			authUser.setError(AuthFailedExceptionType.UNKNOWN_STATUS);
-			throw new AuthFailedException(authUser);
+			authUser.setError(AuthFailedExceptionType.UNKNOWN_STATUS, lang);
+			return Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(authUser).build();
 		}
 
 		String token = SessionPool.put(userSession);

@@ -2,112 +2,155 @@
 <!-- System vocabulary -->
 <vocabulary>
 	<sentence mode="on" keyword="brand">
+		<entry lang="ENG"></entry>
 		<entry lang="RUS"></entry>
 		<entry lang="KAZ"></entry>
-		<entry lang="ENG"></entry>
 		<entry lang="BG"></entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
 
 	<!-- errors -->
 	<sentence mode="on" keyword="USER_EXISTS">
+		<entry lang="ENG">User was already registered</entry>
 		<entry lang="RUS">Пользователь уже зарегестрирован</entry>
 		<entry lang="KAZ">Пользователь уже зарегестрирован</entry>
-		<entry lang="ENG">User was already registered</entry>
 		<entry lang="BG">Потребителят вече е регистриран</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
 	<sentence mode="on" keyword="EMAIL_IS_INCORRECT">
+		<entry lang="ENG">Incorrect email</entry>
 		<entry lang="RUS">Неверный электронный почтовый адрес</entry>
 		<entry lang="KAZ">Неверный электронный почтовый адрес</entry>
-		<entry lang="ENG">Incorrect email</entry>
 		<entry lang="BG">Неправилно електронна поща</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
 	<sentence mode="on" keyword="WEAK_PASSWORD">
+		<entry lang="ENG">Weak password</entry>
 		<entry lang="RUS">Слабый пароль</entry>
 		<entry lang="KAZ">Слабый пароль</entry>
-		<entry lang="ENG">Weak password</entry>
 		<entry lang="BG">Слаба парола</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
 	<sentence mode="on" keyword="SERVER_ERROR">
+		<entry lang="ENG">Server error</entry>
 		<entry lang="RUS">Ошибка серевера</entry>
 		<entry lang="KAZ">Ошибка серевера</entry>
-		<entry lang="ENG">Server error</entry>
 		<entry lang="BG">Грешка в сървъра</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
 	<sentence mode="on" keyword="USER_NOT_FOUND">
+		<entry lang="ENG">User has not found</entry>
 		<entry lang="RUS">Пользователь не найден</entry>
 		<entry lang="KAZ">Пользователь не найден</entry>
-		<entry lang="ENG">User has not found</entry>
 		<entry lang="BG">Потребителят все още не е намерено</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
 	<sentence mode="on" keyword="FORMDATA_INCORRECT">
-		<entry lang="RUS">Значение формы не корректно</entry>
-		<entry lang="KAZ">Значение формы не корректно</entry>
 		<entry lang="ENG">Form data is incorrect</entry>
+		<entry lang="RUS">Значение формы не корректно</entry>
+		<entry lang="KAZ">Значение формы не корректно</entry>	
 		<entry lang="BG">Данни форми е неправилно</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
 	<sentence mode="on" keyword="MESSAGE_HAS_NOT_SENT">
-		<entry lang="RUS">Сообщение не отправлено</entry>
-		<entry lang="KAZ">Сообщение не отправлено</entry>
 		<entry lang="ENG">The message has not been send</entry>
+		<entry lang="RUS">Сообщение не отправлено</entry>
+		<entry lang="KAZ">Сообщение не отправлено</entry>	
 		<entry lang="BG">В съобщението не е било изпратите</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
+	</sentence>
+	<sentence mode="on" keyword="UNKNOWN_STATUS">
+		<entry lang="ENG">Unknown status</entry>
+		<entry lang="RUS">Статус не определен</entry>
+		<entry lang="KAZ">Статус не определен</entry>	
+		<entry lang="BG">Неизвестен статус</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>		
 	</sentence>
 	
 	<!-- warnings -->	
 	<sentence mode="on" keyword="VERIFY_EMAIL_SENDING_ERROR">
-		<entry lang="RUS">Ошибка при отправке письма с кодом верификации</entry>
-		<entry lang="KAZ">Ошибка при отправке письма с кодом верификации</entry>
 		<entry lang="ENG">There was error during sending the verification email</entry>
+		<entry lang="RUS">Ошибка при отправке письма с кодом верификации</entry>
+		<entry lang="KAZ">Ошибка при отправке письма с кодом верификации</entry>	
 		<entry lang="BG">Имаше грешка при изпращане на имейл за потвърждение</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
 	<sentence mode="on" keyword="RESET_PASSWORD_SENDING_ERROR">
+		<entry lang="ENG">There was error during sending the email for reset your password</entry>
 		<entry lang="RUS">Ошибка при отправке письма для сброса пароля</entry>
 		<entry lang="KAZ">Ошибка при отправке письма для сброса пароля</entry>
-		<entry lang="ENG">There was error during sending the email for reset your password</entry>
 		<entry lang="BG">Имаше грешка по време на изпращането на имейла за възстановите паролата си</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
 	<sentence mode="on" keyword="UNKNOWN_USER_STATUS">
+		<entry lang="ENG">Unknown user status</entry>
 		<entry lang="RUS">Не известный статус пользователя</entry>
 		<entry lang="KAZ">Не известный статус пользователя</entry>
-		<entry lang="ENG">Unknown user status</entry>
 		<entry lang="BG">Неизвестен статус на потребителя</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
 	<sentence mode="on" keyword="RESET_PASSWORD_ALREADY_SENT">
-		<entry lang="RUS">Пароль сброса был отправлен</entry>
-		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Reset password has already sent</entry>
+		<entry lang="RUS">Пароль сброса был отправлен</entry>
+		<entry lang="KAZ"></entry>	
 		<entry lang="BG"></entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
 	<sentence mode="on" keyword="INVITATION_SENDING_ERROR">
+		<entry lang="ENG">There is error during sending a invitation</entry>
 		<entry lang="RUS">Ошибка при отправке письма с приглашением</entry>
 		<entry lang="KAZ">Ошибка при отправке письма с приглашением</entry>
-		<entry lang="ENG">There is error during sending a invitation</entry>
 		<entry lang="BG">Грешка по време на изпращането на покана</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>
+	
 	
 	<!-- other messages -->
 	<sentence mode="on" keyword="subject_incorrect">
-		<entry lang="RUS">Текст темы слишком короткий</entry>
-		<entry lang="KAZ">Текст темы слишком короткий</entry>
 		<entry lang="ENG">Subject text is too short</entry>
+		<entry lang="RUS">Текст темы слишком короткий</entry>
+		<entry lang="KAZ">Текст темы слишком короткий</entry>		
 		<entry lang="BG">Темата е твърде кратък</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>	
 	<sentence mode="on" keyword="message_incorrect">
+		<entry lang="ENG">Message text is too short</entry>
 		<entry lang="RUS">Текст сообщения слишком короткий</entry>
 		<entry lang="KAZ">Текст сообщения слишком короткий</entry>
-		<entry lang="ENG">Message text is too short</entry>
 		<entry lang="BG">Съобщението е твърде кратък</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>	
 	<sentence mode="on" keyword="captcha_incorrect">
-		<entry lang="RUS">Каптча не верна</entry>
-		<entry lang="KAZ">Каптча не верна</entry>
 		<entry lang="ENG">Captcha is wrong</entry>
-		<entry lang="BG">Каптча е наред</entry>
+		<entry lang="RUS">Каптча не верна</entry>
+		<entry lang="KAZ">Каптча не верна</entry>		
+		<entry lang="BG">Каптча е наред</entry>\
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>	
 	<sentence mode="on" keyword="message_has_sent_succesfully">
-		<entry lang="RUS">Сообщение не отправлено</entry>
-		<entry lang="KAZ">Сообщение не отправлено</entry>
 		<entry lang="ENG">The message has been sent </entry>
+		<entry lang="RUS">Сообщение не отправлено</entry>
+		<entry lang="KAZ">Сообщение не отправлено</entry>	
 		<entry lang="BG">Съобщението е изпратено</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>	
 	</sentence>	
 
 </vocabulary>
