@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.system.entities.UserRole;
+import com.flabser.env.Environment;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.users.AuthModeType;
 import com.flabser.users.UserStatusType;
@@ -23,7 +24,7 @@ public class AppUser {
 	private String pwdNew;
 	private String pwdRepeat;
 	private UserStatusType status = UserStatusType.UNKNOWN;
-	private AuthFailedExceptionType error;
+	private String error;
 	private String redirect;
 	private AuthModeType authMode;
 	private ArrayList<String> appRoles = new ArrayList<String>();
@@ -67,7 +68,6 @@ public class AppUser {
 		return pwdNew;
 	}
 
-
 	@JsonSetter("pwd_new")
 	public void setPwdNew(String pwdNew) {
 		this.pwdNew = pwdNew;
@@ -104,12 +104,12 @@ public class AppUser {
 		this.status = status;
 	}
 
-	public AuthFailedExceptionType getError() {
+	public String getError() {
 		return error;
 	}
 
-	public void setError(AuthFailedExceptionType error) {
-		this.error = error;
+	public void setError(AuthFailedExceptionType error, String lang) {
+		this.error = Environment.vocabulary.getWord(error.name(), lang);
 	}
 
 	public String getRedirect() {
@@ -127,7 +127,6 @@ public class AppUser {
 	public void setApplications(HashMap<String, Application> applications) {
 		this.applications = applications;
 	}
-
 
 	@JsonIgnore
 	public void setRoles(HashSet<UserRole> roles) {
@@ -155,6 +154,5 @@ public class AppUser {
 	public String toString() {
 		return login + ", email=" + email;
 	}
-
 
 }
