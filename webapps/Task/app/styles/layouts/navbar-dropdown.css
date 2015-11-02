@@ -27,13 +27,3 @@
 .navbar .dropdown-menu a.active {
     background: #eee;
 }
-
-.navbar .dropdown-menu a > i {
-    text-align: left;
-}
-
-.navbar .dropdown-menu a > span {
-    color: #303333;
-    display: inline-block;
-    text-decoration: none;
-}

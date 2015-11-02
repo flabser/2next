@@ -1,45 +1,6 @@
-.nav-profile {
-    border-bottom: 1px solid #E6E6E6;
-    margin-bottom: 5px;
-}
-
-.nav-profile > header {
-    height: 48px;
-    line-height: 1;
-}
-
-.tablet .nav-profile > header,
-.phone .nav-profile > header {
-    height: 50px;
-}
-
-.nav-profile > header > a {
-    color: #222;
-    display: block;
-    padding: 1.1em 16px;
-    text-decoration: none;
-}
-
-.nav-profile > section {
-    background: #FFF;
-    max-height: 0px;
-    overflow: hidden;
-    position: absolute;
-    transition: max-height 200ms;
-}
-
-.nav-profile.expanded > section {
-    max-height: 500px;
-}
-
-.nav-profile ul {
-    margin-left: 0;
-}
-
 .nav-profile .user-avatar {
     display: inline-block;
     vertical-align: top;
-    width: 26px;
 }
 
 .nav-profile .user-name {
@@ -50,11 +11,11 @@
     width: 126px;
 }
 
-.nav-profile .ws {
+.nav-profile .ws > span {
     color: blue;
 }
 
-.nav-profile .logout {
+.nav-profile .logout > span {
     color: red;
 }
 
