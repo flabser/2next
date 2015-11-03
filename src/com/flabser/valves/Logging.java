@@ -52,6 +52,8 @@ public class Logging extends ValveBase {
 
 		logger.infoLogEntry(clientIpAddress + " " + ru.toString() + ", apptype=" + ru.getAppType() + ", servername="
 				+ request.getServerName());
+		com.flabser.server.Server.logger.infoLogEntry(clientIpAddress + " " + ru.toString() + ", apptype="
+				+ ru.getAppType() + ", servername=" + request.getServerName());
 		((Unsecure) getNext()).invoke(request, response, ru);
 		return;
 	}

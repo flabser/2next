@@ -12,12 +12,12 @@ import com.flabser.users.UserSession;
 
 public class AdminProviderOutput extends ProviderOutput {
 	private String element;
-	private static String adminXSLTPath = Environment.primaryAppDir + "." + File.separator + "webapps" + File.separator + "Administrator"
-			+ File.separator + "xslt" + File.separator;
+	private static String adminXSLTPath = Environment.primaryAppDir + "." + File.separator + "webapps" + File.separator
+			+ "Administrator" + File.separator + "xslt" + File.separator;
 
-	AdminProviderOutput(String type, String element, String id, StringBuffer output, HttpServletRequest request, UserSession userSession,
-			HttpSession jses, String dbID)  {
-		super(type, element, output, request, userSession, jses);
+	AdminProviderOutput(String type, String element, String id, StringBuffer output, HttpServletRequest request,
+			UserSession userSession, HttpSession jses, String dbID) {
+		super(element, output, request, userSession, jses);
 		this.element = element;
 	}
 
@@ -34,7 +34,7 @@ public class AdminProviderOutput extends ProviderOutput {
 	@Override
 	public String getStandartOutput() {
 
-		return xmlTextUTF8Header + "<request type=\"" + type + "\" element=\"" + element + "\" id=\"" + id + "\">"
+		return xmlTextUTF8Header + "<request element=\"" + element + "\" id=\"" + id + "\">"
 				+ new AdminOutline().getOutlineAsXML() + output + "</request>";
 	}
 

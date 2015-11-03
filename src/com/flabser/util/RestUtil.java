@@ -43,7 +43,7 @@ public class RestUtil {
 		ArrayList<String> errors = new ArrayList<String>();
 		boolean isValid = true;
 
-		if (!_Validator.checkEmail(email)) {
+		if (!_Validator.checkEmail(email) && !_Validator.checkPhoneNumber(email)) {
 			isValid = false;
 			errors.add(ServerServiceExceptionType.EMAIL_IS_INCORRECT.name());
 		}
