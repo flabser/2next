@@ -1,4 +1,4 @@
-package task.model.filter;
+package task.dao.filter;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -23,8 +23,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
 
 import task.dao.IssueDAO;
+import task.dao.filter.IssueFilter;
 import task.model.Issue;
-import task.model.filter.IssueFilter;
 import task.validation.IssueValidator;
 import task.validation.ValidationError;
 

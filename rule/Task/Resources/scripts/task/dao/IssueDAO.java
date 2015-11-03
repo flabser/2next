@@ -8,8 +8,8 @@ import javax.persistence.TypedQuery;
 import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
+import task.dao.filter.IssueFilter;
 import task.model.Issue;
-import task.model.filter.IssueFilter;
 
 
 public class IssueDAO extends DAO <Issue, Long> {
