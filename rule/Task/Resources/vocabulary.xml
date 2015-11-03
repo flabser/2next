@@ -8,11 +8,364 @@
 		<entry lang="POR">Task</entry>
 	</sentence>
 	<sentence mode="on" keyword="Task_description">
-		<entry lang="RUS">Приложение для введение ваших задании. Создайте задачу, дайте доступ к вашему проекту другим пользователям, выдавайте задания и осуществляйте контроль</entry>
+		<entry lang="RUS">Приложение для введение ваших задании. Создайте задачу, дайте доступ к вашему проекту другим
+			пользователям, выдавайте задания и осуществляйте контроль
+		</entry>
 		<entry lang="KAZ"></entry>
-		<entry lang="ENG">The application for monitoring your task. Create a task, give access to your project to other users, issue and monitor tasks</entry>
+		<entry lang="ENG">The application for monitoring your task. Create a task, give access to your project to other users,
+			issue and monitor tasks
+		</entry>
 		<entry lang="BG"></entry>
 		<entry lang="POR"></entry>
 	</sentence>
-	
+
+	<sentence mode="on" keyword="workspace">
+		<entry lang="RUS">Workspace</entry>
+		<entry lang="KAZ">Workspace</entry>
+		<entry lang="ENG">Workspace</entry>
+		<entry lang="BG">Workspace</entry>
+		<entry lang="POR">Workspace</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="user_profile">
+		<entry lang="RUS">Профиль</entry>
+		<entry lang="KAZ">Профиль</entry>
+		<entry lang="ENG">User Profile</entry>
+		<entry lang="BG">Потребителски профил</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+
+	<sentence mode="on" keyword="dashboard">
+		<entry lang="RUS">Обзор</entry>
+		<entry lang="KAZ">Жалпы шолу</entry>
+		<entry lang="ENG">Dashboard</entry>
+		<entry lang="BG">Обзор</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="tasks">
+		<entry lang="RUS">Tasks</entry>
+		<entry lang="KAZ">Tasks</entry>
+		<entry lang="ENG">Tasks</entry>
+		<entry lang="BG">Tasks</entry>
+		<entry lang="POR">Tasks</entry>
+	</sentence>
+	<sentence mode="on" keyword="task">
+		<entry lang="RUS">Task</entry>
+		<entry lang="KAZ">Task</entry>
+		<entry lang="ENG">Task</entry>
+		<entry lang="BG">Task</entry>
+		<entry lang="POR">Task</entry>
+	</sentence>
+	<sentence mode="on" keyword="issues">
+		<entry lang="RUS">Issues</entry>
+		<entry lang="KAZ">Issues</entry>
+		<entry lang="ENG">Issues</entry>
+		<entry lang="BG">Issues</entry>
+		<entry lang="POR">Issues</entry>
+	</sentence>
+	<sentence mode="on" keyword="categories">
+		<entry lang="RUS">Категории</entry>
+		<entry lang="KAZ">Категории</entry>
+		<entry lang="ENG">Categories</entry>
+		<entry lang="BG">Категори</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+
+	<!-- -->
+	<sentence mode="on" keyword="add">
+		<entry lang="RUS">Добавить</entry>
+		<entry lang="KAZ">Жаңа</entry>
+		<entry lang="ENG">Add</entry>
+		<entry lang="BG">Добави</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="save">
+		<entry lang="RUS">Сохранить</entry>
+		<entry lang="KAZ">Сақтау</entry>
+		<entry lang="ENG">Save</entry>
+		<entry lang="BG">Запиши</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="cancel">
+		<entry lang="RUS">Отмена</entry>
+		<entry lang="KAZ">Болдырмау</entry>
+		<entry lang="ENG">Cancel</entry>
+		<entry lang="BG">Отмена</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="close">
+		<entry lang="RUS">Закрыть</entry>
+		<entry lang="KAZ">Жабу</entry>
+		<entry lang="ENG">Close</entry>
+		<entry lang="BG">Затвори</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="remove">
+		<entry lang="RUS">Удалить</entry>
+		<entry lang="KAZ">Жою</entry>
+		<entry lang="ENG">Remove</entry>
+		<entry lang="BG">Удалить</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="repeat">
+		<entry lang="RUS">Повтор</entry>
+		<entry lang="KAZ">Қайталау</entry>
+		<entry lang="ENG">Repeat</entry>
+		<entry lang="BG">Повтор</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="new">
+		<entry lang="RUS">Новый</entry>
+		<entry lang="KAZ">Жаңа</entry>
+		<entry lang="ENG">New</entry>
+		<entry lang="BG">Новый</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="edit">
+		<entry lang="RUS">Редактировать</entry>
+		<entry lang="KAZ">Өзгерту</entry>
+		<entry lang="ENG">Edit</entry>
+		<entry lang="BG">Редактировать</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+
+	<sentence mode="on" keyword="members">
+		<entry lang="RUS">Участники</entry>
+		<entry lang="KAZ">Участники</entry>
+		<entry lang="ENG">Members</entry>
+		<entry lang="BG">Потребители</entry>
+	</sentence>
+	<sentence mode="on" keyword="settings">
+		<entry lang="RUS">Настройки</entry>
+		<entry lang="KAZ">Настройки</entry>
+		<entry lang="ENG">Settings</entry>
+		<entry lang="BG">Настройки</entry>
+	</sentence>
+
+	<!-- ______________ app captions ______________ -->
+	<sentence mode="on" keyword="author">
+		<entry lang="RUS">Автор</entry>
+		<entry lang="KAZ">Автор</entry>
+		<entry lang="ENG">Author</entry>
+		<entry lang="BG">Автор</entry>
+	</sentence>
+	<sentence mode="on" keyword="additional">
+		<entry lang="RUS">Дополнительно</entry>
+		<entry lang="KAZ">Дополнительно</entry>
+		<entry lang="ENG">Additional</entry>
+		<entry lang="BG">Дополнительно</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="attachments">
+		<entry lang="RUS">Вложения</entry>
+		<entry lang="KAZ">Вложения</entry>
+		<entry lang="ENG">Вложения</entry>
+		<entry lang="BG">Вложения</entry>
+	</sentence>
+	<sentence mode="on" keyword="attach">
+		<entry lang="RUS">Прикрепить</entry>
+		<entry lang="KAZ">Прикрепить</entry>
+		<entry lang="ENG">Attach</entry>
+		<entry lang="BG">Прикрепить</entry>
+	</sentence>
+	<sentence mode="on" keyword="attach_delete">
+		<entry lang="RUS">Удалить</entry>
+		<entry lang="KAZ">Удалить</entry>
+		<entry lang="ENG">Delete</entry>
+		<entry lang="BG">Удалить</entry>
+	</sentence>
+	<sentence mode="on" keyword="attach_open">
+		<entry lang="RUS">Открыть</entry>
+		<entry lang="KAZ">Открыть</entry>
+		<entry lang="ENG">Open</entry>
+		<entry lang="BG">Открыть</entry>
+	</sentence>
+	<sentence mode="on" keyword="attach_preview">
+		<entry lang="RUS">Просмотр</entry>
+		<entry lang="KAZ">Просмотр</entry>
+		<entry lang="ENG">View</entry>
+		<entry lang="BG">Просмотр</entry>
+	</sentence>
+	<sentence mode="on" keyword="attach_add_comment">
+		<entry lang="RUS">Добавить комментарий</entry>
+		<entry lang="KAZ">Добавить комментарий</entry>
+		<entry lang="ENG">Add a comment</entry>
+		<entry lang="BG">Добавить комментарий</entry>
+	</sentence>
+
+	<!-- form fields -->
+	<sentence mode="on" keyword="category">
+		<entry lang="RUS">Категория</entry>
+		<entry lang="KAZ">Категория</entry>
+		<entry lang="ENG">Category</entry>
+		<entry lang="BG">Категория</entry>
+	</sentence>
+	<sentence mode="on" keyword="parent_category">
+		<entry lang="RUS">Родительская категория</entry>
+		<entry lang="KAZ">Категория</entry>
+		<entry lang="ENG">Parent category</entry>
+		<entry lang="BG">Категория</entry>
+	</sentence>
+	<sentence mode="on" keyword="category_active_hint">
+		<entry lang="RUS">Неактивные категории скрыты</entry>
+		<entry lang="KAZ">Неактивные категории скрыты</entry>
+		<entry lang="ENG">Not active categories have hidden</entry>
+		<entry lang="BG">Неактивные категории скрыты</entry>
+	</sentence>
+	<sentence mode="on" keyword="category_color_hint">
+		<entry lang="RUS">Название категории в представлении будет выведено с выбранным цветом</entry>
+		<entry lang="KAZ">Название категории в представлении будет выведено с выбранным цветом</entry>
+		<entry lang="ENG">The name of the category in the presentation will be displayed with the selected color</entry>
+		<entry lang="BG">Название категории в представлении будет выведено с выбранным цветом</entry>
+	</sentence>
+	<sentence mode="on" keyword="user">
+		<entry lang="RUS">Пользователь</entry>
+		<entry lang="KAZ">Пользователь</entry>
+		<entry lang="ENG">User</entry>
+		<entry lang="BG">Пользователь</entry>
+	</sentence>
+	<sentence mode="on" keyword="permissions">
+		<entry lang="RUS">Права доступа</entry>
+		<entry lang="KAZ">Права доступа</entry>
+		<entry lang="ENG">Permissions</entry>
+		<entry lang="BG">Права доступа</entry>
+	</sentence>
+	<sentence mode="on" keyword="name">
+		<entry lang="RUS">Название</entry>
+		<entry lang="KAZ">Название</entry>
+		<entry lang="ENG">Название</entry>
+		<entry lang="BG">Название</entry>
+	</sentence>
+	<sentence mode="on" keyword="user_name">
+		<entry lang="RUS">Имя пользователя</entry>
+		<entry lang="KAZ">Имя пользователя</entry>
+		<entry lang="ENG">User name</entry>
+		<entry lang="BG">Имя пользователя</entry>
+	</sentence>
+	<sentence mode="on" keyword="user_login">
+		<entry lang="RUS">Login</entry>
+		<entry lang="KAZ">Login</entry>
+		<entry lang="ENG">Login</entry>
+		<entry lang="BG">Login</entry>
+	</sentence>
+	<sentence mode="on" keyword="email">
+		<entry lang="RUS">E-mail</entry>
+		<entry lang="KAZ">E-mail</entry>
+		<entry lang="ENG">E-mail</entry>
+		<entry lang="BG">E-mail</entry>
+	</sentence>
+	<sentence mode="on" keyword="roles">
+		<entry lang="RUS">Роли</entry>
+		<entry lang="KAZ">Роли</entry>
+		<entry lang="ENG">Roles</entry>
+		<entry lang="BG">Роли</entry>
+	</sentence>
+	<sentence mode="on" keyword="reg_date">
+		<entry lang="RUS">Дата регистрации</entry>
+		<entry lang="KAZ">Дата регистрации</entry>
+		<entry lang="ENG">Registration time</entry>
+		<entry lang="BG">Дата регистрации</entry>
+	</sentence>
+	<sentence mode="on" keyword="date">
+		<entry lang="RUS">Дата</entry>
+		<entry lang="KAZ">Дата</entry>
+		<entry lang="ENG">Date</entry>
+		<entry lang="BG">Дата</entry>
+	</sentence>
+	<sentence mode="on" keyword="deadline">
+		<entry lang="RUS">Завершить до</entry>
+		<entry lang="KAZ">Завершить до</entry>
+		<entry lang="ENG">Should solved till</entry>
+		<entry lang="BG">Завершить до</entry>
+	</sentence>
+	<sentence mode="on" keyword="color">
+		<entry lang="RUS">Цвет</entry>
+		<entry lang="KAZ">Цвет</entry>
+		<entry lang="ENG">Color</entry>
+		<entry lang="BG">Цвят</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="note">
+		<entry lang="RUS">Примечание</entry>
+		<entry lang="KAZ">Примечание</entry>
+		<entry lang="ENG">Note</entry>
+		<entry lang="BG">Примечание</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+
+	<sentence mode="on" keyword="add_user">
+		<entry lang="RUS">Пригласить пользователя</entry>
+		<entry lang="KAZ">Пригласить пользователя</entry>
+		<entry lang="ENG">Invite a user</entry>
+		<entry lang="BG">Пригласить пользователя</entry>
+	</sentence>
+	<sentence mode="on" keyword="invitation_title">
+		<entry lang="RUS">Пригласить пользователя</entry>
+		<entry lang="KAZ">Пригласить пользователя</entry>
+		<entry lang="ENG">Invite a user</entry>
+		<entry lang="BG">Пригласить пользователя</entry>
+	</sentence>
+	<sentence mode="on" keyword="invitation_email_hint">
+		<entry lang="RUS">Адрес электронной почты приглашаемого пользователя</entry>
+		<entry lang="KAZ">Адрес электронной почты приглашаемого пользователя</entry>
+		<entry lang="ENG">Invited user's email </entry>
+		<entry lang="BG">Адрес электронной почты приглашаемого пользователя</entry>
+	</sentence>
+	<sentence mode="on" keyword="invitation_roles_hint">
+		<entry lang="RUS">Укажите роли которые хотите дать пользователю</entry>
+		<entry lang="KAZ">Укажите роли которые хотите дать пользователю</entry>
+		<entry lang="ENG">Укажите роли которые хотите дать пользователю</entry>
+		<entry lang="BG">Укажите роли которые хотите дать пользователю</entry>
+	</sentence>
+	<sentence mode="on" keyword="message">
+		<entry lang="RUS">Сообщение</entry>
+		<entry lang="KAZ">Сообщение</entry>
+		<entry lang="ENG">Message</entry>
+		<entry lang="BG">Сообщение</entry>
+	</sentence>
+	<sentence mode="on" keyword="send_invite">
+		<entry lang="RUS">Отправить приглашение</entry>
+		<entry lang="KAZ">Отправить приглашение</entry>
+		<entry lang="ENG">Send invite</entry>
+		<entry lang="BG">Отправить приглашение</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="upload_browse">
+		<entry lang="RUS">Прикрепить файл</entry>
+		<entry lang="KAZ">Файл тіркеу</entry>
+		<entry lang="ENG">Attach file</entry>
+		<entry lang="BG">Прикрепить файл</entry>
+	</sentence>
+	<sentence mode="on" keyword="upload_drop_here">
+		<entry lang="RUS">Перетащите файл сюда</entry>
+		<entry lang="KAZ">Файлды осында тасыңыз</entry>
+		<entry lang="ENG">Drop file here</entry>
+		<entry lang="BG">Перетащите файл сюда</entry>
+	</sentence>
+
+	<!-- validation -->
+	<sentence mode="on" keyword="validation_empty">
+		<entry lang="RUS">Обязательное поле</entry>
+		<entry lang="KAZ">Обязательное поле</entry>
+		<entry lang="ENG">Can't be empty</entry>
+		<entry lang="BG">Обязательное поле</entry>
+	</sentence>
+	<sentence mode="on" keyword="validation_email">
+		<entry lang="RUS">Введите корректный адрес</entry>
+		<entry lang="KAZ">Введите корректный адрес</entry>
+		<entry lang="ENG">Введите корректный адрес</entry>
+		<entry lang="BG">Введите корректный адрес</entry>
+	</sentence>
+	<sentence mode="on" keyword="validation_date">
+		<entry lang="RUS">Введите дату</entry>
+		<entry lang="KAZ">Введите дату</entry>
+		<entry lang="ENG">Введите дату</entry>
+		<entry lang="BG">Введите дату</entry>
+	</sentence>
+	<sentence mode="on" keyword="validation_numeric">
+		<entry lang="RUS">Должно быть числовое значение</entry>
+		<entry lang="KAZ">Должно быть числовое значение</entry>
+		<entry lang="ENG">Должно быть числовое значение</entry>
+		<entry lang="BG">Должно быть числовое значение</entry>
+	</sentence>
 </vocabulary>
