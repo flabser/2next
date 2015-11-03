@@ -3,12 +3,10 @@ package com.flabser.util;
 import java.util.ArrayList;
 
 import com.flabser.script._IContent;
-import com.flabser.script._URL;
 
 public class ScriptResponse {
 	public ResponseType type;
 	public boolean resultFlag;
-	private ArrayList<_URL> redirects;
 	private ArrayList<_IContent> elementsList;
 
 	public ScriptResponse(ResponseType type) {
@@ -32,19 +30,11 @@ public class ScriptResponse {
 		resultFlag = responseStatus;
 	}
 
-	public void setRedirects(ArrayList<_URL> r) {
-		redirects = r;
-	}
-
-	public ArrayList<_URL> getRedirects() {
-		return redirects;
-	}
-
 	public void setPublishResult(ArrayList<_IContent> pulishElement) {
 		this.elementsList = pulishElement;
 	}
 
-	public ArrayList<_IContent> getElements(){
+	public ArrayList<_IContent> getElements() {
 		return elementsList;
 	}
 }

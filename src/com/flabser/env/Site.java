@@ -6,7 +6,6 @@ import org.apache.catalina.Host;
 import org.apache.catalina.core.StandardHost;
 
 import com.flabser.apptemplate.AppTemplate;
-import com.flabser.localization.SentenceCaption;
 import com.flabser.script._Exception;
 import com.flabser.script._IContent;
 import com.flabser.supplier.SourceSupplier;
@@ -76,8 +75,8 @@ public class Site implements _IContent {
 	public StringBuffer toXML(String lang) throws _Exception {
 		StringBuffer output = new StringBuffer(1000);
 		SourceSupplier captionTextSupplier = new SourceSupplier(appTemlate, lang);
-		SentenceCaption sc = captionTextSupplier.getValueAsCaption(appTemlate.globalSetting.getDescription());
-		return output.append("<apptype>" + appBase + "</apptype><description>" + sc.word + "</description>");
+		String sc = captionTextSupplier.getValueAsCaption(appTemlate.globalSetting.getDescription());
+		return output.append("<apptype>" + appBase + "</apptype><description>" + sc + "</description>");
 	}
 
 	public String getFullPathAppBase() {

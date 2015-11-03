@@ -16,6 +16,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -155,7 +156,7 @@ public class SessionService extends RestProvider {
 		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
 		UserSession userSession = new UserSession(user);
-
+		userSession.setLang(lang);
 		if (user.getStatus() == UserStatusType.REGISTERED) {
 			authUser = userSession.getUserPOJO();
 			// authUser.setAppId(appID);
@@ -225,6 +226,33 @@ public class SessionService extends RestProvider {
 		int maxAge = -1;
 		NewCookie cookie = new NewCookie(EnvConst.LANG_COOKIE_NAME, lang, "/", null, null, maxAge, false);
 		return Response.status(HttpServletResponse.SC_OK).cookie(cookie).build();
+
+	}
+
+	@GET
+	@Path("/captions")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCaptions() {
+		Outcome res = new Outcome();
+		AppTemplate at = getAppTemplate();
+		_Session ses = getSession();
+		String lang = ses.getLang();
+		res.setMessages(at.vocabulary.getAllCaptions(lang));
+		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
+
+	}
+
+	@GET
+	@Path("/captions/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCaption(@QueryParam("keyword") String keyWord) {
+		Outcome res = new Outcome();
+		AppTemplate at = getAppTemplate();
+		_Session ses = getSession();
+		String lang = ses.getLang();
+		String word = at.vocabulary.getWord(keyWord, lang);
+		res.addMessage(word);
+		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
 
 	}
 

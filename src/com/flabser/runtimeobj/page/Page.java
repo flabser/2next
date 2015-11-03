@@ -9,12 +9,10 @@ import com.flabser.env.Environment;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
-import com.flabser.localization.SentenceCaption;
 import com.flabser.rule.Caption;
 import com.flabser.rule.page.ElementRule;
 import com.flabser.rule.page.PageRule;
 import com.flabser.script._Page;
-import com.flabser.script._URL;
 import com.flabser.scriptprocessor.page.DoProcessor;
 import com.flabser.scriptprocessor.page.IQuerySaveTransaction;
 import com.flabser.supplier.SourceSupplier;
@@ -28,7 +26,6 @@ public class Page {
 	public String generatedFilePath;
 	public String generatedFileOriginalName;
 	private String httpMethod;
-	public ArrayList<_URL> redirects = new ArrayList<_URL>();
 
 	protected AppTemplate env;
 	protected PageRule rule;
@@ -37,7 +34,8 @@ public class Page {
 
 	private String context;
 
-	public Page(AppTemplate env, UserSession userSession, PageRule rule, String httpMethod, String context) throws AuthFailedException {
+	public Page(AppTemplate env, UserSession userSession, PageRule rule, String httpMethod, String context)
+			throws AuthFailedException {
 		this.userSession = userSession;
 		this.env = env;
 		this.rule = rule;
@@ -49,13 +47,14 @@ public class Page {
 	public HashMap<String, String> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
 		HashMap<String, String> captionsList = new HashMap<String, String>();
 		for (Caption cap : captions) {
-			SentenceCaption sc = captionTextSupplier.getValueAsCaption(cap.captionID);
-			captionsList.put(cap.captionID, sc.word);
+			String sc = captionTextSupplier.getValueAsCaption(cap.captionID);
+			captionsList.put(cap.captionID, sc);
 		}
 		return captionsList;
 	}
 
-	public _Page process(Map<String, String[]> formData) throws ClassNotFoundException, RuleException, WebFormValueException {
+	public _Page process(Map<String, String[]> formData)
+			throws ClassNotFoundException, RuleException, WebFormValueException {
 		_Page pp = null;
 		long start_time = System.currentTimeMillis();
 		switch (rule.caching) {
@@ -87,7 +86,8 @@ public class Page {
 	}
 
 	@SuppressWarnings("unused")
-	public _Page getContent(Map<String, String[]> formData) throws ClassNotFoundException, RuleException, WebFormValueException {
+	public _Page getContent(Map<String, String[]> formData)
+			throws ClassNotFoundException, RuleException, WebFormValueException {
 		fields = formData;
 		_Page pp = new _Page();
 
@@ -118,7 +118,6 @@ public class Page {
 						toPostObects.post();
 					}
 					pp.addElements(scriptResp.getElements());
-					redirects.addAll(scriptResp.getRedirects());
 
 					break;
 

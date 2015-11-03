@@ -37,7 +37,7 @@ public class _AppEntourage {
 		ArrayList<String[]> list = new ArrayList<String[]>();
 
 		for (Lang l : env.globalSetting.langsList) {
-			String[] p = { l.isOn.toString(), l.id, l.name };
+			String[] p = { l.isOn.toString(), l.id, l.type.name() };
 			list.add(p);
 		}
 		return list;
@@ -56,9 +56,9 @@ public class _AppEntourage {
 
 	public HashMap<String, Site> getAvailableTemplates() {
 		HashMap<String, Site> at = new HashMap<String, Site>();
-		for(Site site : Environment.availableTemplates.values()){
-			if (site.getAppTemlate().globalSetting.getWorkMode() == WorkModeType.CLOUD){
-				at.put(site.getAppBase(),site);
+		for (Site site : Environment.availableTemplates.values()) {
+			if (site.getAppTemlate().globalSetting.getWorkMode() == WorkModeType.CLOUD) {
+				at.put(site.getAppBase(), site);
 			}
 		}
 		return at;
