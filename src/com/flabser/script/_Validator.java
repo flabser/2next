@@ -36,7 +36,8 @@ public class _Validator {
 	}
 
 	public static boolean checkEmail(String value) {
-		String validate = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		String validate = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 		pattern = Pattern.compile(validate);
 		matcher = pattern.matcher(value);
@@ -61,6 +62,11 @@ public class _Validator {
 		Matcher matcher = pattern.matcher(value.replace("+7", "8").replace(" ", ""));
 
 		return matcher.matches();
+	}
+
+	public static boolean checkPhoneNumber(String value) {
+		// TODO to realise
+		return true;
 	}
 
 	public static boolean checkDate(String value) {

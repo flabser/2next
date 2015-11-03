@@ -7,8 +7,5 @@
 	<defaultredirecturl>Provider?id=ws</defaultredirecturl>
 	<langs>
 		<entry id="ENG">English</entry>
-		<entry id="RUS">Русский</entry>
-		<entry id="KAZ">Қазақша</entry>
-		<entry id="BG">Българский</entry>
 	</langs>
 </rule>

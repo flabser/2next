@@ -26,6 +26,9 @@
 		<app>
 			<name mode="on" sitename="aikonamedia1.kz">ImmigrationService</name>
 		</app>
+		<app>
+			<name mode="on" parent="benexus">administrator</name>
+		</app>
 	</applications>
 		
 		

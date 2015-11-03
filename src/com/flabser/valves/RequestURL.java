@@ -3,7 +3,6 @@ package com.flabser.valves;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class RequestURL {
 
 	private String appType = "";
@@ -11,6 +10,7 @@ public class RequestURL {
 	private String url;
 	private String pageID = "";
 
+	@Deprecated
 	public RequestURL(String url) {
 		this.url = url;
 		String urlVal = url != null ? url.trim() : "";
@@ -25,9 +25,8 @@ public class RequestURL {
 			return;
 		}
 
-		for (String pageIdRegex : new String[] {
-				"^.*/page/([\\w\\-~\\.]+)",
-		"^.*/Provider\\?[\\w\\-~\\.=&]*id=([\\w\\-~\\.]+)[\\w\\-~\\.=&]*" }) {
+		for (String pageIdRegex : new String[] { "^.*/page/([\\w\\-~\\.]+)",
+				"^.*/Provider\\?[\\w\\-~\\.=&]*id=([\\w\\-~\\.]+)[\\w\\-~\\.=&]*" }) {
 			if (urlVal.matches(pageIdRegex)) {
 				pageID = urlVal.replaceAll(pageIdRegex, "$1");
 				break;
@@ -68,7 +67,8 @@ public class RequestURL {
 		if (url.startsWith("/SharedResources")) {
 			return false;
 		}
-		//return !appType.equals("") && !appID.equals("") || !(isDefault() || url.matches(".*/[\\w\\.-]+$"));
+		// return !appType.equals("") && !appID.equals("") || !(isDefault() ||
+		// url.matches(".*/[\\w\\.-]+$"));
 		return false;
 	}
 

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.flabser.rule.Lang;
 import com.flabser.server.Server;
 import com.flabser.util.XMLUtil;
 
@@ -15,7 +14,7 @@ public class Sentence {
 	public String keyWord;
 	public HashMap<String, SentenceCaption> words = new HashMap<String, SentenceCaption>();
 
-	Sentence(Node node, ArrayList<Lang> langsList) {
+	Sentence(Node node, ArrayList<LanguageType> list) {
 		try {
 			if (!XMLUtil.getTextContent(node, "@mode", false).equals("on")) {
 				isOn = false;
@@ -28,8 +27,9 @@ public class Sentence {
 				LanguageType l = LanguageType
 						.valueOf(XMLUtil.getTextContent(wordNode, "@lang", true, "UNKNOWN", false).toUpperCase());
 				SentenceCaption c = new SentenceCaption(keyWord, wordNode.getTextContent());
-
-				words.put(l.toString(), c);
+				if (list.contains(l)) {
+					words.put(l.name(), c);
+				}
 			}
 
 		} catch (Exception e) {

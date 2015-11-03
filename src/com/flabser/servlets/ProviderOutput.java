@@ -13,7 +13,6 @@ public class ProviderOutput {
 	public File xslFile;
 	public boolean isValid;
 	protected static final String xmlTextUTF8Header = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-	protected String type;
 	public BrowserType browser;
 	protected StringBuffer output;
 	protected UserSession userSession;
@@ -21,8 +20,8 @@ public class ProviderOutput {
 	protected String id;
 	private HttpServletRequest request;
 
-	public ProviderOutput(String type, String id, StringBuffer output, HttpServletRequest request, UserSession userSession, HttpSession jses) {
-		this.type = type;
+	public ProviderOutput(String id, StringBuffer output, HttpServletRequest request, UserSession userSession,
+			HttpSession jses) {
 		this.id = id;
 		this.output = output;
 		this.request = request;
@@ -60,8 +59,9 @@ public class ProviderOutput {
 			queryString = "";
 		}
 
-		return xmlTextUTF8Header + "<request " + queryString + " type=\"" + type + "\" lang=\"" + userSession.getLang() + "\" id=\"" + id
-				+ "\" " + "useragent=\"" + browser + "\"  userid=\"" + userSession.currentUser.getLogin() + "\" >" + output + "</request>";
+		return xmlTextUTF8Header + "<request " + queryString + " lang=\"" + userSession.getLang() + "\" id=\"" + id
+				+ "\" " + "useragent=\"" + browser + "\"  userid=\"" + userSession.currentUser.getLogin() + "\" >"
+				+ output + "</request>";
 	}
 
 }

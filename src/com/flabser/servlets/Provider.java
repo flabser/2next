@@ -25,7 +25,6 @@ import com.flabser.rule.page.PageRule;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Exception;
 import com.flabser.server.Server;
-import com.flabser.servlets.sitefiles.AttachmentHandler;
 import com.flabser.users.UserSession;
 
 public class Provider extends HttpServlet {
@@ -60,13 +59,9 @@ public class Provider extends HttpServlet {
 		HttpSession jses = null;
 		UserSession userSession = null;
 		ProviderResult result = null;
-		String disposition = null;
-		AttachmentHandler attachHandler = null;
 
 		try {
 			request.setCharacterEncoding(EnvConst.SUPPOSED_CODE_PAGE);
-			String type = request.getParameter("type");
-			String key = request.getParameter("key");
 			String onlyXML = request.getParameter("onlyxml");
 			String id = request.getParameter("id");
 			if (id == null) {
@@ -80,25 +75,7 @@ public class Provider extends HttpServlet {
 					jses = request.getSession(false);
 					userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 
-					if (type == null || type.equalsIgnoreCase("page")) {
-						result = page(response, request, rule, userSession);
-						if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
-							attachHandler = new AttachmentHandler(request, response, true);
-						}
-					} else if (type.equalsIgnoreCase("search")) {
-						result = search(request, userSession);
-					} else if (type.equalsIgnoreCase("getattach")) {
-						result = getAttach(request, userSession, key);
-						attachHandler = new AttachmentHandler(request, response, true);
-					} else {
-						String reqEnc = request.getCharacterEncoding();
-						type = new String(type.getBytes("ISO-8859-1"), reqEnc);
-						ApplicationException ae = new ApplicationException(env.templateType,
-								"Request has been undefined, type=" + type + ", id=" + id + ", key=" + key);
-						response.setStatus(ae.getCode());
-						response.getWriter().println(ae.getHTMLMessage());
-						return;
-					}
+					result = page(response, request, rule, userSession);
 
 					if (result.publishAs == PublishAsType.XML || onlyXML != null) {
 						result.publishAs = PublishAsType.XML;
@@ -115,7 +92,7 @@ public class Provider extends HttpServlet {
 						if (result.disableClientCache) {
 							disableCash(response);
 						}
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses);
+						ProviderOutput po = new ProviderOutput(id, result.output, request, userSession, jses);
 						response.setContentType("text/html");
 
 						if (po.prepareXSLT(env, result.xslt)) {
@@ -133,18 +110,11 @@ public class Provider extends HttpServlet {
 							disableCash(response);
 						}
 						response.setContentType("text/xml;charset=utf-8");
-						ProviderOutput po = new ProviderOutput(type, id, result.output, request, userSession, jses);
+						ProviderOutput po = new ProviderOutput(id, result.output, request, userSession, jses);
 						String outputContent = po.getStandartOutput();
 						PrintWriter out = response.getWriter();
 						out.println(outputContent);
 						out.close();
-					} else if (result.publishAs == PublishAsType.OUTPUTSTREAM) {
-						if (request.getParameter("disposition") != null) {
-							disposition = request.getParameter("disposition");
-						} else {
-							disposition = "attachment";
-						}
-						attachHandler.publish(result.filePath, result.originalAttachName, disposition);
 					} else if (result.publishAs == PublishAsType.FORWARD) {
 						response.sendRedirect(result.forwardTo);
 						return;
@@ -173,63 +143,6 @@ public class Provider extends HttpServlet {
 		fields.putAll(parMap);
 		Page page = new Page(env, userSession, pageRule, request.getMethod(), (String) request.getAttribute("appid"));
 		result.output.append(page.process(fields).toXML(userSession.getLang()));
-		if (page.fileGenerated) {
-			result.publishAs = PublishAsType.OUTPUTSTREAM;
-			result.filePath = page.generatedFilePath;
-			result.originalAttachName = page.generatedFileOriginalName;
-		}
-		return result;
-	}
-
-	private ProviderResult search(HttpServletRequest request, UserSession userSession)
-			throws RuleException, UnsupportedEncodingException {
-		ProviderResult result = new ProviderResult(PublishAsType.HTML, "searchres.xsl");
-		try {
-			Integer.parseInt(request.getParameter("page"));
-		} catch (NumberFormatException nfe) {
-		}
-		String keyWord = request.getParameter("keyword");
-		keyWord = new String(keyWord.getBytes("ISO-8859-1"), "UTF-8");
-		// FTSearchRequest ftRequest = new FTSearchRequest(env,
-		// userSession.currentUser.getAllUserGroups(),
-		// userSession.currentUser.getUserID(), keyWord, page,
-		// userSession.pageSize);
-		// result.output.append(ftRequest.getDataAsXML());
-		return result;
-	}
-
-	private ProviderResult getAttach(HttpServletRequest request, UserSession userSession, String key)
-			throws UnsupportedEncodingException {
-		ProviderResult result = new ProviderResult(PublishAsType.OUTPUTSTREAM, null);
-		/*
-		 * String fieldName = request.getParameter("field"); String attachName =
-		 * request.getParameter("file");
-		 *
-		 * String reqEnc = request.getCharacterEncoding();
-		 * result.originalAttachName = new
-		 * String(((String)attachName).getBytes("ISO-8859-1"),reqEnc);
-		 *
-		 * String formSesID = request.getParameter("formsesid"); if (formSesID
-		 * != null){ File file = Util.getExistFile(result.originalAttachName,
-		 * Environment.tmpDir + File.separator + formSesID + File.separator +
-		 * fieldName + File.separator); if (!file.exists()){ IDatabase dataBase
-		 * = env.getDataBase(); String docTypeAsText =
-		 * request.getParameter("doctype"); //result.filePath =
-		 * dataBase.getDocumentAttach(Integer.parseInt(key),
-		 * Integer.parseInt(docTypeAsText),
-		 * userSession.currentUser.getAllUserGroups(), fieldName,
-		 * result.originalAttachName); result.filePath =
-		 * dataBase.getDocumentAttach(Integer.parseInt(key),
-		 * Integer.parseInt(docTypeAsText), fieldName,
-		 * result.originalAttachName); }else{ result.filePath =
-		 * file.getAbsolutePath(); } }else{ IDatabase dataBase =
-		 * env.getDataBase(); String docTypeAsText =
-		 * request.getParameter("doctype"); result.filePath =
-		 * dataBase.getDocumentAttach(Integer.parseInt(key),
-		 * Integer.parseInt(docTypeAsText),
-		 * userSession.currentUser.getAllUserGroups(), fieldName,
-		 * result.originalAttachName); }
-		 */
 		return result;
 	}
 
