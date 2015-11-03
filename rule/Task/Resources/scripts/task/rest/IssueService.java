@@ -49,7 +49,7 @@ public class IssueService extends RestProvider {
 			}
 		}
 
-		return Response.ok(new Issues(dao.findAll())).build();
+		return Response.ok(new Issues(dao.find(filter))).build();
 	}
 
 	@GET
