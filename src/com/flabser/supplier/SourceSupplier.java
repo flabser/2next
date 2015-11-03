@@ -3,7 +3,6 @@ package com.flabser.supplier;
 import java.util.HashMap;
 
 import com.flabser.apptemplate.AppTemplate;
-import com.flabser.localization.SentenceCaption;
 import com.flabser.localization.Vocabulary;
 
 public class SourceSupplier {
@@ -19,8 +18,8 @@ public class SourceSupplier {
 		this.lang = lang;
 	}
 
-	public SentenceCaption getValueAsCaption(String keyWord) {
-		return vocabulary.getSentenceCaption(keyWord, lang);
+	public String getValueAsCaption(String keyWord) {
+		return vocabulary.getWord(keyWord, lang);
 	}
 
 }

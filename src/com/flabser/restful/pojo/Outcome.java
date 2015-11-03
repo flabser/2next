@@ -80,4 +80,9 @@ public class Outcome {
 		return this;
 	}
 
+	public Outcome setMessages(ArrayList<String> all) {
+		message.addAll(all);
+		return this;
+	}
+
 }

@@ -43,13 +43,9 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 
 	public void println(Exception e) throws _Exception {
 		String errText = e.toString();
-		System.out.println(errText);
-		_Element element = new _Element("error", errText + "stack:" + ScriptProcessorUtil.getScriptError(e.getStackTrace()));
+		_Element element = new _Element("error",
+				errText + "stack:" + ScriptProcessorUtil.getScriptError(e.getStackTrace()));
 		publishElement("error", element);
-	}
-
-	public void println(String e) {
-		System.out.println(e);
 	}
 
 	@Override
@@ -73,7 +69,6 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 				break;
 			}
 
-			resp.setRedirects(redirects);
 			resp.setPublishResult(toPublishElement);
 			resp.setResponseStatus(true);
 
@@ -90,7 +85,8 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 		return resp;
 	}
 
-	public abstract void doGet(_Session session, _WebFormData formData, String lang) throws WebFormValueException, _Exception;
+	public abstract void doGet(_Session session, _WebFormData formData, String lang)
+			throws WebFormValueException, _Exception;
 
 	public abstract void doPost(_Session session, _WebFormData formData, String lang) throws WebFormValueException;
 

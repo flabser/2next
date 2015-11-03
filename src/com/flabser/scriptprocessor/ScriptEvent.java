@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import com.flabser.env.Environment;
 import com.flabser.localization.Vocabulary;
 import com.flabser.script._Element;
 import com.flabser.script._IContent;
@@ -44,19 +43,16 @@ public class ScriptEvent {
 	public String getGroovyError(StackTraceElement stack[]) {
 		for (int i = 0; i < stack.length; i++) {
 			if (stack[i].getClassName().contains(this.getClass().getName())) {
-				return stack[i].getClassName() + " method=" + stack[i].getMethodName() + " > " + Integer.toString(stack[i].getLineNumber()) + "\n";
+				return stack[i].getClassName() + " method=" + stack[i].getMethodName() + " > "
+						+ Integer.toString(stack[i].getLineNumber()) + "\n";
 			}
 		}
 		return "";
 	}
 
-	public String getTmpDirPath() {
-		return Environment.tmpDir;
-	}
-
 	public String getWord(String word, Vocabulary vocabulary, String lang) {
 		try {
-			return vocabulary.getSentenceCaption(word, lang).word;
+			return vocabulary.getWord(word, lang);
 		} catch (Exception e) {
 			return word.toString();
 		}

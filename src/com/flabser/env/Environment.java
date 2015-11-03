@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -26,9 +27,11 @@ import org.xml.sax.SAXException;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
+import com.flabser.localization.LanguageType;
 import com.flabser.localization.Localizator;
 import com.flabser.localization.LocalizatorException;
 import com.flabser.localization.Vocabulary;
+import com.flabser.rule.Lang;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.scheduler.PeriodicalServices;
@@ -103,7 +106,15 @@ public class Environment implements ICache {
 
 			Localizator l = new Localizator();
 			String vocabuarFilePath = "resources" + File.separator + "vocabulary.xml";
-			vocabulary = l.populate(vocabuarFilePath, "system");
+			// TODO it is need to move to external place
+			ArrayList<Lang> langsList = new ArrayList<Lang>();
+			langsList.add(new Lang(LanguageType.ENG, "English"));
+			langsList.add(new Lang(LanguageType.RUS, "Русский"));
+			langsList.add(new Lang(LanguageType.KAZ, "Қазақша"));
+			langsList.add(new Lang(LanguageType.BG, "Български"));
+			langsList.add(new Lang(LanguageType.POR, "Português"));
+			langsList.add(new Lang(LanguageType.SPA, "Español"));
+			vocabulary = l.populate(vocabuarFilePath, "system", langsList);
 
 			workspaceName = XMLUtil.getTextContent(xmlDocument, "/tn/applications/@workspace", false, "", true);
 

@@ -59,7 +59,7 @@ public class AppTemplate implements ICache, _IContent {
 						Localizator l = new Localizator();
 						String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator
 								+ "vocabulary.xml";
-						vocabulary = l.populate(vocabuarFilePath, templateType);
+						vocabulary = l.populate(vocabuarFilePath, templateType, globalSetting.langsList);
 						if (vocabulary != null) {
 							Server.logger.infoLogEntry("dictionary has loaded");
 						}
@@ -104,7 +104,7 @@ public class AppTemplate implements ICache, _IContent {
 						Localizator l = new Localizator();
 						String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator
 								+ "vocabulary.xml";
-						vocabulary = l.populate(vocabuarFilePath, templateType);
+						vocabulary = l.populate(vocabuarFilePath, templateType, globalSetting.langsList);
 						if (vocabulary == null) {
 							Server.logger.warningLogEntry("dictionary has not loaded");
 						}
