@@ -2,6 +2,7 @@ package com.flabser.localization;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -11,29 +12,28 @@ import com.flabser.rule.Lang;
 
 public class Vocabulary {
 	private HashMap<String, Sentence> words = new HashMap<String, Sentence>();
-	private HashMap<String, ArrayList<String>> wordsLangs = new HashMap<String, ArrayList<String>>();
+	private HashMap<String, HashMap<String, String>> wordsLangs = new HashMap<String, HashMap<String, String>>();
 	private static Log4jLogger logger = new Log4jLogger("Vocabulary");
 	private String templateType;
 
 	public Vocabulary(Document doc, String templateType, ArrayList<Lang> langsList) {
 		org.w3c.dom.Element root = doc.getDocumentElement();
 		this.templateType = templateType;
+		ArrayList<LanguageType> list = new ArrayList<LanguageType>();
+		for (Lang lang : langsList) {
+			list.add(lang.type);
+			HashMap<String, String> langCaptions = new HashMap<String, String>();
+			wordsLangs.put(lang.type.name(), langCaptions);
+		}
 
 		NodeList nodename = root.getElementsByTagName("sentence");
 		for (int i = 0; i < nodename.getLength(); i++) {
-			Sentence sentence = new Sentence(nodename.item(i), langsList);
+			Sentence sentence = new Sentence(nodename.item(i), list);
 			if (sentence.isOn) {
 				words.put(sentence.keyWord, sentence);
-				for (SentenceCaption l : sentence.words.values()) {
-					ArrayList<String> wordsList = wordsLangs.get(l);
-					if (wordsList == null) {
-						wordsList = new ArrayList<String>();
-						// wordsLangs.put(l, wordsList);
-					}
-					// wordsList.add(sentence.words.get(l));
-
+				for (Entry<String, SentenceCaption> l : sentence.words.entrySet()) {
+					wordsLangs.get(l.getKey()).put(l.getValue().keyWord, l.getValue().word);
 				}
-
 			}
 		}
 	}
@@ -54,8 +54,8 @@ public class Vocabulary {
 		}
 	}
 
-	public ArrayList<String> getAllCaptions(String lang) {
-		return null;
+	public HashMap<String, String> getAllCaptions(String lang) {
+		return wordsLangs.get(lang);
 	}
 
 }
