@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rule type="page" mode="on">
-	<description>app-captions</description>
+	<description>translations</description>
 
 	<caption name="brand" />
 
@@ -20,81 +20,45 @@
 	<caption name="newdoc" />
 	<caption name="editing" />
 	<caption name="readonly" />
-	<caption name="modenotdefined" />
 	<caption name="author" />
 
 	<caption name="attachments" />
-
 	<caption name="attach" />
 	<caption name="attach_delete" />
 	<caption name="attach_open" />
 	<caption name="attach_preview" />
 	<caption name="attach_add_comment" />
 
-	<caption name="user_profile" />
-
 	<caption name="dashboard" />
-	<caption name="transaction" />
-	<caption name="transactions" />
-	<caption name="income" />
-	<caption name="incomes" />
-	<caption name="expense" />
-	<caption name="expenses" />
-	<caption name="transfer" />
-	<caption name="transfers" />
+	<caption name="task" />
+	<caption name="tasks" />
 	<caption name="reports" />
-	<caption name="budget" />
-	<caption name="account" />
-	<caption name="accounts" />
 	<caption name="category" />
 	<caption name="categories" />
-	<caption name="cost_center" />
-	<caption name="cost_center_short" />
-	<caption name="cost_centers" />
 	<caption name="tag" />
 	<caption name="tags" />
 	<caption name="user" />
 	<caption name="users" />
 
-	<caption name="budget_name_hint" />
-
+	<caption name="user_profile" />
 	<caption name="password" />
 	<caption name="password_change" />
 	<caption name="pwd_repeat_not_equal" />
 	<caption name="pwd_format_error" />
-	<caption name="name" />
-	<caption name="transfer_to_account" />
-	<caption name="amount_control" />
-	<caption name="amount_control_hint" />
-	<caption name="require_document" />
-	<caption name="require_costcenter" />
 	<caption name="user_login" />
 	<caption name="user_name" />
+
+	<caption name="name" />
 	<caption name="email" />
 	<caption name="roles" />
 	<caption name="reg_date" />
 	<caption name="date" />
+	<caption name="deadline" />
 	<caption name="parent_category" />
-	<caption name="month" />
-	<caption name="basis" />
-	<caption name="documented" />
-
-	<caption name="transaction_type" />
-	<caption name="currency" />
-	<caption name="opening_balance" />
-	<caption name="amount" />
-	<caption name="permissions" />
-	<caption name="writers" />
-	<caption name="writers_hint" />
-	<caption name="readers" />
-	<caption name="readers_hint" />
-	<caption name="color" />
 	<caption name="note" />
 
 	<caption name="active" />
-	<caption name="account_active_hint" />
 	<caption name="category_active_hint" />
-	<caption name="category_transaction_type_hint" />
 	<caption name="category_color_hint" />
 
 	<caption name="add_user" />
