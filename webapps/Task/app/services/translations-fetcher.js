@@ -4,7 +4,7 @@ const {
     Service, inject, $
 } = Em;
 
-const PATH = 'rest/page/app-captions';
+const PATH = 'rest/page/translations';
 
 export default Service.extend({
 

@@ -25,16 +25,16 @@
                         {{/each}}
                     </div>
                 </div>
-                <div class="form-group {{if errors.date 'has-error'}}">
+                <div class="form-group {{if errors.deadline 'has-error'}}">
                     <div class="control-label">
-                        {{t 'date'}}
+                        {{t 'deadline'}}
                     </div>
                     <div class="controls">
                         {{pikaday-input
                             value=task.deadline
                             format='YYYY-MM-DD'
                             class='span2'}}
-                        {{#each errors.date as |error|}}
+                        {{#each errors.deadline as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
                     </div>
