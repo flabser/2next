@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rule mode="on" type="global">
 	<description></description>
-	<templatetype>benexus</templatetype>
 	<workmode>COMMON</workmode>
-	<entrypoint>Provider?id=login</entrypoint>
-	<defaultredirecturl>Provider?id=ws</defaultredirecturl>
 	<langs>
 		<entry id="ENG">English</entry>
 		<entry id="RUS">Русский</entry>

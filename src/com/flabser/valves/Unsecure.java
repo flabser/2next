@@ -63,7 +63,7 @@ public class Unsecure extends ValveBase {
 							response.setStatus(ae.getCode());
 							response.getWriter().println(ae.getHTMLMessage());
 						}
-					}else if (ru.isProtected()) {
+					} else if (ru.isProtected()) {
 						((Secure) getNext()).invoke(request, response, ru);
 					} else {
 						gettingSession(request, response);
@@ -71,9 +71,7 @@ public class Unsecure extends ValveBase {
 					}
 				}
 
-
-			} else if (ru.getAppType().equals(EnvConst.SHARED_RESOURCES_NAME)
-					|| ru.getAppType().equals(EnvConst.ADMIN_APP_NAME)) {
+			} else if (ru.getAppType().equals(EnvConst.SHARED_RESOURCES_NAME)) {
 				getNext().getNext().invoke(request, response);
 			} else {
 				String msg = "unknown application type \"" + ru.getAppType() + "\"";
@@ -82,7 +80,7 @@ public class Unsecure extends ValveBase {
 				response.setStatus(ae.getCode());
 				response.getWriter().println(ae.getHTMLMessage());
 			}
-		}else
+		} else
 
 		{
 			gettingSession(request, response);

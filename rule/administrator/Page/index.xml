@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" mode="on" anonymous="on">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/login.xsl</xsltfile>
+
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="java_class">administrator.page.Site</doscript>
+		</events>
+	</element>
+	
+	<caption name="brand" />
+	<caption name="login" />
+	<caption name="login_title" />
+	<caption name="login_btn" />
+	<caption name="logout" />
+	<caption name="password" />
+
+</rule>

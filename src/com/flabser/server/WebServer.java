@@ -237,6 +237,7 @@ public class WebServer implements IWebServer {
 		} else {
 			Host appHost = site.getHost();
 			context = new StandardContext();
+			// System.out.println(appHost + " " + docBase);
 			context = tomcat.addContext(appHost, "", docBase);
 			context.setDisplayName(templateName);
 			context.setName(templateName);

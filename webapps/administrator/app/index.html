@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>2Next-Administrator</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- <link rel="shortcut icon" href="favicon.ico" />-->
+    <link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="index.css" />
+    <script src="/SharedResources/vendor/jquery/jquery-2.1.4.min.js"></script>
+    <script src="/SharedResources/vendor/jquery/jquery.cookie.min.js"></script>
+    <script src="/SharedResources/vendor/ember/ember-template-compiler.min.js"></script>
+    <script src="/SharedResources/vendor/ember/ember.min.js"></script>
+    <script src="/SharedResources/vendor/ember/ember-data.min.js"></script>
+    <script src="index.app.js"></script>
+</head>
+
+<body>
+    <script type="text/x-handlebars" data-template-name="application">
+        {{outlet}}
+    </script>
+    <script type="text/x-handlebars" data-template-name="login">
+        <div class="container">
+            <section>
+                <div class="col-logo">
+                    <img src="img/2next.png" />
+                </div>
+                <div class="col-form">
+                    <div class="form-wrapper">
+                        <h1>Administrator</h1>
+                        {{input type='text' class="form-control" value=username placeholder="User"}}
+                        {{input type='password' class="form-control" value=password placeholder="Password"}}
+                        <button type="button" class="btn btn-default" {{action 'login'}}>Log In</button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </section>
+            <footer>
+                version 1.5 Copyright &#169; The F team developers 2015
+            </footer>
+        </div>
+    </script>
+    <script type="text/x-handlebars" data-template-name="login_failed">
+        <div>
+            Login or password incorrect
+        </div>
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+.form-login,
+.form-signup {
+    width: 320px;
+    margin: 0 auto;
+    max-width: 90%;
+}
+
+.page-content {
+    padding: 10px 0;
+}
+
+.reset-password .form-control {
+    max-width: 100%;
+    width: 280px;
+}
+
+.reset-password .btn {
+    margin: 0 4px;
+}
+
+@media ( max-width: 768px) {
+    .reset-password .form-control {
+        margin: 0 auto;
+        width: 90%;
+    }
+    .reset-password .form-inline {
+        text-align: center;
+    }
+}

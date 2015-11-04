@@ -26,7 +26,6 @@ public class GlobalSetting {
 	public RunMode isOn;
 	public boolean isValid;
 	public String entryPoint;
-	public String defaultRedirectURL;
 	public ArrayList<Lang> langsList = new ArrayList<Lang>();
 	public String vocabulary = EnvConst.VOCABULARY_FILE;
 	public UserRoleCollection roleCollection = new UserRoleCollection();
@@ -60,11 +59,6 @@ public class GlobalSetting {
 			}
 			workMode = WorkModeType.valueOf(XMLUtil.getTextContent(doc, "/rule/workmode", true, "CLOUD", true));
 			entryPoint = XMLUtil.getTextContent(doc, "/rule/entrypoint");
-
-			defaultRedirectURL = XMLUtil.getTextContent(doc, "/rule/defaultredirecturl");
-			if (defaultRedirectURL.equalsIgnoreCase("")) {
-				defaultRedirectURL = "Error?type=default_url_not_defined";
-			}
 
 			NodeList langs = XMLUtil.getNodeList(doc, "/rule/langs/entry");
 			for (int i = 0; i < langs.getLength(); i++) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <tn>
     <adminapp mode="on"/>
-    <hostname>localhost</hostname>
+    <hostname></hostname>
     <port>80</port>
       
     <applications workspace="benexus">
@@ -27,7 +27,7 @@
 			<name mode="on" sitename="aikonamedia1.kz">ImmigrationService</name>
 		</app>
 		<app>
-			<name mode="on" parent="benexus">administrator</name>
+			<name mode="on" sitename="adminka.io">administrator</name>
 		</app>
 	</applications>
 		

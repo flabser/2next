@@ -49,7 +49,7 @@ public class Server {
 			shutdown();
 		}
 
-		webServerInst.initAdministartor();
+		// webServerInst.initAdministartor();
 
 		String ws = Environment.workspaceName;
 		Site nSite = Environment.availableTemplates.get(ws);
@@ -58,6 +58,7 @@ public class Server {
 		}
 
 		for (String key : Environment.availableTemplates.keySet()) {
+			// TODO need a regex to determine a host name
 			if (!key.contains(".")) {
 				Site site = Environment.availableTemplates.get(key);
 				if (!site.getAppBase().equals(ws)) {

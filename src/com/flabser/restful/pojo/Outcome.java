@@ -16,7 +16,6 @@ public class Outcome {
 	private OutcomeType type = OutcomeType.OK;
 	private String errorId;
 	private String warningId;
-	// private ArrayList<String> message = new ArrayList<String>();
 	private HashMap<String, String> message = new HashMap<String, String>();
 
 	public OutcomeType getType() {

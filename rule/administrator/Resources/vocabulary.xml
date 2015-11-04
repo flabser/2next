@@ -4,6 +4,17 @@
 		<entry lang="ENG">2Next</entry>
 	</sentence>
 
-	
+	<sentence mode="on" keyword="login">
+		<entry lang="ENG">Authorization</entry>
+	</sentence>
+	<sentence mode="on" keyword="login_title">
+		<entry lang="ENG">Authorization</entry>
+	</sentence>
+	<sentence mode="on" keyword="login_btn">
+		<entry lang="ENG">Sign in</entry>
+	</sentence>
+	<sentence mode="on" keyword="logout">
+		<entry lang="ENG">Log out</entry>
+	</sentence>
 
 </vocabulary>

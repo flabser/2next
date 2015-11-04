@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" mode="on" anonymous="off">
+	<description></description>
+	<caching>NO_CACHING</caching>
+	<xsltfile>pages/ws.xsl</xsltfile>
+
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="java_class">benexus.page.Site</doscript>
+		</events>
+	</element>
+
+	<element mode="ON" type="SCRIPT">
+		<events>
+			<doscript source="java_class">benexus.page.WS</doscript>
+		</events>
+	</element>
+
+	<caption name="brand" />
+	<caption name="your_profile" />
+	<caption name="logout" />
+
+	<caption name="cancel" />
+	<caption name="remove" />
+	<caption name="type" />
+	<caption name="name" />
+	<caption name="description" />
+
+	<caption name="applications" />
+	<caption name="applications_description" />
+	<caption name="templates" />
+	<caption name="templates_description" />
+	<caption name="create_app" />
+	<caption name="app_сreation" />
+</rule>
