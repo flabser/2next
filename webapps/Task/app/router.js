@@ -4,11 +4,9 @@ var Router = Em.Router.extend();
 
 Router.map(function() {
 
-    this.route('dashboard', {
+    this.route('issues', {
         path: '/'
-    });
-
-    this.route('issues', function() {
+    }, function() {
         this.route('new');
         this.route('edit', {
             path: '/:issue_id/edit',
