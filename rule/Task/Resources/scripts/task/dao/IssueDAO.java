@@ -23,7 +23,13 @@ public class IssueDAO extends DAO <Issue, Long> {
 	public List <Issue> find(IssueFilter filter) {
 		String categories = "";
 		String dateRange = "";
+		String status = "";
 		boolean hasWhere = false;
+
+		if (filter.getStatus() != null) {
+			status = " m.status = :status";
+			hasWhere = true;
+		}
 
 		if (!filter.getCategories().isEmpty()) {
 			categories = (hasWhere ? " AND " : "") + " m.category IN :categories";
@@ -35,12 +41,16 @@ public class IssueDAO extends DAO <Issue, Long> {
 			hasWhere = true;
 		}
 
-		String jpql = SELECT_ALL + (hasWhere ? " WHERE " : "") + categories + dateRange + " ORDER BY m.milestone ASC";
+		String jpql = SELECT_ALL + (hasWhere ? " WHERE " : "") + status + categories + dateRange
+				+ " ORDER BY m.milestone ASC";
 
 		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			TypedQuery <Issue> q = em.createQuery(jpql, Issue.class);
 
+			if (filter.getStatus() != null) {
+				q.setParameter("status", filter.getStatus());
+			}
 			if (!categories.isEmpty()) {
 				q.setParameter("categories", filter.getCategories());
 			}

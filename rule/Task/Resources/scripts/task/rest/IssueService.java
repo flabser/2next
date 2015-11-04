@@ -36,9 +36,11 @@ public class IssueService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@QueryParam("milestone") String milestone) {
+	public Response get(@QueryParam("milestone") String milestone, @QueryParam("issue_status") String status,
+			@QueryParam("category") Long categoryId) {
 		IssueDAO dao = new IssueDAO(getSession());
 		IssueFilter filter = new IssueFilter();
+		Issue.Status issueStatus = Issue.Status.fromValue(status);
 
 		if (milestone != null && !milestone.isEmpty()) {
 			if ("today".equals(milestone)) {
@@ -48,6 +50,7 @@ public class IssueService extends RestProvider {
 				filter.setMilestoneDateRange(sdate, edate);
 			}
 		}
+		filter.setStatus(issueStatus);
 
 		return Response.ok(new Issues(dao.find(filter))).build();
 	}

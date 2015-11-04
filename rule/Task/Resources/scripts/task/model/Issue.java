@@ -30,11 +30,14 @@ public class Issue extends AppEntity {
 
 	public enum Status {
 		DRAFT, PROCESS, CLOSE;
-	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "task")
-	private Task task;
+		public static Status fromValue(String status) {
+			if ("DRAFT".equals(status) || "PROCESS".equals(status) || "CLOSE".equals(status)) {
+				return valueOf(status);
+			}
+			return null;
+		}
+	}
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -61,14 +64,6 @@ public class Issue extends AppEntity {
 
 	@Column(length = 2000)
 	private String body;
-
-	public Task getTask() {
-		return task;
-	}
-
-	public void setTask(Task task) {
-		this.task = task;
-	}
 
 	public Issue getParent() {
 		return parent;

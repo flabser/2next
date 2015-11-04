@@ -3,10 +3,10 @@ package task.dao;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import task.model.Category;
-
 import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
+
+import task.model.Category;
 
 
 public class CategoryDAO extends DAO <Category, Long> {

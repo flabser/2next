@@ -21,7 +21,7 @@ import com.flabser.dataengine.jpa.AppEntity;
 
 @JsonRootName("category")
 @Entity
-@Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = { "parent_id", "name" }))
+@Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = { "parent_id", "name" }) )
 @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category AS c WHERE c.parent IS NULL ORDER BY c.name")
 public class Category extends AppEntity {
 

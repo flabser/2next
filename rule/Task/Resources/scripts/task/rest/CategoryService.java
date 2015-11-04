@@ -15,14 +15,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.flabser.restful.RestProvider;
+
 import task.dao.CategoryDAO;
 import task.model.Category;
 import task.pojo.Errors;
 import task.validation.CategoryValidator;
 import task.validation.ValidationError;
-
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.restful.RestProvider;
 
 
 @Path("categories")
