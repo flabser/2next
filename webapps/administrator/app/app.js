@@ -1,7 +1,7 @@
 AdminApp = Ember.Application.create();
 
 var baseURL =  DS.RESTAdapter.extend({
-    namespace: 'administrator/rest'
+    namespace: 'rest'
 });
 
 AdminApp.ApplicationAdapter = baseURL.extend({

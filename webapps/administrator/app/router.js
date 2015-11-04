@@ -1,4 +1,7 @@
 AdminApp.Router.map(function(){
+	this.resource('users', {
+	    path: '/'
+	  });
 	this.route('logs');
 	this.route('app', {path: '/app/:app_id'});
 	this.route('apps');

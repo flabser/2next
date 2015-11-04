@@ -1,7 +1,7 @@
 AdminApp = Ember.Application.create();
 
 var baseURL =  DS.RESTAdapter.extend({
-    namespace: 'administrator/rest'
+    namespace: 'rest'
 });
 
 AdminApp.ApplicationAdapter = baseURL.extend({
@@ -13,6 +13,9 @@ AdminApp.ApplicationAdapter = baseURL.extend({
 });
 
 AdminApp.Router.map(function(){
+	this.resource('users', {
+	    path: '/'
+	  });
 	this.route('logs');
 	this.route('app', {path: '/app/:app_id'});
 	this.route('apps');
@@ -424,11 +427,11 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
           "loc": {
             "source": null,
             "start": {
-              "line": 10,
+              "line": 11,
               "column": 20
             },
             "end": {
-              "line": 10,
+              "line": 11,
               "column": 56
             }
           }
@@ -453,7 +456,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
           return morphs;
         },
         statements: [
-          ["content","m.title",["loc",[null,[10,44],[10,55]]]]
+          ["content","m.title",["loc",[null,[11,44],[11,55]]]]
         ],
         locals: [],
         templates: []
@@ -466,11 +469,11 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 8,
+            "line": 9,
             "column": 16
           },
           "end": {
-            "line": 12,
+            "line": 13,
             "column": 16
           }
         }
@@ -501,7 +504,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["block","link-to",[["get","m.viewdata",["loc",[null,[10,31],[10,41]]]]],[],0,null,["loc",[null,[10,20],[10,68]]]]
+        ["block","link-to",[["get","m.viewdata",["loc",[null,[11,31],[11,41]]]]],[],0,null,["loc",[null,[11,20],[11,68]]]]
       ],
       locals: ["m"],
       templates: [child0]
@@ -509,7 +512,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
   }());
   return {
     meta: {
-      "topLevel": null,
+      "topLevel": false,
       "revision": "Ember@2.1.0+45f524a3",
       "loc": {
         "source": null,
@@ -518,7 +521,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
           "column": 0
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 0
         }
       }
@@ -529,6 +532,12 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
     hasRendered: false,
     buildFragment: function buildFragment(dom) {
       var el0 = dom.createDocumentFragment();
+      var el1 = dom.createElement("div");
+      var el2 = dom.createTextNode("application");
+      dom.appendChild(el1, el2);
+      dom.appendChild(el0, el1);
+      var el1 = dom.createTextNode("\n");
+      dom.appendChild(el0, el1);
       var el1 = dom.createElement("div");
       dom.setAttribute(el1,"class","container");
       var el2 = dom.createTextNode("\n    ");
@@ -587,15 +596,15 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       return el0;
     },
     buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-      var element0 = dom.childAt(fragment, [0]);
+      var element0 = dom.childAt(fragment, [2]);
       var morphs = new Array(2);
       morphs[0] = dom.createMorphAt(dom.childAt(element0, [3, 1, 1]),1,1);
       morphs[1] = dom.createMorphAt(dom.childAt(element0, [5]),1,1);
       return morphs;
     },
     statements: [
-      ["block","each",[["get","model",["loc",[null,[8,24],[8,29]]]]],[],0,null,["loc",[null,[8,16],[12,25]]]],
-      ["content","outlet",["loc",[null,[17,8],[17,18]]]]
+      ["block","each",[["get","model",["loc",[null,[9,24],[9,29]]]]],[],0,null,["loc",[null,[9,16],[13,25]]]],
+      ["content","outlet",["loc",[null,[18,8],[18,18]]]]
     ],
     locals: [],
     templates: [child0]
