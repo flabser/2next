@@ -40,7 +40,7 @@ gulp.task('em_templates_compile', function() {
     gulp.src(em_templates)
         .pipe(emberTemplates({
             type: 'browser',
-            compiler: require('../SharedResources/vendor/ember/release/ember-template-compiler'),
+            compiler: require('../SharedResources/vendor/ember/ember-template-compiler'),
             isHTMLBars: true,
             name: {
                 replace: '\\',
