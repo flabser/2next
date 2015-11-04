@@ -14,9 +14,8 @@
 		<class>cashtracker.model.constants.converter.TransactionStateConverter</class>
 	</persistence-unit>
 	<persistence-unit name="Task" transaction-type="RESOURCE_LOCAL">
-		<class>task.model.Task</class>
 		<class>task.model.Issue</class>
-		<class>task.model.Category</class>
+		<class>task.model.Tag</class>
 	</persistence-unit>
 	<persistence-unit name="benexus" transaction-type="RESOURCE_LOCAL">
 		<class>benexus.model.Workspace</class>
