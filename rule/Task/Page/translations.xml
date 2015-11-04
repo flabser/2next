@@ -16,7 +16,8 @@
 	<caption name="workspace" />
 	<caption name="logout" />
 
-	<caption name="dashboard" />
+	<caption name="issue" />
+	<caption name="issues" />
 	<caption name="tag" />
 	<caption name="tags" />
 	<caption name="user" />
