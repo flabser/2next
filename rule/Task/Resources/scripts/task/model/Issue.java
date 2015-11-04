@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -58,9 +60,11 @@ public class Issue extends AppEntity {
 	@Column(nullable = false)
 	private Date milestone;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category")
-	private Tag category;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "issue_tags", joinColumns = {
+			@JoinColumn(name = "issue_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "tag_id", referencedColumnName = "id") })
+	private List <Tag> tags;
 
 	@Column(length = 2000)
 	private String body;
@@ -105,12 +109,12 @@ public class Issue extends AppEntity {
 		this.milestone = milestone;
 	}
 
-	public Tag getCategory() {
-		return category;
+	public List <Tag> getTags() {
+		return tags;
 	}
 
-	public void setCategory(Tag category) {
-		this.category = category;
+	public void setTags(List <Tag> tags) {
+		this.tags = tags;
 	}
 
 	public String getBody() {

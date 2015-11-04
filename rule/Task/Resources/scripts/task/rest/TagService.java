@@ -56,7 +56,7 @@ public class TagService extends RestProvider {
 	public Response create(Tag m) {
 		TagDAO dao = new TagDAO(getSession());
 
-		// parent category
+		// parent tag
 		if (m.getParent() != null) {
 			m.setParent(dao.findById(m.getParent().getId()));
 		}
@@ -78,7 +78,7 @@ public class TagService extends RestProvider {
 
 		m.setId(id);
 
-		// parent category
+		// parent tag
 		if (m.getParent() != null) {
 			m.setParent(dao.findById(m.getParent().getId()));
 		}

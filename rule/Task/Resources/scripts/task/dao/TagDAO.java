@@ -16,12 +16,12 @@ public class TagDAO extends DAO <Tag, Long> {
 	}
 
 	public boolean existsChildCategory(Tag m) {
-		String jpql = "SELECT c FROM Category AS c WHERE c.parent = :category";
+		String jpql = "SELECT m FROM Tag AS c WHERE m.parent = :tag";
 
 		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			Query q = em.createQuery(jpql, Tag.class);
-			q.setParameter("category", m);
+			q.setParameter("tag", m);
 			q.setMaxResults(1);
 			return !q.getResultList().isEmpty();
 		} finally {
