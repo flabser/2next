@@ -1,26 +1,35 @@
 <div class="tasks-view">
     <table style="width:100%">
         <tr>
-            <td style="width:260px">
+            <td style="vertical-align:top;width:260px">
                 <ul class="nav">
                     <li>
-                        {{#link-to 'issues' (query-params milestone='today')}}
+                        {{#link-to 'issues.inbox'}}
+                            {{t 'inbox'}}
+                        {{/link-to}}
+                    </li>
+                    <li>
+                        {{#link-to 'issues.today'}}
                             {{t 'today'}}
                         {{/link-to}}
                     </li>
                     <li>
-                        {{#link-to 'issues' (query-params milestone='week')}}
-                            {{t 'this_week'}}
+                        {{#link-to 'issues.week'}}
+                            {{t 'week'}}
+                        {{/link-to}}
+                    </li>
+                    <li>
+                        {{#link-to 'issues.favorite'}}
+                            {{t 'favorite'}}
                         {{/link-to}}
                     </li>
                 </ul>
-                <button class="btn" {{action 'composeRecord'}}>
-                    <i class="fa fa-plus"></i>{{t 'add'}}
-                </button>
                 {{outlet 'task'}}
-                {{task/tasks-view tasks=tasks}}
             </td>
-            <td>
+            <td style="vertical-align:top;">
+                <h1>
+                    {{tn-input type='text' placeholder='add new issue'}}
+                </h1>
                 {{issue/issues-view issues=issues}}
             </td>
         </tr>

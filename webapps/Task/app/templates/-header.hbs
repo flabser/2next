@@ -62,29 +62,15 @@
             {{#link-to 'dashboard' class='nav-item'}}
                 <i class="fa fa-dashboard"></i><span>{{t 'dashboard'}}</span>
             {{/link-to}}
-            <!-- {{#link-to 'tasks' class='nav-item'}}
-                <i class="fa fa-check-square-o"></i><span>{{t 'tasks'}}</span>
-            {{/link-to}} -->
             {{#link-to 'issues' class='nav-item'}}
                 <i class="fa fa-check-square-o"></i><span>{{t 'issues'}}</span>
             {{/link-to}}
-            <div class="nav-item dropdown">
-                <div class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-angle-down"></i>
-                </div>
-                <ul class="dropdown-menu">
-                    <li>
-                        {{#link-to 'categories'}}
-                            <i class="fa fa-sitemap"></i><span>{{t 'categories'}}</span>
-                        {{/link-to}}
-                    </li>
-                    <li>
-                        {{#link-to 'users'}}
-                            <i class="fa fa-users"></i><span>{{t 'users'}}</span>
-                        {{/link-to}}
-                    </li>
-                </ul>
-            </div>
+            {{#link-to 'tags' class='nav-item'}}
+                <i class="fa fa-tag"></i><span>{{t 'tags'}}</span>
+            {{/link-to}}
+            {{#link-to 'users' class='nav-item'}}
+                <i class="fa fa-users"></i><span>{{t 'users'}}</span>
+            {{/link-to}}
         </nav>
     </div>
 </header>

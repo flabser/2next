@@ -1,22 +1,23 @@
 <div class="tasks">
     {{#each tasks as |task|}}
-        {{#unless task.isNew}}
-        <div class="entry-wrap">
-            <div class="entry-actions">
-                <button class="entry-action action-delete" {{action 'deleteRecord' task}}>
-                    <i class="fa fa-trash" />
-                </button>
-            </div>
-            {{#tn-swipe-entry class='entry'}}
-                {{#link-to 'tasks.task.issues' task class='entry-link'}}
-                <div class="entry-fields">
-                    <span>
-                        {{task.name}}
-                    </span>
-                </div>
-                {{/link-to}}
-            {{/tn-swipe-entry}}
+    <div class="entry-wrap">
+        <div class="entry-actions">
+            {{#link-to 'issues.tasks.edit' task class='entry-link'}}
+                {{t 'edit'}}
+            {{/link-to}}
+            <button class="entry-action action-delete" {{action 'deleteRecord' task}}>
+                <i class="fa fa-trash" />
+            </button>
         </div>
-        {{/unless}}
+        {{#tn-swipe-entry class='entry'}}
+            {{#link-to 'issues.tasks' task class='entry-link'}}
+            <div class="entry-fields">
+                <span>
+                    {{task.title}}
+                </span>
+            </div>
+            {{/link-to}}
+        {{/tn-swipe-entry}}
+    </div>
     {{/each}}
 </div>

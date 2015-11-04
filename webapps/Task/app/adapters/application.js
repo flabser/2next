@@ -8,11 +8,10 @@ export default DS.RESTAdapter.extend({
     namespace: getHost() + 'rest',
 
     pathForType: function(type) {
+        console.log(arguments);
         switch (type) {
             case 'category':
                 return 'categories';
-            case 'budget':
-                return 'budget';
             case 'role':
                 return 'application/roles'
             default:
