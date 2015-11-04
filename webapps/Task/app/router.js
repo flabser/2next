@@ -4,42 +4,23 @@ var Router = Em.Router.extend();
 
 Router.map(function() {
 
-    this.route('dashboard', {
-        path: '/'
-    });
-
-    this.route('tasks', function() {
-        this.route('new');
-        this.route('edit', {
-            path: '/:task_id/edit',
-        });
-        this.route('task', {
-            path: '/:task_id',
-        }, function() {
-            this.route('issues', {
-                path: 'issues'
-            }, function() {
-                this.route('new');
-                this.route('issue', {
-                    path: ':issue_id'
-                });
-            });
-        });
-    });
-
     this.route('issues', {
-        path: 'issues'
+        path: '/'
     }, function() {
         this.route('new');
-        this.route('issue', {
-            path: ':issue_id'
+        this.route('edit', {
+            path: '/:issue_id/edit',
         });
+        this.route('inbox');
+        this.route('today');
+        this.route('week');
+        this.route('favorite');
     });
 
-    this.route('categories', function() {
+    this.route('tags', function() {
         this.route('new');
-        this.route('category', {
-            path: '/:category_id'
+        this.route('tag', {
+            path: '/:tag_id'
         });
     });
 

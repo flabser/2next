@@ -21,12 +21,18 @@ public class IssueDAO extends DAO <Issue, Long> {
 	}
 
 	public List <Issue> find(IssueFilter filter) {
-		String categories = "";
+		String tags = "";
 		String dateRange = "";
+		String status = "";
 		boolean hasWhere = false;
 
-		if (!filter.getCategories().isEmpty()) {
-			categories = (hasWhere ? " AND " : "") + " m.category IN :categories";
+		if (filter.getStatus() != null) {
+			status = " m.status = :status";
+			hasWhere = true;
+		}
+
+		if (!filter.getTags().isEmpty()) {
+			tags = (hasWhere ? " AND " : "") + " m.tag IN :tags";
 			hasWhere = true;
 		}
 
@@ -35,14 +41,18 @@ public class IssueDAO extends DAO <Issue, Long> {
 			hasWhere = true;
 		}
 
-		String jpql = SELECT_ALL + (hasWhere ? " WHERE " : "") + categories + dateRange + " ORDER BY m.milestone ASC";
+		String jpql = SELECT_ALL + (hasWhere ? " WHERE " : "") + status + tags + dateRange
+				+ " ORDER BY m.milestone ASC";
 
 		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
 			TypedQuery <Issue> q = em.createQuery(jpql, Issue.class);
 
-			if (!categories.isEmpty()) {
-				q.setParameter("categories", filter.getCategories());
+			if (filter.getStatus() != null) {
+				q.setParameter("status", filter.getStatus());
+			}
+			if (!tags.isEmpty()) {
+				q.setParameter("tags", filter.getTags());
 			}
 			if (!dateRange.isEmpty()) {
 				q.setParameter("sdate", filter.getMilestoneDateRange()[0]);

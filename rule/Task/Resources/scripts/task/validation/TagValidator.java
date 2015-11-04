@@ -1,24 +1,20 @@
 package task.validation;
 
-import task.model.Category;
+import task.model.Tag;
 
 
-public class CategoryValidator {
+public class TagValidator {
 
-	public CategoryValidator() {
+	public TagValidator() {
 	}
 
-	public ValidationError validate(Category m) {
+	public ValidationError validate(Tag m) {
 		ValidationError ve = new ValidationError();
 
 		if (m.getName() == null || m.getName().isEmpty()) {
 			ve.addError("name", "required", "required");
 		} else if (m.getName().length() > 64) {
 			ve.addError("name", "invalid", "too_long");
-		}
-
-		if (m.getNote() != null && m.getNote().length() > 256) {
-			ve.addError("note", "invalid", "too_long");
 		}
 
 		if (m.getParentId() != null) {

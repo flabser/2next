@@ -8,16 +8,7 @@ export default DS.RESTAdapter.extend({
     namespace: getHost() + 'rest',
 
     pathForType: function(type) {
-        switch (type) {
-            case 'category':
-                return 'categories';
-            case 'budget':
-                return 'budget';
-            case 'role':
-                return 'application/roles'
-            default:
-                return type + 's';
-        }
+        return type + 's';
     },
 
     shouldReloadAll: () => false

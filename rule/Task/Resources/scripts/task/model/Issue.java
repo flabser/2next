@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -30,11 +32,14 @@ public class Issue extends AppEntity {
 
 	public enum Status {
 		DRAFT, PROCESS, CLOSE;
-	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "task")
-	private Task task;
+		public static Status fromValue(String status) {
+			if ("DRAFT".equals(status) || "PROCESS".equals(status) || "CLOSE".equals(status)) {
+				return valueOf(status);
+			}
+			return null;
+		}
+	}
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -55,20 +60,14 @@ public class Issue extends AppEntity {
 	@Column(nullable = false)
 	private Date milestone;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category")
-	private Category category;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "issue_tags", joinColumns = {
+			@JoinColumn(name = "issue_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "tag_id", referencedColumnName = "id") })
+	private List <Tag> tags;
 
 	@Column(length = 2000)
 	private String body;
-
-	public Task getTask() {
-		return task;
-	}
-
-	public void setTask(Task task) {
-		this.task = task;
-	}
 
 	public Issue getParent() {
 		return parent;
@@ -110,12 +109,12 @@ public class Issue extends AppEntity {
 		this.milestone = milestone;
 	}
 
-	public Category getCategory() {
-		return category;
+	public List <Tag> getTags() {
+		return tags;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setTags(List <Tag> tags) {
+		this.tags = tags;
 	}
 
 	public String getBody() {

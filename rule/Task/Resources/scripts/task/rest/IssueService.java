@@ -36,9 +36,11 @@ public class IssueService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@QueryParam("milestone") String milestone) {
+	public Response get(@QueryParam("milestone") String milestone, @QueryParam("issue_status") String status,
+			@QueryParam("tag") Long tagId) {
 		IssueDAO dao = new IssueDAO(getSession());
 		IssueFilter filter = new IssueFilter();
+		Issue.Status issueStatus = Issue.Status.fromValue(status);
 
 		if (milestone != null && !milestone.isEmpty()) {
 			if ("today".equals(milestone)) {
@@ -48,6 +50,7 @@ public class IssueService extends RestProvider {
 				filter.setMilestoneDateRange(sdate, edate);
 			}
 		}
+		filter.setStatus(issueStatus);
 
 		return Response.ok(new Issues(dao.find(filter))).build();
 	}
@@ -58,11 +61,10 @@ public class IssueService extends RestProvider {
 	public Response get(@PathParam("id") long id) {
 		IssueDAO dao = new IssueDAO(getSession());
 		Issue m = dao.findById(id);
-		//
 		if (m == null) {
 			return Response.noContent().status(Status.NOT_FOUND).build();
 		}
-		//
+
 		return Response.ok(m).build();
 	}
 
@@ -93,13 +95,12 @@ public class IssueService extends RestProvider {
 
 		IssueDAO dao = new IssueDAO(getSession());
 		Issue pm = dao.findById(id);
-		//
 		if (pm == null) {
 			return Response.noContent().status(Status.NOT_FOUND).build();
 		}
-		//
+
 		pm.setBody(m.getBody());
-		//
+
 		return Response.ok(dao.update(pm)).build();
 	}
 

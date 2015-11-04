@@ -41,6 +41,7 @@
             Status:
         </div>
         <div class="controls">
+
         {{select-user-status value=model.status}}
 
         </div>
@@ -50,7 +51,11 @@
             RegDate:
         </div>
         <div class="controls">
+
             {{input name="regDate" value=model.regDate disabled=true  }}
+
+
+
         </div>
     </div>
     <div class="control-group">
@@ -58,8 +63,9 @@
             IsSupervisor:
         </div>
         <div class="controls">
-        
-            {{input type="checkbox" name="isSupervisor"  checked=model.isSupervisor}}
+
+            {{input name="isSupervisor" value=model.isSupervisor required=true}}
+
         </div>
     </div>
 </div>
