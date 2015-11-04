@@ -7,7 +7,7 @@
 		<entry lang="BG">Immigration Service</entry>
 		<entry lang="CHO">移民服務</entry>
 	</sentence>
-	
+
 	<sentence mode="on" keyword="promo_heading">
 		<entry lang="RUS">Иммиграционный сервис</entry>
 		<entry lang="KAZ">Иммиграционный сервис</entry>
@@ -27,7 +27,7 @@
 		<entry lang="CHO">十餘年來，在市場</entry>
 	</sentence>
 
-	<sentence mode="on" keyword="find_out_more">
+	<sentence mode="on" keyword="learn_more">
 		<entry lang="RUS">Узнать больше</entry>
 		<entry lang="KAZ">Көбірек білгім келеді</entry>
 		<entry lang="ENG">More</entry>
@@ -42,7 +42,7 @@
 		<entry lang="BG">Основните</entry>
 		<entry lang="CHO"></entry>
 	</sentence>
-	<sentence mode="on" keyword="ВНЖ в Болгарии">
+	<sentence mode="on" keyword="vnzh_bg">
 		<entry lang="RUS">ВНЖ в Болгарии</entry>
 		<entry lang="KAZ">ВНЖ в Болгарии</entry>
 		<entry lang="ENG">Residence permit in Bulgaria</entry>
@@ -65,6 +65,13 @@
 		<entry lang="KAZ">Вид на жительство в Болгарии – это просто, не дорого и гарантировано</entry>
 		<entry lang="ENG">Residence permit in Bulgaria is simple, not expensive and guaranteed</entry>
 		<entry lang="CHO"></entry>
+	</sentence>
+	<sentence mode="on" keyword="price">
+		<entry lang="RUS">Услуги и стоимость</entry>
+		<entry lang="KAZ">Услуги и стоимость</entry>
+		<entry lang="ENG">Услуги и стоимость</entry>
+		<entry lang="BG">Услуги и стоимость</entry>
+		<entry lang="CHO">Услуги и стоимость</entry>
 	</sentence>
 	<sentence mode="on" keyword="contact_us">
 		<entry lang="RUS">Свяжитесь с нами</entry>
@@ -127,25 +134,41 @@
 	</sentence>
 
 	<!-- -->
+	<sentence mode="on" keyword="about_us">
+		<entry lang="RUS">О нас</entry>
+		<entry lang="KAZ">О нас</entry>
+		<entry lang="ENG">About us</entry>
+		<entry lang="BG">О нас</entry>
+		<entry lang="CHO"></entry>
+	</sentence>
 	<sentence mode="on" keyword="about_us_text">
-		<entry lang="RUS">У нас есть готовые решения для каждого заявителя! Позвоните сейчас и получите ответы на все интересующие вопросы. На территории Болгарии и Казахстана наш сервис предоставит Вам полное сопровождение в подготовке документов и оснований, для получения иммиграционной визы и оформления вида на жительство в Болгарии. 
+		<entry lang="RUS">У нас есть готовые решения для каждого заявителя! Позвоните сейчас и получите ответы на все
+			интересующие вопросы. На территории Болгарии и Казахстана наш сервис предоставит Вам полное сопровождение в
+			подготовке документов и оснований, для получения иммиграционной визы и оформления вида на жительство в Болгарии.
 		</entry>
-		<entry lang="KAZ">У нас есть готовые решения для каждого заявителя! Позвоните сейчас и получите ответы на все интересующие вопросы. На территории Болгарии и Казахстана наш сервис предоставит Вам полное сопровождение в подготовке документов и оснований, для получения иммиграционной визы и оформления вида на жительство в Болгарии. 
+		<entry lang="KAZ">У нас есть готовые решения для каждого заявителя! Позвоните сейчас и получите ответы на все
+			интересующие вопросы. На территории Болгарии и Казахстана наш сервис предоставит Вам полное сопровождение в
+			подготовке документов и оснований, для получения иммиграционной визы и оформления вида на жительство в Болгарии.
 		</entry>
-		<entry lang="ENG">We have ready solutions for each applicant! Call now and get answers to all your questions. On the territory of Bulgaria and Kazakhstan our service will provide You full support in the preparation of documents and grounds for immigration visa and a residence permit in Bulgaria
+		<entry lang="ENG">We have ready solutions for each applicant! Call now and get answers to all your questions. On the
+			territory of Bulgaria and Kazakhstan our service will provide You full support in the preparation of documents and
+			grounds for immigration visa and a residence permit in Bulgaria
 		</entry>
 
-	<entry lang="CHO"></entry>
-		</sentence>
+		<entry lang="CHO"></entry>
+	</sentence>
 	<sentence mode="on" keyword="about_experience_text">
 		<entry lang="RUS">Бесплатная консультация по телефону.
-Подготовка документов для получения визы Д
-Полное сопровождение на получение внж в Болгарии</entry>
+			Подготовка документов для получения визы Д
+			Полное сопровождение
+			на получение внж в Болгарии
+		</entry>
 		<entry lang="KAZ">На протяжении многих лет,
 		</entry>
-		<entry lang="ENG">Over the years, we have amassed extensive knowledge and 
+		<entry lang="ENG">Over the years, we have amassed extensive knowledge and
 		</entry>
-<entry lang="CHO"></entry>	</sentence>
+		<entry lang="CHO"></entry>
+	</sentence>
 
 	<!-- -->
 	<sentence mode="on" keyword="skills_prog_lang">
@@ -159,10 +182,10 @@
 		<entry lang="KAZ"></entry>
 		<entry lang="ENG"></entry>
 		<entry lang="CHO"></entry>
-		
+
 	</sentence>
 	<sentence mode="on" keyword="skills_mobile_tech">
-			<entry lang="RUS">Услуги</entry>
+		<entry lang="RUS">Услуги</entry>
 		<entry lang="KAZ"></entry>
 		<entry lang="ENG"></entry>
 		<entry lang="CHO"></entry>

@@ -1,0 +1,22 @@
+<div class="issues">
+    {{#each issues as |issue|}}
+        {{#unless issue.isNew}}
+        <div class="entry-wrap">
+            <div class="entry-actions">
+                <button class="entry-action action-delete" {{action 'deleteRecord' issue}}>
+                    <i class="fa fa-trash" />
+                </button>
+            </div>
+            {{#tn-swipe-entry class='entry'}}
+                {{#link-to 'issues.issue' issue class='entry-link'}}
+                <div class="entry-fields">
+                    <span>
+                        {{issue.body}}
+                    </span>
+                </div>
+                {{/link-to}}
+            {{/tn-swipe-entry}}
+        </div>
+        {{/unless}}
+    {{/each}}
+</div>

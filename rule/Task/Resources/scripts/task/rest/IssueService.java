@@ -1,7 +1,10 @@
 package task.rest;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -11,17 +14,19 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.flabser.restful.RestProvider;
+
 import task.dao.IssueDAO;
+import task.dao.filter.IssueFilter;
 import task.model.Issue;
 import task.validation.IssueValidator;
 import task.validation.ValidationError;
-
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.restful.RestProvider;
 
 
 @Path("issues")
@@ -31,9 +36,20 @@ public class IssueService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get() {
+	public Response get(@QueryParam("milestone") String milestone) {
 		IssueDAO dao = new IssueDAO(getSession());
-		return Response.ok(new Issues(dao.findAll())).build();
+		IssueFilter filter = new IssueFilter();
+
+		if (milestone != null && !milestone.isEmpty()) {
+			if ("today".equals(milestone)) {
+				LocalDate localDate = LocalDate.now();
+				Date sdate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+				Date edate = Date.from(localDate.plusDays(1L).atStartOfDay(ZoneId.systemDefault()).toInstant());
+				filter.setMilestoneDateRange(sdate, edate);
+			}
+		}
+
+		return Response.ok(new Issues(dao.find(filter))).build();
 	}
 
 	@GET

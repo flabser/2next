@@ -10,6 +10,9 @@ Router.map(function() {
 
     this.route('tasks', function() {
         this.route('new');
+        this.route('edit', {
+            path: '/:task_id/edit',
+        });
         this.route('task', {
             path: '/:task_id',
         }, function() {
@@ -21,6 +24,15 @@ Router.map(function() {
                     path: ':issue_id'
                 });
             });
+        });
+    });
+
+    this.route('issues', {
+        path: 'issues'
+    }, function() {
+        this.route('new');
+        this.route('issue', {
+            path: ':issue_id'
         });
     });
 

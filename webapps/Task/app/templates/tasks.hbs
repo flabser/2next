@@ -1,0 +1,31 @@
+<div class="tasks-view">
+    <table>
+        <tr>
+            <td style="width:260px">
+                <ul class="nav">
+                    <li>
+                        {{#link-to 'issues' (query-params milestone='today')}}
+                            {{t 'today'}}
+                        {{/link-to}}
+                    </li>
+                    <li>
+                        {{#link-to 'issues' (query-params milestone='week')}}
+                            {{t 'this_week'}}
+                        {{/link-to}}
+                    </li>
+                </ul>
+                <button class="btn" {{action 'composeRecord'}}>
+                    <i class="fa fa-plus"></i>{{t 'add'}}
+                </button>
+                {{outlet 'task'}}
+                {{task/tasks-view tasks=model}}
+            </td>
+            <td>
+                <div class="issues">
+                    {{outlet 'issues'}}
+                </div>
+                {{issue/issues-view issues=issues}}
+            </td>
+        </tr>
+    </table>
+</div>

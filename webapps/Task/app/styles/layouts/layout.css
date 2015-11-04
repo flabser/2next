@@ -4,10 +4,6 @@
     position: relative;
 }
 
-.layout_wide .container {
-    max-width: 100%;
-}
-
 .layout {
     background: #FFF;
     margin: 0px auto;
@@ -99,10 +95,9 @@
     background: #FFF url(../img/loader-mini.gif) center center no-repeat;
     height: 100%;
     left: 0;
-    padding-top: 50px;
     position: absolute;
     text-align: center;
-    top: 0;
+    top: 50px;
     width: 100%;
     z-index: 999;
 }

@@ -13,11 +13,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import task.serializers.JsonDateSerializer;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.flabser.dataengine.jpa.AppEntity;
+
+import task.serializers.JsonDateSerializer;
 
 
 @JsonRootName("task")
@@ -31,9 +32,11 @@ public class Task extends AppEntity {
 
 	@JsonSerialize(using = JsonDateSerializer.class)
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
 	private Date deadline;
 
+	private int issueCount;
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private List <Issue> issues;
 
@@ -55,6 +58,15 @@ public class Task extends AppEntity {
 
 	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
+	}
+
+	public int getIssueCount() {
+		// return issueCount;
+		return getIssues().size();
+	}
+
+	public void setIssueCount(int issueCount) {
+		this.issueCount = issueCount;
 	}
 
 	@Override

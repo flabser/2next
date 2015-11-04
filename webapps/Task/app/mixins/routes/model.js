@@ -5,10 +5,12 @@ export default Em.Mixin.create({
 
     deactivate: function() {
         let model = this.currentModel;
-        if (model.get('isNew') && model.get('isSaving') === false) {
-            model.deleteRecord();
-        } else if (!model.get('isNew') && model.get('hasDirtyAttributes')) {
-            model.rollbackAttributes();
+        if (model) {
+            if (model.get('isNew') && model.get('isSaving') === false) {
+                model.deleteRecord();
+            } else if (!model.get('isNew') && model.get('hasDirtyAttributes')) {
+                model.rollbackAttributes();
+            }
         }
 
         return true;
