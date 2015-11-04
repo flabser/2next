@@ -1,14 +1,14 @@
 <div>
-<h3>Users</h3>
+	<h3>Users</h3>
     <div class="action-bar">
         <a class="btn" href="#/users/new">new user</a>
     </div>
-{{#each model as |user|}}
-    <div>
-        <label class="entry-select">
-            <input type="checkbox" name="docid" value="{@docid}" />
-        </label>
-        {{#link-to 'user' user.id}} {{user.login}}  {{user.userName}} {{/link-to}}</div>
-{{/each}}
-
+	{{#each model as |user|}}
+	    <div>
+	        <label class="entry-select">
+	            <input type="checkbox" name="docid" value="{@docid}" />
+	        </label>
+	        {{#link-to 'user' user.id}} {{user.login}}  {{user.userName}} {{/link-to}}
+	    </div>
+	{{/each}}
 </div>

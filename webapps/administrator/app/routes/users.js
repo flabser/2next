@@ -1,6 +1,6 @@
 AdminApp.UsersRoute = Ember.Route.extend({
     model: function(params) {
-        return this.store.find('user');
+        return this.store.findAll('user');
     }
 });
 

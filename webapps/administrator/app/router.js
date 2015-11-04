@@ -1,5 +1,5 @@
 AdminApp.Router.map(function(){
-	this.resource('users', {
+	this.route('users', {
 	    path: '/'
 	  });
 	this.route('logs');

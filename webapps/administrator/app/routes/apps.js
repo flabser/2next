@@ -1,6 +1,6 @@
 AdminApp.AppsRoute = Ember.Route.extend({
     model: function(params) {
-        return this.store.find('app');
+        return this.store.findAll('app');
     }
 });
 
