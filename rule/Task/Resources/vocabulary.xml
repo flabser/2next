@@ -42,33 +42,12 @@
 		<entry lang="BG">Обзор</entry>
 		<entry lang="POR"></entry>
 	</sentence>
-	<sentence mode="on" keyword="tasks">
-		<entry lang="RUS">Tasks</entry>
-		<entry lang="KAZ">Tasks</entry>
-		<entry lang="ENG">Tasks</entry>
-		<entry lang="BG">Tasks</entry>
-		<entry lang="POR">Tasks</entry>
-	</sentence>
-	<sentence mode="on" keyword="task">
-		<entry lang="RUS">Task</entry>
-		<entry lang="KAZ">Task</entry>
-		<entry lang="ENG">Task</entry>
-		<entry lang="BG">Task</entry>
-		<entry lang="POR">Task</entry>
-	</sentence>
 	<sentence mode="on" keyword="issues">
 		<entry lang="RUS">Issues</entry>
 		<entry lang="KAZ">Issues</entry>
 		<entry lang="ENG">Issues</entry>
 		<entry lang="BG">Issues</entry>
 		<entry lang="POR">Issues</entry>
-	</sentence>
-	<sentence mode="on" keyword="categories">
-		<entry lang="RUS">Категории</entry>
-		<entry lang="KAZ">Категории</entry>
-		<entry lang="ENG">Categories</entry>
-		<entry lang="BG">Категори</entry>
-		<entry lang="POR"></entry>
 	</sentence>
 
 	<!-- -->
@@ -149,12 +128,6 @@
 		<entry lang="ENG">Author</entry>
 		<entry lang="BG">Автор</entry>
 	</sentence>
-	<sentence mode="on" keyword="additional">
-		<entry lang="RUS">Дополнительно</entry>
-		<entry lang="KAZ">Дополнительно</entry>
-		<entry lang="ENG">Additional</entry>
-		<entry lang="BG">Дополнительно</entry>
-	</sentence>
 
 	<sentence mode="on" keyword="attachments">
 		<entry lang="RUS">Вложения</entry>
@@ -206,18 +179,7 @@
 		<entry lang="ENG">Parent category</entry>
 		<entry lang="BG">Категория</entry>
 	</sentence>
-	<sentence mode="on" keyword="category_active_hint">
-		<entry lang="RUS">Неактивные категории скрыты</entry>
-		<entry lang="KAZ">Неактивные категории скрыты</entry>
-		<entry lang="ENG">Not active categories have hidden</entry>
-		<entry lang="BG">Неактивные категории скрыты</entry>
-	</sentence>
-	<sentence mode="on" keyword="category_color_hint">
-		<entry lang="RUS">Название категории в представлении будет выведено с выбранным цветом</entry>
-		<entry lang="KAZ">Название категории в представлении будет выведено с выбранным цветом</entry>
-		<entry lang="ENG">The name of the category in the presentation will be displayed with the selected color</entry>
-		<entry lang="BG">Название категории в представлении будет выведено с выбранным цветом</entry>
-	</sentence>
+
 	<sentence mode="on" keyword="user">
 		<entry lang="RUS">Пользователь</entry>
 		<entry lang="KAZ">Пользователь</entry>
@@ -254,12 +216,6 @@
 		<entry lang="ENG">E-mail</entry>
 		<entry lang="BG">E-mail</entry>
 	</sentence>
-	<sentence mode="on" keyword="roles">
-		<entry lang="RUS">Роли</entry>
-		<entry lang="KAZ">Роли</entry>
-		<entry lang="ENG">Roles</entry>
-		<entry lang="BG">Роли</entry>
-	</sentence>
 	<sentence mode="on" keyword="reg_date">
 		<entry lang="RUS">Дата регистрации</entry>
 		<entry lang="KAZ">Дата регистрации</entry>
@@ -272,25 +228,11 @@
 		<entry lang="ENG">Date</entry>
 		<entry lang="BG">Дата</entry>
 	</sentence>
-	<sentence mode="on" keyword="deadline">
+	<sentence mode="on" keyword="milestone">
 		<entry lang="RUS">Завершить до</entry>
 		<entry lang="KAZ">Завершить до</entry>
 		<entry lang="ENG">Should solved till</entry>
 		<entry lang="BG">Завершить до</entry>
-	</sentence>
-	<sentence mode="on" keyword="color">
-		<entry lang="RUS">Цвет</entry>
-		<entry lang="KAZ">Цвет</entry>
-		<entry lang="ENG">Color</entry>
-		<entry lang="BG">Цвят</entry>
-		<entry lang="POR"></entry>
-	</sentence>
-	<sentence mode="on" keyword="note">
-		<entry lang="RUS">Примечание</entry>
-		<entry lang="KAZ">Примечание</entry>
-		<entry lang="ENG">Note</entry>
-		<entry lang="BG">Примечание</entry>
-		<entry lang="POR"></entry>
 	</sentence>
 
 	<sentence mode="on" keyword="add_user">

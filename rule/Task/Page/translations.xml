@@ -16,30 +16,13 @@
 	<caption name="workspace" />
 	<caption name="logout" />
 
-	<caption name="saved" />
-	<caption name="newdoc" />
-	<caption name="editing" />
-	<caption name="readonly" />
-	<caption name="author" />
-
-	<caption name="attachments" />
-	<caption name="attach" />
-	<caption name="attach_delete" />
-	<caption name="attach_open" />
-	<caption name="attach_preview" />
-	<caption name="attach_add_comment" />
-
 	<caption name="dashboard" />
-	<caption name="task" />
-	<caption name="tasks" />
-	<caption name="reports" />
-	<caption name="category" />
-	<caption name="categories" />
 	<caption name="tag" />
 	<caption name="tags" />
 	<caption name="user" />
 	<caption name="users" />
 
+	<caption name="author" />
 	<caption name="user_profile" />
 	<caption name="password" />
 	<caption name="password_change" />
@@ -50,16 +33,10 @@
 
 	<caption name="name" />
 	<caption name="email" />
-	<caption name="roles" />
-	<caption name="reg_date" />
 	<caption name="date" />
-	<caption name="deadline" />
-	<caption name="parent_category" />
-	<caption name="note" />
-
-	<caption name="active" />
-	<caption name="category_active_hint" />
-	<caption name="category_color_hint" />
+	<caption name="milestone" />
+	<caption name="parent_tag" />
+	<caption name="body" />
 
 	<caption name="add_user" />
 	<caption name="invitation_title" />
@@ -67,6 +44,13 @@
 	<caption name="invitation_roles_hint" />
 	<caption name="message" />
 	<caption name="send_invite" />
+
+	<caption name="attachments" />
+	<caption name="attach" />
+	<caption name="attach_delete" />
+	<caption name="attach_open" />
+	<caption name="attach_preview" />
+	<caption name="attach_add_comment" />
 
 	<caption name="upload_browse" />
 	<caption name="upload_drop_here" />
