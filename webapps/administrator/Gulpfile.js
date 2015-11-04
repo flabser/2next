@@ -22,11 +22,7 @@ gulp.task('minify_css', function() {
 // --------------------------------
 
 // ember app
-var js_ember_files = ['./js/**/*.js',
-    '!./js/libs/**/*.js',
-    '!./js/app.build.js',
-    '!./js/app.min.js'
-];
+var js_ember_files = ['./app/**/*.js'];
 
 gulp.task('em_minify_js', function() {
     gulp.src(js_ember_files)
@@ -38,13 +34,13 @@ gulp.task('em_minify_js', function() {
 });
 // --------------------------------
 
-var em_templates = ['./js/templates/**/*.html'];
+var em_templates = ['./app/templates/**/*.hbs'];
 
 gulp.task('em_templates_compile', function() {
     gulp.src(em_templates)
         .pipe(emberTemplates({
             type: 'browser',
-            compiler: require('../SharedResources/vendor/ember/ember-template-compiler.min'),
+            compiler: require('../SharedResources/vendor/ember/release/ember-template-compiler'),
             isHTMLBars: true,
             name: {
                 replace: '\\',
@@ -52,7 +48,7 @@ gulp.task('em_templates_compile', function() {
             }
         }))
         .pipe(concat('templates.js'))
-        .pipe(gulp.dest('./js/templates/compiled'));
+        .pipe(gulp.dest('./app/templates/compiled'));
 });
 // --------------------------------
 

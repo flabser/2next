@@ -3,12 +3,12 @@
     <div class="action-bar">
         <a class="btn" href="#/users/new">new user</a>
     </div>
-{{#each controller}}
+{{#each model as |user|}}
     <div>
         <label class="entry-select">
             <input type="checkbox" name="docid" value="{@docid}" />
         </label>
-        {{#link-to 'user' id}} {{login}}  {{userName}} {{/link-to}}</div>
+        {{#link-to 'user' user.id}} {{user.login}}  {{user.userName}} {{/link-to}}</div>
 {{/each}}
 
 </div>

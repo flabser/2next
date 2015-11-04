@@ -5,9 +5,9 @@
     <aside>
         <div class="nav">
             <ul>
-                {{#each controller}}
+                {{#each model as |m|}}
                 <li>
-                    {{#link-to viewdata}} {{title}} {{/link-to}}
+                    {{#link-to m.viewdata}} {{m.title}} {{/link-to}}
                 </li>
                 {{/each}}
             </ul>

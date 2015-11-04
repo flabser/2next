@@ -1,7 +1,7 @@
 AdminApp = Ember.Application.create();
 
 var baseURL =  DS.RESTAdapter.extend({
-    namespace: 'Administrator/rest'
+    namespace: 'administrator/rest'
 });
 
 AdminApp.ApplicationAdapter = baseURL.extend({
@@ -22,14 +22,14 @@ AdminApp.Router.map(function(){
 });
 
 
-AdminApp.LogsController = Ember.ArrayController.extend({
+AdminApp.LogsController = Ember.Controller.extend({
     actions: {
         selectAll: function() {}
     }
 });
 
 
-AdminApp.NewUserController = Ember.ObjectController.extend({
+AdminApp.NewUserController = Ember.Controller.extend({
     actions: {
         save: function(user) {
             console.log("save new user", user);
@@ -46,7 +46,7 @@ AdminApp.NewUserController = Ember.ObjectController.extend({
     }
 });
 
-AdminApp.UserController = Ember.ObjectController.extend({
+AdminApp.UserController = Ember.Controller.extend({
     actions: {
         save: function(user) {
         	console.log("upda5te user");
@@ -57,7 +57,7 @@ AdminApp.UserController = Ember.ObjectController.extend({
     }
 });
 
-AdminApp.UsersController = Ember.ArrayController.extend({
+AdminApp.UsersController = Ember.Controller.extend({
     actions: {
         selectAll: function() {}
     }
@@ -124,6 +124,8 @@ AdminApp.User.FIXTURES = [{
 }];
 
 AdminApp.ApplicationRoute = Ember.Route.extend({
+    templateName: 'application',
+
     model: function() {
         return [{
             title: "Logs",
@@ -177,12 +179,26 @@ AdminApp.UsersNewRoute = Ember.Route.extend({
 
 Ember.TEMPLATES["app"] = Ember.HTMLBars.template((function() {
   return {
-    isHTMLBars: true,
-    revision: "Ember@1.12.1",
-    blockParams: 0,
+    meta: {
+      "topLevel": null,
+      "revision": "Ember@2.1.0+45f524a3",
+      "loc": {
+        "source": null,
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 55,
+          "column": 6
+        }
+      }
+    },
+    isEmpty: false,
+    arity: 0,
     cachedFragment: null,
     hasRendered: false,
-    build: function build(dom) {
+    buildFragment: function buildFragment(dom) {
       var el0 = dom.createDocumentFragment();
       var el1 = dom.createElement("div");
       var el2 = dom.createTextNode("\n");
@@ -370,57 +386,58 @@ Ember.TEMPLATES["app"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el0, el1);
       return el0;
     },
-    render: function render(context, env, contextualElement) {
-      var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
-      dom.detectNamespace(contextualElement);
-      var fragment;
-      if (env.useFragmentCache && dom.canClone) {
-        if (this.cachedFragment === null) {
-          fragment = this.build(dom);
-          if (this.hasRendered) {
-            this.cachedFragment = fragment;
-          } else {
-            this.hasRendered = true;
-          }
-        }
-        if (this.cachedFragment) {
-          fragment = dom.cloneNode(this.cachedFragment, true);
-        }
-      } else {
-        fragment = this.build(dom);
-      }
+    buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
       var element0 = dom.childAt(fragment, [0]);
       var element1 = dom.childAt(element0, [3, 1]);
-      var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
-      var morph1 = dom.createMorphAt(dom.childAt(element0, [5, 3]),1,1);
-      var morph2 = dom.createMorphAt(dom.childAt(element0, [7, 3]),1,1);
-      var morph3 = dom.createMorphAt(dom.childAt(element0, [9, 3]),1,1);
-      var morph4 = dom.createMorphAt(dom.childAt(element0, [11, 3]),1,1);
-      var morph5 = dom.createMorphAt(dom.childAt(element0, [13, 3]),1,1);
-      var morph6 = dom.createMorphAt(dom.childAt(element0, [15, 3]),1,1);
-      content(env, morph0, context, "appName");
-      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
-      inline(env, morph1, context, "input", [], {"name": "appName", "value": get(env, context, "appName"), "required": true});
-      inline(env, morph2, context, "input", [], {"name": "owner", "value": get(env, context, "owner"), "required": true});
-      inline(env, morph3, context, "input", [], {"name": "dbHost", "value": get(env, context, "dbHost"), "required": true});
-      inline(env, morph4, context, "input", [], {"name": "dbLogin", "value": get(env, context, "dbLogin"), "required": true});
-      inline(env, morph5, context, "input", [], {"name": "dbName", "value": get(env, context, "dbName"), "required": true});
-      inline(env, morph6, context, "input", [], {"name": "dbPwd", "value": get(env, context, "dbPwd"), "required": true});
-      return fragment;
-    }
+      var morphs = new Array(8);
+      morphs[0] = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
+      morphs[1] = dom.createElementMorph(element1);
+      morphs[2] = dom.createMorphAt(dom.childAt(element0, [5, 3]),1,1);
+      morphs[3] = dom.createMorphAt(dom.childAt(element0, [7, 3]),1,1);
+      morphs[4] = dom.createMorphAt(dom.childAt(element0, [9, 3]),1,1);
+      morphs[5] = dom.createMorphAt(dom.childAt(element0, [11, 3]),1,1);
+      morphs[6] = dom.createMorphAt(dom.childAt(element0, [13, 3]),1,1);
+      morphs[7] = dom.createMorphAt(dom.childAt(element0, [15, 3]),1,1);
+      return morphs;
+    },
+    statements: [
+      ["content","appName",["loc",[null,[2,16],[2,27]]]],
+      ["element","action",["save",["get","this",["loc",[null,[4,56],[4,60]]]]],[],["loc",[null,[4,40],[4,62]]]],
+      ["inline","input",[],["name","appName","value",["subexpr","@mut",[["get","appName",["loc",[null,[12,41],[12,48]]]]],[],[]],"required",true],["loc",[null,[12,12],[12,64]]]],
+      ["inline","input",[],["name","owner","value",["subexpr","@mut",[["get","owner",["loc",[null,[20,36],[20,41]]]]],[],[]],"required",true],["loc",[null,[20,9],[20,58]]]],
+      ["inline","input",[],["name","dbHost","value",["subexpr","@mut",[["get","dbHost",["loc",[null,[28,40],[28,46]]]]],[],[]],"required",true],["loc",[null,[28,12],[28,63]]]],
+      ["inline","input",[],["name","dbLogin","value",["subexpr","@mut",[["get","dbLogin",["loc",[null,[36,38],[36,45]]]]],[],[]],"required",true],["loc",[null,[36,9],[36,62]]]],
+      ["inline","input",[],["name","dbName","value",["subexpr","@mut",[["get","dbName",["loc",[null,[44,40],[44,46]]]]],[],[]],"required",true],["loc",[null,[44,12],[44,63]]]],
+      ["inline","input",[],["name","dbPwd","value",["subexpr","@mut",[["get","dbPwd",["loc",[null,[52,39],[52,44]]]]],[],[]],"required",true],["loc",[null,[52,12],[52,61]]]]
+    ],
+    locals: [],
+    templates: []
   };
 }()));
 Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
   var child0 = (function() {
     var child0 = (function() {
       return {
-        isHTMLBars: true,
-        revision: "Ember@1.12.1",
-        blockParams: 0,
+        meta: {
+          "topLevel": null,
+          "revision": "Ember@2.1.0+45f524a3",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 10,
+              "column": 20
+            },
+            "end": {
+              "line": 10,
+              "column": 56
+            }
+          }
+        },
+        isEmpty: false,
+        arity: 0,
         cachedFragment: null,
         hasRendered: false,
-        build: function build(dom) {
+        buildFragment: function buildFragment(dom) {
           var el0 = dom.createDocumentFragment();
           var el1 = dom.createTextNode(" ");
           dom.appendChild(el0, el1);
@@ -430,39 +447,39 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
           dom.appendChild(el0, el1);
           return el0;
         },
-        render: function render(context, env, contextualElement) {
-          var dom = env.dom;
-          var hooks = env.hooks, content = hooks.content;
-          dom.detectNamespace(contextualElement);
-          var fragment;
-          if (env.useFragmentCache && dom.canClone) {
-            if (this.cachedFragment === null) {
-              fragment = this.build(dom);
-              if (this.hasRendered) {
-                this.cachedFragment = fragment;
-              } else {
-                this.hasRendered = true;
-              }
-            }
-            if (this.cachedFragment) {
-              fragment = dom.cloneNode(this.cachedFragment, true);
-            }
-          } else {
-            fragment = this.build(dom);
-          }
-          var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
-          content(env, morph0, context, "title");
-          return fragment;
-        }
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment,1,1,contextualElement);
+          return morphs;
+        },
+        statements: [
+          ["content","m.title",["loc",[null,[10,44],[10,55]]]]
+        ],
+        locals: [],
+        templates: []
       };
     }());
     return {
-      isHTMLBars: true,
-      revision: "Ember@1.12.1",
-      blockParams: 0,
+      meta: {
+        "topLevel": null,
+        "revision": "Ember@2.1.0+45f524a3",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 8,
+            "column": 16
+          },
+          "end": {
+            "line": 12,
+            "column": 16
+          }
+        }
+      },
+      isEmpty: false,
+      arity: 1,
       cachedFragment: null,
       hasRendered: false,
-      build: function build(dom) {
+      buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
         var el1 = dom.createTextNode("                ");
         dom.appendChild(el0, el1);
@@ -478,39 +495,39 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         dom.appendChild(el0, el1);
         return el0;
       },
-      render: function render(context, env, contextualElement) {
-        var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
-        dom.detectNamespace(contextualElement);
-        var fragment;
-        if (env.useFragmentCache && dom.canClone) {
-          if (this.cachedFragment === null) {
-            fragment = this.build(dom);
-            if (this.hasRendered) {
-              this.cachedFragment = fragment;
-            } else {
-              this.hasRendered = true;
-            }
-          }
-          if (this.cachedFragment) {
-            fragment = dom.cloneNode(this.cachedFragment, true);
-          }
-        } else {
-          fragment = this.build(dom);
-        }
-        var morph0 = dom.createMorphAt(dom.childAt(fragment, [1]),1,1);
-        block(env, morph0, context, "link-to", [get(env, context, "viewdata")], {}, child0, null);
-        return fragment;
-      }
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]),1,1);
+        return morphs;
+      },
+      statements: [
+        ["block","link-to",[["get","m.viewdata",["loc",[null,[10,31],[10,41]]]]],[],0,null,["loc",[null,[10,20],[10,68]]]]
+      ],
+      locals: ["m"],
+      templates: [child0]
     };
   }());
   return {
-    isHTMLBars: true,
-    revision: "Ember@1.12.1",
-    blockParams: 0,
+    meta: {
+      "topLevel": null,
+      "revision": "Ember@2.1.0+45f524a3",
+      "loc": {
+        "source": null,
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 23,
+          "column": 0
+        }
+      }
+    },
+    isEmpty: false,
+    arity: 0,
     cachedFragment: null,
     hasRendered: false,
-    build: function build(dom) {
+    buildFragment: function buildFragment(dom) {
       var el0 = dom.createDocumentFragment();
       var el1 = dom.createElement("div");
       dom.setAttribute(el1,"class","container");
@@ -569,45 +586,45 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el0, el1);
       return el0;
     },
-    render: function render(context, env, contextualElement) {
-      var dom = env.dom;
-      var hooks = env.hooks, get = hooks.get, block = hooks.block, content = hooks.content;
-      dom.detectNamespace(contextualElement);
-      var fragment;
-      if (env.useFragmentCache && dom.canClone) {
-        if (this.cachedFragment === null) {
-          fragment = this.build(dom);
-          if (this.hasRendered) {
-            this.cachedFragment = fragment;
-          } else {
-            this.hasRendered = true;
-          }
-        }
-        if (this.cachedFragment) {
-          fragment = dom.cloneNode(this.cachedFragment, true);
-        }
-      } else {
-        fragment = this.build(dom);
-      }
+    buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
       var element0 = dom.childAt(fragment, [0]);
-      var morph0 = dom.createMorphAt(dom.childAt(element0, [3, 1, 1]),1,1);
-      var morph1 = dom.createMorphAt(dom.childAt(element0, [5]),1,1);
-      block(env, morph0, context, "each", [get(env, context, "controller")], {}, child0, null);
-      content(env, morph1, context, "outlet");
-      return fragment;
-    }
+      var morphs = new Array(2);
+      morphs[0] = dom.createMorphAt(dom.childAt(element0, [3, 1, 1]),1,1);
+      morphs[1] = dom.createMorphAt(dom.childAt(element0, [5]),1,1);
+      return morphs;
+    },
+    statements: [
+      ["block","each",[["get","model",["loc",[null,[8,24],[8,29]]]]],[],0,null,["loc",[null,[8,16],[12,25]]]],
+      ["content","outlet",["loc",[null,[17,8],[17,18]]]]
+    ],
+    locals: [],
+    templates: [child0]
   };
 }()));
 Ember.TEMPLATES["apps"] = Ember.HTMLBars.template((function() {
   var child0 = (function() {
     var child0 = (function() {
       return {
-        isHTMLBars: true,
-        revision: "Ember@1.12.1",
-        blockParams: 0,
+        meta: {
+          "topLevel": null,
+          "revision": "Ember@2.1.0+45f524a3",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 11,
+              "column": 8
+            },
+            "end": {
+              "line": 11,
+              "column": 66
+            }
+          }
+        },
+        isEmpty: false,
+        arity: 0,
         cachedFragment: null,
         hasRendered: false,
-        build: function build(dom) {
+        buildFragment: function buildFragment(dom) {
           var el0 = dom.createDocumentFragment();
           var el1 = dom.createTextNode(" ");
           dom.appendChild(el0, el1);
@@ -621,41 +638,41 @@ Ember.TEMPLATES["apps"] = Ember.HTMLBars.template((function() {
           dom.appendChild(el0, el1);
           return el0;
         },
-        render: function render(context, env, contextualElement) {
-          var dom = env.dom;
-          var hooks = env.hooks, content = hooks.content;
-          dom.detectNamespace(contextualElement);
-          var fragment;
-          if (env.useFragmentCache && dom.canClone) {
-            if (this.cachedFragment === null) {
-              fragment = this.build(dom);
-              if (this.hasRendered) {
-                this.cachedFragment = fragment;
-              } else {
-                this.hasRendered = true;
-              }
-            }
-            if (this.cachedFragment) {
-              fragment = dom.cloneNode(this.cachedFragment, true);
-            }
-          } else {
-            fragment = this.build(dom);
-          }
-          var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
-          var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          content(env, morph0, context, "appName");
-          content(env, morph1, context, "owner");
-          return fragment;
-        }
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(2);
+          morphs[0] = dom.createMorphAt(fragment,1,1,contextualElement);
+          morphs[1] = dom.createMorphAt(fragment,3,3,contextualElement);
+          return morphs;
+        },
+        statements: [
+          ["content","app.appName",["loc",[null,[11,34],[11,49]]]],
+          ["content","app.owner",["loc",[null,[11,52],[11,65]]]]
+        ],
+        locals: [],
+        templates: []
       };
     }());
     return {
-      isHTMLBars: true,
-      revision: "Ember@1.12.1",
-      blockParams: 0,
+      meta: {
+        "topLevel": null,
+        "revision": "Ember@2.1.0+45f524a3",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 6,
+            "column": 0
+          },
+          "end": {
+            "line": 12,
+            "column": 0
+          }
+        }
+      },
+      isEmpty: false,
+      arity: 1,
       cachedFragment: null,
       hasRendered: false,
-      build: function build(dom) {
+      buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
         var el1 = dom.createTextNode("    ");
         dom.appendChild(el0, el1);
@@ -683,39 +700,39 @@ Ember.TEMPLATES["apps"] = Ember.HTMLBars.template((function() {
         dom.appendChild(el0, el1);
         return el0;
       },
-      render: function render(context, env, contextualElement) {
-        var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
-        dom.detectNamespace(contextualElement);
-        var fragment;
-        if (env.useFragmentCache && dom.canClone) {
-          if (this.cachedFragment === null) {
-            fragment = this.build(dom);
-            if (this.hasRendered) {
-              this.cachedFragment = fragment;
-            } else {
-              this.hasRendered = true;
-            }
-          }
-          if (this.cachedFragment) {
-            fragment = dom.cloneNode(this.cachedFragment, true);
-          }
-        } else {
-          fragment = this.build(dom);
-        }
-        var morph0 = dom.createMorphAt(dom.childAt(fragment, [1]),3,3);
-        block(env, morph0, context, "link-to", ["app", get(env, context, "id")], {}, child0, null);
-        return fragment;
-      }
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]),3,3);
+        return morphs;
+      },
+      statements: [
+        ["block","link-to",["app",["get","app.id",["loc",[null,[11,25],[11,31]]]]],[],0,null,["loc",[null,[11,8],[11,78]]]]
+      ],
+      locals: ["app"],
+      templates: [child0]
     };
   }());
   return {
-    isHTMLBars: true,
-    revision: "Ember@1.12.1",
-    blockParams: 0,
+    meta: {
+      "topLevel": null,
+      "revision": "Ember@2.1.0+45f524a3",
+      "loc": {
+        "source": null,
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 14,
+          "column": 6
+        }
+      }
+    },
+    isEmpty: false,
+    arity: 0,
     cachedFragment: null,
     hasRendered: false,
-    build: function build(dom) {
+    buildFragment: function buildFragment(dom) {
       var el0 = dom.createDocumentFragment();
       var el1 = dom.createElement("div");
       var el2 = dom.createTextNode("\n");
@@ -748,42 +765,42 @@ Ember.TEMPLATES["apps"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el0, el1);
       return el0;
     },
-    render: function render(context, env, contextualElement) {
-      var dom = env.dom;
-      var hooks = env.hooks, get = hooks.get, block = hooks.block;
-      dom.detectNamespace(contextualElement);
-      var fragment;
-      if (env.useFragmentCache && dom.canClone) {
-        if (this.cachedFragment === null) {
-          fragment = this.build(dom);
-          if (this.hasRendered) {
-            this.cachedFragment = fragment;
-          } else {
-            this.hasRendered = true;
-          }
-        }
-        if (this.cachedFragment) {
-          fragment = dom.cloneNode(this.cachedFragment, true);
-        }
-      } else {
-        fragment = this.build(dom);
-      }
-      var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),5,5);
-      block(env, morph0, context, "each", [get(env, context, "controller")], {}, child0, null);
-      return fragment;
-    }
+    buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+      var morphs = new Array(1);
+      morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]),5,5);
+      return morphs;
+    },
+    statements: [
+      ["block","each",[["get","model",["loc",[null,[6,8],[6,13]]]]],[],0,null,["loc",[null,[6,0],[12,9]]]]
+    ],
+    locals: [],
+    templates: [child0]
   };
 }()));
 Ember.TEMPLATES["logs"] = Ember.HTMLBars.template((function() {
   var child0 = (function() {
     var child0 = (function() {
       return {
-        isHTMLBars: true,
-        revision: "Ember@1.12.1",
-        blockParams: 0,
+        meta: {
+          "topLevel": null,
+          "revision": "Ember@2.1.0+45f524a3",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 11,
+              "column": 8
+            },
+            "end": {
+              "line": 11,
+              "column": 115
+            }
+          }
+        },
+        isEmpty: false,
+        arity: 0,
         cachedFragment: null,
         hasRendered: false,
-        build: function build(dom) {
+        buildFragment: function buildFragment(dom) {
           var el0 = dom.createDocumentFragment();
           var el1 = dom.createTextNode(" name: ");
           dom.appendChild(el0, el1);
@@ -801,43 +818,43 @@ Ember.TEMPLATES["logs"] = Ember.HTMLBars.template((function() {
           dom.appendChild(el0, el1);
           return el0;
         },
-        render: function render(context, env, contextualElement) {
-          var dom = env.dom;
-          var hooks = env.hooks, content = hooks.content;
-          dom.detectNamespace(contextualElement);
-          var fragment;
-          if (env.useFragmentCache && dom.canClone) {
-            if (this.cachedFragment === null) {
-              fragment = this.build(dom);
-              if (this.hasRendered) {
-                this.cachedFragment = fragment;
-              } else {
-                this.hasRendered = true;
-              }
-            }
-            if (this.cachedFragment) {
-              fragment = dom.cloneNode(this.cachedFragment, true);
-            }
-          } else {
-            fragment = this.build(dom);
-          }
-          var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
-          var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          var morph2 = dom.createMorphAt(fragment,5,5,contextualElement);
-          content(env, morph0, context, "name");
-          content(env, morph1, context, "lastModified");
-          content(env, morph2, context, "length");
-          return fragment;
-        }
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(3);
+          morphs[0] = dom.createMorphAt(fragment,1,1,contextualElement);
+          morphs[1] = dom.createMorphAt(fragment,3,3,contextualElement);
+          morphs[2] = dom.createMorphAt(fragment,5,5,contextualElement);
+          return morphs;
+        },
+        statements: [
+          ["content","log.name",["loc",[null,[11,40],[11,52]]]],
+          ["content","log.lastModified",["loc",[null,[11,67],[11,87]]]],
+          ["content","log.length",["loc",[null,[11,97],[11,111]]]]
+        ],
+        locals: [],
+        templates: []
       };
     }());
     return {
-      isHTMLBars: true,
-      revision: "Ember@1.12.1",
-      blockParams: 0,
+      meta: {
+        "topLevel": null,
+        "revision": "Ember@2.1.0+45f524a3",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 6,
+            "column": 0
+          },
+          "end": {
+            "line": 12,
+            "column": 0
+          }
+        }
+      },
+      isEmpty: false,
+      arity: 1,
       cachedFragment: null,
       hasRendered: false,
-      build: function build(dom) {
+      buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
         var el1 = dom.createTextNode("    ");
         dom.appendChild(el0, el1);
@@ -865,39 +882,39 @@ Ember.TEMPLATES["logs"] = Ember.HTMLBars.template((function() {
         dom.appendChild(el0, el1);
         return el0;
       },
-      render: function render(context, env, contextualElement) {
-        var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
-        dom.detectNamespace(contextualElement);
-        var fragment;
-        if (env.useFragmentCache && dom.canClone) {
-          if (this.cachedFragment === null) {
-            fragment = this.build(dom);
-            if (this.hasRendered) {
-              this.cachedFragment = fragment;
-            } else {
-              this.hasRendered = true;
-            }
-          }
-          if (this.cachedFragment) {
-            fragment = dom.cloneNode(this.cachedFragment, true);
-          }
-        } else {
-          fragment = this.build(dom);
-        }
-        var morph0 = dom.createMorphAt(dom.childAt(fragment, [1]),3,3);
-        block(env, morph0, context, "link-to", ["log", get(env, context, "id")], {}, child0, null);
-        return fragment;
-      }
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]),3,3);
+        return morphs;
+      },
+      statements: [
+        ["block","link-to",["log",["get","log.id",["loc",[null,[11,25],[11,31]]]]],[],0,null,["loc",[null,[11,8],[11,127]]]]
+      ],
+      locals: ["log"],
+      templates: [child0]
     };
   }());
   return {
-    isHTMLBars: true,
-    revision: "Ember@1.12.1",
-    blockParams: 0,
+    meta: {
+      "topLevel": null,
+      "revision": "Ember@2.1.0+45f524a3",
+      "loc": {
+        "source": null,
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 14,
+          "column": 6
+        }
+      }
+    },
+    isEmpty: false,
+    arity: 0,
     cachedFragment: null,
     hasRendered: false,
-    build: function build(dom) {
+    buildFragment: function buildFragment(dom) {
       var el0 = dom.createDocumentFragment();
       var el1 = dom.createElement("div");
       var el2 = dom.createTextNode("\n");
@@ -930,40 +947,40 @@ Ember.TEMPLATES["logs"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el0, el1);
       return el0;
     },
-    render: function render(context, env, contextualElement) {
-      var dom = env.dom;
-      var hooks = env.hooks, get = hooks.get, block = hooks.block;
-      dom.detectNamespace(contextualElement);
-      var fragment;
-      if (env.useFragmentCache && dom.canClone) {
-        if (this.cachedFragment === null) {
-          fragment = this.build(dom);
-          if (this.hasRendered) {
-            this.cachedFragment = fragment;
-          } else {
-            this.hasRendered = true;
-          }
-        }
-        if (this.cachedFragment) {
-          fragment = dom.cloneNode(this.cachedFragment, true);
-        }
-      } else {
-        fragment = this.build(dom);
-      }
-      var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),5,5);
-      block(env, morph0, context, "each", [get(env, context, "controller")], {}, child0, null);
-      return fragment;
-    }
+    buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+      var morphs = new Array(1);
+      morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]),5,5);
+      return morphs;
+    },
+    statements: [
+      ["block","each",[["get","model",["loc",[null,[6,8],[6,13]]]]],[],0,null,["loc",[null,[6,0],[12,9]]]]
+    ],
+    locals: [],
+    templates: [child0]
   };
 }()));
 Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
   return {
-    isHTMLBars: true,
-    revision: "Ember@1.12.1",
-    blockParams: 0,
+    meta: {
+      "topLevel": null,
+      "revision": "Ember@2.1.0+45f524a3",
+      "loc": {
+        "source": null,
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 63,
+          "column": 6
+        }
+      }
+    },
+    isEmpty: false,
+    arity: 0,
     cachedFragment: null,
     hasRendered: false,
-    build: function build(dom) {
+    buildFragment: function buildFragment(dom) {
       var el0 = dom.createDocumentFragment();
       var el1 = dom.createElement("div");
       var el2 = dom.createTextNode("\n");
@@ -1176,59 +1193,60 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el0, el1);
       return el0;
     },
-    render: function render(context, env, contextualElement) {
-      var dom = env.dom;
-      var hooks = env.hooks, content = hooks.content, get = hooks.get, element = hooks.element, inline = hooks.inline;
-      dom.detectNamespace(contextualElement);
-      var fragment;
-      if (env.useFragmentCache && dom.canClone) {
-        if (this.cachedFragment === null) {
-          fragment = this.build(dom);
-          if (this.hasRendered) {
-            this.cachedFragment = fragment;
-          } else {
-            this.hasRendered = true;
-          }
-        }
-        if (this.cachedFragment) {
-          fragment = dom.cloneNode(this.cachedFragment, true);
-        }
-      } else {
-        fragment = this.build(dom);
-      }
+    buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
       var element0 = dom.childAt(fragment, [0]);
       var element1 = dom.childAt(element0, [3, 1]);
-      var morph0 = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
-      var morph1 = dom.createMorphAt(dom.childAt(element0, [5, 3]),1,1);
-      var morph2 = dom.createMorphAt(dom.childAt(element0, [7, 3]),1,1);
-      var morph3 = dom.createMorphAt(dom.childAt(element0, [9, 3]),1,1);
-      var morph4 = dom.createMorphAt(dom.childAt(element0, [11, 3]),1,1);
-      var morph5 = dom.createMorphAt(dom.childAt(element0, [13, 3]),1,1);
-      var morph6 = dom.createMorphAt(dom.childAt(element0, [15, 3]),1,1);
-      var morph7 = dom.createMorphAt(dom.childAt(element0, [17, 3]),1,1);
-      content(env, morph0, context, "login");
-      element(env, element1, context, "action", ["save", get(env, context, "this")], {});
-      inline(env, morph1, context, "input", [], {"name": "userName", "value": get(env, context, "userName"), "required": true});
-      inline(env, morph2, context, "input", [], {"name": "login", "value": get(env, context, "login"), "required": true});
-      inline(env, morph3, context, "input", [], {"name": "pwd", "value": get(env, context, "pwd"), "required": true});
-      inline(env, morph4, context, "input", [], {"name": "email", "value": get(env, context, "email"), "required": true});
-      inline(env, morph5, context, "input", [], {"name": "status", "value": get(env, context, "status"), "required": true});
-      inline(env, morph6, context, "input", [], {"name": "regDate", "value": get(env, context, "regDate"), "required": true});
-      inline(env, morph7, context, "input", [], {"name": "isSupervisor", "value": get(env, context, "isSupervisor"), "required": true});
-      return fragment;
-    }
+      var morphs = new Array(9);
+      morphs[0] = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
+      morphs[1] = dom.createElementMorph(element1);
+      morphs[2] = dom.createMorphAt(dom.childAt(element0, [5, 3]),1,1);
+      morphs[3] = dom.createMorphAt(dom.childAt(element0, [7, 3]),1,1);
+      morphs[4] = dom.createMorphAt(dom.childAt(element0, [9, 3]),1,1);
+      morphs[5] = dom.createMorphAt(dom.childAt(element0, [11, 3]),1,1);
+      morphs[6] = dom.createMorphAt(dom.childAt(element0, [13, 3]),1,1);
+      morphs[7] = dom.createMorphAt(dom.childAt(element0, [15, 3]),1,1);
+      morphs[8] = dom.createMorphAt(dom.childAt(element0, [17, 3]),1,1);
+      return morphs;
+    },
+    statements: [
+      ["content","login",["loc",[null,[2,9],[2,18]]]],
+      ["element","action",["save",["get","this",["loc",[null,[4,56],[4,60]]]]],[],["loc",[null,[4,40],[4,62]]]],
+      ["inline","input",[],["name","userName","value",["subexpr","@mut",[["get","userName",["loc",[null,[12,42],[12,50]]]]],[],[]],"required",true],["loc",[null,[12,12],[12,66]]]],
+      ["inline","input",[],["name","login","value",["subexpr","@mut",[["get","login",["loc",[null,[20,36],[20,41]]]]],[],[]],"required",true],["loc",[null,[20,9],[20,58]]]],
+      ["inline","input",[],["name","pwd","value",["subexpr","@mut",[["get","pwd",["loc",[null,[28,37],[28,40]]]]],[],[]],"required",true],["loc",[null,[28,12],[28,57]]]],
+      ["inline","input",[],["name","email","value",["subexpr","@mut",[["get","email",["loc",[null,[36,36],[36,41]]]]],[],[]],"required",true],["loc",[null,[36,9],[36,58]]]],
+      ["inline","input",[],["name","status","value",["subexpr","@mut",[["get","status",["loc",[null,[44,40],[44,46]]]]],[],[]],"required",true],["loc",[null,[44,12],[44,63]]]],
+      ["inline","input",[],["name","regDate","value",["subexpr","@mut",[["get","regDate",["loc",[null,[52,41],[52,48]]]]],[],[]],"required",true],["loc",[null,[52,12],[52,65]]]],
+      ["inline","input",[],["name","isSupervisor","value",["subexpr","@mut",[["get","isSupervisor",["loc",[null,[60,46],[60,58]]]]],[],[]],"required",true],["loc",[null,[60,12],[60,74]]]]
+    ],
+    locals: [],
+    templates: []
   };
 }()));
 Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
   var child0 = (function() {
     var child0 = (function() {
       return {
-        isHTMLBars: true,
-        revision: "Ember@1.12.1",
-        blockParams: 0,
+        meta: {
+          "topLevel": null,
+          "revision": "Ember@2.1.0+45f524a3",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 11,
+              "column": 8
+            },
+            "end": {
+              "line": 11,
+              "column": 70
+            }
+          }
+        },
+        isEmpty: false,
+        arity: 0,
         cachedFragment: null,
         hasRendered: false,
-        build: function build(dom) {
+        buildFragment: function buildFragment(dom) {
           var el0 = dom.createDocumentFragment();
           var el1 = dom.createTextNode(" ");
           dom.appendChild(el0, el1);
@@ -1242,41 +1260,41 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
           dom.appendChild(el0, el1);
           return el0;
         },
-        render: function render(context, env, contextualElement) {
-          var dom = env.dom;
-          var hooks = env.hooks, content = hooks.content;
-          dom.detectNamespace(contextualElement);
-          var fragment;
-          if (env.useFragmentCache && dom.canClone) {
-            if (this.cachedFragment === null) {
-              fragment = this.build(dom);
-              if (this.hasRendered) {
-                this.cachedFragment = fragment;
-              } else {
-                this.hasRendered = true;
-              }
-            }
-            if (this.cachedFragment) {
-              fragment = dom.cloneNode(this.cachedFragment, true);
-            }
-          } else {
-            fragment = this.build(dom);
-          }
-          var morph0 = dom.createMorphAt(fragment,1,1,contextualElement);
-          var morph1 = dom.createMorphAt(fragment,3,3,contextualElement);
-          content(env, morph0, context, "login");
-          content(env, morph1, context, "userName");
-          return fragment;
-        }
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(2);
+          morphs[0] = dom.createMorphAt(fragment,1,1,contextualElement);
+          morphs[1] = dom.createMorphAt(fragment,3,3,contextualElement);
+          return morphs;
+        },
+        statements: [
+          ["content","user.login",["loc",[null,[11,36],[11,50]]]],
+          ["content","user.userName",["loc",[null,[11,52],[11,69]]]]
+        ],
+        locals: [],
+        templates: []
       };
     }());
     return {
-      isHTMLBars: true,
-      revision: "Ember@1.12.1",
-      blockParams: 0,
+      meta: {
+        "topLevel": null,
+        "revision": "Ember@2.1.0+45f524a3",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 6,
+            "column": 0
+          },
+          "end": {
+            "line": 12,
+            "column": 0
+          }
+        }
+      },
+      isEmpty: false,
+      arity: 1,
       cachedFragment: null,
       hasRendered: false,
-      build: function build(dom) {
+      buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
         var el1 = dom.createTextNode("    ");
         dom.appendChild(el0, el1);
@@ -1304,39 +1322,39 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
         dom.appendChild(el0, el1);
         return el0;
       },
-      render: function render(context, env, contextualElement) {
-        var dom = env.dom;
-        var hooks = env.hooks, get = hooks.get, block = hooks.block;
-        dom.detectNamespace(contextualElement);
-        var fragment;
-        if (env.useFragmentCache && dom.canClone) {
-          if (this.cachedFragment === null) {
-            fragment = this.build(dom);
-            if (this.hasRendered) {
-              this.cachedFragment = fragment;
-            } else {
-              this.hasRendered = true;
-            }
-          }
-          if (this.cachedFragment) {
-            fragment = dom.cloneNode(this.cachedFragment, true);
-          }
-        } else {
-          fragment = this.build(dom);
-        }
-        var morph0 = dom.createMorphAt(dom.childAt(fragment, [1]),3,3);
-        block(env, morph0, context, "link-to", ["user", get(env, context, "id")], {}, child0, null);
-        return fragment;
-      }
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]),3,3);
+        return morphs;
+      },
+      statements: [
+        ["block","link-to",["user",["get","user.id",["loc",[null,[11,26],[11,33]]]]],[],0,null,["loc",[null,[11,8],[11,82]]]]
+      ],
+      locals: ["user"],
+      templates: [child0]
     };
   }());
   return {
-    isHTMLBars: true,
-    revision: "Ember@1.12.1",
-    blockParams: 0,
+    meta: {
+      "topLevel": null,
+      "revision": "Ember@2.1.0+45f524a3",
+      "loc": {
+        "source": null,
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 14,
+          "column": 6
+        }
+      }
+    },
+    isEmpty: false,
+    arity: 0,
     cachedFragment: null,
     hasRendered: false,
-    build: function build(dom) {
+    buildFragment: function buildFragment(dom) {
       var el0 = dom.createDocumentFragment();
       var el1 = dom.createElement("div");
       var el2 = dom.createTextNode("\n");
@@ -1369,29 +1387,15 @@ Ember.TEMPLATES["users"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el0, el1);
       return el0;
     },
-    render: function render(context, env, contextualElement) {
-      var dom = env.dom;
-      var hooks = env.hooks, get = hooks.get, block = hooks.block;
-      dom.detectNamespace(contextualElement);
-      var fragment;
-      if (env.useFragmentCache && dom.canClone) {
-        if (this.cachedFragment === null) {
-          fragment = this.build(dom);
-          if (this.hasRendered) {
-            this.cachedFragment = fragment;
-          } else {
-            this.hasRendered = true;
-          }
-        }
-        if (this.cachedFragment) {
-          fragment = dom.cloneNode(this.cachedFragment, true);
-        }
-      } else {
-        fragment = this.build(dom);
-      }
-      var morph0 = dom.createMorphAt(dom.childAt(fragment, [0]),5,5);
-      block(env, morph0, context, "each", [get(env, context, "controller")], {}, child0, null);
-      return fragment;
-    }
+    buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+      var morphs = new Array(1);
+      morphs[0] = dom.createMorphAt(dom.childAt(fragment, [0]),5,5);
+      return morphs;
+    },
+    statements: [
+      ["block","each",[["get","model",["loc",[null,[6,8],[6,13]]]]],[],0,null,["loc",[null,[6,0],[12,9]]]]
+    ],
+    locals: [],
+    templates: [child0]
   };
 }()));

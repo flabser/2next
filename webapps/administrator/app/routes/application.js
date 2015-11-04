@@ -1,4 +1,6 @@
 AdminApp.ApplicationRoute = Ember.Route.extend({
+    templateName: 'application',
+
     model: function() {
         return [{
             title: "Logs",

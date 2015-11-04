@@ -3,12 +3,12 @@
     <div class="action-bar">
         <a class="btn" href="#/logs/delete">Delete log</a>
     </div>
-{{#each controller}}
+{{#each model as |log|}}
     <div>
         <label class="entry-select">
             <input type="checkbox" name="docid" value="{@docid}" />
         </label>
-        {{#link-to 'log' id}} name: {{name}}, last modified{{lastModified}} , length {{length}} mB {{/link-to}}</div>
+        {{#link-to 'log' log.id}} name: {{log.name}}, last modified{{log.lastModified}} , length {{log.length}} mB {{/link-to}}</div>
 {{/each}}
 
 </div>

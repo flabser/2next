@@ -1,4 +1,4 @@
-AdminApp.LogsController = Ember.ArrayController.extend({
+AdminApp.LogsController = Ember.Controller.extend({
     actions: {
         selectAll: function() {}
     }

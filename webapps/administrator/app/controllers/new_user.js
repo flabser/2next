@@ -1,4 +1,4 @@
-AdminApp.NewUserController = Ember.ObjectController.extend({
+AdminApp.NewUserController = Ember.Controller.extend({
     actions: {
         save: function(user) {
             console.log("save new user", user);

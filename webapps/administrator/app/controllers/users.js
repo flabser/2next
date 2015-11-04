@@ -1,4 +1,4 @@
-AdminApp.UsersController = Ember.ArrayController.extend({
+AdminApp.UsersController = Ember.Controller.extend({
     actions: {
         selectAll: function() {}
     }

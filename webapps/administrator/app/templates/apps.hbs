@@ -3,12 +3,12 @@
     <div class="action-bar">
         <a class="btn" href="#/apps/new">Add</a>
     </div>
-{{#each controller}}
+{{#each model as |app|}}
     <div>
         <label class="entry-select">
             <input type="checkbox" name="docid" value="{@docid}" />
         </label>
-        {{#link-to 'app' id}} {{appName}} - {{owner}} {{/link-to}}</div>
+        {{#link-to 'app' app.id}} {{app.appName}} - {{app.owner}} {{/link-to}}</div>
 {{/each}}
 
 </div>
