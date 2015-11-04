@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,7 +21,10 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.exception.WebFormValueException;
+import com.flabser.localization.LanguageType;
 import com.flabser.restful.RestProvider;
+import com.flabser.restful.pojo.Outcome;
 import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.script._Session;
 import com.flabser.users.User;
@@ -54,15 +58,12 @@ public class UserService extends RestProvider {
 
 	}
 
-
-
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(User user) throws ClassNotFoundException, SQLException, InstantiationException, DatabasePoolException,
-	IllegalAccessException {
+	public Response create(User user) throws ClassNotFoundException, SQLException, InstantiationException,
+			DatabasePoolException, IllegalAccessException {
 		user.setRegDate(new Date());
-		user.lastURL = "";
 		user.setStatus(UserStatusType.REGISTERED);
 		user.setVerifyCode("");
 		user.save();
@@ -74,9 +75,15 @@ public class UserService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") int id, User u) {
-		System.out.println("PUT " + u);
+		Outcome res = new Outcome();
 		User user = sysDatabase.getUser(id);
-		// user.refresh(u);
+		try {
+			user.refresh(u);
+			user.save();
+		} catch (WebFormValueException e) {
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(e, LanguageType.ENG.name()))
+					.build();
+		}
 		return Response.ok(user).build();
 	}
 

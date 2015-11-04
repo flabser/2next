@@ -254,7 +254,7 @@ public class User {
 				this.password = password;
 				setPasswordHash(password);
 			} else {
-				throw new WebFormValueException(ServerServiceExceptionType.FORMDATA_INCORRECT, "password");
+				throw new WebFormValueException(ServerServiceExceptionType.WEAK_PASSWORD, "password");
 			}
 		}
 	}
@@ -316,7 +316,18 @@ public class User {
 		}
 		email = appUser.getEmail();
 		avatar = appUser.getAttachedFile();
-		// defaultApp = authUser.getDefaultApp();
+
+	}
+
+	public void refresh(User u) throws WebFormValueException {
+		login = u.getLogin();
+		userName = u.getUserName();
+		String p = u.getPwd();
+		if (p != null && !p.equals("")) {
+			setPwd(u.getPwd());
+		}
+		email = u.getEmail();
+		isSupervisor = u.isSupervisor;
 
 	}
 

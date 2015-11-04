@@ -1,5 +1,5 @@
 <div>
-<h1>User {{login}}</h1>
+<h1>User {{model.login}}</h1>
     <div class="action-bar">
         <button class="btn btn-primary" {{action 'save' this}}>Save & Close</button>
         <a class="btn" href="#/users">Cancel</a>
@@ -9,7 +9,7 @@
             User name:
         </div>
         <div class="controls">
-            {{input name="userName" value=userName required=true}}
+            {{input name="userName" value=model.userName required=true}}
         </div>
     </div>
     <div class="control-group">
@@ -17,7 +17,7 @@
          Login:
         </div>
         <div class="controls">
-         {{input name="login" value=login required=true }}
+         {{input name="login" value=model.login required=true }}
         </div>
     </div>
     <div class="control-group">
@@ -25,7 +25,7 @@
             Password:
         </div>
         <div class="controls">
-            {{input name="pwd" value=pwd required=true }}
+            {{input name="pwd" value=model.pwd required=true }}
         </div>
     </div>
     <div class="control-group">
@@ -33,7 +33,7 @@
          E-mail:
         </div>
         <div class="controls">
-         {{input name="email" value=email required=true }}
+         {{input name="email" value=model.email required=true }}
         </div>
     </div>
     <div class="control-group">
@@ -41,7 +41,8 @@
             Status:
         </div>
         <div class="controls">
-            {{input name="status" value=status required=true }}
+        {{select-user-status value=model.status}}
+
         </div>
     </div>
     <div class="control-group">
@@ -49,7 +50,7 @@
             RegDate:
         </div>
         <div class="controls">
-            {{input name="regDate" value=regDate required=true }}
+            {{input name="regDate" value=model.regDate disabled=true  }}
         </div>
     </div>
     <div class="control-group">
@@ -57,7 +58,8 @@
             IsSupervisor:
         </div>
         <div class="controls">
-            {{input name="isSupervisor" value=isSupervisor required=true}}
+        
+            {{input type="checkbox" name="isSupervisor"  checked=model.isSupervisor}}
         </div>
     </div>
 </div>
