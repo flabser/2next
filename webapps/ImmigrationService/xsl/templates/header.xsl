@@ -9,14 +9,21 @@
 	</xsl:template>
 
 	<xsl:template name="navbar">
-		<nav class="navbar navbar-default js-navbar-top js-toggle-class">
+		<nav class="navbar navbar-default navbar-static-top js-navbar-top js-toggle-class">
 			<div class="container">
 				<div class="navbar-header">
+					<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#nb-navbar"
+						aria-controls="nb-navbar" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
 					<a class="navbar-brand" href="#home">
 						<xsl:value-of select="//captions/brand/@caption" />
 					</a>
 				</div>
-				<div class="dropdown dropdown-lang">
+				<div class="dropdown dropdown-lang pull-right">
 					<a href="#" class="dropdown-toggle animated fadeInRight" data-toggle="dropdown">
 						<i class="fa fa-globe"></i>
 						<xsl:value-of select="upper-case(//@lang)" />
@@ -25,6 +32,35 @@
 						<xsl:apply-templates select="//availablelangs" />
 					</ul>
 				</div>
+				<nav id="nb-navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#home">
+								<xsl:value-of select="//captions/home/@caption" />
+							</a>
+						</li>
+						<li>
+							<a href="#bg">
+								<xsl:value-of select="//captions/vnzh_bg/@caption" />
+							</a>
+						</li>
+						<li>
+							<a href="#price">
+								<xsl:value-of select="//captions/price/@caption" />
+							</a>
+						</li>
+						<li>
+							<a href="#about">
+								<xsl:value-of select="//captions/about_us/@caption" />
+							</a>
+						</li>
+						<li>
+							<a href="#contact_us">
+								<xsl:value-of select="//captions/contact_us/@caption" />
+							</a>
+						</li>
+					</ul>
+				</nav>
 			</div>
 		</nav>
 	</xsl:template>
@@ -47,9 +83,9 @@
 						<a href="#contact" class="promo__btn btn btn-lg btn-primary animated fadeInUp delay_2">
 							<xsl:value-of select="//captions/contact_us/@caption" />
 						</a>
-						<!-- <a href="#about" class="promo__btn btn btn-lg btn-link animated fadeInUp delay_2">
+						<a href="#about" class="promo__btn btn btn-lg btn-link animated fadeInUp delay_2">
 							<xsl:value-of select="//captions/learn_more/@caption" />
-						</a> -->
+						</a>
 					</div>
 				</div>
 			</div>
