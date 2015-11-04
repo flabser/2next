@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import task.model.Category;
 import task.model.Issue.Status;
+import task.model.Tag;
 
 
 public class IssueFilter {
 
 	private Status status;
-	private List <Category> categories;
+	private List <Tag> tags;
 	private Date[] milestoneDateRange = new Date[2];
 
 	public IssueFilter() {
-		categories = new ArrayList <Category>();
+		tags = new ArrayList <Tag>();
 	}
 
 	public Status getStatus() {
@@ -26,16 +26,16 @@ public class IssueFilter {
 		this.status = status;
 	}
 
-	public List <Category> getCategories() {
-		return categories;
+	public List <Tag> getTags() {
+		return tags;
 	}
 
-	public void setCategories(List <Category> categories) {
-		this.categories = categories;
+	public void setTags(List <Tag> tags) {
+		this.tags = tags;
 	}
 
-	public void addCategory(Category category) {
-		this.categories.add(category);
+	public void addTag(Tag tag) {
+		this.tags.add(tag);
 	}
 
 	public Date[] getMilestoneDateRange() {

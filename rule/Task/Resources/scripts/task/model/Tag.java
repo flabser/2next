@@ -19,40 +19,32 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.dataengine.jpa.AppEntity;
 
 
-@JsonRootName("category")
+@JsonRootName("tag")
 @Entity
-@Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = { "parent_id", "name" }) )
-@NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category AS c WHERE c.parent IS NULL ORDER BY c.name")
-public class Category extends AppEntity {
+@Table(name = "tags", uniqueConstraints = @UniqueConstraint(columnNames = { "parent", "name" }) )
+@NamedQuery(name = "Tag.findAll", query = "SELECT m FROM Tag AS m WHERE m.parent IS NULL ORDER BY m.name")
+public class Tag extends AppEntity {
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent_id")
-	private Category parent;
+	@JoinColumn(name = "parent")
+	private Tag parent;
 
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
-	private List <Category> children;
+	private List <Tag> children;
 
 	@Column(nullable = false, length = 64)
 	private String name;
 
-	private boolean enabled;
-
-	@Column(length = 256)
-	private String note;
-
-	@Column(length = 7)
-	private String color;
-
-	public List <Category> getChildren() {
+	public List <Tag> getChildren() {
 		return children;
 	}
 
-	public Category getParent() {
+	public Tag getParent() {
 		return parent;
 	}
 
-	public void setParent(Category parent) {
+	public void setParent(Tag parent) {
 		this.parent = parent;
 	}
 
@@ -71,7 +63,7 @@ public class Category extends AppEntity {
 			return;
 		}
 
-		Category parent = new Category();
+		Tag parent = new Tag();
 		parent.setId(id);
 		setParent(parent);
 	}
@@ -84,33 +76,8 @@ public class Category extends AppEntity {
 		this.name = name;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
-	}
-
 	@Override
 	public String toString() {
-		return "Category[" + id + ", " + name + ", " + enabled + ", " + parent + ", " + getAuthor() + ", "
-				+ getRegDate() + "]";
+		return "Tag[" + id + ", " + name + ", " + parent + ", " + getAuthor() + ", " + getRegDate() + "]";
 	}
 }

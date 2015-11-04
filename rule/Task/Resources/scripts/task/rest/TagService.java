@@ -18,44 +18,43 @@ import javax.ws.rs.core.Response.Status;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.restful.RestProvider;
 
-import task.dao.CategoryDAO;
-import task.model.Category;
+import task.dao.TagDAO;
+import task.model.Tag;
 import task.pojo.Errors;
-import task.validation.CategoryValidator;
+import task.validation.TagValidator;
 import task.validation.ValidationError;
 
 
-@Path("categories")
-public class CategoryService extends RestProvider {
+@Path("tags")
+public class TagService extends RestProvider {
 
-	private CategoryValidator validator = new CategoryValidator();
+	private TagValidator validator = new TagValidator();
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get() {
-		CategoryDAO dao = new CategoryDAO(getSession());
-		return Response.ok(new Categories(dao.findAll())).build();
+		TagDAO dao = new TagDAO(getSession());
+		return Response.ok(new Tags(dao.findAll())).build();
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") long id) {
-		CategoryDAO dao = new CategoryDAO(getSession());
-		Category m = dao.findById(id);
-		//
+		TagDAO dao = new TagDAO(getSession());
+		Tag m = dao.findById(id);
 		if (m == null) {
 			return Response.noContent().status(Status.NOT_FOUND).build();
 		}
-		//
+
 		return Response.ok(m).build();
 	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(Category m) {
-		CategoryDAO dao = new CategoryDAO(getSession());
+	public Response create(Tag m) {
+		TagDAO dao = new TagDAO(getSession());
 
 		// parent category
 		if (m.getParent() != null) {
@@ -74,8 +73,8 @@ public class CategoryService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") long id, Category m) {
-		CategoryDAO dao = new CategoryDAO(getSession());
+	public Response update(@PathParam("id") long id, Tag m) {
+		TagDAO dao = new TagDAO(getSession());
 
 		m.setId(id);
 
@@ -89,18 +88,14 @@ public class CategoryService extends RestProvider {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();
 		}
 
-		Category pm = dao.findById(id);
-		//
+		Tag pm = dao.findById(id);
 		if (pm == null) {
 			return Response.noContent().status(Status.NOT_FOUND).build();
 		}
-		//
+
 		pm.setName(m.getName());
 		pm.setParent(m.getParent());
-		pm.setNote(m.getNote());
-		pm.setColor(m.getColor());
-		pm.setEnabled(m.isEnabled());
-		//
+
 		return Response.ok(dao.update(pm)).build();
 	}
 
@@ -108,8 +103,8 @@ public class CategoryService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
-		CategoryDAO dao = new CategoryDAO(getSession());
-		Category m = dao.findById(id);
+		TagDAO dao = new TagDAO(getSession());
+		Tag m = dao.findById(id);
 		if (m != null) {
 			if (dao.existsChildCategory(m)) {
 				Errors msg = new Errors();
@@ -119,15 +114,16 @@ public class CategoryService extends RestProvider {
 				dao.delete(m);
 			}
 		}
+
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
-	@JsonRootName("categories")
-	class Categories extends ArrayList <Category> {
+	@JsonRootName("tags")
+	class Tags extends ArrayList <Tag> {
 
 		private static final long serialVersionUID = 1L;
 
-		public Categories(Collection <? extends Category> m) {
+		public Tags(Collection <? extends Tag> m) {
 			addAll(m);
 		}
 	}

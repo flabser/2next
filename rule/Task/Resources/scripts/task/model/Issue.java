@@ -60,7 +60,7 @@ public class Issue extends AppEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category")
-	private Category category;
+	private Tag category;
 
 	@Column(length = 2000)
 	private String body;
@@ -105,11 +105,11 @@ public class Issue extends AppEntity {
 		this.milestone = milestone;
 	}
 
-	public Category getCategory() {
+	public Tag getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(Tag category) {
 		this.category = category;
 	}
 
