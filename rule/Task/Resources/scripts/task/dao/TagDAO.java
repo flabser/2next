@@ -16,7 +16,7 @@ public class TagDAO extends DAO <Tag, Long> {
 	}
 
 	public boolean existsChildTag(Tag m) {
-		String jpql = "SELECT m FROM Tag AS c WHERE m.parent = :tag";
+		String jpql = "SELECT m FROM Tag AS m WHERE m.parent = :tag";
 
 		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
