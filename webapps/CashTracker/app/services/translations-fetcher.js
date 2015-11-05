@@ -4,7 +4,7 @@ const {
     Service, inject, $
 } = Em;
 
-const PATH = 'rest/page/app-captions';
+const PATH = 'rest/session/captions';
 
 export default Service.extend({
 
@@ -15,13 +15,7 @@ export default Service.extend({
     },
 
     _addTranslations: function(json) {
-        var tr = {};
-        var captions = json._Page.captions;
-
-        for (var key in captions) {
-            tr[key] = captions[key];
-        }
-
-        this.get('i18n').addTranslations('en', tr);
+        var translations = json.outcome.messages;
+        this.get('i18n').addTranslations('en', translations);
     }
 });
