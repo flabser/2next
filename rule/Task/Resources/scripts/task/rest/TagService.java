@@ -106,7 +106,7 @@ public class TagService extends RestProvider {
 		TagDAO dao = new TagDAO(getSession());
 		Tag m = dao.findById(id);
 		if (m != null) {
-			if (dao.existsChildCategory(m)) {
+			if (dao.existsChildTag(m)) {
 				Errors msg = new Errors();
 				msg.setMessage("exists_child");
 				return Response.status(Status.BAD_REQUEST).entity(msg).build();
@@ -115,7 +115,7 @@ public class TagService extends RestProvider {
 			}
 		}
 
-		return Response.status(Status.NO_CONTENT).build();
+		return Response.noContent().build();
 	}
 
 	@JsonRootName("tags")

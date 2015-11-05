@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -21,6 +23,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.flabser.dataengine.jpa.AppEntity;
 
+import task.model.constants.IssuePriority;
+import task.model.constants.IssueStatus;
 import task.serializers.JsonDateSerializer;
 
 
@@ -30,17 +34,6 @@ import task.serializers.JsonDateSerializer;
 @NamedQuery(name = "Issue.findAll", query = "SELECT t FROM Issue AS t ORDER BY t.milestone")
 public class Issue extends AppEntity {
 
-	public enum Status {
-		DRAFT, PROCESS, CLOSE;
-
-		public static Status fromValue(String status) {
-			if ("DRAFT".equals(status) || "PROCESS".equals(status) || "CLOSE".equals(status)) {
-				return valueOf(status);
-			}
-			return null;
-		}
-	}
-
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
@@ -49,8 +42,13 @@ public class Issue extends AppEntity {
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
 	private List <Issue> children;
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 16)
+	private IssueStatus status = IssueStatus.DRAFT;
+
+	@Enumerated(EnumType.ORDINAL)
 	@Column(nullable = false)
-	private Status status;
+	private IssuePriority priority = IssuePriority.NORMAL;
 
 	@Column(nullable = false)
 	private Long executor;
@@ -85,12 +83,20 @@ public class Issue extends AppEntity {
 		this.children = children;
 	}
 
-	public Status getStatus() {
+	public IssueStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(IssueStatus status) {
 		this.status = status;
+	}
+
+	public IssuePriority getPriority() {
+		return priority;
+	}
+
+	public void setPriority(IssuePriority priority) {
+		this.priority = priority;
 	}
 
 	public Long getExecutor() {
@@ -127,6 +133,7 @@ public class Issue extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "Issue[" + id + ", " + getAuthor() + ", " + getRegDate() + "]";
+		return "Issue[" + id + ", " + status + ", " + executor + ", " + milestone + ", " + body + ", parent:" + parent
+				+ ", " + getAuthor() + ", " + getRegDate() + "]";
 	}
 }

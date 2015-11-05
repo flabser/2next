@@ -1,10 +1,8 @@
 package task.rest;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -24,6 +22,7 @@ import com.flabser.restful.RestProvider;
 
 import task.dao.IssueDAO;
 import task.dao.filter.IssueFilter;
+import task.helper.IssueFilterBuilder;
 import task.model.Issue;
 import task.validation.IssueValidator;
 import task.validation.ValidationError;
@@ -36,22 +35,10 @@ public class IssueService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@QueryParam("milestone") String milestone, @QueryParam("issue_status") String status,
-			@QueryParam("tag") Long tagId) {
+	public Response get(@QueryParam("at") String at, @QueryParam("s") String status,
+			@QueryParam("tags") List <Long> tagIds) {
 		IssueDAO dao = new IssueDAO(getSession());
-		IssueFilter filter = new IssueFilter();
-		Issue.Status issueStatus = Issue.Status.fromValue(status);
-
-		if (milestone != null && !milestone.isEmpty()) {
-			if ("today".equals(milestone)) {
-				LocalDate localDate = LocalDate.now();
-				Date sdate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-				Date edate = Date.from(localDate.plusDays(1L).atStartOfDay(ZoneId.systemDefault()).toInstant());
-				filter.setMilestoneDateRange(sdate, edate);
-			}
-		}
-		filter.setStatus(issueStatus);
-
+		IssueFilter filter = IssueFilterBuilder.create(status, tagIds, at);
 		return Response.ok(new Issues(dao.find(filter))).build();
 	}
 
@@ -110,8 +97,10 @@ public class IssueService extends RestProvider {
 	public Response delete(@PathParam("id") long id) {
 		IssueDAO dao = new IssueDAO(getSession());
 		Issue m = dao.findById(id);
-		dao.delete(m);
-		return Response.status(Status.NO_CONTENT).build();
+		if (m != null) {
+			dao.delete(m);
+		}
+		return Response.noContent().build();
 	}
 
 	@JsonRootName("issues")

@@ -50,7 +50,7 @@ public class Tag extends AppEntity {
 
 	@JsonGetter("parent")
 	public Long getParentId() {
-		if (parent == null || parent.id == 0) {
+		if (parent == null || parent.id < 1) {
 			return null;
 		}
 		return parent.id;
@@ -58,7 +58,7 @@ public class Tag extends AppEntity {
 
 	@JsonSetter("parent")
 	public void setParentId(Long id) {
-		if (id == null || id == 0) {
+		if (id == null || id < 1) {
 			setParent(null);
 			return;
 		}

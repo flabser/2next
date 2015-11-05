@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import task.model.Issue.Status;
 import task.model.Tag;
+import task.model.constants.IssueStatus;
 
 
 public class IssueFilter {
 
-	private Status status;
+	private IssueStatus status;
 	private List <Tag> tags;
 	private Date[] milestoneDateRange = new Date[2];
 
@@ -18,11 +18,11 @@ public class IssueFilter {
 		tags = new ArrayList <Tag>();
 	}
 
-	public Status getStatus() {
+	public IssueStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(IssueStatus status) {
 		this.status = status;
 	}
 
