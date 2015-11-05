@@ -2,15 +2,21 @@ import Em from 'ember';
 
 export default Em.Route.extend({
     queryParams: {
-        milestone: {
+        at: {
+            refreshModel: true
+        },
+        s: {
+            refreshModel: true
+        },
+        tags: {
             refreshModel: true
         }
     },
 
     beforeModel: function(transition) {
         if (transition.targetName === 'issues.index') {
-            if (!transition.queryParams.milestone || transition.queryParams.milestone === 'undefined') {
-                transition.queryParams.milestone = '';
+            if (!transition.queryParams.at || transition.queryParams.at === 'undefined') {
+                transition.queryParams.at = '';
             }
 
             this.transitionTo('issues', {
@@ -22,7 +28,7 @@ export default Em.Route.extend({
     },
 
     model: function(params) {
-        return this.store.findAll('issue', params);
+        return this.store.query('issue', params);
     },
 
     setupController: function(controller, model) {

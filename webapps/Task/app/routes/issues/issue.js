@@ -10,5 +10,6 @@ export default Em.Route.extend(ModelRoute, {
 
     setupController: function(controller, model) {
         controller.set('issue', model);
+        controller.set('tags', this.store.findAll('tag'));
     }
 });

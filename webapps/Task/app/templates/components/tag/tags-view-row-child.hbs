@@ -1,0 +1,7 @@
+{{#each model as |tag|}}
+    {{#unless tag.isNew}}
+        {{#unless tag.parent}}
+            {{tag.tags-view-row-child tag=tag tagName='' deleteRecord='deleteRecord'}}
+        {{/unless}}
+    {{/unless}}
+{{/each}}

@@ -4,17 +4,11 @@ var Router = Em.Router.extend();
 
 Router.map(function() {
 
-    this.route('issues', {
-        path: '/'
-    }, function() {
+    this.route('issues', function() {
         this.route('new');
-        this.route('edit', {
+        this.route('issue', {
             path: '/:issue_id/edit',
         });
-        this.route('inbox');
-        this.route('today');
-        this.route('week');
-        this.route('favorite');
     });
 
     this.route('tags', function() {

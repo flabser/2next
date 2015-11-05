@@ -1,5 +1,5 @@
 import Em from 'ember';
 
 export default Em.Controller.extend({
-    queryParams: ['milestone']
+    queryParams: ['at', 's', 'tags']
 });

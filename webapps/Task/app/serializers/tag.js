@@ -13,7 +13,6 @@ export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
         var belongsTo = snapshot.belongsTo(key);
 
         key = this.keyForRelationship ? this.keyForRelationship(key, 'belongsTo', 'serialize') : key;
-
         json[key] = Em.isNone(belongsTo) ? belongsTo : belongsTo.record.id;
     },
 

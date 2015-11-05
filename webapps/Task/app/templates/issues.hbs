@@ -4,22 +4,22 @@
             <td style="vertical-align:top;width:260px">
                 <ul class="nav">
                     <li>
-                        {{#link-to 'issues.inbox'}}
+                        {{#link-to 'issues' (query-params at='inbox')}}
                             {{t 'inbox'}}
                         {{/link-to}}
                     </li>
                     <li>
-                        {{#link-to 'issues.today'}}
+                        {{#link-to 'issues' (query-params at='today')}}
                             {{t 'today'}}
                         {{/link-to}}
                     </li>
                     <li>
-                        {{#link-to 'issues.week'}}
+                        {{#link-to 'issues' (query-params at='week')}}
                             {{t 'week'}}
                         {{/link-to}}
                     </li>
                     <li>
-                        {{#link-to 'issues.favorite'}}
+                        {{#link-to 'issues' (query-params at='favorite')}}
                             {{t 'favorite'}}
                         {{/link-to}}
                     </li>

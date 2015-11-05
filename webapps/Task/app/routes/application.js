@@ -103,12 +103,12 @@ export default Route.extend({
             window.history.back();
         },
 
-        transitionToDashboard: function() {
-            this.transitionTo('dashboard');
+        transitionToIssues: function() {
+            this.transitionTo('issues');
         },
 
-        transitionToTasks: function() {
-            this.transitionTo('tasks');
+        transitionToTags: function() {
+            this.transitionTo('tags');
         },
 
         transitionToUsers: function() {
@@ -131,12 +131,8 @@ export default Route.extend({
             $('body').toggleClass('nav-app-open');
         },
 
-        navUserMenuToggle: function() {
-            $('body').toggleClass('nav-ws-open');
-        },
-
         hideOpenedNav: function() {
-            $('body').removeClass('nav-app-open nav-ws-open');
+            $('body').removeClass('nav-app-open');
         },
 
         toggleSearchForm: function() {
@@ -148,7 +144,7 @@ export default Route.extend({
         },
 
         willTransition: function(transition) {
-            $('body').removeClass('nav-app-open nav-ws-open');
+            $('body').removeClass('nav-app-open');
             $('.dropdown.open').removeClass('open');
         },
 
@@ -160,7 +156,7 @@ export default Route.extend({
             }
 
             if (_error.status === 401 || (!this.get('session').isAuthenticated() && this.routeName !== 'login')) {
-                window.location.href = '/CashTracker/Provider?id=login';
+                window.location.href = '/Task/Provider?id=login';
 
                 /*this.controllerFor('login').setProperties({
                     transition: transition

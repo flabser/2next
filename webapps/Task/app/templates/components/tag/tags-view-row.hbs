@@ -1,0 +1,29 @@
+<div class="entry-wrap">
+    <div class="entry-actions">
+        <button class="entry-action action-delete" {{action 'deleteRecord' tag}}>
+            <i class="fa fa-trash" />
+        </button>
+    </div>
+    {{#tn-swipe-entry class='entry'}}
+        {{#link-to 'tags.tag' tag class='entry-link'}}
+        <div class="entry-fields">
+            <span class="vcat-name {{if tag.parent 'indent'}}">
+                {{#if tag.children}}
+                    <i class="has-child"></i>
+                {{/if}}
+                {{#if tag.parent}}
+                    <i class="has-parent"></i>
+                {{/if}}
+                {{tag.name}}
+            </span>
+        </div>
+        {{/link-to}}
+    {{/tn-swipe-entry}}
+</div>
+{{#if tag.children}}
+    {{#each tag.children as |child_tag|}}
+        {{#unless child_tag.isNew}}
+            {{tag.tags-view-row-child tag=child_tag tagName='div' class='child' deleteRecord='deleteRecord'}}
+        {{/unless}}
+    {{/each}}
+{{/if}}

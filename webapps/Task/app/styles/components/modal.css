@@ -1,0 +1,30 @@
+.modal {
+    display: none;
+    max-width: 98%;
+    overflow-y: auto;
+    position: fixed;
+    top: -900px;
+    transition: top .15s;
+    width: 500px;
+    z-index: 999;
+}
+
+.modal.open {
+    display: block;
+    top: 50px;
+}
+
+.modal:before {
+    content: '';
+    display: block;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.model__content {
+    z-index: 2;
+}

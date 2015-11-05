@@ -1,0 +1,23 @@
+<div class="form-wrapper">
+    <form {{action 'save' on='submit' }}>
+        <section class="content-body">
+            <fieldset class="fieldset">
+                <div class="form-group {{if errors.name 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'name'}}
+                    </div>
+                    <div class="controls">
+                        {{tn-input
+                            value=tag.name
+                            maxlength='64'
+                            class='span5'}}
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+        <footer class="content-actions">
+            <button class="btn" {{action 'close'}}>{{t 'cancel'}}</button>
+            <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
+        </footer>
+    </form>
+</div>
