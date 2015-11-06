@@ -475,11 +475,11 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
           "loc": {
             "source": null,
             "start": {
-              "line": 10,
+              "line": 36,
               "column": 20
             },
             "end": {
-              "line": 10,
+              "line": 36,
               "column": 56
             }
           }
@@ -504,7 +504,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
           return morphs;
         },
         statements: [
-          ["content","m.title",["loc",[null,[10,44],[10,55]]]]
+          ["content","m.title",["loc",[null,[36,44],[36,55]]]]
         ],
         locals: [],
         templates: []
@@ -517,11 +517,11 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         "loc": {
           "source": null,
           "start": {
-            "line": 8,
+            "line": 34,
             "column": 16
           },
           "end": {
-            "line": 12,
+            "line": 38,
             "column": 16
           }
         }
@@ -535,6 +535,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         var el1 = dom.createTextNode("                ");
         dom.appendChild(el0, el1);
         var el1 = dom.createElement("li");
+        dom.setAttribute(el1,"role","presentation");
         var el2 = dom.createTextNode("\n                    ");
         dom.appendChild(el1, el2);
         var el2 = dom.createComment("");
@@ -552,7 +553,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
         return morphs;
       },
       statements: [
-        ["block","link-to",[["get","m.viewdata",["loc",[null,[10,31],[10,41]]]]],[],0,null,["loc",[null,[10,20],[10,68]]]]
+        ["block","link-to",[["get","m.viewdata",["loc",[null,[36,31],[36,41]]]]],[],0,null,["loc",[null,[36,20],[36,68]]]]
       ],
       locals: ["m"],
       templates: [child0]
@@ -569,7 +570,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
           "column": 0
         },
         "end": {
-          "line": 23,
+          "line": 49,
           "column": 0
         }
       }
@@ -586,7 +587,136 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       dom.appendChild(el1, el2);
       var el2 = dom.createElement("div");
       dom.setAttribute(el2,"class","header");
-      var el3 = dom.createTextNode("\n        Administrator\n    ");
+      var el3 = dom.createTextNode("\n       ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("nav");
+      dom.setAttribute(el3,"class","navbar navbar-default");
+      var el4 = dom.createTextNode("\n  ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createElement("div");
+      dom.setAttribute(el4,"class","container-fluid");
+      var el5 = dom.createTextNode("\n    ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("div");
+      dom.setAttribute(el5,"class","navbar-header");
+      var el6 = dom.createTextNode("\n     ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("a");
+      dom.setAttribute(el6,"class","navbar-brand");
+      dom.setAttribute(el6,"href","page/about");
+      var el7 = dom.createTextNode("\n						");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createElement("img");
+      dom.setAttribute(el7,"src","../img/logo.png");
+      dom.setAttribute(el7,"alt","logo");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createTextNode("2Next\n					");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n    ");
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n\n    ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createComment(" Collect the nav links, forms, and other content for toggling ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n    ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createElement("div");
+      dom.setAttribute(el5,"class","collapse navbar-collapse");
+      dom.setAttribute(el5,"id","bs-example-navbar-collapse-1");
+      var el6 = dom.createTextNode("\n     \n\n      ");
+      dom.appendChild(el5, el6);
+      var el6 = dom.createElement("ul");
+      dom.setAttribute(el6,"class","nav navbar-nav navbar-right");
+      var el7 = dom.createTextNode("\n        ");
+      dom.appendChild(el6, el7);
+      var el7 = dom.createElement("li");
+      dom.setAttribute(el7,"class","dropdown");
+      var el8 = dom.createTextNode("\n          ");
+      dom.appendChild(el7, el8);
+      var el8 = dom.createElement("a");
+      dom.setAttribute(el8,"href","#");
+      dom.setAttribute(el8,"class","dropdown-toggle");
+      dom.setAttribute(el8,"data-toggle","dropdown");
+      dom.setAttribute(el8,"role","button");
+      dom.setAttribute(el8,"aria-haspopup","true");
+      dom.setAttribute(el8,"aria-expanded","false");
+      var el9 = dom.createTextNode("Dropdown ");
+      dom.appendChild(el8, el9);
+      var el9 = dom.createElement("span");
+      dom.setAttribute(el9,"class","caret");
+      dom.appendChild(el8, el9);
+      dom.appendChild(el7, el8);
+      var el8 = dom.createTextNode("\n          ");
+      dom.appendChild(el7, el8);
+      var el8 = dom.createElement("ul");
+      dom.setAttribute(el8,"class","dropdown-menu");
+      var el9 = dom.createTextNode("\n            ");
+      dom.appendChild(el8, el9);
+      var el9 = dom.createElement("li");
+      var el10 = dom.createElement("a");
+      dom.setAttribute(el10,"href","#");
+      var el11 = dom.createTextNode("Action");
+      dom.appendChild(el10, el11);
+      dom.appendChild(el9, el10);
+      dom.appendChild(el8, el9);
+      var el9 = dom.createTextNode("\n            ");
+      dom.appendChild(el8, el9);
+      var el9 = dom.createElement("li");
+      var el10 = dom.createElement("a");
+      dom.setAttribute(el10,"href","#");
+      var el11 = dom.createTextNode("Another action");
+      dom.appendChild(el10, el11);
+      dom.appendChild(el9, el10);
+      dom.appendChild(el8, el9);
+      var el9 = dom.createTextNode("\n            ");
+      dom.appendChild(el8, el9);
+      var el9 = dom.createElement("li");
+      var el10 = dom.createElement("a");
+      dom.setAttribute(el10,"href","#");
+      var el11 = dom.createTextNode("Something else here");
+      dom.appendChild(el10, el11);
+      dom.appendChild(el9, el10);
+      dom.appendChild(el8, el9);
+      var el9 = dom.createTextNode("\n            ");
+      dom.appendChild(el8, el9);
+      var el9 = dom.createElement("li");
+      dom.setAttribute(el9,"role","separator");
+      dom.setAttribute(el9,"class","divider");
+      dom.appendChild(el8, el9);
+      var el9 = dom.createTextNode("\n            ");
+      dom.appendChild(el8, el9);
+      var el9 = dom.createElement("li");
+      var el10 = dom.createElement("a");
+      dom.setAttribute(el10,"href","#");
+      var el11 = dom.createTextNode("Separated link");
+      dom.appendChild(el10, el11);
+      dom.appendChild(el9, el10);
+      dom.appendChild(el8, el9);
+      var el9 = dom.createTextNode("\n          ");
+      dom.appendChild(el8, el9);
+      dom.appendChild(el7, el8);
+      var el8 = dom.createTextNode("\n        ");
+      dom.appendChild(el7, el8);
+      dom.appendChild(el6, el7);
+      var el7 = dom.createTextNode("\n      ");
+      dom.appendChild(el6, el7);
+      dom.appendChild(el5, el6);
+      var el6 = dom.createTextNode("\n    ");
+      dom.appendChild(el5, el6);
+      dom.appendChild(el4, el5);
+      var el5 = dom.createComment(" /.navbar-collapse ");
+      dom.appendChild(el4, el5);
+      var el5 = dom.createTextNode("\n  ");
+      dom.appendChild(el4, el5);
+      dom.appendChild(el3, el4);
+      var el4 = dom.createComment(" /.container-fluid ");
+      dom.appendChild(el3, el4);
+      var el4 = dom.createTextNode("\n");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
       var el2 = dom.createTextNode("\n    ");
@@ -595,10 +725,11 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       var el3 = dom.createTextNode("\n        ");
       dom.appendChild(el2, el3);
       var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","nav");
+      dom.setAttribute(el3,"class","outline");
       var el4 = dom.createTextNode("\n            ");
       dom.appendChild(el3, el4);
       var el4 = dom.createElement("ul");
+      dom.setAttribute(el4,"class","nav nav-pills nav-stacked");
       var el5 = dom.createTextNode("\n");
       dom.appendChild(el4, el5);
       var el5 = dom.createComment("");
@@ -645,8 +776,8 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       return morphs;
     },
     statements: [
-      ["block","each",[["get","model",["loc",[null,[8,24],[8,29]]]]],[],0,null,["loc",[null,[8,16],[12,25]]]],
-      ["content","outlet",["loc",[null,[17,8],[17,18]]]]
+      ["block","each",[["get","model",["loc",[null,[34,24],[34,29]]]]],[],0,null,["loc",[null,[34,16],[38,25]]]],
+      ["content","outlet",["loc",[null,[43,8],[43,18]]]]
     ],
     locals: [],
     templates: [child0]

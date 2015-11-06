@@ -1,10 +1,17 @@
 
-.nav {
+.outline {
     background: none;
     box-shadow: none;
     max-width: 100%;
     min-height: 100%;
-    position: relative;
+    position: absolute;
+
 }
 
-.
+
+.view {
+    background: none;
+    box-shadow: none;
+    margin-left: 150px;
+
+}
