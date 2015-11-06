@@ -327,6 +327,7 @@ public class User {
 			setPwd(u.getPwd());
 		}
 		email = u.getEmail();
+		status = u.getStatus();
 		isSupervisor = u.isSupervisor;
 
 	}

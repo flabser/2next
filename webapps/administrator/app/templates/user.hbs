@@ -36,6 +36,14 @@
          {{input name="email" value=model.email required=true }}
         </div>
     </div>
+       <div class="control-group">
+        <div class="control-label">
+         Preffered lang:
+        </div>
+        <div class="controls">
+         {{input name="preffered lang" value=model.prefferedLang required=true }}
+        </div>
+    </div>
     <div class="control-group">
         <div class="control-label">
             Status:
@@ -52,7 +60,7 @@
         </div>
         <div class="controls">
 
-            {{input name="regDate" value=model.regDate disabled=true  }}
+            {{input name="regDate" value=model.regDate disabled=true}}
 
 
 
@@ -64,7 +72,7 @@
         </div>
         <div class="controls">
 
-            {{input name="isSupervisor" value=model.isSupervisor required=true}}
+            {{input type="checkbox" name="isSupervisor" checked=model.isSupervisor }}
 
         </div>
     </div>

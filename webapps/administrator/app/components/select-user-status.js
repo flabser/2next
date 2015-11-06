@@ -1,6 +1,4 @@
-import Em from 'ember';
-
-export default Em.Component.extend({
+AdminApp.SelectUserStatusComponent = Ember.Component.extend({
     tagName: 'div',
     classNames: ['select-user-staus'],
     value: null,
