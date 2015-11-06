@@ -54,19 +54,11 @@
 		<header class="header navbar navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
-					<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#nb-navbar"
-						aria-controls="nb-navbar" aria-expanded="false">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="?id=ws">
-						<img src="img/logo.png" alt="logo" />
-						<xsl:value-of select="//captions/brand/@caption" />
+					<a class="navbar-brand" href="?id=about">
+						<img src="img/logo.png" alt="logo" /><xsl:value-of select="//captions/brand/@caption" />
 					</a>
 				</div>
-
+				
 			</div>
 		</header>
 	</xsl:template>
