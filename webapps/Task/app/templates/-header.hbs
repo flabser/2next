@@ -1,6 +1,6 @@
 <header class="header navbar">
     <div class="container">
-        {{content-overlay action='hideOpenedNav'}}
+        {{content-overlay}}
         <div class="navbar-header">
             <button class="sidebar-toggle" type="button" {{action 'navAppMenuToggle' }}></button>
             <div class="navbar-brand">
@@ -38,7 +38,16 @@
                 <ul class="dropdown-menu right">
                     <li class="profile">
                         {{#link-to 'user_profile'}}
-                            <i class="fa fa-cog"></i><span>{{model.login}}</span>
+                            <i class="fa fa-user"></i>
+                            <div>
+                                {{model.login}}
+                                <div class="hint">{{t 'profile'}}</div>
+                            </div>
+                        {{/link-to}}
+                    </li>
+                    <li>
+                        {{#link-to 'settings'}}
+                            <i class="fa fa-gear"></i><span>{{t 'settings'}}</span>
                         {{/link-to}}
                     </li>
                     {{#if loginThroughToken}}
@@ -58,15 +67,9 @@
                 </ul>
             </div>
         </nav>
-        <nav class="navbar-nav navbar-link nav-app">
+        <nav class="navbar-nav navbar-link">
             {{#link-to 'issues' class='nav-item'}}
                 <i class="fa fa-check-square-o"></i><span>{{t 'issues'}}</span>
-            {{/link-to}}
-            {{#link-to 'tags' class='nav-item'}}
-                <i class="fa fa-tag"></i><span>{{t 'tags'}}</span>
-            {{/link-to}}
-            {{#link-to 'users' class='nav-item'}}
-                <i class="fa fa-users"></i><span>{{t 'users'}}</span>
             {{/link-to}}
         </nav>
     </div>

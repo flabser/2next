@@ -1,5 +1,5 @@
 import Em from 'ember';
-import FormatUtils from '../utils/format-utils';
+import FormatUtils from 'lof-task/utils/format-utils';
 
 const {
     $

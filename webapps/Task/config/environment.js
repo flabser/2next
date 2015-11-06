@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
     var ENV = {
-        modulePrefix: 'task',
+        modulePrefix: 'lof-task',
         environment: environment,
         baseURL: '/',
         locationType: 'hash',

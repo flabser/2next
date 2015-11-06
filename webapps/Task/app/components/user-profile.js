@@ -1,9 +1,9 @@
 import Em from 'ember';
 import DS from 'ember-data';
-import ModelForm from '../mixins/components/form';
-import Validate from '../utils/validator';
+import ModelFormMixin from 'lof-task/mixins/components/form';
+import Validate from 'lof-task/utils/validator';
 
-export default Em.Component.extend(ModelForm, {
+export default Em.Component.extend(ModelFormMixin, {
     user: null,
     changePassword: false,
     isEdit: false,

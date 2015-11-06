@@ -1,0 +1,22 @@
+<div class="settings-view">
+    <nav class="settings__nav">
+        <header>{{t 'settings'}}</header>
+        <ul>
+            <li>
+                {{#link-to 'settings.tags' class='settings__nav-link'}}
+                    <i class="fa fa-tag"></i>
+                    <span>{{t 'tags'}}</span>
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'settings.users' class='settings__nav-link'}}
+                    <i class="fa fa-users"></i>
+                    <span>{{t 'users'}}</span>
+                {{/link-to}}
+            </li>
+        </ul>
+    </nav>
+    <section class="settings__content">
+        {{outlet}}
+    </section>
+</div>

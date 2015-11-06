@@ -1,5 +1,5 @@
 import Em from 'ember';
-import swipeEntryUtil from '../utils/swipe-ventry';
+import swipeEntryUtil from 'lof-task/utils/swipe-ventry';
 
 export default Em.Component.extend({
     tagName: 'div',

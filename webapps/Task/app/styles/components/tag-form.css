@@ -1,0 +1,51 @@
+.tag-form {}
+
+.tag-form .tag-form-container {
+    border-bottom: 1px solid #eee;
+    max-width: 100%;
+    padding: 4px 0px 4px 0px;
+    position: relative;
+    width: 560px;
+}
+
+.tag-form.invalid input {
+    border-color: red;
+}
+
+.tag-form .tag-field {
+    display: inline-block;
+    min-width: 200px;
+}
+
+.tag-form .tag-field .active {
+    font-weight: bold;
+}
+
+.tag-form .tag-actions {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+
+.tag-form .tag-actions a {
+    color: #666;
+}
+
+.tags_add {
+    font-size: 16px;
+    width: 100%;
+    padding: 0 12px;
+    border-radius: 6px;
+}
+
+.tags_add input {
+    background: transparent;
+    margin: 14px 0;
+    padding: 10px;
+    width: 100%;
+}
+
+.tag-children {
+    border-left: 2px solid #CCC;
+    padding-left: 20px;
+}

@@ -1,23 +1,31 @@
-<div class="form-wrapper">
-    <form {{action 'save' on='submit' }}>
-        <section class="content-body">
-            <fieldset class="fieldset">
-                <div class="form-group {{if errors.name 'has-error'}}">
-                    <div class="control-label">
-                        {{t 'name'}}
-                    </div>
-                    <div class="controls">
-                        {{tn-input
-                            value=tag.name
-                            maxlength='64'
-                            class='span5'}}
-                    </div>
-                </div>
-            </fieldset>
-        </section>
-        <footer class="content-actions">
-            <button class="btn" {{action 'close'}}>{{t 'cancel'}}</button>
-            <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
-        </footer>
-    </form>
+<div class="tag-form-container">
+    <div class="tag-drag">..</div>
+    <div class="tag-field">
+        {{#if isEditing}}
+            {{tn-input value=tag.name maxlength='64'}}
+        {{else}}
+            {{#link-to 'settings.tags.tag' tag}}
+                {{tag.name}}
+            {{/link-to}}
+        {{/if}}
+    </div>
+    <div class="tag-actions">
+        {{#if isEditing}}
+            <a href="#" {{action 'saveTag' tag}}>{{t 'save'}}</a>
+            <a href="#" {{action 'cancel' tag}}>{{t 'cancel'}}</a>
+        {{else}}
+            <a href="#" {{action 'toggleEditing' tag}}>{{t 'edit'}}</a>
+            <a href="#" {{action 'addTag' tag}}>{{t 'add_child'}}</a>
+        {{/if}}
+        {{#unless tag.isNew}}
+            <a href="#" {{action 'deleteTag' tag}}>{{t 'remove'}}</a>
+        {{/unless}}
+    </div>
+    {{#if tag.children}}
+        <div class="tag-children">
+            {{#each tag.children as |tag|}}
+                {{tag.tag-form tag=tag}}
+            {{/each}}
+        </div>
+    {{/if}}
 </div>

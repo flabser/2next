@@ -108,11 +108,11 @@ export default Route.extend({
         },
 
         transitionToTags: function() {
-            this.transitionTo('tags');
+            this.transitionTo('settings.tags');
         },
 
         transitionToUsers: function() {
-            this.transitionTo('users');
+            this.transitionTo('settings.users');
         },
 
         toggleDevice: function() {

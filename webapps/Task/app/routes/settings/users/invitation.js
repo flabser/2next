@@ -1,14 +1,13 @@
 import Em from 'ember';
-import ModelRoute from '../../mixins/routes/model';
+import ModelRouteMixin from 'lof-task/mixins/routes/model';
 
-export default Em.Route.extend(ModelRoute, {
+export default Em.Route.extend(ModelRouteMixin, {
     model: function() {
         return this.store.createRecord('invitation');
     },
 
     setupController: function(controller, model) {
         controller.set('invitation', model);
-        controller.set('roles', this.store.findAll('role'));
     },
 
     actions: {

@@ -4,28 +4,32 @@ var Router = Em.Router.extend();
 
 Router.map(function() {
 
-    this.route('issues', function() {
+    this.route('issues', {
+        path: '/'
+    }, function() {
         this.route('new');
         this.route('issue', {
+            path: '/:issue_id',
+        });
+        this.route('edit', {
             path: '/:issue_id/edit',
         });
     });
 
-    this.route('tags', function() {
-        this.route('new');
-        this.route('tag', {
-            path: '/:tag_id'
+    this.route('settings', function() {
+        this.route('tags', function() {
+            this.route('new');
+            this.route('tag', {
+                path: ':tag_id'
+            });
+        });
+        this.route('users', function() {
+            this.route('invitation');
         });
     });
 
-    this.route('users', function() {
-        this.route('invitation');
-    });
-
     this.route('login');
-    this.route('user_profile', {
-        path: 'user-profile'
-    });
+    this.route('user_profile');
 
     this.route('error404', {
         path: '/*path'

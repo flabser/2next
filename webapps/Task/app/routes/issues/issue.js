@@ -1,7 +1,7 @@
 import Em from 'ember';
-import ModelRoute from '../../mixins/routes/model';
+import ModelRouteMixin from 'lof-task/mixins/routes/model';
 
-export default Em.Route.extend(ModelRoute, {
+export default Em.Route.extend(ModelRouteMixin, {
     templateName: 'issues/issue',
 
     model: function(params) {
