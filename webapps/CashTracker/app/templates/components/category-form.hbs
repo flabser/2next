@@ -12,7 +12,9 @@
             <fieldset class="fieldset">
                 <div class="form-group form-group-no-label">
                     <div class="controls select-transaction-type">
-                        {{select-transaction-type value=category.transactionType}}
+                        {{select-transaction-type
+                            value=category.transactionType
+                            values=transactionTypes}}
                         {{#each errors.transactionType as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}

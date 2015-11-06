@@ -1,7 +1,8 @@
 import Em from 'ember';
-import ModelRoute from '../../mixins/routes/model';
+import ModelRouteMixin from '../../mixins/routes/model';
+import TransactionTypesMixin from '../../mixins/transaction-types';
 
-export default Em.Route.extend(ModelRoute, {
+export default Em.Route.extend(ModelRouteMixin, TransactionTypesMixin, {
     templateName: 'transactions/transaction',
 
     model: function(params) {
@@ -14,5 +15,6 @@ export default Em.Route.extend(ModelRoute, {
         controller.set('categories', this.store.findAll('category'));
         controller.set('costCenters', this.store.findAll('costCenter'));
         controller.set('tags', this.store.findAll('tag'));
+        controller.set('transactionTypes', this.transactionTypes);
     }
 });

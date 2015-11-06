@@ -1,7 +1,7 @@
 import Em from 'ember';
-import InfinityRoute from 'ember-infinity/mixins/route';
+import InfinityRouteMixin from 'ember-infinity/mixins/route';
 
-export default Em.Route.extend(InfinityRoute, {
+export default Em.Route.extend(InfinityRouteMixin, {
     perPageParam: "limit", // instead of "per_page"
     pageParam: "page", // instead of "page"
     totalPagesParam: "meta.total_pages", // instead of "meta.total_pages"

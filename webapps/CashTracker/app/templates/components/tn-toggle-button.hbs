@@ -1,6 +1,5 @@
 {{#each-in values as |index item|}}
     <button type="button" data-type={{item.value}} class="btn" {{action 'toggle' item.value}}>
-        {{transaction-icon item.value}}
         <span>{{t item.label}}</span>
     </button>
 {{/each-in}}

@@ -12,7 +12,9 @@
             <fieldset class="fieldset">
                 <div class="form-group form-group-no-label {{if errors.name 'has-error'}}">
                     <div class="controls">
-                        {{select-transaction-type value=transaction.transactionType}}
+                        {{select-transaction-type
+                            value=transaction.transactionType
+                            values=transactionTypes}}
                     </div>
                 </div>
                 <div class="form-group {{if errors.date 'has-error'}}">

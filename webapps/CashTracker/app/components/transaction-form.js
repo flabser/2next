@@ -1,9 +1,9 @@
 import Em from 'ember';
 import DS from 'ember-data';
-import ModelForm from '../mixins/components/form';
+import ModelFormMixin from '../mixins/components/form';
 import Validate from '../utils/validator';
 
-export default Em.Component.extend(ModelForm, {
+export default Em.Component.extend(ModelFormMixin, {
     transaction: null,
     accounts: null,
     categories: null,

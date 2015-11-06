@@ -1,0 +1,70 @@
+.tn-toggle-button {
+    font-size: 0;
+}
+
+.tablet .tn-toggle-button,
+.phone .tn-toggle-button {
+    text-align: center;
+}
+
+.tn-toggle-button > .btn {
+    background: none !important;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    font-size: 13px;
+    margin: 0;
+    opacity: .7;
+    padding: 8px 8px 8px 4px;
+    position: relative;
+}
+
+.tn-toggle-button.multi .btn.active:after {
+    background: #999;
+    border-right: 8px solid #FFF;
+    border-bottom: 8px solid transparent;
+    content: '';
+    display: block;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    /* top: 0; */
+    width: 0;
+}
+
+.tn-toggle-button > .btn:hover {
+    opacity: 1;
+}
+
+.tn-toggle-button > .btn.active {
+    border-bottom: 1px solid #999;
+    opacity: 1;
+    box-shadow: inset 0px -1px 0 #999;
+}
+
+.tn-toggle-button > .btn.active span {
+    text-decoration: none;
+}
+
+.tn-toggle-button > .btn .fa {
+    font-size: 16px;
+    line-height: 14px;
+    /* border: 2px solid transparent;
+    height: 22px;
+    line-height: 20px;
+    width: 22px; */
+}
+
+.tablet .tn-toggle-button > .btn .fa,
+.phone .tn-toggle-button > .btn .fa {
+    margin: 0 3px;
+}
+
+.tn-toggle-button > .btn.active .fa {
+    /* border: 2px solid #aaa;
+    border-radius: 50%; */
+}
+
+.tn-toggle-button > button:not(.active) .fa {
+    color: #999;
+}

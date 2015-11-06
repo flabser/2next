@@ -2,14 +2,15 @@ import Em from 'ember';
 
 export default Em.Component.extend({
     tagName: 'div',
-    classNames: ['select-transaction-type'],
+    classNames: ['tn-toggle-button'],
+    multi: false,
     value: null,
     values: null,
 
     _showActive: function() {
-        var type = this.get('value');
-        if (type) {
-            var el = Em.$('[data-type=' + type + ']:not(.active)', this.element);
+        let value = this.get('value');
+        if (value) {
+            let el = Em.$('[data-type=' + value + ']:not(.active)', this.element);
             if (el.length) {
                 Em.$('.active', this.element).removeClass('active');
                 el.addClass('active');
@@ -28,9 +29,9 @@ export default Em.Component.extend({
     },
 
     actions: {
-        toggle: function(type) {
-            if (type !== this.get('value')) {
-                this.set('value', type);
+        toggle: function(value) {
+            if (value !== this.get('value')) {
+                this.set('value', value);
             } else {
                 this.set('value', '');
             }

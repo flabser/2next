@@ -1,7 +1,7 @@
 import Em from 'ember';
-import ModelRoute from '../../mixins/routes/model';
+import ModelRouteMixin from '../../mixins/routes/model';
 
-export default Em.Route.extend(ModelRoute, {
+export default Em.Route.extend(ModelRouteMixin, {
     templateName: 'cost-centers/cost-center',
 
     model: function(params) {
