@@ -1,5 +1,5 @@
 {
-  "name": "task",
+  "name": "lof-task",
   "dependencies": {
     "ember": "2.2.0-beta.1",
     "ember-cli-shims": "ember-cli/ember-cli-shims#0.0.3",

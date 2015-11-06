@@ -1,31 +1,61 @@
 import Em from 'ember';
-import DS from 'ember-data';
-import ModelForm from '../../mixins/components/form';
-import Validate from '../../utils/validator';
+import Validate from 'lof-task/utils/validator';
 
-export default Em.Component.extend(ModelForm, {
+export default Em.Component.extend({
+    classNames: ['tag-form'],
+    classNameBindings: ['isInvalid:invalid', 'isEditing:edit'],
     tag: null,
 
+    addTag: 'addTag',
+    saveTag: 'saveTag',
+    deleteTag: 'deleteTag',
+    cancel: 'cancel',
+    setTagActiveRoute: 'setTagActiveRoute',
+
+    isEditing: Em.computed('tag.isNew', function() {
+        return this.get('tag.isNew');
+    }),
+
+    isInvalid: Em.computed('tag.name', function() {
+        return Validate.isEmpty(this.get('tag.name'));
+    }),
+
+    willDestroyElement: function() {
+        if (this.get('tag.isNew')) {
+            this.get('tag').destroyRecord();
+        }
+        this.set('isEditing', false);
+    },
+
     actions: {
-        save: function() {
-            if (this.validate()) {
-                this.sendAction('saveRecord', this.get('tag'));
+        addTag: function(tag) {
+            this.sendAction('addTag', tag);
+        },
+
+        saveTag: function(tag) {
+            console.log('in');
+            this.sendAction('saveTag', tag, () => {
+                this.set('isEditing', false);
+            });
+        },
+
+        deleteTag: function(tag) {
+            this.sendAction('deleteTag', tag);
+            this.set('isEditing', false);
+        },
+
+        cancel: function(tag) {
+            if (tag.get('isNew')) {
+                tag.destroyRecord();
+            } else {
+                tag.rollbackAttributes();
+                this.set('isEditing', false);
             }
         },
 
-        close: function() {
-            this.sendAction('close');
+        toggleEditing: function() {
+            this.toggleProperty('isEditing');
+            this.sendAction('setTagActiveRoute', this.get('tag'));
         }
-    },
-
-    validate: function(fieldName) {
-        var i18n = this.get('i18n');
-        this.set('errors', DS.Errors.create());
-
-        if (Validate.isEmpty(this.get('tag.name'))) {
-            this.get('errors').add('name', i18n.t('validation_empty'));
-        }
-
-        return this.get('errors.isEmpty');
     }
 });

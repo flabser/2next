@@ -28,4 +28,9 @@ public class TagDAO extends DAO <Tag, Long> {
 			em.close();
 		}
 	}
+
+	public boolean existsIssuesByTag(Tag m) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

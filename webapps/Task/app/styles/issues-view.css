@@ -1,0 +1,5 @@
+.issues-view {}
+
+.issues-view .nav a.active {
+    font-weight: bold;
+}

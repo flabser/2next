@@ -5,6 +5,8 @@ export default Em.Component.extend({
 
     classNames: ['content-overlay'],
 
+    action: 'hideOpenedNav',
+
     mouseDown: function(e) {
         e.preventDefault();
         this.sendAction();

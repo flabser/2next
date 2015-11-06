@@ -1,0 +1,22 @@
+<div class="view tags_view">
+    <header class="content-header">
+        <h1 class="header-title">{{t 'tags'}}</h1>
+    </header>
+    <section class="tags_add">
+        {{input value=newTagName
+            key-down='keyDownOnNew'
+            disabled=isSaveProcess
+            type='text'
+            placeholder='new tag name'
+            autofocus='autofocus'}}
+    </section>
+    <section class="content-body">
+        <div class="entries">
+            {{#each tags as |tag|}}
+                {{#unless tag.parent}}
+                    {{tag.tag-form tag=tag}}
+                {{/unless}}
+            {{/each}}
+        </div>
+    </section>
+</div>

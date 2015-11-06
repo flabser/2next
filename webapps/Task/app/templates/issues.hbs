@@ -1,4 +1,4 @@
-<div class="tasks-view">
+<div class="issues-view">
     <table style="width:100%">
         <tr>
             <td style="vertical-align:top;width:260px">
@@ -23,8 +23,28 @@
                             {{t 'favorite'}}
                         {{/link-to}}
                     </li>
+                    <li>
+                        {{#link-to 'issues' (query-params at='completed')}}
+                            {{t 'completed'}}
+                        {{/link-to}}
+                    </li>
                 </ul>
-                {{outlet 'task'}}
+                <ul class="nav">
+                    <li>
+                        <h4>{{t 'tags'}}</h4>
+                        {{#link-to 'settings.tags.new'}}
+                            {{t 'add_tag'}}
+                        {{/link-to}}
+                    </li>
+                </ul>
+                <ul class="nav">
+                    <li>
+                        <h4>{{t 'executors'}}</h4>
+                        {{#link-to 'settings.users.invitation'}}
+                            {{t 'invite_user'}}
+                        {{/link-to}}
+                    </li>
+                </ul>
             </td>
             <td style="vertical-align:top;">
                 <h1>
