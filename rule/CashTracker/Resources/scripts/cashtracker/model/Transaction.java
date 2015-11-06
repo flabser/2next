@@ -21,24 +21,24 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import cashtracker.model.constants.TransactionState;
-import cashtracker.model.constants.TransactionType;
-import cashtracker.model.constants.converter.TransactionStateConverter;
-import cashtracker.model.constants.converter.TransactionTypeConverter;
-import cashtracker.serializers.JsonDateSerializer;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.flabser.dataengine.jpa.AppEntity;
 
+import cashtracker.model.constants.TransactionState;
+import cashtracker.model.constants.TransactionType;
+import cashtracker.model.constants.converter.TransactionStateConverter;
+import cashtracker.model.constants.converter.TransactionTypeConverter;
+import cashtracker.serializers.JsonDateSerializer;
+
 
 @JsonRootName("transaction")
 @Entity
 @Table(name = "transactions")
 @NamedQuery(name = "Transaction.findAll", query = "SELECT t FROM Transaction AS t ORDER BY t.date ASC")
-public class Transaction extends AppEntity /*SecureAppEntity*/{
+public class Transaction extends AppEntity /*SecureAppEntity*/ {
 
 	@Convert(converter = TransactionTypeConverter.class)
 	@Column(name = "transaction_type", nullable = false, length = 3)
@@ -65,7 +65,9 @@ public class Transaction extends AppEntity /*SecureAppEntity*/{
 	private CostCenter costCenter;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "transaction_tags", joinColumns = { @JoinColumn(name = "transaction_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "tag_id", referencedColumnName = "id") })
+	@JoinTable(name = "transaction_tags", joinColumns = {
+			@JoinColumn(name = "transaction_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "tag_id", referencedColumnName = "id") })
 	private List <Tag> tags;
 
 	@JsonSerialize(using = JsonDateSerializer.class)
