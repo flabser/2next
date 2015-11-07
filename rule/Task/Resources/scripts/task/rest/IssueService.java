@@ -35,7 +35,7 @@ public class IssueService extends RestProvider {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@QueryParam("at") String at, @QueryParam("s") String status,
+	public Response get(@QueryParam("at") String at, @QueryParam("st") String status,
 			@QueryParam("tags") List <Long> tagIds) {
 		IssueDAO dao = new IssueDAO(getSession());
 		IssueFilter filter = IssueFilterBuilder.create(status, tagIds, at);

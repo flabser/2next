@@ -29,7 +29,7 @@ Router.map(function() {
     });
 
     this.route('login');
-    this.route('user_profile');
+    this.route('user-profile');
 
     this.route('error404', {
         path: '/*path'

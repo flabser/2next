@@ -10,11 +10,12 @@ export default Em.Route.extend(ModelRouteMixin, {
         controller.set('invitation', model);
     },
 
-    actions: {
-        sendInvite: function(invitation) {
-            invitation.save().then(() => {
-                this.transitionTo('users');
-            });
-        }
+    renderTemplate: function(controller, model) {
+        var usersController = this.controllerFor('settings.users');
+
+        this.render('settings.users.invitation', {
+            into: 'settings',
+            controller: usersController
+        });
     }
 });

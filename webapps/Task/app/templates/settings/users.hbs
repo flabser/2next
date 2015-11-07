@@ -1,10 +1,10 @@
 <div class="view">
     <header class="content-header">
         <h1 class="header-title">{{t 'users'}}</h1>
-        <nav class="content-actions on-desktop">
-            <button class="btn" {{action 'composeRecord'}}>
+        <nav class="content-actions">
+            {{#link-to 'settings.users.invitation' class='btn'}}
                 {{t 'add_user'}}
-            </button>
+            {{/link-to}}
         </nav>
     </header>
     <section class="content-body">

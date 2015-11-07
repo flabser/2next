@@ -15,7 +15,7 @@
                 <a href="#" {{action 'cancel' tag}}>{{t 'cancel'}}</a>
             {{else}}
                 <a href="#" {{action 'toggleEditing' tag}}>{{t 'edit'}}</a>
-                <a href="#" {{action 'addTag' tag}}>{{t 'add_child'}}</a>
+                <a href="#" {{action 'addChildTag' tag}}>{{t 'add_child'}}</a>
             {{/if}}
             {{#unless tag.isNew}}
                 <a href="#" {{action 'deleteTag' tag}}>{{t 'remove'}}</a>
