@@ -1,25 +1,26 @@
 <div class="tag-form-container">
-    <div class="tag-drag">..</div>
-    <div class="tag-field">
-        {{#if isEditing}}
-            {{tn-input value=tag.name maxlength='64'}}
-        {{else}}
-            {{#link-to 'settings.tags.tag' tag}}
-                {{tag.name}}
-            {{/link-to}}
-        {{/if}}
-    </div>
-    <div class="tag-actions">
-        {{#if isEditing}}
-            <a href="#" {{action 'saveTag' tag}}>{{t 'save'}}</a>
-            <a href="#" {{action 'cancel' tag}}>{{t 'cancel'}}</a>
-        {{else}}
-            <a href="#" {{action 'toggleEditing' tag}}>{{t 'edit'}}</a>
-            <a href="#" {{action 'addTag' tag}}>{{t 'add_child'}}</a>
-        {{/if}}
-        {{#unless tag.isNew}}
-            <a href="#" {{action 'deleteTag' tag}}>{{t 'remove'}}</a>
-        {{/unless}}
+    <div class="tag-form-row">
+        <div class="tag-field">
+            {{#if isEditing}}
+                {{tn-input value=tag.name maxlength='64'}}
+            {{else}}
+                {{#link-to 'settings.tags.tag' tag}}
+                    {{tag.name}}
+                {{/link-to}}
+            {{/if}}
+        </div>
+        <div class="tag-actions">
+            {{#if isEditing}}
+                <a href="#" {{action 'saveTag' tag}} class="btn btn-primary">{{t 'save'}}</a>
+                <a href="#" {{action 'cancel' tag}}>{{t 'cancel'}}</a>
+            {{else}}
+                <a href="#" {{action 'toggleEditing' tag}}>{{t 'edit'}}</a>
+                <a href="#" {{action 'addTag' tag}}>{{t 'add_child'}}</a>
+            {{/if}}
+            {{#unless tag.isNew}}
+                <a href="#" {{action 'deleteTag' tag}}>{{t 'remove'}}</a>
+            {{/unless}}
+        </div>
     </div>
     {{#if tag.children}}
         <div class="tag-children">
