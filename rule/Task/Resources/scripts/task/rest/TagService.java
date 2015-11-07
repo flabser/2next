@@ -11,6 +11,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -98,6 +99,26 @@ public class TagService extends RestProvider {
 		pm.setParent(m.getParent());
 
 		return Response.ok(dao.update(pm)).build();
+	}
+
+	@PUT
+	@Path("/{id}/set")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response setParent(@PathParam("id") long id, @QueryParam("parent") long parentId) {
+		TagDAO dao = new TagDAO(getSession());
+		Tag m = dao.findById(id);
+
+		if (parentId > 0) {
+			Tag parent = dao.findById(parentId);
+			if (parent == null) {
+				return Response.noContent().status(Status.NOT_FOUND).build();
+			}
+			m.setParent(parent);
+		} else {
+			m.setParent(null);
+		}
+
+		return Response.ok(dao.update(m)).build();
 	}
 
 	@DELETE
