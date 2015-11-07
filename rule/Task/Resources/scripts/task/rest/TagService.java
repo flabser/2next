@@ -34,7 +34,8 @@ public class TagService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get() {
 		TagDAO dao = new TagDAO(getSession());
-		return Response.ok(new Tags(dao.findAll())).build();
+		Tags tags = new Tags(dao.findAll());
+		return Response.ok(tags).build();
 	}
 
 	@GET

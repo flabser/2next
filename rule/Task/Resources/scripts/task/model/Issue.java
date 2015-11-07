@@ -1,7 +1,7 @@
 package task.model;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +40,7 @@ public class Issue extends AppEntity {
 	private Issue parent;
 
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
-	private List <Issue> children;
+	private Set <Issue> children;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 16)
@@ -62,7 +62,7 @@ public class Issue extends AppEntity {
 	@JoinTable(name = "issue_tags", joinColumns = {
 			@JoinColumn(name = "issue_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "tag_id", referencedColumnName = "id") })
-	private List <Tag> tags;
+	private Set <Tag> tags;
 
 	@Column(length = 2000)
 	private String body;
@@ -75,11 +75,11 @@ public class Issue extends AppEntity {
 		this.parent = parent;
 	}
 
-	public List <Issue> getChildren() {
+	public Set <Issue> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List <Issue> children) {
+	public void setChildren(Set <Issue> children) {
 		this.children = children;
 	}
 
@@ -115,11 +115,11 @@ public class Issue extends AppEntity {
 		this.milestone = milestone;
 	}
 
-	public List <Tag> getTags() {
+	public Set <Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(List <Tag> tags) {
+	public void setTags(Set <Tag> tags) {
 		this.tags = tags;
 	}
 
