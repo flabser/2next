@@ -53,9 +53,13 @@ export default Em.Component.extend({
             }
         },
 
-        toggleEditing: function() {
+        setTagActiveRoute: function(tag) {
+            this.sendAction('setTagActiveRoute', tag);
+        },
+
+        toggleEditing: function(tag) {
             this.toggleProperty('isEditing');
-            this.sendAction('setTagActiveRoute', this.get('tag'));
+            this.send('setTagActiveRoute', tag);
         }
     }
 });

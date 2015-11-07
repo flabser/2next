@@ -1,20 +1,32 @@
 .tag-form {}
 
 .tag-form .tag-form-container {
-    border-bottom: 1px solid #eee;
     max-width: 100%;
-    padding: 4px 0px 4px 0px;
     position: relative;
     width: 560px;
 }
 
+.tag-form-row {
+    padding: 4px 0;
+}
+
+.tag-form-row:hover {
+    background-color: #F5F5F5;
+}
+
+.tag-form input {}
+
 .tag-form.invalid input {
-    border-color: red;
+    border-color: #F44336;
+    box-shadow: 0 0 1px rgba(255, 0, 0, 0.3);
 }
 
 .tag-form .tag-field {
+    border: 1px solid #ccc;
+    border-radius: 2px;
     display: inline-block;
-    min-width: 200px;
+    margin-left: 2px;
+    padding: 3px;
 }
 
 .tag-form .tag-field .active {
@@ -24,7 +36,7 @@
 .tag-form .tag-actions {
     display: inline-block;
     position: absolute;
-    right: 0;
+    right: 2px;
 }
 
 .tag-form .tag-actions a {
@@ -46,6 +58,10 @@
 }
 
 .tag-children {
-    border-left: 2px solid #CCC;
+    border-left: 1px solid #EEE;
     padding-left: 20px;
+}
+
+.tag-children:hover {
+    border-left-color: #AAA;
 }
