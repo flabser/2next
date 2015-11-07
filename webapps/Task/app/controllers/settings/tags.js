@@ -9,6 +9,12 @@ export default Em.Controller.extend({
     isSaveProcess: false,
 
     actions: {
+        resetAddForm: function() {
+            this.set('newTagName', '');
+            this.set('isSaveProcess', false);
+            
+        },
+
         keyDownOnNew: function(value, event) {
             if (event.keyCode === 13 && this.get('newTagName.length')) {
                 event.stopPropagation();
@@ -34,14 +40,10 @@ export default Em.Controller.extend({
             // return true;
         },
 
-        addTag: function(tag) {
-            if (tag) {
-                this.store.createRecord('tag', {
-                    parent: tag
-                });
-            } else {
-                this.store.createRecord('tag');
-            }
+        addChildTag: function(tag) {
+            this.store.createRecord('tag', {
+                parent: tag
+            });
         },
 
         saveTag: function(tag, callSuccess, callError) {

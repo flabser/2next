@@ -26,13 +26,11 @@ public abstract class AppEntity implements IAppEntity {
 	@Column(name = "reg_date", nullable = false, updatable = false)
 	protected Date regDate;
 
-	//
 	@PrePersist
-	private void onPersist() {
+	private void prePersist() {
 		regDate = new Date();
 	}
 
-	//
 	@Override
 	public void setId(long id) {
 		this.id = id;
