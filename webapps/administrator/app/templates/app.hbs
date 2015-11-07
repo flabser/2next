@@ -1,15 +1,16 @@
 <div>
-<h1>Application {{appName}}</h1>
+<h1>Application {{model.appName}}</h1>
     <div class="action-bar">
         <button class="btn btn-primary" {{action 'save' this}}>Save & Close</button>
         <a class="btn" href="#/apps">Cancel</a>
     </div>
+
     <div class="control-group">
         <div class="control-label">
             Application name:
         </div>
         <div class="controls">
-            {{input name="appName" value=appName required=true}}
+            {{input name="appName" value=model.appName required=true}}
         </div>
     </div>
     <div class="control-group">
@@ -17,7 +18,7 @@
          Owner:
         </div>
         <div class="controls">
-         {{input name="owner" value=owner required=true }}
+         {{input name="owner" value=model.owner required=true }}
         </div>
     </div>
     <div class="control-group">
@@ -25,7 +26,7 @@
             Database host:
         </div>
         <div class="controls">
-            {{input name="dbHost" value=dbHost required=true }}
+            {{input name="dbHost" value=model.dbHost required=true }}
         </div>
     </div>
     <div class="control-group">
@@ -33,7 +34,7 @@
          Database login:
         </div>
         <div class="controls">
-         {{input name="dbLogin" value=dbLogin required=true }}
+         {{input name="dbLogin" value=model.dbLogin required=true }}
         </div>
     </div>
     <div class="control-group">
@@ -41,15 +42,9 @@
             Database name:
         </div>
         <div class="controls">
-            {{input name="dbName" value=dbName required=true }}
+            {{input name="dbName" value=model.dbName required=true }}
         </div>
     </div>
-    <div class="control-group">
-        <div class="control-label">
-            Database password:
-        </div>
-        <div class="controls">
-            {{input name="dbPwd" value=dbPwd required=true }}
-        </div>
-    </div>   
+ 
+     
 </div>

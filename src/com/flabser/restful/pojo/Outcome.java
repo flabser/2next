@@ -32,7 +32,7 @@ public class Outcome {
 		return this;
 	}
 
-	public Outcome setError(WebFormValueException e, String lang) {
+	public Outcome setMessage(WebFormValueException e, String lang) {
 		return setMessage(e.id, lang);
 	}
 

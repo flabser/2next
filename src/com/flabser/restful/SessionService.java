@@ -324,7 +324,7 @@ public class SessionService extends RestProvider {
 			user.setPwd(pwd);
 			user.setEmail(email);
 		} catch (WebFormValueException e) {
-			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(e, lang)).build();
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setMessage(e, lang)).build();
 		}
 
 		user.setStatus(UserStatusType.NOT_VERIFIED);
@@ -378,7 +378,7 @@ public class SessionService extends RestProvider {
 						}
 					}
 				} catch (WebFormValueException e) {
-					return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(e, lang)).build();
+					return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setMessage(e, lang)).build();
 				}
 			} else if (user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING) {
 				return Response.status(HttpServletResponse.SC_OK)

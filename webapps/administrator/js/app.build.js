@@ -6,7 +6,6 @@ var baseURL =  DS.RESTAdapter.extend({
 
 AdminApp.ApplicationAdapter = baseURL.extend({
     pathForType: function(type) {
-        	console.log("type=" + type);
            return type + 's';
 
     }
@@ -22,6 +21,7 @@ AdminApp.Router.map(function(){
 	this.route('user', {path: '/users/:user_id'});
 	this.route('users');
 	this.route('newUser', {path: '/users/new'});
+	this.route('userprofile');
 });
 
 
@@ -73,6 +73,16 @@ AdminApp.SelectUserStatusComponent = Ember.Component.extend({
     }
 });
 
+AdminApp.AppController = Ember.Controller.extend({
+    actions: {
+        save: function(app) {
+        	console.log("save app");
+            app.save();
+            this.transitionTo('apps');
+        }
+    }
+});
+
 AdminApp.LogsController = Ember.Controller.extend({
     actions: {
         selectAll: function() {}
@@ -109,6 +119,8 @@ AdminApp.UserController = Ember.Controller.extend({
 });
 
 AdminApp.UsersController = Ember.Controller.extend({
+
+
     actions: {
         selectAll: function() {}
     }
@@ -174,6 +186,12 @@ AdminApp.User.FIXTURES = [{
     role: "role22"
 }];
 
+AdminApp.AppRoute = Ember.Route.extend({
+    model: function(params) {
+        return this.store.find('app', params.app_id);
+    }
+});
+
 AdminApp.ApplicationRoute = Ember.Route.extend({
     templateName: 'application',
 
@@ -218,10 +236,28 @@ AdminApp.UserRoute = Ember.Route.extend({
     }
 });
 
+
+AdminApp.UserProfileRoute = Ember.Route.extend({
+
+    model: function() {
+    	var u =  this.store.get('session.user');
+    	console.log(u);
+        return this.get('session.user');
+    },
+
+   
+    setupController: function(controller, model) {
+        controller.set('userProfile', model);
+    }
+    
+    
+});
+
 AdminApp.UsersRoute = Ember.Route.extend({
     model: function(params) {
         return this.store.findAll('user');
     }
+	
 });
 
 AdminApp.UsersNewRoute = Ember.Route.extend({
@@ -240,7 +276,7 @@ Ember.TEMPLATES["app"] = Ember.HTMLBars.template((function() {
           "column": 0
         },
         "end": {
-          "line": 55,
+          "line": 50,
           "column": 6
         }
       }
@@ -282,7 +318,7 @@ Ember.TEMPLATES["app"] = Ember.HTMLBars.template((function() {
       var el3 = dom.createTextNode("\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
-      var el2 = dom.createTextNode("\n    ");
+      var el2 = dom.createTextNode("\n\n    ");
       dom.appendChild(el1, el2);
       var el2 = dom.createElement("div");
       dom.setAttribute(el2,"class","control-group");
@@ -407,32 +443,7 @@ Ember.TEMPLATES["app"] = Ember.HTMLBars.template((function() {
       var el3 = dom.createTextNode("\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
-      var el2 = dom.createTextNode("\n    ");
-      dom.appendChild(el1, el2);
-      var el2 = dom.createElement("div");
-      dom.setAttribute(el2,"class","control-group");
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","control-label");
-      var el4 = dom.createTextNode("\n            Database password:\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
-      dom.appendChild(el2, el3);
-      var el3 = dom.createElement("div");
-      dom.setAttribute(el3,"class","controls");
-      var el4 = dom.createTextNode("\n            ");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createComment("");
-      dom.appendChild(el3, el4);
-      var el4 = dom.createTextNode("\n        ");
-      dom.appendChild(el3, el4);
-      dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n    ");
-      dom.appendChild(el2, el3);
-      dom.appendChild(el1, el2);
-      var el2 = dom.createTextNode("   \n");
+      var el2 = dom.createTextNode("\n \n     \n");
       dom.appendChild(el1, el2);
       dom.appendChild(el0, el1);
       return el0;
@@ -440,7 +451,7 @@ Ember.TEMPLATES["app"] = Ember.HTMLBars.template((function() {
     buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
       var element0 = dom.childAt(fragment, [0]);
       var element1 = dom.childAt(element0, [3, 1]);
-      var morphs = new Array(8);
+      var morphs = new Array(7);
       morphs[0] = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
       morphs[1] = dom.createElementMorph(element1);
       morphs[2] = dom.createMorphAt(dom.childAt(element0, [5, 3]),1,1);
@@ -448,18 +459,16 @@ Ember.TEMPLATES["app"] = Ember.HTMLBars.template((function() {
       morphs[4] = dom.createMorphAt(dom.childAt(element0, [9, 3]),1,1);
       morphs[5] = dom.createMorphAt(dom.childAt(element0, [11, 3]),1,1);
       morphs[6] = dom.createMorphAt(dom.childAt(element0, [13, 3]),1,1);
-      morphs[7] = dom.createMorphAt(dom.childAt(element0, [15, 3]),1,1);
       return morphs;
     },
     statements: [
-      ["content","appName",["loc",[null,[2,16],[2,27]]]],
+      ["content","model.appName",["loc",[null,[2,16],[2,33]]]],
       ["element","action",["save",["get","this",["loc",[null,[4,56],[4,60]]]]],[],["loc",[null,[4,40],[4,62]]]],
-      ["inline","input",[],["name","appName","value",["subexpr","@mut",[["get","appName",["loc",[null,[12,41],[12,48]]]]],[],[]],"required",true],["loc",[null,[12,12],[12,64]]]],
-      ["inline","input",[],["name","owner","value",["subexpr","@mut",[["get","owner",["loc",[null,[20,36],[20,41]]]]],[],[]],"required",true],["loc",[null,[20,9],[20,58]]]],
-      ["inline","input",[],["name","dbHost","value",["subexpr","@mut",[["get","dbHost",["loc",[null,[28,40],[28,46]]]]],[],[]],"required",true],["loc",[null,[28,12],[28,63]]]],
-      ["inline","input",[],["name","dbLogin","value",["subexpr","@mut",[["get","dbLogin",["loc",[null,[36,38],[36,45]]]]],[],[]],"required",true],["loc",[null,[36,9],[36,62]]]],
-      ["inline","input",[],["name","dbName","value",["subexpr","@mut",[["get","dbName",["loc",[null,[44,40],[44,46]]]]],[],[]],"required",true],["loc",[null,[44,12],[44,63]]]],
-      ["inline","input",[],["name","dbPwd","value",["subexpr","@mut",[["get","dbPwd",["loc",[null,[52,39],[52,44]]]]],[],[]],"required",true],["loc",[null,[52,12],[52,61]]]]
+      ["inline","input",[],["name","appName","value",["subexpr","@mut",[["get","model.appName",["loc",[null,[13,41],[13,54]]]]],[],[]],"required",true],["loc",[null,[13,12],[13,70]]]],
+      ["inline","input",[],["name","owner","value",["subexpr","@mut",[["get","model.owner",["loc",[null,[21,36],[21,47]]]]],[],[]],"required",true],["loc",[null,[21,9],[21,64]]]],
+      ["inline","input",[],["name","dbHost","value",["subexpr","@mut",[["get","model.dbHost",["loc",[null,[29,40],[29,52]]]]],[],[]],"required",true],["loc",[null,[29,12],[29,69]]]],
+      ["inline","input",[],["name","dbLogin","value",["subexpr","@mut",[["get","model.dbLogin",["loc",[null,[37,38],[37,51]]]]],[],[]],"required",true],["loc",[null,[37,9],[37,68]]]],
+      ["inline","input",[],["name","dbName","value",["subexpr","@mut",[["get","model.dbName",["loc",[null,[45,40],[45,52]]]]],[],[]],"required",true],["loc",[null,[45,12],[45,69]]]]
     ],
     locals: [],
     templates: []
@@ -642,7 +651,7 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
       dom.setAttribute(el8,"role","button");
       dom.setAttribute(el8,"aria-haspopup","true");
       dom.setAttribute(el8,"aria-expanded","false");
-      var el9 = dom.createTextNode("Dropdown ");
+      var el9 = dom.createComment("");
       dom.appendChild(el8, el9);
       var el9 = dom.createElement("span");
       dom.setAttribute(el9,"class","caret");
@@ -770,12 +779,14 @@ Ember.TEMPLATES["application"] = Ember.HTMLBars.template((function() {
     },
     buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
       var element0 = dom.childAt(fragment, [0]);
-      var morphs = new Array(2);
-      morphs[0] = dom.createMorphAt(dom.childAt(element0, [3, 1, 1]),1,1);
-      morphs[1] = dom.createMorphAt(dom.childAt(element0, [5]),1,1);
+      var morphs = new Array(3);
+      morphs[0] = dom.createMorphAt(dom.childAt(element0, [1, 1, 1, 5, 1, 1, 1]),0,0);
+      morphs[1] = dom.createMorphAt(dom.childAt(element0, [3, 1, 1]),1,1);
+      morphs[2] = dom.createMorphAt(dom.childAt(element0, [5]),1,1);
       return morphs;
     },
     statements: [
+      ["content","model.userProfile.login",["loc",[null,[17,126],[17,153]]]],
       ["block","each",[["get","model",["loc",[null,[34,24],[34,29]]]]],[],0,null,["loc",[null,[34,16],[38,25]]]],
       ["content","outlet",["loc",[null,[43,8],[43,18]]]]
     ],
@@ -1153,7 +1164,7 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
           "column": 0
         },
         "end": {
-          "line": 79,
+          "line": 87,
           "column": 6
         }
       }
@@ -1173,26 +1184,23 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
       var el3 = dom.createComment("");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
-      var el2 = dom.createTextNode("\n    ");
+      var el2 = dom.createTextNode("\n\n    \n    ");
       dom.appendChild(el1, el2);
       var el2 = dom.createElement("div");
-      dom.setAttribute(el2,"class","action-bar");
-      var el3 = dom.createTextNode("\n        ");
+      dom.setAttribute(el2,"class","input-group");
+      var el3 = dom.createTextNode("\n  ");
       dom.appendChild(el2, el3);
-      var el3 = dom.createElement("button");
-      dom.setAttribute(el3,"class","btn btn-primary");
-      var el4 = dom.createTextNode("Save & Close");
+      var el3 = dom.createElement("span");
+      dom.setAttribute(el3,"class","input-group-addon");
+      dom.setAttribute(el3,"id","basic-addon2");
+      var el4 = dom.createTextNode("User name:");
       dom.appendChild(el3, el4);
       dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n        ");
+      var el3 = dom.createTextNode("\n  ");
       dom.appendChild(el2, el3);
-      var el3 = dom.createElement("a");
-      dom.setAttribute(el3,"class","btn");
-      dom.setAttribute(el3,"href","#/users");
-      var el4 = dom.createTextNode("Cancel");
-      dom.appendChild(el3, el4);
+      var el3 = dom.createComment("");
       dom.appendChild(el2, el3);
-      var el3 = dom.createTextNode("\n    ");
+      var el3 = dom.createTextNode("\n\n");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
       var el2 = dom.createTextNode("\n    ");
@@ -1395,6 +1403,28 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
       var el3 = dom.createTextNode("\n    ");
       dom.appendChild(el2, el3);
       dom.appendChild(el1, el2);
+      var el2 = dom.createTextNode("\n    \n        ");
+      dom.appendChild(el1, el2);
+      var el2 = dom.createElement("div");
+      dom.setAttribute(el2,"class","action-bar");
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("button");
+      dom.setAttribute(el3,"class","btn btn-primary");
+      var el4 = dom.createTextNode("Save & Close");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n        ");
+      dom.appendChild(el2, el3);
+      var el3 = dom.createElement("a");
+      dom.setAttribute(el3,"class","btn");
+      dom.setAttribute(el3,"href","#/users");
+      var el4 = dom.createTextNode("Cancel");
+      dom.appendChild(el3, el4);
+      dom.appendChild(el2, el3);
+      var el3 = dom.createTextNode("\n    ");
+      dom.appendChild(el2, el3);
+      dom.appendChild(el1, el2);
       var el2 = dom.createTextNode("\n");
       dom.appendChild(el1, el2);
       dom.appendChild(el0, el1);
@@ -1402,10 +1432,10 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
     },
     buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
       var element0 = dom.childAt(fragment, [0]);
-      var element1 = dom.childAt(element0, [3, 1]);
-      var morphs = new Array(10);
+      var element1 = dom.childAt(element0, [21, 1]);
+      var morphs = new Array(11);
       morphs[0] = dom.createMorphAt(dom.childAt(element0, [1]),1,1);
-      morphs[1] = dom.createElementMorph(element1);
+      morphs[1] = dom.createMorphAt(dom.childAt(element0, [3]),3,3);
       morphs[2] = dom.createMorphAt(dom.childAt(element0, [5, 3]),1,1);
       morphs[3] = dom.createMorphAt(dom.childAt(element0, [7, 3]),1,1);
       morphs[4] = dom.createMorphAt(dom.childAt(element0, [9, 3]),1,1);
@@ -1414,19 +1444,21 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
       morphs[7] = dom.createMorphAt(dom.childAt(element0, [15, 3]),1,1);
       morphs[8] = dom.createMorphAt(dom.childAt(element0, [17, 3]),1,1);
       morphs[9] = dom.createMorphAt(dom.childAt(element0, [19, 3]),1,1);
+      morphs[10] = dom.createElementMorph(element1);
       return morphs;
     },
     statements: [
       ["content","model.login",["loc",[null,[2,9],[2,24]]]],
-      ["element","action",["save",["get","this",["loc",[null,[4,56],[4,60]]]]],[],["loc",[null,[4,40],[4,62]]]],
-      ["inline","input",[],["name","userName","value",["subexpr","@mut",[["get","model.userName",["loc",[null,[12,42],[12,56]]]]],[],[]],"required",true],["loc",[null,[12,12],[12,72]]]],
-      ["inline","input",[],["name","login","value",["subexpr","@mut",[["get","model.login",["loc",[null,[20,36],[20,47]]]]],[],[]],"required",true],["loc",[null,[20,9],[20,64]]]],
-      ["inline","input",[],["name","pwd","value",["subexpr","@mut",[["get","model.pwd",["loc",[null,[28,37],[28,46]]]]],[],[]],"required",true],["loc",[null,[28,12],[28,63]]]],
-      ["inline","input",[],["name","email","value",["subexpr","@mut",[["get","model.email",["loc",[null,[36,36],[36,47]]]]],[],[]],"required",true],["loc",[null,[36,9],[36,64]]]],
-      ["inline","input",[],["name","preffered lang","value",["subexpr","@mut",[["get","model.prefferedLang",["loc",[null,[44,45],[44,64]]]]],[],[]],"required",true],["loc",[null,[44,9],[44,81]]]],
-      ["inline","select-user-status",[],["value",["subexpr","@mut",[["get","model.status",["loc",[null,[53,35],[53,47]]]]],[],[]]],["loc",[null,[53,8],[53,49]]]],
-      ["inline","input",[],["name","regDate","value",["subexpr","@mut",[["get","model.regDate",["loc",[null,[63,41],[63,54]]]]],[],[]],"disabled",true],["loc",[null,[63,12],[63,70]]]],
-      ["inline","input",[],["type","checkbox","name","isSupervisor","checked",["subexpr","@mut",[["get","model.isSupervisor",["loc",[null,[75,64],[75,82]]]]],[],[]]],["loc",[null,[75,12],[75,85]]]]
+      ["inline","input",[],["class","form-control","aria-describedby","basic-addon2","name","userName","value",["subexpr","@mut",[["get","model.userName",["loc",[null,[7,85],[7,99]]]]],[],[]],"required",true],["loc",[null,[7,2],[7,115]]]],
+      ["inline","input",[],["name","userName","value",["subexpr","@mut",[["get","model.userName",["loc",[null,[15,42],[15,56]]]]],[],[]],"required",true],["loc",[null,[15,12],[15,72]]]],
+      ["inline","input",[],["name","login","value",["subexpr","@mut",[["get","model.login",["loc",[null,[23,36],[23,47]]]]],[],[]],"required",true],["loc",[null,[23,9],[23,64]]]],
+      ["inline","input",[],["name","pwd","value",["subexpr","@mut",[["get","model.pwd",["loc",[null,[31,37],[31,46]]]]],[],[]],"required",true],["loc",[null,[31,12],[31,63]]]],
+      ["inline","input",[],["name","email","value",["subexpr","@mut",[["get","model.email",["loc",[null,[39,36],[39,47]]]]],[],[]],"required",true],["loc",[null,[39,9],[39,64]]]],
+      ["inline","input",[],["name","preffered lang","value",["subexpr","@mut",[["get","model.prefferedLang",["loc",[null,[47,45],[47,64]]]]],[],[]],"required",true],["loc",[null,[47,9],[47,81]]]],
+      ["inline","select-user-status",[],["value",["subexpr","@mut",[["get","model.status",["loc",[null,[56,35],[56,47]]]]],[],[]]],["loc",[null,[56,8],[56,49]]]],
+      ["inline","input",[],["name","regDate","value",["subexpr","@mut",[["get","model.regDate",["loc",[null,[66,41],[66,54]]]]],[],[]],"disabled",true],["loc",[null,[66,12],[66,70]]]],
+      ["inline","input",[],["type","checkbox","name","isSupervisor","checked",["subexpr","@mut",[["get","model.isSupervisor",["loc",[null,[78,64],[78,82]]]]],[],[]]],["loc",[null,[78,12],[78,85]]]],
+      ["element","action",["save",["get","this",["loc",[null,[84,56],[84,60]]]]],[],["loc",[null,[84,40],[84,62]]]]
     ],
     locals: [],
     templates: []

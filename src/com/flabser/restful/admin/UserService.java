@@ -52,7 +52,6 @@ public class UserService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") int id) {
-		System.out.println("GET " + id);
 		User user = sysDatabase.getUser(id);
 		return Response.ok(user).build();
 
@@ -81,7 +80,7 @@ public class UserService extends RestProvider {
 			user.refresh(u);
 			user.save();
 		} catch (WebFormValueException e) {
-			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setError(e, LanguageType.ENG.name()))
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setMessage(e, LanguageType.ENG.name()))
 					.build();
 		}
 		return Response.ok(user).build();

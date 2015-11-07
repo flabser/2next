@@ -6,7 +6,6 @@ var baseURL =  DS.RESTAdapter.extend({
 
 AdminApp.ApplicationAdapter = baseURL.extend({
     pathForType: function(type) {
-        	console.log("type=" + type);
            return type + 's';
 
     }

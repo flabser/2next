@@ -36,7 +36,8 @@ public interface ISystemDatabase {
 
 	ArrayList<User> getAllUsers(String condition, int calcStartEntry, int pageSize);
 
-	IApplicationDatabase getApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException;
+	IApplicationDatabase getApplicationDatabase()
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException;
 
 	int insert(ApplicationProfile applicationProfile);
 
@@ -47,6 +48,8 @@ public interface ISystemDatabase {
 	ArrayList<ApplicationProfile> getAllApps(String string, int calcStartEntry, int pageSize);
 
 	ApplicationProfile getApp(String string);
+
+	ApplicationProfile getApp(int id);
 
 	User getUser(long id);
 

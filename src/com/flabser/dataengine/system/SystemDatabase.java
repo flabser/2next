@@ -372,9 +372,9 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 								UserStatusType.getType(rs.getInt("STATUS")),
 								new HashSet<>(getUserGroups(
 										Arrays.asList((Integer[]) getObjectArray(rs.getArray("GROUPS"))))),
-								new HashSet<>(getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))),
-								getApplicationProfiles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true,
-								rs.getString("AVATARNAME")));
+						new HashSet<>(getUserRoles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("ROLES"))))),
+						getApplicationProfiles(Arrays.asList((Integer[]) getObjectArray(rs.getArray("APPS")))), true,
+						rs.getString("AVATARNAME")));
 			}
 
 			conn.commit();
@@ -729,7 +729,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		try (PreparedStatement pst = conn.prepareStatement(
 				"insert into APPS(APPNAME, OWNER, DBHOST, DBNAME, APPTYPE, APPID, DBTYPE, STATUS, STATUSDATE, "
 						+ "REGDATE, DESCRIPTION, LASTERROR, visibility) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
-						PreparedStatement.RETURN_GENERATED_KEYS)) {
+				PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			pst.setString(1, ap.appName);
 			pst.setString(2, ap.owner);
@@ -759,9 +759,9 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			try (Statement s = conn.createStatement()) {
 				s.executeUpdate(
 						"delete from roles where app_id = " + ap.id
-						+ (ap.getRoles().size() > 0 ? " and id not in " + ap.getRoles().stream()
-								.map(r -> String.valueOf(r.getId())).collect(Collectors.joining(", ", "(", ")"))
-								: ""));
+								+ (ap.getRoles().size() > 0 ? " and id not in " + ap.getRoles().stream()
+										.map(r -> String.valueOf(r.getId())).collect(Collectors.joining(", ", "(", ")"))
+										: ""));
 			}
 
 			conn.commit();
@@ -803,9 +803,9 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			try (Statement s = conn.createStatement()) {
 				s.executeUpdate(
 						"delete from roles where app_id = " + ap.id
-						+ (ap.getRoles().size() > 0 ? " and id not in " + ap.getRoles().stream()
-								.map(r -> String.valueOf(r.getId())).collect(Collectors.joining(", ", "(", ")"))
-								: ""));
+								+ (ap.getRoles().size() > 0 ? " and id not in " + ap.getRoles().stream()
+										.map(r -> String.valueOf(r.getId())).collect(Collectors.joining(", ", "(", ")"))
+										: ""));
 			}
 
 			conn.commit();
@@ -847,6 +847,28 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		}
 	}
 
+	@Override
+	public ApplicationProfile getApp(int id) {
+		ApplicationProfile app = null;
+		Connection conn = pool.getConnection();
+		try {
+			Statement s = conn.createStatement();
+			ResultSet rs = s.executeQuery("select * from APPS where id = " + id);
+
+			if (rs.next()) {
+				app = new ApplicationProfile(rs);
+			}
+
+			conn.commit();
+			return app;
+		} catch (SQLException e) {
+			DatabaseUtil.debugErrorPrint(e);
+			return null;
+		} finally {
+			pool.returnConnection(conn);
+		}
+	}
+
 	// risk of sql injection
 	@Override
 	public ArrayList<ApplicationProfile> getAllApps(String condition, int calcStartEntry, int pageSize) {
@@ -884,9 +906,10 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	public int insert(Invitation inv) {
 		Connection conn = pool.getConnection();
 
-		try (PreparedStatement pst = conn
-				.prepareStatement("insert into INVITATIONS(REGDATE, EMAIL, APPTYPE, APPID, MESSAGE, AUTHOR, TEMPLOGIN, STATUS) "
-						+ "values(?, ?, ?, ?, ?, ?, ?, ?);", PreparedStatement.RETURN_GENERATED_KEYS)) {
+		try (PreparedStatement pst = conn.prepareStatement(
+				"insert into INVITATIONS(REGDATE, EMAIL, APPTYPE, APPID, MESSAGE, AUTHOR, TEMPLOGIN, STATUS) "
+						+ "values(?, ?, ?, ?, ?, ?, ?, ?);",
+				PreparedStatement.RETURN_GENERATED_KEYS)) {
 
 			pst.setTimestamp(1, inv.getRegDate() != null ? new java.sql.Timestamp(inv.getRegDate().getTime()) : null);
 			pst.setString(2, inv.getEmail());
@@ -930,7 +953,6 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			pst.setLong(6, invitation.getTempLogin());
 			pst.setInt(7, invitation.getStatus().getCode());
 			pst.setInt(8, invitation.getId());
-
 
 			pst.executeUpdate();
 

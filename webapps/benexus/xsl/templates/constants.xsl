@@ -8,4 +8,12 @@
 		<xsl:text disable-output-escaping="yes">&lt;</xsl:text>!DOCTYPE html<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
 	</xsl:template>
 
+
+	<xsl:template name="alerts">
+		<div class="alert alert-success reg-result-ok" role="alert" style="display:none;" id="green-alert"></div>
+		<div class="alert alert-info reg-result-ok" role="alert" style="display:none;" id="blue-alert"></div>
+		<div class="alert alert-warning reg-result-ok" role="alert" style="display:none;" id="yellow-alert"></div>
+		<div class="alert alert-danger reg-result-ok" role="alert" style="display:none;" id="red-alert"></div>
+	</xsl:template>
+	
 </xsl:stylesheet>

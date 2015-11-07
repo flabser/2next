@@ -35,12 +35,9 @@ public class ApplicationProfile implements _IContent {
 	public String appName;
 
 	public String owner;
-	@JsonIgnore
 	public DatabaseType dbType = DatabaseType.POSTGRESQL;
-	@JsonIgnore
 	public String dbHost = EnvConst.DATABASE_HOST + ":" + EnvConst.CONN_PORT;
 
-	@JsonIgnore
 	public String dbName;
 	public String defaultURL;
 	private ApplicationStatusType status = ApplicationStatusType.UNKNOWN;
@@ -252,6 +249,7 @@ public class ApplicationProfile implements _IContent {
 		this.defaultURL = defaultURL;
 	}
 
+	@JsonIgnore
 	public Application getPOJO() {
 		Application app = new Application(this);
 		app.setAppType(appType);

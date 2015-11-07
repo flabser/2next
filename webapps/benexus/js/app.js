@@ -97,54 +97,28 @@ nubis.signUp = function(form) {
         url: 'rest/session/signup',
         data: $(form).serialize(),
         success: function(result) {
-            console.log(result.outcome);
-
-            if (result.outcome.type == 'ERROR') {
-                var errorId = result.outcome.errorId;
-                if (errorId == 'EMAIL_IS_INCORRECT') {
-                    $('input[name=email]', form).addClass('invalid');
-                    $('.reg-email-invalid').css('height', 'auto');
-                    alert(result.outcome.message[0]);
-                } else if (errorId == 'USER_EXISTS') {
-                    $('.reg-email-exists', form).css('height', 'auto');
-                    alert(result.outcome.message[0]);
-                } else if (errorId == 'WEAK_PASSWORD') {
-                    $('input[name=pwd]', form).addClass('invalid');
-                    $('.reg-pwd-weak', form).css('height', 'auto');
-                }
+            var map = obj.outcome.messages;
+            var alert;
+            if (result.outcome.type == 'ERROR') {            	 
+            	 alert = '#red-alert';
             } else if (result.outcome.type == 'WARNING') {
-                if (result.outcome.warningId == 'VERIFY_EMAIL_SENDING_ERROR') {
-                    alert(result.outcome.message[0]);
-                }
+            	alert = '#yellow-alert';
             } else {
-                alert('result ' + result.outcome.type);
-
-                var isReg = false;
-                //if (pr.indexOf('user-reg') != -1) {
-                console.log('user-reg');
-                isReg = true;
-                $('input[name=pwd]', form).val('');
-                //}
-                //if (pr.indexOf('ok') != -1) {
-                console.log('ok');
-                //}
-                //
-
-                /*if (pr == 'verify email sending error') {
-                    var $msg = $('.reg-result-ok');
-                    $msg.css({
-                        'display': 'block'
-                    });
-                    form.reset();
-
-                    setTimeout(function() {
-                        $('.reg-result-ok').css({'display': 'none'});
-                    }, 1000 * 60);
-                }*/
+            	alert = '#green-alert';
             }
+            $(alert).text(map[Object.keys(map)[0]]).show();
+            setTimeout(function() {
+                $(alert).hide();
+            }, 5000);
         },
         error: function(err) {
-            console.log(err);
+        	  $('#main-load').hide();
+        	  var obj = $.parseJSON(err.responseText);
+        	  var map = obj.outcome.messages;
+              $('#red-alert').text(map[Object.keys(map)[0]]).show();
+              setTimeout(function() {
+                  $('#red-alert').hide();
+              }, 5000);
         },
         complete: function() {
             $(form).removeClass('process');
@@ -174,24 +148,15 @@ nubis.login = function(form) {
             }
         }),
         success: function(result) {
-            console.log(result);
-            if (result.authUser.status === 'PASSWORD_INCORRECT') {
-                $('#main-load').hide();
-                $('#login-error').show();
-
-                setTimeout(function() {
-                    $('#login-error').hide();
-                }, 5000);
-            } else {
-                location.href = '?id=ws';
-            }
+            location.href = '?id=ws';           
         },
         error: function(err) {
             $('#main-load').hide();
-            $('#login-error').show();
-
+            var obj = $.parseJSON(err.responseText);
+            $('#red-alert').text(obj.authUser.error).show();
+            
             setTimeout(function() {
-                $('#login-error').hide();
+                $('#red-alert').hide();
             }, 5000);
         },
         complete: function() {

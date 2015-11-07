@@ -77,9 +77,9 @@
 	</sentence>
 	<sentence mode="on" keyword="PASSWORD_OR_LOGIN_INCORRECT">
 		<entry lang="ENG">The password or login is incorrect</entry>
-		<entry lang="RUS">Статус не определен</entry>
-		<entry lang="KAZ">Статус не определен</entry>	
-		<entry lang="BG">Неизвестен статус</entry>
+		<entry lang="RUS">Неверный пароль или имя пользователя</entry>
+		<entry lang="KAZ"></entry>	
+		<entry lang="BG">Парола или потребителско името е неправилно</entry>
 		<entry lang="POR"></entry>
 		<entry lang="SPA"></entry>		
 	</sentence>

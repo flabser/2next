@@ -1,9 +1,12 @@
 <div>
 <h1>User {{model.login}}</h1>
-    <div class="action-bar">
-        <button class="btn btn-primary" {{action 'save' this}}>Save & Close</button>
-        <a class="btn" href="#/users">Cancel</a>
-    </div>
+
+    
+    <div class="input-group">
+  <span class="input-group-addon" id="basic-addon2">User name:</span>
+  {{input class="form-control" aria-describedby="basic-addon2" name="userName" value=model.userName required=true}}
+
+</div>
     <div class="control-group">
         <div class="control-label">
             User name:
@@ -75,5 +78,10 @@
             {{input type="checkbox" name="isSupervisor" checked=model.isSupervisor }}
 
         </div>
+    </div>
+    
+        <div class="action-bar">
+        <button class="btn btn-primary" {{action 'save' this}}>Save & Close</button>
+        <a class="btn" href="#/users">Cancel</a>
     </div>
 </div>

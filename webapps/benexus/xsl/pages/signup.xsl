@@ -15,7 +15,7 @@
 						<xsl:value-of select="//captions/signup_title/@caption" />
 					</h1>
 				</div>
-				<div class="alert alert-success reg-result-ok" role="alert" style="display:none;">reg-result-ok</div>
+				<xsl:call-template name="alerts" />
 				<form method="post" name="signup">
 					<div class="form-group">
 						<input class="form-control" type="email" name="email" required="required" placeholder="E-mail" autocomplete="off" />

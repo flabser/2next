@@ -15,7 +15,7 @@
 						<xsl:value-of select="//captions/login_title/@caption" />
 					</h1>
 				</div>
-				<div class="alert alert-danger" id="login-error" role="alert" style="display:none;">Login or password incorrect</div>
+					<xsl:call-template name="alerts" />
 				<form method="post" name="signin">
 					<div class="form-group">
 						<input class="form-control" type="email" name="login" required="required" placeholder="E-mail" />
