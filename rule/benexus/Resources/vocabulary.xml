@@ -101,6 +101,7 @@
 		<entry lang="POR"></entry>
 		<entry lang="SPA"></entry>
 	</sentence>
+
 	<sentence mode="on" keyword="verify_email_error">
 		<entry lang="RUS">Не верные данные</entry>
 		<entry lang="KAZ">Не верные данные</entry>

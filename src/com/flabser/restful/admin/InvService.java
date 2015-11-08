@@ -71,7 +71,7 @@ public class InvService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Invitation invitation) throws ClassNotFoundException, SQLException, InstantiationException,
-	DatabasePoolException, IllegalAccessException {
+			DatabasePoolException, IllegalAccessException {
 		IEMail message = null;
 		Outcome result = new Outcome();
 		_Session session = getSession();
@@ -92,7 +92,7 @@ public class InvService extends RestProvider {
 		if (tempUser == null) {
 			tempUser = _UsersHelper.regTempApplicationUser(ap, invitation.getEmail());
 			message = new InvitationEMail(session, user, invitation.getMessage(), tempUser);
-		}else{
+		} else {
 			message = new InvitationEMailExist(session, user, invitation.getMessage(), tempUser);
 		}
 
@@ -137,7 +137,7 @@ public class InvService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") int id) {
 		User user = sysDatabase.getUser(id);
-		user.delete();
+
 		return Response.ok().build();
 	}
 

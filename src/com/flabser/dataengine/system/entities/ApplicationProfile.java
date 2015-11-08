@@ -204,7 +204,6 @@ public class ApplicationProfile implements _IContent {
 		// visibilty
 	}
 
-	@JsonIgnore
 	public void setStatus(ApplicationStatusType onLine) {
 		status = onLine;
 		statusDate = new Date();

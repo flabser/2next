@@ -87,9 +87,12 @@ public class AppService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") int id) {
-		User user = sysDatabase.getUser(id);
-		user.delete();
-		return Response.ok().build();
+		int res = sysDatabase.deleteApplicationProfile(id);
+		if (res == 1) {
+			return Response.status(HttpServletResponse.SC_OK).build();
+		} else {
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
+		}
 	}
 
 	@JsonRootName("apps")

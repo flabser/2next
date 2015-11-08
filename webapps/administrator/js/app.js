@@ -80,61 +80,6 @@ nubis.init = function() {
     }
 };
 
-nubis.signUp = function(form) {
-    if ($(form).hasClass('process')) {
-        return false;
-    }
-
-    $('#main-load').show();
-    $('input', form).removeClass('invalid');
-    $('.reg-email-invalid,.reg-email-exists,.reg-pwd-weak', form).css('height', '0px');
-    $(form).addClass('process');
-
-    $.ajax({
-        method: 'POST',
-        dataType: 'json',
-        // url: 'Provider?client=' + screen.height + 'x' + screen.width,
-        url: 'rest/session/signup',
-        data: $(form).serialize(),
-        success: function(result) {
-            console.log(result.outcome);
-
-            if (result.outcome.type == 'ERROR') {
-                var errorId = result.outcome.errorId;
-                if (errorId == 'EMAIL_IS_INCORRECT') {
-                    $('input[name=email]', form).addClass('invalid');
-                    $('.reg-email-invalid').css('height', 'auto');
-                    alert(result.outcome.message[0]);
-                } else if (errorId == 'USER_EXISTS') {
-                    $('.reg-email-exists', form).css('height', 'auto');
-                    alert(result.outcome.message[0]);
-                } else if (errorId == 'WEAK_PASSWORD') {
-                    $('input[name=pwd]', form).addClass('invalid');
-                    $('.reg-pwd-weak', form).css('height', 'auto');
-                }
-            } else if (result.outcome.type == 'WARNING') {
-                if (result.outcome.warningId == 'VERIFY_EMAIL_SENDING_ERROR') {
-                    alert(result.outcome.message[0]);
-                }
-            } else {
-                alert('result ' + result.outcome.type);
-
-                var isReg = false;
-                console.log('user-reg');
-                isReg = true;
-                $('input[name=pwd]', form).val('');
-                console.log('ok');             
-            }
-        },
-        error: function(err) {
-            console.log(err);
-        },
-        complete: function() {
-            $(form).removeClass('process');
-            $('#main-load').hide();
-        }
-    });
-};
 
 nubis.login = function(form) {
     if ($(form).hasClass('process')) {

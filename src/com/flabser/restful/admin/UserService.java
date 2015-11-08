@@ -80,8 +80,8 @@ public class UserService extends RestProvider {
 			user.refresh(u);
 			user.save();
 		} catch (WebFormValueException e) {
-			return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(res.setMessage(e, LanguageType.ENG.name()))
-					.build();
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST)
+					.entity(res.setMessage(e, LanguageType.ENG.name())).build();
 		}
 		return Response.ok(user).build();
 	}
@@ -90,9 +90,12 @@ public class UserService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") int id) {
-		User user = sysDatabase.getUser(id);
-		user.delete();
-		return Response.ok().build();
+		int res = sysDatabase.deleteUser(id);
+		if (res == 1) {
+			return Response.status(HttpServletResponse.SC_OK).build();
+		} else {
+			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
+		}
 	}
 
 	@JsonRootName("users")

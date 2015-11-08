@@ -256,11 +256,10 @@ public class SessionService extends RestProvider {
 
 	}
 
-	@POST
-	@Path("/verify")
+	@GET
+	@Path("/verify/{code}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response verify(@FormParam("code") String code) {
+	public Response verify(@PathParam("code") String code) {
 		Outcome res = new Outcome();
 		_Session session = getSession();
 		String lang = session.getLang();
@@ -334,6 +333,7 @@ public class SessionService extends RestProvider {
 		VerifyEMail sve = new VerifyEMail(session, user);
 		if (sve.send()) {
 			user.setStatus(UserStatusType.WAITING_FOR_VERIFYCODE);
+			res.addMessage("verifaction_message_has_been_sent", lang);
 		} else {
 			user.setStatus(UserStatusType.VERIFYCODE_NOT_SENT);
 			res.setMessage(ServerServiceWarningType.VERIFY_EMAIL_SENDING_ERROR, lang);

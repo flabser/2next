@@ -93,11 +93,10 @@ nubis.signUp = function(form) {
     $.ajax({
         method: 'POST',
         dataType: 'json',
-        // url: 'Provider?client=' + screen.height + 'x' + screen.width,
         url: 'rest/session/signup',
         data: $(form).serialize(),
         success: function(result) {
-            var map = obj.outcome.messages;
+            var map = result.outcome.messages;
             var alert;
             if (result.outcome.type == 'ERROR') {            	 
             	 alert = '#red-alert';

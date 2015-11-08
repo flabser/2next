@@ -336,11 +336,6 @@ public class User {
 		return avatar;
 	}
 
-	public boolean delete() {
-		return false;
-
-	}
-
 	public HashMap<String, HashMap<String, ApplicationProfile>> getEnabledApps() {
 		return applicationsMap;
 	}

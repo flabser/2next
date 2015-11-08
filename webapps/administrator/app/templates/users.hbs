@@ -1,14 +1,33 @@
 <div>
-	<h3>Users</h3>
-    <div class="action-bar">
-        <a class="btn" href="#/users/new">new user</a>
-    </div>
-	{{#each model as |user|}}
-	    <div>
-	        <label class="entry-select">
-	            <input type="checkbox" name="docid" value="{@docid}" />
-	        </label>
-	        {{#link-to 'user' user.id}} {{user.login}}  {{user.userName}} {{/link-to}}
-	    </div>
-	{{/each}}
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Users</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Login</th>
+					<th>Name</th>
+					<th>E-mail</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each model as |user|}}
+				<tr>
+					<td>{{user.id}}</td>
+					<td>{{#link-to 'user' user.id}} {{user.login}}{{/link-to}}</td>
+					<td>{{user.userName}}</td>
+					<td>{{user.email}}</td>
+					<td>{{user.status}}</td>
+					<td>
+						<button {{action 'deleteu' user}} class="btn btn-default">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
 </div>

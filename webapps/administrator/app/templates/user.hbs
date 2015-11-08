@@ -1,87 +1,47 @@
 <div>
-<h1>User {{model.login}}</h1>
-
-    
-    <div class="input-group">
-  <span class="input-group-addon" id="basic-addon2">User name:</span>
-  {{input class="form-control" aria-describedby="basic-addon2" name="userName" value=model.userName required=true}}
-
-</div>
-    <div class="control-group">
-        <div class="control-label">
-            User name:
-        </div>
-        <div class="controls">
-            {{input name="userName" value=model.userName required=true}}
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="control-label">
-         Login:
-        </div>
-        <div class="controls">
-         {{input name="login" value=model.login required=true }}
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="control-label">
-            Password:
-        </div>
-        <div class="controls">
-            {{input name="pwd" value=model.pwd required=true }}
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="control-label">
-         E-mail:
-        </div>
-        <div class="controls">
-         {{input name="email" value=model.email required=true }}
-        </div>
-    </div>
-       <div class="control-group">
-        <div class="control-label">
-         Preffered lang:
-        </div>
-        <div class="controls">
-         {{input name="preffered lang" value=model.prefferedLang required=true }}
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="control-label">
-            Status:
-        </div>
-        <div class="controls">
-
-        {{select-user-status value=model.status}}
-
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="control-label">
-            RegDate:
-        </div>
-        <div class="controls">
-
-            {{input name="regDate" value=model.regDate disabled=true}}
+	<h1>User {{model.login}}</h1>
 
 
+	<div class="input-group">
+		<span class="input-group-addon" id="basic-addon1">User name:</span>
+		{{input class="form-control" aria-describedby="basic-addon1" name="userName" value=model.userName required=true}}
+	</div>
+	
+	<div class="input-group">
+		<span class="input-group-addon" id="basic-addon1">Login:</span>
+		{{input class="form-control" aria-describedby="basic-addon1" name="login" value=model.login required=true}}
+	</div>
+	
+	<div class="input-group">
+		<span class="input-group-addon" id="basic-addon2">E-mail:</span>
+		{{input class="form-control" aria-describedby="basic-addon1" name="email" value=model.email required=true}}
+	</div>
+	<div class="input-group">
+		 <span class="input-group-addon" id="basic-addon2"> Preffered lang:</span>
+		{{input class="form-control" aria-describedby="basic-addon1" name="prefflang" value=model.prefferedLang required=true}}
+	</div>
 
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="control-label">
-            IsSupervisor:
-        </div>
-        <div class="controls">
 
-            {{input type="checkbox" name="isSupervisor" checked=model.isSupervisor }}
+	<div class="control-group">
+		<div class="control-label">Status:</div>
+		<div class="controls">{{select-user-status value=model.status}}
 
-        </div>
-    </div>
-    
-        <div class="action-bar">
-        <button class="btn btn-primary" {{action 'save' this}}>Save & Close</button>
-        <a class="btn" href="#/users">Cancel</a>
-    </div>
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="control-label">RegDate:</div>
+		<div class="controls">{{input name="regDate" value=model.regDate
+			disabled=true}}</div>
+	</div>
+	<div class="control-group">
+		<div class="control-label">IsSupervisor:</div>
+		<div class="controls">{{input type="checkbox"
+			name="isSupervisor" checked=model.isSupervisor }}</div>
+	</div>
+
+	<div class="action-bar">
+		<button class="btn btn-primary"{{action 'save' this}}>Save &
+			Close</button>
+		<a class="btn" href="#/users">Cancel</a>
+	</div>
 </div>

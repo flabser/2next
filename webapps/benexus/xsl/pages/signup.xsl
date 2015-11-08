@@ -15,6 +15,7 @@
 						<xsl:value-of select="//captions/signup_title/@caption" />
 					</h1>
 				</div>
+				<div class="main-load" id="main-load"></div>
 				<xsl:call-template name="alerts" />
 				<form method="post" name="signup">
 					<div class="form-group">

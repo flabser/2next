@@ -178,4 +178,13 @@
 		<entry lang="SPA"></entry>	
 	</sentence>	
 
+	<!-- sign up processing -->
+	<sentence mode="on" keyword="verifaction_message_has_been_sent">
+		<entry lang="ENG">Verifaction message has been sent. Check your email</entry>
+		<entry lang="RUS">Письмо для подтверждения адреса электронной почты было отпавлено. Проверьте вашу почту</entry>
+		<entry lang="KAZ">Письмо для подтверждения адреса электронной почты было отпавлено. Проверьте вашу почту</entry>		
+		<entry lang="BG">Проверка съобщение е изпратено. Проверявате електронната си поща</entry>
+		<entry lang="POR"></entry>
+		<entry lang="SPA"></entry>
+	</sentence>
 </vocabulary>

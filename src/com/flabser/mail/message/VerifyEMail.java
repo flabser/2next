@@ -25,9 +25,11 @@ public class VerifyEMail implements IEMail {
 		String code = user.getVerifyCode();
 		String url = session.getBaseAppURL();
 		subj = "Confirmation of the E-mail your account in " + session.getAppType();
-		msg = "<h4>Confirmation of the E-mail</h4><p>Ignore this letter, if you have not registered on the site<a href=\"" + url + "\"><b>" + url + "</b></a>"
-				+ "</p><div><b>Click on the link to confirmation your address</b><br/><a href=\"" + url + "/Provider?id=verify_email&code=" + code + "\">"
-				+ url + "/Provider?id=verify_email&code=" + code + "</a></div>";
+		msg = "<h4>Confirmation of the E-mail</h4><p>Ignore this letter, if you have not registered on the site<a href=\""
+				+ url + "\"><b>" + url + "</b></a>"
+				+ "</p><div><b>Click on the link to confirmation your address</b><br/><a href=\"" + url
+				+ "/Provider?id=verify_email&code=" + code + "\">" + url + "/Provider?id=verify_email&code=" + code
+				+ "</a></div>";
 		recipients.add(user.getEmail());
 	}
 
@@ -37,8 +39,7 @@ public class VerifyEMail implements IEMail {
 		return ma.sendMail(recipients, subj, msg, false);
 	}
 
-
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		String file = "resources" + File.separator + "memos" + File.separator + "verifyemail.html";
 		String html = Util.readFile(file);
 		Document document = Jsoup.parse(html);

@@ -71,3 +71,14 @@ img {
         padding-top: 8px;
     }
 }
+
+.main-load {
+    background: transparent url(../img/loader.gif) center center no-repeat;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}

@@ -1,14 +1,35 @@
 <div>
-<h3>Applications</h3>
-    <div class="action-bar">
-        <a class="btn" href="#/apps/new">Add</a>
-    </div>
-{{#each model as |app|}}
-    <div>
-        <label class="entry-select">
-            <input type="checkbox" name="docid" value="{@docid}" />
-        </label>
-        {{#link-to 'app' app.id}} {{app.appName}} - {{app.owner}} {{/link-to}}</div>
-{{/each}}
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Applications</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th>Owner</th>
+					<th>Type</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each model as |app|}}
+				<tr>
+
+					<td>{{app.id}}</td>
+					<td>{{#link-to 'app' app.id}} {{app.appName}}{{/link-to}}</td>
+					<td>{{app.owner}}</td>
+					<td>{{app.appType}}</td>
+					<td>{{app.status}}</td>
+					<td>
+						<button {{action 'deletea' app}} class="btn btn-default">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
 
 </div>
