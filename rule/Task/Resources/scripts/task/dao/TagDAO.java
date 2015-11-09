@@ -6,6 +6,7 @@ import javax.persistence.Query;
 import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
+import task.model.Issue;
 import task.model.Tag;
 
 
@@ -30,7 +31,16 @@ public class TagDAO extends DAO <Tag, Long> {
 	}
 
 	public boolean existsIssuesByTag(Tag m) {
-		// TODO Auto-generated method stub
-		return false;
+		String jpql = "SELECT m.id FROM Issue AS m WHERE :tag MEMBER OF m.tags";
+
+		EntityManager em = getEntityManagerFactory().createEntityManager();
+		try {
+			Query q = em.createQuery(jpql, Issue.class);
+			q.setParameter("tag", m);
+			q.setMaxResults(1);
+			return !q.getResultList().isEmpty();
+		} finally {
+			em.close();
+		}
 	}
 }

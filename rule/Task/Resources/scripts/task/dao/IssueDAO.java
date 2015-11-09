@@ -32,7 +32,7 @@ public class IssueDAO extends DAO <Issue, Long> {
 		}
 
 		if (!filter.getTags().isEmpty()) {
-			tags = (hasWhere ? " AND " : "") + " m.tag IN :tags";
+			tags = (hasWhere ? " AND " : "") + " m.tags IN :tags";
 			hasWhere = true;
 		}
 

@@ -1,8 +1,6 @@
 import Em from 'ember';
 
 export default Em.Controller.extend({
-    // queryParams: ['at'/*, 'st', 'tags'*/],
-
     actions: {
         saveIssue: function(issue) {
             issue.save().then(() => {

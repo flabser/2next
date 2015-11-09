@@ -3,8 +3,9 @@ AdminApp.SelectNativeComponent = Ember.Component.extend({
     value: null,
 
     didInsertElement: function() {
+        var selectEl = this.$('select')[0];
         var v = this.get('value');
-        this.$('option[value=' + v + ']').attr('selected', true);
+        this.$('option[value=' + v + ']', selectEl).attr('selected', true);
     },
 
     actions: {

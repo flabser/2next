@@ -18,7 +18,6 @@ Router.map(function() {
 
     this.route('settings', function() {
         this.route('tags', function() {
-            this.route('new');
             this.route('tag', {
                 path: ':tag_id'
             });

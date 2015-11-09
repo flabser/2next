@@ -1,6 +1,8 @@
 package task.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -18,8 +20,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.flabser.dataengine.jpa.AppEntity;
 
@@ -99,6 +103,16 @@ public class Issue extends AppEntity {
 		this.priority = priority;
 	}
 
+	@JsonGetter("priority")
+	public int getPriorityOrdinal() {
+		return priority.ordinal();
+	}
+
+	@JsonSetter("priority")
+	public void setPriority(int priorityOrdinal) {
+		this.priority = IssuePriority.fromValue(priorityOrdinal);
+	}
+
 	public Long getExecutor() {
 		return executor;
 	}
@@ -121,6 +135,21 @@ public class Issue extends AppEntity {
 
 	public void setTags(Set <Tag> tags) {
 		this.tags = tags;
+	}
+
+	@JsonSetter("tags")
+	public void setTagsId(List <Long> ids) {
+		if (ids != null) {
+			Set <Tag> _tags = new HashSet <Tag>();
+			ids.forEach(id -> {
+				Tag tag = new Tag();
+				tag.setId(id);
+				_tags.add(tag);
+			});
+			setTags(_tags);
+		} else {
+			setTags(null);
+		}
 	}
 
 	public String getBody() {
