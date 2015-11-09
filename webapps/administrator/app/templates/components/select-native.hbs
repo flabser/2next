@@ -1,0 +1,7 @@
+<select {{action "change" on="change"}}>
+    {{#each content as |it|}}
+        <option value="{{it.value}}">
+            {{it.label}}
+        </option>
+    {{/each}}
+</select>
