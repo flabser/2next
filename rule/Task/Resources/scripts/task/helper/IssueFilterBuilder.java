@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import task.dao.filter.IssueFilter;
+import task.model.Tag;
 import task.model.constants.IssueStatus;
 
 
@@ -22,6 +23,14 @@ public class IssueFilterBuilder {
 
 		IssueStatus issueStatus = IssueStatus.fromValue(status);
 		filter.setStatus(issueStatus);
+
+		if (tagIds != null) {
+			tagIds.forEach(it -> {
+				Tag tag = new Tag();
+				tag.setId(it);
+				filter.addTag(tag);
+			});
+		}
 
 		if (at != null && !at.isEmpty()) {
 			LocalDate today = LocalDate.now();
