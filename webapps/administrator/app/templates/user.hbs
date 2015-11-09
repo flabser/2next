@@ -1,47 +1,44 @@
 <div>
-	<h1>User {{model.login}}</h1>
-
-
-	<div class="input-group">
-		<span class="input-group-addon" id="basic-addon1">User name:</span>
-		{{input class="form-control" aria-describedby="basic-addon1" name="userName" value=model.userName required=true}}
-	</div>
 	
-	<div class="input-group">
-		<span class="input-group-addon" id="basic-addon1">Login:</span>
-		{{input class="form-control" aria-describedby="basic-addon1" name="login" value=model.login required=true}}
-	</div>
+   		 <div class="page-header">
+     	   <h1>User<small>{{model.login}}</small></h1>
+  		  </div>
 	
-	<div class="input-group">
-		<span class="input-group-addon" id="basic-addon2">E-mail:</span>
-		{{input class="form-control" aria-describedby="basic-addon1" name="email" value=model.email required=true}}
-	</div>
-	<div class="input-group">
-		 <span class="input-group-addon" id="basic-addon2"> Preffered lang:</span>
-		{{input class="form-control" aria-describedby="basic-addon1" name="prefflang" value=model.prefferedLang required=true}}
-	</div>
+	<form class="form-horizontal">
 
-
-	<div class="control-group">
-		<div class="control-label">Status:</div>
-		<div class="controls">{{select-user-status value=model.status}}
-
+		<div class="form-group">
+			<label for="inputEmail" class="control-label col-xs-2">User	name</label>
+			<div class="col-xs-5">{{input class="form-control" name="userName" value=model.userName required=true}}</div>
 		</div>
-	</div>
-	<div class="control-group">
-		<div class="control-label">RegDate:</div>
-		<div class="controls">{{input name="regDate" value=model.regDate
-			disabled=true}}</div>
-	</div>
-	<div class="control-group">
-		<div class="control-label">IsSupervisor:</div>
-		<div class="controls">{{input type="checkbox"
-			name="isSupervisor" checked=model.isSupervisor }}</div>
-	</div>
-
-	<div class="action-bar">
-		<button class="btn btn-primary"{{action 'save' this}}>Save &
-			Close</button>
-		<a class="btn" href="#/users">Cancel</a>
-	</div>
+		<div class="form-group">
+			<label for="inputEmail" class="control-label col-xs-2">Login</label>
+			<div class="col-xs-5">{{input class="form-control" name="login"	value=model.login required=true}}</div>
+		</div>
+		<div class="form-group">
+			<label for="inputEmail" class="control-label col-xs-2">E-mail</label>
+			<div class="col-xs-5">{{input class="form-control" name="email"	value=model.email required=true}}</div>
+		</div>
+		<div class="form-group">
+			<label for="inputEmail" class="control-label col-xs-2">Preffered lang</label>
+			<div class="col-xs-5">{{input class="form-control" name="prefflang" value=model.prefferedLang required=true}}</div>
+		</div>
+		<div class="form-group">
+			<label for="inputEmail" class="control-label col-xs-2">Status</label>
+			 <div class="col-xs-5">
+					{{select-native class="form-control" content=USER_STATUS value=model.status}}
+			</div>	
+		</div>
+		<div class="form-group">
+			<label for="inputEmail" class="control-label col-xs-2">RegDate</label>
+			<div class="col-xs-5">{{input class="form-control" name="regDate" value=model.regDate disabled=true}}</div>
+		</div>
+		<div class="form-group">
+			<label for="inputEmail" class="control-label col-xs-2">IsSupervisor</label>
+			<div class="col-xs-5">{{input type="checkbox" name="isSupervisor" checked=model.isSupervisor}}</div>
+		</div>		
+		<div class="action-bar">
+			<button class="btn btn-primary"{{action 'save' this}}>Save & Close</button>
+			<a class="btn" href="#/users">Cancel</a>
+		</div>
+	</form>
 </div>

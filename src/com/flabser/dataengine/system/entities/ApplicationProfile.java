@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.DatabaseFactory;
@@ -26,6 +27,7 @@ import com.flabser.users.User;
 import com.flabser.users.VisibiltyType;
 import com.flabser.util.Util;
 
+@JsonRootName("app")
 public class ApplicationProfile implements _IContent {
 	public int id;
 	public Date regDate;

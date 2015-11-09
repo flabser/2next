@@ -5,6 +5,8 @@
     max-width: 100%;
     min-height: 100%;
     position: absolute;
+    border-right: 1px solid #808080;
+    
 
 }
 

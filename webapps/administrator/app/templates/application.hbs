@@ -4,10 +4,8 @@
   <div class="container-fluid">
     <div class="navbar-header">
      <a class="navbar-brand" href="page/about">
-						<img src="../img/logo.png" alt="logo" />2Next
-					</a>
+			<img src="../img/logo.png" alt="logo" />&#xA0;&#xA0;Administrator</a>
     </div>
-
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
      
@@ -32,7 +30,7 @@
         <div class="outline">
             <ul class="nav nav-pills nav-stacked">
                 {{#each model as |m|}}
-                <li role="presentation" >
+                <li >
                     {{#link-to m.viewdata}} {{m.title}} {{/link-to}}
                 </li>
                 {{/each}}
@@ -42,7 +40,9 @@
     <aside class="view">
         {{outlet}}
     </aside>
-    <div class="footer">
-       2Next
-    </div>
+  <div class="footer-spacer"></div>
+		<footer class="footer">
+<span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>2015 <a href="//flabser.com">flabser.com</a>
+	
+		</footer>
 </div>

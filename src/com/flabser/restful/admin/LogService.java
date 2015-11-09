@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,19 +21,17 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.restful.RestProvider;
-import com.flabser.servlets.sitefiles.AttachmentHandler;
 import com.flabser.servlets.sitefiles.AttachmentHandlerException;
 
 @Path("/logs")
 public class LogService extends RestProvider {
-	private ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
 
 	@SuppressWarnings("unchecked")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public LogsList get() {
 		ArrayList<LogFile> fileList = new ArrayList<LogFile>();
-		File logDir = new File("." + File.separator + "logs");
+		File logDir = new File("." + File.separator + "logs" + File.separator + "server");
 		if (logDir.isDirectory()) {
 			File[] list = logDir.listFiles();
 			Arrays.sort(list, LastModifiedFileComparator.LASTMODIFIED_COMPARATOR);
@@ -44,17 +43,24 @@ public class LogService extends RestProvider {
 	}
 
 	@GET
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@PathParam("id") int id) throws AttachmentHandlerException {
-		System.out.println("GET " + id);
-		String disposition = "attachment";
-		AttachmentHandler attachHandler = new AttachmentHandler(request, response, true);
-		File logDir = new File("." + File.separator + "logs");
-		String filePath = logDir + File.separator + id;
-		String originalAttachName = "";
-		attachHandler.publish(filePath, originalAttachName, disposition);
-		return Response.ok().build();
+	@Path("/{logfile}")
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	public Response get(@PathParam("logfile") String logFile) throws AttachmentHandlerException {
+		File file = null;
+
+		File logDir = new File("." + File.separator + "logs" + File.separator + "server");
+		String fileName = logDir + File.separator + logFile;
+
+		if (!fileName.equals("")) {
+			file = new File(fileName);
+		}
+
+		if (file != null && file.exists()) {
+			return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
+					.header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"").build();
+		} else {
+			return Response.status(HttpServletResponse.SC_NO_CONTENT).build();
+		}
 
 	}
 

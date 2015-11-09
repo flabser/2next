@@ -1,14 +1,39 @@
 <div>
-<h3>Logs</h3>
-    <div class="action-bar">
-        <a class="btn" href="#/logs/delete">Delete log</a>
-    </div>
-{{#each model as |log|}}
-    <div>
-        <label class="entry-select">
-            <input type="checkbox" name="docid" value="{@docid}" />
-        </label>
-        {{#link-to 'log' log.id}} name: {{log.name}}, last modified{{log.lastModified}} , length {{log.length}} mB {{/link-to}}</div>
-{{/each}}
+<ul class="nav nav-tabs">
+        <li class="active"><a href="#">Common server logs</a></li>
+        <li><a href="#">Localization warnings</a></li>
+        <li><a href="#">Requests logging</a></li>
+	</ul>
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading">Logs</div>
+		<table class="table  table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Last modified</th>
+					<th>Size</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each model as |log|}}
+				<tr>
+
+					<td></td>
+					<td><a href="/rest/logs/{{log.name}}">{{log.name}}</a></td>
+					<td>{{log.lastModified}}</td>
+					<td>{{log.length}}</td>
+					<td>
+						<button {{action 'deletea' app}} class="btn btn-default">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+					</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
 
 </div>
+
