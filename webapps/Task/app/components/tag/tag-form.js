@@ -6,7 +6,7 @@ export default Em.Component.extend({
     classNameBindings: ['isInvalid:invalid', 'isEditing:edit'],
     tag: null,
 
-    addTag: 'addTag',
+    addChildTag: 'addChildTag',
     saveTag: 'saveTag',
     deleteTag: 'deleteTag',
     cancel: 'cancel',
@@ -28,8 +28,8 @@ export default Em.Component.extend({
     },
 
     actions: {
-        addTag: function(tag) {
-            this.sendAction('addTag', tag);
+        addChildTag: function(tag) {
+            this.sendAction('addChildTag', tag);
         },
 
         saveTag: function(tag) {

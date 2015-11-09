@@ -7,10 +7,10 @@ export default Em.Route.extend({
         },
         st: {
             refreshModel: true
-        }/*,
+        },
         tags: {
             refreshModel: true
-        }*/
+        }
     },
 
     model: function(params) {

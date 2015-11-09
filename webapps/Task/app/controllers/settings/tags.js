@@ -12,7 +12,7 @@ export default Em.Controller.extend({
         resetAddForm: function() {
             this.set('newTagName', '');
             this.set('isSaveProcess', false);
-            
+
         },
 
         keyDownOnNew: function(value, event) {
