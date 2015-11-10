@@ -1,48 +1,52 @@
-<div class="container">
-    <div class="header">
-       <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-     <a class="navbar-brand" href="page/about">
-			<img src="../img/logo.png" alt="logo" />&#xA0;&#xA0;Administrator</a>
-    </div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-     
+<div class="layout">
+  <div class="container">
+      <div class="header">
+         <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+       <a class="navbar-brand" href="page/about">
+  			<img src="../img/logo.png" alt="logo" />&#xA0;&#xA0;Administrator</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+       
 
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{model.userProfile.login}}<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-    </div>
-    <aside>
-        <div class="outline">
-            <ul class="nav nav-pills nav-stacked">
-                {{#each model as |m|}}
-                <li >
-                    {{#link-to m.viewdata}} {{m.title}} {{/link-to}}
-                </li>
-                {{/each}}
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{model.userProfile.login}}<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Separated link</a></li>
             </ul>
-        </div>
-    </aside>
-    <aside class="view">
-        {{outlet}}
-    </aside>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+      </div>
+      <aside>
+          <div class="outline">
+              <ul class="nav nav-pills nav-stacked">
+                  {{#each model as |m|}}
+                  <li >
+                      {{#link-to m.viewdata}} {{m.title}} {{/link-to}}
+                  </li>
+                  {{/each}}
+              </ul>
+          </div>
+      </aside>
+      <section class="view">
+          {{outlet}}
+      </section>
+    
+  </div>
   <div class="footer-spacer"></div>
-		<footer class="footer">
-<span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>2015 <a href="//flabser.com">flabser.com</a>
-	
-		</footer>
+  <footer class="footer">
+    <div class="container">
+      <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span>2015 <a href="//flabser.com">flabser.com</a>
+    </div>
+  </footer>
 </div>
