@@ -78,9 +78,9 @@ public class AppTemplate implements ICache, _IContent {
 				}
 
 				if (site.getVirtualHostName().equals("")) {
-					hostName = WebServer.httpSchema + "://" + Environment.hostName + ":" + Environment.httpPort;
+					hostName = WebServer.httpSchema + "://" + Environment.hostName + Environment.getPort();
 				} else {
-					hostName = WebServer.httpSchema + "://" + site.getVirtualHostName() + ":" + Environment.httpPort;
+					hostName = WebServer.httpSchema + "://" + site.getVirtualHostName() + Environment.getPort();
 				}
 
 				isValid = true;

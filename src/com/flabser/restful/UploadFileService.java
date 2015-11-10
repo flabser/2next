@@ -16,7 +16,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.flabser.env.Environment;
-import com.flabser.users.UserSession;
+import com.flabser.script._Session;
 import com.flabser.util.Util;
 
 @Path("/file")
@@ -28,8 +28,8 @@ public class UploadFileService extends RestProvider {
 	public Response uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
 			@FormDataParam("file") FormDataContentDisposition fileDetail) {
 
-		UserSession us = getUserSession();
-		String login = us.currentUser.getLogin();
+		_Session us = getSession();
+		String login = us.getCurrentUser().getLogin();
 
 		File userTmpDir = new File(Environment.tmpDir + File.separator + login);
 		if (!userTmpDir.exists()) {
@@ -40,8 +40,6 @@ public class UploadFileService extends RestProvider {
 		String uploadedFileLocation = userTmpDir + File.separator + tempFileName;
 
 		writeToFile(uploadedInputStream, uploadedFileLocation);
-
-
 
 		return Response.status(200).entity(tempFileName).build();
 
@@ -64,7 +62,6 @@ public class UploadFileService extends RestProvider {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 
 	}
 

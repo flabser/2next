@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.exception.XSLTFileNotFoundException;
-import com.flabser.users.UserSession;
+import com.flabser.script._Session;
 
 public class ProviderOutput {
 	public File xslFile;
@@ -15,20 +15,19 @@ public class ProviderOutput {
 	protected static final String xmlTextUTF8Header = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 	public BrowserType browser;
 	protected StringBuffer output;
-	protected UserSession userSession;
+	protected _Session ses;
 	protected HttpSession jses;
 	protected String id;
 	private HttpServletRequest request;
 
-	public ProviderOutput(String id, StringBuffer output, HttpServletRequest request, UserSession userSession,
-			HttpSession jses) {
+	public ProviderOutput(String id, StringBuffer output, HttpServletRequest request, _Session ses, HttpSession jses) {
 		this.id = id;
 		this.output = output;
 		this.request = request;
 		this.jses = jses;
 
 		browser = ServletUtil.getBrowserType(request);
-		this.userSession = userSession;
+		this.ses = ses;
 
 	}
 
@@ -59,9 +58,8 @@ public class ProviderOutput {
 			queryString = "";
 		}
 
-		return xmlTextUTF8Header + "<request " + queryString + " lang=\"" + userSession.getLang() + "\" id=\"" + id
-				+ "\" " + "useragent=\"" + browser + "\"  userid=\"" + userSession.currentUser.getLogin() + "\" >"
-				+ output + "</request>";
+		return xmlTextUTF8Header + "<request " + queryString + " lang=\"" + ses.getLang() + "\" id=\"" + id + "\" "
+				+ "useragent=\"" + browser + "\" >" + output + "</request>";
 	}
 
 }

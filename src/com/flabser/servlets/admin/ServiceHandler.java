@@ -29,7 +29,7 @@ public class ServiceHandler {
 		String viewText = "";
 		xmlFragment += "<version>" + Server.serverVersion + "</version>";
 		xmlFragment += "<host>" + Environment.hostName + "</host>";
-		xmlFragment += "<port>" + Environment.httpPort + "</port>";
+		xmlFragment += "<port>" + Environment.getPort() + "</port>";
 		xmlFragment += "<sslenable>" + Environment.isTLSEnable + "</sslenable>";
 		xmlFragment += "<certkeyfile>" + Environment.certKeyFile + "</certkeyfile>";
 		xmlFragment += "<certfile>" + Environment.certFile + "</certfile>";

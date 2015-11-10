@@ -25,6 +25,4 @@ public interface IWebServer {
 
 	Context addApplication(String appID, Site env) throws ServletException;
 
-	Context initAdministartor();
-
 }

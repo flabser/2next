@@ -33,7 +33,7 @@ public class ApplicationService extends RestProvider {
 	public Response getRoles() {
 		Outcome res = new Outcome();
 		ApplicationProfile ap = DatabaseFactory.getSysDatabase().getApp(context.getServletContextName());
-		for(UserRole role: ap.getRoles()){
+		for (UserRole role : ap.getRoles()) {
 			res.addMessage(role.getName());
 		}
 		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
@@ -51,7 +51,7 @@ public class ApplicationService extends RestProvider {
 		String lang = session.getLang();
 
 		VisibiltyType vis = VisibiltyType.ONLY_MEMBERS;
-		User user = getUserSession().currentUser;
+		User user = getSession().getCurrentUser();
 
 		if (visibilty.equals("public")) {
 			vis = VisibiltyType.PUBLIC;

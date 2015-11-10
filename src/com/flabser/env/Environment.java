@@ -42,7 +42,6 @@ import com.flabser.util.XMLUtil;
 public class Environment implements ICache {
 	public static int serverVersion;
 	public static String hostName;
-	public static int httpPort = EnvConst.DEFAULT_HTTP_PORT;
 
 	public static ISystemDatabase systemBase;
 	public static String defaultSender = "";
@@ -67,6 +66,7 @@ public class Environment implements ICache {
 	public static String workspaceName;
 	public static Vocabulary vocabulary;
 
+	private static int httpPort = EnvConst.DEFAULT_HTTP_PORT;
 	private static HashMap<String, Object> cache = new HashMap<String, Object>();
 
 	public static void init() {
@@ -214,6 +214,19 @@ public class Environment implements ICache {
 		} catch (LocalizatorException e) {
 			Server.logger.errorLogEntry(e);
 		}
+	}
+
+	public static int getHttpPort() {
+		return httpPort;
+	}
+
+	public static String getPort() {
+		if (httpPort == 80) {
+			return "";
+		} else {
+			return ":" + httpPort;
+		}
+
 	}
 
 	private static void loadProperties() {

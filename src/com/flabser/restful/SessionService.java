@@ -50,7 +50,6 @@ import com.flabser.server.Server;
 import com.flabser.servlets.ServletUtil;
 import com.flabser.users.AuthModeType;
 import com.flabser.users.User;
-import com.flabser.users.UserSession;
 import com.flabser.users.UserStatusType;
 import com.flabser.util.Util;
 
@@ -61,12 +60,12 @@ public class SessionService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCurrentSession() {
 		HttpSession jses = request.getSession(false);
-		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
+		_Session userSession = (_Session) jses.getAttribute(EnvConst.SESSION_ATTR);
 		AppUser au = null;
 		if (userSession == null) {
 			au = new AppUser();
 		} else {
-			au = userSession.getUserPOJO();
+			au = userSession.getAppUser();
 		}
 		return Response.status(HttpServletResponse.SC_OK).entity(au).build();
 
@@ -80,8 +79,8 @@ public class SessionService extends RestProvider {
 		String fn = null;
 
 		HttpSession jses = request.getSession(false);
-		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
-		User user = userSession.currentUser;
+		_Session userSession = (_Session) jses.getAttribute(EnvConst.SESSION_ATTR);
+		User user = userSession.getCurrentUser();
 		if (user.getLogin().equals(User.ANONYMOUS_USER)) {
 			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
 		} else {
@@ -116,8 +115,8 @@ public class SessionService extends RestProvider {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateSession(AppUser appUser) throws WebFormValueException {
 		HttpSession jses = request.getSession(false);
-		UserSession userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
-		User user = userSession.currentUser;
+		_Session userSession = (_Session) jses.getAttribute(EnvConst.SESSION_ATTR);
+		User user = userSession.getCurrentUser();
 		if (user.getLogin().equals(User.ANONYMOUS_USER)) {
 			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();
 		} else {
@@ -155,10 +154,9 @@ public class SessionService extends RestProvider {
 		Server.logger.infoLogEntry(userID + " has connected (" + context.getContextPath() + ")");
 		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
-		UserSession userSession = new UserSession(user);
-		userSession.setLang(lang);
+		session.setUser(user);
 		if (user.getStatus() == UserStatusType.REGISTERED) {
-			authUser = userSession.getUserPOJO();
+			authUser = session.getAppUser();
 			// authUser.setAppId(appID);
 		} else if (user.getStatus() == UserStatusType.WAITING_FIRST_ENTERING) {
 			authUser.setRedirect("tochangepwd");
@@ -176,8 +174,8 @@ public class SessionService extends RestProvider {
 			return Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(authUser).build();
 		}
 
-		String token = SessionPool.put(userSession);
-		jses.setAttribute(EnvConst.SESSION_ATTR, userSession);
+		String token = SessionPool.put(session);
+		jses.setAttribute(EnvConst.SESSION_ATTR, session);
 		int maxAge = -1;
 
 		NewCookie cookie = new NewCookie(EnvConst.AUTH_COOKIE_NAME, token, "/", null, null, maxAge, false);
@@ -187,7 +185,7 @@ public class SessionService extends RestProvider {
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response destroySession() throws URISyntaxException {
-		UserSession userSession = getUserSession();
+		_Session userSession = getSession();
 		AppTemplate env = getAppTemplate();
 		String url = "";
 		if (userSession.getAuthMode() == AuthModeType.DIRECT_LOGIN) {

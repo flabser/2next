@@ -30,7 +30,6 @@ import com.flabser.restful.ResourceLoader;
 import com.flabser.valves.Logging;
 import com.flabser.valves.Secure;
 import com.flabser.valves.Unsecure;
-import com.flabser.web.filter.AccessGuard;
 import com.flabser.web.filter.CacheControlFilter;
 
 public class WebServer implements IWebServer {
@@ -47,7 +46,7 @@ public class WebServer implements IWebServer {
 		Server.logger.debugLogEntry("init webserver ...");
 
 		tomcat = new Tomcat();
-		tomcat.setPort(Environment.httpPort);
+		tomcat.setPort(Environment.getHttpPort());
 		tomcat.setHostname(defaultHostName);
 		tomcat.setBaseDir("webserver");
 		tomcat.getHost().setAutoDeploy(false);
@@ -76,56 +75,6 @@ public class WebServer implements IWebServer {
 		sharedResContext.addMimeMapping("js", "text/javascript");
 		sharedResContext.setTldValidation(false);
 		return sharedResContext;
-	}
-
-	@Override
-	public Context initAdministartor() {
-		Context context = null;
-
-		String docBase = EnvConst.ADMIN_APP_NAME;
-		String URLPath = "/" + docBase;
-
-		String db = new File(Environment.primaryAppDir + "webapps/" + docBase).getAbsolutePath();
-		context = tomcat.addContext(URLPath, db);
-
-		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.admin.AdminProvider");
-		context.setDisplayName(EnvConst.ADMIN_APP_NAME);
-
-		addFilterToContext(context, AccessGuard.class, "AccessGuard", "/*");
-
-		initErrorPages(context);
-
-		for (int i = 0; i < defaultWelcomeList.length; i++) {
-			context.addWelcomeFile(defaultWelcomeList[i]);
-		}
-
-		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
-		context.addServletMapping("/", "default");
-
-		context.addServletMapping("/Provider", "Provider");
-
-		Wrapper w = Tomcat.addServlet(context, "PortalInit", "com.flabser.servlets.PortalInit");
-		w.setLoadOnStartup(1);
-
-		context.addServletMapping("/PortalInit", "PortalInit");
-
-		Tomcat.addServlet(context, "Uploader", "com.flabser.servlets.Uploader");
-		context.addServletMapping("/Uploader", "Uploader");
-
-		Tomcat.addServlet(context, "Error", "com.flabser.servlets.Error");
-		context.addServletMapping("/Error", "Error");
-
-		context.addMimeMapping("css", "text/css");
-		context.addMimeMapping("js", "text/javascript");
-
-		ResourceConfig rc = new ResourceConfig(new ResourceLoader(docBase).getClasses());
-		Wrapper w1 = Tomcat.addServlet(context, "Jersey REST Service", new ServletContainer(rc));
-		w1.setLoadOnStartup(1);
-		w1.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
-		context.addServletMapping("/rest/*", "Jersey REST Service");
-		context.setTldValidation(false);
-
-		return context;
 	}
 
 	@Override
@@ -337,7 +286,7 @@ public class WebServer implements IWebServer {
 			portInfo = httpSecureSchema + "://" + tomcat.getHost().getName() + ":"
 					+ Integer.toString(Environment.secureHttpPort);
 		} else {
-			portInfo = tomcat.getHost().getName() + ":" + Integer.toString(Environment.httpPort);
+			portInfo = tomcat.getHost().getName() + Environment.getPort();
 		}
 
 		Connector connector = tomcat.getConnector();

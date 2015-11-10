@@ -11,7 +11,6 @@ import com.flabser.localization.Vocabulary;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.script._WebFormDataRest;
-import com.flabser.users.UserSession;
 import com.flabser.util.ScriptResponse;
 
 import groovy.lang.GroovyObject;
@@ -26,10 +25,10 @@ public class DoProcessor {
 	private _WebFormData webFormData;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public DoProcessor(AppTemplate env, UserSession u, String currentLang, Map<String, String[]> formData, String context) {
-		ses = new _Session(env, u, context);
+	public DoProcessor(AppTemplate env, _Session ses, Map<String, String[]> formData, String context) {
 		vocabulary = env.vocabulary;
-		lang = currentLang;
+		this.ses = ses;
+		lang = ses.getLang();
 		if (formData instanceof MultivaluedMap) {
 			webFormData = new _WebFormDataRest((MultivaluedMap) formData);
 		} else {
@@ -37,7 +36,8 @@ public class DoProcessor {
 		}
 	}
 
-	public ScriptResponse processGroovyScript(String className, String method) throws ClassNotFoundException, WebFormValueException {
+	public ScriptResponse processGroovyScript(String className, String method)
+			throws ClassNotFoundException, WebFormValueException {
 		GroovyObject groovyObject = null;
 		try {
 			Class<?> pageClass = Class.forName(className);
@@ -58,7 +58,8 @@ public class DoProcessor {
 		return myObject.process();
 	}
 
-	public ScriptResponse processJava(String className, String method) throws ClassNotFoundException, WebFormValueException {
+	public ScriptResponse processJava(String className, String method)
+			throws ClassNotFoundException, WebFormValueException {
 		Object object = null;
 		try {
 			Class<?> pageClass = Class.forName(className);

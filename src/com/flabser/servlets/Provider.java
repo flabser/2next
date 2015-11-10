@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,15 +23,14 @@ import com.flabser.rule.IRule;
 import com.flabser.rule.page.PageRule;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script._Exception;
+import com.flabser.script._Session;
 import com.flabser.server.Server;
-import com.flabser.users.UserSession;
 
 public class Provider extends HttpServlet {
 
 	private static final long serialVersionUID = 2352885167311108325L;
 	private AppTemplate env;
 	private ServletContext context;
-	private static final int MONTH_TIME = 60 * 60 * 24 * 365;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -57,7 +55,7 @@ public class Provider extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession jses = null;
-		UserSession userSession = null;
+		_Session ses = null;
 		ProviderResult result = null;
 
 		try {
@@ -71,28 +69,20 @@ public class Provider extends HttpServlet {
 			if (env != null) {
 				IRule rule = env.ruleProvider.getRule(id);
 				if (rule != null) {
-					SessionCooksValues cooks = new SessionCooksValues(request);
 					jses = request.getSession(false);
-					userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
+					ses = (_Session) jses.getAttribute(EnvConst.SESSION_ATTR);
 
-					result = page(response, request, rule, userSession);
+					result = page(response, request, rule, ses);
 
 					if (result.publishAs == PublishAsType.XML || onlyXML != null) {
 						result.publishAs = PublishAsType.XML;
-					}
-
-					if (cooks.currentLang.equalsIgnoreCase(userSession.getLang())) {
-						Cookie c = new Cookie(EnvConst.LANG_COOKIE_NAME, userSession.getLang());
-						c.setMaxAge(MONTH_TIME);
-						c.setDomain("/");
-						response.addCookie(c);
 					}
 
 					if (result.publishAs == PublishAsType.HTML) {
 						if (result.disableClientCache) {
 							disableCash(response);
 						}
-						ProviderOutput po = new ProviderOutput(id, result.output, request, userSession, jses);
+						ProviderOutput po = new ProviderOutput(id, result.output, request, ses, jses);
 						response.setContentType("text/html");
 
 						if (po.prepareXSLT(env, result.xslt)) {
@@ -110,7 +100,7 @@ public class Provider extends HttpServlet {
 							disableCash(response);
 						}
 						response.setContentType("text/xml;charset=utf-8");
-						ProviderOutput po = new ProviderOutput(id, result.output, request, userSession, jses);
+						ProviderOutput po = new ProviderOutput(id, result.output, request, ses, jses);
 						String outputContent = po.getStandartOutput();
 						PrintWriter out = response.getWriter();
 						out.println(outputContent);
@@ -133,16 +123,16 @@ public class Provider extends HttpServlet {
 		}
 	}
 
-	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule,
-			UserSession userSession) throws RuleException, UnsupportedEncodingException, ClassNotFoundException,
-					_Exception, WebFormValueException {
+	private ProviderResult page(HttpServletResponse response, HttpServletRequest request, IRule rule, _Session ses)
+			throws RuleException, UnsupportedEncodingException, ClassNotFoundException, _Exception,
+			WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		ProviderResult result = new ProviderResult(pageRule.publishAs, pageRule.getXSLT());
 		HashMap<String, String[]> fields = new HashMap<String, String[]>();
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
-		Page page = new Page(env, userSession, pageRule, request.getMethod(), (String) request.getAttribute("appid"));
-		result.output.append(page.process(fields).toXML(userSession.getLang()));
+		Page page = new Page(env, ses, pageRule, request.getMethod(), (String) request.getAttribute("appid"));
+		result.output.append(page.process(fields).toXML(ses.getLang()));
 		return result;
 	}
 

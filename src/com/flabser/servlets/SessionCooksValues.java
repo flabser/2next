@@ -10,15 +10,19 @@ public class SessionCooksValues {
 	public String auth;
 
 	public SessionCooksValues(HttpServletRequest request) {
-		Cookie[] cooks = request.getCookies();
-		if (cooks != null) {
-			for (int i = 0; i < cooks.length; i++) {
-				if (cooks[i].getName().equals(EnvConst.LANG_COOKIE_NAME)) {
-					currentLang = cooks[i].getValue();
-				} else if (cooks[i].getName().equals(EnvConst.AUTH_COOKIE_NAME)) {
-					auth = cooks[i].getValue();
+		try {
+			Cookie[] cooks = request.getCookies();
+			if (cooks != null) {
+				for (int i = 0; i < cooks.length; i++) {
+					if (cooks[i].getName().equals(EnvConst.LANG_COOKIE_NAME)) {
+						currentLang = cooks[i].getValue();
+					} else if (cooks[i].getName().equals(EnvConst.AUTH_COOKIE_NAME)) {
+						auth = cooks[i].getValue();
+					}
 				}
 			}
+		} catch (Exception e) {
+
 		}
 	}
 

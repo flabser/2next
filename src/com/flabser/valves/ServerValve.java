@@ -14,10 +14,9 @@ import com.flabser.env.EnvConst;
 import com.flabser.env.SessionPool;
 import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
+import com.flabser.script._Session;
 import com.flabser.server.Server;
 import com.flabser.servlets.SessionCooksValues;
-import com.flabser.users.User;
-import com.flabser.users.UserSession;
 
 public abstract class ServerValve extends ValveBase {
 	RequestURL ru;
@@ -28,7 +27,7 @@ public abstract class ServerValve extends ValveBase {
 		SessionCooksValues appCookies = new SessionCooksValues(http);
 		String token = appCookies.auth;
 		if (token != null) {
-			UserSession userSession = SessionPool.getLoggeedUser(token);
+			_Session userSession = SessionPool.getLoggeedUser(token);
 			if (userSession != null) {
 				HttpSession jses = http.getSession(true);
 				jses.setAttribute(EnvConst.SESSION_ATTR, userSession);
@@ -37,7 +36,7 @@ public abstract class ServerValve extends ValveBase {
 				invoke(request, response);
 			} else {
 				if (allowAnonymous) {
-					getAnnonymousSession(request, response);
+					// getAnnonymousSession(request, response);
 				} else {
 					Server.logger.warningLogEntry("there is no associated user session for the token");
 					AuthFailedException e = new AuthFailedException(
@@ -48,7 +47,7 @@ public abstract class ServerValve extends ValveBase {
 			}
 		} else {
 			if (allowAnonymous) {
-				getAnnonymousSession(request, response);
+				// getAnnonymousSession(request, response);
 			} else {
 				Server.logger.warningLogEntry("user session was expired");
 				AuthFailedException e = new AuthFailedException(AuthFailedExceptionType.NO_USER_SESSION,
@@ -57,20 +56,6 @@ public abstract class ServerValve extends ValveBase {
 				response.getWriter().println(e.getHTMLMessage());
 			}
 		}
-	}
-
-	private void getAnnonymousSession(Request request, Response response) {
-		HttpSession jses = request.getSession(false);
-		if (jses == null) {
-			jses = request.getSession(true);
-			jses.setAttribute(EnvConst.SESSION_ATTR, new UserSession(new User()));
-		} else {
-			UserSession us = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
-			if (us == null) {
-				jses.setAttribute(EnvConst.SESSION_ATTR, new UserSession(new User()));
-			}
-		}
-
 	}
 
 }

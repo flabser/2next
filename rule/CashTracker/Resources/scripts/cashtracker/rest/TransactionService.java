@@ -47,7 +47,6 @@ import cashtracker.pojo.Meta;
 import cashtracker.validation.TransactionValidator;
 import cashtracker.validation.ValidationError;
 
-
 @Path("transactions")
 public class TransactionService extends RestProvider {
 
@@ -72,7 +71,7 @@ public class TransactionService extends RestProvider {
 			count = dao.getCount().intValue();
 		}
 
-		List <Transaction> list = dao.find(filter, pr);
+		List<Transaction> list = dao.find(filter, pr);
 		_Response _resp = new _Response(list, new Meta(count, pr.getLimit(), pr.getOffset(), page));
 
 		ObjectMapper om = new ObjectMapper();
@@ -119,7 +118,7 @@ public class TransactionService extends RestProvider {
 		}
 		if (m.getTags() != null && !m.getTags().isEmpty()) {
 			TagDAO tagDao = new TagDAO(getSession());
-			List <Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
+			List<Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
 			m.setTags(tagDao.findAllByIds(ids));
 		}
 
@@ -157,7 +156,7 @@ public class TransactionService extends RestProvider {
 		}
 		if (m.getTags() != null && !m.getTags().isEmpty()) {
 			TagDAO tagDao = new TagDAO(getSession());
-			List <Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
+			List<Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
 			m.setTags(tagDao.findAllByIds(ids));
 		}
 
@@ -199,7 +198,7 @@ public class TransactionService extends RestProvider {
 		if (m == null) {
 			return Response.noContent().status(Status.NOT_FOUND).build();
 		} else {
-			User user = getUserSession().currentUser;
+			User user = getSession().getCurrentUser();
 			File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
 			TransactionFile tFile = m.getAttachment(fieldName, fileName);
 			if (tFile != null) {
@@ -251,10 +250,10 @@ public class TransactionService extends RestProvider {
 
 	class _Response {
 
-		public List <Transaction> transactions;
+		public List<Transaction> transactions;
 		public Meta meta;
 
-		public _Response(List <Transaction> list, Meta meta) {
+		public _Response(List<Transaction> list, Meta meta) {
 			this.transactions = list;
 			this.meta = meta;
 		}

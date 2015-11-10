@@ -40,7 +40,6 @@ import com.flabser.script._Page;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
 import com.flabser.users.User;
-import com.flabser.users.UserSession;
 
 @Path("/")
 public class RestProvider {
@@ -57,25 +56,15 @@ public class RestProvider {
 
 	}
 
-	public UserSession getUserSession() {
-		HttpSession jses = request.getSession(false);
-		UserSession us = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
-		return us;
-
-	}
-
 	public String getAppID() {
 		return (String) request.getAttribute("appid");
 
 	}
 
 	public _Session getSession() {
-		UserSession userSession = getUserSession();
-		if (userSession == null) {
-			return null;
-		} else {
-			return new _Session(getAppTemplate(), userSession, getAppID());
-		}
+		HttpSession jses = request.getSession(false);
+		_Session us = (_Session) jses.getAttribute(EnvConst.SESSION_ATTR);
+		return us;
 	}
 
 	@GET
@@ -92,7 +81,7 @@ public class RestProvider {
 			try {
 				try {
 
-					result = page(env, queryParams, request, rule, getUserSession());
+					result = page(env, queryParams, request, rule, getSession());
 				} catch (WebFormValueException e) {
 					return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(result).build();
 				}
@@ -116,7 +105,7 @@ public class RestProvider {
 
 		if (rule != null) {
 			try {
-				result = page(env, formParams, request, rule, getUserSession());
+				result = page(env, formParams, request, rule, getSession());
 			} catch (WebFormValueException e) {
 				return Response.status(HttpServletResponse.SC_BAD_REQUEST).entity(result).build();
 			}
@@ -179,7 +168,7 @@ public class RestProvider {
 	 */
 
 	private _Page page(AppTemplate env, MultivaluedMap<String, String> formParams, HttpServletRequest request2,
-			IRule rule, UserSession userSession) throws ClassNotFoundException, RuleException, WebFormValueException {
+			IRule rule, _Session ses) throws ClassNotFoundException, RuleException, WebFormValueException {
 		PageRule pageRule = (PageRule) rule;
 		Map<String, String[]> parMap = new HashMap<String, String[]>();
 		for (String e : formParams.keySet()) {
@@ -187,7 +176,6 @@ public class RestProvider {
 			v[0] = formParams.getFirst(e);
 			parMap.put(e, v);
 		}
-		return new Page(env, userSession, pageRule, request.getMethod(), context.getServletContextName())
-				.process(parMap);
+		return new Page(env, ses, pageRule, request.getMethod(), context.getServletContextName()).process(parMap);
 	}
 }

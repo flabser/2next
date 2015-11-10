@@ -5,42 +5,41 @@ import java.util.HashMap;
 
 import org.apache.commons.codec.binary.Base64;
 
-import com.flabser.users.AuthModeType;
-import com.flabser.users.UserSession;
+import com.flabser.script._Session;
 import com.flabser.util.Util;
 
 public class SessionPool {
-	private static HashMap<Integer, UserSession> userSessions = new HashMap<Integer, UserSession>();
+	private static HashMap<Integer, _Session> userSessions = new HashMap<Integer, _Session>();
 
-	public static String put(UserSession us) {
+	public static String put(_Session us) {
 		String sesID = Util.generateRandomAsText();
-		int key = Base64.encodeBase64String(us.currentUser.getLogin().getBytes(Charset.forName("UTF-8"))).hashCode();
+		int key = Base64.encodeBase64String(us.getCurrentUser().getLogin().getBytes(Charset.forName("UTF-8")))
+				.hashCode();
 		userSessions.put(key, us);
 		String token = sesID + "#" + key;
 		return token;
 	}
 
-	public static UserSession getLoggeedUser(String token) {
+	public static _Session getLoggeedUser(String token) {
 		int key = 0;
 		try {
 			key = Integer.parseInt(token.substring(token.indexOf("#") + 1, token.length()));
 		} catch (NumberFormatException e) {
 
 		}
-		UserSession us = userSessions.get(key);
+		_Session us = userSessions.get(key);
 		if (us != null) {
-			us.setAuthMode(AuthModeType.LOGIN_THROUGH_TOKEN);
 			return us;
 		} else {
 			return null;
 		}
 	}
 
-	public static void remove(UserSession us) {
-		userSessions.remove(us.currentUser.getLogin());
+	public static void remove(_Session us) {
+		userSessions.remove(us.getCurrentUser().getLogin());
 	}
 
-	public static HashMap<Integer, UserSession> getUserSessions() {
+	public static HashMap<Integer, _Session> getUserSessions() {
 		return userSessions;
 	}
 

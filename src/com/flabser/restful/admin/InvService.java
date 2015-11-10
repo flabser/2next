@@ -87,7 +87,7 @@ public class InvService extends RestProvider {
 					.entity(result.setMessage(ServerServiceExceptionType.VALUE_IS_EMPTY, lang)).build();
 		}
 		User tempUser = DatabaseFactory.getSysDatabase().getUser(invitation.getEmail());
-		User user = getUserSession().currentUser;
+		User user = getSession().getCurrentUser();
 		ApplicationProfile ap = user.getApplicationProfile(getAppID());
 		if (tempUser == null) {
 			tempUser = _UsersHelper.regTempApplicationUser(ap, invitation.getEmail());

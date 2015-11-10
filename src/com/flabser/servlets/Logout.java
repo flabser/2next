@@ -15,9 +15,9 @@ import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.env.EnvConst;
 import com.flabser.exception.ApplicationException;
+import com.flabser.script._Session;
 import com.flabser.server.Server;
 import com.flabser.users.User;
-import com.flabser.users.UserSession;
 
 public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -36,7 +36,7 @@ public class Logout extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		UserSession userSession = null;
+		_Session userSession = null;
 
 		String mode = request.getParameter("mode");
 		if (mode == null) {
@@ -46,9 +46,9 @@ public class Logout extends HttpServlet {
 		try {
 			HttpSession jses = request.getSession(false);
 			if (jses != null) {
-				userSession = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
+				userSession = (_Session) jses.getAttribute(EnvConst.SESSION_ATTR);
 				if (userSession != null) {
-					User user = userSession.currentUser;
+					User user = userSession.getCurrentUser();
 					String userID = user.getLogin();
 					IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 					ua.postLogout(ServletUtil.getClientIpAddr(request), user);

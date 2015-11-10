@@ -12,9 +12,9 @@ import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.scheduler.PeriodicalServices;
 import com.flabser.scheduler.tasks.DatabaseRemover;
+import com.flabser.script._Session;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.User;
-import com.flabser.users.UserSession;
 import com.flabser.util.Util;
 
 public class Console implements Runnable {
@@ -30,9 +30,9 @@ public class Console implements Runnable {
 				Server.shutdown();
 				in.close();
 			} else if (command.equalsIgnoreCase("sessions") || command.equalsIgnoreCase("us")) {
-				Collection<UserSession> sc = SessionPool.getUserSessions().values();
+				Collection<_Session> sc = SessionPool.getUserSessions().values();
 				if (sc.size() > 0) {
-					for (UserSession us : SessionPool.getUserSessions().values()) {
+					for (_Session us : SessionPool.getUserSessions().values()) {
 						System.out.println(us);
 					}
 				} else {
