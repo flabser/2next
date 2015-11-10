@@ -8,6 +8,9 @@ export default Em.Component.extend(ModelFormMixin, {
     roles: null,
     messageMaxLen: 256,
 
+    sendInvite: 'sendInvite',
+    close: 'transitionToUsers',
+
     actions: {
         sendInvite: function() {
             if (this.validate()) {

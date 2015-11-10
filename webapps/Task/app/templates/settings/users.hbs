@@ -1,19 +1,19 @@
-<div class="view">
+<div class="view users-view">
     <header class="content-header">
         <h1 class="header-title">{{t 'users'}}</h1>
         <nav class="content-actions">
-            {{#link-to 'settings.users.invitation' class='btn'}}
-                {{t 'add_user'}}
+            {{#link-to 'settings.users.invitation' class='btn btn-primary'}}
+                {{t 'invite_user'}}
             {{/link-to}}
         </nav>
     </header>
     <section class="content-body">
         <div class="entries">
-            {{#each model as |user|}}
+            {{#each users as |user|}}
                 {{#unless user.isNew}}
                 <div class="entry-wrap">
                     <div class="entry-actions">
-                        <button class="entry-action action-delete" {{action 'deleteRecord' user}}>
+                        <button class="entry-action action-delete" {{action 'deleteUser' user}}>
                             <i class="fa fa-trash" />
                         </button>
                     </div>

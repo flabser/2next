@@ -1,20 +1,26 @@
-<div class="view tags_view">
+<div class="view tags-view">
     <header class="content-header">
         <h1 class="header-title">{{t 'tags'}}</h1>
     </header>
     <section class="tags_add">
-        {{input value=newTagName
-            key-down='keyDownOnNew'
-            disabled=isSaveProcess
-            type='text'
-            placeholder='new tag name'
-            autofocus='autofocus'}}
+        <fieldset class="fieldset" disabled={{isSaveProcess}}>
+            {{input value=newTagName
+                key-down='keyDownOnNew'
+                type='text'
+                id='input-new-tag'
+                maxlength='64'
+                placeholder='new tag name'
+                autofocus='autofocus'}}
+            <button type="button" class="btn" {{action 'saveNewTag'}}>{{t 'save'}}</button>
+        </fieldset>
     </section>
     <section class="content-body">
         <div class="entries">
             {{#each tags as |tag|}}
-                {{#unless tag.parent}}
-                    {{tag.tag-form tag=tag}}
+                {{#unless tag.isNew}}
+                    {{#unless tag.parent}}
+                        {{tag.tag-form tag=tag}}
+                    {{/unless}}
                 {{/unless}}
             {{/each}}
         </div>

@@ -1,72 +1,66 @@
-<div class="issues-view">
-    <table style="width:100%">
-        <tr>
-            <td style="vertical-align:top;width:260px">
-                <nav class="issues-nav">
-                    <ul class="nav">
-                        <li>
-                            {{#link-to 'issues' (query-params at='inbox')}}
-                                {{t 'inbox'}}
-                            {{/link-to}}
-                        </li>
-                        <li>
-                            {{#link-to 'issues' (query-params at='today')}}
-                                {{t 'today'}}
-                            {{/link-to}}
-                        </li>
-                        <li>
-                            {{#link-to 'issues' (query-params at='week')}}
-                                {{t 'week'}}
-                            {{/link-to}}
-                        </li>
-                        <li>
-                            {{#link-to 'issues' (query-params at='favorite')}}
-                                {{t 'favorite'}}
-                            {{/link-to}}
-                        </li>
-                        <li>
-                            {{#link-to 'issues' (query-params at='completed')}}
-                                {{t 'completed'}}
-                            {{/link-to}}
-                        </li>
-                    </ul>
-                    <ul class="nav">
-                        <li>
-                            <h4>{{t 'tags'}}</h4>
-                            {{#link-to 'settings.tags'}}
-                                {{t 'add_tag'}}
-                            {{/link-to}}
-                        </li>
-                        {{#each tags as |tag|}}
-                            <li>
-                                {{#link-to 'issues' (query-params tags=tag.id)}}
-                                    {{tag.name}}
-                                {{/link-to}}
-                            </li>
-                        {{/each}}
-                    </ul>
-                    <ul class="nav">
-                        <li>
-                            <h4>{{t 'executors'}}</h4>
-                            {{#link-to 'settings.users.invitation'}}
-                                {{t 'invite_user'}}
-                            {{/link-to}}
-                        </li>
-                        {{#each users as |user|}}
-                            <li>
-                                <!-- {{#link-to 'issues' (query-params users=user.id)}}
-                                    {{user.login}}
-                                {{/link-to}} -->
-                                {{user.login}}
-                            </li>
-                        {{/each}}
-                    </ul>
-                </nav>
-            </td>
-            <td style="vertical-align:top;">
-                {{outlet}}
-                {{outlet 'issue-modal'}}
-            </td>
-        </tr>
-    </table>
+<div class="issues-wrapper">
+    <nav class="issues__nav nav-app">
+        <ul class="issues__nav-at">
+            <li>
+                {{#link-to 'issues' (query-params at='inbox')}}
+                    {{t 'inbox'}}
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'issues' (query-params at='today')}}
+                    {{t 'today'}}
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'issues' (query-params at='week')}}
+                    {{t 'week'}}
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'issues' (query-params at='favorite')}}
+                    {{t 'favorite'}}
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'issues' (query-params at='completed')}}
+                    {{t 'completed'}}
+                {{/link-to}}
+            </li>
+        </ul>
+        <ul class="issues__nav-tags">
+            <li>
+                <h4>{{t 'tags'}}</h4>
+                {{#link-to 'settings.tags'}}
+                    {{t 'add_tag'}}
+                {{/link-to}}
+            </li>
+            {{#each tags as |tag|}}
+                <li>
+                    {{#link-to 'issues' (query-params tags=tag.id)}}
+                        {{tag.name}}
+                    {{/link-to}}
+                </li>
+            {{/each}}
+        </ul>
+        <ul class="issues__nav-users">
+            <li>
+                <h4>{{t 'executors'}}</h4>
+                {{#link-to 'settings.users.invitation'}}
+                    {{t 'invite_user'}}
+                {{/link-to}}
+            </li>
+            {{#each users as |user|}}
+                <li>
+                    <!-- {{#link-to 'issues' (query-params users=user.id)}}
+                        {{user.login}}
+                    {{/link-to}} -->
+                    {{user.login}}
+                </li>
+            {{/each}}
+        </ul>
+    </nav>
+    <section class="issues__content">
+        {{outlet}}
+        {{outlet 'issue-modal'}}
+    </section>
 </div>

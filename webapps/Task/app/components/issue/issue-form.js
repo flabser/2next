@@ -6,6 +6,9 @@ import Validate from 'lof-task/utils/validator';
 export default Em.Component.extend(ModelFormMixin, {
     issue: null,
 
+    saveIssue: 'saveIssue',
+    close: 'transitionToIssues',
+
     actions: {
         save: function() {
             if (this.validate()) {

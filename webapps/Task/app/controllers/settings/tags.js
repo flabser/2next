@@ -9,17 +9,18 @@ export default Em.Controller.extend({
     isSaveProcess: false,
 
     actions: {
-        resetAddForm: function() {
-            this.set('newTagName', '');
-            this.set('isSaveProcess', false);
-
-        },
-
         keyDownOnNew: function(value, event) {
-            if (event.keyCode === 13 && this.get('newTagName.length')) {
+            if (event.keyCode === 13) {
                 event.stopPropagation();
                 event.preventDefault();
 
+                this.send('saveNewTag');
+                return false;
+            }
+        },
+
+        saveNewTag: function() {
+            if (this.get('newTagName.length')) {
                 let tag = this.store.createRecord('tag', {
                     name: this.get('newTagName')
                 });
@@ -27,17 +28,11 @@ export default Em.Controller.extend({
                 this.send('saveTag', tag, () => {
                     this.set('newTagName', '');
                     this.set('isSaveProcess', false);
-
-                    setTimeout(() => {
-                        Em.$(event.target).focus();
-                    }, 100);
                 }, () => {
                     this.set('isSaveProcess', false);
+                    tag.deleteRecord();
                 });
-
-                return false;
             }
-            // return true;
         },
 
         addChildTag: function(tag) {

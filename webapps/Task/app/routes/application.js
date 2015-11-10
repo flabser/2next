@@ -25,13 +25,13 @@ export default Route.extend({
         }
     },
 
-    beforeModel: function() {
-        return this.get('translationsFetcher').fetch();
-    },
-
     model: function() {
         var sessionService = this.get('session');
         return sessionService.getSession().then(() => sessionService.get('user'));
+    },
+
+    afterModel: function() {
+        return this.get('translationsFetcher').fetch();
     },
 
     setupController: function(controller, model) {
@@ -156,7 +156,7 @@ export default Route.extend({
             }
 
             if (_error.status === 401 || (!this.get('session').isAuthenticated() && this.routeName !== 'login')) {
-                window.location.href = '/Task/Provider?id=login';
+                window.location.href = '//' + location.host;
 
                 /*this.controllerFor('login').setProperties({
                     transition: transition

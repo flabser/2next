@@ -43,20 +43,6 @@
     color: #666;
 }
 
-.tags_add {
-    font-size: 16px;
-    width: 100%;
-    padding: 0 12px;
-    border-radius: 6px;
-}
-
-.tags_add input {
-    background: transparent;
-    margin: 14px 0;
-    padding: 10px;
-    width: 100%;
-}
-
 .tag-children {
     border-left: 1px solid #EEE;
     padding-left: 20px;

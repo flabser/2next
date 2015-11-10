@@ -1,6 +1,6 @@
 <header class="header navbar">
+    {{content-overlay}}
     <div class="container">
-        {{content-overlay}}
         <div class="navbar-header">
             <button class="sidebar-toggle" type="button" {{action 'navAppMenuToggle' }}></button>
             <div class="navbar-brand">
@@ -9,9 +9,6 @@
             </div>
         </div>
         <nav class="navbar-nav navbar-right">
-            <!-- <button class="nav-item nav-btn" type="button" {{action 'toggleDevice'}}>
-                <i class="fa fa-mobile"></i>
-            </button> -->
             <button class="nav-item nav-btn compose-new" type="button" {{action 'composeRecord'}}>
                 <i class="fa fa-plus"></i>
             </button>

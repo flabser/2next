@@ -2,7 +2,7 @@ import Em from 'ember';
 
 export default Em.Controller.extend({
     actions: {
-        transitionToNewInviteRoute: function() {
+        composeRecord: function() {
             this.transitionToRoute('settings.users.invitation');
         },
 

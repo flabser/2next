@@ -2,6 +2,10 @@ import Em from 'ember';
 
 export default Em.Controller.extend({
     actions: {
+        composeRecord: function() {
+            this.transitionToRoute('issues.new');
+        },
+
         saveIssue: function(issue) {
             issue.save().then(() => {
                 this.transitionToRoute('issues.issue', issue);

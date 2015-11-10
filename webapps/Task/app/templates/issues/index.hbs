@@ -1,6 +1,15 @@
-<h1>
-    {{#link-to 'issues.new'}}
-        {{t 'add'}}
-    {{/link-to}}
-</h1>
-{{issue/issues-view issues=issues}}
+<div class="view issues-view">
+    <header class="content-header">
+        <h1 class="header-title">{{t 'issues'}}</h1>
+        <nav class="content-actions">
+            {{#link-to 'issues.new' class='btn btn-primary'}}
+                {{t 'issue_new'}}
+            {{/link-to}}
+        </nav>
+    </header>
+    <section class="content-body">
+        <div class="entries">
+            {{issue.issues-view issues=issues}}
+        </div>
+    </section>
+</div>

@@ -10,17 +10,62 @@
         </header>
         <section class="content-body">
             <fieldset class="fieldset">
-                <div class="form-group {{if errors.name 'has-error'}}">
+                <div class="form-group {{if errors.body 'has-error'}}">
                     <div class="control-label">
-                        {{t 'name'}}
+                        {{t 'body'}}
                     </div>
                     <div class="controls">
                         {{tn-input
-                            value=issue.name
-                            key-up='validateName'
+                            value=issue.body
+                            key-up='validateBody'
                             maxlength='64'
                             class='span5'}}
-                        {{#each errors.name as |error|}}
+                        {{#each errors.body as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="form-group {{if errors.milestone 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'milestone'}}
+                    </div>
+                    <div class="controls">
+                        {{tn-input
+                            value=issue.milestone
+                            key-up='validateMilestone'
+                            maxlength='64'
+                            class='span5'}}
+                        {{#each errors.milestone as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="form-group {{if errors.executor 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'executor'}}
+                    </div>
+                    <div class="controls">
+                        {{tn-input
+                            value=issue.executor
+                            key-up='validateEexecutor'
+                            maxlength='64'
+                            class='span5'}}
+                        {{#each errors.executor as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="form-group {{if errors.tags 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'tags'}}
+                    </div>
+                    <div class="controls">
+                        {{tn-input
+                            value=issue.tags
+                            key-up='validateTags'
+                            maxlength='64'
+                            class='span5'}}
+                        {{#each errors.tags as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
                     </div>

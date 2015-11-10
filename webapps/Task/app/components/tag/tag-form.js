@@ -9,7 +9,6 @@ export default Em.Component.extend({
     addChildTag: 'addChildTag',
     saveTag: 'saveTag',
     deleteTag: 'deleteTag',
-    cancel: 'cancel',
     setTagActiveRoute: 'setTagActiveRoute',
 
     isEditing: Em.computed('tag.isNew', function() {
@@ -33,7 +32,6 @@ export default Em.Component.extend({
         },
 
         saveTag: function(tag) {
-            console.log('in');
             this.sendAction('saveTag', tag, () => {
                 this.set('isEditing', false);
             });

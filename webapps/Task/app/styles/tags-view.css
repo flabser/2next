@@ -1,0 +1,31 @@
+.tags-view {}
+
+.tags_add {
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 0 12px;
+    position: relative;
+    width: 100%;
+}
+
+.tags_add fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tags_add fieldset input {
+    background: transparent;
+    margin: 14px 0;
+    padding: 10px;
+    padding-right: 10em;
+    width: 100%;
+}
+
+.tags_add fieldset .btn {
+    font-size: 13px;
+    height: 32px;
+    position: absolute;
+    right: 16px;
+    top: 18px;
+}
