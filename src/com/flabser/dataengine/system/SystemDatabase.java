@@ -491,7 +491,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 					conn.createArrayOf("integer", user.getUserRoles().stream().map(UserRole::getId).toArray()));
 			insertUser.setArray(15,
 					conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
-			insertUser.setString(16, user.getDbPwd());
+			insertUser.setString(16, user.getDefaultDbPwd());
 			Attachment aFile = user.getAvatar();
 			if (aFile != null && aFile.getRealFileName() != null) {
 				File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
@@ -563,7 +563,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 					conn.createArrayOf("integer", user.getUserRoles().stream().map(UserRole::getId).toArray()));
 			updateUser.setArray(15,
 					conn.createArrayOf("integer", user.getGroups().stream().map(UserGroup::getId).toArray()));
-			updateUser.setString(16, user.getDbPwd());
+			updateUser.setString(16, user.getDefaultDbPwd());
 
 			Attachment aFile = user.getAvatar();
 			if (aFile != null && aFile.getRealFileName() != null) {

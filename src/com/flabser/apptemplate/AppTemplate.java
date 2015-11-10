@@ -43,43 +43,6 @@ public class AppTemplate implements ICache, _IContent {
 		templateType = EnvConst.ADMIN_APP_NAME;
 	}
 
-	@Deprecated
-	public AppTemplate(String appType, String globalFileName) {
-		this.templateType = appType;
-		try {
-			Server.logger.infoLogEntry("init application template \"" + appType + "\"");
-			ruleProvider = new RuleProvider(this);
-			ruleProvider.initAppTemplate(globalFileName);
-			globalSetting = ruleProvider.global;
-			if (globalSetting.isOn == RunMode.ON) {
-				if (globalSetting.langsList.size() > 0) {
-					Server.logger.infoLogEntry("dictionary is loading...");
-
-					try {
-						Localizator l = new Localizator();
-						String vocabuarFilePath = globalSetting.rulePath + File.separator + "Resources" + File.separator
-								+ "vocabulary.xml";
-						vocabulary = l.populate(vocabuarFilePath, templateType, globalSetting.langsList);
-						if (vocabulary != null) {
-							Server.logger.infoLogEntry("dictionary has loaded");
-						}
-					} catch (LocalizatorException le) {
-						Server.logger.debugLogEntry(le.getMessage());
-					}
-
-				}
-
-				isValid = true;
-			} else {
-				Server.logger.warningLogEntry("application: \"" + appType + "\" is off");
-
-			}
-
-		} catch (Exception e) {
-			Server.logger.errorLogEntry(e);
-		}
-	}
-
 	public AppTemplate(Site site) {
 		templateType = site.getAppBase();
 		if (!site.getParent().equals("")) {

@@ -37,18 +37,20 @@ public class Secure extends ValveBase {
 		HttpServletRequest http = request;
 		String appType = ru.getAppType();
 
-		if (!appType.equalsIgnoreCase("") && !appType.equalsIgnoreCase(EnvConst.ADMIN_APP_NAME)) {
+		if (!appType.equalsIgnoreCase("")) {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
 				UserSession us = (UserSession) jses.getAttribute(EnvConst.SESSION_ATTR);
 				if (us != null && !us.currentUser.getLogin().equals(User.ANONYMOUS_USER)) {
 					if (!appType.equalsIgnoreCase(Environment.workspaceName)) {
 						Site site = Environment.availableTemplates.get(appType);
-						HashMap<String, ApplicationProfile> hh = us.currentUser.getApplicationProfiles(site.getAppBase());
+						HashMap<String, ApplicationProfile> hh = us.currentUser
+								.getApplicationProfiles(site.getAppBase());
 						if (hh != null) {
 							getNext().invoke(request, response);
 						} else {
-							String msg = "\"" + site.getAppBase() + "\" has not set for \"" + us.currentUser.getLogin() + "\" (" + ru + ")";
+							String msg = "\"" + site.getAppBase() + "\" has not set for \"" + us.currentUser.getLogin()
+									+ "\" (" + ru + ")";
 							Server.logger.warningLogEntry(msg);
 							ApplicationException e = new ApplicationException(ru.getAppType(), msg);
 							response.setStatus(e.getCode());
@@ -83,8 +85,8 @@ public class Secure extends ValveBase {
 				invoke(request, response);
 			} else {
 				Server.logger.warningLogEntry("there is no associated user session for the token");
-				AuthFailedException e = new AuthFailedException(AuthFailedExceptionType.NO_ASSOCIATED_SESSION_FOR_THE_TOKEN,
-						ru.getAppType());
+				AuthFailedException e = new AuthFailedException(
+						AuthFailedExceptionType.NO_ASSOCIATED_SESSION_FOR_THE_TOKEN, ru.getAppType());
 				response.setStatus(e.getCode());
 				response.getWriter().println(e.getHTMLMessage());
 			}

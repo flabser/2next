@@ -8,29 +8,12 @@ AdminApp.User = DS.Model.extend({
     regDate: DS.attr('string'),
     status: DS.attr('string'),
     email: DS.attr('string'),
-    isSupervisor: DS.attr('number'),
+    isSupervisor: DS.attr('boolean'),
+    dbLogin: DS.attr('string'),
+    defaultDbPwd:  DS.attr('string'),
 
     roles: DS.hasMany('role', {
         async: true
       })
 });
 
-AdminApp.User.FIXTURES = [{
-    id: "3",
-    login: " bug",
-    pwd: "123",
-    email: "dddd",
-    role: "role"
-}, {
-    id: "4",
-    login: " player",
-    pwd: "123",
-    email: "dddd",
-    role: "role"
-}, {
-    id: "5",
-    login: "Fix",
-    pwd: "123",
-    email: "dddd",
-    role: "role22"
-}];

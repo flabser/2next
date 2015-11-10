@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.catalina.realm.RealmBase;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
@@ -48,6 +49,11 @@ public class User {
 	private String passwordHash = "";
 	private String email = "";
 	private boolean isSupervisor;
+
+	public void setSupervisor(boolean isSupervisor) {
+		this.isSupervisor = isSupervisor;
+	}
+
 	private int loginHash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
@@ -106,18 +112,20 @@ public class User {
 		}
 	}
 
-	@JsonIgnore
-	public String getDbPwd() {
+	public String getDefaultDbPwd() {
 		return dbPwd;
 	}
 
-	@JsonIgnore
 	public void setDefaultDbPwd(String defaultDbPwd) {
 		this.dbPwd = defaultDbPwd;
 	}
 
 	public boolean isSupervisor() {
 		return isSupervisor;
+	}
+
+	public void setIsSupervisor(boolean isSupervisor) {
+		this.isSupervisor = isSupervisor;
 	}
 
 	public void setRoles(HashSet<UserRole> roles) {
@@ -223,6 +231,7 @@ public class User {
 		return oldLogin;
 	}
 
+	@JsonGetter("dbLogin")
 	public String getDBLogin() {
 		return login.replace("@", "__").replace(".", "_").replace("-", "_").toLowerCase();
 	}
@@ -301,10 +310,6 @@ public class User {
 			regDate = new Date();
 		}
 		this.status = status;
-	}
-
-	public void setIsSupervisor(boolean isSupervisor) {
-		this.isSupervisor = isSupervisor;
 	}
 
 	public void refresh(AppUser appUser) throws WebFormValueException {
