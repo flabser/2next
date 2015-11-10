@@ -13,19 +13,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import cashtracker.model.constants.TransactionType;
-import cashtracker.model.constants.converter.TransactionTypeConverter;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.flabser.dataengine.jpa.AppEntity;
 
+import cashtracker.model.constants.TransactionType;
+import cashtracker.model.constants.converter.TransactionTypeConverter;
+
 
 @JsonRootName("category")
 @Entity
-@Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = { "parent_id", "name" }))
+@Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = { "parent_id", "name" }) )
 @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category AS c WHERE c.parent IS NULL ORDER BY c.name")
 public class Category extends AppEntity {
 

@@ -3,10 +3,10 @@ package cashtracker.dao;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import cashtracker.model.Budget;
-
 import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
+
+import cashtracker.model.Budget;
 
 
 public class BudgetDAO extends DAO <Budget, Long> {

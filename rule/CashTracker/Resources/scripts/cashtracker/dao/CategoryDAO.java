@@ -6,12 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import com.flabser.dataengine.jpa.DAO;
+import com.flabser.script._Session;
+
 import cashtracker.model.Category;
 import cashtracker.model.Transaction;
 import cashtracker.model.constants.TransactionType;
-
-import com.flabser.dataengine.jpa.DAO;
-import com.flabser.script._Session;
 
 
 public class CategoryDAO extends DAO <Category, Long> {

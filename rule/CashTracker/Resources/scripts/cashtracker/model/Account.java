@@ -41,7 +41,7 @@ public class Account extends AppEntity {
 	private Long owner;
 
 	@ElementCollection
-	@CollectionTable(name = "account_observers", joinColumns = @JoinColumn(name = "fk_parent"))
+	@CollectionTable(name = "account_observers", joinColumns = @JoinColumn(name = "fk_parent") )
 	@Column(name = "userid")
 	private List <Long> observers;
 

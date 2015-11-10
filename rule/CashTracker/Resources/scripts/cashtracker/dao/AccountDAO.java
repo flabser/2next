@@ -6,11 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import cashtracker.model.Account;
-import cashtracker.model.Transaction;
-
 import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
+
+import cashtracker.model.Account;
+import cashtracker.model.Transaction;
 
 
 public class AccountDAO extends DAO <Account, Long> {

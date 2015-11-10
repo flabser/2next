@@ -1,4 +1,4 @@
-package cashtracker.helper;
+package cashtracker.dao.filter;
 
 import java.util.ArrayList;
 import java.util.Date;

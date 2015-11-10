@@ -13,16 +13,16 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.io.FileUtils;
 
-import cashtracker.helper.PageRequest;
-import cashtracker.helper.TransactionFilter;
-import cashtracker.model.Transaction;
-import cashtracker.model.TransactionFile;
-import cashtracker.model.constants.TransactionType;
-
 import com.flabser.dataengine.jpa.DAO;
 import com.flabser.env.Environment;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
+
+import cashtracker.dao.filter.TransactionFilter;
+import cashtracker.helper.PageRequest;
+import cashtracker.model.Transaction;
+import cashtracker.model.TransactionFile;
+import cashtracker.model.constants.TransactionType;
 
 
 public class TransactionDAO extends DAO <Transaction, Long> {

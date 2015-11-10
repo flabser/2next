@@ -9,12 +9,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.flabser.restful.RestProvider;
+
 import cashtracker.dao.AccountDAO;
 import cashtracker.dao.TransactionDAO;
 import cashtracker.model.constants.TransactionType;
-
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.restful.RestProvider;
 
 
 @Path("dashboard")
@@ -50,7 +50,6 @@ public class DashboardService extends RestProvider {
 			  where date(t.date) = '2015-09-28'
 			  group by transaction_type;*/
 
-			
 			/*for (Account acc : accountDAO.findAll()) {
 				trByAccount.put(acc.getName(), (long) tdao.findAllByAccountFrom(acc).size());
 			}*/
