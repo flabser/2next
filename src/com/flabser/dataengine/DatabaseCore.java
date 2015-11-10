@@ -36,7 +36,7 @@ public abstract class DatabaseCore {
 			User user = sysDb.getUser(appProfile.owner);
 			if (user != null) {
 				dbLogin = user.getDBLogin();
-				dbPwd = user.getDbPwd();
+				dbPwd = user.getDefaultDbPwd();
 			} else {
 				throw new ApplicationException(appProfile.appType,
 						"Owner of the application cannot get access to database \"" + appProfile.getURI() + "\"");

@@ -159,7 +159,7 @@ public class ApplicationProfile implements _IContent {
 				try {
 					User userOwner = sysDatabase.getUser(owner);
 					IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
-					appDb.registerUser(userOwner.getDBLogin(), userOwner.getDbPwd());
+					appDb.registerUser(userOwner.getDBLogin(), userOwner.getDefaultDbPwd());
 					int res = appDb.createDatabase(getDbName(), userOwner.getDBLogin());
 					if (res == 0 || res == 1) {
 						IDatabase db = getDatabase();

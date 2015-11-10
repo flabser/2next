@@ -1,7 +1,7 @@
 <div>
 	
    		 <div class="page-header">
-     	   <h1>User<small>{{model.login}}</small></h1>
+     	   <h1>User<small>{{model.login}}</small><small>{{model.regDate}}</small></h1>
   		  </div>
 	
 	<form class="form-horizontal">
@@ -29,9 +29,13 @@
 			</div>	
 		</div>
 		<div class="form-group">
-			<label for="inputEmail" class="control-label col-xs-2">RegDate</label>
-			<div class="col-xs-5">{{input class="form-control" name="regDate" value=model.regDate disabled=true}}</div>
+			<label for="inputEmail" class="control-label col-xs-2">Database login</label>
+			<div class="col-xs-5">{{input class="form-control" name="dblogin" value=model.dbLogin required=true}}</div>
 		</div>
+		<div class="form-group">
+			<label for="inputEmail" class="control-label col-xs-2">Database default password</label>
+			<div class="col-xs-5">{{input class="form-control" name="dbdefaultpwd" value=model.defaultDbPwd required=true}}</div>
+		</div>	
 		<div class="form-group">
 			<label for="inputEmail" class="control-label col-xs-2">IsSupervisor</label>
 			<div class="col-xs-5">{{input type="checkbox" name="isSupervisor" checked=model.isSupervisor}}</div>
