@@ -7,6 +7,9 @@
 	<sentence mode="on" keyword="login">
 		<entry lang="ENG">Authorization</entry>
 	</sentence>
+	<sentence mode="on" keyword="password">
+		<entry lang="ENG">Password</entry>
+	</sentence>
 	<sentence mode="on" keyword="login_title">
 		<entry lang="ENG">Authorization</entry>
 	</sentence>

@@ -8,11 +8,19 @@
 		<entry lang="POR">Tarefa</entry>
 	</sentence>
 	<sentence mode="on" keyword="Task_description">
-		<entry lang="RUS">Приложение для введение ваших задании. Создайте задачу, дайте доступ к вашему проекту другим пользователям, выдавайте задания и осуществляйте контроль</entry>
+		<entry lang="RUS">Приложение для введение ваших задании. Создайте
+			задачу, дайте доступ к вашему проекту другим пользователям, выдавайте
+			задания и осуществляйте контроль</entry>
 		<entry lang="KAZ"></entry>
-		<entry lang="ENG">Application for monitoring your task. Create a task, grant other users access to your project, issue and follwo up on tasks</entry>
-		<entry lang="BG">Приложението за мониторинг на вашата задача. Създаване на задача, дава достъп до вашия проект за другите потребители, издаване и монитор задачи</entry>
-		<entry lang="POR">Aplicação para monitorizar as suas tarefas. Permite criar uma tarefa, dar acesso ao seu projeto a outros utilizadores, gerar e monitorizar tarefas</entry>
+		<entry lang="ENG">Application for monitoring your task. Create a task,
+			grant other users access to your project, issue and follwo up on
+			tasks</entry>
+		<entry lang="BG">Приложението за мониторинг на вашата задача.
+			Създаване на задача, дава достъп до вашия проект за другите
+			потребители, издаване и монитор задачи</entry>
+		<entry lang="POR">Aplicação para monitorizar as suas tarefas. Permite
+			criar uma tarefa, dar acesso ao seu projeto a outros utilizadores,
+			gerar e monitorizar tarefas</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="workspace">
@@ -39,11 +47,130 @@
 		<entry lang="POR">Painel de Controlo</entry>
 	</sentence>
 	<sentence mode="on" keyword="issues">
-		<entry lang="RUS">Issues</entry>
-		<entry lang="KAZ">Issues</entry>
 		<entry lang="ENG">Issues</entry>
-		<entry lang="BG">Issues</entry>
-		<entry lang="POR">Issues</entry>
+		<entry lang="RUS">Задачи</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Задачи</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="issue_new">
+		<entry lang="ENG">New issues</entry>
+		<entry lang="RUS">Новая задача</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Нови задача</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="inbox">
+		<entry lang="ENG">Inbox</entry>
+		<entry lang="RUS">Входящие</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Входящи</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="today">
+		<entry lang="ENG">Today</entry>
+		<entry lang="RUS">Сегодня</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Днес</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="week">
+		<entry lang="ENG">Week</entry>
+		<entry lang="RUS">Неделя</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Седмица</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="favorite">
+		<entry lang="ENG">Favourites</entry>
+		<entry lang="RUS">Избранное</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Любими</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="completed">
+		<entry lang="ENG">Completed</entry>
+		<entry lang="RUS">Завершенные</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Завършен</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="tags">
+		<entry lang="ENG">Labels</entry>
+		<entry lang="RUS">Этикетки</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Этикетки</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="add_tag">
+		<entry lang="ENG">Add a label</entry>
+		<entry lang="RUS">Добавить этикетку</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Добави етикет</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="executors">
+		<entry lang="ENG">Completed</entry>
+		<entry lang="RUS">Завершенные</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Завършен</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="invite_user">
+		<entry lang="ENG">Invite a user</entry>
+		<entry lang="RUS">Завершенные</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Покани на ползовател</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="issue">
+		<entry lang="ENG">Issue</entry>
+		<entry lang="RUS">Задача</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Задача</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="body">
+		<entry lang="ENG">Task desciption</entry>
+		<entry lang="RUS">Текст задания</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Покани на ползовател</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="executor">
+		<entry lang="ENG">Executor</entry>
+		<entry lang="RUS">Исполнитель</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Покани на ползовател</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="add_child">
+		<entry lang="ENG">Add level</entry>
+		<entry lang="RUS">Добавить уровень</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Добави ниво</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="users">
+		<entry lang="ENG">Users</entry>
+		<entry lang="RUS">Ползователи</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Потребители</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="profile">
+		<entry lang="ENG">Profile</entry>
+		<entry lang="RUS">Добавить уровень</entry>
+		<entry lang="KAZ">Issues</entry>
+		<entry lang="BG">Профил</entry>
+		<entry lang="POR">Perfil</entry>
+	</sentence>
+	<sentence mode="on" keyword="logout">
+		<entry lang="ENG">Logout</entry>
+		<entry lang="RUS">Выход</entry>
+		<entry lang="KAZ">Issues</entry>
+		<entry lang="BG">Излез</entry>
+		<entry lang="POR">Deslogar</entry>
 	</sentence>
 
 	<!-- -->
@@ -254,16 +381,23 @@
 		<entry lang="BG">Пригласить пользователя</entry>
 	</sentence>
 	<sentence mode="on" keyword="invitation_email_hint">
-		<entry lang="RUS">Адрес электронной почты приглашаемого пользователя</entry>
-		<entry lang="KAZ">Адрес электронной почты приглашаемого пользователя</entry>
+		<entry lang="RUS">Адрес электронной почты приглашаемого пользователя
+		</entry>
+		<entry lang="KAZ">Адрес электронной почты приглашаемого пользователя
+		</entry>
 		<entry lang="ENG">Invited user's email </entry>
-		<entry lang="BG">Адрес электронной почты приглашаемого пользователя</entry>
+		<entry lang="BG">Адрес электронной почты приглашаемого пользователя
+		</entry>
 	</sentence>
 	<sentence mode="on" keyword="invitation_roles_hint">
-		<entry lang="RUS">Укажите роли которые хотите дать пользователю</entry>
-		<entry lang="KAZ">Укажите роли которые хотите дать пользователю</entry>
-		<entry lang="ENG">Укажите роли которые хотите дать пользователю</entry>
-		<entry lang="BG">Укажите роли которые хотите дать пользователю</entry>
+		<entry lang="RUS">Укажите роли которые хотите дать пользователю
+		</entry>
+		<entry lang="KAZ">Укажите роли которые хотите дать пользователю
+		</entry>
+		<entry lang="ENG">Укажите роли которые хотите дать пользователю
+		</entry>
+		<entry lang="BG">Укажите роли которые хотите дать пользователю
+		</entry>
 	</sentence>
 	<sentence mode="on" keyword="message">
 		<entry lang="RUS">Сообщение</entry>
