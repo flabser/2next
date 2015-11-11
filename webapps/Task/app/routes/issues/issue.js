@@ -10,6 +10,7 @@ export default Em.Route.extend(ModelRouteMixin, {
 
     setupController: function(controller, model) {
         controller.set('issue', model);
+        controller.set('users', this.store.findAll('user'));
         controller.set('tags', this.store.findAll('tag'));
     }
 });

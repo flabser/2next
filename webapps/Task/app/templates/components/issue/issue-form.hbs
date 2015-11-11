@@ -15,10 +15,10 @@
                         {{t 'body'}}
                     </div>
                     <div class="controls">
-                        {{tn-input
+                        {{textarea
                             value=issue.body
                             key-up='validateBody'
-                            maxlength='64'
+                            maxlength=2000
                             class='span5'}}
                         {{#each errors.body as |error|}}
                             <div class="error-message">{{error.message}}</div>
@@ -30,11 +30,10 @@
                         {{t 'milestone'}}
                     </div>
                     <div class="controls">
-                        {{tn-input
+                        {{pikaday-input
                             value=issue.milestone
-                            key-up='validateMilestone'
-                            maxlength='64'
-                            class='span5'}}
+                            format='YYYY-MM-DD'
+                            class='span2'}}
                         {{#each errors.milestone as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
@@ -45,10 +44,12 @@
                         {{t 'executor'}}
                     </div>
                     <div class="controls">
-                        {{tn-input
-                            value=issue.executor
-                            key-up='validateEexecutor'
-                            maxlength='64'
+                        {{ember-selectize
+                            content=users
+                            optionValuePath='id'
+                            optionLabelPath='login'
+                            selection=issue.executor
+                            placeholder='-'
                             class='span5'}}
                         {{#each errors.executor as |error|}}
                             <div class="error-message">{{error.message}}</div>
@@ -60,14 +61,14 @@
                         {{t 'tags'}}
                     </div>
                     <div class="controls">
-                        {{tn-input
-                            value=issue.tags
-                            key-up='validateTags'
-                            maxlength='64'
+                        {{ember-selectize
+                            content=tags
+                            multiple=true
+                            optionValuePath='id'
+                            optionLabelPath='name'
+                            selection=issue.tags
+                            placeholder='-'
                             class='span5'}}
-                        {{#each errors.tags as |error|}}
-                            <div class="error-message">{{error.message}}</div>
-                        {{/each}}
                     </div>
                 </div>
             </fieldset>

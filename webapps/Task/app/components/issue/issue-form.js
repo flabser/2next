@@ -12,7 +12,7 @@ export default Em.Component.extend(ModelFormMixin, {
     actions: {
         save: function() {
             if (this.validate()) {
-                this.sendAction('saveRecord', this.get('issue'));
+                this.sendAction('saveIssue', this.get('issue'));
             }
         },
 
@@ -20,16 +20,16 @@ export default Em.Component.extend(ModelFormMixin, {
             this.sendAction('close');
         },
 
-        validateName: function() {
-            this.validate();
+        validateBody: function() {
+            this.validate('body');
         }
     },
 
     validate: function() {
         this.set('errors', DS.Errors.create());
 
-        if (Validate.isEmpty(this.get('issue.name'))) {
-            this.get('errors').add('name', this.get('i18n').t('validation_empty'));
+        if (Validate.isEmpty(this.get('issue.body'))) {
+            this.get('errors').add('body', this.get('i18n').t('validation_empty'));
         }
 
         return this.get('errors.isEmpty');
