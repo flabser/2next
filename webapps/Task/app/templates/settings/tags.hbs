@@ -19,7 +19,7 @@
             {{#each tags as |tag|}}
                 {{#unless tag.isNew}}
                     {{#unless tag.parent}}
-                        {{tag.tag-form tag=tag}}
+                        {{tag.tag-row tag=tag}}
                     {{/unless}}
                 {{/unless}}
             {{/each}}

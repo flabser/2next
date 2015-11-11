@@ -1,5 +1,9 @@
 .tags-view {}
 
+.tags-view .entries > .tag-form {
+    padding: 0 12px;
+}
+
 .tags_add {
     border-radius: 6px;
     font-size: 16px;

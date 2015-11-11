@@ -1,20 +1,24 @@
-.tag-form {}
-
-.tag-form .tag-form-container {
-    max-width: 100%;
-    position: relative;
-    width: 560px;
-}
-
-.tag-form-row {
+.tag-form {
+    cursor: pointer;
     padding: 4px 0;
+    position: relative;
 }
 
-.tag-form-row:hover {
+.tag-form:hover {
     background-color: #F5F5F5;
 }
 
-.tag-form input {}
+.tag-form.edit {
+    box-shadow: 0px 1px 3px #9E9E9E;
+    cursor: auto;
+    margin: 4px 0;
+    padding: 4px;
+}
+
+.tag-form input {
+    margin-bottom: 4px;
+    width: 100%;
+}
 
 .tag-form.invalid input {
     border-color: #F44336;
@@ -22,6 +26,11 @@
 }
 
 .tag-form .tag-field {
+    width: 100%;
+    z-index: 1;
+}
+
+.tag-form .tag-field a {
     border: 1px solid #ccc;
     border-radius: 2px;
     display: inline-block;
@@ -37,10 +46,8 @@
     display: inline-block;
     position: absolute;
     right: 2px;
-}
-
-.tag-form .tag-actions a {
-    color: #666;
+    top: 0;
+    z-index: 2;
 }
 
 .tag-children {

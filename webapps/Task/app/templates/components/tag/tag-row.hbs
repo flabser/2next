@@ -1,0 +1,8 @@
+{{tag.tag-form tag=tag}}
+{{#if tag.children}}
+    <div class="tag-children">
+        {{#each tag.children as |tag|}}
+            {{tag.tag-row tag=tag}}
+        {{/each}}
+    </div>
+{{/if}}

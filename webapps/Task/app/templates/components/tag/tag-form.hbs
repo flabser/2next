@@ -1,32 +1,21 @@
-<div class="tag-form-container">
-    <div class="tag-form-row">
-        <div class="tag-field">
-            {{#if isEditing}}
-                {{tn-input value=tag.name maxlength='64'}}
-            {{else}}
-                {{#link-to 'settings.tags.tag' tag}}
-                    {{tag.name}}
-                {{/link-to}}
-            {{/if}}
-        </div>
-        <div class="tag-actions">
-            {{#if isEditing}}
-                <a href="#" {{action 'saveTag' tag}} class="btn btn-primary">{{t 'save'}}</a>
-                <a href="#" {{action 'cancel' tag}}>{{t 'cancel'}}</a>
-            {{else}}
-                <a href="#" {{action 'toggleEditing' tag}}>{{t 'edit'}}</a>
-                <a href="#" {{action 'addChildTag' tag}}>{{t 'add_child'}}</a>
-            {{/if}}
-            {{#unless tag.isNew}}
-                <a href="#" {{action 'deleteTag' tag}}>{{t 'remove'}}</a>
-            {{/unless}}
-        </div>
-    </div>
-    {{#if tag.children}}
-        <div class="tag-children">
-            {{#each tag.children as |tag|}}
-                {{tag.tag-form tag=tag}}
-            {{/each}}
+<div class="tag-field">
+    {{#if isEditing}}
+        {{tn-input value=tag.name maxlength='64'}}
+        <button {{action 'saveTag' tag}} class="btn btn-primary">{{t 'save'}}</button>
+        <button {{action 'cancel' tag}} class="btn btn-link">{{t 'cancel'}}</button>
+    {{else}}
+        <div {{action 'setEditing' tag}}>
+            {{#link-to 'settings.tags.tag' tag}}
+                {{tag.name}}
+            {{/link-to}}
         </div>
     {{/if}}
 </div>
+{{#unless isEditing}}
+    <div class="tag-actions">
+        <button {{action 'addChildTag' tag}} class="btn btn-link">{{t 'add_child'}}</button>
+        {{#unless tag.isNew}}
+            <button {{action 'deleteTag' tag}} class="btn btn-link btn-warning">{{t 'remove'}}</button>
+        {{/unless}}
+    </div>
+{{/unless}}

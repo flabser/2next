@@ -19,6 +19,12 @@ export default Em.Component.extend({
         return Validate.isEmpty(this.get('tag.name'));
     }),
 
+    didInsertElement: function() {
+        if (this.get('tag.isNew')) {
+            this.$('input', this.element).focus();
+        }
+    },
+
     willDestroyElement: function() {
         if (this.get('tag.isNew')) {
             this.get('tag').destroyRecord();
@@ -55,9 +61,19 @@ export default Em.Component.extend({
             this.sendAction('setTagActiveRoute', tag);
         },
 
+        setEditing: function(tag) {
+            if (!this.get('isEditing')) {
+                this.send('toggleEditing', tag);
+            }
+            return false;
+        },
+
         toggleEditing: function(tag) {
             this.toggleProperty('isEditing');
             this.send('setTagActiveRoute', tag);
+            Em.run.schedule('afterRender', this, function() {
+                this.$('input', this.element).focus();
+            });
         }
     }
 });

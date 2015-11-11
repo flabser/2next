@@ -71,10 +71,40 @@ button .fa {
     background-color: #FFED81;
 }
 
-.btn-text {
-    background: transparent;
+.btn-warning {
+    background-color: #F44336;
+    border: 1px solid #E00000;
+    color: #FFF;
+}
+
+.btn-warning:hover {
+    background-color: #FF5722;
+    color: #FFF;
+}
+
+.btn-warning:active {
+    background-color: #F44336;
+    color: #FFF;
+}
+
+.btn-link {
+    background: none;
     border: 0;
-    display: inline;
     margin: 0;
-    padding: 0;
+    padding: 6px 3px;
+}
+
+.btn-link:hover,
+.btn-link:active {
+    background: none;
+    text-decoration: underline;
+}
+
+.btn-link.btn-warning,
+.btn-link.btn-warning:hover {
+    color: #FF5722;
+}
+
+.btn-link.btn-warning:active {
+    color: #F00;
 }

@@ -9,7 +9,11 @@
 .issues-view .content-header .content-actions {
     border: none;
     float: right;
-    padding: 8px 16px;
+}
+
+.issues-view .content-header .content-actions .btn {
+    border-radius: 3px;
+    line-height: 20px;
 }
 
 .issues__nav {
