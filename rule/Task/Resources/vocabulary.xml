@@ -5,14 +5,14 @@
 		<entry lang="KAZ">Task</entry>
 		<entry lang="ENG">Task</entry>
 		<entry lang="BG">Task</entry>
-		<entry lang="POR">Task</entry>
+		<entry lang="POR">Tarefa</entry>
 	</sentence>
 	<sentence mode="on" keyword="Task_description">
 		<entry lang="RUS">Приложение для введение ваших задании. Создайте задачу, дайте доступ к вашему проекту другим пользователям, выдавайте задания и осуществляйте контроль</entry>
 		<entry lang="KAZ"></entry>
-		<entry lang="ENG">The application for monitoring your task. Create a task, give access to your project to other users, issue and monitor tasks</entry>
+		<entry lang="ENG">Application for monitoring your task. Create a task, grant other users access to your project, issue and follwo up on tasks</entry>
 		<entry lang="BG">Приложението за мониторинг на вашата задача. Създаване на задача, дава достъп до вашия проект за другите потребители, издаване и монитор задачи</entry>
-		<entry lang="POR">O aplicativo para monitorar sua tarefa. Criar uma tarefa, dar acesso ao seu projeto a outros usuários, emitir e monitorar tarefas</entry>
+		<entry lang="POR">Aplicação para monitorizar as suas tarefas. Permite criar uma tarefa, dar acesso ao seu projeto a outros utilizadores, gerar e monitorizar tarefas</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="workspace">
@@ -20,7 +20,7 @@
 		<entry lang="KAZ">Workspace</entry>
 		<entry lang="ENG">Workspace</entry>
 		<entry lang="BG">Workspace</entry>
-		<entry lang="POR">Workspace</entry>
+		<entry lang="POR">Área de Trabalho</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="user_profile">
@@ -28,7 +28,7 @@
 		<entry lang="KAZ">Профиль</entry>
 		<entry lang="ENG">User Profile</entry>
 		<entry lang="BG">Потребителски профил</entry>
-		<entry lang="POR"></entry>
+		<entry lang="POR">Perfil de Utilizador</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="dashboard">
@@ -36,7 +36,7 @@
 		<entry lang="KAZ">Жалпы шолу</entry>
 		<entry lang="ENG">Dashboard</entry>
 		<entry lang="BG">Обзор</entry>
-		<entry lang="POR"></entry>
+		<entry lang="POR">Painel de Controlo</entry>
 	</sentence>
 	<sentence mode="on" keyword="issues">
 		<entry lang="RUS">Issues</entry>
@@ -52,56 +52,56 @@
 		<entry lang="KAZ">Жаңа</entry>
 		<entry lang="ENG">Add</entry>
 		<entry lang="BG">Добави</entry>
-		<entry lang="POR"></entry>
+		<entry lang="POR">Adicionar</entry>
 	</sentence>
 	<sentence mode="on" keyword="save">
 		<entry lang="RUS">Сохранить</entry>
 		<entry lang="KAZ">Сақтау</entry>
 		<entry lang="ENG">Save</entry>
 		<entry lang="BG">Запиши</entry>
-		<entry lang="POR"></entry>
+		<entry lang="POR">Guardar</entry>
 	</sentence>
 	<sentence mode="on" keyword="cancel">
 		<entry lang="RUS">Отмена</entry>
 		<entry lang="KAZ">Болдырмау</entry>
 		<entry lang="ENG">Cancel</entry>
 		<entry lang="BG">Отмена</entry>
-		<entry lang="POR"></entry>
+		<entry lang="POR">Anular</entry>
 	</sentence>
 	<sentence mode="on" keyword="close">
 		<entry lang="RUS">Закрыть</entry>
 		<entry lang="KAZ">Жабу</entry>
 		<entry lang="ENG">Close</entry>
 		<entry lang="BG">Затвори</entry>
-		<entry lang="POR"></entry>
+		<entry lang="POR">Fechar</entry>
 	</sentence>
 	<sentence mode="on" keyword="remove">
 		<entry lang="RUS">Удалить</entry>
 		<entry lang="KAZ">Жою</entry>
 		<entry lang="ENG">Remove</entry>
 		<entry lang="BG">Удалить</entry>
-		<entry lang="POR"></entry>
+		<entry lang="POR">Eliminar</entry>
 	</sentence>
 	<sentence mode="on" keyword="repeat">
 		<entry lang="RUS">Повтор</entry>
 		<entry lang="KAZ">Қайталау</entry>
 		<entry lang="ENG">Repeat</entry>
 		<entry lang="BG">Повтор</entry>
-		<entry lang="POR"></entry>
+		<entry lang="POR">Repetir</entry>
 	</sentence>
 	<sentence mode="on" keyword="new">
 		<entry lang="RUS">Новый</entry>
 		<entry lang="KAZ">Жаңа</entry>
 		<entry lang="ENG">New</entry>
 		<entry lang="BG">Новый</entry>
-		<entry lang="POR"></entry>
+		<entry lang="POR">Novo</entry>
 	</sentence>
 	<sentence mode="on" keyword="edit">
 		<entry lang="RUS">Редактировать</entry>
 		<entry lang="KAZ">Өзгерту</entry>
 		<entry lang="ENG">Edit</entry>
 		<entry lang="BG">Редактировать</entry>
-		<entry lang="POR"></entry>
+		<entry lang="POR">Editar</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="members">
@@ -109,12 +109,14 @@
 		<entry lang="KAZ">Участники</entry>
 		<entry lang="ENG">Members</entry>
 		<entry lang="BG">Потребители</entry>
+		<entry lang="POR">Membros</entry>
 	</sentence>
 	<sentence mode="on" keyword="settings">
 		<entry lang="RUS">Настройки</entry>
 		<entry lang="KAZ">Настройки</entry>
 		<entry lang="ENG">Settings</entry>
 		<entry lang="BG">Настройки</entry>
+		<entry lang="POR">Definições</entry>
 	</sentence>
 
 	<!-- ______________ app captions ______________ -->
@@ -123,6 +125,7 @@
 		<entry lang="KAZ">Автор</entry>
 		<entry lang="ENG">Author</entry>
 		<entry lang="BG">Автор</entry>
+		<entry lang="POR">Autor</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="attachments">
@@ -130,36 +133,42 @@
 		<entry lang="KAZ">Вложения</entry>
 		<entry lang="ENG">Вложения</entry>
 		<entry lang="BG">Вложения</entry>
+		<entry lang="POR"></entry>
 	</sentence>
 	<sentence mode="on" keyword="attach">
 		<entry lang="RUS">Прикрепить</entry>
 		<entry lang="KAZ">Прикрепить</entry>
 		<entry lang="ENG">Attach</entry>
 		<entry lang="BG">Прикрепить</entry>
+		<entry lang="POR">Anexar</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_delete">
 		<entry lang="RUS">Удалить</entry>
 		<entry lang="KAZ">Удалить</entry>
 		<entry lang="ENG">Delete</entry>
 		<entry lang="BG">Удалить</entry>
+		<entry lang="POR">Elininar</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_open">
 		<entry lang="RUS">Открыть</entry>
 		<entry lang="KAZ">Открыть</entry>
 		<entry lang="ENG">Open</entry>
 		<entry lang="BG">Открыть</entry>
+		<entry lang="POR">Abrir</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_preview">
 		<entry lang="RUS">Просмотр</entry>
 		<entry lang="KAZ">Просмотр</entry>
 		<entry lang="ENG">View</entry>
 		<entry lang="BG">Просмотр</entry>
+		<entry lang="POR">Ver</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_add_comment">
 		<entry lang="RUS">Добавить комментарий</entry>
 		<entry lang="KAZ">Добавить комментарий</entry>
 		<entry lang="ENG">Add a comment</entry>
 		<entry lang="BG">Добавить комментарий</entry>
+		<entry lang="POR">Adicionar um comentário</entry>
 	</sentence>
 
 	<!-- form fields -->
@@ -168,6 +177,7 @@
 		<entry lang="KAZ">Категория</entry>
 		<entry lang="ENG">Category</entry>
 		<entry lang="BG">Категория</entry>
+		<entry lang="POR">Categoria</entry>
 	</sentence>
 	<sentence mode="on" keyword="parent_category">
 		<entry lang="RUS">Родительская категория</entry>
