@@ -5,24 +5,14 @@ const {
 } = Em;
 
 export default Route.extend({
-    navProfileIsExpanded: false,
-    hasAddAction: false,
+    showAddAction: false,
 
     session: inject.service(),
-
     translationsFetcher: inject.service(),
 
     activate: function() {
         this.windowOnResize();
         $(window).resize(this.windowOnResize);
-    },
-
-    windowOnResize: function() {
-        if (window.innerWidth <= 768) {
-            $('body').addClass('phone');
-        } else {
-            $('body').removeClass('phone');
-        }
     },
 
     model: function() {
@@ -35,11 +25,19 @@ export default Route.extend({
     },
 
     setupController: function(controller, model) {
-        controller.set('model', model);
+        controller.set('sessionUser', model);
         // loginThroughToken - show link rest/workspace/url if LOGIN_THROUGH_TOKEN
         controller.set('loginThroughToken', model.authMode === 'LOGIN_THROUGH_TOKEN');
 
         setTimeout(this.initScrollSpySide, 200);
+    },
+
+    windowOnResize: function() {
+        if (window.innerWidth <= 768) {
+            $('body').addClass('phone');
+        } else {
+            $('body').removeClass('phone');
+        }
     },
 
     initScrollSpySide: function() {
@@ -88,10 +86,6 @@ export default Route.extend({
         }
     },
 
-    setWindowTitle: function(title) {
-        this.get('controller').set('windowTitle', title);
-    },
-
     actions: {
         logout: function() {
             this.get('session').logout().then(function(response) {
@@ -115,16 +109,12 @@ export default Route.extend({
             this.transitionTo('settings.users');
         },
 
-        toggleDevice: function() {
-            $('body').toggleClass('phone');
-        },
-
         showAddAction: function() {
-            this.set('hasAddAction', true);
+            this.set('showAddAction', true);
         },
 
         hideAddAction: function() {
-            this.set('hasAddAction', false);
+            this.set('showAddAction', false);
         },
 
         navAppMenuToggle: function() {
@@ -139,30 +129,26 @@ export default Route.extend({
             $('body').toggleClass('search-open');
         },
 
-        toggleNavProfile: function() {
-            $('.nav-profile').toggleClass('expanded');
-        },
-
         willTransition: function(transition) {
             $('body').removeClass('nav-app-open');
             $('.dropdown.open').removeClass('open');
         },
 
-        error: function(_error /*, transition*/ ) {
+        setWindowTitle: function(title) {
+            if (title.length > 0 && top.document.title != title) {
+                top.document.title = title;
+            }
+        },
+
+        error: function(_error, transition) {
             console.log(_error);
 
             if (_error.errors && _error.errors.length && _error.errors[0].status === '401') {
-                // window.location.href = 'Provider?id=login';
+                window.location.href = '//' + location.host;
             }
 
             if (_error.status === 401 || (!this.get('session').isAuthenticated() && this.routeName !== 'login')) {
                 window.location.href = '//' + location.host;
-
-                /*this.controllerFor('login').setProperties({
-                    transition: transition
-                });*/
-
-                // this.transitionTo('login');
             } else if (_error.status === '400') {
                 return true;
             } else {

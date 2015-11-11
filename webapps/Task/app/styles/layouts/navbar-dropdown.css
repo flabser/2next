@@ -8,6 +8,7 @@
 
 .navbar .dropdown-menu {
     line-height: 1;
+    min-width: 200px;
     top: 50px;
 }
 

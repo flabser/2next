@@ -15,12 +15,12 @@ export default Em.Route.extend({
 
     actions: {
         composeRecord: function() {
-            this.transitionToRoute('issues.new');
+            this.transitionTo('issues.new');
         },
 
         saveIssue: function(issue) {
             issue.save().then(() => {
-                this.transitionToRoute('issues.issue', issue);
+                this.transitionTo('issues.issue', issue);
             }, function() {
                 console.log(arguments);
             });
@@ -28,7 +28,7 @@ export default Em.Route.extend({
 
         deleteIssue: function(issue) {
             issue.destroyRecord().then(() => {
-                this.transitionToRoute('issues');
+                this.transitionTo('issues');
             }, function(resp) {
                 issue.rollbackAttributes();
                 alert(resp.errors.message);

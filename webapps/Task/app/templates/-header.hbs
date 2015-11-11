@@ -9,9 +9,11 @@
             </div>
         </div>
         <nav class="navbar-nav navbar-right">
-            <button class="nav-item nav-btn compose-new" type="button" {{action 'composeRecord'}}>
-                <i class="fa fa-plus"></i>
-            </button>
+            {{#if showAddAction}}
+                <button class="nav-item nav-btn compose-new" type="button" {{action 'composeRecord'}}>
+                    <i class="fa fa-plus"></i>
+                </button>
+            {{/if}}
             <button class="nav-item nav-btn nav-search-toggle" type="button" {{action 'toggleSearchForm' on='mouseDown' }}>
                 <i class="fa fa-search"></i>
             </button>
@@ -30,6 +32,7 @@
                 <div class="dropdown-toggle" data-toggle="dropdown">
                     <span class="user-avatar">
                         <i class="fa fa-user"></i>
+                        <i class="fa fa-angle-down"></i>
                     </span>
                 </div>
                 <ul class="dropdown-menu right">
@@ -37,7 +40,7 @@
                         {{#link-to 'user-profile'}}
                             <i class="fa fa-user"></i>
                             <div>
-                                {{model.login}}
+                                {{sessionUser.login}}
                                 <div class="hint">{{t 'profile'}}</div>
                             </div>
                         {{/link-to}}

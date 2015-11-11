@@ -3,6 +3,14 @@
     vertical-align: top;
 }
 
+.nav-profile .user-avatar .fa {
+    width: 16px;
+}
+
+.nav-profile .user-avatar .fa-angle-down {
+    color: #999;
+}
+
 .nav-profile .user-name {
     display: inline-block;
     overflow: hidden;

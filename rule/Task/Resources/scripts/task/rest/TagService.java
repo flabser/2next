@@ -34,6 +34,12 @@ public class TagService extends RestProvider {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get() {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
 		TagDAO dao = new TagDAO(getSession());
 		Tags tags = new Tags(dao.findAll());
 		return Response.ok(tags).build();
@@ -43,6 +49,12 @@ public class TagService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") long id) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
 		TagDAO dao = new TagDAO(getSession());
 		Tag m = dao.findById(id);
 		if (m == null) {
@@ -56,6 +68,12 @@ public class TagService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Tag m) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
 		TagDAO dao = new TagDAO(getSession());
 
 		// parent tag
@@ -76,6 +94,12 @@ public class TagService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, Tag m) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
 		TagDAO dao = new TagDAO(getSession());
 
 		m.setId(id);
@@ -105,6 +129,12 @@ public class TagService extends RestProvider {
 	@Path("/{id}/set")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response setParent(@PathParam("id") long id, @QueryParam("parent") long parentId) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
 		TagDAO dao = new TagDAO(getSession());
 		Tag m = dao.findById(id);
 
@@ -125,6 +155,12 @@ public class TagService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
 		TagDAO dao = new TagDAO(getSession());
 		Tag m = dao.findById(id);
 		if (m != null) {

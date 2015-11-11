@@ -40,6 +40,12 @@ public class IssueService extends RestProvider {
 	public Response get(@QueryParam("at") String at, @QueryParam("st") String status,
 			@QueryParam("tags") List <Long> tagIds, @QueryParam("offset") int offset, @QueryParam("limit") int limit,
 			@QueryParam("sort") String sort) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
 		IssueDAO dao = new IssueDAO(getSession());
 		IssueFilter filter = IssueFilterBuilder.create(status, tagIds, at);
 		PageRequest pageRequest = new PageRequest(offset, limit, sort);
@@ -63,6 +69,12 @@ public class IssueService extends RestProvider {
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") long id) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
 		IssueDAO dao = new IssueDAO(getSession());
 		Issue m = dao.findById(id);
 		if (m == null) {
@@ -76,6 +88,12 @@ public class IssueService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(Issue m) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
 		ValidationError ve = validator.validate(m);
 		if (ve.hasError()) {
 			return Response.status(Status.BAD_REQUEST).entity(ve).build();
@@ -90,6 +108,12 @@ public class IssueService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") long id, Issue m) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
 		m.setId(id);
 
 		ValidationError ve = validator.validate(m);
@@ -112,6 +136,12 @@ public class IssueService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
 		IssueDAO dao = new IssueDAO(getSession());
 		Issue m = dao.findById(id);
 		if (m != null) {

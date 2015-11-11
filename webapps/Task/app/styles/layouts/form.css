@@ -66,13 +66,13 @@
     overflow: hidden;
     padding: 5px 0px 0px;
     text-align: right;
-    width: 230px;
+    width: 200px;
 }
 
 .form-group .controls {
     color: #000;
     display: block;
-    margin: 0 0 0 240px;
+    margin: 0 0 0 210px;
     max-width: 100%;
     min-height: inherit;
     padding: 0px;
