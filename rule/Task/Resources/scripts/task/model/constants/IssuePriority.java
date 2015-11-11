@@ -1,7 +1,13 @@
 package task.model.constants;
 
 public enum IssuePriority {
-	HEIGHEST, HEIGHT, MEDIUM, NORMAL;
+	HEIGHEST(1), HEIGHT(2), MEDIUM(3), NORMAL(4);
+
+	private final int value;
+
+	private IssuePriority(int value) {
+		this.value = value;
+	}
 
 	public static IssuePriority fromValue(int priority) {
 		switch (priority) {
@@ -16,5 +22,9 @@ public enum IssuePriority {
 		}
 
 		return null;
+	}
+
+	public int toValue() {
+		return value;
 	}
 }

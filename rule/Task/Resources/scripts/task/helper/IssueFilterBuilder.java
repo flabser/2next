@@ -21,7 +21,7 @@ public class IssueFilterBuilder {
 
 		IssueFilter filter = new IssueFilter();
 
-		IssueStatus issueStatus = IssueStatus.fromValue(status);
+		IssueStatus issueStatus = issueStatusFromValue(status);
 		filter.setStatus(issueStatus);
 
 		if (tagIds != null) {
@@ -56,5 +56,12 @@ public class IssueFilterBuilder {
 		}
 
 		return filter;
+	}
+
+	private static IssueStatus issueStatusFromValue(String status) {
+		if ("DRAFT".equals(status) || "PROCESS".equals(status) || "CLOSE".equals(status)) {
+			return IssueStatus.valueOf(status);
+		}
+		return null;
 	}
 }

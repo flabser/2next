@@ -1,7 +1,5 @@
 package task.rest;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -17,13 +15,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.flabser.restful.RestProvider;
 
 import task.dao.IssueDAO;
 import task.dao.filter.IssueFilter;
 import task.helper.IssueFilterBuilder;
+import task.helper.PageRequest;
 import task.model.Issue;
+import task.pojo.Meta;
 import task.validation.IssueValidator;
 import task.validation.ValidationError;
 
@@ -36,10 +38,25 @@ public class IssueService extends RestProvider {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@QueryParam("at") String at, @QueryParam("st") String status,
-			@QueryParam("tags") List <Long> tagIds) {
+			@QueryParam("tags") List <Long> tagIds, @QueryParam("offset") int offset, @QueryParam("limit") int limit,
+			@QueryParam("sort") String sort) {
 		IssueDAO dao = new IssueDAO(getSession());
 		IssueFilter filter = IssueFilterBuilder.create(status, tagIds, at);
-		return Response.ok(new Issues(dao.find(filter))).build();
+		PageRequest pageRequest = new PageRequest(offset, limit, sort);
+
+		int count = dao.getCount().intValue();
+		List <Issue> list = dao.find(filter, pageRequest);
+		_Response _resp = new _Response(list, new Meta(count, pageRequest.getLimit(), pageRequest.getOffset(), 0));
+
+		ObjectMapper om = new ObjectMapper();
+		om.disable(SerializationFeature.WRAP_ROOT_VALUE);
+
+		try {
+			return Response.ok(om.writeValueAsString(_resp)).build();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return Response.noContent().status(Status.BAD_REQUEST).build();
+		}
 	}
 
 	@GET
@@ -103,13 +120,14 @@ public class IssueService extends RestProvider {
 		return Response.noContent().build();
 	}
 
-	@JsonRootName("issues")
-	class Issues extends ArrayList <Issue> {
+	class _Response {
 
-		private static final long serialVersionUID = 1L;
+		public List <Issue> issues;
+		public Meta meta;
 
-		public Issues(Collection <? extends Issue> m) {
-			addAll(m);
+		public _Response(List <Issue> list, Meta meta) {
+			this.issues = list;
+			this.meta = meta;
 		}
 	}
 }

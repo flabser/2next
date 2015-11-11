@@ -9,6 +9,7 @@ import com.flabser.dataengine.jpa.DAO;
 import com.flabser.script._Session;
 
 import task.dao.filter.IssueFilter;
+import task.helper.PageRequest;
 import task.model.Issue;
 
 
@@ -20,7 +21,7 @@ public class IssueDAO extends DAO <Issue, Long> {
 		super(Issue.class, session);
 	}
 
-	public List <Issue> find(IssueFilter filter) {
+	public List <Issue> find(IssueFilter filter, PageRequest pageRequest) {
 		String tags = "";
 		String dateRange = "";
 		String status = "";
@@ -58,6 +59,9 @@ public class IssueDAO extends DAO <Issue, Long> {
 				q.setParameter("sdate", filter.getMilestoneDateRange()[0]);
 				q.setParameter("edate", filter.getMilestoneDateRange()[1]);
 			}
+
+			q.setFirstResult(pageRequest.getOffset());
+			q.setMaxResults(pageRequest.getLimit());
 
 			return q.getResultList();
 		} finally {
