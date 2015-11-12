@@ -36,7 +36,6 @@ public class _Session implements ICache {
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 	private HttpSession jses;
 	private String contexID;
-	private static final int MONTH_TIME = 60 * 60 * 24 * 365;
 	public ArrayList<_Session> descendants = new ArrayList<_Session>();
 
 	public _Session(AppTemplate env, HttpSession jses, String contextID, User user) {

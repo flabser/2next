@@ -60,8 +60,6 @@ public class Secure extends ValveBase {
 							response.getWriter().println(e.getHTMLMessage());
 						}
 					} else {
-						System.out.println(ru.getUrl() + " " + jses.getId() + " " + ses.getAppType() + " "
-								+ ses.descendants.size());
 						getNext().invoke(request, response);
 					}
 				} else {

@@ -23,7 +23,6 @@ public class Site extends _DoScript {
 				session.setLang(LanguageType.ENG);
 			}
 		} catch (Exception e) {
-			System.out.println(toLang + " " + LanguageType.values());
 			publishElement("error", "the " + toLang + " language is not available");
 		}
 

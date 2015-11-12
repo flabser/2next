@@ -2,8 +2,8 @@
 <vocabulary>
 	<sentence mode="on" keyword="brand">
 		<entry lang="RUS">Задачи</entry>
-		<entry lang="KAZ">Task</entry>
-		<entry lang="ENG">Task</entry>
+		<entry lang="KAZ">Tasks</entry>
+		<entry lang="ENG">Tasks</entry>
 		<entry lang="BG">Задачи</entry>
 		<entry lang="POR">Tarefa</entry>
 	</sentence>
@@ -102,15 +102,15 @@
 		<entry lang="POR"></entry>
 	</sentence>
 	<sentence mode="on" keyword="executors">
-		<entry lang="ENG">Completed</entry>
-		<entry lang="RUS">Завершенные</entry>
+		<entry lang="ENG">Executors</entry>
+		<entry lang="RUS">Исполнители</entry>
 		<entry lang="KAZ"></entry>
-		<entry lang="BG">Завършен</entry>
-		<entry lang="POR"></entry>
+		<entry lang="BG">Изпълнители</entry>
+		<entry lang="POR">Executores</entry>
 	</sentence>
 	<sentence mode="on" keyword="invite_user">
 		<entry lang="ENG">Invite a user</entry>
-		<entry lang="RUS">Завершенные</entry>
+		<entry lang="RUS">Пригласить пользователя</entry>
 		<entry lang="KAZ"></entry>
 		<entry lang="BG">Покани на ползовател</entry>
 		<entry lang="POR"></entry>
@@ -126,7 +126,7 @@
 		<entry lang="ENG">Task description</entry>
 		<entry lang="RUS">Текст задания</entry>
 		<entry lang="KAZ"></entry>
-		<entry lang="BG">Покани на ползовател</entry>
+		<entry lang="BG">Описание на задачата</entry>
 		<entry lang="POR"></entry>
 	</sentence>
 	<sentence mode="on" keyword="executor">
@@ -153,14 +153,14 @@
 	<sentence mode="on" keyword="profile">
 		<entry lang="ENG">Profile</entry>
 		<entry lang="RUS">Добавить уровень</entry>
-		<entry lang="KAZ">Issues</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="BG">Профил</entry>
 		<entry lang="POR">Perfil</entry>
 	</sentence>
 	<sentence mode="on" keyword="logout">
 		<entry lang="ENG">Logout</entry>
 		<entry lang="RUS">Выход</entry>
-		<entry lang="KAZ">Issues</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="BG">Излез</entry>
 		<entry lang="POR">Deslogar</entry>
 	</sentence>
@@ -225,14 +225,14 @@
 
 	<sentence mode="on" keyword="members">
 		<entry lang="RUS">Участники</entry>
-		<entry lang="KAZ">Участники</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Members</entry>
 		<entry lang="BG">Потребители</entry>
 		<entry lang="POR">Membros</entry>
 	</sentence>
 	<sentence mode="on" keyword="settings">
 		<entry lang="RUS">Настройки</entry>
-		<entry lang="KAZ">Настройки</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Settings</entry>
 		<entry lang="BG">Настройки</entry>
 		<entry lang="POR">Definições</entry>
@@ -241,7 +241,7 @@
 	<!-- ______________ app captions ______________ -->
 	<sentence mode="on" keyword="author">
 		<entry lang="RUS">Автор</entry>
-		<entry lang="KAZ">Автор</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Author</entry>
 		<entry lang="BG">Автор</entry>
 		<entry lang="POR">Autor</entry>
@@ -249,42 +249,42 @@
 
 	<sentence mode="on" keyword="attachments">
 		<entry lang="RUS">Вложения</entry>
-		<entry lang="KAZ">Вложения</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Вложения</entry>
 		<entry lang="BG">Прикачени файлове</entry>
 		<entry lang="POR"></entry>
 	</sentence>
 	<sentence mode="on" keyword="attach">
 		<entry lang="RUS">Прикрепить</entry>
-		<entry lang="KAZ">Прикрепить</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Attach</entry>
 		<entry lang="BG">Прикрепете</entry>
 		<entry lang="POR">Anexar</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_delete">
 		<entry lang="RUS">Удалить</entry>
-		<entry lang="KAZ">Удалить</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Delete</entry>
 		<entry lang="BG">Премахвам</entry>
 		<entry lang="POR">Elininar</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_open">
 		<entry lang="RUS">Открыть</entry>
-		<entry lang="KAZ">Открыть</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Open</entry>
 		<entry lang="BG">Открит</entry>
 		<entry lang="POR">Abrir</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_preview">
 		<entry lang="RUS">Просмотр</entry>
-		<entry lang="KAZ">Просмотр</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Preview</entry>
 		<entry lang="BG">Преглед</entry>
 		<entry lang="POR">Ver</entry>
 	</sentence>
 	<sentence mode="on" keyword="attach_add_comment">
 		<entry lang="RUS">Добавить комментарий</entry>
-		<entry lang="KAZ">Добавить комментарий</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Add a comment</entry>
 		<entry lang="BG">Добавить комментарий</entry>
 		<entry lang="POR">Adicionar um comentário</entry>
@@ -293,45 +293,45 @@
 	<!-- form fields -->
 	<sentence mode="on" keyword="category">
 		<entry lang="RUS">Категория</entry>
-		<entry lang="KAZ">Категория</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Category</entry>
 		<entry lang="BG">Категория</entry>
 		<entry lang="POR">Categoria</entry>
 	</sentence>
 	<sentence mode="on" keyword="parent_category">
 		<entry lang="RUS">Родительская категория</entry>
-		<entry lang="KAZ">Категория</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Parent category</entry>
 		<entry lang="BG">Категория</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="user">
 		<entry lang="RUS">Пользователь</entry>
-		<entry lang="KAZ">Пользователь</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">User</entry>
 		<entry lang="BG">Пользователь</entry>
 	</sentence>
 	<sentence mode="on" keyword="permissions">
 		<entry lang="RUS">Права доступа</entry>
-		<entry lang="KAZ">Права доступа</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Permissions</entry>
 		<entry lang="BG">Права доступа</entry>
 	</sentence>
 	<sentence mode="on" keyword="name">
 		<entry lang="RUS">Название</entry>
-		<entry lang="KAZ">Название</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Name</entry>
 		<entry lang="BG">Название</entry>
 	</sentence>
 	<sentence mode="on" keyword="user_name">
 		<entry lang="RUS">Имя пользователя</entry>
-		<entry lang="KAZ">Имя пользователя</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">User name</entry>
 		<entry lang="BG">Имя пользователя</entry>
 	</sentence>
 	<sentence mode="on" keyword="user_login">
-		<entry lang="RUS">Login</entry>
-		<entry lang="KAZ">Login</entry>
+		<entry lang="RUS">Вход</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Вход</entry>
 		<entry lang="BG">Влизане</entry>
 	</sentence>
@@ -343,72 +343,67 @@
 	</sentence>
 	<sentence mode="on" keyword="reg_date">
 		<entry lang="RUS">Дата регистрации</entry>
-		<entry lang="KAZ">Дата регистрации</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Registration time</entry>
 		<entry lang="BG">Дата регистрации</entry>
 	</sentence>
 	<sentence mode="on" keyword="date">
 		<entry lang="RUS">Дата</entry>
-		<entry lang="KAZ">Дата</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Date</entry>
 		<entry lang="BG">Дата</entry>
 	</sentence>
 	<sentence mode="on" keyword="milestone">
 		<entry lang="RUS">Завершить до</entry>
-		<entry lang="KAZ">Завершить до</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Should solved till</entry>
 		<entry lang="BG">Завершить до</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="add_user">
 		<entry lang="RUS">Пригласить пользователя</entry>
-		<entry lang="KAZ">Пригласить пользователя</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Invite a user</entry>
 		<entry lang="BG">Пригласить пользователя</entry>
 	</sentence>
 	<sentence mode="on" keyword="invitation_title">
 		<entry lang="RUS">Пригласить пользователя</entry>
-		<entry lang="KAZ">Пригласить пользователя</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Invite a user</entry>
 		<entry lang="BG">Пригласить пользователя</entry>
 	</sentence>
 	<sentence mode="on" keyword="invitation_email_hint">
 		<entry lang="RUS">Адрес электронной почты приглашаемого пользователя
 		</entry>
-		<entry lang="KAZ">Адрес электронной почты приглашаемого пользователя
-		</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Invited user's email </entry>
 		<entry lang="BG">Адрес электронной почты приглашаемого пользователя
 		</entry>
 	</sentence>
 	<sentence mode="on" keyword="invitation_roles_hint">
-		<entry lang="RUS">Укажите роли которые хотите дать пользователю
-		</entry>
-		<entry lang="KAZ">Укажите роли которые хотите дать пользователю
-		</entry>
-		<entry lang="ENG">Укажите роли которые хотите дать пользователю
-		</entry>
-		<entry lang="BG">Укажите роли которые хотите дать пользователю
-		</entry>
+		<entry lang="RUS">Укажите роли которые хотите дать пользователю	</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG">Choose roles to apply to the user</entry>
+		<entry lang="BG">Изберете роли да се прилагат за потребителя</entry>
 	</sentence>
 	<sentence mode="on" keyword="message">
 		<entry lang="RUS">Сообщение</entry>
-		<entry lang="KAZ">Сообщение</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Message</entry>
-		<entry lang="BG">Сообщение</entry>
+		<entry lang="BG">Съобщение</entry>
 	</sentence>
 	<sentence mode="on" keyword="send_invite">
 		<entry lang="RUS">Отправить приглашение</entry>
-		<entry lang="KAZ">Отправить приглашение</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Send invite</entry>
-		<entry lang="BG">Отправить приглашение</entry>
+		<entry lang="BG">Изпратете покани</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="upload_browse">
 		<entry lang="RUS">Прикрепить файл</entry>
 		<entry lang="KAZ">Файл тіркеу</entry>
 		<entry lang="ENG">Attach file</entry>
-		<entry lang="BG">Прикрепить файл</entry>
+		<entry lang="BG">Прикачите файл</entry>
 	</sentence>
 	<sentence mode="on" keyword="upload_drop_here">
 		<entry lang="RUS">Перетащите файл сюда</entry>
@@ -420,26 +415,26 @@
 	<!-- validation -->
 	<sentence mode="on" keyword="validation_empty">
 		<entry lang="RUS">Обязательное поле</entry>
-		<entry lang="KAZ">Обязательное поле</entry>
-		<entry lang="ENG">Can't be empty</entry>
-		<entry lang="BG">Обязательное поле</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG">The field can't be empty</entry>
+		<entry lang="BG">Полето не може да бъде празно</entry>
 	</sentence>
 	<sentence mode="on" keyword="validation_email">
 		<entry lang="RUS">Введите корректный адрес</entry>
-		<entry lang="KAZ">Введите корректный адрес</entry>
-		<entry lang="ENG">Введите корректный адрес</entry>
-		<entry lang="BG">Введите корректный адрес</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG">Enter correct address</entry>
+		<entry lang="BG">Въведете правилния адрес</entry>
 	</sentence>
 	<sentence mode="on" keyword="validation_date">
 		<entry lang="RUS">Введите дату</entry>
-		<entry lang="KAZ">Введите дату</entry>
-		<entry lang="ENG">Введите дату</entry>
-		<entry lang="BG">Введите дату</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG">Enter date</entry>
+		<entry lang="BG">Въведете дата</entry>
 	</sentence>
 	<sentence mode="on" keyword="validation_numeric">
 		<entry lang="RUS">Должно быть числовое значение</entry>
-		<entry lang="KAZ">Должно быть числовое значение</entry>
-		<entry lang="ENG">Должно быть числовое значение</entry>
-		<entry lang="BG">Должно быть числовое значение</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG">The value must be numeric</entry>
+		<entry lang="BG">Стойността трябва да е цифра</entry>
 	</sentence>
 </vocabulary>
