@@ -1,11 +1,16 @@
 import Em from 'ember';
 
 export default Em.Controller.extend({
+    i18n: Em.inject.service(),
+
     tagsSorting: ['isNew:desc', 'name'],
 
     tags: Em.computed.sort('model', 'tagsSorting'),
 
     newTagName: '',
+    newTagNamePlaceHolder: Em.computed('i18n', function() {
+        return this.get('i18n').t('new_tag_hint');
+    }),
     isSaveProcess: false,
 
     actions: {
