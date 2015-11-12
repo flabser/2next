@@ -51,8 +51,20 @@
     display: inline-block;
     position: absolute;
     right: 2px;
-    top: 0;
+    top: 4px;
     z-index: 2;
+}
+
+.tag-form .tag-actions .fa {
+    font-size: 14px;
+}
+
+.tag-form .tag-actions button:hover > .fa {
+    color: black;
+}
+
+.tag-form .tag-actions button.delete:hover > .fa {
+    color: red;
 }
 
 .tag-children {

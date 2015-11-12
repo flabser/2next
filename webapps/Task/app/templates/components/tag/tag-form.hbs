@@ -13,9 +13,13 @@
 </div>
 {{#unless isEditing}}
     <div class="tag-actions">
-        <button {{action 'addChildTag' tag}} class="btn btn-link">{{t 'add_child'}}</button>
+        <button {{action 'addChildTag' tag}} class="btn btn-link">
+            <i class="fa fa-plus"></i>
+        </button>
         {{#unless tag.isNew}}
-            <button {{action 'deleteTag' tag}} class="btn btn-link btn-warning">{{t 'remove'}}</button>
+            <button {{action 'deleteTag' tag}} class="btn btn-link delete">
+                <i class="fa fa-trash"></i>
+            </button>
         {{/unless}}
     </div>
 {{/unless}}
