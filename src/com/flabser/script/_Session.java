@@ -147,10 +147,10 @@ public class _Session implements ICache {
 		return aUser;
 	}
 
-	public void switchLang(LanguageType lang) {
+	public void setLang(LanguageType lang) {
 		this.lang = lang;
 		for (_Session child : descendants) {
-			child.switchLang(lang);
+			child.setLang(lang);
 		}
 	}
 
@@ -208,7 +208,7 @@ public class _Session implements ICache {
 	public _Session clone(AppTemplate env, HttpSession jses, String contextID) {
 		_Session newSes = new _Session(env, jses, contextID, currentUser);
 		newSes.authMode = AuthModeType.LOGIN_THROUGH_TOKEN;
-		newSes.switchLang(lang);
+		newSes.setLang(lang);
 		addDescendant(newSes);
 		return newSes;
 	}

@@ -17,10 +17,10 @@ public class Index extends _DoScript {
 		try {
 			if (toLang.length() > 0) {
 				LanguageType l = LanguageType.valueOf(toLang.toUpperCase().trim());
-				session.switchLang(l);
+				session.setLang(l);
 				cooks.saveLang(l);
 			} else if (session.getLang() == null || session.getLang().isEmpty()) {
-				session.switchLang(LanguageType.ENG);
+				session.setLang(LanguageType.ENG);
 			}
 		} catch (Exception e) {
 			publishElement("error", "the " + toLang + " language is not available");

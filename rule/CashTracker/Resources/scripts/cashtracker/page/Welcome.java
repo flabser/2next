@@ -17,9 +17,9 @@ public class Welcome extends _DoScript {
 		String toLang = formData.getValueSilently("lang");
 		try {
 			if (toLang.length() > 0) {
-				session.switchLang(LanguageType.valueOf(toLang.toUpperCase()));
+				session.setLang(LanguageType.valueOf(toLang.toUpperCase()));
 			} else if (session.getLang() == null || session.getLang().isEmpty()) {
-				session.switchLang(LanguageType.ENG);
+				session.setLang(LanguageType.ENG);
 			}
 		} catch (Exception e) {
 			publishElement("error", "the " + toLang + " language is not available");
