@@ -54,6 +54,10 @@
     vertical-align: top;
 }
 
+.brand-logo + .brand-title {
+    margin-left: 10px;
+}
+
 .navbar-nav {
     display: inline-block;
     margin: 0;
