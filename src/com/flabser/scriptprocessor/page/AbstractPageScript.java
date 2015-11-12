@@ -10,6 +10,7 @@ import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.scriptprocessor.ScriptEvent;
 import com.flabser.scriptprocessor.ScriptProcessorUtil;
+import com.flabser.servlets.SessionCooks;
 import com.flabser.util.ResponseType;
 import com.flabser.util.ScriptResponse;
 
@@ -19,6 +20,7 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 	private String lang;
 	private _WebFormData formData;
 	private ScriptResponse resp = new ScriptResponse(ResponseType.RESULT_OF_PAGE_SCRIPT);
+	private SessionCooks cooks;
 
 	@Override
 	public void setSession(_Session ses) {
@@ -41,6 +43,11 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 		this.vocabulary = vocabulary;
 	}
 
+	@Override
+	public void setCooks(SessionCooks cooks) {
+		this.cooks = cooks;
+	}
+
 	public void println(Exception e) throws _Exception {
 		String errText = e.toString();
 		_Element element = new _Element("error",
@@ -53,19 +60,19 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 		try {
 			switch (method) {
 			case HttpMethod.GET:
-				doGet(ses, formData, lang);
+				doGet(ses, formData, lang, cooks);
 				break;
 
 			case HttpMethod.POST:
-				doPost(ses, formData, lang);
+				doPost(ses, formData, lang, cooks);
 				break;
 
 			case HttpMethod.PUT:
-				doPut(ses, formData, lang);
+				doPut(ses, formData, lang, cooks);
 				break;
 
 			case HttpMethod.DELETE:
-				doDelete(ses, formData, lang);
+				doDelete(ses, formData, lang, cooks);
 				break;
 			}
 
@@ -85,12 +92,15 @@ public abstract class AbstractPageScript extends ScriptEvent implements IPageScr
 		return resp;
 	}
 
-	public abstract void doGet(_Session session, _WebFormData formData, String lang)
+	public abstract void doGet(_Session session, _WebFormData formData, String lang, SessionCooks cooks)
 			throws WebFormValueException, _Exception;
 
-	public abstract void doPost(_Session session, _WebFormData formData, String lang) throws WebFormValueException;
+	public abstract void doPost(_Session session, _WebFormData formData, String lang, SessionCooks cooks)
+			throws WebFormValueException;
 
-	public abstract void doPut(_Session session, _WebFormData formData, String lang) throws WebFormValueException;
+	public abstract void doPut(_Session session, _WebFormData formData, String lang, SessionCooks cooks)
+			throws WebFormValueException;
 
-	public abstract void doDelete(_Session session, _WebFormData formData, String lang) throws WebFormValueException;
+	public abstract void doDelete(_Session session, _WebFormData formData, String lang, SessionCooks cooks)
+			throws WebFormValueException;
 }

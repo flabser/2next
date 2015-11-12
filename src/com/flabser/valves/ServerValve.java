@@ -16,7 +16,7 @@ import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
-import com.flabser.servlets.SessionCooksValues;
+import com.flabser.servlets.SessionCooks;
 
 public abstract class ServerValve extends ValveBase {
 	RequestURL ru;
@@ -24,7 +24,7 @@ public abstract class ServerValve extends ValveBase {
 	protected void gettingSession(Request request, Response response, boolean allowAnonymous)
 			throws IOException, ServletException {
 		HttpServletRequest http = request;
-		SessionCooksValues appCookies = new SessionCooksValues(http);
+		SessionCooks appCookies = new SessionCooks(http, null);
 		String token = appCookies.auth;
 		if (token != null) {
 			_Session userSession = SessionPool.getLoggeedUser(token);

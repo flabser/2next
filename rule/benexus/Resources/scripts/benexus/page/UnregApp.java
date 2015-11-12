@@ -4,6 +4,7 @@ import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
+import com.flabser.servlets.SessionCooks;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.User;
 
@@ -11,19 +12,19 @@ import com.flabser.users.User;
 public class UnregApp extends _DoScript {
 
 	@Override
-	public void doGet(_Session session, _WebFormData formData, String lang) {
+	public void doGet(_Session session, _WebFormData formData, String lang, SessionCooks cooks) {
 	}
 
 	@Override
-	public void doPost(_Session session, _WebFormData formData, String lang) {
+	public void doPost(_Session session, _WebFormData formData, String lang, SessionCooks cooks) {
 	}
 
 	@Override
-	public void doPut(_Session session, _WebFormData formData, String lang) {
+	public void doPut(_Session session, _WebFormData formData, String lang, SessionCooks cooks) {
 	}
 
 	@Override
-	public void doDelete(_Session session, _WebFormData formData, String lang) {
+	public void doDelete(_Session session, _WebFormData formData, String lang, SessionCooks cooks) {
 		User user = session.getUser();
 		String appID = formData.getValueSilently("app");
 		ApplicationProfile ap = user.getApplicationProfile(appID);

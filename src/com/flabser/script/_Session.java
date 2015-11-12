@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.flabser.apptemplate.AppTemplate;
@@ -14,7 +11,6 @@ import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
@@ -26,7 +22,6 @@ import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
 import com.flabser.script.mail._MailAgent;
 import com.flabser.server.Server;
-import com.flabser.servlets.SessionCooksValues;
 import com.flabser.users.ApplicationStatusType;
 import com.flabser.users.AuthModeType;
 import com.flabser.users.User;
@@ -40,17 +35,12 @@ public class _Session implements ICache {
 	private LanguageType lang;
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
 	private HttpSession jses;
-	private HttpServletRequest request;
-	private HttpServletResponse response;
 	private String contexID;
 	private static final int MONTH_TIME = 60 * 60 * 24 * 365;
+	public ArrayList<_Session> descendants = new ArrayList<_Session>();
 
-	public _Session(AppTemplate env, HttpServletRequest request, HttpServletResponse response, String contextID,
-			User user) {
+	public _Session(AppTemplate env, HttpSession jses, String contextID, User user) {
 		this.env = env;
-		this.request = request;
-		this.response = response;
-		this.jses = request.getSession(false);
 		currentUser = user;
 		this.contexID = contextID;
 	}
@@ -157,22 +147,14 @@ public class _Session implements ICache {
 		return aUser;
 	}
 
-	public void switchLang(LanguageType lang) {
+	public void setLang(LanguageType lang) {
 		this.lang = lang;
-		SessionCooksValues cooks = new SessionCooksValues(request);
-		if (cooks.currentLang.equalsIgnoreCase(lang.name())) {
-			Cookie c = new Cookie(EnvConst.LANG_COOKIE_NAME, lang.name());
-			c.setMaxAge(MONTH_TIME);
-			c.setDomain("/");
-			response.addCookie(c);
+		for (_Session child : descendants) {
+			child.setLang(lang);
 		}
 	}
 
 	public String getLang() {
-		if (lang == null) {
-			SessionCooksValues cooks = new SessionCooksValues(request);
-			lang = LanguageType.valueOf(cooks.currentLang);
-		}
 		return lang.name();
 
 	}
@@ -182,7 +164,7 @@ public class _Session implements ICache {
 	}
 
 	public String getLocalizedWord(String word) {
-		return env.vocabulary.getWord(word, getLang());
+		return env.vocabulary.getWord(word, lang.name());
 	}
 
 	public HttpSession getJses() {
@@ -223,10 +205,11 @@ public class _Session implements ICache {
 		}
 	}
 
-	public _Session clone(AppTemplate env, HttpServletRequest request, HttpServletResponse response, String contextID) {
-		_Session newSes = new _Session(env, request, response, contextID, currentUser);
+	public _Session clone(AppTemplate env, HttpSession jses, String contextID) {
+		_Session newSes = new _Session(env, jses, contextID, currentUser);
 		newSes.authMode = AuthModeType.LOGIN_THROUGH_TOKEN;
-		newSes.switchLang(lang);
+		newSes.setLang(lang);
+		addDescendant(newSes);
 		return newSes;
 	}
 
@@ -245,6 +228,10 @@ public class _Session implements ICache {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	private void addDescendant(_Session descendant) {
+		this.descendants.add(descendant);
 	}
 
 }

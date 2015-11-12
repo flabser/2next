@@ -22,7 +22,7 @@ import com.flabser.exception.AuthFailedException;
 import com.flabser.exception.AuthFailedExceptionType;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
-import com.flabser.servlets.SessionCooksValues;
+import com.flabser.servlets.SessionCooks;
 import com.flabser.users.User;
 
 public class Secure extends ValveBase {
@@ -44,22 +44,24 @@ public class Secure extends ValveBase {
 		if (!appType.equalsIgnoreCase("")) {
 			HttpSession jses = http.getSession(false);
 			if (jses != null) {
-				_Session us = (_Session) jses.getAttribute(EnvConst.SESSION_ATTR);
-				if (us != null && !us.getAppUser().getLogin().equals(User.ANONYMOUS_USER)) {
+				_Session ses = (_Session) jses.getAttribute(EnvConst.SESSION_ATTR);
+				if (ses != null && !ses.getAppUser().getLogin().equals(User.ANONYMOUS_USER)) {
 					if (site.getAppTemlate().globalSetting.getWorkMode() == WorkModeType.CLOUD) {
-						HashMap<String, ApplicationProfile> hh = us.getCurrentUser()
+						HashMap<String, ApplicationProfile> hh = ses.getCurrentUser()
 								.getApplicationProfiles(site.getAppBase());
 						if (hh != null) {
 							getNext().invoke(request, response);
 						} else {
 							String msg = "\"" + site.getAppBase() + "\" has not set for \""
-									+ us.getCurrentUser().getLogin() + "\" (" + ru + ")";
+									+ ses.getCurrentUser().getLogin() + "\" (" + ru + ")";
 							Server.logger.warningLogEntry(msg);
 							ApplicationException e = new ApplicationException(ru.getAppType(), msg);
 							response.setStatus(e.getCode());
 							response.getWriter().println(e.getHTMLMessage());
 						}
 					} else {
+						System.out.println(ru.getUrl() + " " + jses.getId() + " " + ses.getAppType() + " "
+								+ ses.descendants.size());
 						getNext().invoke(request, response);
 					}
 				} else {
@@ -77,13 +79,13 @@ public class Secure extends ValveBase {
 	private void gettingSession(Request request, Response response, AppTemplate env)
 			throws IOException, ServletException {
 		HttpServletRequest http = request;
-		SessionCooksValues appCookies = new SessionCooksValues(http);
+		SessionCooks appCookies = new SessionCooks(http, null);
 		String token = appCookies.auth;
 		if (token != null) {
 			_Session userSession = SessionPool.getLoggeedUser(token);
 			if (userSession != null) {
 				HttpSession jses = http.getSession(true);
-				jses.setAttribute(EnvConst.SESSION_ATTR, userSession.clone(env, request, response, ru.getAppID()));
+				jses.setAttribute(EnvConst.SESSION_ATTR, userSession.clone(env, jses, ru.getAppID()));
 				Server.logger.debugLogEntry(userSession.toString() + "\" got from session pool "
 						+ jses.getServletContext().getContextPath());
 				invoke(request, response);

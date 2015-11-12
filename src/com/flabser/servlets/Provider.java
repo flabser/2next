@@ -131,7 +131,8 @@ public class Provider extends HttpServlet {
 		HashMap<String, String[]> fields = new HashMap<String, String[]>();
 		Map<String, String[]> parMap = request.getParameterMap();
 		fields.putAll(parMap);
-		Page page = new Page(env, ses, pageRule, request.getMethod(), (String) request.getAttribute("appid"));
+		Page page = new Page(env, ses, pageRule, request.getMethod(), (String) request.getAttribute("appid"),
+				new SessionCooks(request, response));
 		result.output.append(page.process(fields).toXML(ses.getLang()));
 		return result;
 	}

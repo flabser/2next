@@ -176,6 +176,7 @@ public class SessionService extends RestProvider {
 
 		String token = SessionPool.put(session);
 		jses.setAttribute(EnvConst.SESSION_ATTR, session);
+		System.out.println("login = " + jses.getId() + " " + session.getAppType());
 		int maxAge = -1;
 
 		NewCookie cookie = new NewCookie(EnvConst.AUTH_COOKIE_NAME, token, "/", null, null, maxAge, false);

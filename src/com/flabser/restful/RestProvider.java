@@ -39,6 +39,7 @@ import com.flabser.scheduler.tasks.TempFileCleaner;
 import com.flabser.script._Page;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
+import com.flabser.servlets.SessionCooks;
 import com.flabser.users.User;
 
 @Path("/")
@@ -176,6 +177,7 @@ public class RestProvider {
 			v[0] = formParams.getFirst(e);
 			parMap.put(e, v);
 		}
-		return new Page(env, ses, pageRule, request.getMethod(), context.getServletContextName()).process(parMap);
+		return new Page(env, ses, pageRule, request.getMethod(), context.getServletContextName(),
+				new SessionCooks(request, response)).process(parMap);
 	}
 }

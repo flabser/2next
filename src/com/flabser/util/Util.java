@@ -11,8 +11,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -23,8 +21,6 @@ import com.flabser.server.Server;
 
 public class Util {
 	public static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
-	public static final SimpleDateFormat timeFormat = new SimpleDateFormat("kk:mm");
-	public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
 	public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 	public static final Pattern pEntity = Pattern.compile("\\G&(#\\d+|\\w+);");
 	public static final Pattern pTag = Pattern.compile("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>");
@@ -32,110 +28,6 @@ public class Util {
 	public static final Pattern pWord = Pattern.compile("\\G(\\w|\\pL)+");
 	public static final Pattern pNonHtml = Pattern
 			.compile("\\G([^(\\w|\\p{L})]|\\p{Ps}|\\p{Pe}|\\p{Pi}|\\p{Pf}|\\p{P}|\\p{S})+");
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static HashMap cloneMap(HashMap sourceMap) {
-		HashMap map = new HashMap();
-		for (Object key : sourceMap.keySet()) {
-			String k = (String) key;
-			map.put(k, sourceMap.get(k));
-		}
-		return map;
-
-	}
-
-	public static String convertDataTimeToString(Date date) {
-		try {
-			return dateTimeFormat.format(date);
-		} catch (Exception e) {
-			return "null";
-		}
-	}
-
-	public static String convertDataTimeToStringSilently(Date date) {
-		try {
-			return dateTimeFormat.format(date);
-		} catch (Exception e) {
-			return "";
-		}
-	}
-
-	public static String convertDataTimeToTimeString(Date date) {
-		try {
-			return timeFormat.format(date);
-		} catch (Exception e) {
-			Server.logger.errorLogEntry("Util, Не удалось преобразовать время в текст " + date);
-			return "null";
-		}
-	}
-
-	public static Date convertStringToDateTime(String date) {
-		try {
-			return dateTimeFormat.parse(date);
-		} catch (Exception e) {
-			Server.logger.errorLogEntry("Util, Unbale to convert text to date " + date + ", expected format: "
-					+ dateTimeFormat.toPattern());
-			return null;
-		}
-	}
-
-	public static Date convertStringToDateTimeSilently(String date) {
-		try {
-			if (date != null) {
-				if (date.length() == 19) {
-					return dateTimeFormat.parse(date);
-				}
-				if (date.length() == 10) {
-					return simpleDateFormat.parse(date);
-				}
-			}
-		} catch (Exception e) {
-			return null;
-		}
-		return null;
-	}
-
-	public static String convertDataToString(Date date) {
-		try {
-			return dateFormat.format(date);
-		} catch (Exception e) {
-			Server.logger.errorLogEntry("Util, Не удалось преобразовать дату в текст " + date);
-			// AppEnv.logger.errorLogEntry(e);
-			return "err date";
-		}
-	}
-
-	public static String convertDataToString(Calendar date) {
-		try {
-			return simpleDateFormat.format(date.getTime());
-		} catch (Exception e) {
-			Server.logger.errorLogEntry("Util, Не удалось преобразовать дату в текст " + date);
-			// Server.logger.errorLogEntry(e);
-			return "err date";
-		}
-	}
-
-	public static Date convertStringToDate(String date) {
-		try {
-			return dateFormat.parse(date);
-		} catch (Exception e) {
-			Server.logger.errorLogEntry("Util, Не удалось преобразовать текст в дату " + date + ", ожидался формат: "
-					+ dateFormat.toPattern());
-			// Server.logger.errorLogEntry(e);
-			return null;
-		}
-	}
-
-	public static Date convertStringToSimpleDate(String date) {
-		try {
-			return simpleDateFormat.parse(date);
-		} catch (Exception e) {
-			Server.logger.errorLogEntry("Util, Не удалось преобразовать текст в дату " + date + ", ожидался формат: "
-					+ dateFormat.toPattern());
-			// Server.logger.errorLogEntry(e);
-			return null;
-		}
-	}
 
 	public static boolean getRandomBoolean() {
 		Random random = new Random();
@@ -215,8 +107,8 @@ public class Util {
 			is.close();
 			result = md.digest();
 		} catch (FileNotFoundException e) {
-			Server.logger.errorLogEntry("Util, не удалось получить контрольную сумму файла " + filePath
-					+ ": файл не найден");
+			Server.logger.errorLogEntry(
+					"Util, не удалось получить контрольную сумму файла " + filePath + ": файл не найден");
 			return null;
 		} catch (NoSuchAlgorithmException e) {
 			Server.logger.errorLogEntry("Util, не удалось инициализировать алгоритм шифрования");
@@ -264,7 +156,7 @@ public class Util {
 			while (i < children.length) {
 				Random rand = new Random();
 				int randomNum = rand.nextInt(max - min + 1) + min;
-				String filename = dir + File.separator +  children[randomNum];
+				String filename = dir + File.separator + children[randomNum];
 				if (filename.contains(".JPG") || filename.contains(".jpg")) {
 					return new File(filename);
 				}
@@ -383,7 +275,7 @@ public class Util {
 	}
 
 	public static boolean pwdIsStrong(String email) {
-		//TODO need to check weaking of the password
+		// TODO need to check weaking of the password
 		return true;
 
 	}
@@ -411,9 +303,9 @@ public class Util {
 			Server.logger.errorLogEntry(e);
 		} catch (IOException e) {
 			Server.logger.errorLogEntry(e);
-		}finally{
+		} finally {
 			try {
-				if (reader !=null) {
+				if (reader != null) {
 					reader.close();
 				}
 			} catch (IOException e) {

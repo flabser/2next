@@ -6,13 +6,14 @@ import com.flabser.script._Session;
 import com.flabser.script._Validator;
 import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
+import com.flabser.servlets.SessionCooks;
 import com.flabser.users.User;
 
 
 class RetrySendVerifyEMail extends _DoScript {
 
 	@Override
-	public void doPost(_Session session, _WebFormData formData, String lang) {
+	public void doPost(_Session session, _WebFormData formData, String lang, SessionCooks cooks) {
 
 		String email = formData.getValueSilently("email");
 		if (!_Validator.checkEmail(email)) {
@@ -41,14 +42,14 @@ class RetrySendVerifyEMail extends _DoScript {
 	}
 
 	@Override
-	public void doGet(_Session session, _WebFormData formData, String lang) {
+	public void doGet(_Session session, _WebFormData formData, String lang, SessionCooks cooks) {
 	}
 
 	@Override
-	public void doPut(_Session session, _WebFormData formData, String lang) {
+	public void doPut(_Session session, _WebFormData formData, String lang, SessionCooks cooks) {
 	}
 
 	@Override
-	public void doDelete(_Session session, _WebFormData formData, String lang) {
+	public void doDelete(_Session session, _WebFormData formData, String lang, SessionCooks cooks) {
 	}
 }
