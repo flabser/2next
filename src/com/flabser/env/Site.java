@@ -8,7 +8,6 @@ import org.apache.catalina.core.StandardHost;
 import com.flabser.apptemplate.AppTemplate;
 import com.flabser.script._Exception;
 import com.flabser.script._IContent;
-import com.flabser.supplier.SourceSupplier;
 
 public class Site implements _IContent {
 	private String virtualHostName;
@@ -74,8 +73,7 @@ public class Site implements _IContent {
 	@Override
 	public StringBuffer toXML(String lang) throws _Exception {
 		StringBuffer output = new StringBuffer(1000);
-		SourceSupplier captionTextSupplier = new SourceSupplier(appTemlate, lang);
-		String sc = captionTextSupplier.getValueAsCaption(appTemlate.globalSetting.getDescription());
+		String sc = appTemlate.vocabulary.getWord(appTemlate.globalSetting.getDescription(), lang);
 		return output.append("<apptype>" + appBase + "</apptype><description>" + sc + "</description>");
 	}
 

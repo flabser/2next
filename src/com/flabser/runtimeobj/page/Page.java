@@ -17,7 +17,6 @@ import com.flabser.script._Session;
 import com.flabser.scriptprocessor.page.DoProcessor;
 import com.flabser.scriptprocessor.page.IQuerySaveTransaction;
 import com.flabser.servlets.SessionCooks;
-import com.flabser.supplier.SourceSupplier;
 import com.flabser.util.ScriptResponse;
 import com.flabser.util.Util;
 
@@ -44,15 +43,6 @@ public class Page {
 		this.context = context;
 		this.cooks = cooks;
 
-	}
-
-	public HashMap<String, String> getCaptions(SourceSupplier captionTextSupplier, ArrayList<Caption> captions) {
-		HashMap<String, String> captionsList = new HashMap<String, String>();
-		for (Caption cap : captions) {
-			String sc = captionTextSupplier.getValueAsCaption(cap.captionID);
-			captionsList.put(cap.captionID, sc);
-		}
-		return captionsList;
 	}
 
 	public _Page process(Map<String, String[]> formData)
@@ -134,8 +124,17 @@ public class Page {
 			}
 		}
 
-		SourceSupplier captionTextSupplier = new SourceSupplier(env, ses.getLang());
-		pp.setCaptions(getCaptions(captionTextSupplier, rule.captions));
+		pp.setCaptions(getCaptions(rule.captions));
 		return pp;
+	}
+
+	private HashMap<String, String> getCaptions(ArrayList<Caption> captions) {
+		HashMap<String, String> captionsList = new HashMap<String, String>();
+
+		for (Caption cap : captions) {
+			String sc = env.vocabulary.getWord(cap.captionID, ses.getLang());
+			captionsList.put(cap.captionID, sc);
+		}
+		return captionsList;
 	}
 }
