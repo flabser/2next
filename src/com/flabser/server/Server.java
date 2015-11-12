@@ -27,7 +27,7 @@ public class Server {
 		logger.infoLogEntry(serverTitle + " start");
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 
-		logger.infoLogEntry("copyright(c) the F developers team 2015. All Right Reserved");
+		logger.infoLogEntry("copyright(c) the flabser team 2015. All Right Reserved");
 		logger.infoLogEntry("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "("
 				+ System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
 
@@ -48,8 +48,6 @@ public class Server {
 			Server.logger.errorLogEntry(e);
 			shutdown();
 		}
-
-		// webServerInst.initAdministartor();
 
 		String ws = Environment.workspaceName;
 		Site nSite = Environment.availableTemplates.get(ws);

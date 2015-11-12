@@ -30,6 +30,7 @@ import com.flabser.restful.ResourceLoader;
 import com.flabser.valves.Logging;
 import com.flabser.valves.Secure;
 import com.flabser.valves.Unsecure;
+import com.flabser.web.filter.AccessGuard;
 import com.flabser.web.filter.CacheControlFilter;
 
 public class WebServer implements IWebServer {
@@ -101,8 +102,6 @@ public class WebServer implements IWebServer {
 				} else {
 					return null;
 				}
-
-				// engine.addChild(appHost);
 			} else {
 				if (tomcat.getHost().findChild(appID) == null) {
 					context = tomcat.addContext(URLPath, db);
@@ -186,7 +185,6 @@ public class WebServer implements IWebServer {
 		} else {
 			Host appHost = site.getHost();
 			context = new StandardContext();
-			// System.out.println(appHost + " " + docBase);
 			context = tomcat.addContext(appHost, "", docBase);
 			context.setDisplayName(templateName);
 			context.setName(templateName);
@@ -211,10 +209,9 @@ public class WebServer implements IWebServer {
 
 		initErrorPages(context);
 
-		/*
-		 * for (int i = 0; i < defaultInfoList.length; i++) {
-		 * context.addWelcomeFile(defaultInfoList[i]); }
-		 */
+		if (templateName.equals("administrator")) {
+			addFilterToContext(context, AccessGuard.class, "AccesGuard", "/*");
+		}
 
 		Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
 		context.addServletMapping("/", "default");
@@ -222,7 +219,6 @@ public class WebServer implements IWebServer {
 		Tomcat.addServlet(context, "Provider", "com.flabser.servlets.Provider");
 		context.addServletMapping("/Provider", "Provider");
 		context.addServletMapping("/index.html", "Provider");
-		// context.addServletMapping("/info.html", "Provider");
 
 		Wrapper w = Tomcat.addServlet(context, "PortalInit", "com.flabser.servlets.PortalInit");
 		w.setLoadOnStartup(1);
@@ -248,11 +244,6 @@ public class WebServer implements IWebServer {
 		String db = new File(Environment.primaryAppDir + "webapps/ROOT").getAbsolutePath();
 		Context context = tomcat.addContext(tomcat.getHost(), "", db);
 		context.setDisplayName("root");
-
-		/*
-		 * for (int i = 0; i < defaultInfoList.length; i++) {
-		 * context.addWelcomeFile(defaultInfoList[i]); }
-		 */
 
 		engine.getPipeline().addValve(new Logging());
 		engine.getPipeline().addValve(new Unsecure());

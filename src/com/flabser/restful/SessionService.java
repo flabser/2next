@@ -141,11 +141,11 @@ public class SessionService extends RestProvider {
 		Server.logger.infoLogEntry(login + " is attempting to signin");
 		User user = systemDatabase.checkUserHash(login, authUser.getPwd(), null);
 		authUser.setPwd(null);
-		if (!user.isAuthorized) {
+		if (!user.isAuthorized
+				|| getAppTemplate().templateType.equals(EnvConst.ADMIN_APP_NAME) && !user.isSupervisor()) {
 			Server.logger.warningLogEntry("signin of " + login + " was failed");
 			authUser.setError(AuthFailedExceptionType.PASSWORD_OR_LOGIN_INCORRECT, lang);
 			return Response.status(HttpServletResponse.SC_UNAUTHORIZED).entity(authUser).build();
-			// throw new AuthFailedException(authUser);
 		}
 
 		String userID = user.getLogin();
@@ -176,7 +176,6 @@ public class SessionService extends RestProvider {
 
 		String token = SessionPool.put(session);
 		jses.setAttribute(EnvConst.SESSION_ATTR, session);
-		System.out.println("login = " + jses.getId() + " " + session.getAppType());
 		int maxAge = -1;
 
 		NewCookie cookie = new NewCookie(EnvConst.AUTH_COOKIE_NAME, token, "/", null, null, maxAge, false);
