@@ -1,9 +1,3 @@
-.container {
-    margin: 0px auto;
-    max-width: 950px;
-    position: relative;
-}
-
 .layout {
     background: #FFF;
     margin: 0px auto;
@@ -35,12 +29,12 @@
     position: fixed;
     top: 50px;
     transition: all .15s;
+    width: 230px;
     z-index: 4;
 }
 
 .tablet .aside,
 .phone .aside {
-    background: #FFF url(../img/yellow_background.png) 0 0 no-repeat;
     border: none;
     top: 0;
     z-index: 99;
@@ -59,7 +53,6 @@
 .tablet .content,
 .phone .content {
     margin: 0 0 10px 0px;
-    padding-top: 50px;
 }
 
 .content-overlay {
@@ -71,32 +64,4 @@
     top: 0;
     width: 100%;
     z-index: 4;
-}
-
-.app-loading {
-    background: #FFF;
-    height: 100%;
-    left: 0;
-    padding-top: 50px;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    width: 100%;
-    z-index: 999;
-}
-
-.app-loading img {
-    display: inline-block;
-    margin: auto;
-}
-
-.loading {
-    background: #FFF url(../img/loader-mini.gif) center center no-repeat;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    text-align: center;
-    top: 50px;
-    width: 100%;
-    z-index: 999;
 }

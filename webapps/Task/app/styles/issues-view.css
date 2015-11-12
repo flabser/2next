@@ -16,45 +16,21 @@
     line-height: 20px;
 }
 
-.issues__nav {
-    padding: 20px 0;
-    position: relative;
-    width: 230px;
+.aside.issue-nav {
+    padding: 20px 8px;
 }
 
-.issues__nav > header {
-    color: #303333;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 48px;
-    margin: 0;
-    padding: 0 16px;
-}
-
-.issues__nav > ul,
-.issues__nav > ul > li {
+.issue-nav ul.issue-filter {
     list-style: none;
+    margin: 0 !important;
+    padding: 5px 15px 15px 15px;
+}
+
+.issue-nav .issue-filter li {
     margin: 0;
     padding: 0;
 }
 
-.issues__nav a {
-    display: block;
-}
-
-.issues__nav a.active {
-    font-weight: bold;
-}
-
-.issues__content {
-    width: 100%;
-}
-
-.issues__nav-at a {
-    padding: 8px 16px;
-}
-
-.issues__nav-tags a,
-.issues__nav-users a {
-    padding: 2px 16px;
+.issue-nav .issue-filter li a.nav-link {
+    padding: 4px !important;
 }

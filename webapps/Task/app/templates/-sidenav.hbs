@@ -1,64 +1,79 @@
-<aside class="aside side-nav nav-app" id="nav-app">
+<aside class="aside side-nav issue-nav" id="nav-app">
     <ul>
         <li>
-            {{#link-to 'issues' (query-params at='inbox')}}
-                <i class="fa fa-inbox"></i>{{t 'inbox'}}
+            {{#link-to 'issues' (query-params at='inbox') class='nav-link'}}
+                <i class="fa fa-inbox"></i>
+                <span>{{t 'inbox'}}</span>
             {{/link-to}}
         </li>
         <li>
-            {{#link-to 'issues' (query-params at='today')}}
-                <i class="fa fa-calendar-o"></i>{{t 'today'}}
+            {{#link-to 'issues' (query-params at='today') class='nav-link'}}
+                <i class="fa fa-calendar-o"></i>
+                <span>{{t 'today'}}</span>
             {{/link-to}}
         </li>
         <li>
-            {{#link-to 'issues' (query-params at='week')}}
-                <i class="fa fa-calendar"></i>{{t 'week'}}
+            {{#link-to 'issues' (query-params at='week') class='nav-link'}}
+                <i class="fa fa-calendar"></i>
+                <span>{{t 'week'}}</span>
             {{/link-to}}
         </li>
         <li>
-            {{#link-to 'issues' (query-params at='favorite')}}
-                <i class="fa fa-star-o"></i>{{t 'favorite'}}
+            {{#link-to 'issues' (query-params at='favorite') class='nav-link'}}
+                <i class="fa fa-star-o"></i>
+                <span>{{t 'favorite'}}</span>
             {{/link-to}}
         </li>
         <li>
-            {{#link-to 'issues' (query-params at='completed')}}
-                <i class="fa fa-check-square-o"></i>{{t 'completed'}}
+            {{#link-to 'issues' (query-params at='completed') class='nav-link'}}
+                <i class="fa fa-check-square-o"></i>
+                <span>{{t 'completed'}}</span>
             {{/link-to}}
         </li>
         <li class="divider"></li>
         <li class="panel open">
-            <button class="panel-toggle" data-toggle="panel">
-                <i class="fa fa-angle-left"></i>
-            </button>
-            {{#link-to 'tags' class='panel-title'}}
-                <i class="fa fa-tags"></i>{{t 'tags'}}
-            {{/link-to}}
-            <ul class="panel-body issues__nav-tags">
-                {{#each tags as |tag|}}
-                    <li>
-                        {{#link-to 'issues' (query-params tags=tag.id)}}
-                            {{tag.name}}
-                        {{/link-to}}
-                    </li>
-                {{/each}}
-            </ul>
+            <div class="panel__header">
+                <button class="panel-toggle" data-toggle="panel">
+                    <i class="fa"></i>
+                </button>
+                {{#link-to 'tags' class='panel-title nav-link'}}
+                    <i class="fa fa-tags"></i>
+                    <span>{{t 'tags'}}</span>
+                {{/link-to}}
+            </div>
+            <div class="panel__body">
+                <ul class="issue-filter">
+                    {{#each tags as |tag|}}
+                        <li>
+                            {{#link-to 'issues' (query-params tags=tag.id) class='nav-link'}}
+                                {{tag.name}}
+                            {{/link-to}}
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
         </li>
         <li class="panel open">
-            <button class="panel-toggle" data-toggle="panel">
-                <i class="fa fa-angle-left"></i>
-            </button>
-            {{#link-to 'users' class='panel-title'}}
-                <i class="fa fa-users"></i>{{t 'executors'}}
-            {{/link-to}}
-            <ul class="panel-body issues__nav-users">
-                {{#each users as |user|}}
-                    <li>
-                        {{#link-to 'issues' (query-params u=user.id)}}
-                            {{user.login}}
-                        {{/link-to}}
-                    </li>
-                {{/each}}
-            </ul>
+            <div class="panel__header">
+                <button class="panel-toggle" data-toggle="panel">
+                    <i class="fa"></i>
+                </button>
+                {{#link-to 'users' class='panel-title nav-link'}}
+                    <i class="fa fa-users"></i>
+                    <span>{{t 'executors'}}</span>
+                {{/link-to}}
+            </div>
+            <div class="panel__body">
+                <ul class="issue-filter">
+                    {{#each users as |user|}}
+                        <li>
+                            {{#link-to 'issues' (query-params u=user.id) class='nav-link'}}
+                                {{user.login}}
+                            {{/link-to}}
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
         </li>
     </ul>
 </aside>

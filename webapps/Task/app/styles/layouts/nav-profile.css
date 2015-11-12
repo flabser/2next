@@ -27,18 +27,10 @@
     color: red;
 }
 
-.nav-profile .fa.expand {
-    position: absolute;
-    right: 0;
-    text-align: center;
-    width: 36px;
-    z-index: 2;
+.nav-profile .profile a > i {
+    vertical-align: top;
 }
 
-.nav-profile .fa.expand:before {
-    content: "\f107";
-}
-
-.nav-profile.expanded .fa.expand:before {
-    content: "\f106";
+.nav-profile .profile a > div {
+    display: inline-block;
 }

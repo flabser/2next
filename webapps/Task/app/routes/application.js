@@ -77,7 +77,7 @@ export default Route.extend({
 
         var offsetTop = 0;
         var sideOnTop = false;
-        var $side = $('#nav-app----');
+        var $side = $('#side-nav----');
 
         if ($side.length) {
             offsetTop = $('.header')[0].clientHeight;
@@ -133,11 +133,11 @@ export default Route.extend({
         },
 
         navAppMenuToggle: function() {
-            $('body').toggleClass('nav-app-open');
+            $('body').toggleClass('side-nav-open');
         },
 
         hideOpenedNav: function() {
-            $('body').removeClass('nav-app-open');
+            $('body').removeClass('side-nav-open');
         },
 
         toggleSearchForm: function() {
@@ -145,7 +145,7 @@ export default Route.extend({
         },
 
         willTransition: function(transition) {
-            $('body').removeClass('nav-app-open');
+            $('body').removeClass('side-nav-open');
             $('.dropdown.open').removeClass('open');
         },
 
