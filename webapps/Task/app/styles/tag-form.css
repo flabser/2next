@@ -38,6 +38,7 @@
 .tag-form .tag-field a {
     border: 1px solid #ccc;
     border-radius: 2px;
+    color: #333;
     display: inline-block;
     margin-left: 2px;
     padding: 3px 6px;
@@ -51,7 +52,7 @@
     display: inline-block;
     position: absolute;
     right: 2px;
-    top: 4px;
+    top: 3px;
     z-index: 2;
 }
 
