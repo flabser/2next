@@ -1,6 +1,11 @@
 .panel {
+    border: 1px solid transparent;
     margin-bottom: 1px;
     position: relative;
+}
+
+.panel.open {
+    border-color: #E6E6E6;
 }
 
 .panel__header {
@@ -55,7 +60,6 @@
 }
 
 .panel > .panel__body {
-    border: 1px solid transparent;
     display: block;
     max-height: 0px;
     overflow: hidden;
@@ -65,7 +69,6 @@
 }
 
 .panel.open > .panel__body {
-    border-color: #f2f2f2;
     max-height: 300px;
     overflow-y: auto;
 }
