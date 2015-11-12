@@ -11,10 +11,10 @@ export default Em.Route.extend(ModelRouteMixin, {
     },
 
     renderTemplate: function(controller, model) {
-        var usersController = this.controllerFor('settings.users');
+        var usersController = this.controllerFor('users');
 
-        this.render('settings.users.invitation', {
-            into: 'settings',
+        this.render('users.invitation', {
+            into: 'application',
             controller: usersController
         });
     }

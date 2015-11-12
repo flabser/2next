@@ -16,15 +16,14 @@ Router.map(function() {
         });
     });
 
-    this.route('settings', function() {
-        this.route('tags', function() {
-            this.route('tag', {
-                path: ':tag_id'
-            });
+    this.route('tags', function() {
+        this.route('tag', {
+            path: ':tag_id'
         });
-        this.route('users', function() {
-            this.route('invitation');
-        });
+    });
+
+    this.route('users', function() {
+        this.route('invitation');
     });
 
     this.route('login');

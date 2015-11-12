@@ -17,7 +17,11 @@ export default Route.extend({
 
     model: function() {
         var sessionService = this.get('session');
-        return sessionService.getSession().then(() => sessionService.get('user'));
+        return Em.RSVP.hash({
+            sessionUser: sessionService.getSession().then(() => sessionService.get('user')),
+            tags: this.store.findAll('tag'),
+            users: this.store.findAll('user')
+        });
     },
 
     afterModel: function() {
@@ -25,9 +29,11 @@ export default Route.extend({
     },
 
     setupController: function(controller, model) {
-        controller.set('sessionUser', model);
+        controller.set('tags', model.tags);
+        controller.set('users', model.users);
+        controller.set('sessionUser', model.sessionUser);
         // loginThroughToken - show link rest/workspace/url if LOGIN_THROUGH_TOKEN
-        controller.set('loginThroughToken', model.authMode === 'LOGIN_THROUGH_TOKEN');
+        controller.set('loginThroughToken', model.sessionUser.authMode === 'LOGIN_THROUGH_TOKEN');
 
         setTimeout(this.initScrollSpySide, 200);
     },
@@ -60,9 +66,18 @@ export default Route.extend({
             }
         });
 
+        $('[data-toggle=panel]').click(function() {
+            let $panel = $(this).parents('.panel');
+            if ($panel.hasClass('open')) {
+                $panel.removeClass('open');
+            } else {
+                $panel.addClass('open');
+            }
+        });
+
         var offsetTop = 0;
         var sideOnTop = false;
-        var $side = $('#nav-app');
+        var $side = $('#nav-app----');
 
         if ($side.length) {
             offsetTop = $('.header')[0].clientHeight;
@@ -102,11 +117,11 @@ export default Route.extend({
         },
 
         transitionToTags: function() {
-            this.transitionTo('settings.tags');
+            this.transitionTo('tags');
         },
 
         transitionToUsers: function() {
-            this.transitionTo('settings.users');
+            this.transitionTo('users');
         },
 
         showAddAction: function() {

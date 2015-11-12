@@ -1,18 +1,31 @@
 import Em from 'ember';
-import ModelRouteMixin from 'lof-task/mixins/routes/model';
 
-export default Em.Route.extend(ModelRouteMixin, {
+export default Em.Route.extend({
+    beforeModel: function() {
+        console.log('users beforeModel, get check changes');
+    },
+
     model: function() {
-        return this.store.findAll('user');
+        // if has changes this.store.query('user') else peekAll
+        return this.store.peekAll('user');
     },
 
     setupController: function(controller, model) {
         controller.set('users', model);
     },
 
+    renderTemplate: function(controller, model) {
+        var usersController = this.controllerFor('users');
+
+        this.render('users', {
+            into: 'application',
+            controller: usersController
+        });
+    },
+
     actions: {
         composeRecord: function() {
-            this.transitionTo('settings.users.invitation');
+            this.transitionTo('users.invitation');
         },
 
         sendInvite: function(invitation) {
@@ -23,7 +36,7 @@ export default Em.Route.extend(ModelRouteMixin, {
 
         deleteUser: function(user) {
             user.destroyRecord().then(() => {
-                this.transitionTo('settings.users');
+                this.transitionTo('users');
             }, function(resp) {
                 user.rollbackAttributes();
                 alert(resp.errors.message);

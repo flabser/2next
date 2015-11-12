@@ -1,16 +1,31 @@
 import Em from 'ember';
 
 export default Em.Route.extend({
-    model: function() {
-        return Em.RSVP.hash({
-            tags: this.store.findAll('tag'),
-            users: this.store.findAll('user')
-        });
+    queryParams: {
+        at: {
+            refreshModel: true
+        },
+        st: {
+            refreshModel: true
+        },
+        tags: {
+            refreshModel: true
+        },
+        u: {
+            refreshModel: true
+        }
+    },
+
+    beforeModel: function() {
+        console.log('issues beforeModel, get check changes');
+    },
+
+    model: function(params) {
+        return this.store.query('issue', params);
     },
 
     setupController: function(controller, model) {
-        controller.set('tags', model.tags);
-        controller.set('users', model.users);
+        controller.set('issues', model);
     },
 
     actions: {

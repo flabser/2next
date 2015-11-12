@@ -17,10 +17,7 @@
 }
 
 .issues__nav {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 20px 0px;
+    padding: 20px 0;
     position: relative;
     width: 230px;
 }

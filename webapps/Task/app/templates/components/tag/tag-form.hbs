@@ -5,7 +5,7 @@
         <button {{action 'cancel' tag}} class="btn btn-link">{{t 'cancel'}}</button>
     {{else}}
         <div {{action 'setEditing' tag}}>
-            {{#link-to 'settings.tags.tag' tag}}
+            {{#link-to 'tags.tag' tag}}
                 {{tag.name}}
             {{/link-to}}
         </div>

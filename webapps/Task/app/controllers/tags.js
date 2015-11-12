@@ -43,7 +43,7 @@ export default Em.Controller.extend({
 
         saveTag: function(tag, callSuccess, callError) {
             tag.save().then(() => {
-                this.transitionToRoute('settings.tags.tag', tag);
+                this.transitionToRoute('tags.tag', tag);
                 callSuccess && callSuccess();
             }, function() {
                 callError && callError();
@@ -53,7 +53,7 @@ export default Em.Controller.extend({
 
         deleteTag: function(tag) {
             tag.destroyRecord().then(() => {
-                this.transitionToRoute('settings.tags');
+                this.transitionToRoute('tags');
             }, function(resp) {
                 tag.rollbackAttributes();
                 alert(resp.errors.message);
@@ -61,7 +61,7 @@ export default Em.Controller.extend({
         },
 
         setTagActiveRoute: function(tag) {
-            this.transitionToRoute('settings.tags.tag', tag);
+            this.transitionToRoute('tags.tag', tag);
         }
     }
 });

@@ -45,11 +45,11 @@
                             </div>
                         {{/link-to}}
                     </li>
-                    <li>
+                    <!-- <li>
                         {{#link-to 'settings'}}
                             <i class="fa fa-gear"></i><span>{{t 'settings'}}</span>
                         {{/link-to}}
-                    </li>
+                    </li> -->
                     {{#if loginThroughToken}}
                         <li class="divider"></li>
                         <li>
@@ -66,11 +66,6 @@
                     </li>
                 </ul>
             </div>
-        </nav>
-        <nav class="navbar-nav navbar-link">
-            {{#link-to 'issues' class='nav-item'}}
-                <i class="fa fa-check-square-o"></i><span>{{t 'issues'}}</span>
-            {{/link-to}}
         </nav>
     </div>
 </header>

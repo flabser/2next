@@ -1,3 +1,7 @@
+.entries > .tag-row {
+    padding: 0 12px;
+}
+
 .tag-form {
     cursor: pointer;
     padding: 4px 0;
@@ -35,7 +39,7 @@
     border-radius: 2px;
     display: inline-block;
     margin-left: 2px;
-    padding: 3px;
+    padding: 3px 6px;
 }
 
 .tag-form .tag-field .active {

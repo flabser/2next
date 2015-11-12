@@ -12,5 +12,12 @@ export default Em.Route.extend(ModelRouteMixin, {
         controller.set('issue', model);
         controller.set('users', this.store.findAll('user'));
         controller.set('tags', this.store.findAll('tag'));
+    },
+
+    renderTemplate: function(controller, model) {
+        this.render('issues.issue', {
+            into: 'application',
+            controller: controller
+        });
     }
 });
