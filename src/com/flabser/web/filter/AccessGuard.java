@@ -28,7 +28,7 @@ public class AccessGuard implements Filter {
 		HttpServletResponse resp = (HttpServletResponse) response;
 		String requestURI = http.getRequestURI();
 
-		System.out.println(requestURI);
+		// System.out.println(requestURI);
 		// TODO it is need a regex
 		if (requestURI.contains("/rest/")) {
 			if (requestURI.equals("/rest/session") && http.getMethod().equalsIgnoreCase("POST")) {
