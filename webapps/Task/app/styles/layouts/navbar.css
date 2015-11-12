@@ -47,7 +47,7 @@
 }
 
 .brand-title {
-    display: none;
+    /* display: none; */
     font-size: 13px;
     text-transform: uppercase;
     font-weight: bold;

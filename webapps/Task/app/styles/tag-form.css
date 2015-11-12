@@ -17,6 +17,7 @@
     cursor: auto;
     margin: 4px 0;
     padding: 4px;
+    text-align: right;
 }
 
 .tag-form input {
