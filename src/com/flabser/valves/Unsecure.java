@@ -15,8 +15,10 @@ import com.flabser.env.Environment;
 import com.flabser.env.Site;
 import com.flabser.exception.ApplicationException;
 import com.flabser.exception.RuleException;
+import com.flabser.localization.LanguageType;
 import com.flabser.script._Session;
 import com.flabser.server.Server;
+import com.flabser.servlets.SessionCooks;
 import com.flabser.users.User;
 
 public class Unsecure extends ValveBase {
@@ -44,7 +46,7 @@ public class Unsecure extends ValveBase {
 				if (request.getMethod().equalsIgnoreCase("POST")) {
 					HttpSession jses = request.getSession(true);
 					jses.setAttribute(EnvConst.SESSION_ATTR,
-							new _Session(site.getAppTemlate(), request, response, ru.getAppID(), new User()));
+							new _Session(site.getAppTemlate(), jses, ru.getAppID(), new User()));
 					getNext().getNext().invoke(request, response);
 				} else {
 					((Secure) getNext()).invoke(request, response, ru, site);
@@ -89,13 +91,20 @@ public class Unsecure extends ValveBase {
 		HttpSession jses = request.getSession(false);
 		if (jses == null) {
 			jses = request.getSession(true);
-			jses.setAttribute(EnvConst.SESSION_ATTR, new _Session(env, request, response, appID, new User()));
+			SessionCooks cooks = new SessionCooks(request, response);
+			_Session ses = new _Session(env, jses, appID, new User());
+			ses.switchLang(LanguageType.valueOf(cooks.getCurrentLang()));
+			jses.setAttribute(EnvConst.SESSION_ATTR, ses);
 		} else {
 			_Session us = (_Session) jses.getAttribute(EnvConst.SESSION_ATTR);
 			if (us == null) {
-				jses.setAttribute(EnvConst.SESSION_ATTR, new _Session(env, request, response, appID, new User()));
+				SessionCooks cooks = new SessionCooks(request, response);
+				_Session ses = new _Session(env, jses, appID, new User());
+				ses.switchLang(LanguageType.valueOf(cooks.getCurrentLang()));
+				jses.setAttribute(EnvConst.SESSION_ATTR, ses);
 			}
 		}
 
 	}
+
 }

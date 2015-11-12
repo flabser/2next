@@ -16,6 +16,7 @@ import com.flabser.script._Page;
 import com.flabser.script._Session;
 import com.flabser.scriptprocessor.page.DoProcessor;
 import com.flabser.scriptprocessor.page.IQuerySaveTransaction;
+import com.flabser.servlets.SessionCooks;
 import com.flabser.supplier.SourceSupplier;
 import com.flabser.util.ScriptResponse;
 import com.flabser.util.Util;
@@ -31,16 +32,17 @@ public class Page {
 	protected PageRule rule;
 	protected Map<String, String[]> fields = new HashMap<String, String[]>();
 	protected _Session ses;
-
+	private SessionCooks cooks;
 	private String context;
 
-	public Page(AppTemplate env, _Session ses, PageRule rule, String httpMethod, String context)
+	public Page(AppTemplate env, _Session ses, PageRule rule, String httpMethod, String context, SessionCooks cooks)
 			throws AuthFailedException {
 		this.ses = ses;
 		this.env = env;
 		this.rule = rule;
 		this.httpMethod = httpMethod;
 		this.context = context;
+		this.cooks = cooks;
 
 	}
 
@@ -96,7 +98,7 @@ public class Page {
 				switch (elementRule.type) {
 				case SCRIPT:
 					ScriptResponse scriptResp = null;
-					DoProcessor sProcessor = new DoProcessor(env, ses, fields, context);
+					DoProcessor sProcessor = new DoProcessor(env, ses, fields, context, cooks);
 					switch (elementRule.doClassName.getType()) {
 					case GROOVY_FILE:
 						scriptResp = sProcessor.processGroovyScript(elementRule.doClassName.getClassName(), httpMethod);
@@ -123,7 +125,7 @@ public class Page {
 
 				case INCLUDED_PAGE:
 					PageRule rule = (PageRule) env.ruleProvider.getRule(elementRule.value);
-					IncludedPage page = new IncludedPage(env, ses, rule, httpMethod, context);
+					IncludedPage page = new IncludedPage(env, ses, rule, httpMethod, context, cooks);
 					pp.addPage(page.process(fields));
 					break;
 				default:

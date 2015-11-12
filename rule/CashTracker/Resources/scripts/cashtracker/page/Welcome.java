@@ -6,12 +6,13 @@ import com.flabser.script._Exception;
 import com.flabser.script._Session;
 import com.flabser.script._WebFormData;
 import com.flabser.script.events._DoScript;
+import com.flabser.servlets.SessionCooks;
 
 
 public class Welcome extends _DoScript {
 
 	@Override
-	public void doGet(_Session session, _WebFormData formData, String lang) throws _Exception {
+	public void doGet(_Session session, _WebFormData formData, String lang, SessionCooks cooks) throws _Exception {
 
 		String toLang = formData.getValueSilently("lang");
 		try {
@@ -33,14 +34,14 @@ public class Welcome extends _DoScript {
 	}
 
 	@Override
-	public void doPost(_Session session, _WebFormData formData, String lang) {
+	public void doPost(_Session session, _WebFormData formData, String lang, SessionCooks cooks) {
 	}
 
 	@Override
-	public void doPut(_Session session, _WebFormData formData, String lang) {
+	public void doPut(_Session session, _WebFormData formData, String lang, SessionCooks cooks) {
 	}
 
 	@Override
-	public void doDelete(_Session session, _WebFormData formData, String lang) {
+	public void doDelete(_Session session, _WebFormData formData, String lang, SessionCooks cooks) {
 	}
 }
