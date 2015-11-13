@@ -47,10 +47,9 @@
 }
 
 .brand-title {
-    /* display: none; */
-    font-size: 13px;
+    font-size: 16px;
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: normal;
     vertical-align: top;
 }
 
