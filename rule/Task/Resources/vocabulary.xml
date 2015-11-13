@@ -89,15 +89,15 @@
 	</sentence>
 	<sentence mode="on" keyword="tags">
 		<entry lang="ENG">Labels</entry>
-		<entry lang="RUS">Этикетки</entry>
+		<entry lang="RUS">Метки</entry>
 		<entry lang="KAZ"></entry>
 		<entry lang="BG">Этикетки</entry>
 		<entry lang="POR"></entry>
 	</sentence>
-	<sentence mode="on" keyword="add_tag">
-		<entry lang="ENG">Add a label</entry>
-		<entry lang="RUS">Добавить этикетку</entry>
-		<entry lang="KAZ"></entry>
+	<sentence mode="on" keyword="new_tag_hint">
+		<entry lang="ENG">New label name</entry>
+		<entry lang="RUS">Новая метка</entry>
+		<entry lang="KAZ">Жаңа белгі</entry>
 		<entry lang="BG">Добави етикет</entry>
 		<entry lang="POR"></entry>
 	</sentence>
@@ -145,14 +145,14 @@
 	</sentence>
 	<sentence mode="on" keyword="users">
 		<entry lang="ENG">Users</entry>
-		<entry lang="RUS">Ползователи</entry>
+		<entry lang="RUS">Пользователи</entry>
 		<entry lang="KAZ"></entry>
 		<entry lang="BG">Потребители</entry>
 		<entry lang="POR"></entry>
 	</sentence>
 	<sentence mode="on" keyword="profile">
 		<entry lang="ENG">Profile</entry>
-		<entry lang="RUS">Добавить уровень</entry>
+		<entry lang="RUS">Профиль</entry>
 		<entry lang="KAZ"></entry>
 		<entry lang="BG">Профил</entry>
 		<entry lang="POR">Perfil</entry>
