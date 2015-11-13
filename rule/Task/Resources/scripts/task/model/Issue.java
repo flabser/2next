@@ -54,8 +54,7 @@ public class Issue extends AppEntity {
 	@Column(nullable = false)
 	private IssuePriority priority = IssuePriority.NORMAL;
 
-	@Column(nullable = false)
-	private Long executor;
+	private Long assignee;
 
 	@JsonSerialize(using = JsonDateSerializer.class)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -113,12 +112,12 @@ public class Issue extends AppEntity {
 		this.priority = IssuePriority.fromValue(priorityOrdinal);
 	}
 
-	public Long getExecutor() {
-		return executor;
+	public Long getAssignee() {
+		return assignee;
 	}
 
-	public void setExecutor(Long executor) {
-		this.executor = executor;
+	public void setAssignee(Long assignee) {
+		this.assignee = assignee;
 	}
 
 	public Date getMilestone() {
@@ -162,7 +161,7 @@ public class Issue extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "Issue[" + id + ", " + status + ", " + executor + ", " + milestone + ", " + body + ", parent:" + parent
+		return "Issue[" + id + ", " + status + ", " + assignee + ", " + milestone + ", " + body + ", parent:" + parent
 				+ ", " + getAuthor() + ", " + getRegDate() + "]";
 	}
 }
