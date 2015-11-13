@@ -39,7 +39,7 @@
                         {{/each}}
                     </div>
                 </div>
-                <div class="form-group {{if errors.executor 'has-error'}}">
+                <div class="form-group {{if errors.assignee 'has-error'}}">
                     <div class="control-label">
                         {{t 'executor'}}
                     </div>
@@ -48,10 +48,10 @@
                             content=users
                             optionValuePath='id'
                             optionLabelPath='login'
-                            selection=issue.executor
+                            selection=issue.assignee
                             placeholder='-'
                             class='span5'}}
-                        {{#each errors.executor as |error|}}
+                        {{#each errors.assignee as |error|}}
                             <div class="error-message">{{error.message}}</div>
                         {{/each}}
                     </div>

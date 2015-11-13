@@ -45,7 +45,7 @@
             </div>
             <div class="panel__body">
                 <ul class="issue-filter">
-                    {{#each tags as |tag|}}
+                    {{#each filterTags as |tag|}}
                         <li>
                             {{#link-to 'issues' (query-params tags=tag.id) class='nav-link'}}
                                 {{tag.name}}
