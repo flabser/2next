@@ -92,7 +92,6 @@ body.side-nav-open {
     color: #5C5C5C;
     display: inline-block;
     font-size: 1.3em;
-    margin-right: .5em;
     text-align: left;
     vertical-align: middle;
     width: 26px;
@@ -100,4 +99,8 @@ body.side-nav-open {
 
 .side-nav .nav-link > span {
     display: inline-block;
+}
+
+.side-nav .nav-link > i + span {
+    margin-left: 2px;
 }

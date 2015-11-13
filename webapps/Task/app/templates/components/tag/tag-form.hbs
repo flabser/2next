@@ -1,8 +1,8 @@
 <div class="tag-field">
     {{#if isEditing}}
         {{tn-input value=tag.name maxlength=64}}
-        <button {{action 'cancel' tag}} class="btn btn-link btn-sm">{{t 'cancel'}}</button>
-        <button {{action 'saveTag' tag}} class="btn btn-primary btn-sm">{{t 'save'}}</button>
+        <button {{action 'cancel' tag}} class="btn btn-link">{{t 'cancel'}}</button>
+        <button {{action 'saveTag' tag}} class="btn btn-primary">{{t 'save'}}</button>
     {{else}}
         <div {{action 'setEditing' tag}}>
             {{#link-to 'tags.tag' tag}}
