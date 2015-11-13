@@ -51,6 +51,7 @@ public class IssueFilterBuilder {
 				LocalDate sunday = today.with(nextOrSame(SUNDAY));
 				sdate = Date.from(monday.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				edate = Date.from(sunday.plusDays(1L).atStartOfDay(ZoneId.systemDefault()).toInstant());
+				filter.setMilestoneDateRange(sdate, edate);
 				break;
 			case "favorite":
 				break;
