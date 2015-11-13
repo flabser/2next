@@ -23,6 +23,7 @@ public class IssueDAO extends DAO <Issue, Long> {
 
 	public List <Issue> find(IssueFilter filter, PageRequest pageRequest) {
 		String tags = "";
+		String assignees = "";
 		String dateRange = "";
 		String status = "";
 		boolean hasWhere = false;
@@ -37,12 +38,17 @@ public class IssueDAO extends DAO <Issue, Long> {
 			hasWhere = true;
 		}
 
+		if (!filter.getAssignees().isEmpty()) {
+			assignees = (hasWhere ? " AND " : "") + " m.assignee IN :assignees";
+			hasWhere = true;
+		}
+
 		if (filter.getMilestoneDateRange()[0] != null) {
 			dateRange = (hasWhere ? " AND " : "") + " m.milestone > :sdate AND m.milestone < :edate";
 			hasWhere = true;
 		}
 
-		String jpql = SELECT_ALL + (hasWhere ? " WHERE " : "") + status + tags + dateRange
+		String jpql = SELECT_ALL + (hasWhere ? " WHERE " : "") + status + tags + assignees + dateRange
 				+ " ORDER BY m.milestone ASC";
 
 		EntityManager em = getEntityManagerFactory().createEntityManager();
@@ -54,6 +60,9 @@ public class IssueDAO extends DAO <Issue, Long> {
 			}
 			if (!tags.isEmpty()) {
 				q.setParameter("tags", filter.getTags());
+			}
+			if (!assignees.isEmpty()) {
+				q.setParameter("assignees", filter.getAssignees());
 			}
 			if (!dateRange.isEmpty()) {
 				q.setParameter("sdate", filter.getMilestoneDateRange()[0]);

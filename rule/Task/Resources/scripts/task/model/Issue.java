@@ -35,7 +35,7 @@ import task.serializers.JsonDateSerializer;
 @JsonRootName("issue")
 @Entity
 @Table(name = "issues")
-@NamedQuery(name = "Issue.findAll", query = "SELECT t FROM Issue AS t ORDER BY t.milestone")
+@NamedQuery(name = "Issue.findAll", query = "SELECT m FROM Issue AS m ORDER BY m.milestone")
 public class Issue extends AppEntity {
 
 	@JsonIgnore

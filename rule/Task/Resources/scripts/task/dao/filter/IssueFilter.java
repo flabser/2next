@@ -12,6 +12,7 @@ public class IssueFilter {
 
 	private IssueStatus status;
 	private List <Tag> tags;
+	private List <Long> assignees;
 	private Date[] milestoneDateRange = new Date[2];
 
 	public IssueFilter() {
@@ -36,6 +37,14 @@ public class IssueFilter {
 
 	public void addTag(Tag tag) {
 		this.tags.add(tag);
+	}
+
+	public List <Long> getAssignees() {
+		return assignees;
+	}
+
+	public void setAssignees(List <Long> assignees) {
+		this.assignees = assignees;
 	}
 
 	public Date[] getMilestoneDateRange() {

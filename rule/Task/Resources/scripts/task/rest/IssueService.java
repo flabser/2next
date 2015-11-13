@@ -38,8 +38,8 @@ public class IssueService extends RestProvider {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@QueryParam("at") String at, @QueryParam("st") String status,
-			@QueryParam("tags") List <Long> tagIds, @QueryParam("offset") int offset, @QueryParam("limit") int limit,
-			@QueryParam("sort") String sort) {
+			@QueryParam("tags") List <Long> tagIds, @QueryParam("u") List <Long> assignees,
+			@QueryParam("offset") int offset, @QueryParam("limit") int limit, @QueryParam("sort") String sort) {
 
 		// UNAUTHORIZED
 		if (!getSession().getUser().isAuthorized) {
@@ -47,7 +47,7 @@ public class IssueService extends RestProvider {
 		}
 
 		IssueDAO dao = new IssueDAO(getSession());
-		IssueFilter filter = IssueFilterBuilder.create(status, tagIds, at);
+		IssueFilter filter = IssueFilterBuilder.create(status, tagIds, assignees, at);
 		PageRequest pageRequest = new PageRequest(offset, limit, sort);
 
 		int count = dao.getCount().intValue();
@@ -128,6 +128,10 @@ public class IssueService extends RestProvider {
 		}
 
 		pm.setBody(m.getBody());
+		pm.setPriority(m.getPriority());
+		pm.setMilestone(m.getMilestone());
+		pm.setTags(m.getTags());
+		pm.setAssignee(m.getAssignee());
 
 		return Response.ok(dao.update(pm)).build();
 	}

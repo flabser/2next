@@ -12,6 +12,7 @@
 		<class>cashtracker.model.TransactionFile</class>
 		<class>cashtracker.model.constants.converter.TransactionTypeConverter</class>
 		<class>cashtracker.model.constants.converter.TransactionStateConverter</class>
+		<shared-cache-mode>NONE</shared-cache-mode>
 	</persistence-unit>
 	<persistence-unit name="Task" transaction-type="RESOURCE_LOCAL">
 		<class>task.model.Issue</class>

@@ -17,7 +17,7 @@ import task.model.constants.IssueStatus;
 
 public class IssueFilterBuilder {
 
-	public static IssueFilter create(String status, List <Long> tagIds, String at) {
+	public static IssueFilter create(String status, List <Long> tagIds, List <Long> assignees, String at) {
 
 		IssueFilter filter = new IssueFilter();
 
@@ -30,6 +30,10 @@ public class IssueFilterBuilder {
 				tag.setId(it);
 				filter.addTag(tag);
 			});
+		}
+
+		if (assignees != null) {
+			filter.setAssignees(assignees);
 		}
 
 		if (at != null && !at.isEmpty()) {
@@ -49,6 +53,9 @@ public class IssueFilterBuilder {
 				edate = Date.from(sunday.plusDays(1L).atStartOfDay(ZoneId.systemDefault()).toInstant());
 				break;
 			case "favorite":
+				break;
+			case "completed":
+				filter.setStatus(IssueStatus.CLOSE);
 				break;
 			default:
 				break;
