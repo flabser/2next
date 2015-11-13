@@ -9,6 +9,8 @@ export default Em.Component.extend(ModelFormMixin, {
     isEdit: false,
     userEmail: '',
 
+    close: 'goBack',
+
     session: Em.inject.service(),
 
     init: function() {

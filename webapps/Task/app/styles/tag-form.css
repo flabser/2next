@@ -48,12 +48,22 @@
     font-weight: bold;
 }
 
+.tag-form .tag-field .btn {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
 .tag-form .tag-actions {
     display: inline-block;
+    opacity: .7;
     position: absolute;
     right: 2px;
     top: 3px;
     z-index: 2;
+}
+
+.tag-form:hover .tag-actions {
+    opacity: 1;
 }
 
 .tag-form .tag-actions .fa {

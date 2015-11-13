@@ -1,7 +1,7 @@
 .btn {
     background-color: #FFF;
     border: 1px solid #CDCDCD;
-    border-radius: 2px;
+    border-radius: 3px;
     box-sizing: border-box;
     color: #243140;
     cursor: pointer;
@@ -19,6 +19,14 @@
     white-space: nowrap;
 }
 
+.btn-sm {
+    padding: 6px;
+}
+
+.btn-lg {
+    padding: 9px 12px;
+}
+
 .btn:hover {
     background-color: #efefef;
     color: #243140;
@@ -32,19 +40,6 @@
 .tablet .btn,
 .phone .btn {
     line-height: 1.4em;
-}
-
-.btn .fa,
-button .fa {
-    color: #646464;
-    margin: 0 3px;
-}
-
-.tablet .btn .fa,
-.tablet button .fa,
-.phone .btn .fa,
-.phone button .fa {
-    margin: 0 6px;
 }
 
 .btn[disabled],
@@ -90,8 +85,6 @@ button .fa {
 .btn-link {
     background: none;
     border: 1px solid transparent;
-    margin: 0;
-    padding: 6px 3px;
 }
 
 .btn-link:hover,
@@ -107,4 +100,8 @@ button .fa {
 
 .btn-link.btn-warning:active {
     color: #F00;
+}
+
+.btn i+span {
+    margin-left: 3px;
 }

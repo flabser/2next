@@ -11,11 +11,6 @@
     float: right;
 }
 
-.issues-view .content-header .content-actions .btn {
-    border-radius: 3px;
-    line-height: 20px;
-}
-
 .aside.issue-nav {
     padding: 20px 8px;
 }

@@ -8,8 +8,3 @@
     border: none;
     float: right;
 }
-
-.users-view .content-header .content-actions .btn {
-    border-radius: 3px;
-    line-height: 20px;
-}

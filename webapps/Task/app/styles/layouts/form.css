@@ -95,10 +95,10 @@
 
 @media ( max-width: 960px) {
     .form-group .control-label {
-        width: 195px;
+        width: 170px;
     }
     .form-group .controls {
-        margin-left: 205px;
+        margin-left: 180px;
     }
 }
 

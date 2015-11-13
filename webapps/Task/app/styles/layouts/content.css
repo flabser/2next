@@ -94,6 +94,12 @@ footer.content-actions .btn {
     padding: 8px 12px;
 }
 
+@media ( max-width: 960px) {
+    footer.content-actions {
+        padding-left: 195px;
+    }
+}
+
 @media ( max-width: 768px) {
     footer.content-actions {
         padding-left: 8px;
