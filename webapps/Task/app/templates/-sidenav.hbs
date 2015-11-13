@@ -33,13 +33,15 @@
         <li class="divider"></li>
         <li class="panel">
             <div class="panel__header">
-                <button class="panel-toggle" data-toggle="panel">
-                    <i class="fa"></i>
-                </button>
-                {{#link-to 'tags' class='panel-title nav-link'}}
+                <div class="panel-actions">
+                    {{#link-to 'tags' class='panel-btn'}}
+                        <i class="fa fa-gear"></i>
+                    {{/link-to}}
+                </div>
+                <span class="panel-title nav-link" data-toggle="panel">
                     <i class="fa fa-tags"></i>
                     <span>{{t 'tags'}}</span>
-                {{/link-to}}
+                </span>
             </div>
             <div class="panel__body">
                 <ul class="issue-filter">
@@ -55,13 +57,15 @@
         </li>
         <li class="panel">
             <div class="panel__header">
-                <button class="panel-toggle" data-toggle="panel">
-                    <i class="fa"></i>
-                </button>
-                {{#link-to 'users' class='panel-title nav-link'}}
+                <div class="panel-actions">
+                    {{#link-to 'users' class='panel-btn'}}
+                        <i class="fa fa-gear"></i>
+                    {{/link-to}}
+                </div>
+                <span class="panel-title nav-link" data-toggle="panel">
                     <i class="fa fa-users"></i>
                     <span>{{t 'executors'}}</span>
-                {{/link-to}}
+                </span>
             </div>
             <div class="panel__body">
                 <ul class="issue-filter">

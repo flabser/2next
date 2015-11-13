@@ -7,7 +7,7 @@ export default DS.Model.extend({
     priority: DS.attr('number', {
         defaultValue: 4
     }),
-    executor: DS.belongsTo('user'),
+    assignee: DS.belongsTo('user'),
     milestone: DS.attr('date'),
     body: DS.attr('string'),
     tags: DS.hasMany('tag')

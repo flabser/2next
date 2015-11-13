@@ -56,10 +56,11 @@ body.side-nav-open {
 }
 
 
-/* .side-nav a.nav-link */
+/* .side-nav .nav-link */
 
-.side-nav a.nav-link {
+.side-nav .nav-link {
     color: #303333;
+    cursor: pointer;
     display: block;
     font-weight: normal;
     margin: 0;
@@ -69,25 +70,25 @@ body.side-nav-open {
     white-space: nowrap;
 }
 
-.tablet .side-nav a.nav-link,
-.phone .side-nav a.nav-link {
+.tablet .side-nav .nav-link,
+.phone .side-nav .nav-link {
     padding: 8px 16px;
 }
 
-.side-nav a.nav-link.active {
+.side-nav .nav-link.active {
     background-color: #F5F5F5;
     font-weight: bold;
 }
 
-.side-nav a.nav-link:active {
+.side-nav .nav-link:active {
     background-color: #F5F5F5 !important;
 }
 
-.side-nav a.nav-link:hover {
+.side-nav .nav-link:hover {
     background-color: #F9F9F9;
 }
 
-.side-nav a.nav-link > i {
+.side-nav .nav-link > i {
     color: #5C5C5C;
     display: inline-block;
     font-size: 1.3em;
@@ -97,6 +98,6 @@ body.side-nav-open {
     width: 26px;
 }
 
-.side-nav a.nav-link > span {
+.side-nav .nav-link > span {
     display: inline-block;
 }

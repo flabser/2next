@@ -31,6 +31,33 @@
 
 .panel.open .panel-title {}
 
+.panel .panel-actions {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: block;
+    height: 34px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    z-index: 2;
+}
+
+.panel .panel-btn {
+    display: block;
+    height: 34px;
+    padding: 8px 12px;
+    position: relative;
+}
+
+.panel .panel-btn.active {
+    background: #EEE;
+}
+
+.panel .panel-btn.active i.fa {
+    color: #333;
+}
+
 .panel .panel-toggle {
     background: none;
     border: none;
@@ -43,12 +70,19 @@
     z-index: 2;
 }
 
+.panel .panel-btn:hover,
 .panel .panel-toggle:hover {
     background: #EEE;
 }
 
-.panel .panel-toggle i.fa {
+.panel .panel-btn > i.fa,
+.panel .panel-toggle > i.fa {
     color: #AAA;
+}
+
+.panel .panel-btn:hover > i.fa,
+.panel .panel-toggle:hover > i.fa {
+    color: #666;
 }
 
 .panel .panel-toggle > i.fa:before {
