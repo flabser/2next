@@ -3,6 +3,7 @@
 .dropdown-toggle {
     cursor: pointer;
     display: block;
+    padding: 0 8px;
 }
 
 .dropdown-menu {

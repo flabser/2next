@@ -1,37 +1,5 @@
 {{#each issues as |issue|}}
     {{#unless issue.isNew}}
-    <div class="entry-wrap">
-        <div class="entry-actions">
-            <button class="entry-action action-delete" {{action 'deleteIssue' issue}}>
-                <i class="fa fa-trash" />
-            </button>
-        </div>
-        {{#tn-swipe-entry class='entry'}}
-            {{#link-to 'issues.edit' issue class='entry-link'}}
-            <div class="entry-fields">
-                <span class="issue-status">
-                    {{issue.status}}
-                </span>
-                <span class="issue-body">
-                    <span>{{issue.body}}</span>
-                    <span class="issue-tags">
-                        {{#each tags as |tag|}}
-                            <span class="issue-tag">{{tag.name}}</span>
-                        {{/each}}
-                    </span>
-                    <span class="issue-milestone">
-                        {{format-date issue.milestone}}
-                    </span>
-                </span>
-                <span class="issue-assignee">
-                    {{issue.assignee.login}}
-                </span>
-                <span class="issue-priority">
-                    {{issue.priority}}
-                </span>
-            </div>
-            {{/link-to}}
-        {{/tn-swipe-entry}}
-    </div>
+        {{issue.issue-row issue=issue}}
     {{/unless}}
 {{/each}}

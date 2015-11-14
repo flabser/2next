@@ -71,6 +71,21 @@ table {
 }
 
 
+/* .hidden-mobile */
+
+.hidden-mobile {}
+
+html body.phone .hidden-mobile {
+    display: none !important;
+}
+
+@media ( max-width: 768px) {
+    html body .hidden-mobile {
+        display: none !important;
+    }
+}
+
+
 /* floating */
 
 .pull-left {
