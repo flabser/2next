@@ -48,11 +48,13 @@ public class IssueFilterBuilder {
 				List <Long> assigneesMe = new ArrayList <Long>();
 				assigneesMe.add(user.id);
 				filter.setAssignees(assigneesMe);
+				filter.setStatus(IssueStatus.PROCESS);
 				break;
 			case "today":
 				sdate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				edate = Date.from(today.plusDays(1L).atStartOfDay(ZoneId.systemDefault()).toInstant());
 				filter.setMilestoneDateRange(sdate, edate);
+				filter.setStatus(IssueStatus.PROCESS);
 				break;
 			case "week":
 				LocalDate monday = today.with(previousOrSame(MONDAY));
@@ -60,6 +62,7 @@ public class IssueFilterBuilder {
 				sdate = Date.from(monday.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				edate = Date.from(sunday.plusDays(1L).atStartOfDay(ZoneId.systemDefault()).toInstant());
 				filter.setMilestoneDateRange(sdate, edate);
+				filter.setStatus(IssueStatus.PROCESS);
 				break;
 			case "completed":
 				filter.setStatus(IssueStatus.CLOSE);
