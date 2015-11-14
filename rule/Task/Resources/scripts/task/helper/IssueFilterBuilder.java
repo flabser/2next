@@ -7,8 +7,11 @@ import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.flabser.users.User;
 
 import task.dao.filter.IssueFilter;
 import task.model.Tag;
@@ -17,7 +20,7 @@ import task.model.constants.IssueStatus;
 
 public class IssueFilterBuilder {
 
-	public static IssueFilter create(String status, List <Long> tagIds, List <Long> assignees, String at) {
+	public static IssueFilter create(User user, String status, List <Long> tagIds, List <Long> assignees, String at) {
 
 		IssueFilter filter = new IssueFilter();
 
@@ -41,6 +44,11 @@ public class IssueFilterBuilder {
 			Date sdate;
 			Date edate;
 			switch (at) {
+			case "inbox":
+				List <Long> assigneesMe = new ArrayList <Long>();
+				assigneesMe.add(user.id);
+				filter.setAssignees(assigneesMe);
+				break;
 			case "today":
 				sdate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				edate = Date.from(today.plusDays(1L).atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -52,8 +60,6 @@ public class IssueFilterBuilder {
 				sdate = Date.from(monday.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				edate = Date.from(sunday.plusDays(1L).atStartOfDay(ZoneId.systemDefault()).toInstant());
 				filter.setMilestoneDateRange(sdate, edate);
-				break;
-			case "favorite":
 				break;
 			case "completed":
 				filter.setStatus(IssueStatus.CLOSE);

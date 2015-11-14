@@ -73,6 +73,13 @@
 		<entry lang="BG">Седмица</entry>
 		<entry lang="POR"></entry>
 	</sentence>
+	<sentence mode="on" keyword="issues_all">
+		<entry lang="ENG">All</entry>
+		<entry lang="RUS">Все</entry>
+		<entry lang="KAZ">Барлық</entry>
+		<entry lang="BG">Все</entry>
+		<entry lang="POR"></entry>
+	</sentence>
 	<sentence mode="on" keyword="favorite">
 		<entry lang="ENG">Favourites</entry>
 		<entry lang="RUS">Избранное</entry>

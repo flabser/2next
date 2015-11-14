@@ -47,7 +47,7 @@ public class IssueService extends RestProvider {
 		}
 
 		IssueDAO dao = new IssueDAO(getSession());
-		IssueFilter filter = IssueFilterBuilder.create(status, tagIds, assignees, at);
+		IssueFilter filter = IssueFilterBuilder.create(getSession().getUser(), status, tagIds, assignees, at);
 		PageRequest pageRequest = new PageRequest(offset, limit, sort);
 
 		int count = dao.getCount().intValue();
