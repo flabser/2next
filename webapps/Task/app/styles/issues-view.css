@@ -1,7 +1,3 @@
-.issues-wrapper {
-    display: flex;
-}
-
 .issues-view .header-title {
     float: left;
 }
@@ -10,6 +6,9 @@
     border: none;
     float: right;
 }
+
+
+/* .issue-nav */
 
 .aside.issue-nav {
     padding: 20px 8px;
@@ -28,4 +27,73 @@
 
 .issue-nav .issue-filter li a.nav-link {
     padding: 4px !important;
+}
+
+
+/* .issues-view fields */
+
+.issues-view .issue-status {
+    font-size: 18px;
+    width: 28px;
+}
+
+.issues-view .issue-body {
+    width: 60%;
+}
+
+.issues-view .issue-body-text {
+    font-weight: bold;
+}
+
+.issues-view .issue-tags .issue-tag {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: inline-block;
+    line-height: 1;
+    padding: 4px;
+}
+
+.issues-view .issue-milestone {
+    color: #888;
+    display: block;
+    padding-top: 4px;
+}
+
+.issue-milestone-from-now {
+    color: #333;
+}
+
+.issues-view .issue-assignee {
+    position: absolute;
+    right: 30px;
+    top: 0;
+    width: 160px;
+}
+
+@media ( max-width: 768px) {
+    .issues-view .issue-assignee {
+        display: block;
+        position: relative;
+        left: 32px;
+    }
+}
+
+.issues-view .issue-priority {
+    height: 30px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+}
+
+.issue-status-draft {
+    color: blue;
+}
+
+.issue-status-process {
+    color: green;
+}
+
+.issue-status-close {
+    color: #BD3835;
 }

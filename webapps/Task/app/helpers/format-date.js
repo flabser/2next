@@ -5,7 +5,7 @@ export default Em.Helper.helper(function(params) {
     let [date, format] = params;
 
     if (!format) {
-        format = 'MM.DD.YYYY';
+        format = 'DD.MM.YYYY';
     }
 
     return moment(date).format(format);

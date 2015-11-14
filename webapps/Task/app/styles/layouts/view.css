@@ -86,7 +86,7 @@
     background: white;
     display: block;
     overflow: hidden;
-    padding: 0 16px;
+    padding: 0;
     position: relative;
     transition: transform .20s;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -146,7 +146,7 @@
 .entry-link {
     display: inline-block;
     line-height: 1.4;
-    padding: 11px 0;
+    padding: 11px;
     position: relative;
     vertical-align: top;
     width: 100%;
@@ -154,7 +154,8 @@
 
 .tablet .entry-link,
 .phone .entry-link {
-    padding: 20px 0;
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
 
 .entry-link.active {
@@ -167,7 +168,6 @@
 
 .entry-fields>span {
     display: inline-block;
-    /* outline: 1px solid #ccc; */
     overflow: hidden;
     padding: 0 3px;
     vertical-align: top;

@@ -8,17 +8,20 @@
         {{#link-to 'issues.edit' issue class='entry-link'}}
         <div class="entry-fields">
             <span class="issue-status">
-                {{issue.status}}
+                {{issue-status-icon issue.status}}
             </span>
             <span class="issue-body">
-                <span>{{issue.body}}</span>
+                <span class="issue-body-text">{{issue.body}}</span>
                 <span class="issue-tags">
-                    {{#each tags as |tag|}}
+                    {{#each issue.tags as |tag|}}
                         <span class="issue-tag">{{tag.name}}</span>
                     {{/each}}
                 </span>
                 <span class="issue-milestone">
-                    {{format-date issue.milestone}}
+                    <span>{{format-date issue.milestone}}</span>
+                    <span class="issue-milestone-from-now">
+                        {{moment-from-now issue.milestone}}
+                    </span>
                 </span>
             </span>
             <span class="issue-assignee">
