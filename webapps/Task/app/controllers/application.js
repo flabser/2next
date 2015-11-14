@@ -2,6 +2,9 @@ import Em from 'ember';
 
 export default Em.Controller.extend({
 
+    canEditTags: true,
+    canEditUsers: true,
+
     filterTags: Em.computed.filter('tags', function(tag, index, array) {
         /*let list = this.get('tags');
 

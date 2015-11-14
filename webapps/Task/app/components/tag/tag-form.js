@@ -4,7 +4,10 @@ import Validate from 'lof-task/utils/validator';
 export default Em.Component.extend({
     classNames: ['tag-form'],
     classNameBindings: ['isInvalid:invalid', 'isEditing:edit'],
+    // attributeBindings: ['draggable'],
     tag: null,
+
+    // draggable: 'true',
 
     addChildTag: 'addChildTag',
     saveTag: 'saveTag',

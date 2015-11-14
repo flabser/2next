@@ -16,7 +16,7 @@ export default Em.Route.extend({
         }
     },
 
-    beforeModel: function() {
+    beforeModel: function(transition) {
         console.log('issues beforeModel, get check changes');
     },
 

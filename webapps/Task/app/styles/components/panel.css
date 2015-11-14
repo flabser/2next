@@ -44,7 +44,7 @@
 }
 
 .panel .panel-btn {
-    display: block;
+    display: inline-block;
     height: 34px;
     padding: 8px 12px;
     position: relative;

@@ -19,11 +19,17 @@
             {{/link-to}}
         </li>
         <li>
+            {{#link-to 'issues' (query-params at='all') class='nav-link'}}
+                <i class="fa fa-database"></i>
+                <span>{{t 'issues_all'}}</span>
+            {{/link-to}}
+        </li>
+        <!-- <li>
             {{#link-to 'issues' (query-params at='favorite') class='nav-link'}}
                 <i class="fa fa-star-o"></i>
                 <span>{{t 'favorite'}}</span>
             {{/link-to}}
-        </li>
+        </li> -->
         <li>
             {{#link-to 'issues' (query-params at='completed') class='nav-link'}}
                 <i class="fa fa-check-square-o"></i>
@@ -33,11 +39,13 @@
         <li class="divider"></li>
         <li class="panel">
             <div class="panel__header">
-                <div class="panel-actions">
-                    {{#link-to 'tags' class='panel-btn'}}
-                        <i class="fa fa-gear"></i>
-                    {{/link-to}}
-                </div>
+                {{#if canEditTags}}
+                    <div class="panel-actions">
+                        {{#link-to 'tags' class='panel-btn'}}
+                            <i class="fa fa-gear"></i>
+                        {{/link-to}}
+                    </div>
+                {{/if}}
                 <span class="panel-title nav-link" data-toggle="panel">
                     <i class="fa fa-tags"></i>
                     <span>{{t 'tags'}}</span>
@@ -57,11 +65,13 @@
         </li>
         <li class="panel">
             <div class="panel__header">
-                <div class="panel-actions">
-                    {{#link-to 'users' class='panel-btn'}}
-                        <i class="fa fa-gear"></i>
-                    {{/link-to}}
-                </div>
+                {{#if canEditUsers}}
+                    <div class="panel-actions">
+                        {{#link-to 'users' class='panel-btn'}}
+                            <i class="fa fa-gear"></i>
+                        {{/link-to}}
+                    </div>
+                {{/if}}
                 <span class="panel-title nav-link" data-toggle="panel">
                     <i class="fa fa-users"></i>
                     <span>{{t 'executors'}}</span>
