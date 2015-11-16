@@ -13,7 +13,8 @@ public class IssueFilter {
 	private IssueStatus status;
 	private List <Tag> tags;
 	private List <Long> assignees;
-	private Date[] milestoneDateRange = new Date[2];
+	private Date dueDateFrom;
+	private Date dueDateUntil;
 
 	public IssueFilter() {
 		tags = new ArrayList <Tag>();
@@ -47,14 +48,27 @@ public class IssueFilter {
 		this.assignees = assignees;
 	}
 
-	public Date[] getMilestoneDateRange() {
-		return milestoneDateRange;
+	public Date getDueDateFrom() {
+		return dueDateFrom;
+	}
+
+	public void setDueDateFrom(Date dueDateFrom) {
+		this.dueDateFrom = dueDateFrom;
+	}
+
+	public Date getDueDateUntil() {
+		return dueDateUntil;
+	}
+
+	public void setDueDateUntil(Date dueDateUntil) {
+		this.dueDateUntil = dueDateUntil;
 	}
 
 	public void setMilestoneDateRange(Date sd, Date ed) {
-		if (sd.compareTo(ed) >= 0) {
+		if (sd != null && sd.compareTo(ed) >= 0) {
 			throw new IllegalArgumentException("st date < end date; " + sd + " : " + ed);
 		}
-		this.milestoneDateRange = new Date[] { sd, ed };
+		this.dueDateFrom = sd;
+		this.dueDateUntil = ed;
 	}
 }
