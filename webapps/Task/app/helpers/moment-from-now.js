@@ -3,6 +3,11 @@ import moment from 'moment';
 
 export default Em.Helper.helper(function(params) {
     let [date] = params;
+    let md = moment(date);
 
-    return moment(date).fromNow();
+    if (md.isValid()) {
+        return md.fromNow();
+    } else {
+        return '';
+    }
 });

@@ -2,6 +2,7 @@ import Em from 'ember';
 
 export default Em.Controller.extend({
 
+    showAddAction: false,
     canEditTags: true,
     canEditUsers: true,
 

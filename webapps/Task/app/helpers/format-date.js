@@ -8,5 +8,11 @@ export default Em.Helper.helper(function(params) {
         format = 'DD.MM.YYYY';
     }
 
-    return moment(date).format(format);
+    let md = moment(date);
+
+    if (md.isValid()) {
+        return md.format(format);
+    } else {
+        return '';
+    }
 });

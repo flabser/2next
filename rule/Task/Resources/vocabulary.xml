@@ -360,7 +360,7 @@
 		<entry lang="ENG">Date</entry>
 		<entry lang="BG">Дата</entry>
 	</sentence>
-	<sentence mode="on" keyword="milestone">
+	<sentence mode="on" keyword="due_date">
 		<entry lang="RUS">Завершить до</entry>
 		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Due date</entry>

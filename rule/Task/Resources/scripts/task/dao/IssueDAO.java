@@ -24,32 +24,34 @@ public class IssueDAO extends DAO <Issue, Long> {
 	public List <Issue> find(IssueFilter filter, PageRequest pageRequest) {
 		String tags = "";
 		String assignees = "";
-		String dateRange = "";
 		String status = "";
+		String dueDateFrom = "";
+		String dueDateUntil = "";
 		boolean hasWhere = false;
 
 		if (filter.getStatus() != null) {
 			status = " m.status = :status";
 			hasWhere = true;
 		}
-
 		if (!filter.getTags().isEmpty()) {
 			tags = (hasWhere ? " AND " : "") + " m.tags IN :tags";
 			hasWhere = true;
 		}
-
 		if (!filter.getAssignees().isEmpty()) {
 			assignees = (hasWhere ? " AND " : "") + " m.assignee IN :assignees";
 			hasWhere = true;
 		}
-
-		if (filter.getMilestoneDateRange()[0] != null) {
-			dateRange = (hasWhere ? " AND " : "") + " m.milestone > :sdate AND m.milestone < :edate";
+		if (filter.getDueDateFrom() != null) {
+			dueDateFrom = (hasWhere ? " AND " : "") + " m.dueDate > :sdate";
+			hasWhere = true;
+		}
+		if (filter.getDueDateUntil() != null) {
+			dueDateUntil = (hasWhere ? " AND " : "") + " m.dueDate < :edate";
 			hasWhere = true;
 		}
 
-		String jpql = SELECT_ALL + (hasWhere ? " WHERE " : "") + status + tags + assignees + dateRange
-				+ " ORDER BY m.milestone ASC";
+		String jpql = SELECT_ALL + (hasWhere ? " WHERE " : "") + status + tags + assignees + dueDateFrom + dueDateUntil
+				+ " ORDER BY m.dueDate ASC";
 
 		EntityManager em = getEntityManagerFactory().createEntityManager();
 		try {
@@ -64,9 +66,11 @@ public class IssueDAO extends DAO <Issue, Long> {
 			if (!assignees.isEmpty()) {
 				q.setParameter("assignees", filter.getAssignees());
 			}
-			if (!dateRange.isEmpty()) {
-				q.setParameter("sdate", filter.getMilestoneDateRange()[0]);
-				q.setParameter("edate", filter.getMilestoneDateRange()[1]);
+			if (!dueDateFrom.isEmpty()) {
+				q.setParameter("sdate", filter.getDueDateFrom());
+			}
+			if (!dueDateUntil.isEmpty()) {
+				q.setParameter("edate", filter.getDueDateUntil());
 			}
 
 			q.setFirstResult(pageRequest.getOffset());

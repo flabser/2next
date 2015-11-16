@@ -8,7 +8,7 @@ export default DS.Model.extend({
         defaultValue: 4
     }),
     assignee: DS.belongsTo('user'),
-    milestone: DS.attr('date'),
+    dueDate: DS.attr('date'),
     body: DS.attr('string'),
     tags: DS.hasMany('tag')
 });

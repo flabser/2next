@@ -35,7 +35,7 @@ import task.serializers.JsonDateSerializer;
 @JsonRootName("issue")
 @Entity
 @Table(name = "issues")
-@NamedQuery(name = "Issue.findAll", query = "SELECT m FROM Issue AS m ORDER BY m.milestone")
+@NamedQuery(name = "Issue.findAll", query = "SELECT m FROM Issue AS m ORDER BY m.dueDate")
 public class Issue extends AppEntity {
 
 	@JsonIgnore
@@ -58,8 +58,11 @@ public class Issue extends AppEntity {
 
 	@JsonSerialize(using = JsonDateSerializer.class)
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
-	private Date milestone;
+	private Date startDate;
+
+	@JsonSerialize(using = JsonDateSerializer.class)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dueDate;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "issue_tags", joinColumns = {
@@ -120,12 +123,20 @@ public class Issue extends AppEntity {
 		this.assignee = assignee;
 	}
 
-	public Date getMilestone() {
-		return milestone;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setMilestone(Date milestone) {
-		this.milestone = milestone;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 
 	public Set <Tag> getTags() {
@@ -161,7 +172,7 @@ public class Issue extends AppEntity {
 
 	@Override
 	public String toString() {
-		return "Issue[" + id + ", " + status + ", " + assignee + ", " + milestone + ", " + body + ", parent:" + parent
-				+ ", " + getAuthor() + ", " + getRegDate() + "]";
+		return "Issue[" + id + ", " + status + ", " + assignee + ", " + startDate + ", " + dueDate + ", " + body
+				+ ", parent:" + parent + ", " + getAuthor() + ", " + getRegDate() + "]";
 	}
 }

@@ -29,6 +29,10 @@
     padding: 4px !important;
 }
 
+.issue-nav .issue-filter li a.active {
+    border-left: 2px solid #666;
+}
+
 
 /* .issues-view fields */
 
@@ -53,13 +57,13 @@
     padding: 4px;
 }
 
-.issues-view .issue-milestone {
+.issues-view .issue-due-date {
     color: #888;
     display: block;
     padding-top: 4px;
 }
 
-.issue-milestone-from-now {
+.issue-due-date-from-now {
     color: #333;
 }
 
