@@ -93,6 +93,7 @@ public class Server {
 		}
 	}
 
+	// TODO Should add database shutdown handler
 	public static void shutdown() {
 		logger.infoLogEntry("server is stopping ... ");
 		Environment.shutdown();

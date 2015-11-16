@@ -24,14 +24,24 @@ public class ApplicationDatabase implements IApplicationDatabase {
 		Class.forName(SystemDatabase.jdbcDriver).newInstance();
 	}
 
+	ApplicationDatabase(String dataBase) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+		props.setProperty("user", EnvConst.DB_USER);
+		props.setProperty("password", EnvConst.DB_PWD);
+		dbURL = "jdbc:postgresql://" + EnvConst.DATABASE_HOST + ":" + EnvConst.CONN_PORT + "/" + dataBase;
+		Class.forName(SystemDatabase.jdbcDriver).newInstance();
+	}
+
 	@Override
 	public int createDatabase(String name, String dbUser) throws SQLException {
 		if (!hasDatabase(name)) {
 			Connection conn = DriverManager.getConnection(dbURL, props);
 			try {
 				Statement st = conn.createStatement();
-				st.executeUpdate("CREATE DATABASE " + name + " WITH OWNER = " + dbUser + " ENCODING = 'UTF8'");
-				st.executeUpdate("GRANT ALL privileges ON DATABASE " + name + " TO " + dbUser);
+				String sql = "CREATE DATABASE \"" + name + "\" WITH OWNER = " + dbUser
+						+ " ENCODING = 'UTF8' TABLESPACE = pg_default"
+						+ " LC_COLLATE = 'English_United States.1252' LC_CTYPE = 'English_United States.1252' CONNECTION LIMIT = -1";
+				st.executeUpdate(sql);
+				st.executeUpdate("GRANT ALL privileges ON DATABASE \"" + name + "\" TO " + dbUser);
 				st.close();
 				return 0;
 			} catch (Throwable e) {
@@ -70,7 +80,7 @@ public class ApplicationDatabase implements IApplicationDatabase {
 			try {
 				Statement st = conn.createStatement();
 				st.executeUpdate("DROP DATABASE " + name);
-			}catch(PSQLException e){
+			} catch (PSQLException e) {
 				Server.logger.errorLogEntry("database busy " + e.getErrorCode());
 			} catch (Throwable e) {
 				DatabaseUtil.debugErrorPrint(e);
