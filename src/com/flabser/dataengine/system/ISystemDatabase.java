@@ -2,12 +2,13 @@ package com.flabser.dataengine.system;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.dataengine.system.entities.Invitation;
+import com.flabser.restful.pojo.AppUser;
 import com.flabser.users.User;
 
 public interface ISystemDatabase {
@@ -16,6 +17,7 @@ public interface ISystemDatabase {
 
 	User checkUserHash(String userID, String pwd, String hash);
 
+	@Deprecated
 	User getUser(int id);
 
 	User getUser(String id);
@@ -30,16 +32,15 @@ public interface ISystemDatabase {
 
 	int getAllUsersCount(String condition);
 
-	HashMap<String, User> getAllAdministrators();
+	HashMap<String, IUser> getAllAdministrators();
 
 	int deleteUser(int id);
 
-	ArrayList<User> getUsers(String keyWord);
+	ArrayList<IUser> getUsers(String keyWord);
 
-	ArrayList<User> getAllUsers(String condition, int calcStartEntry, int pageSize);
+	ArrayList<IUser> getAllUsers(String condition, int calcStartEntry, int pageSize);
 
-	ArrayList<IUser> getAppUsers(User user, AppTemplate template, int calcStartEntry, int pageSize,
-			boolean invitationInclude);
+	ArrayList<AppUser> getAppUsers(User user, String contextID, int calcStartEntry, int pageSize);
 
 	IApplicationDatabase getApplicationDatabase()
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException;
@@ -63,5 +64,7 @@ public interface ISystemDatabase {
 	long insert(Invitation user);
 
 	long update(Invitation invitation);
+
+	List<AppUser> getInvitedUsers(User currentUser, String contexID, int calcStartEntry, int i);
 
 }

@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 
 import org.apache.catalina.realm.RealmBase;
 
-import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.activity.Activity;
@@ -37,6 +36,7 @@ import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
+import com.flabser.restful.pojo.AppUser;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.server.Server;
 import com.flabser.users.User;
@@ -269,15 +269,15 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	}
 
 	@Override
-	public HashMap<String, User> getAllAdministrators() {
-		HashMap<String, User> users = new HashMap<>();
+	public HashMap<String, IUser> getAllAdministrators() {
+		HashMap<String, IUser> users = new HashMap<>();
 		Connection conn = pool.getConnection();
 
 		try (Statement s = conn.createStatement();
 				ResultSet rs = s.executeQuery("SELECT ARRAY(SELECT ID FROM USERS WHERE ISSUPERVISOR = TRUE) as IDS")) {
 
 			if (rs.next()) {
-				List<User> userList = getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
+				List<IUser> userList = getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
 				userList.forEach(u -> users.put(u.getLogin(), u));
 			}
 
@@ -359,10 +359,10 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		return result;
 	}
 
-	private List<User> getUsers(Integer... ids) {
+	private List<IUser> getUsers(Integer... ids) {
 
 		Connection conn = pool.getConnection();
-		List<User> result = new ArrayList<>();
+		List<IUser> result = new ArrayList<>();
 		if (ids == null) {
 			return result;
 		}
@@ -399,20 +399,20 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 
 	@Override
 	public User getUser(int id) {
-		List<User> users = getUsers(id);
+		List<IUser> users = getUsers(id);
 		if (users.size() == 0) {
 			return null;
 		}
-		return users.get(0);
+		return (User) users.get(0);
 	}
 
 	@Override
 	public User getUser(long id) {
-		List<User> users = getUsers((int) id);
+		List<IUser> users = getUsers((int) id);
 		if (users.size() == 0) {
 			return null;
 		}
-		return users.get(0);
+		return (User) users.get(0);
 	}
 
 	// identical to initUser(String login)
@@ -618,8 +618,8 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	}
 
 	@Override
-	public ArrayList<User> getUsers(String keyWord) {
-		ArrayList<User> users = new ArrayList<>();
+	public ArrayList<IUser> getUsers(String keyWord) {
+		ArrayList<IUser> users = new ArrayList<>();
 
 		Connection conn = pool.getConnection();
 		try (PreparedStatement pst = conn
@@ -628,7 +628,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			pst.setString(1, keyWord + "%");
 			try (ResultSet rs = pst.executeQuery()) {
 				if (rs.next()) {
-					return (ArrayList<User>) getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
+					return (ArrayList<IUser>) getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
 				}
 			}
 		} catch (SQLException e) {
@@ -650,9 +650,9 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 
 	// risk of sql injection
 	@Override
-	public ArrayList<User> getAllUsers(String condition, int calcStartEntry, int pageSize) {
+	public ArrayList<IUser> getAllUsers(String condition, int calcStartEntry, int pageSize) {
 
-		ArrayList<User> users = null;
+		ArrayList<IUser> users = null;
 		String wherePiece = "";
 		if (!condition.equals("")) {
 			wherePiece = "WHERE " + condition;
@@ -671,7 +671,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			}
 
 			if (rs.next()) {
-				users = (ArrayList<User>) getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
+				users = (ArrayList<IUser>) getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
 			}
 
 			conn.commit();
@@ -685,29 +685,15 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	}
 
 	@Override
-	public ArrayList<IUser> getAppUsers(User user, AppTemplate template, int calcStartEntry, int pageSize,
-			boolean invitationInclude) {
-		ArrayList<IUser> users = null;
+	public ArrayList<AppUser> getAppUsers(User user, String contextID, int calcStartEntry, int pageSize) {
+		ArrayList<AppUser> us = new ArrayList<AppUser>();
 
-		Connection conn = pool.getConnection();
-		try {
-
-			Statement s = conn.createStatement();
-			ResultSet rs = null;
-			if (pageSize == 0) {
-				rs = s.executeQuery("select ARRAY(select ID from USERS, APPS WHERE USERS.ID=APPS.USERID as IDS;");
-			} else {
-
-			}
-
-			conn.commit();
-		} catch (SQLException e) {
-			DatabaseUtil.debugErrorPrint(e);
-		} finally {
-			pool.returnConnection(conn);
+		ApplicationProfile app = getApp(contextID);
+		ArrayList<IUser> users = getAllUsers("apps contains(" + app.id + ")", 0, 0);
+		for (IUser u : users) {
+			us.add(u.getPOJO());
 		}
-
-		return users;
+		return us;
 	}
 
 	@Override
@@ -1000,6 +986,18 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		} finally {
 			pool.returnConnection(conn);
 		}
+	}
+
+	@Override
+	public List<AppUser> getInvitedUsers(User currentUser, String contextID, int calcStartEntry, int i) {
+		ArrayList<AppUser> us = new ArrayList<AppUser>();
+
+		ApplicationProfile app = getApp(contextID);
+		ArrayList<IUser> users = getAllUsers("apps contains(" + app.id + ")", 0, 0);
+		for (IUser u : users) {
+			us.add(u.getPOJO());
+		}
+		return us;
 	}
 
 }

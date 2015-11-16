@@ -1,18 +1,14 @@
 package com.flabser.servlets.admin;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import com.flabser.dataengine.DatabaseFactory;
-import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.IApplicationDatabase;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.exception.RuleException;
 import com.flabser.localization.LocalizatorException;
-import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.users.User;
 
 public class UserServices {
@@ -52,44 +48,8 @@ public class UserServices {
 		return sysDatabase.deleteUser(docID);
 	}
 
-	public String getUserListWrapper(String keyWord, int pageNum, int pageSize) {
-		String condition = "", xmlFragment = "";
-		if (keyWord != null) {
-			condition = "USERID LIKE '" + keyWord + "%'";
-		}
-		count = sysDatabase.getAllUsersCount(condition);
-		ArrayList<User> fl = sysDatabase.getAllUsers(condition, RuntimeObjUtil.calcStartEntry(pageNum, pageSize),
-				pageSize);
-
-		Iterator<User> it = fl.iterator();
-		while (it.hasNext()) {
-			User user = it.next();
-			xmlFragment += "<entry id=\"" + user.id + "\" ><login>" + user.getLogin() + "</login>" + "<issupervisor>"
-					+ user.isSupervisor() + "</issupervisor><email>" + user.getEmail() + "</email><username>"
-					+ user.getUserName() + "</username></entry>";
-		}
-
-		return xmlFragment;
-	}
-
 	public int getCount() {
 		return count;
-	}
-
-	public String deploy(String userID) throws SQLException, InstantiationException, IllegalAccessException,
-			ClassNotFoundException, DatabasePoolException {
-		String result = "";
-		User user = sysDatabase.getUser(Integer.parseInt(userID));
-		IApplicationDatabase appDb = sysDatabase.getApplicationDatabase();
-		for (ApplicationProfile appProfile : user.getApplications()) {
-			int res = appDb.createDatabase(appProfile.getDbName(), appProfile.owner);
-			if (res == 0 || res == 1) {
-				IDatabase dataBase = appProfile.getDatabase();
-				;
-				// ad.deploy(null);
-			}
-		}
-		return result;
 	}
 
 	public String remove(String userID) throws SQLException, InstantiationException, IllegalAccessException,

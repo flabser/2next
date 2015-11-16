@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,7 +30,6 @@ import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
-import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
@@ -235,19 +234,22 @@ public class SessionService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCurrentUsers() {
 		ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
-		Outcome res = new Outcome();
-		AppTemplate at = getAppTemplate();
 		_Session ses = getSession();
-		String lang = ses.getLang();
-		if (ses != null) {
-			ArrayList<IUser> users = sysDatabase.getAppUsers(ses.getCurrentUser(), at,
-					RuntimeObjUtil.calcStartEntry(1, 50), 50, true);
+		List<AppUser> users = sysDatabase.getAppUsers(ses.getCurrentUser(), ses.getContexID(),
+				RuntimeObjUtil.calcStartEntry(1, 50), 50);
+		return Response.status(HttpServletResponse.SC_OK).entity(users).build();
 
-		} else {
-			return null;
-		}
-		res.setMessages(at.vocabulary.getAllCaptions(lang));
-		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
+	}
+
+	@GET
+	@Path("/invitations")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCurrentInvitations() {
+		ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
+		_Session ses = getSession();
+		List<AppUser> users = sysDatabase.getInvitedUsers(ses.getCurrentUser(), ses.getContexID(),
+				RuntimeObjUtil.calcStartEntry(1, 50), 50);
+		return Response.status(HttpServletResponse.SC_OK).entity(users).build();
 
 	}
 

@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.RestProvider;
@@ -41,7 +42,7 @@ public class UserService extends RestProvider {
 		// System.out.println("get users");
 		_Session ses = getSession();
 		if (ses != null) {
-			ArrayList<User> users = sysDatabase.getAllUsers("", RuntimeObjUtil.calcStartEntry(1, pageSize), pageSize);
+			ArrayList<IUser> users = sysDatabase.getAllUsers("", RuntimeObjUtil.calcStartEntry(1, pageSize), pageSize);
 			return new UsersList(users);
 		} else {
 			return null;
@@ -99,10 +100,10 @@ public class UserService extends RestProvider {
 	}
 
 	@JsonRootName("users")
-	class UsersList extends ArrayList<User> {
+	class UsersList extends ArrayList<IUser> {
 		private static final long serialVersionUID = -9012621540375574267L;
 
-		public UsersList(Collection<? extends User> m) {
+		public UsersList(Collection<? extends IUser> m) {
 			addAll(m);
 		}
 	}

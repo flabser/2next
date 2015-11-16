@@ -11,12 +11,10 @@ import com.flabser.apptemplate.WorkModeType;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.IDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.env.Environment;
 import com.flabser.exception.RuleException;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.pojo.AppUser;
-import com.flabser.restful.pojo.Application;
 import com.flabser.rule.Role;
 import com.flabser.runtimeobj.caching.ICache;
 import com.flabser.runtimeobj.page.Page;
@@ -119,30 +117,8 @@ public class _Session implements ICache {
 	}
 
 	public AppUser getAppUser() {
-		AppUser aUser = new AppUser();
-		aUser.setLogin(getCurrentUser().getLogin());
-		aUser.setName(getCurrentUser().getUserName());
-		aUser.setEmail(getCurrentUser().getEmail());
-		aUser.setRoles(getCurrentUser().getUserRoles());
-		HashMap<String, Application> applications = new HashMap<String, Application>();
-		for (ApplicationProfile ap : getCurrentUser().getApplicationProfiles().values()) {
-			if (!ap.appType.equalsIgnoreCase(Environment.workspaceName)) {
-				Application a = new Application(ap);
-				a.setAppID(ap.appID);
-				a.setAppName(ap.appName);
-				a.setAppType(ap.appType);
-				a.setOwner(ap.owner);
-				a.setVisibilty(ap.getVisibilty());
-				a.setStatus(ap.getStatus());
-				a.setDescription(ap.getDesciption());
-				applications.put(ap.appID, a);
-			}
-		}
-		aUser.setApplications(applications);
-		aUser.setRoles(getCurrentUser().getUserRoles());
+		AppUser aUser = getCurrentUser().getPOJO();
 		aUser.setAuthMode(authMode);
-		aUser.setStatus(getCurrentUser().getStatus());
-		aUser.setAttachedFile(getCurrentUser().getAvatar());
 		return aUser;
 	}
 
@@ -168,6 +144,10 @@ public class _Session implements ICache {
 
 	public HttpSession getJses() {
 		return jses;
+	}
+
+	public String getContexID() {
+		return contexID;
 	}
 
 	@Override

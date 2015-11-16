@@ -19,14 +19,14 @@ import com.flabser.users.UserStatusType;
 public class AppUser {
 	private String login;
 	private String name;
-	private String email;
+	protected String email;
 	private String pwd;
 	private String pwdNew;
 	private String pwdRepeat;
 	private UserStatusType status = UserStatusType.UNKNOWN;
 	private String error;
 	private String redirect;
-	private AuthModeType authMode;
+	private AuthModeType authMode = AuthModeType.UNDEFINED;
 	private ArrayList<String> appRoles = new ArrayList<String>();
 	private HashMap<String, Application> applications = new HashMap<String, Application>();
 	private Attachment attachedFile;

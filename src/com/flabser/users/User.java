@@ -18,10 +18,12 @@ import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
+import com.flabser.env.Environment;
 import com.flabser.exception.ServerServiceExceptionType;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.pojo.AppUser;
+import com.flabser.restful.pojo.Application;
 import com.flabser.util.Util;
 
 @JsonRootName("user")
@@ -153,6 +155,33 @@ public class User implements IUser {
 
 	public HashMap<String, ApplicationProfile> getApplicationProfiles(String appType) {
 		return getEnabledApps().get(appType);
+	}
+
+	public AppUser getPOJO() {
+		AppUser aUser = new AppUser();
+		aUser.setLogin(getLogin());
+		aUser.setName(getUserName());
+		aUser.setEmail(getEmail());
+		aUser.setRoles(getUserRoles());
+		HashMap<String, Application> applications = new HashMap<String, Application>();
+		for (ApplicationProfile ap : getApplicationProfiles().values()) {
+			if (!ap.appType.equalsIgnoreCase(Environment.workspaceName)) {
+				Application a = new Application(ap);
+				a.setAppID(ap.appID);
+				a.setAppName(ap.appName);
+				a.setAppType(ap.appType);
+				a.setOwner(ap.owner);
+				a.setVisibilty(ap.getVisibilty());
+				a.setStatus(ap.getStatus());
+				a.setDescription(ap.getDesciption());
+				applications.put(ap.appID, a);
+			}
+		}
+		aUser.setApplications(applications);
+		aUser.setRoles(getUserRoles());
+		aUser.setStatus(getStatus());
+		aUser.setAttachedFile(getAvatar());
+		return aUser;
 	}
 
 	public HashMap<String, ApplicationProfile> getApplicationProfiles() {

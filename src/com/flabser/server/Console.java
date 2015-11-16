@@ -8,13 +8,13 @@ import java.util.Scanner;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
 import com.flabser.scheduler.PeriodicalServices;
 import com.flabser.scheduler.tasks.DatabaseRemover;
 import com.flabser.script._Session;
 import com.flabser.users.ApplicationStatusType;
-import com.flabser.users.User;
 import com.flabser.util.Util;
 
 public class Console implements Runnable {
@@ -55,8 +55,8 @@ public class Console implements Runnable {
 					}
 				} else if (command.contains("users") || command.contains("us")) {
 					ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
-					ArrayList<User> users = sysDb.getAllUsers("", 0, 0);
-					for (User u : users) {
+					ArrayList<IUser> users = sysDb.getAllUsers("", 0, 0);
+					for (IUser u : users) {
 						System.out.println(u);
 					}
 				}

@@ -8,7 +8,7 @@ import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.constants.InvitationStatusType;
 
 @JsonRootName("invitation")
-public class Invitation implements IUser {
+public class Invitation {
 	private long id;
 	private Date regDate;
 	private String email;
@@ -22,7 +22,6 @@ public class Invitation implements IUser {
 	private long tempLogin;
 	private InvitationStatusType status = InvitationStatusType.UNKNOWN;
 
-	@Override
 	public long getID() {
 		return id;
 	}
@@ -31,7 +30,6 @@ public class Invitation implements IUser {
 		this.id = id;
 	}
 
-	@Override
 	public Date getRegDate() {
 		return regDate;
 	}
@@ -116,11 +114,6 @@ public class Invitation implements IUser {
 		} else {
 			return true;
 		}
-	}
-
-	@Override
-	public String getLogin() {
-		return email;
 	}
 
 }
