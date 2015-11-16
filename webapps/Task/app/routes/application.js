@@ -5,8 +5,6 @@ const {
 } = Em;
 
 export default Route.extend({
-    showAddAction: false,
-
     session: inject.service(),
     translationsFetcher: inject.service(),
 

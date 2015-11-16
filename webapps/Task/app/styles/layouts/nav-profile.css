@@ -28,7 +28,11 @@
 }
 
 .nav-profile .profile a > i {
+    font-size: 44px;
+    height: 42px;
+    text-align: center;
     vertical-align: top;
+    width: 42px;
 }
 
 .nav-profile .profile a > div {

@@ -100,9 +100,6 @@ footer.content-actions {
         padding-left: 8px;
         text-align: center;
     }
-    footer.content-actions .btn {
-        min-width: 28%;
-    }
 }
 
 

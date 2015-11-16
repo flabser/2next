@@ -17,10 +17,10 @@
                         <span class="issue-tag">{{tag.name}}</span>
                     {{/each}}
                 </span>
-                <span class="issue-milestone">
-                    <span>{{format-date issue.milestone}}</span>
-                    <span class="issue-milestone-from-now">
-                        {{moment-from-now issue.milestone}}
+                <span class="issue-due-date">
+                    <span>{{format-date issue.dueDate}}</span>
+                    <span class="issue-due-date-from-now">
+                        {{moment-from-now issue.dueDate}}
                     </span>
                 </span>
             </span>

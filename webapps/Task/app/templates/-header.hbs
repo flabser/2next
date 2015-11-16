@@ -12,29 +12,19 @@
             {{#if showAddAction}}
                 <button class="nav-item nav-btn compose-new" type="button" {{action 'composeRecord'}}>
                     <i class="fa fa-plus"></i>
+                    <span>{{t 'issue_new'}}</span>
                 </button>
             {{/if}}
             <button class="nav-item nav-btn nav-search-toggle" type="button" {{action 'toggleSearchForm' on='mouseDown' }}>
                 <i class="fa fa-search"></i>
             </button>
-            <div class="nav-item nav-search" id="head-search-block">
-                <form class="search-form" role="search" onsubmit="alert('кручу-верчу найти хочу'); return false;">
-                    <button class="search-toggle-back" type="button" {{action 'toggleSearchForm' on='mouseDown' }}>
-                        <i class="fa fa-chevron-left"></i>
-                    </button>
-                    {{input type='search' name='keyword' class='search-keyword' placeholder='Search'}}
-                    <button type="submit" class="search-btn">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </form>
-            </div>
             <div class="nav-item nav-profile dropdown">
                 <div class="dropdown-toggle" data-toggle="dropdown">
                     <span class="user-avatar">
                         <i class="fa fa-user"></i>
-                        <spna class="hidden-mobile">
+                        <span class="hidden-mobile">
                             {{sessionUser.login}}
-                        </spna>
+                        </span>
                         <i class="fa fa-angle-down"></i>
                     </span>
                 </div>
@@ -52,17 +42,32 @@
                         <li class="divider"></li>
                         <li>
                             <a href="rest/workspace/url" class="ws">
-                                <i class="fa fa-desktop"></i><span>{{t 'workspace'}}</span>
+                                <i class="fa fa-desktop"></i>
+                                <span>{{t 'workspace'}}</span>
                             </a>
                         </li>
                     {{/if}}
                     <li class="divider"></li>
                     <li>
                         <a href="#" {{action 'logout'}} class="logout">
-                            <i class="fa fa-sign-out"></i><span>{{t 'logout'}}</span>
+                            <i class="fa fa-sign-out"></i>
+                            <span>{{t 'logout'}}</span>
                         </a>
                     </li>
                 </ul>
+            </div>
+        </nav>
+        <nav class="navbar-nav navbar-search">
+            <div class="nav-item nav-search">
+                <form class="search-form" role="search" onsubmit="alert('кручу-верчу найти хочу'); return false;">
+                    <button class="search-toggle-back" type="button" {{action 'toggleSearchForm' on='mouseDown' }}>
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    {{input type='search' name='keyword' class='search-keyword' placeholder='Search'}}
+                    <button type="submit" class="search-btn">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
             </div>
         </nav>
     </div>
