@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,7 @@ import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
+import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
 import com.flabser.env.SessionPool;
@@ -42,6 +44,7 @@ import com.flabser.mail.message.ResetPasswordEMail;
 import com.flabser.mail.message.VerifyEMail;
 import com.flabser.restful.pojo.AppUser;
 import com.flabser.restful.pojo.Outcome;
+import com.flabser.runtimeobj.RuntimeObjUtil;
 import com.flabser.scheduler.tasks.TempFileCleaner;
 import com.flabser.script._Helper;
 import com.flabser.script._Session;
@@ -224,6 +227,27 @@ public class SessionService extends RestProvider {
 		int maxAge = -1;
 		NewCookie cookie = new NewCookie(EnvConst.LANG_COOKIE_NAME, lang, "/", null, null, maxAge, false);
 		return Response.status(HttpServletResponse.SC_OK).cookie(cookie).build();
+
+	}
+
+	@GET
+	@Path("/users")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCurrentUsers() {
+		ISystemDatabase sysDatabase = DatabaseFactory.getSysDatabase();
+		Outcome res = new Outcome();
+		AppTemplate at = getAppTemplate();
+		_Session ses = getSession();
+		String lang = ses.getLang();
+		if (ses != null) {
+			ArrayList<IUser> users = sysDatabase.getAppUsers(ses.getCurrentUser(), at,
+					RuntimeObjUtil.calcStartEntry(1, 50), 50, true);
+
+		} else {
+			return null;
+		}
+		res.setMessages(at.vocabulary.getAllCaptions(lang));
+		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
 
 	}
 

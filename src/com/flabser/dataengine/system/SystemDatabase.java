@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 import org.apache.catalina.realm.RealmBase;
 
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.activity.Activity;
@@ -30,6 +31,7 @@ import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.dataengine.system.entities.Invitation;
 import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
@@ -44,8 +46,15 @@ import com.flabser.users.UserStatusType;
 public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	public static final String jdbcDriver = "org.postgresql.Driver";
 
-	public SystemDatabase()
-			throws DatabasePoolException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException,
+			ClassNotFoundException, SQLException {
+
+		IApplicationDatabase appDb = new ApplicationDatabase("postgres");
+		int res = appDb.createDatabase(EnvConst.DATABASE_NAME, EnvConst.DB_USER);
+		if (res == 0) {
+			Server.logger.infoLogEntry("system database has been initiated successfully");
+		}
+
 		pool = new com.flabser.dataengine.pool.DBConnectionPool();
 		pool.initConnectionPool(jdbcDriver,
 				"jdbc:postgresql://" + EnvConst.DATABASE_HOST + ":" + EnvConst.CONN_PORT + "/" + EnvConst.DATABASE_NAME,
@@ -61,6 +70,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		queries.put("ROLES", DDEScripts.ROLES_DDE);
 
 		createTable(queries);
+
 	}
 
 	@Override
@@ -675,6 +685,32 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	}
 
 	@Override
+	public ArrayList<IUser> getAppUsers(User user, AppTemplate template, int calcStartEntry, int pageSize,
+			boolean invitationInclude) {
+		ArrayList<IUser> users = null;
+
+		Connection conn = pool.getConnection();
+		try {
+
+			Statement s = conn.createStatement();
+			ResultSet rs = null;
+			if (pageSize == 0) {
+				rs = s.executeQuery("select ARRAY(select ID from USERS, APPS WHERE USERS.ID=APPS.USERID as IDS;");
+			} else {
+
+			}
+
+			conn.commit();
+		} catch (SQLException e) {
+			DatabaseUtil.debugErrorPrint(e);
+		} finally {
+			pool.returnConnection(conn);
+		}
+
+		return users;
+	}
+
+	@Override
 	public IApplicationDatabase getApplicationDatabase()
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		return new ApplicationDatabase();
@@ -903,7 +939,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	}
 
 	@Override
-	public int insert(Invitation inv) {
+	public long insert(Invitation inv) {
 		Connection conn = pool.getConnection();
 
 		try (PreparedStatement pst = conn.prepareStatement(
@@ -929,7 +965,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			}
 
 			conn.commit();
-			return inv.getId();
+			return inv.getID();
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;
@@ -939,7 +975,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	}
 
 	@Override
-	public int update(Invitation invitation) {
+	public long update(Invitation invitation) {
 		Connection conn = pool.getConnection();
 
 		try (PreparedStatement pst = conn.prepareStatement(
@@ -952,12 +988,12 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			pst.setLong(5, invitation.getAuthor());
 			pst.setLong(6, invitation.getTempLogin());
 			pst.setInt(7, invitation.getStatus().getCode());
-			pst.setInt(8, invitation.getId());
+			pst.setLong(8, invitation.getID());
 
 			pst.executeUpdate();
 
 			conn.commit();
-			return invitation.getId();
+			return invitation.getID();
 		} catch (SQLException e) {
 			DatabaseUtil.debugErrorPrint(e);
 			return -1;

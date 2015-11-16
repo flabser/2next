@@ -3,8 +3,10 @@ package com.flabser.dataengine.system;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
+import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.dataengine.system.entities.Invitation;
 import com.flabser.users.User;
 
@@ -36,6 +38,9 @@ public interface ISystemDatabase {
 
 	ArrayList<User> getAllUsers(String condition, int calcStartEntry, int pageSize);
 
+	ArrayList<IUser> getAppUsers(User user, AppTemplate template, int calcStartEntry, int pageSize,
+			boolean invitationInclude);
+
 	IApplicationDatabase getApplicationDatabase()
 			throws InstantiationException, IllegalAccessException, ClassNotFoundException;
 
@@ -55,8 +60,8 @@ public interface ISystemDatabase {
 
 	byte[] getUserAvatarStream(long id);
 
-	int insert(Invitation user);
+	long insert(Invitation user);
 
-	int update(Invitation invitation);
+	long update(Invitation invitation);
 
 }

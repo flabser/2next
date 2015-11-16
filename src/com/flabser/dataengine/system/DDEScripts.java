@@ -1,4 +1,4 @@
-package com.flabser.dataengine.system;
+ package com.flabser.dataengine.system;
 
 public class DDEScripts {
 
@@ -22,8 +22,8 @@ public class DDEScripts {
 			+ "apps integer[], "
 			+ "roles integer[], "
 			+ "groups integer[], "
-			+ "CONSTRAINT users_pkey PRIMARY KEY (ID)),"
-			+ "CONSTRAINT unique_email UNIQUE (email),"
+			+ "CONSTRAINT users_pkey PRIMARY KEY (ID),"
+			+ "CONSTRAINT unique_email UNIQUE (email));"
 			+ "create index users_login_hash on users using hash(login text_ops); ";
 
 	public static final String APPS_DDE = "create table APPS("
