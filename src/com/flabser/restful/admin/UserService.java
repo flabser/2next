@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.ISystemDatabase;
-import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.exception.WebFormValueException;
 import com.flabser.localization.LanguageType;
 import com.flabser.restful.RestProvider;
@@ -42,7 +41,7 @@ public class UserService extends RestProvider {
 		// System.out.println("get users");
 		_Session ses = getSession();
 		if (ses != null) {
-			ArrayList<IUser> users = sysDatabase.getAllUsers("", RuntimeObjUtil.calcStartEntry(1, pageSize), pageSize);
+			ArrayList<User> users = sysDatabase.getAllUsers("", RuntimeObjUtil.calcStartEntry(1, pageSize), pageSize);
 			return new UsersList(users);
 		} else {
 			return null;
@@ -52,7 +51,7 @@ public class UserService extends RestProvider {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@PathParam("id") int id) {
+	public Response get(@PathParam("id") long id) {
 		User user = sysDatabase.getUser(id);
 		return Response.ok(user).build();
 
@@ -74,7 +73,7 @@ public class UserService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") int id, User u) {
+	public Response update(@PathParam("id") long id, User u) {
 		Outcome res = new Outcome();
 		User user = sysDatabase.getUser(id);
 		try {
@@ -100,10 +99,10 @@ public class UserService extends RestProvider {
 	}
 
 	@JsonRootName("users")
-	class UsersList extends ArrayList<IUser> {
+	class UsersList extends ArrayList<User> {
 		private static final long serialVersionUID = -9012621540375574267L;
 
-		public UsersList(Collection<? extends IUser> m) {
+		public UsersList(Collection<? extends User> m) {
 			addAll(m);
 		}
 	}

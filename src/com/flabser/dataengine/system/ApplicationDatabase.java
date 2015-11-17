@@ -34,7 +34,9 @@ public class ApplicationDatabase implements IApplicationDatabase {
 	@Override
 	public int createDatabase(String name, String dbUser) throws SQLException {
 		if (!hasDatabase(name)) {
-			Server.logger.warningLogEntry("creating system database...");
+			if (name.equals(EnvConst.DATABASE_NAME)) {
+				Server.logger.warningLogEntry("creating system database...");
+			}
 			Connection conn = DriverManager.getConnection(dbURL, props);
 			try {
 				Statement st = conn.createStatement();

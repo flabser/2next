@@ -15,7 +15,6 @@ import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.Environment;
@@ -27,7 +26,7 @@ import com.flabser.restful.pojo.Application;
 import com.flabser.util.Util;
 
 @JsonRootName("user")
-public class User implements IUser {
+public class User {
 	public long id;
 	public boolean isValid = false;
 	public boolean isAuthorized;
@@ -253,7 +252,6 @@ public class User implements IUser {
 		this.login = l;
 	}
 
-	@Override
 	public String getLogin() {
 		return login;
 	}
@@ -319,7 +317,6 @@ public class User implements IUser {
 		return primaryRegDate;
 	}
 
-	@Override
 	public Date getRegDate() {
 		return regDate;
 	}
@@ -393,7 +390,6 @@ public class User implements IUser {
 		this.groups = groups;
 	}
 
-	@Override
 	public long getID() {
 		return id;
 	}

@@ -30,7 +30,6 @@ import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.dataengine.system.entities.Invitation;
 import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
@@ -269,15 +268,15 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	}
 
 	@Override
-	public HashMap<String, IUser> getAllAdministrators() {
-		HashMap<String, IUser> users = new HashMap<>();
+	public HashMap<String, User> getAllAdministrators() {
+		HashMap<String, User> users = new HashMap<>();
 		Connection conn = pool.getConnection();
 
 		try (Statement s = conn.createStatement();
 				ResultSet rs = s.executeQuery("SELECT ARRAY(SELECT ID FROM USERS WHERE ISSUPERVISOR = TRUE) as IDS")) {
 
 			if (rs.next()) {
-				List<IUser> userList = getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
+				List<User> userList = getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
 				userList.forEach(u -> users.put(u.getLogin(), u));
 			}
 
@@ -359,10 +358,10 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		return result;
 	}
 
-	private List<IUser> getUsers(Integer... ids) {
+	private List<User> getUsers(Integer... ids) {
 
 		Connection conn = pool.getConnection();
-		List<IUser> result = new ArrayList<>();
+		List<User> result = new ArrayList<>();
 		if (ids == null) {
 			return result;
 		}
@@ -399,20 +398,20 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 
 	@Override
 	public User getUser(int id) {
-		List<IUser> users = getUsers(id);
+		List<User> users = getUsers(id);
 		if (users.size() == 0) {
 			return null;
 		}
-		return (User) users.get(0);
+		return users.get(0);
 	}
 
 	@Override
 	public User getUser(long id) {
-		List<IUser> users = getUsers((int) id);
+		List<User> users = getUsers((int) id);
 		if (users.size() == 0) {
 			return null;
 		}
-		return (User) users.get(0);
+		return users.get(0);
 	}
 
 	// identical to initUser(String login)
@@ -618,8 +617,8 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	}
 
 	@Override
-	public ArrayList<IUser> getUsers(String keyWord) {
-		ArrayList<IUser> users = new ArrayList<>();
+	public ArrayList<User> getUsers(String keyWord) {
+		ArrayList<User> users = new ArrayList<>();
 
 		Connection conn = pool.getConnection();
 		try (PreparedStatement pst = conn
@@ -628,7 +627,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			pst.setString(1, keyWord + "%");
 			try (ResultSet rs = pst.executeQuery()) {
 				if (rs.next()) {
-					return (ArrayList<IUser>) getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
+					return (ArrayList<User>) getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
 				}
 			}
 		} catch (SQLException e) {
@@ -650,9 +649,9 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 
 	// risk of sql injection
 	@Override
-	public ArrayList<IUser> getAllUsers(String condition, int calcStartEntry, int pageSize) {
+	public ArrayList<User> getAllUsers(String condition, int calcStartEntry, int pageSize) {
 
-		ArrayList<IUser> users = null;
+		ArrayList<User> users = null;
 		String wherePiece = "";
 		if (!condition.equals("")) {
 			wherePiece = "WHERE " + condition;
@@ -671,7 +670,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			}
 
 			if (rs.next()) {
-				users = (ArrayList<IUser>) getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
+				users = (ArrayList<User>) getUsers((Integer[]) getObjectArray(rs.getArray("IDS")));
 			}
 
 			conn.commit();
@@ -689,8 +688,8 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		ArrayList<AppUser> us = new ArrayList<AppUser>();
 
 		ApplicationProfile app = getApp(contextID);
-		ArrayList<IUser> users = getAllUsers("apps && '{" + app.id + "}'", 0, 0);
-		for (IUser u : users) {
+		ArrayList<User> users = getAllUsers("apps && '{" + app.id + "}'", 0, 0);
+		for (User u : users) {
 			us.add(u.getPOJO());
 		}
 		return us;
@@ -993,8 +992,8 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		ArrayList<AppUser> us = new ArrayList<AppUser>();
 
 		ApplicationProfile app = getApp(contextID);
-		ArrayList<IUser> users = getAllUsers("apps contains(" + app.id + ")", 0, 0);
-		for (IUser u : users) {
+		ArrayList<User> users = getAllUsers("apps contains(" + app.id + ")", 0, 0);
+		for (User u : users) {
 			us.add(u.getPOJO());
 		}
 		return us;

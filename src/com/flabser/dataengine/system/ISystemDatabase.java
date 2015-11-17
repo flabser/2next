@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.flabser.dataengine.activity.IActivity;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
-import com.flabser.dataengine.system.entities.IUser;
 import com.flabser.dataengine.system.entities.Invitation;
 import com.flabser.restful.pojo.AppUser;
 import com.flabser.users.User;
@@ -32,13 +31,13 @@ public interface ISystemDatabase {
 
 	int getAllUsersCount(String condition);
 
-	HashMap<String, IUser> getAllAdministrators();
+	HashMap<String, User> getAllAdministrators();
 
 	int deleteUser(int id);
 
-	ArrayList<IUser> getUsers(String keyWord);
+	ArrayList<User> getUsers(String keyWord);
 
-	ArrayList<IUser> getAllUsers(String condition, int calcStartEntry, int pageSize);
+	ArrayList<User> getAllUsers(String condition, int calcStartEntry, int pageSize);
 
 	ArrayList<AppUser> getAppUsers(User user, String contextID, int calcStartEntry, int pageSize);
 

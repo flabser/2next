@@ -8,7 +8,7 @@ import org.quartz.JobExecutionException;
 
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
-import com.flabser.dataengine.system.entities.IUser;
+import com.flabser.users.User;
 
 //TODO To realize
 public class SendMemoToUnverifedUsers implements Job {
@@ -20,8 +20,8 @@ public class SendMemoToUnverifedUsers implements Job {
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 		ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
-		ArrayList<IUser> users = sysDb.getAllUsers("status=460", 0, 100);
-		for (IUser user : users) {
+		ArrayList<User> users = sysDb.getAllUsers("status=460", 0, 100);
+		for (User user : users) {
 
 		}
 
