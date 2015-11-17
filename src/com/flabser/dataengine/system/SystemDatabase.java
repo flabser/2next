@@ -689,7 +689,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		ArrayList<AppUser> us = new ArrayList<AppUser>();
 
 		ApplicationProfile app = getApp(contextID);
-		ArrayList<IUser> users = getAllUsers("apps contains(" + app.id + ")", 0, 0);
+		ArrayList<IUser> users = getAllUsers("apps && '{" + app.id + "}'", 0, 0);
 		for (IUser u : users) {
 			us.add(u.getPOJO());
 		}

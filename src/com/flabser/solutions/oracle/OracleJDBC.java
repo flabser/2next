@@ -27,8 +27,8 @@ public class OracleJDBC {
 		Connection connection = null;
 
 		try {
-
-			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:mkyong", "username", "password");
+			String url = "jdbc:oracle:thin:@192.168.1.97:1521:ONE";
+			connection = DriverManager.getConnection(url, "SYSTEM", "aida22");
 
 		} catch (SQLException e) {
 
