@@ -73,7 +73,7 @@ public class _Session implements ICache {
 					}
 				}
 			} else {
-				Server.logger.errorLogEntry("\"" + User.ANONYMOUS_USER + "\" cannot get some database insatnce");
+				Server.logger.errorLogEntry("\"" + User.ANONYMOUS_USER + "\" cannot get some database instance");
 			}
 		}
 

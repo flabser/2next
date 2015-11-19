@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.flabser.dataengine.DatabaseFactory;
+import com.flabser.dataengine.deploing.FillInitialData;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.Environment;
@@ -70,6 +71,9 @@ public class ApplicationService extends RestProvider {
 				user.addApplication(ap);
 				if (user.save()) {
 					Server.webServerInst.addApplication(ap.getAppID(), site);
+
+					FillInitialData p = new FillInitialData(site.getAppTemlate(), ap.getAppID());
+					p.process();
 					return Response.status(HttpServletResponse.SC_OK).entity(res.addMessage(ap.getStatus().name()))
 							.build();
 				} else {

@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -35,6 +36,7 @@ import com.flabser.dataengine.system.entities.UserGroup;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.EnvConst;
 import com.flabser.env.Environment;
+import com.flabser.exception.WebFormValueException;
 import com.flabser.restful.pojo.AppUser;
 import com.flabser.rule.constants.RunMode;
 import com.flabser.server.Server;
@@ -46,13 +48,10 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	public static final String jdbcDriver = "org.postgresql.Driver";
 
 	public SystemDatabase() throws DatabasePoolException, InstantiationException, IllegalAccessException,
-			ClassNotFoundException, SQLException {
+			ClassNotFoundException, SQLException, WebFormValueException {
 
 		IApplicationDatabase appDb = new ApplicationDatabase("postgres");
 		int res = appDb.createDatabase(EnvConst.DATABASE_NAME, EnvConst.DB_USER);
-		if (res == 0) {
-			Server.logger.infoLogEntry("system database has been initiated successfully");
-		}
 
 		pool = new com.flabser.dataengine.pool.DBConnectionPool();
 		pool.initConnectionPool(jdbcDriver,
@@ -69,6 +68,19 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		queries.put("ROLES", DDEScripts.ROLES_DDE);
 
 		createTable(queries);
+
+		if (res == 0) {
+			Environment.systemBase = this;
+			User sysUser = new User();
+			sysUser.setPwd("123");
+			sysUser.setSupervisor(true);
+			sysUser.setLogin(User.SYSTEM_USER + "@flabser.com");
+			sysUser.setUserName("system");
+			sysUser.setRegDate(new Date());
+			sysUser.setStatus(UserStatusType.REGISTERED);
+			sysUser.save();
+			Server.logger.infoLogEntry("system database has been initiated successfully");
+		}
 
 	}
 
@@ -397,6 +409,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 	}
 
 	@Override
+	@Deprecated
 	public User getUser(int id) {
 		List<User> users = getUsers(id);
 		if (users.size() == 0) {

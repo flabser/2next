@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.flabser.dataengine.deploing.IInitialData;
-import com.flabser.dataengine.jpa.ISimpleAppEntity;
 
 import cashtracker.dao.TagDAO;
 import task.model.Tag;
 
-public class InitTags implements IInitialData {
+public class InitTags implements IInitialData<Tag, TagDAO> {
 
 	@Override
-	public List<ISimpleAppEntity> getData() {
-		ArrayList<ISimpleAppEntity> entities = new ArrayList<ISimpleAppEntity>();
+	public List<Tag> getData() {
+		List<Tag> entities = new ArrayList<Tag>();
 		Tag t = new Tag();
 		t.setName("favourite");
 		entities.add(t);
@@ -21,7 +20,7 @@ public class InitTags implements IInitialData {
 	}
 
 	@Override
-	public Class<?> getDAO() {
+	public Class<TagDAO> getDAO() {
 		return TagDAO.class;
 	}
 

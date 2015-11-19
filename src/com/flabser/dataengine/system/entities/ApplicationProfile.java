@@ -171,11 +171,9 @@ public class ApplicationProfile implements _IContent {
 									addRole(role.name, role.description);
 								}
 							}
-
-							// PopulatingProcFinder p = new
-							// PopulatingProcFinder(app, appID);
-							// p.process();
-
+							User sysUser = DatabaseFactory.getSysDatabase().getUser(User.SYSTEM_USER);
+							sysUser.addApplication(this);
+							sysUser.save();
 						} else {
 							setStatus(ApplicationStatusType.DEPLOING_FAILED);
 							result = false;

@@ -2,10 +2,8 @@ package com.flabser.dataengine.deploing;
 
 import java.util.List;
 
-import com.flabser.dataengine.jpa.ISimpleAppEntity;
+public interface IInitialData<T, T1> {
+	List<T> getData();
 
-public interface IInitialData {
-	List<ISimpleAppEntity> getData();
-
-	Class<?> getDAO();
+	Class<T1> getDAO();
 }
