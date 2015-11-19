@@ -5,8 +5,8 @@
 		<entry lang="KAZ">benexus</entry>
 		<entry lang="ENG">benexus</entry>
 		<entry lang="BG">benexus</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>
+		<entry lang="POR">benexus</entry>
+		<entry lang="SPA">benexus</entry>
 	</sentence>
 
 	<sentence mode="on" keyword="login">
@@ -85,7 +85,7 @@
 	</sentence>
 	<sentence mode="on" keyword="your_profile">
 		<entry lang="RUS">Ваш профиль</entry>
-		<entry lang="KAZ">Ваш профиль</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Your profile</entry>
 		<entry lang="BG">Вашият профил</entry>
 		<entry lang="POR"></entry>
@@ -95,7 +95,7 @@
 	<!-- verify_email -->
 	<sentence mode="on" keyword="verify_email_title">
 		<entry lang="RUS">Подтверждение E-mail</entry>
-		<entry lang="KAZ">Подтверждение E-mail</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">E-mail confirm</entry>
 		<entry lang="BG">Е-мейл за потвърждение</entry>
 		<entry lang="POR"></entry>
@@ -104,7 +104,7 @@
 
 	<sentence mode="on" keyword="verify_email_error">
 		<entry lang="RUS">Не верные данные</entry>
-		<entry lang="KAZ">Не верные данные</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Incorrect value</entry>
 		<entry lang="BG">Неправилна стойност</entry>
 		<entry lang="POR"></entry>
@@ -112,7 +112,7 @@
 	</sentence>
 	<sentence mode="on" keyword="verify_email_done">
 		<entry lang="RUS">Проверка прошла успешно. Теперь вы можете войти.</entry>
-		<entry lang="KAZ">Проверка прошла успешно. Теперь вы можете войти.</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">The confirmation has been succesfully. Now you can enter</entry>
 		<entry lang="BG">Потвърждението е било успешно. Сега можете да въведете</entry>
 		<entry lang="POR"></entry>
@@ -120,7 +120,7 @@
 	</sentence>
 	<sentence mode="on" keyword="verify_email_already">
 		<entry lang="RUS">Вы уже зарегистрированы</entry>
-		<entry lang="KAZ">Вы уже зарегистрированы</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="ENG">You are already registered</entry>
 		<entry lang="BG" hint="">Вие вече сте регистрирани</entry>
 		<entry lang="POR"></entry>
@@ -144,41 +144,11 @@
 		<entry lang="POR"></entry>
 		<entry lang="SPA"></entry>
 	</sentence>
-	<sentence mode="on" keyword="retry_send_verify_email_send_ok">
-		<entry lang="RUS" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
-		<entry lang="KAZ" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
-		<entry lang="ENG" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
-		<entry lang="BG" hint="Письмо отправлено, проверьте почту.">Письмо отправлено, проверьте почту.</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>
-	</sentence>
-	<sentence mode="on" keyword="no_user">
-		<entry lang="RUS" hint="Пользователь не найден">Пользователь не найден</entry>
-		<entry lang="KAZ" hint="Пользователь не найден">Пользователь не найден</entry>
-		<entry lang="ENG" hint="Пользователь не найден">User not found</entry>
-		<entry lang="BG" hint="Пользователь не найден">Пользователь не найден</entry>
-	</sentence>
-	<sentence mode="on" keyword="invalid_email">
-		<entry lang="RUS" hint="Не корректный e-mail">Не корректный e-mail</entry>
-		<entry lang="KAZ" hint="Не корректный e-mail">Не корректный e-mail</entry>
-		<entry lang="ENG" hint="Не корректный e-mail">Incorrect e-mail address</entry>
-		<entry lang="BG" hint="Не корректный e-mail">Не корректный e-mail</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>
-	</sentence>
 	<sentence mode="on" keyword="user_already_verified">
 		<entry lang="RUS" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
 		<entry lang="KAZ" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
 		<entry lang="ENG" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
 		<entry lang="BG" hint="E-mail адресс ранее верифицирован">E-mail адресс ранее верифицирован</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>
-	</sentence>
-	<sentence mode="on" keyword="error_verify_email">
-		<entry lang="RUS" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
-		<entry lang="KAZ" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
-		<entry lang="ENG" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
-		<entry lang="BG" hint="Не удалось отправить письмо верификации">Не удалось отправить письмо верификации</entry>
 		<entry lang="POR"></entry>
 		<entry lang="SPA"></entry>
 	</sentence>

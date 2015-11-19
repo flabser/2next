@@ -51,11 +51,6 @@ public class User {
 	private String passwordHash = "";
 	private String email = "";
 	private boolean isSupervisor;
-
-	public void setSupervisor(boolean isSupervisor) {
-		this.isSupervisor = isSupervisor;
-	}
-
 	private int loginHash;
 	private String verifyCode;
 	private UserStatusType status = UserStatusType.UNKNOWN;
@@ -126,7 +121,7 @@ public class User {
 		return isSupervisor;
 	}
 
-	public void setIsSupervisor(boolean isSupervisor) {
+	public void setSupervisor(boolean isSupervisor) {
 		this.isSupervisor = isSupervisor;
 	}
 

@@ -16,9 +16,6 @@ public interface ISystemDatabase {
 
 	User checkUserHash(String userID, String pwd, String hash);
 
-	@Deprecated
-	User getUser(int id);
-
 	User getUser(String id);
 
 	User getUserByVerifyCode(String userID);

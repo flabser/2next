@@ -18,8 +18,6 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.dataengine.DatabaseFactory;
-import com.flabser.dataengine.system.ISystemDatabase;
 import com.flabser.restful.RestProvider;
 import com.flabser.servlets.sitefiles.AttachmentHandlerException;
 

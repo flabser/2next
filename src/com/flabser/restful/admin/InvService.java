@@ -60,7 +60,7 @@ public class InvService extends RestProvider {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@PathParam("id") int id) {
+	public Response get(@PathParam("id") long id) {
 		System.out.println("GET " + id);
 		User user = sysDatabase.getUser(id);
 		return Response.ok(user).build();
@@ -126,7 +126,7 @@ public class InvService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") int id, User u) {
+	public Response update(@PathParam("id") long id, User u) {
 		System.out.println("PUT " + u);
 		User user = sysDatabase.getUser(id);
 		return Response.ok(user).build();
@@ -135,7 +135,7 @@ public class InvService extends RestProvider {
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response delete(@PathParam("id") int id) {
+	public Response delete(@PathParam("id") long id) {
 		User user = sysDatabase.getUser(id);
 
 		return Response.ok().build();

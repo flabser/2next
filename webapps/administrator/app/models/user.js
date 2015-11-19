@@ -8,7 +8,7 @@ AdminApp.User = DS.Model.extend({
     regDate: DS.attr('string'),
     status: DS.attr('string'),
     email: DS.attr('string'),
-    isSupervisor: DS.attr('boolean'),
+    supervisor: DS.attr('boolean'),
     dbLogin: DS.attr('string'),
     defaultDbPwd:  DS.attr('string'),
 

@@ -151,7 +151,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			getUser.setString(1, login);
 			try (ResultSet rs = getUser.executeQuery()) {
 				if (rs.next()) {
-					return getUser(rs.getInt("ID"));
+					return getUser(rs.getLong("ID"));
 				}
 			}
 
@@ -312,7 +312,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			pstmt.setString(1, code);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					return getUser(rs.getInt("ID"));
+					return getUser(rs.getLong("ID"));
 				}
 			}
 
@@ -333,7 +333,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					return getUser(rs.getInt("ID"));
+					return getUser(rs.getLong("ID"));
 				}
 			}
 
@@ -406,16 +406,6 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		}
 
 		return result;
-	}
-
-	@Override
-	@Deprecated
-	public User getUser(int id) {
-		List<User> users = getUsers(id);
-		if (users.size() == 0) {
-			return null;
-		}
-		return users.get(0);
 	}
 
 	@Override
@@ -703,7 +693,9 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 		ApplicationProfile app = getApp(contextID);
 		ArrayList<User> users = getAllUsers("apps && '{" + app.id + "}'", 0, 0);
 		for (User u : users) {
-			us.add(u.getPOJO());
+			if (!u.getLogin().equals(User.SYSTEM_USER)) {
+				us.add(u.getPOJO());
+			}
 		}
 		return us;
 	}

@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- System vocabulary -->
 <vocabulary>
-	<sentence mode="on" keyword="brand">
-		<entry lang="ENG">benexus workspace</entry>
-		<entry lang="RUS">benexus workspace</entry>
-		<entry lang="KAZ">benexus workspace</entry>
-		<entry lang="BG">benexus workspace</entry>
-		<entry lang="POR">benexus workspace</entry>
-		<entry lang="SPA">benexus workspace</entry>	
-	</sentence>
-
 	<!-- errors -->
 	<sentence mode="on" keyword="USER_EXISTS">
 		<entry lang="ENG">User is already registered</entry>
@@ -105,7 +96,7 @@
 	<sentence mode="on" keyword="VERIFY_EMAIL_SENDING_ERROR">
 		<entry lang="ENG">There was an error while sending the verification email</entry>
 		<entry lang="RUS">Ошибка при отправке письма с кодом верификации</entry>
-		<entry lang="KAZ">Ошибка при отправке письма с кодом верификации</entry>	
+		<entry lang="KAZ"></entry>	
 		<entry lang="BG">Имаше грешка при изпращане на имейл за потвърждение</entry>
 		<entry lang="POR">Ocorreu um erro ao enviar a mensagem de verificação</entry>
 		<entry lang="SPA">Se produjo un error al enviar el mensaje de verificación</entry>	
@@ -113,7 +104,7 @@
 	<sentence mode="on" keyword="RESET_PASSWORD_SENDING_ERROR">
 		<entry lang="ENG">There was an error while sending the email to reset your password</entry>
 		<entry lang="RUS">Ошибка при отправке письма для сброса пароля</entry>
-		<entry lang="KAZ">Ошибка при отправке письма для сброса пароля</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="BG">Имаше грешка по време на изпращането на имейла за възстановите паролата си</entry>
 		<entry lang="POR">Ocorreu um erro ao enviar a mensagem para reinicializar a sua palavra-passe</entry>
 		<entry lang="SPA">Se produjo un error al enviar el mensaje con el restablecimiento de la contraseña</entry>	
@@ -121,7 +112,7 @@
 	<sentence mode="on" keyword="UNKNOWN_USER_STATUS">
 		<entry lang="ENG">Unknown user status</entry>
 		<entry lang="RUS">Не известный статус пользователя</entry>
-		<entry lang="KAZ">Не известный статус пользователя</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="BG">Неизвестен статус на потребителя</entry>
 		<entry lang="POR">Estado do utilizador desconhecido</entry>
 		<entry lang="SPA">Estado del usuario desconocido</entry>	
@@ -137,7 +128,7 @@
 	<sentence mode="on" keyword="INVITATION_SENDING_ERROR">
 		<entry lang="ENG">There was an error while sending the invitation</entry>
 		<entry lang="RUS">Ошибка при отправке письма с приглашением</entry>
-		<entry lang="KAZ">Ошибка при отправке письма с приглашением</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="BG">Грешка по време на изпращането на покана</entry>
 		<entry lang="POR">Ocorreu um erro ao enviar o convite</entry>
 		<entry lang="SPA">Se produjo un error al enviar la invitación</entry>	
@@ -148,7 +139,7 @@
 	<sentence mode="on" keyword="subject_incorrect">
 		<entry lang="ENG">Subject text is too short</entry>
 		<entry lang="RUS">Текст темы слишком короткий</entry>
-		<entry lang="KAZ">Текст темы слишком короткий</entry>		
+		<entry lang="KAZ"></entry>		
 		<entry lang="BG">Темата е твърде кратък</entry>
 		<entry lang="POR">O texto do assunto é demasiado curto</entry>
 		<entry lang="SPA">El texto del asunto es demasiado corto</entry>	
@@ -156,7 +147,7 @@
 	<sentence mode="on" keyword="message_incorrect">
 		<entry lang="ENG">Message text is too short</entry>
 		<entry lang="RUS">Текст сообщения слишком короткий</entry>
-		<entry lang="KAZ">Текст сообщения слишком короткий</entry>
+		<entry lang="KAZ"></entry>
 		<entry lang="BG">Съобщението е твърде кратък</entry>
 		<entry lang="POR"></entry>
 		<entry lang="SPA"></entry>	
@@ -164,7 +155,7 @@
 	<sentence mode="on" keyword="captcha_incorrect">
 		<entry lang="ENG">Captcha is wrong</entry>
 		<entry lang="RUS">Каптча не верна</entry>
-		<entry lang="KAZ">Каптча не верна</entry>		
+		<entry lang="KAZ"></entry>		
 		<entry lang="BG">Каптча е наред</entry>\
 		<entry lang="POR"></entry>
 		<entry lang="SPA"></entry>	
@@ -172,7 +163,7 @@
 	<sentence mode="on" keyword="message_has_sent_succesfully">
 		<entry lang="ENG">The message has been sent </entry>
 		<entry lang="RUS">Сообщение не отправлено</entry>
-		<entry lang="KAZ">Сообщение не отправлено</entry>	
+		<entry lang="KAZ"></entry>	
 		<entry lang="BG">Съобщението е изпратено</entry>
 		<entry lang="POR">A mensagem foi enviada</entry>
 		<entry lang="SPA">El mensaje fue enviado</entry>	
@@ -182,7 +173,7 @@
 	<sentence mode="on" keyword="verifaction_message_has_been_sent">
 		<entry lang="ENG">Verification message has been sent. Check your email</entry>
 		<entry lang="RUS">Письмо для подтверждения адреса электронной почты было отпавлено. Проверьте вашу почту</entry>
-		<entry lang="KAZ">Письмо для подтверждения адреса электронной почты было отпавлено. Проверьте вашу почту</entry>		
+		<entry lang="KAZ"></entry>		
 		<entry lang="BG">Проверка съобщение е изпратено. Проверявате електронната си поща</entry>
 		<entry lang="POR">A mensagem de verificação foi enviada. Veja a sua caixa de email</entry>
 		<entry lang="SPA">El mensaje de verificación ha sido enviado. Consulte su buzón de email</entry>

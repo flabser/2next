@@ -64,7 +64,6 @@ public class AppService extends RestProvider {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response create(User user) throws ClassNotFoundException, SQLException, InstantiationException,
 			DatabasePoolException, IllegalAccessException {
-		System.out.println("POST " + user);
 		user.setRegDate(new Date());
 		user.lastURL = "";
 		user.setStatus(UserStatusType.REGISTERED);
@@ -77,7 +76,7 @@ public class AppService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") int id, User u) {
+	public Response update(@PathParam("id") long id, User u) {
 		System.out.println("PUT " + u);
 		User user = sysDatabase.getUser(id);
 		return Response.ok(user).build();
@@ -88,7 +87,7 @@ public class AppService extends RestProvider {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") int id) {
 		int res = sysDatabase.deleteApplicationProfile(id);
-		if (res == 1) {
+		if (res == 0) {
 			return Response.status(HttpServletResponse.SC_OK).build();
 		} else {
 			return Response.status(HttpServletResponse.SC_BAD_REQUEST).build();

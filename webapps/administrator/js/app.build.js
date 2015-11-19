@@ -232,7 +232,7 @@ AdminApp.User = DS.Model.extend({
     regDate: DS.attr('string'),
     status: DS.attr('string'),
     email: DS.attr('string'),
-    isSupervisor: DS.attr('boolean'),
+    supervisor: DS.attr('boolean'),
     dbLogin: DS.attr('string'),
     defaultDbPwd:  DS.attr('string'),
 
@@ -1698,7 +1698,7 @@ Ember.TEMPLATES["user"] = Ember.HTMLBars.template((function() {
       ["inline","select-native",[],["class","form-control","content",["subexpr","@mut",[["get","USER_STATUS",["loc",[null,[28,50],[28,61]]]]],[],[]],"value",["subexpr","@mut",[["get","model.status",["loc",[null,[28,68],[28,80]]]]],[],[]]],["loc",[null,[28,5],[28,82]]]],
       ["inline","input",[],["class","form-control","name","dblogin","value",["subexpr","@mut",[["get","model.dbLogin",["loc",[null,[33,75],[33,88]]]]],[],[]],"required",true],["loc",[null,[33,25],[33,104]]]],
       ["inline","input",[],["class","form-control","name","dbdefaultpwd","value",["subexpr","@mut",[["get","model.defaultDbPwd",["loc",[null,[37,80],[37,98]]]]],[],[]],"required",true],["loc",[null,[37,25],[37,114]]]],
-      ["inline","input",[],["type","checkbox","name","isSupervisor","checked",["subexpr","@mut",[["get","model.isSupervisor",["loc",[null,[41,77],[41,95]]]]],[],[]]],["loc",[null,[41,25],[41,97]]]],
+      ["inline","input",[],["type","checkbox","name","isSupervisor","checked",["subexpr","@mut",[["get","model.supervisor",["loc",[null,[41,77],[41,93]]]]],[],[]]],["loc",[null,[41,25],[41,95]]]],
       ["element","action",["save",["get","this",["loc",[null,[44,50],[44,54]]]]],[],["loc",[null,[44,34],[44,56]]]]
     ],
     locals: [],

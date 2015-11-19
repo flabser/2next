@@ -22,11 +22,18 @@ body {
     border-right: 1px solid #808080;
 }
 
+
 .view {
     background: none;
     box-shadow: none;
     margin-left: 150px;
 }
+
+
+table tr:hover{
+    background: #EFEFEF;
+}
+
 
 #toggle-all {
     position: absolute;
