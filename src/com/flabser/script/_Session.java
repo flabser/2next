@@ -128,7 +128,12 @@ public class _Session implements ICache {
 		}
 	}
 
-	public String getLang() {
+	public LanguageType getLang() {
+		return lang;
+
+	}
+
+	public String getLanguage() {
 		return lang.name();
 
 	}
@@ -138,7 +143,7 @@ public class _Session implements ICache {
 	}
 
 	public String getLocalizedWord(String word) {
-		return env.vocabulary.getWord(word, lang.name());
+		return env.vocabulary.getWord(word, lang);
 	}
 
 	public String getContexID() {

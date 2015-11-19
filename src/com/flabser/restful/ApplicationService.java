@@ -49,7 +49,7 @@ public class ApplicationService extends RestProvider {
 					throws ServletException {
 		Outcome res = new Outcome();
 		_Session session = getSession();
-		String lang = session.getLang();
+		String lang = session.getLanguage();
 
 		VisibiltyType vis = VisibiltyType.ONLY_MEMBERS;
 		User user = getSession().getCurrentUser();
@@ -98,7 +98,7 @@ public class ApplicationService extends RestProvider {
 	public Response unregApp(@FormParam("app") String appId) {
 		Outcome res = new Outcome();
 		_Session session = getSession();
-		String lang = session.getLang();
+		String lang = session.getLanguage();
 
 		User user = session.getUser();
 		ApplicationProfile ap = user.getApplicationProfile(appId);

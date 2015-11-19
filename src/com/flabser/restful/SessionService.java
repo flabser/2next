@@ -137,7 +137,7 @@ public class SessionService extends RestProvider {
 	public Response createSession(AppUser authUser) throws ClassNotFoundException, InstantiationException,
 			DatabasePoolException, UserException, IllegalAccessException, SQLException, URISyntaxException {
 		_Session session = getSession();
-		String lang = session.getLang();
+		String lang = session.getLanguage();
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		String login = authUser.getLogin();
 		Server.logger.infoLogEntry(login + " is attempting to signin");
@@ -199,7 +199,7 @@ public class SessionService extends RestProvider {
 		}
 		Outcome res = new Outcome();
 		_Session session = getSession();
-		String lang = session.getLang();
+		String lang = session.getLanguage();
 		res.addMessage(url, lang);
 		if (userSession != null) {
 			request.getSession(false).removeAttribute(EnvConst.SESSION_ATTR);
@@ -260,7 +260,7 @@ public class SessionService extends RestProvider {
 		Outcome res = new Outcome();
 		AppTemplate at = getAppTemplate();
 		_Session ses = getSession();
-		String lang = ses.getLang();
+		String lang = ses.getLanguage();
 		res.setMessages(at.vocabulary.getAllCaptions(lang));
 		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
 
@@ -273,8 +273,8 @@ public class SessionService extends RestProvider {
 		Outcome res = new Outcome();
 		AppTemplate at = getAppTemplate();
 		_Session ses = getSession();
-		String lang = ses.getLang();
-		String word = at.vocabulary.getWord(keyWord, lang);
+		String lang = ses.getLanguage();
+		String word = at.vocabulary.getWord(keyWord, LanguageType.valueOf(lang));
 		res.addMessage(word, keyWord);
 		return Response.status(HttpServletResponse.SC_OK).entity(res).build();
 
@@ -286,7 +286,7 @@ public class SessionService extends RestProvider {
 	public Response verify(@PathParam("code") String code) {
 		Outcome res = new Outcome();
 		_Session session = getSession();
-		String lang = session.getLang();
+		String lang = session.getLanguage();
 		User user = DatabaseFactory.getSysDatabase().getUserByVerifyCode(code);
 		if (user != null) {
 			if (user.getStatus() == UserStatusType.WAITING_FOR_VERIFYCODE
@@ -323,7 +323,7 @@ public class SessionService extends RestProvider {
 	public Response signUp(@FormParam("email") String email, @FormParam("pwd") String pwd) {
 		Outcome res = new Outcome();
 		_Session session = getSession();
-		String lang = session.getLang();
+		String lang = session.getLanguage();
 		if (!_Validator.checkEmail(email)) {
 			return Response.status(HttpServletResponse.SC_BAD_REQUEST)
 					.entity(res.setMessage(ServerServiceExceptionType.EMAIL_IS_INCORRECT, lang)).build();
@@ -379,7 +379,7 @@ public class SessionService extends RestProvider {
 		User user = DatabaseFactory.getSysDatabase().getUser(email);
 		Outcome res = new Outcome();
 		_Session session = getSession();
-		String lang = session.getLang();
+		String lang = session.getLanguage();
 
 		if (user != null) {
 			if (user.getStatus() == UserStatusType.REGISTERED) {

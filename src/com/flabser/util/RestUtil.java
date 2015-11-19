@@ -16,7 +16,7 @@ public class RestUtil {
 	public static Response processSimpleMessage(_Session session, String recipient, String email, String subj,
 			String msg, String captcha) {
 		Outcome res = new Outcome();
-		String lang = session.getLang();
+		String lang = session.getLanguage();
 		ArrayList<String> e = validateSimpleMailForm(email, subj, msg, captcha);
 
 		if (e.size() > 0) {

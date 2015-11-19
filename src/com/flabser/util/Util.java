@@ -281,7 +281,6 @@ public class Util {
 	public static String readFile(String file) {
 		BufferedReader reader = null;
 		try {
-			File f = new File(file);
 			reader = new BufferedReader(new FileReader(file));
 			String line = null;
 			StringBuilder stringBuilder = new StringBuilder();

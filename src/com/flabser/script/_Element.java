@@ -44,14 +44,6 @@ public class _Element implements _IContent {
 		this.value = value;
 	}
 
-	public void addElement(Object e) {
-		if (value == null) {
-			value = new ArrayList();
-		}
-		((ArrayList) value).add(e);
-
-	}
-
 	public void setValue(String value) {
 		this.value = value;
 	}

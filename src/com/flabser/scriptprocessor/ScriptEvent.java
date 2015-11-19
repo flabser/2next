@@ -40,26 +40,4 @@ public class ScriptEvent {
 		redirects.add(url);
 	}
 
-	public String getGroovyError(StackTraceElement stack[]) {
-		for (int i = 0; i < stack.length; i++) {
-			if (stack[i].getClassName().contains(this.getClass().getName())) {
-				return stack[i].getClassName() + " method=" + stack[i].getMethodName() + " > "
-						+ Integer.toString(stack[i].getLineNumber()) + "\n";
-			}
-		}
-		return "";
-	}
-
-	public String getWord(String word, Vocabulary vocabulary, String lang) {
-		try {
-			return vocabulary.getWord(word, lang);
-		} catch (Exception e) {
-			return word.toString();
-		}
-	}
-
-	public String getLocalizedWord(String word, String lang) {
-		return getWord(word, vocabulary, lang);
-	}
-
 }

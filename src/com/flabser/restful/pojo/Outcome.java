@@ -9,6 +9,7 @@ import com.flabser.env.Environment;
 import com.flabser.exception.ServerServiceExceptionType;
 import com.flabser.exception.ServerServiceWarningType;
 import com.flabser.exception.WebFormValueException;
+import com.flabser.localization.LanguageType;
 
 @JsonRootName("outcome")
 @JsonPropertyOrder({ "type", "warningId", "errorId", "messages" })
@@ -28,7 +29,7 @@ public class Outcome {
 	}
 
 	public Outcome addMessage(String message, String lang) {
-		this.message.put(lang, Environment.vocabulary.getWord(message, lang));
+		this.message.put(lang, Environment.vocabulary.getWord(message, LanguageType.valueOf(lang)));
 		return this;
 	}
 
@@ -49,14 +50,14 @@ public class Outcome {
 	public Outcome setMessage(ServerServiceExceptionType e, String lang) {
 		type = OutcomeType.ERROR;
 		errorId = e.name();
-		message.put(lang, Environment.vocabulary.getWord(e.name(), lang));
+		message.put(lang, Environment.vocabulary.getWord(e.name(), LanguageType.valueOf(lang)));
 		return this;
 	}
 
 	public Outcome setMessage(ServerServiceWarningType w, String lang) {
 		type = OutcomeType.WARNING;
 		warningId = w.name();
-		message.put(lang, Environment.vocabulary.getWord(w.name(), lang));
+		message.put(lang, Environment.vocabulary.getWord(w.name(), LanguageType.valueOf(lang)));
 		return this;
 	}
 

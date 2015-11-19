@@ -75,7 +75,7 @@ public class InvService extends RestProvider {
 		IEMail message = null;
 		Outcome result = new Outcome();
 		_Session session = getSession();
-		String lang = session.getLang();
+		String lang = session.getLanguage();
 
 		if (!_Validator.checkEmail(invitation.getEmail())) {
 			return Response.status(HttpServletResponse.SC_OK)
@@ -136,7 +136,6 @@ public class InvService extends RestProvider {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") long id) {
-		User user = sysDatabase.getUser(id);
 
 		return Response.ok().build();
 	}

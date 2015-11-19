@@ -73,7 +73,7 @@ public class Page {
 	}
 
 	public String getID() {
-		return "PAGE_" + rule.id + "_" + ses.getLang();
+		return "PAGE_" + rule.id + "_" + ses.getLanguage();
 
 	}
 

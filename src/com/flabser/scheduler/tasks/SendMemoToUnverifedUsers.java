@@ -22,7 +22,7 @@ public class SendMemoToUnverifedUsers implements Job {
 		ISystemDatabase sysDb = DatabaseFactory.getSysDatabase();
 		ArrayList<User> users = sysDb.getAllUsers("status=460", 0, 100);
 		for (User user : users) {
-
+			System.out.println(user);
 		}
 
 	}

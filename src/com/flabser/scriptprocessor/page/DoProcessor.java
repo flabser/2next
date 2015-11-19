@@ -31,7 +31,7 @@ public class DoProcessor {
 			SessionCooks cooks) {
 		vocabulary = env.vocabulary;
 		this.ses = ses;
-		lang = ses.getLang();
+		lang = ses.getLanguage();
 		if (formData instanceof MultivaluedMap) {
 			webFormData = new _WebFormDataRest((MultivaluedMap) formData);
 		} else {

@@ -19,7 +19,7 @@ public class Site extends _DoScript {
 				LanguageType l = LanguageType.valueOf(toLang.toUpperCase().trim());
 				session.setLang(l);
 				cooks.saveLang(l);
-			} else if (session.getLang() == null || session.getLang().isEmpty()) {
+			} else if (session.getLanguage() == null || session.getLanguage().isEmpty()) {
 				session.setLang(LanguageType.ENG);
 			}
 		} catch (Exception e) {

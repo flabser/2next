@@ -58,7 +58,7 @@ public class ProviderOutput {
 			queryString = "";
 		}
 
-		return xmlTextUTF8Header + "<request " + queryString + " lang=\"" + ses.getLang() + "\" id=\"" + id + "\" "
+		return xmlTextUTF8Header + "<request " + queryString + " lang=\"" + ses.getLanguage() + "\" id=\"" + id + "\" "
 				+ "useragent=\"" + browser + "\" userid=\"" + ses.getCurrentUser().getLogin() + "\" >" + output
 				+ "</request>";
 	}

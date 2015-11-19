@@ -9,7 +9,6 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.env.Environment;
 import com.flabser.log.LogFiles;
 import com.flabser.rule.Lang;
-import com.flabser.rule.Role;
 import com.flabser.server.Server;
 
 public class ServiceHandler {
@@ -59,9 +58,7 @@ public class ServiceHandler {
 		xmlFragment.append("</availablelangs>");
 
 		xmlFragment.append("<roles>");
-		for (Role role : env.globalSetting.roleCollection.getRolesMap().values()) {
-			// xmlFragment.append("<entry>" + role.toXML() + "</entry>");
-		}
+
 		xmlFragment.append("</roles>");
 
 		xmlFragment.append("<xslt>");

@@ -133,7 +133,7 @@ public class Provider extends HttpServlet {
 		fields.putAll(parMap);
 		Page page = new Page(env, ses, pageRule, request.getMethod(), (String) request.getAttribute("appid"),
 				new SessionCooks(request, response));
-		result.output.append(page.process(fields).toXML(ses.getLang()));
+		result.output.append(page.process(fields).toXML(ses.getLanguage()));
 		return result;
 	}
 

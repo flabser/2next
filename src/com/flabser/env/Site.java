@@ -6,6 +6,7 @@ import org.apache.catalina.Host;
 import org.apache.catalina.core.StandardHost;
 
 import com.flabser.apptemplate.AppTemplate;
+import com.flabser.localization.LanguageType;
 import com.flabser.script._Exception;
 import com.flabser.script._IContent;
 
@@ -73,7 +74,8 @@ public class Site implements _IContent {
 	@Override
 	public StringBuffer toXML(String lang) throws _Exception {
 		StringBuffer output = new StringBuffer(1000);
-		String sc = appTemlate.vocabulary.getWord(appTemlate.globalSetting.getDescription(), lang);
+		String sc = appTemlate.vocabulary.getWord(appTemlate.globalSetting.getDescription(),
+				LanguageType.valueOf(lang));
 		return output.append("<apptype>" + appBase + "</apptype><description>" + sc + "</description>");
 	}
 

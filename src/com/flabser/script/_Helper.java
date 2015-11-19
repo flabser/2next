@@ -1,57 +1,62 @@
 package com.flabser.script;
 
-import java.io.*;
-import java.net.URI;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipOutputStream;
+
 import com.flabser.util.Util;
 
 public class _Helper {
 
-	public static String getNormalizedRichText(String value){
+	public static String getNormalizedRichText(String value) {
 		return value.replace("&nbsp;", " ").replace("<br>", "<br/>").replace("&", "&amp;");
-	}	
+	}
 
-	public static String getDateAsString() throws _Exception{
+	public static String getDateAsString() throws _Exception {
 		return getDateAsString(new Date());
 	}
 
-	public static String getDateAsString(Date date) throws _Exception{
-		try{
+	public static String getDateAsString(Date date) throws _Exception {
+		try {
 			return Util.simpleDateFormat.format(date);
 		} catch (Exception e) {
-			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR,"Date has not parsed :getDateAsString(" + date + ")");
+			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR,
+					"Date has not parsed :getDateAsString(" + date + ")");
 		}
 	}
 
-	public static String getDateAsStringSilently(Date date) throws _Exception{
-		try{
+	public static String getDateAsStringSilently(Date date) throws _Exception {
+		try {
 			return Util.dateTimeFormat.format(date);
 		} catch (Exception e) {
 			return "";
 		}
 	}
 
-	public static String getDateAsStringShort() throws _Exception{
+	public static String getDateAsStringShort() throws _Exception {
 		return getDateAsStringShort(new Date());
 	}
 
-	public static String getDateAsStringShort(Date date) throws _Exception{
+	public static String getDateAsStringShort(Date date) throws _Exception {
 		try {
 			return Util.simpleDateFormat.format(date);
 		} catch (Exception e) {
-			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR,"Date has not parsed :getDateAsStringShort(" + date + ")");
+			throw new _Exception(_ExceptionType.SCRIPT_ENGINE_ERROR,
+					"Date has not parsed :getDateAsStringShort(" + date + ")");
 		}
 	}
 
-	public static String getDateAsStringShortSilently(Date date) throws _Exception{
+	public static String getDateAsStringShortSilently(Date date) throws _Exception {
 		try {
 			return Util.simpleDateFormat.format(date);
 		} catch (Exception e) {
@@ -59,21 +64,19 @@ public class _Helper {
 		}
 	}
 
-
-
-	public static Date convertStringToDate(String dateParam) throws _Exception{
+	public static Date convertStringToDate(String dateParam) throws _Exception {
 		int numPatterns = 6;
-		Pattern[] datePatterns = new Pattern [numPatterns];
+		Pattern[] datePatterns = new Pattern[numPatterns];
 		String[] dateFormats = new String[numPatterns];
-		boolean flag=true;
-		int i=0;
+		boolean flag = true;
+		int i = 0;
 		Matcher matcher;
 		SimpleDateFormat sdf = null;
 
 		datePatterns[0] = Pattern.compile("[0-9]{2}-[0-9]{2}-[0-9]{4}[ ]{1,}[0-9]{2}:[0-9]{2}:[0-9]{2}");
 		dateFormats[0] = "dd-MM-yyyy HH:mm:ss";
 		datePatterns[1] = Pattern.compile("[0-9]{2}-[0-9]{2}-[0-9]{4}");
-		dateFormats[1] = "dd-MM-yyyy";	
+		dateFormats[1] = "dd-MM-yyyy";
 		datePatterns[2] = Pattern.compile("[0-9]{2}.[0-9]{2}.[0-9]{4}[ ]{1,}[0-9]{2}:[0-9]{2}:[0-9]{2}");
 		dateFormats[2] = "dd.MM.yyyy HH:mm:ss";
 		datePatterns[3] = Pattern.compile("[0-9]{2}.[0-9]{2}.[0-9]{4}");
@@ -83,68 +86,46 @@ public class _Helper {
 		datePatterns[5] = Pattern.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}");
 		dateFormats[5] = "yyyy-MM-dd";
 
-		while ((i < numPatterns) && flag){
+		while (i < numPatterns && flag) {
 			matcher = datePatterns[i].matcher(dateParam);
 			if (matcher.matches()) {
 				sdf = new SimpleDateFormat(dateFormats[i]);
-				flag=false;
+				flag = false;
 			}
 			i++;
 		}
 
-
-		try{
+		try {
 			return sdf.parse(dateParam);
-		}catch(ParseException e){
-			throw new _Exception(_ExceptionType.FORMDATA_INCORRECT,"Parser error :convertStringToDate(" + dateParam + ")");
-		}catch(Exception e){
-			throw new _Exception(_ExceptionType.FORMDATA_INCORRECT,"Error :convertStringToDate(" + dateParam + ")");
+		} catch (ParseException e) {
+			throw new _Exception(_ExceptionType.FORMDATA_INCORRECT,
+					"Parser error :convertStringToDate(" + dateParam + ")");
+		} catch (Exception e) {
+			throw new _Exception(_ExceptionType.FORMDATA_INCORRECT, "Error :convertStringToDate(" + dateParam + ")");
 		}
 
 	}
 
-	public static String getRandomValue(){
-		return Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");	 
+	public static String getRandomValue() {
+		return Util.generateRandomAsText("QWERTYUIOPASDFGHJKLMNBVCXZ1234567890");
 	}
 
-
-	public static String removeHTMLTags(String content){
+	public static String removeHTMLTags(String content) {
 		return Util.removeHTMLTags(content);
 	}
 
-	public static int countMaxPage(int colCount, int pageSize){
-		float mp = (float)colCount/(float)pageSize;
+	public static int countMaxPage(int colCount, int pageSize) {
+		float mp = (float) colCount / (float) pageSize;
 		float d = Math.round(mp);
 
 		int maxPage = (int) d;
-		if (mp > d){
-			maxPage ++;
+		if (mp > d) {
+			maxPage++;
 		}
-		if (maxPage < 1) maxPage = 1;
+		if (maxPage < 1) {
+			maxPage = 1;
+		}
 		return maxPage;
-	}
-
-	public static void unzip(File zipfile, File directory) throws IOException {
-
-		ZipFile zfile = new ZipFile(zipfile);
-		Enumeration<? extends ZipEntry> entries = zfile.entries();
-
-		while (entries.hasMoreElements()) {
-			ZipEntry entry = entries.nextElement();
-			File file = new File(directory, entry.getName());
-			if (entry.isDirectory()) {
-				file.mkdirs();
-			} else {
-				file.getParentFile().mkdirs();
-				InputStream stream = zfile.getInputStream(entry);
-				try {
-					copy(stream, file);
-				}
-				finally {
-					stream.close();
-				}
-			}
-		}
 	}
 
 	public static String getMonth(int month) {
@@ -158,80 +139,6 @@ public class _Helper {
 			month_name = month_name.substring(0, month_name.length() - 1) + "я";
 		}
 		return month_name;
-	}
-
-	public static void changeData(File targetFile, Map<String, String> substitutionData) throws IOException {
-
-		BufferedReader br = null;
-		String docxTemplate = "";
-		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(targetFile), "UTF-8"));
-			String temp;
-			while ((temp = br.readLine()) != null)
-				docxTemplate = docxTemplate + temp;
-			br.close();
-			targetFile.delete();
-		}
-		catch (IOException e) {
-			br.close();
-			throw e;
-		}
-
-		Iterator substitutionDataIterator = substitutionData.entrySet().iterator();
-		while (substitutionDataIterator.hasNext()) {
-			Map.Entry<String, String> pair = (Map.Entry<String, String>) substitutionDataIterator.next();
-			if (docxTemplate.contains(pair.getKey())) {
-				if (pair.getValue() != null)
-					docxTemplate = docxTemplate.replace(pair.getKey(), pair.getValue());
-				else
-					docxTemplate = docxTemplate.replace(pair.getKey(), "NEDOSTAJE");
-			}
-		}
-
-		FileOutputStream fos = null;
-		try {
-			fos = new FileOutputStream(targetFile);
-			fos.write(docxTemplate.getBytes("UTF-8"));
-			fos.close();
-		}
-		catch (IOException e) {
-			fos.close();
-			throw e;
-		}
-	}
-
-	public static void zip(File directory, File zipfile) throws IOException {
-
-		URI base = directory.toURI();
-		Deque<File> queue = new LinkedList<File>();
-		queue.push(directory);
-		OutputStream out = new FileOutputStream(zipfile);
-		Closeable res = out;
-
-		try {
-			ZipOutputStream zout = new ZipOutputStream(out);
-			res = zout;
-			while (!queue.isEmpty()) {
-				directory = queue.pop();
-				for (File kid : directory.listFiles()) {
-					String name = base.relativize(kid.toURI()).getPath();
-					if (kid.isDirectory()) {
-						queue.push(kid);
-						name = name.endsWith("/") ? name : name + "/";
-						zout.putNextEntry(new ZipEntry(name));
-					} else {
-						if (kid.getName().contains(".docx"))
-							continue;
-						zout.putNextEntry(new ZipEntry(name));
-						copy(kid, zout);
-						zout.closeEntry();
-					}
-				}
-			}
-		}
-		finally {
-			res.close();
-		}
 	}
 
 	public static void copy(InputStream stream, OutputStream out) throws IOException {
@@ -265,4 +172,3 @@ public class _Helper {
 	}
 
 }
-

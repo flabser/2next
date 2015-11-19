@@ -18,7 +18,7 @@ public class Welcome extends _DoScript {
 		try {
 			if (toLang.length() > 0) {
 				session.setLang(LanguageType.valueOf(toLang.toUpperCase()));
-			} else if (session.getLang() == null || session.getLang().isEmpty()) {
+			} else if (session.getLanguage() == null || session.getLanguage().isEmpty()) {
 				session.setLang(LanguageType.ENG);
 			}
 		} catch (Exception e) {

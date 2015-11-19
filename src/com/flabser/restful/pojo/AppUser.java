@@ -12,6 +12,7 @@ import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.Environment;
 import com.flabser.exception.AuthFailedExceptionType;
+import com.flabser.localization.LanguageType;
 import com.flabser.users.AuthModeType;
 import com.flabser.users.UserStatusType;
 
@@ -109,7 +110,7 @@ public class AppUser {
 	}
 
 	public void setError(AuthFailedExceptionType error, String lang) {
-		this.error = Environment.vocabulary.getWord(error.name(), lang);
+		this.error = Environment.vocabulary.getWord(error.name(), LanguageType.valueOf(lang));
 	}
 
 	public String getRedirect() {
