@@ -10,7 +10,7 @@ import com.flabser.localization.Vocabulary;
 import cashtracker.dao.TagDAO;
 import task.model.Tag;
 
-public class InitTags implements IInitialData<Tag, TagDAO> {
+public class PostDefaultTags implements IInitialData<Tag, TagDAO> {
 
 	@Override
 	public List<Tag> getData(LanguageType lang, Vocabulary vocabulary) {
