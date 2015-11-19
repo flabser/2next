@@ -12,135 +12,135 @@
 
 	<!-- errors -->
 	<sentence mode="on" keyword="USER_EXISTS">
-		<entry lang="ENG">User was already registered</entry>
+		<entry lang="ENG">User is already registered</entry>
 		<entry lang="RUS">Пользователь уже зарегестрирован</entry>
 		<entry lang="KAZ">Пользователь уже зарегестрирован</entry>
 		<entry lang="BG">Потребителят вече е регистриран</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">Utilizador já registado</entry>
+		<entry lang="SPA">Usuario ya registrado</entry>	
 	</sentence>
 	<sentence mode="on" keyword="EMAIL_IS_INCORRECT">
 		<entry lang="ENG">Incorrect email</entry>
 		<entry lang="RUS">Неверный электронный почтовый адрес</entry>
 		<entry lang="KAZ">Неверный электронный почтовый адрес</entry>
 		<entry lang="BG">Неправилно електронна поща</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">Email incorreto</entry>
+		<entry lang="SPA">Email incorrecto</entry>	
 	</sentence>
 	<sentence mode="on" keyword="WEAK_PASSWORD">
 		<entry lang="ENG">Weak password</entry>
 		<entry lang="RUS">Слабый пароль</entry>
 		<entry lang="KAZ">Слабый пароль</entry>
 		<entry lang="BG">Слаба парола</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">Palavra-passe fraca</entry>
+		<entry lang="SPA">Contraseña débil</entry>	
 	</sentence>
 	<sentence mode="on" keyword="SERVER_ERROR">
 		<entry lang="ENG">Server error</entry>
 		<entry lang="RUS">Ошибка серевера</entry>
 		<entry lang="KAZ">Ошибка серевера</entry>
 		<entry lang="BG">Грешка в сървъра</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">Erro do servidor</entry>
+		<entry lang="SPA">Error del servidor</entry>	
 	</sentence>
 	<sentence mode="on" keyword="USER_NOT_FOUND">
-		<entry lang="ENG">User has not found</entry>
+		<entry lang="ENG">User not found</entry>
 		<entry lang="RUS">Пользователь не найден</entry>
 		<entry lang="KAZ">Пользователь не найден</entry>
 		<entry lang="BG">Потребителят все още не е намерено</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">Utilizador não encontrado</entry>
+		<entry lang="SPA">Usuario no encontrado</entry>	
 	</sentence>
 	<sentence mode="on" keyword="FORMDATA_INCORRECT">
 		<entry lang="ENG">Form data is incorrect</entry>
 		<entry lang="RUS">Значение формы не корректно</entry>
 		<entry lang="KAZ">Значение формы не корректно</entry>	
 		<entry lang="BG">Данни форми е неправилно</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">Dados de formulário incorretos</entry>
+		<entry lang="SPA">Datos de formulario incorrectos</entry>	
 	</sentence>
 	<sentence mode="on" keyword="MESSAGE_HAS_NOT_SENT">
 		<entry lang="ENG">The message has not been send</entry>
 		<entry lang="RUS">Сообщение не отправлено</entry>
 		<entry lang="KAZ">Сообщение не отправлено</entry>	
 		<entry lang="BG">В съобщението не е било изпратите</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">A mensagem não foi enviada</entry>
+		<entry lang="SPA">El mensaje no ha sido enviado</entry>	
 	</sentence>
 	<sentence mode="on" keyword="UNKNOWN_STATUS">
 		<entry lang="ENG">Unknown status</entry>
 		<entry lang="RUS">Статус не определен</entry>
 		<entry lang="KAZ">Статус не определен</entry>	
 		<entry lang="BG">Неизвестен статус</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>		
+		<entry lang="POR">Estado desconhecido</entry>
+		<entry lang="SPA">Estado desconocido</entry>		
 	</sentence>
 	<sentence mode="on" keyword="PASSWORD_OR_LOGIN_INCORRECT">
 		<entry lang="ENG">The password or login is incorrect</entry>
 		<entry lang="RUS">Неверный пароль или имя пользователя</entry>
 		<entry lang="KAZ"></entry>	
 		<entry lang="BG">Парола или потребителско името е неправилно</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>		
+		<entry lang="POR">Palavra-passe ou nome de utilizador incorreto</entry>
+		<entry lang="SPA">Contraseña o nombre de usuario incorrecto</entry>		
 	</sentence>
 	<sentence mode="on" keyword="INCOMPLETE_REGISTRATION">
-		<entry lang="ENG">The registration was incompleted. Probably you have not verifed your email</entry>
+		<entry lang="ENG">The registration is incomplete. Probably you have not verified your email</entry>
 		<entry lang="RUS">Регистрация не закончена, возможно вы не подтвердили свой электронны адрес</entry>
 		<entry lang="KAZ">Статус не определен</entry>	
 		<entry lang="BG">Неизвестен статус</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>		
+		<entry lang="POR">O registo não está completo. Provavelmente ainda não verificou o seu endereço de email</entry>
+		<entry lang="SPA">El registro no se ha concluido. Es posible que todavía no haya confirmado su dirección de email</entry>		
 	</sentence>
 	<sentence mode="on" keyword="USER_WAS_DELETED">
-		<entry lang="ENG">The user accpunt was deleted</entry>
+		<entry lang="ENG">The user account was deleted</entry>
 		<entry lang="RUS">Профиль пользователя был удален</entry>
 		<entry lang="KAZ"></entry>	
 		<entry lang="BG"></entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>		
+		<entry lang="POR">A conta do utilizador foi eliminada</entry>
+		<entry lang="SPA">La cuenta del usuario ha sido borrada</entry>		
 	</sentence>
 	
 	
 	<!-- warnings -->	
 	<sentence mode="on" keyword="VERIFY_EMAIL_SENDING_ERROR">
-		<entry lang="ENG">There was error during sending the verification email</entry>
+		<entry lang="ENG">There was an error while sending the verification email</entry>
 		<entry lang="RUS">Ошибка при отправке письма с кодом верификации</entry>
 		<entry lang="KAZ">Ошибка при отправке письма с кодом верификации</entry>	
 		<entry lang="BG">Имаше грешка при изпращане на имейл за потвърждение</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">Ocorreu um erro ao enviar a mensagem de verificação</entry>
+		<entry lang="SPA">Se produjo un error al enviar el mensaje de verificación</entry>	
 	</sentence>
 	<sentence mode="on" keyword="RESET_PASSWORD_SENDING_ERROR">
-		<entry lang="ENG">There was error during sending the email for reset your password</entry>
+		<entry lang="ENG">There was an error while sending the email to reset your password</entry>
 		<entry lang="RUS">Ошибка при отправке письма для сброса пароля</entry>
 		<entry lang="KAZ">Ошибка при отправке письма для сброса пароля</entry>
 		<entry lang="BG">Имаше грешка по време на изпращането на имейла за възстановите паролата си</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">Ocorreu um erro ao enviar a mensagem para reinicializar a sua palavra-passe</entry>
+		<entry lang="SPA">Se produjo un error al enviar el mensaje con el restablecimiento de la contraseña</entry>	
 	</sentence>
 	<sentence mode="on" keyword="UNKNOWN_USER_STATUS">
 		<entry lang="ENG">Unknown user status</entry>
 		<entry lang="RUS">Не известный статус пользователя</entry>
 		<entry lang="KAZ">Не известный статус пользователя</entry>
 		<entry lang="BG">Неизвестен статус на потребителя</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">Estado do utilizador desconhecido</entry>
+		<entry lang="SPA">Estado del usuario desconocido</entry>	
 	</sentence>
 	<sentence mode="on" keyword="RESET_PASSWORD_ALREADY_SENT">
-		<entry lang="ENG">Reset password has already sent</entry>
+		<entry lang="ENG">Password reset was already sent</entry>
 		<entry lang="RUS">Пароль сброса был отправлен</entry>
 		<entry lang="KAZ"></entry>	
 		<entry lang="BG"></entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">A reinicialização da palavra-passe já foi enviada</entry>
+		<entry lang="SPA">El restablecimiento de la contraseña ya se ha enviado</entry>	
 	</sentence>
 	<sentence mode="on" keyword="INVITATION_SENDING_ERROR">
-		<entry lang="ENG">There is error during sending a invitation</entry>
+		<entry lang="ENG">There was an error while sending the invitation</entry>
 		<entry lang="RUS">Ошибка при отправке письма с приглашением</entry>
 		<entry lang="KAZ">Ошибка при отправке письма с приглашением</entry>
 		<entry lang="BG">Грешка по време на изпращането на покана</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">Ocorreu um erro ao enviar o convite</entry>
+		<entry lang="SPA">Se produjo un error al enviar la invitación</entry>	
 	</sentence>
 	
 	
@@ -150,8 +150,8 @@
 		<entry lang="RUS">Текст темы слишком короткий</entry>
 		<entry lang="KAZ">Текст темы слишком короткий</entry>		
 		<entry lang="BG">Темата е твърде кратък</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">O texto do assunto é demasiado curto</entry>
+		<entry lang="SPA">El texto del asunto es demasiado corto</entry>	
 	</sentence>	
 	<sentence mode="on" keyword="message_incorrect">
 		<entry lang="ENG">Message text is too short</entry>
@@ -174,17 +174,17 @@
 		<entry lang="RUS">Сообщение не отправлено</entry>
 		<entry lang="KAZ">Сообщение не отправлено</entry>	
 		<entry lang="BG">Съобщението е изпратено</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">A mensagem foi enviada</entry>
+		<entry lang="SPA">El mensaje fue enviado</entry>	
 	</sentence>	
 
 	<!-- sign up processing -->
 	<sentence mode="on" keyword="verifaction_message_has_been_sent">
-		<entry lang="ENG">Verifaction message has been sent. Check your email</entry>
+		<entry lang="ENG">Verification message has been sent. Check your email</entry>
 		<entry lang="RUS">Письмо для подтверждения адреса электронной почты было отпавлено. Проверьте вашу почту</entry>
 		<entry lang="KAZ">Письмо для подтверждения адреса электронной почты было отпавлено. Проверьте вашу почту</entry>		
 		<entry lang="BG">Проверка съобщение е изпратено. Проверявате електронната си поща</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>
+		<entry lang="POR">A mensagem de verificação foi enviada. Veja a sua caixa de email</entry>
+		<entry lang="SPA">El mensaje de verificación ha sido enviado. Consulte su buzón de email</entry>
 	</sentence>
 </vocabulary>
