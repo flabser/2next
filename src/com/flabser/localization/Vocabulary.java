@@ -38,6 +38,7 @@ public class Vocabulary {
 		}
 	}
 
+	@Deprecated
 	public String getWord(String keyWord, String lang) {
 		Sentence sent = words.get(keyWord);
 		if (sent == null) {
@@ -46,6 +47,22 @@ public class Vocabulary {
 			return keyWord;
 		} else {
 			SentenceCaption caption = sent.words.get(lang);
+			if (caption != null) {
+				return caption.word;
+			} else {
+				return keyWord;
+			}
+		}
+	}
+
+	public String getWord(String keyWord, LanguageType lang) {
+		Sentence sent = words.get(keyWord);
+		if (sent == null) {
+			logger.warningLogEntry("translation of word \"" + keyWord + "\" to " + lang
+					+ ", has not found in vocabulary (" + templateType + ")");
+			return keyWord;
+		} else {
+			SentenceCaption caption = sent.words.get(lang.name());
 			if (caption != null) {
 				return caption.word;
 			} else {

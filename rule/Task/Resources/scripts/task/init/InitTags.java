@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.flabser.dataengine.deploing.IInitialData;
+import com.flabser.localization.LanguageType;
+import com.flabser.localization.Vocabulary;
 
 import cashtracker.dao.TagDAO;
 import task.model.Tag;
@@ -11,10 +13,10 @@ import task.model.Tag;
 public class InitTags implements IInitialData<Tag, TagDAO> {
 
 	@Override
-	public List<Tag> getData() {
+	public List<Tag> getData(LanguageType lang, Vocabulary vocabulary) {
 		List<Tag> entities = new ArrayList<Tag>();
 		Tag t = new Tag();
-		t.setName("favourite");
+		t.setName(vocabulary.getWord("favorite", lang));
 		entities.add(t);
 		return entities;
 	}

@@ -179,12 +179,6 @@ public class Util {
 		}
 	}
 
-	public static void main(String[] args) {
-
-		File file = getRandomFileIn(new File("C:\\Users\\k-zon_000\\Pictures"));
-		System.out.println(file);
-	}
-
 	public static String removeHTMLTags(String text) {
 		if (text == null) {
 			return "";

@@ -74,7 +74,7 @@ public class SystemDatabase extends DatabaseCore implements ISystemDatabase {
 			User sysUser = new User();
 			sysUser.setPwd("123");
 			sysUser.setSupervisor(true);
-			sysUser.setLogin(User.SYSTEM_USER + "@flabser.com");
+			sysUser.setLogin(User.SYSTEM_USER);
 			sysUser.setUserName("system");
 			sysUser.setRegDate(new Date());
 			sysUser.setStatus(UserStatusType.REGISTERED);

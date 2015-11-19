@@ -8,20 +8,23 @@ import com.flabser.apptemplate.AppTemplate;
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.jpa.IAppEntity;
 import com.flabser.dataengine.jpa.IDAO;
+import com.flabser.localization.LanguageType;
 import com.flabser.script._Session;
 import com.flabser.users.User;
 
-public class FillInitialData {
+public class PostInitialData {
 	private _Session ses;
+	private AppTemplate template;
 
-	public FillInitialData(AppTemplate template, String contextID) {
+	public PostInitialData(AppTemplate template, String contextID) {
 		User user = DatabaseFactory.getSysDatabase().getUser(User.SYSTEM_USER);
 		ses = new _Session(template, contextID, user);
+		this.template = template;
 
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void process() {
+	public void process(String lang) {
 		JavaClassFinder classFinder = new JavaClassFinder();
 		List<Class<? extends IInitialData>> populatingClassesList = classFinder
 				.findAllMatchingTypes(IInitialData.class);
@@ -31,7 +34,7 @@ public class FillInitialData {
 				IInitialData<IAppEntity, IDAO> pcInstance;
 				try {
 					pcInstance = (IInitialData) Class.forName(populatingClass.getCanonicalName()).newInstance();
-					List<IAppEntity> entities = pcInstance.getData();
+					List<IAppEntity> entities = pcInstance.getData(LanguageType.valueOf(lang), template.vocabulary);
 					Class<?> daoClass = pcInstance.getDAO();
 					for (IAppEntity entity : entities) {
 						IDAO dao = getDAOInstance(daoClass, entity.getClass());

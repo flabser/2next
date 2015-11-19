@@ -34,7 +34,7 @@ public class User {
 	// TODO need to save in sys database
 	public LanguageType preferredLang = LanguageType.ENG;
 	public final static String ANONYMOUS_USER = "anonymous";
-	public final static String SYSTEM_USER = "system";
+	public final static String SYSTEM_USER = "system@flabser.com";
 	private HashMap<String, HashMap<String, ApplicationProfile>> applicationsMap = new HashMap<>();
 	private HashMap<String, ApplicationProfile> applications = new HashMap<>();
 	private transient ISystemDatabase sysDatabase;
