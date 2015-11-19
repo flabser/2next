@@ -46,7 +46,7 @@ public class Unsecure extends ValveBase {
 				if (request.getMethod().equalsIgnoreCase("POST")) {
 					HttpSession jses = request.getSession(true);
 					jses.setAttribute(EnvConst.SESSION_ATTR,
-							new _Session(site.getAppTemlate(), jses, ru.getAppID(), new User()));
+							new _Session(site.getAppTemlate(), ru.getAppID(), new User()));
 					getNext().getNext().invoke(request, response);
 				} else {
 					((Secure) getNext()).invoke(request, response, ru, site);
@@ -104,7 +104,7 @@ public class Unsecure extends ValveBase {
 	private _Session getAnonymousSes(Request request, Response response, HttpSession jses, AppTemplate env,
 			String appID) {
 		SessionCooks cooks = new SessionCooks(request, response);
-		_Session ses = new _Session(env, jses, appID, new User());
+		_Session ses = new _Session(env, appID, new User());
 		ses.setLang(LanguageType.valueOf(cooks.getCurrentLang()));
 		return ses;
 	}

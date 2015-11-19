@@ -171,6 +171,11 @@ public class ApplicationProfile implements _IContent {
 									addRole(role.name, role.description);
 								}
 							}
+
+							// PopulatingProcFinder p = new
+							// PopulatingProcFinder(app, appID);
+							// p.process();
+
 						} else {
 							setStatus(ApplicationStatusType.DEPLOING_FAILED);
 							result = false;

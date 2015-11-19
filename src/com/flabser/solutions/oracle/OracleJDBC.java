@@ -16,8 +16,11 @@ public class OracleJDBC {
 		}
 		Connection connection = null;
 		try {
-			String url = "jdbc:oracle:thin:@192.168.1.97:1521:XE";
-			connection = DriverManager.getConnection(url, "SYSTEM", "aida22");
+			// String url = "jdbc:oracle:thin:@192.168.1.97:1521:XE";
+			// connection = DriverManager.getConnection(url, "SYSTEM",
+			// "aida22");
+			String url = "jdbc:oracle:thin:@172.16.251.12:1521:dbserver";
+			connection = DriverManager.getConnection(url, "SYSTEM", "Pa$$w0rd");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return;

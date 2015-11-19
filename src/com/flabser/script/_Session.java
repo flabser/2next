@@ -32,11 +32,10 @@ public class _Session implements ICache {
 	private AuthModeType authMode;
 	private LanguageType lang;
 	private HashMap<String, _Page> cache = new HashMap<String, _Page>();
-	private HttpSession jses;
 	private String contexID;
 	public ArrayList<_Session> descendants = new ArrayList<_Session>();
 
-	public _Session(AppTemplate env, HttpSession jses, String contextID, User user) {
+	public _Session(AppTemplate env, String contextID, User user) {
 		this.env = env;
 		currentUser = user;
 		this.contexID = contextID;
@@ -142,10 +141,6 @@ public class _Session implements ICache {
 		return env.vocabulary.getWord(word, lang.name());
 	}
 
-	public HttpSession getJses() {
-		return jses;
-	}
-
 	public String getContexID() {
 		return contexID;
 	}
@@ -185,7 +180,7 @@ public class _Session implements ICache {
 	}
 
 	public _Session clone(AppTemplate env, HttpSession jses, String contextID) {
-		_Session newSes = new _Session(env, jses, contextID, currentUser);
+		_Session newSes = new _Session(env, contextID, currentUser);
 		newSes.authMode = AuthModeType.LOGIN_THROUGH_TOKEN;
 		newSes.setLang(lang);
 		addDescendant(newSes);

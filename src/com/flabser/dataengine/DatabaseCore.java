@@ -83,15 +83,4 @@ public abstract class DatabaseCore {
 		return factory;
 	}
 
-	public void generatePersistStorage() {
-		// properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "");
-		// properties.put(PersistenceUnitProperties.DDL_GENERATION,
-		// "drop-and-create-tables");
-		// properties.put(PersistenceUnitProperties.CREATE_JDBC_DDL_FILE,
-		// "createDDL.jdbc");
-		// properties.put(PersistenceUnitProperties.DROP_JDBC_DDL_FILE,
-		// "dropDDL.jdbc");
-		// properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE,
-		// "both");
-	}
 }

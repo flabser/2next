@@ -41,8 +41,7 @@ public class ApplicationDatabase implements IApplicationDatabase {
 			try {
 				Statement st = conn.createStatement();
 				String sql = "CREATE DATABASE \"" + name + "\" WITH OWNER = " + dbUser
-						+ " ENCODING = 'UTF8' TABLESPACE = pg_default"
-						+ " LC_COLLATE = 'English_United States.1252' LC_CTYPE = 'English_United States.1252' CONNECTION LIMIT = -1";
+						+ " ENCODING = 'UTF8' TABLESPACE = pg_default CONNECTION LIMIT = -1";
 				st.executeUpdate(sql);
 				st.executeUpdate("GRANT ALL privileges ON DATABASE \"" + name + "\" TO " + dbUser);
 				st.close();
