@@ -46,7 +46,6 @@
 
 .entry-captions>span {
     display: inline-block;
-    /* outline: 1px solid #ccc; */
     overflow: hidden;
     padding: 0 3px;
 }

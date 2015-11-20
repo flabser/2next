@@ -25,7 +25,20 @@
                         {{/each}}
                     </div>
                 </div>
-                <div class="form-group {{if errors.dueDate 'has-error'}}">
+                <div class="form-group {{if errors.startDate 'has-error'}}">
+                    <div class="control-label">
+                        {{t 'start_date'}}
+                    </div>
+                    <div class="controls">
+                        {{pikaday-input
+                            value=issue.startDate
+                            format='YYYY-MM-DD'
+                            class='span2'}}
+                        {{#each errors.startDate as |error|}}
+                            <div class="error-message">{{error.message}}</div>
+                        {{/each}}
+                    </div>
+                </div><div class="form-group {{if errors.dueDate 'has-error'}}">
                     <div class="control-label">
                         {{t 'due_date'}}
                     </div>
@@ -75,7 +88,12 @@
         </section>
         <footer class="content-actions">
             <button class="btn" {{action 'close'}}>{{t 'cancel'}}</button>
-            <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
+            {{#if issue.isNew}}
+                <button type="submit" class="btn btn-primary">{{t 'issue_add'}}</button>
+            {{else}}
+                <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
+                <button class="btn btn-close-issue" {{action 'closeIssue'}}>{{t 'issue_close'}}</button>
+            {{/if}}
         </footer>
     </form>
 </div>

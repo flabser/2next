@@ -2,7 +2,7 @@ import IssueRoute from './issue';
 
 export default IssueRoute.extend({
     model: function(params, transition) {
-        var milestoneDate = new Date();
+        var dueDate = new Date();
         /*if (transition.queryParams) {
             if (transition.queryParams.at === 'today') {
 
@@ -14,7 +14,7 @@ export default IssueRoute.extend({
         }*/
 
         return this.store.createRecord('issue', {
-            milestone: milestoneDate
+            dueDate: dueDate
         });
     }
 });

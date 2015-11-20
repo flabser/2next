@@ -7,6 +7,10 @@ export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
             embedded: 'always'
         },
         tags: {
+            embedded: 'always',
+            serialize: 'ids'
+        },
+        comments: {
             embedded: 'always'
         },
         children: {
@@ -20,9 +24,11 @@ export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
 
         var data = this.serialize(snapshot, options);
 
-        data.tags = snapshot.hasMany('tags', {
-            ids: true
-        });
+        delete data['comments'];
+        delete data['attachments'];
+        delete data['author'];
+        delete data['regDate'];
+        delete data['children'];
 
         hash[type.modelName] = data;
     },
@@ -33,5 +39,5 @@ export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
 
         key = this.keyForRelationship ? this.keyForRelationship(key, 'belongsTo', 'serialize') : key;
         json[key] = Em.isNone(belongsTo) ? belongsTo : belongsTo.record.id;
-    },
+    }
 });

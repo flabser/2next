@@ -3,6 +3,9 @@
         <button class="entry-action action-delete" {{action 'deleteIssue' issue}}>
             <i class="fa fa-trash" />
         </button>
+        <span class="entry-action entry-action-toggle">
+            <i class="fa fa-ellipsis-v" />
+        </span>
     </div>
     {{#tn-swipe-entry class='entry'}}
         {{#link-to 'issues.edit' issue class='entry-link'}}

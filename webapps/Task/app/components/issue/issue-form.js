@@ -10,6 +10,11 @@ export default Em.Component.extend(ModelFormMixin, {
     close: 'transitionToIssues',
 
     actions: {
+        closeIssue: function() {
+            this.set('issue.status', 'CLOSE');
+            this.send('save');
+        },
+
         save: function() {
             if (this.validate()) {
                 this.sendAction('saveIssue', this.get('issue'));

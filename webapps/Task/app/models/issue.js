@@ -2,13 +2,26 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
     status: DS.attr('string', {
-        defaultValue: 'DRAFT'
+        defaultValue: () => 'DRAFT'
     }),
     priority: DS.attr('number', {
-        defaultValue: 4
+        defaultValue: () => 4
     }),
     assignee: DS.belongsTo('user'),
-    dueDate: DS.attr('date'),
+    startDate: DS.attr('date', {
+        defaultValue: () => new Date()
+    }),
+    dueDate: DS.attr('date', {
+        defaultValue: () => new Date()
+    }),
     body: DS.attr('string'),
-    tags: DS.hasMany('tag')
+    tags: DS.hasMany('tag'),
+    comments: DS.hasMany('comment'),
+    attachments: DS.hasMany('attachment'),
+    author: DS.belongsTo('user'),
+    regDate: DS.attr('date'),
+    parent: DS.belongsTo('issue'),
+    children: DS.hasMany('issue', {
+        inverse: 'parent'
+    })
 });
