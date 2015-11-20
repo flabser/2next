@@ -16,7 +16,9 @@
 	</persistence-unit>
 	<persistence-unit name="Task" transaction-type="RESOURCE_LOCAL">
 		<class>task.model.Issue</class>
+		<class>task.model.Comment</class>
 		<class>task.model.Tag</class>
+		<class>task.model.Attachment</class>
 		<class>task.model.constants.converter.IssuePriorityConverter</class>
 		<shared-cache-mode>NONE</shared-cache-mode>
 	</persistence-unit>

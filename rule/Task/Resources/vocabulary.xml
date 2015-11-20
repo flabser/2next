@@ -52,6 +52,13 @@
 		<entry lang="BG">Нови задача</entry>
 		<entry lang="POR"></entry>
 	</sentence>
+	<sentence mode="on" keyword="issue_add">
+		<entry lang="ENG">Add issue</entry>
+		<entry lang="RUS">Добавить задачу</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG"></entry>
+		<entry lang="POR"></entry>
+	</sentence>
 	<sentence mode="on" keyword="inbox">
 		<entry lang="ENG">Inbox</entry>
 		<entry lang="RUS">Входящие</entry>
@@ -359,6 +366,12 @@
 		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Date</entry>
 		<entry lang="BG">Дата</entry>
+	</sentence>
+	<sentence mode="on" keyword="start_date">
+		<entry lang="RUS">Дата начала</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="ENG">Start date</entry>
+		<entry lang="BG"></entry>
 	</sentence>
 	<sentence mode="on" keyword="due_date">
 		<entry lang="RUS">Завершить до</entry>

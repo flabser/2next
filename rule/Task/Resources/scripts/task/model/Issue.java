@@ -1,11 +1,11 @@
 package task.model;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -29,6 +29,7 @@ import com.flabser.dataengine.jpa.AppEntity;
 
 import task.model.constants.IssuePriority;
 import task.model.constants.IssueStatus;
+import task.model.constants.converter.IssuePriorityConverter;
 import task.serializers.JsonDateSerializer;
 
 
@@ -44,12 +45,13 @@ public class Issue extends AppEntity {
 	private Issue parent;
 
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
-	private Set <Issue> children;
+	private List <Issue> children;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 16)
 	private IssueStatus status = IssueStatus.DRAFT;
 
+	@Convert(converter = IssuePriorityConverter.class)
 	@Enumerated(EnumType.ORDINAL)
 	@Column(nullable = false)
 	private IssuePriority priority = IssuePriority.NORMAL;
@@ -68,10 +70,16 @@ public class Issue extends AppEntity {
 	@JoinTable(name = "issue_tags", joinColumns = {
 			@JoinColumn(name = "issue_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "tag_id", referencedColumnName = "id") })
-	private Set <Tag> tags;
+	private List <Tag> tags;
 
 	@Column(length = 2000)
 	private String body;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "issue_comments", joinColumns = {
+			@JoinColumn(name = "issue_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "comment_id", referencedColumnName = "id") })
+	private List <Comment> comments;
 
 	public Issue getParent() {
 		return parent;
@@ -81,11 +89,11 @@ public class Issue extends AppEntity {
 		this.parent = parent;
 	}
 
-	public Set <Issue> getChildren() {
+	public List <Issue> getChildren() {
 		return children;
 	}
 
-	public void setChildren(Set <Issue> children) {
+	public void setChildren(List <Issue> children) {
 		this.children = children;
 	}
 
@@ -107,7 +115,7 @@ public class Issue extends AppEntity {
 
 	@JsonGetter("priority")
 	public int getPriorityOrdinal() {
-		return priority.ordinal();
+		return priority.toValue();
 	}
 
 	@JsonSetter("priority")
@@ -139,18 +147,18 @@ public class Issue extends AppEntity {
 		this.dueDate = dueDate;
 	}
 
-	public Set <Tag> getTags() {
+	public List <Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(Set <Tag> tags) {
+	public void setTags(List <Tag> tags) {
 		this.tags = tags;
 	}
 
 	@JsonSetter("tags")
 	public void setTagsId(List <Long> ids) {
 		if (ids != null) {
-			Set <Tag> _tags = new HashSet <Tag>();
+			List <Tag> _tags = new ArrayList <Tag>();
 			ids.forEach(id -> {
 				Tag tag = new Tag();
 				tag.setId(id);
@@ -168,6 +176,14 @@ public class Issue extends AppEntity {
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	public List <Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List <Comment> comments) {
+		this.comments = comments;
 	}
 
 	@Override

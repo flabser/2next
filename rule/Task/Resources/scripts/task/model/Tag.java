@@ -1,6 +1,6 @@
 package task.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +32,7 @@ public class Tag extends AppEntity {
 	private Tag parent;
 
 	@OneToMany(mappedBy = "parent", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-	private Set <Tag> children;
+	private List <Tag> children;
 
 	@Column(nullable = false, length = 64)
 	private String name;
@@ -45,7 +45,7 @@ public class Tag extends AppEntity {
 		this.parent = parent;
 	}
 
-	public Set <Tag> getChildren() {
+	public List <Tag> getChildren() {
 		return children;
 	}
 

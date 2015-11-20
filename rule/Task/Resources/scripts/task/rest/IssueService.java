@@ -128,7 +128,9 @@ public class IssueService extends RestProvider {
 		}
 
 		pm.setBody(m.getBody());
+		pm.setStatus(m.getStatus());
 		pm.setPriority(m.getPriority());
+		pm.setStartDate(m.getStartDate());
 		pm.setDueDate(m.getDueDate());
 		pm.setTags(m.getTags());
 		pm.setAssignee(m.getAssignee());
