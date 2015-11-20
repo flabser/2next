@@ -24,6 +24,7 @@ import task.dao.IssueDAO;
 import task.dao.filter.IssueFilter;
 import task.helper.IssueFilterBuilder;
 import task.helper.PageRequest;
+import task.model.Comment;
 import task.model.Issue;
 import task.pojo.Meta;
 import task.validation.IssueValidator;
@@ -154,6 +155,40 @@ public class IssueService extends RestProvider {
 			dao.delete(m);
 		}
 		return Response.noContent().build();
+	}
+
+	@GET
+	@Path("/{id}/comments")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getComments(@PathParam("id") long id) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
+		IssueDAO dao = new IssueDAO(getSession());
+		Issue m = dao.findById(id);
+		return Response.ok(m.getComments()).build();
+	}
+
+	@POST
+	@Path("/{id}/comments")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addComment(@PathParam("id") long id, Comment comment) {
+
+		// UNAUTHORIZED
+		if (!getSession().getUser().isAuthorized) {
+			return Response.noContent().status(Status.UNAUTHORIZED).build();
+		}
+
+		IssueDAO dao = new IssueDAO(getSession());
+		Issue m = dao.findById(id);
+		comment.setAuthor(getSession().getUser().getID());
+		m.getComments().add(comment);
+		dao.update(m);
+		return Response.ok(comment).build();
 	}
 
 	class _Response {
