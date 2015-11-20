@@ -112,11 +112,8 @@
 						</xsl:if>
 						<li class="dropdown dropdown-lang">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<i>
-									<xsl:attribute name="class">
-										<xsl:value-of select="concat('lang-icon-', lower-case(//@lang))" />
-									</xsl:attribute>
-								</i>
+								<i class="fa fa-globe lang-globe"></i>
+								<span><xsl:value-of select="lower-case(//@lang)" /></span>
 							</a>
 							<ul class="dropdown-menu">
 								<xsl:apply-templates select="//availablelangs" mode="lang" />
@@ -144,11 +141,6 @@
 	<xsl:template match="value" mode="lang">
 		<li>
 			<a class="lang" href="Provider?id={//request/@id}&amp;lang={entry[2]}">
-				<i>
-					<xsl:attribute name="class">
-						<xsl:value-of select="concat('lang-icon-', lower-case(entry[2]))" />
-					</xsl:attribute>
-				</i>
 				<xsl:value-of select="entry[3]" />
 			</a>
 		</li>
