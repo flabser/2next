@@ -9,8 +9,9 @@ export default Em.Component.extend(ModelFormMixin, {
     isEditing: Em.computed.bool('edit'),
 
     saveIssue: 'saveIssue',
-    close: 'transitionToIssues',
     addComment: 'addComment',
+    close: 'transitionToIssues',
+    back: 'transitionToIssues',
 
     canCloseIssue: Em.computed('issue.status', function() {
         return !this.get('issue.isNew') && this.get('issue.status') === 'PROCESS';
@@ -26,6 +27,10 @@ export default Em.Component.extend(ModelFormMixin, {
     }),
 
     actions: {
+        back: function() {
+            this.sendAction('back');
+        },
+
         addIssue: function() {
             this.set('issue.status', 'PROCESS');
             this.send('save');

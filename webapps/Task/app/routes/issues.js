@@ -35,7 +35,7 @@ export default Em.Route.extend({
 
         saveIssue: function(issue) {
             issue.save().then(() => {
-                this.transitionTo('issues.issue', issue);
+                this.transitionTo('issues');
             }, function() {
                 console.log(arguments);
             });

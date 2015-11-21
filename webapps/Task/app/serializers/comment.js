@@ -7,6 +7,7 @@ export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
 
         var data = this.serialize(snapshot, options);
 
+        delete data.attachments;
         delete data.author;
         delete data.regDate;
 
