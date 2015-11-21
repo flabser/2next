@@ -1,6 +1,8 @@
 import IssueRoute from './issue';
 
 export default IssueRoute.extend({
+    templateName: 'issues/new',
+
     model: function(params, transition) {
         var dueDate = new Date();
         /*if (transition.queryParams) {

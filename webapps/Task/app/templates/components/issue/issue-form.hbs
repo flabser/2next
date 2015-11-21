@@ -1,5 +1,5 @@
 <div class="form-wrapper">
-    <form {{action 'save' on='submit' }}>
+    <form>
         <header class="content-header content-horizontal">
             <button class="btn-back" {{action 'close'}}>
                 <i class="fa fa-chevron-left"></i>
@@ -12,95 +12,54 @@
             </h1>
             {{#if issueInProcess}}
                 <nav class="content-actions">
-                    <button class="btn btn-primary btn-issue-close" {{action 'closeIssue'}}>{{t 'issue_close'}}</button>
+                    <button class="btn btn-primary btn-issue-close" {{action 'closeIssue'}}>
+                        <i class="fa fa-check-square-o"></i>
+                        <span>{{t 'issue_close'}}</span>
+                    </button>
                 </nav>
             {{/if}}
         </header>
         <section class="content-body">
-            <fieldset class="fieldset">
-                <div class="form-group {{if errors.body 'has-error'}}">
-                    <div class="control-label">
-                        {{t 'body'}}
-                    </div>
-                    <div class="controls">
-                        {{textarea
-                            value=issue.body
-                            key-up='validateBody'
-                            maxlength=2000
-                            class='span5'}}
-                        {{#each errors.body as |error|}}
-                            <div class="error-message">{{error.message}}</div>
-                        {{/each}}
-                    </div>
-                </div>
-                <div class="form-group {{if errors.startDate 'has-error'}}">
-                    <div class="control-label">
-                        {{t 'start_date'}}
-                    </div>
-                    <div class="controls">
-                        {{pikaday-input
-                            value=issue.startDate
-                            format='YYYY-MM-DD'
-                            class='span2'}}
-                        {{#each errors.startDate as |error|}}
-                            <div class="error-message">{{error.message}}</div>
-                        {{/each}}
-                    </div>
-                </div><div class="form-group {{if errors.dueDate 'has-error'}}">
-                    <div class="control-label">
-                        {{t 'due_date'}}
-                    </div>
-                    <div class="controls">
-                        {{pikaday-input
-                            value=issue.dueDate
-                            format='YYYY-MM-DD'
-                            class='span2'}}
-                        {{#each errors.dueDate as |error|}}
-                            <div class="error-message">{{error.message}}</div>
-                        {{/each}}
-                    </div>
-                </div>
-                <div class="form-group {{if errors.assignee 'has-error'}}">
-                    <div class="control-label">
-                        {{t 'executor'}}
-                    </div>
-                    <div class="controls">
-                        {{ember-selectize
-                            content=users
-                            optionValuePath='id'
-                            optionLabelPath='login'
-                            selection=issue.assignee
-                            placeholder='-'
-                            class='span5'}}
-                        {{#each errors.assignee as |error|}}
-                            <div class="error-message">{{error.message}}</div>
-                        {{/each}}
-                    </div>
-                </div>
-                <div class="form-group {{if errors.tags 'has-error'}}">
-                    <div class="control-label">
-                        {{t 'tags'}}
-                    </div>
-                    <div class="controls">
-                        {{ember-selectize
-                            content=tags
-                            multiple=true
-                            optionValuePath='id'
-                            optionLabelPath='name'
-                            selection=issue.tags
-                            placeholder='-'
-                            class='span5'}}
-                    </div>
-                </div>
-            </fieldset>
+            {{#if isEditing}}
+                {{issue.issue-detail-edit issue=issue users=users tags=tags}}
+            {{else}}
+                {{issue.issue-detail issue=issue}}
+            {{/if}}
         </section>
         <footer class="content-actions">
-            <button class="btn" {{action 'close'}}>{{t 'cancel'}}</button>
-            {{#if issue.isNew}}
-                <button type="submit" class="btn btn-primary">{{t 'issue_add'}}</button>
+            {{#if isEditing}}
+                <button class="btn" {{action 'cancelEdit'}}>{{t 'cancel'}}</button>
             {{else}}
-                <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
+                <button class="btn" {{action 'close'}}>{{t 'cancel'}}</button>
+            {{/if}}
+            {{#if issue.isNew}}
+                <button class="btn" {{action 'saveAsDraft'}}>{{t 'save'}}</button>
+                <button class="btn btn-primary btn-issue-add" {{action 'addIssue'}}>
+                    <i class="fa fa-spinner"></i>
+                    <span>{{t 'issue_add'}}</span>
+                </button>
+            {{else}}
+                {{#if isEditing}}
+                    <button class="btn btn-primary" {{action 'save'}}>{{t 'save'}}</button>
+                {{else}}
+                    <button class="btn" {{action 'editIssue'}}>{{t 'edit'}}</button>
+                {{/if}}
             {{/if}}
         </footer>
+        <section class="issue-timeline">
+            Comments
+            {{#each issue.comments as |comment|}}
+                <div class="comment-text">
+                    {{comment.comment}}
+                </div>
+            {{/each}}
+            <div>
+                {{textarea
+                    value=newComment
+                    maxlength=256
+                    class='span5'}}
+                <button class="btn" {{action 'addComment'}}>{{t 'add_comment'}}</button>
+            </div>
+        </section>
     </form>
 </div>

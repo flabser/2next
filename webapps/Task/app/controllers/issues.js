@@ -9,5 +9,14 @@ export default Em.Controller.extend({
     headerTitle: Em.computed('at', function() {
         let at = this.get('at');
         return this.get('i18n').t(at);
-    })
+    }),
+
+    actions: {
+        addComment: function(issue, commentText) {
+            let comment = this.store.createRecord('comment', {
+                comment: commentText
+            });
+            issue.comments.pushObject(comment);
+        }
+    }
 });

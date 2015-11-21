@@ -1,0 +1,76 @@
+<fieldset class="fieldset">
+    <div class="form-group {{if errors.body 'has-error'}}">
+        <div class="control-label">
+            {{t 'body'}}
+        </div>
+        <div class="controls">
+            {{textarea
+                value=issue.body
+                key-up='validateBody'
+                maxlength=2000
+                class='span5'}}
+            {{#each errors.body as |error|}}
+                <div class="error-message">{{error.message}}</div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="form-group {{if errors.startDate 'has-error'}}">
+        <div class="control-label">
+            {{t 'start_date'}}
+        </div>
+        <div class="controls">
+            {{pikaday-input
+                value=issue.startDate
+                format='YYYY-MM-DD'
+                class='span2'}}
+            {{#each errors.startDate as |error|}}
+                <div class="error-message">{{error.message}}</div>
+            {{/each}}
+        </div>
+    </div><div class="form-group {{if errors.dueDate 'has-error'}}">
+        <div class="control-label">
+            {{t 'due_date'}}
+        </div>
+        <div class="controls">
+            {{pikaday-input
+                value=issue.dueDate
+                format='YYYY-MM-DD'
+                class='span2'}}
+            {{#each errors.dueDate as |error|}}
+                <div class="error-message">{{error.message}}</div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="form-group {{if errors.assignee 'has-error'}}">
+        <div class="control-label">
+            {{t 'executor'}}
+        </div>
+        <div class="controls">
+            {{ember-selectize
+                content=users
+                optionValuePath='id'
+                optionLabelPath='login'
+                selection=issue.assignee
+                placeholder='-'
+                class='span5'}}
+            {{#each errors.assignee as |error|}}
+                <div class="error-message">{{error.message}}</div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="form-group {{if errors.tags 'has-error'}}">
+        <div class="control-label">
+            {{t 'tags'}}
+        </div>
+        <div class="controls">
+            {{ember-selectize
+                content=tags
+                multiple=true
+                optionValuePath='id'
+                optionLabelPath='name'
+                selection=issue.tags
+                placeholder='-'
+                class='span5'}}
+        </div>
+    </div>
+</fieldset>

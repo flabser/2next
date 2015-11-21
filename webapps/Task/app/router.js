@@ -11,9 +11,6 @@ Router.map(function() {
         this.route('issue', {
             path: '/:issue_id',
         });
-        this.route('edit', {
-            path: '/:issue_id/edit',
-        });
     });
 
     this.route('tags', function() {

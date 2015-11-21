@@ -25,7 +25,7 @@ export default Em.Component.extend({
         let status = this.get('status');
         switch (status) {
             case 'DRAFT':
-                return 'fa fa-edit';
+                return 'fa fa-file-o';
             case 'PROCESS':
                 return 'fa fa-spinner';
             case 'CLOSE':

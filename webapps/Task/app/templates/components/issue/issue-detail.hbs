@@ -1,0 +1,22 @@
+<div class="issue-detail issues-view">
+    <span class="issue-body">
+        <span class="issue-body-text">{{issue.body}}</span>
+        <span class="issue-tags">
+            {{#each issue.tags as |tag|}}
+                <span class="issue-tag">{{tag.name}}</span>
+            {{/each}}
+        </span>
+        <span class="issue-due-date">
+            <span>{{format-date issue.dueDate}}</span>
+            <span class="issue-due-date-from-now">
+                {{moment-from-now issue.dueDate}}
+            </span>
+        </span>
+    </span>
+    <span class="issue-assignee">
+        {{issue.assignee.login}}
+    </span>
+    <span class="issue-priority">
+        {{issue.priority}}
+    </span>
+</div>

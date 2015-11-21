@@ -15,9 +15,19 @@ export default Em.Route.extend(ModelRouteMixin, {
     },
 
     renderTemplate: function(controller, model) {
-        this.render('issues.issue', {
+        this.render(this.get('templateName'), {
             into: 'application',
             controller: controller
         });
+    },
+
+    actions: {
+        addComment: function(issue, commentText) {
+            let comment = this.store.createRecord('comment', {
+                comment: commentText
+            });
+            // comment.save();
+            issue.get('comments').pushObject(comment);
+        }
     }
 });

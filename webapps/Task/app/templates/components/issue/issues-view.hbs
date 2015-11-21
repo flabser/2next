@@ -1,5 +1,7 @@
 {{#each issues as |issue|}}
     {{#unless issue.isNew}}
-        {{issue.issue-row issue=issue}}
+        {{#unless issue.parent}}
+            {{issue.issue-row issue=issue}}
+        {{/unless}}
     {{/unless}}
 {{/each}}

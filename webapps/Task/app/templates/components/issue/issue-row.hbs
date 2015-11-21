@@ -37,3 +37,10 @@
         {{/link-to}}
     {{/tn-swipe-entry}}
 </div>
+{{#if issue.children}}
+    <div class="issue-children">
+        {{#each issue.children as |issue|}}
+            {{issue.issue-row issue=issue}}
+        {{/each}}
+    </div>
+{{/if}}
