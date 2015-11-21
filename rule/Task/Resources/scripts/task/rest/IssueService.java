@@ -128,13 +128,13 @@ public class IssueService extends RestProvider {
 			return Response.noContent().status(Status.NOT_FOUND).build();
 		}
 
-		pm.setBody(m.getBody());
 		pm.setStatus(m.getStatus());
 		pm.setPriority(m.getPriority());
+		pm.setAssignee(m.getAssignee());
 		pm.setStartDate(m.getStartDate());
 		pm.setDueDate(m.getDueDate());
 		pm.setTags(m.getTags());
-		pm.setAssignee(m.getAssignee());
+		pm.setBody(m.getBody());
 
 		return Response.ok(dao.update(pm)).build();
 	}

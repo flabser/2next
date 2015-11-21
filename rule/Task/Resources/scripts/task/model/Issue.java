@@ -72,7 +72,7 @@ public class Issue extends AppEntity {
 					@JoinColumn(name = "tag_id", referencedColumnName = "id") })
 	private List <Tag> tags;
 
-	@Column(length = 2000)
+	@Column(length = 2048)
 	private String body;
 
 	@ManyToMany(fetch = FetchType.LAZY)

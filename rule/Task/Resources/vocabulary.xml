@@ -8,7 +8,7 @@
 		<entry lang="POR">Tarefa</entry>
 	</sentence>
 	<sentence mode="on" keyword="Task_description">
-		<entry lang="RUS">Приложение для введение ваших задании. Создайте задачу, дайте доступ к вашему проекту другим пользователям, выдавайте	задания и осуществляйте контроль</entry>
+		<entry lang="RUS">Приложение для введение ваших задании. Создайте задачу, дайте доступ к вашему проекту другим пользователям, выдавайте задания и осуществляйте контроль</entry>
 		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Application for monitoring your task. Create a task, grant other users access to your project, issue and follwo up on tasks</entry>
 		<entry lang="BG">Приложението за мониторинг на вашата задача. Създаване на задача, дава достъп до вашия проект за другите потребители, издаване и монитор задачи</entry>
@@ -30,6 +30,20 @@
 		<entry lang="BG">Потребителски профил</entry>
 		<entry lang="POR">Perfil de Utilizador</entry>
 	</sentence>
+	<sentence mode="on" keyword="password">
+		<entry lang="RUS">Пароль</entry>
+		<entry lang="KAZ">Құпия сөз</entry>
+		<entry lang="ENG">Password</entry>
+		<entry lang="BG">Парола</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="password_change">
+		<entry lang="RUS">Изменить пароль</entry>
+		<entry lang="KAZ">Құпия сөзді өзгерту</entry>
+		<entry lang="ENG">Change password</entry>
+		<entry lang="BG">Изменить пароль</entry>
+		<entry lang="POR"></entry>
+	</sentence>
 
 	<sentence mode="on" keyword="dashboard">
 		<entry lang="RUS">Панель управления</entry>
@@ -43,20 +57,6 @@
 		<entry lang="RUS">Задачи</entry>
 		<entry lang="KAZ"></entry>
 		<entry lang="BG">Задачи</entry>
-		<entry lang="POR"></entry>
-	</sentence>
-	<sentence mode="on" keyword="issue_new">
-		<entry lang="ENG">New issues</entry>
-		<entry lang="RUS">Новая задача</entry>
-		<entry lang="KAZ"></entry>
-		<entry lang="BG">Нови задача</entry>
-		<entry lang="POR"></entry>
-	</sentence>
-	<sentence mode="on" keyword="issue_add">
-		<entry lang="ENG">Add issue</entry>
-		<entry lang="RUS">Добавить задачу</entry>
-		<entry lang="KAZ"></entry>
-		<entry lang="BG"></entry>
 		<entry lang="POR"></entry>
 	</sentence>
 	<sentence mode="on" keyword="inbox">
@@ -80,18 +80,11 @@
 		<entry lang="BG">Седмица</entry>
 		<entry lang="POR"></entry>
 	</sentence>
-	<sentence mode="on" keyword="issues_all">
+	<sentence mode="on" keyword="all">
 		<entry lang="ENG">All</entry>
 		<entry lang="RUS">Все</entry>
 		<entry lang="KAZ">Барлық</entry>
 		<entry lang="BG">Все</entry>
-		<entry lang="POR"></entry>
-	</sentence>
-	<sentence mode="on" keyword="favorite">
-		<entry lang="ENG">Favourites</entry>
-		<entry lang="RUS">Избранное</entry>
-		<entry lang="KAZ"></entry>
-		<entry lang="BG">Любими</entry>
 		<entry lang="POR"></entry>
 	</sentence>
 	<sentence mode="on" keyword="completed">
@@ -124,7 +117,7 @@
 	</sentence>
 	<sentence mode="on" keyword="invite_user">
 		<entry lang="ENG">Invite a user</entry>
-		<entry lang="RUS">Пригласить пользователя</entry>
+		<entry lang="RUS">Пригласить</entry>
 		<entry lang="KAZ"></entry>
 		<entry lang="BG">Покани на ползовател</entry>
 		<entry lang="POR"></entry>
@@ -134,6 +127,27 @@
 		<entry lang="RUS">Задача</entry>
 		<entry lang="KAZ"></entry>
 		<entry lang="BG">Задача</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="issue_new">
+		<entry lang="ENG">New issue</entry>
+		<entry lang="RUS">Новая задача</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG">Нови задача</entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="issue_add">
+		<entry lang="ENG">Add issue</entry>
+		<entry lang="RUS">Добавить задачу</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG"></entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="issue_close">
+		<entry lang="ENG">Close issue</entry>
+		<entry lang="RUS">Закрыть задачу</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG"></entry>
 		<entry lang="POR"></entry>
 	</sentence>
 	<sentence mode="on" keyword="body">
@@ -177,6 +191,28 @@
 		<entry lang="KAZ"></entry>
 		<entry lang="BG">Излез</entry>
 		<entry lang="POR">Deslogar</entry>
+	</sentence>
+
+	<sentence mode="on" keyword="issue_draft">
+		<entry lang="ENG">Draft</entry>
+		<entry lang="RUS">Черновик</entry>
+		<entry lang="KAZ"></entry>
+		<entry lang="BG"></entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="issue_open">
+		<entry lang="ENG">Open</entry>
+		<entry lang="RUS">В процессе</entry>
+		<entry lang="KAZ">Ағымда</entry>
+		<entry lang="BG"></entry>
+		<entry lang="POR"></entry>
+	</sentence>
+	<sentence mode="on" keyword="issue_closed">
+		<entry lang="ENG">Closed</entry>
+		<entry lang="RUS">Закрытый</entry>
+		<entry lang="KAZ">Жабық</entry>
+		<entry lang="BG"></entry>
+		<entry lang="POR"></entry>
 	</sentence>
 
 	<!-- -->
@@ -305,20 +341,6 @@
 	</sentence>
 
 	<!-- form fields -->
-	<sentence mode="on" keyword="category">
-		<entry lang="RUS">Категория</entry>
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG">Category</entry>
-		<entry lang="BG">Категория</entry>
-		<entry lang="POR">Categoria</entry>
-	</sentence>
-	<sentence mode="on" keyword="parent_category">
-		<entry lang="RUS">Родительская категория</entry>
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG">Parent category</entry>
-		<entry lang="BG">Категория</entry>
-	</sentence>
-
 	<sentence mode="on" keyword="user">
 		<entry lang="RUS">Пользователь</entry>
 		<entry lang="KAZ"></entry>
@@ -360,12 +382,6 @@
 		<entry lang="KAZ"></entry>
 		<entry lang="ENG">Registration time</entry>
 		<entry lang="BG">Дата регистрации</entry>
-	</sentence>
-	<sentence mode="on" keyword="date">
-		<entry lang="RUS">Дата</entry>
-		<entry lang="KAZ"></entry>
-		<entry lang="ENG">Date</entry>
-		<entry lang="BG">Дата</entry>
 	</sentence>
 	<sentence mode="on" keyword="start_date">
 		<entry lang="RUS">Дата начала</entry>
