@@ -30,6 +30,7 @@
 .tags_add fieldset .btn {
     font-size: 13px;
     height: 33px;
+    line-height: 1;
     position: absolute;
     right: 15px;
     top: 18px;

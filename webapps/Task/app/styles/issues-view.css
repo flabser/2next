@@ -1,13 +1,3 @@
-.issues-view .header-title {
-    float: left;
-}
-
-.issues-view .content-header .content-actions {
-    border: none;
-    float: right;
-}
-
-
 /* .issue-nav */
 
 .aside.issue-nav {
@@ -36,8 +26,7 @@
 
 /* .issues-view fields */
 
-.issues-view .issue-status {
-    font-size: 18px;
+.issues-view .col-issue-status {
     width: 28px;
 }
 
@@ -88,16 +77,4 @@
     right: 0;
     top: 0;
     width: 30px;
-}
-
-.issue-status-draft {
-    color: blue;
-}
-
-.issue-status-process {
-    color: green;
-}
-
-.issue-status-close {
-    color: #BD3835;
 }

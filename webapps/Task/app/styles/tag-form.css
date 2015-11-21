@@ -62,6 +62,10 @@
     z-index: 2;
 }
 
+.tag-form .tag-actions .btn {
+    line-height: 1;
+}
+
 .tag-form:hover .tag-actions {
     opacity: 1;
 }

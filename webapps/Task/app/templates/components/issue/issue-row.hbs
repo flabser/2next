@@ -8,10 +8,10 @@
         </span>
     </div>
     {{#tn-swipe-entry class='entry'}}
-        {{#link-to 'issues.edit' issue class='entry-link'}}
+        {{#link-to 'issues.issue' issue class='entry-link'}}
         <div class="entry-fields">
-            <span class="issue-status">
-                {{issue-status-icon issue.status}}
+            <span class="col-issue-status">
+                {{issue.issue-status status=issue.status}}
             </span>
             <span class="issue-body">
                 <span class="issue-body-text">{{issue.body}}</span>

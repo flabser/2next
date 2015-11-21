@@ -18,10 +18,12 @@ export default DS.Model.extend({
     tags: DS.hasMany('tag'),
     comments: DS.hasMany('comment'),
     attachments: DS.hasMany('attachment'),
-    author: DS.belongsTo('user'),
-    regDate: DS.attr('date'),
+
     parent: DS.belongsTo('issue'),
     children: DS.hasMany('issue', {
         inverse: 'parent'
-    })
+    }),
+
+    author: DS.belongsTo('user'),
+    regDate: DS.attr('date')
 });

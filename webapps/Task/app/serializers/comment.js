@@ -7,8 +7,8 @@ export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
 
         var data = this.serialize(snapshot, options);
 
-        delete data['author'];
-        delete data['regDate'];
+        delete data.author;
+        delete data.regDate;
 
         hash[type.modelName] = data;
     }

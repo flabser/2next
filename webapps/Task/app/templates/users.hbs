@@ -1,9 +1,10 @@
 <div class="view users-view">
-    <header class="content-header">
+    <header class="content-header content-horizontal">
         <h1 class="header-title">{{t 'users'}}</h1>
         <nav class="content-actions">
             {{#link-to 'users.invitation' class='btn btn-primary'}}
-                {{t 'invite_user'}}
+                <i class="fa fa-user"></i>
+                <span>{{t 'invite_user'}}</span>
             {{/link-to}}
         </nav>
     </header>

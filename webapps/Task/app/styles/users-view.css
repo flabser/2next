@@ -1,10 +1,1 @@
 .users-view {}
-
-.users-view .header-title {
-    float: left;
-}
-
-.users-view .content-header .content-actions {
-    border: none;
-    float: right;
-}

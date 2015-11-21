@@ -1,0 +1,57 @@
+/* issue-status */
+
+.issue-status {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    font-size: 0;
+    font-weight: normal;
+    line-height: 13px;
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+
+.issue-status > i,
+.issue-status > span {
+    font-size: 14px;
+    line-height: 16px;
+    vertical-align: top;
+}
+
+.issue-status i + span {
+    margin-left: 5px;
+}
+
+.issue-status-draft {
+    border-color: #999;
+    color: #333;
+}
+
+.issue-status-process {
+    border-color: #4CAF50;
+    color: #4CAF50;
+}
+
+.issue-status-close {
+    border-color: #F44336;
+    color: #F44336;
+}
+
+.issues-view .col-issue-status .issue-status {
+    background: none;
+    border: none;
+    display: inline-block;
+    padding: 0;
+}
+
+.issues-view .col-issue-status .issue-status > i {
+    font-size: 18px;
+}
+
+@media ( max-width: 360px) {
+    .issue-status > span {
+        display: none;
+    }
+}
