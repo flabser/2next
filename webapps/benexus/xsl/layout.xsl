@@ -114,6 +114,7 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<i class="fa fa-globe lang-globe"></i>
 								<span><xsl:value-of select="lower-case(//@lang)" /></span>
+								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<xsl:apply-templates select="//availablelangs" mode="lang" />
