@@ -12,8 +12,17 @@ export default Em.Component.extend(ModelFormMixin, {
     close: 'transitionToIssues',
     addComment: 'addComment',
 
-    issueInProcess: Em.computed('issue.status', function() {
+    canCloseIssue: Em.computed('issue.status', function() {
         return !this.get('issue.isNew') && this.get('issue.status') === 'PROCESS';
+    }),
+
+    canAddComment: Em.computed('issue.status', function() {
+        if (this.get('issue.isNew')) {
+            return false;
+        }
+
+        let status = this.get('issue.status');
+        return status === 'PROCESS' || status === 'DRAFT';
     }),
 
     actions: {
@@ -36,6 +45,10 @@ export default Em.Component.extend(ModelFormMixin, {
             this.sendAction('addComment', this.get('issue'), this.get('newComment'));
         },
 
+        editIssue: function() {
+            this.set('edit', true);
+        },
+
         save: function() {
             if (this.validate()) {
                 this.sendAction('saveIssue', this.get('issue'));
@@ -43,14 +56,11 @@ export default Em.Component.extend(ModelFormMixin, {
         },
 
         close: function() {
-            this.sendAction('close');
-        },
-
-        editIssue: function() {
-            this.set('edit', true);
-        },
-        cancelEdit: function() {
-            this.set('edit', false);
+            if (!this.get('issue.isNew') && this.get('isEditing')) {
+                this.set('edit', false);
+            } else {
+                this.sendAction('close');
+            }
         },
 
         validateBody: function() {

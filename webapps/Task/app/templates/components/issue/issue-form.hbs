@@ -1,58 +1,62 @@
 <div class="form-wrapper">
-    <form>
-        <header class="content-header content-horizontal">
-            <button class="btn-back" {{action 'close'}}>
-                <i class="fa fa-chevron-left"></i>
-            </button>
-            <h1 class="header-title">
-                {{t 'issue'}}
-                {{#unless issue.isNew}}
-                    {{issue.issue-status status=issue.status labelVisible=true}}
-                {{/unless}}
-            </h1>
-            {{#if issueInProcess}}
-                <nav class="content-actions">
-                    <button class="btn btn-primary btn-issue-close" {{action 'closeIssue'}}>
-                        <i class="fa fa-check-square-o"></i>
-                        <span>{{t 'issue_close'}}</span>
-                    </button>
-                </nav>
-            {{/if}}
-        </header>
-        <section class="content-body">
-            {{#if isEditing}}
-                {{issue.issue-detail-edit issue=issue users=users tags=tags}}
-            {{else}}
-                {{issue.issue-detail issue=issue}}
-            {{/if}}
-        </section>
-        <footer class="content-actions">
-            {{#if isEditing}}
-                <button class="btn" {{action 'cancelEdit'}}>{{t 'cancel'}}</button>
-            {{else}}
-                <button class="btn" {{action 'close'}}>{{t 'cancel'}}</button>
-            {{/if}}
-            {{#if issue.isNew}}
-                <button class="btn" {{action 'saveAsDraft'}}>{{t 'save'}}</button>
-                <button class="btn btn-primary btn-issue-add" {{action 'addIssue'}}>
-                    <i class="fa fa-spinner"></i>
-                    <span>{{t 'issue_add'}}</span>
+    <header class="content-header content-horizontal">
+        <button class="btn-back" {{action 'close'}}>
+            <i class="fa fa-chevron-left"></i>
+        </button>
+        <h1 class="header-title">
+            {{t 'issue'}}
+            {{#unless issue.isNew}}
+                {{issue.issue-status status=issue.status labelVisible=true}}
+            {{/unless}}
+        </h1>
+        {{#if canCloseIssue}}
+            <nav class="content-actions">
+                <button class="btn btn-primary btn-issue-close" {{action 'closeIssue'}}>
+                    <i class="fa fa-check-square-o"></i>
+                    <span>{{t 'issue_close'}}</span>
                 </button>
+            </nav>
+        {{/if}}
+    </header>
+    <section class="content-body">
+        {{#if isEditing}}
+            {{issue.issue-detail-edit
+                issue=issue
+                users=users
+                tags=tags
+                errors=errors}}
+        {{else}}
+            {{issue.issue-detail issue=issue}}
+        {{/if}}
+    </section>
+    <footer class="content-actions">
+        {{#if isEditing}}
+            <button class="btn" {{action 'close'}}>{{t 'cancel'}}</button>
+        {{else}}
+            <button class="btn" {{action 'close'}}>{{t 'cancel'}}</button>
+        {{/if}}
+        {{#if issue.isNew}}
+            <button class="btn" {{action 'saveAsDraft'}}>{{t 'save'}}</button>
+            <button class="btn btn-primary btn-issue-add" {{action 'addIssue'}}>
+                <i class="fa fa-spinner"></i>
+                <span>{{t 'issue_add'}}</span>
+            </button>
+        {{else}}
+            {{#if isEditing}}
+                <button class="btn btn-primary" {{action 'save'}}>{{t 'save'}}</button>
             {{else}}
-                {{#if isEditing}}
-                    <button class="btn btn-primary" {{action 'save'}}>{{t 'save'}}</button>
-                {{else}}
-                    <button class="btn" {{action 'editIssue'}}>{{t 'edit'}}</button>
-                {{/if}}
+                <button class="btn" {{action 'editIssue'}}>{{t 'edit'}}</button>
             {{/if}}
-        </footer>
-        <section class="issue-timeline">
-            Comments
-            {{#each issue.comments as |comment|}}
-                <div class="comment-text">
-                    {{comment.comment}}
-                </div>
-            {{/each}}
+        {{/if}}
+    </footer>
+    <section class="issue-timeline">
+        Comments
+        {{#each issue.comments as |comment|}}
+            <div class="comment-text">
+                {{comment.comment}}
+            </div>
+        {{/each}}
+        {{#if canAddComment}}
             <div>
                 {{textarea
                     value=newComment
@@ -60,6 +64,6 @@
                     class='span5'}}
                 <button class="btn" {{action 'addComment'}}>{{t 'add_comment'}}</button>
             </div>
-        </section>
-    </form>
+        {{/if}}
+    </section>
 </div>
