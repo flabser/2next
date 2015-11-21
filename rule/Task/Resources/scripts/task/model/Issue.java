@@ -81,6 +81,12 @@ public class Issue extends AppEntity {
 					@JoinColumn(name = "comment_id", referencedColumnName = "id") })
 	private List <Comment> comments;
 
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "issue_attachments", joinColumns = {
+			@JoinColumn(name = "issue_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "attachment_id", referencedColumnName = "id") })
+	private List <Attachment> attachments;
+
 	public Issue getParent() {
 		return parent;
 	}
@@ -184,6 +190,14 @@ public class Issue extends AppEntity {
 
 	public void setComments(List <Comment> comments) {
 		this.comments = comments;
+	}
+
+	public List <Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List <Attachment> attachments) {
+		this.attachments = attachments;
 	}
 
 	@Override
