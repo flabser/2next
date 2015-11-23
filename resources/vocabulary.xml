@@ -149,16 +149,16 @@
 		<entry lang="RUS">Текст сообщения слишком короткий</entry>
 		<entry lang="KAZ"></entry>
 		<entry lang="BG">Съобщението е твърде кратък</entry>
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">O texto da mensagem é demasiado curto</entry>
+		<entry lang="SPA">El texto del mensaje es demasiado corto</entry>	
 	</sentence>	
 	<sentence mode="on" keyword="captcha_incorrect">
 		<entry lang="ENG">Captcha is wrong</entry>
 		<entry lang="RUS">Каптча не верна</entry>
 		<entry lang="KAZ"></entry>		
 		<entry lang="BG">Каптча е наред</entry>\
-		<entry lang="POR"></entry>
-		<entry lang="SPA"></entry>	
+		<entry lang="POR">Código de segurança errado</entry>
+		<entry lang="SPA">Código de seguridad incirrecto</entry>	
 	</sentence>	
 	<sentence mode="on" keyword="message_has_sent_succesfully">
 		<entry lang="ENG">The message has been sent </entry>
