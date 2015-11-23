@@ -2,9 +2,8 @@ package cashtracker.dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -20,8 +19,8 @@ import com.flabser.server.Server;
 
 import cashtracker.dao.filter.TransactionFilter;
 import cashtracker.helper.PageRequest;
+import cashtracker.model.Attachment;
 import cashtracker.model.Transaction;
-import cashtracker.model.TransactionFile;
 import cashtracker.model.constants.TransactionType;
 
 
@@ -124,7 +123,7 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 				transact.begin();
 				entity.setAuthor(user.id);
 				//
-				Set <TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
+				List <Attachment> files = proccesAttachments(entity, entity.getAttachments());
 				if (files != null) {
 					entity.setAttachments(files);
 				}
@@ -150,7 +149,7 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 			try {
 				transact.begin();
 				//
-				Set <TransactionFile> files = proccesAttachments(entity, entity.getAttachments());
+				List <Attachment> files = proccesAttachments(entity, entity.getAttachments());
 				if (files != null) {
 					entity.setAttachments(files);
 				}
@@ -168,11 +167,11 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 		}
 	}
 
-	protected Set <TransactionFile> proccesAttachments(Transaction entity, Set <TransactionFile> attachments) {
+	protected List <Attachment> proccesAttachments(Transaction entity, List <Attachment> attachments) {
 		if (attachments != null) {
 			File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
-			Set <TransactionFile> files = new HashSet <TransactionFile>();
-			for (TransactionFile newFile : attachments) {
+			List <Attachment> files = new ArrayList <Attachment>();
+			for (Attachment newFile : attachments) {
 				String tmpID = newFile.getTempID();
 				if (tmpID != null) {
 					String uploadedFileLocation = userTmpDir + File.separator + newFile.getTempID();
@@ -180,7 +179,7 @@ public class TransactionDAO extends DAO <Transaction, Long> {
 					try {
 						byte[] bFile = FileUtils.readFileToByteArray(file);
 						newFile.setFile(bFile);
-						newFile.setTransaction(entity);
+						// newFile.setTransaction(entity);
 					} catch (IOException e) {
 						Server.logger.errorLogEntry(e);
 					}

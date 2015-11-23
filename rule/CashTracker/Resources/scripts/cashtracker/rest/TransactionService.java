@@ -39,13 +39,14 @@ import cashtracker.dao.TagDAO;
 import cashtracker.dao.TransactionDAO;
 import cashtracker.dao.filter.TransactionFilter;
 import cashtracker.helper.PageRequest;
+import cashtracker.model.Attachment;
 import cashtracker.model.Tag;
 import cashtracker.model.Transaction;
-import cashtracker.model.TransactionFile;
 import cashtracker.model.constants.TransactionType;
 import cashtracker.pojo.Meta;
 import cashtracker.validation.TransactionValidator;
 import cashtracker.validation.ValidationError;
+
 
 @Path("transactions")
 public class TransactionService extends RestProvider {
@@ -71,7 +72,7 @@ public class TransactionService extends RestProvider {
 			count = dao.getCount().intValue();
 		}
 
-		List<Transaction> list = dao.find(filter, pr);
+		List <Transaction> list = dao.find(filter, pr);
 		_Response _resp = new _Response(list, new Meta(count, pr.getLimit(), pr.getOffset(), page));
 
 		ObjectMapper om = new ObjectMapper();
@@ -118,7 +119,7 @@ public class TransactionService extends RestProvider {
 		}
 		if (m.getTags() != null && !m.getTags().isEmpty()) {
 			TagDAO tagDao = new TagDAO(getSession());
-			List<Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
+			List <Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
 			m.setTags(tagDao.findAllByIds(ids));
 		}
 
@@ -156,7 +157,7 @@ public class TransactionService extends RestProvider {
 		}
 		if (m.getTags() != null && !m.getTags().isEmpty()) {
 			TagDAO tagDao = new TagDAO(getSession());
-			List<Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
+			List <Long> ids = m.getTags().stream().map(Tag::getId).collect(Collectors.toList());
 			m.setTags(tagDao.findAllByIds(ids));
 		}
 
@@ -200,7 +201,7 @@ public class TransactionService extends RestProvider {
 		} else {
 			User user = getSession().getCurrentUser();
 			File userTmpDir = new File(Environment.tmpDir + File.separator + user.getLogin());
-			TransactionFile tFile = m.getAttachment(fieldName, fileName);
+			Attachment tFile = m.getAttachment(fieldName, fileName);
 			if (tFile != null) {
 				String fn = userTmpDir.getAbsolutePath() + File.separator + tFile.getRealFileName();
 				File file = new File(fn);
@@ -250,10 +251,10 @@ public class TransactionService extends RestProvider {
 
 	class _Response {
 
-		public List<Transaction> transactions;
+		public List <Transaction> transactions;
 		public Meta meta;
 
-		public _Response(List<Transaction> list, Meta meta) {
+		public _Response(List <Transaction> list, Meta meta) {
 			this.transactions = list;
 			this.meta = meta;
 		}

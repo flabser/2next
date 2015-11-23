@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -104,16 +102,19 @@ public class Transaction extends AppEntity /*SecureAppEntity*/ {
 	@Column(name = "include_in_reports")
 	private boolean includeInReports;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction", orphanRemoval = true, cascade = CascadeType.ALL)
-	public Set <TransactionFile> attachments;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "transaction_attachments", joinColumns = {
+			@JoinColumn(name = "transaction_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "attachment_id", referencedColumnName = "id") })
+	private List <Attachment> attachments;
 
 	//
-	public Set <TransactionFile> getAttachments() {
+	public List <Attachment> getAttachments() {
 		return attachments;
 	}
 
-	public TransactionFile getAttachment(String fieldName, String fileName) {
-		for (TransactionFile file : attachments) {
+	public Attachment getAttachment(String fieldName, String fileName) {
+		for (Attachment file : attachments) {
 			if (file.getFieldName().equalsIgnoreCase(fieldName) && file.getRealFileName().equals(fileName)) {
 				return file;
 			}
@@ -122,7 +123,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/ {
 	}
 
 	public boolean deleteAttachment(String fieldName, String fileName) {
-		for (TransactionFile file : attachments) {
+		for (Attachment file : attachments) {
 			if (file.getFieldName().equalsIgnoreCase(fieldName) && file.getRealFileName().equals(fileName)) {
 				boolean res = attachments.remove(file);
 				return res;
@@ -131,7 +132,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/ {
 		return false;
 	}
 
-	public void setAttachments(Set <TransactionFile> attachments) {
+	public void setAttachments(List <Attachment> attachments) {
 		this.attachments = attachments;
 	}
 

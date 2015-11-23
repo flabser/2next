@@ -1,35 +1,30 @@
 package cashtracker.model;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.flabser.dataengine.jpa.SimpleAppEntity;
 
 
-// TODO it is necessary more convenient and unified working with attachment
-
+@JsonRootName("attachment")
 @Entity
-@Table(name = "transaction_files")
-public class TransactionFile extends SimpleAppEntity {
-
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "transaction_id", nullable = false)
-	private Transaction transaction;
+@Table(name = "attachments")
+@NamedQuery(name = "Attachment.findAll", query = "SELECT m FROM Attachment AS m")
+public class Attachment extends SimpleAppEntity {
 
 	private String fieldName;
 	private String realFileName;
 	@Transient
 	private String tempID;
 
+	@JsonIgnore
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	private byte[] file;
@@ -58,23 +53,12 @@ public class TransactionFile extends SimpleAppEntity {
 		this.tempID = tempID;
 	}
 
-	@JsonIgnore
 	public byte[] getFile() {
 		return file;
 	}
 
-	@JsonIgnore
 	public void setFile(byte[] file) {
 		this.file = file;
-	}
-
-	public void setTransaction(Transaction entity) {
-		transaction = entity;
-
-	}
-
-	public Transaction getTransaction() {
-		return transaction;
 	}
 
 	@Override
