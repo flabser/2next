@@ -47,6 +47,7 @@ export default Em.Component.extend(ModelFormMixin, {
         saveUserProfile: function() {
             this.get('session').saveUserProfile().then(() => {
                 this.set('avatarUrl', 'rest/session/avatar?' + Date.now());
+                this.set('isEdit', false);
             });
         },
 
