@@ -6,9 +6,6 @@
             </button>
             <h1 class="header-title">
                 {{t 'user_profile'}}
-                {{#unless isEdit}}
-                    <a href="#" {{action 'edit'}}>{{t 'edit'}}</a>
-                {{/unless}}
             </h1>
         </header>
         <section class="content-body">
@@ -121,13 +118,16 @@
                             {{/if}}
                         </p>
                     </div>
+                    {{#unless isEdit}}
+                        <a href="#" {{action 'edit'}}>{{t 'edit'}}</a>
+                    {{/unless}}
                 </div>
             </fieldset>
         </section>
         {{#if isEdit}}
-        <footer class="content-actions">
-            <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
-        </footer>
+            <footer class="content-actions">
+                <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
+            </footer>
         {{/if}}
     </form>
 </div>

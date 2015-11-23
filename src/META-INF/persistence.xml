@@ -3,22 +3,22 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 	<persistence-unit name="CashTracker" transaction-type="RESOURCE_LOCAL">
+		<class>cashtracker.model.Attachment</class>
 		<class>cashtracker.model.Account</class>
 		<class>cashtracker.model.Budget</class>
 		<class>cashtracker.model.Category</class>
 		<class>cashtracker.model.CostCenter</class>
 		<class>cashtracker.model.Tag</class>
 		<class>cashtracker.model.Transaction</class>
-		<class>cashtracker.model.TransactionFile</class>
 		<class>cashtracker.model.constants.converter.TransactionTypeConverter</class>
 		<class>cashtracker.model.constants.converter.TransactionStateConverter</class>
 		<shared-cache-mode>NONE</shared-cache-mode>
 	</persistence-unit>
 	<persistence-unit name="Task" transaction-type="RESOURCE_LOCAL">
+		<class>task.model.Attachment</class>
 		<class>task.model.Issue</class>
 		<class>task.model.Comment</class>
 		<class>task.model.Tag</class>
-		<class>task.model.Attachment</class>
 		<class>task.model.constants.converter.IssuePriorityConverter</class>
 		<shared-cache-mode>NONE</shared-cache-mode>
 	</persistence-unit>

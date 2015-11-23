@@ -1,0 +1,74 @@
+.panel {
+    border: 1px solid transparent;
+    margin-bottom: 1px;
+    position: relative;
+}
+
+.panel.open {
+    border-color: #E6E6E6;
+}
+
+.panel__header {
+    display: block;
+    height: 34px;
+    position: relative;
+}
+
+.panel:hover .panel__header {
+    background-color: #f7f7f7;
+}
+
+.panel.open .panel__header {
+    background-color: #f9f9f9;
+}
+
+.panel-title {
+    display: block;
+    height: 34px;
+    padding: 8px 16px;
+    position: relative;
+}
+
+.panel.open .panel-title {}
+
+.panel .panel-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: block;
+    height: 34px;
+    padding: 8px;
+    position: absolute;
+    right: 0;
+    z-index: 2;
+}
+
+.panel .panel-toggle:hover {
+    background: #EEE;
+}
+
+.panel .panel-toggle i.fa {
+    color: #AAA;
+}
+
+.panel .panel-toggle > i.fa:before {
+    content: "\f107";
+}
+
+.panel.open .panel-toggle > i.fa:before {
+    content: "\f106";
+}
+
+.panel > .panel__body {
+    display: block;
+    max-height: 0px;
+    overflow: hidden;
+    position: relative;
+    transition: max-height .15s;
+    z-index: 2;
+}
+
+.panel.open > .panel__body {
+    max-height: 300px;
+    overflow-y: auto;
+}

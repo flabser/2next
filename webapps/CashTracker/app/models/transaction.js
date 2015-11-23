@@ -24,5 +24,5 @@ export default DS.Model.extend({
     includeInReports: DS.attr('boolean', {
         defaultValue: true
     }),
-    attachments: DS.hasMany('attach')
+    attachments: DS.hasMany('attachment')
 });

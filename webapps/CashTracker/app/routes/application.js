@@ -93,7 +93,8 @@ export default Route.extend({
     actions: {
         logout: function() {
             this.get('session').logout().then(function(response) {
-                window.location.href = response.outcome.message[0];
+                let langId = Object.keys(response.outcome.messages)[0];
+                window.location.href = response.outcome.messages[langId];
             });
         },
 
@@ -165,17 +166,11 @@ export default Route.extend({
             console.log(_error);
 
             if (_error.errors && _error.errors.length && _error.errors[0].status === '401') {
-                // window.location.href = 'Provider?id=login';
+                window.location.href = '//' + location.host;
             }
 
             if (_error.status === 401 || (!this.get('session').isAuthenticated() && this.routeName !== 'login')) {
-                window.location.href = '/CashTracker/Provider?id=login';
-
-                /*this.controllerFor('login').setProperties({
-                    transition: transition
-                });*/
-
-                // this.transitionTo('login');
+                window.location.href = '//' + location.host;
             } else if (_error.status === '400') {
                 return true;
             } else {
