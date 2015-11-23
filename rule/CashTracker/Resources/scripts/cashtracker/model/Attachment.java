@@ -10,14 +10,14 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.flabser.dataengine.jpa.SimpleAppEntity;
+import com.flabser.dataengine.jpa.AppEntity;
 
 
 @JsonRootName("attachment")
 @Entity
 @Table(name = "attachments")
 @NamedQuery(name = "Attachment.findAll", query = "SELECT m FROM Attachment AS m")
-public class Attachment extends SimpleAppEntity {
+public class Attachment extends AppEntity {
 
 	private String fieldName;
 	private String realFileName;
