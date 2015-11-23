@@ -2,13 +2,14 @@ package task.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -24,7 +25,7 @@ public class Comment extends AppEntity {
 	@Column(nullable = false, length = 512)
 	private String comment;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinTable(name = "comment_attachments", joinColumns = {
 			@JoinColumn(name = "comment_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "attachment_id", referencedColumnName = "id") })

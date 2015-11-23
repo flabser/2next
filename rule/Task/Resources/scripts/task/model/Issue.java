@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -81,7 +82,7 @@ public class Issue extends AppEntity {
 					@JoinColumn(name = "comment_id", referencedColumnName = "id") })
 	private List <Comment> comments;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinTable(name = "issue_attachments", joinColumns = {
 			@JoinColumn(name = "issue_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "attachment_id", referencedColumnName = "id") })
