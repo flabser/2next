@@ -1,42 +1,14 @@
-.nav-profile {
-    border-bottom: 1px solid #E6E6E6;
-    margin-bottom: 5px;
-}
-
-.nav-profile > header {
-    height: 48px;
-}
-
-.tablet .nav-profile > header,
-.phone .nav-profile > header {
-    height: 50px;
-}
-
-.nav-profile > header > a {
-    color: #222;
-    display: block;
-    padding: 1.1em 16px;
-    text-decoration: none;
-}
-
-.nav-profile > section {
-    max-height: 0px;
-    overflow: hidden;
-    transition: max-height 200ms;
-}
-
-.nav-profile.expanded > section {
-    max-height: 500px;
-}
-
-.nav-profile ul {
-    margin-left: 0;
-}
-
 .nav-profile .user-avatar {
     display: inline-block;
-    vertical-align: middle;
-    width: 26px;
+    vertical-align: top;
+}
+
+.nav-profile .user-avatar .fa {
+    width: 16px;
+}
+
+.nav-profile .user-avatar .fa-angle-down {
+    color: #999;
 }
 
 .nav-profile .user-name {
@@ -47,26 +19,22 @@
     width: 126px;
 }
 
-.nav-profile .ws {
+.nav-profile .ws > span {
     color: blue;
 }
 
-.nav-profile .logout {
+.nav-profile .logout > span {
     color: red;
 }
 
-.nav-profile .fa.expand {
-    position: absolute;
-    right: 0;
+.nav-profile .profile a > i {
+    font-size: 44px;
+    height: 42px;
     text-align: center;
-    width: 36px;
-    z-index: 2;
+    vertical-align: top;
+    width: 42px;
 }
 
-.nav-profile .fa.expand:before {
-    content: "\f107";
-}
-
-.nav-profile.expanded .fa.expand:before {
-    content: "\f106";
+.nav-profile .profile a > div {
+    display: inline-block;
 }

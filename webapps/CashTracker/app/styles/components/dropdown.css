@@ -3,6 +3,7 @@
 .dropdown-toggle {
     cursor: pointer;
     display: block;
+    padding: 0 8px;
 }
 
 .dropdown-menu {
@@ -81,7 +82,7 @@
 .dropdown-menu > li > a {
     display: block;
     margin: 0;
-    padding: 6px 12px;
+    padding: 8px 12px;
 }
 
 .dropdown-menu > li > a:hover {

@@ -60,9 +60,24 @@ export default Route.extend({
         $('body').removeClass('no_transition');
         $('#app-loading').hide();
 
+        // init dropdown
+        $('[data-toggle=dropdown]').click(function() {
+            let $dropdown = $(this).parent('.dropdown');
+            if ($dropdown.hasClass('open')) {
+                $dropdown.removeClass('open');
+            } else {
+                $dropdown.addClass('open');
+                setTimeout(function() {
+                    $('body').one('click', function() {
+                        $dropdown.removeClass('open');
+                    });
+                }, 100);
+            }
+        });
+
         var offsetTop = 0;
         var sideOnTop = false;
-        var $side = $('#nav-app');
+        var $side = $('#nav-app---');
 
         if ($side.length) {
             offsetTop = $('.header')[0].clientHeight;
@@ -126,10 +141,6 @@ export default Route.extend({
             this.transitionTo('users');
         },
 
-        toggleDevice: function() {
-            $('body').toggleClass('phone');
-        },
-
         showAddAction: function() {
             this.set('hasAddAction', true);
         },
@@ -139,27 +150,19 @@ export default Route.extend({
         },
 
         navAppMenuToggle: function() {
-            $('body').toggleClass('nav-app-open');
-        },
-
-        navUserMenuToggle: function() {
-            $('body').toggleClass('nav-ws-open');
+            $('body').toggleClass('side-nav-open');
         },
 
         hideOpenedNav: function() {
-            $('body').removeClass('nav-app-open nav-ws-open');
+            $('body').removeClass('side-nav-open');
         },
 
         toggleSearchForm: function() {
             $('body').toggleClass('search-open');
         },
 
-        toggleNavProfile: function() {
-            $('.nav-profile').toggleClass('expanded');
-        },
-
         willTransition: function(transition) {
-            $('body').removeClass('nav-app-open nav-ws-open');
+            $('body').removeClass('side-nav-open');
         },
 
         error: function(_error /*, transition*/ ) {

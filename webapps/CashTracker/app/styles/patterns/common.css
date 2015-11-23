@@ -7,7 +7,6 @@ body {
 
 body {
     background: #FFF;
-    /*  url(../img/bg-lb.jpg) bottom repeat-x fixed; */
     font: 13px/1.43 Verdana, Arial, Helvetica, sans-serif;
 }
 
@@ -18,25 +17,18 @@ body {
 }
 
 
-/* on-desktop */
+/* fix: content overflow */
 
-.on-desktop {}
-
-html body.tablet .on-desktop,
-html body.phone .on-desktop {
-    display: none !important;
-}
-
-
-/* no-desktop */
-
-html body .no-desktop {
-    display: none;
-}
-
-html body.tablet .no-desktop,
-html body.phone .no-desktop {
+fieldset {
     display: block;
+    min-width: inherit;
+}
+
+@-moz-document url-prefix () {
+    fieldset {
+        /* moz */
+        display: table-column !important;
+    }
 }
 
 a {
@@ -50,28 +42,10 @@ a:hover {
     text-decoration: underline;
 }
 
-
-/* fix: content overflow */
-
-fieldset {
-    display: block;
-    /* chrome */
-    min-width: inherit;
-}
-
-
-/* fix: content overflow */
-
-@-moz-document url-prefix () {
-    fieldset {
-        /* moz */
-        display: table-column !important;
-    }
-}
-
 img {
     max-width: 100%;
     max-height: 100%;
+    vertical-align: middle;
 }
 
 button+button {
@@ -97,7 +71,22 @@ table {
 }
 
 
-/* position */
+/* .hidden-mobile */
+
+.hidden-mobile {}
+
+html body.phone .hidden-mobile {
+    display: none !important;
+}
+
+@media ( max-width: 768px) {
+    html body .hidden-mobile {
+        display: none !important;
+    }
+}
+
+
+/* floating */
 
 .pull-left {
     float: left;
@@ -131,25 +120,31 @@ table {
     display: block !important;
 }
 
-.hidden {
-    display: none !important;
+.divider {
+    background-color: #E6E6E6;
+    display: block;
+    font-size: 0;
+    height: 1px;
+    margin: 5px 0;
+    overflow: hidden;
 }
 
-.wsnowrap {
-    white-space: nowrap;
+.hidden {
+    display: none !important;
 }
 
 .hint {
     color: #767676;
     font-size: 13px;
+    margin: 2px 0;
 }
 
 .text-muted {
     color: #888;
 }
 
-.hint {
-    margin: 2px 0;
+.wsnowrap {
+    white-space: nowrap;
 }
 
 .text-center {

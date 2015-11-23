@@ -6,7 +6,7 @@
 .fieldset {
     border: none;
     margin: 0 0 8px 0;
-    padding: 8px 16px;
+    padding: 8px;
 }
 
 .fieldset > .legend {
@@ -66,13 +66,13 @@
     overflow: hidden;
     padding: 5px 0px 0px;
     text-align: right;
-    width: 230px;
+    width: 200px;
 }
 
 .form-group .controls {
     color: #000;
     display: block;
-    margin: 0 0 0 240px;
+    margin: 0 0 0 210px;
     max-width: 100%;
     min-height: inherit;
     padding: 0px;
@@ -95,10 +95,10 @@
 
 @media ( max-width: 960px) {
     .form-group .control-label {
-        width: 195px;
+        width: 170px;
     }
     .form-group .controls {
-        margin-left: 205px;
+        margin-left: 180px;
     }
 }
 

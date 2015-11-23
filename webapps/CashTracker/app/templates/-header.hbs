@@ -1,9 +1,7 @@
 <header class="header navbar">
     <div class="container">
         <div class="navbar-header">
-            <button class="nav-app-side-toggle" type="button" {{action 'navAppMenuToggle' }}>
-                <i class="nav-app-toggle"></i>
-            </button>
+            <button class="sidebar-toggle" type="button" {{action 'navAppMenuToggle' }}></button>
             <div class="navbar-brand">
                 <img alt="logo" src="img/logo.png" class="brand-logo" />
                 <span class="brand-title">{{t 'brand'}}</span>
@@ -22,7 +20,47 @@
             <button class="nav-item nav-search-toggle" type="button" {{action 'toggleSearchForm' on='mouseDown' }}>
                 <i class="fa fa-search"></i>
             </button>
-            <div class="nav-item nav-search" id="head-search-block">
+            <div class="nav-item nav-profile dropdown">
+                <div class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="user-avatar">
+                        <i class="fa fa-user"></i>
+                        <span class="hidden-mobile">
+                            {{model.login}}
+                        </span>
+                        <i class="fa fa-angle-down"></i>
+                    </span>
+                </div>
+                <ul class="dropdown-menu right">
+                    <li class="profile">
+                        {{#link-to 'user_profile'}}
+                            <i class="fa fa-user"></i>
+                            <div>
+                                {{model.login}}
+                                <div class="hint">{{t 'profile'}}</div>
+                            </div>
+                        {{/link-to}}
+                    </li>
+                    {{#if loginThroughToken}}
+                        <li class="divider"></li>
+                        <li>
+                            <a href="rest/workspace/url" class="ws">
+                                <i class="fa fa-desktop"></i>
+                                <span>{{t 'workspace'}}</span>
+                            </a>
+                        </li>
+                    {{/if}}
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#" {{action 'logout'}} class="logout">
+                            <i class="fa fa-sign-out"></i>
+                            <span>{{t 'logout'}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <nav class="navbar-nav navbar-search">
+            <div class="nav-item nav-search">
                 <form class="search-form" role="search" onsubmit="alert('кручу-верчу найти хочу'); return false;">
                     <button class="search-toggle-back" type="button" {{action 'toggleSearchForm' on='mouseDown' }}>
                         <i class="fa fa-chevron-left"></i>
