@@ -102,7 +102,8 @@ export default Route.extend({
     actions: {
         logout: function() {
             this.get('session').logout().then(function(response) {
-                window.location.href = response.outcome.message[0];
+                let langId = Object.keys(response.outcome.messages)[0];
+                window.location.href = response.outcome.messages[langId];
             });
         },
 
