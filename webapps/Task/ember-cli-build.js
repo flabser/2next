@@ -25,5 +25,8 @@ module.exports = function(defaults) {
         fingerprint: disabled
     });
 
+    app.import('bower_components/jq_plugins/jquery.ui.widget.js');
+    app.import('bower_components/jq_plugins/jquery.fileupload.js');
+
     return app.toTree();
 };
