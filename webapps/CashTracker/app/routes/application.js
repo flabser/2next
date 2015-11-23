@@ -60,6 +60,8 @@ export default Route.extend({
         $('body').removeClass('no_transition');
         $('#app-loading').hide();
 
+        //
+        $('[data-toggle=dropdown]').unbind('click');
         // init dropdown
         $('[data-toggle=dropdown]').click(function() {
             let $dropdown = $(this).parent('.dropdown');

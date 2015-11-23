@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -102,7 +103,7 @@ public class Transaction extends AppEntity /*SecureAppEntity*/ {
 	@Column(name = "include_in_reports")
 	private boolean includeInReports;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinTable(name = "transaction_attachments", joinColumns = {
 			@JoinColumn(name = "transaction_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "attachment_id", referencedColumnName = "id") })

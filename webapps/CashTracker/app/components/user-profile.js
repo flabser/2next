@@ -8,6 +8,9 @@ export default Em.Component.extend(ModelFormMixin, {
     changePassword: false,
     isEdit: false,
     userEmail: '',
+    avatarUrl: 'rest/session/avatar',
+
+    refresh: 'refresh',
 
     session: Em.inject.service(),
 
@@ -43,8 +46,7 @@ export default Em.Component.extend(ModelFormMixin, {
 
         saveUserProfile: function() {
             this.get('session').saveUserProfile().then(() => {
-                // this.rerender();
-                this.sendAction('close');
+                this.set('avatarUrl', 'rest/session/avatar?' + Date.now());
             });
         },
 
@@ -53,7 +55,13 @@ export default Em.Component.extend(ModelFormMixin, {
         },
 
         updateAvatar: function(attach) {
-            this.get('user').attachedFile = attach;
+            let u = this.get('user');
+
+            try {
+                delete u.attachedFile;
+            } catch (e) {}
+
+            u.attachedFile = attach;
         },
 
         setChangePassword: function() {

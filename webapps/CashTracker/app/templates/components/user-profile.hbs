@@ -12,7 +12,7 @@
             <fieldset class="fieldset">
                 <div class="user_avatar">
                     <div class="avatar_thumb">
-                        <img src="rest/session/avatar" alt="avatar" class="img-thumbnail" />
+                        <img src="{{avatarUrl}}" alt="avatar" class="img-thumbnail" />
                         {{upload-form
                             uploadVisible=isEdit
                             maxSize=3
@@ -126,7 +126,7 @@
         </section>
         {{#if isEdit}}
             <footer class="content-actions">
-                <button type="submit" class="btn btn-primary">{{t 'save'}}</button>
+                <button type="submit" class="btn btn-primary">{{t 'update_profile'}}</button>
             </footer>
         {{/if}}
     </form>
