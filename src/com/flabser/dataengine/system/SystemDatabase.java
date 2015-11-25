@@ -28,6 +28,7 @@ import com.flabser.dataengine.DatabaseCore;
 import com.flabser.dataengine.DatabaseUtil;
 import com.flabser.dataengine.activity.Activity;
 import com.flabser.dataengine.activity.IActivity;
+import com.flabser.dataengine.deploing.ApplicationDatabase;
 import com.flabser.dataengine.jpa.Attachment;
 import com.flabser.dataengine.pool.DatabasePoolException;
 import com.flabser.dataengine.system.entities.ApplicationProfile;

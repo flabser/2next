@@ -1,4 +1,4 @@
-package com.flabser.dataengine.system;
+package com.flabser.dataengine.deploing;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,6 +10,8 @@ import java.util.Properties;
 import org.postgresql.util.PSQLException;
 
 import com.flabser.dataengine.DatabaseUtil;
+import com.flabser.dataengine.system.IApplicationDatabase;
+import com.flabser.dataengine.system.SystemDatabase;
 import com.flabser.env.EnvConst;
 import com.flabser.server.Server;
 
@@ -17,14 +19,15 @@ public class ApplicationDatabase implements IApplicationDatabase {
 	private Properties props = new Properties();
 	private String dbURL;
 
-	ApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public ApplicationDatabase() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		props.setProperty("user", EnvConst.DB_USER);
 		props.setProperty("password", EnvConst.DB_PWD);
 		dbURL = "jdbc:postgresql://" + EnvConst.DATABASE_HOST + ":" + EnvConst.CONN_PORT + "/" + EnvConst.DATABASE_NAME;
 		Class.forName(SystemDatabase.jdbcDriver).newInstance();
 	}
 
-	ApplicationDatabase(String dataBase) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public ApplicationDatabase(String dataBase)
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		props.setProperty("user", EnvConst.DB_USER);
 		props.setProperty("password", EnvConst.DB_PWD);
 		dbURL = "jdbc:postgresql://" + EnvConst.DATABASE_HOST + ":" + EnvConst.CONN_PORT + "/" + dataBase;
