@@ -140,7 +140,6 @@ public class SessionService extends RestProvider {
 		String lang = session.getLanguage();
 		ISystemDatabase systemDatabase = DatabaseFactory.getSysDatabase();
 		String login = authUser.getLogin();
-		Server.logger.infoLogEntry(login + " is attempting to signin");
 		User user = systemDatabase.checkUserHash(login, authUser.getPwd(), null);
 		authUser.setPwd(null);
 		if (!user.isAuthorized
@@ -153,7 +152,7 @@ public class SessionService extends RestProvider {
 		String userID = user.getLogin();
 		HttpSession jses = request.getSession(true);
 
-		Server.logger.infoLogEntry(userID + " has connected (" + context.getContextPath() + ")");
+		Server.logger.infoLogEntry(userID + " has connected");
 		IActivity ua = DatabaseFactory.getSysDatabase().getActivity();
 		ua.postLogin(ServletUtil.getClientIpAddr(request), user);
 		session.setUser(user);
@@ -191,12 +190,13 @@ public class SessionService extends RestProvider {
 		AppTemplate env = getAppTemplate();
 		String url = "";
 		if (userSession.getAuthMode() == AuthModeType.DIRECT_LOGIN) {
-			url = env.getHostName() + "/" + env.templateType + "/" + getAppID() + "/Provider?id=login";
+			url = env.getHostName() + "/" + env.templateType + "/" + getAppID() + "/?id=login";
 			;
 		} else {
 			Site site = Environment.availableTemplates.get(Environment.getWorkspaceName());
-			url = site.getAppTemlate().getHostName() + "/Provider?id=login";
+			url = site.getAppTemlate().getHostName() + "/?id=login";
 		}
+		Server.logger.infoLogEntry(userSession.getUser().getLogin() + " has disconnected");
 		Outcome res = new Outcome();
 		_Session session = getSession();
 		String lang = session.getLanguage();
