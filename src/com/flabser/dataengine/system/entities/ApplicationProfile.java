@@ -182,6 +182,7 @@ public class ApplicationProfile implements _IContent {
 						setStatus(ApplicationStatusType.DATABASE_NOT_CREATED);
 						result = false;
 					}
+
 				} catch (Exception e) {
 					Server.logger.errorLogEntry(e);
 					setStatus(ApplicationStatusType.DEPLOING_FAILED);

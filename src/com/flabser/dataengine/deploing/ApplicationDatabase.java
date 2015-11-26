@@ -68,7 +68,10 @@ public class ApplicationDatabase implements IApplicationDatabase {
 				st.executeUpdate("CREATE USER  " + dbUser + " WITH password '" + dbPwd + "'");
 				return 0;
 			} catch (PSQLException sqle) {
-				// Server.logger.warningLogEntry(sqle.getMessage());
+				Server.logger.warningLogEntry(sqle.getMessage());
+				return 1;
+			} catch (Exception e) {
+				Server.logger.errorLogEntry(e.getMessage());
 				return 1;
 			}
 		} catch (Throwable e) {
