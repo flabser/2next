@@ -75,7 +75,7 @@ public abstract class DatabaseCore {
 		if (factory == null) {
 			Server.logger
 					.warningLogEntry("the entity manager of \"" + appProfile.appType + "\" has not been initialized");
-			Server.logger.errorLogEntry(dbPwd + " " + dbLogin);
+			Server.logger.errorLogEntry(dbPwd + " " + dbLogin + " " + appProfile.getURI());
 		}
 
 	}

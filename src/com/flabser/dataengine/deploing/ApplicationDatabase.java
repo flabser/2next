@@ -43,8 +43,7 @@ public class ApplicationDatabase implements IApplicationDatabase {
 			Connection conn = DriverManager.getConnection(dbURL, props);
 			try {
 				Statement st = conn.createStatement();
-				String sql = "CREATE DATABASE \"" + name + "\" WITH OWNER = " + dbUser
-						+ " ENCODING = 'UTF8' TABLESPACE = pg_default CONNECTION LIMIT = -1";
+				String sql = "CREATE DATABASE \"" + name + "\" WITH OWNER = " + dbUser + " ENCODING = 'UTF8'";
 				st.executeUpdate(sql);
 				st.executeUpdate("GRANT ALL privileges ON DATABASE \"" + name + "\" TO " + dbUser);
 				st.close();

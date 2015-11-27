@@ -257,7 +257,7 @@ public class User {
 
 	@JsonGetter("dbLogin")
 	public String getDBLogin() {
-		return login.replace("@", "__").replace(".", "_").replace("-", "_").toLowerCase();
+		return login.replace("@", "").replace(".", "").replace("-", "").toLowerCase();
 	}
 
 	public String getEmail() {
