@@ -52,7 +52,7 @@
 	</logger>
 	
 	 <logger name="Server">
-  		<level value="INFO"/>
+  		<level value="DEBUG"/>
   		<appender-ref ref="server_main"/>
   		<appender-ref ref="console"/>
  	</logger>

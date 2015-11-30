@@ -53,10 +53,15 @@ public abstract class DatabaseCore {
 		properties.put(PersistenceUnitProperties.JDBC_DRIVER, driver);
 		properties.put(PersistenceUnitProperties.JDBC_USER, dbLogin);
 		properties.put(PersistenceUnitProperties.JDBC_PASSWORD, dbPwd);
-		properties.put(PersistenceUnitProperties.JDBC_URL,
-				appProfile.getURI() + "?user=" + dbLogin + "&password=" + dbPwd + "&ssl=true");
+		// properties.put(PersistenceUnitProperties.JDBC_PROPERTY, dbPwd);
 
-		properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "OFF");
+		properties.put(PersistenceUnitProperties.JDBC_URL, appProfile.getURI());
+
+		// INFO,
+		// OFF,
+		// ALL,
+		// CONFIG (developing)
+		properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "CONFIG");
 		properties.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
 		// for CREATE_OR_EXTEND need DDL_GENERATION_MODE = (DDL_BOTH_GENERATION
 		// | DATABASE)
