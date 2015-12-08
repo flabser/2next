@@ -60,4 +60,5 @@ Class-Path:  libs/annotations-api.jar
   libs/tomcat/tomcat-embed-websocket.jar
   libs/xercesImpl.jar libs/jsoup-1.8.3.jar
   libs/jdbc/ojdbc7.jar
+  libs/jcfinder.jar
 Main-Class: com.flabser.server.Server
