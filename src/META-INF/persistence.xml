@@ -2,6 +2,9 @@
 <persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+	<persistence-unit name="benexus" transaction-type="RESOURCE_LOCAL">
+		<shared-cache-mode>NONE</shared-cache-mode>
+	</persistence-unit>
 	<persistence-unit name="CashTracker" transaction-type="RESOURCE_LOCAL">
 		<class>cashtracker.model.Attachment</class>
 		<class>cashtracker.model.Account</class>
@@ -22,8 +25,5 @@
 		<class>task.model.constants.converter.IssuePriorityConverter</class>
 		<shared-cache-mode>NONE</shared-cache-mode>
 	</persistence-unit>
-	<persistence-unit name="benexus" transaction-type="RESOURCE_LOCAL">
-		<class>benexus.model.Workspace</class>
-		<class>benexus.model.Icon</class>
-	</persistence-unit>
+
 </persistence>

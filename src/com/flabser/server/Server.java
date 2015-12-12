@@ -28,9 +28,6 @@ public class Server {
 		compilationTime = ((Log4jLogger) logger).getBuildDateTime();
 
 		logger.infoLogEntry("copyright(c) the flabser team 2015. All Right Reserved");
-		logger.infoLogEntry("OS: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + "("
-				+ System.getProperty("os.arch") + "), jvm: " + System.getProperty("java.version"));
-
 		Environment.init();
 		if (compilationTime != null && !compilationTime.equalsIgnoreCase("")) {
 			logger.debugLogEntry("build: " + compilationTime);

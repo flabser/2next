@@ -53,17 +53,16 @@ public abstract class DatabaseCore {
 		properties.put(PersistenceUnitProperties.JDBC_DRIVER, driver);
 		properties.put(PersistenceUnitProperties.JDBC_USER, dbLogin);
 		properties.put(PersistenceUnitProperties.JDBC_PASSWORD, dbPwd);
-		// properties.put(PersistenceUnitProperties.JDBC_PROPERTY, dbPwd);
-
 		properties.put(PersistenceUnitProperties.JDBC_URL, appProfile.getURI());
 
 		// INFO,
 		// OFF,
 		// ALL,
 		// CONFIG (developing)
-		properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "ALL");
-		// properties.put(PersistenceUnitProperties.LOGGING_LOGGER, "Server");
+		properties.put(PersistenceUnitProperties.LOGGING_LEVEL, "INFO");
 		properties.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
+		properties.put(PersistenceUnitProperties.SCHEMA_GENERATION_SCRIPTS_ACTION,
+				PersistenceUnitProperties.SCHEMA_GENERATION_DROP_AND_CREATE_ACTION);
 		// for CREATE_OR_EXTEND need DDL_GENERATION_MODE = (DDL_BOTH_GENERATION
 		// | DATABASE)
 		// properties.put(PersistenceUnitProperties.DDL_GENERATION_MODE,
@@ -82,10 +81,6 @@ public abstract class DatabaseCore {
 		if (factory == null) {
 			Server.logger
 					.warningLogEntry("the entity manager of \"" + appProfile.appType + "\" has not been initialized");
-			/*
-			 * Server.logger .errorLogEntry(dbPwd + " " + dbLogin + " " +
-			 * properties.get(PersistenceUnitProperties.JDBC_URL));
-			 */
 		}
 
 	}

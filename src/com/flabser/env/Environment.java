@@ -16,8 +16,6 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -76,12 +74,12 @@ public class Environment implements ICache {
 
 	private static void initProcess() {
 		try {
-			SAXParserFactory factory = SAXParserFactory.newInstance();
-			factory.setValidating(true);
-			SAXParser saxParser = factory.newSAXParser();
-			SAXHandler cfgXMLhandler = new SAXHandler();
-			File file = new File(EnvConst.CFG_FILE);
-			saxParser.parse(file, cfgXMLhandler);
+			// SAXParserFactory factory = SAXParserFactory.newInstance();
+			// factory.setValidating(true);
+			// SAXParser saxParser = factory.newSAXParser();
+			// SAXHandler cfgXMLhandler = new SAXHandler();
+			// File file = new File(csE);
+			// saxParser.parse(file, cfgXMLhandler);
 			Document xmlDocument = getDocument();
 
 			Server.logger.infoLogEntry("initialize runtime environment");
@@ -205,12 +203,6 @@ public class Environment implements ICache {
 
 			libsDir = libs.getAbsolutePath();
 
-		} catch (SAXException se) {
-			Server.logger.errorLogEntry(se);
-		} catch (ParserConfigurationException pce) {
-			Server.logger.errorLogEntry(pce);
-		} catch (IOException ioe) {
-			Server.logger.errorLogEntry(ioe);
 		} catch (LocalizatorException e) {
 			Server.logger.errorLogEntry(e);
 		}
@@ -262,7 +254,7 @@ public class Environment implements ICache {
 			DocumentBuilder builder;
 
 			builder = domFactory.newDocumentBuilder();
-			return builder.parse("cfg.xml");
+			return builder.parse(EnvConst.CFG_FILE);
 		} catch (SAXException e) {
 			Server.logger.errorLogEntry(e);
 		} catch (IOException e) {

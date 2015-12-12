@@ -1,9 +1,12 @@
 package com.flabser.server;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
+
+import javax.persistence.EntityManager;
 
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
@@ -29,6 +32,23 @@ public class Console implements Runnable {
 			if (command.equalsIgnoreCase("quit") || command.equalsIgnoreCase("q") || command.equalsIgnoreCase("exit")) {
 				Server.shutdown();
 				in.close();
+			} else if (command.equalsIgnoreCase("database info") || command.equalsIgnoreCase("di")) {
+
+			} else if (command.equalsIgnoreCase("libs version") || command.equalsIgnoreCase("lv")) {
+				try {
+					System.out.println("OS: " + System.getProperty("os.name") + " (" + System.getProperty("os.version")
+							+ " " + System.getProperty("os.arch") + ")");
+					System.out.println("jvm: " + System.getProperty("java.version"));
+					new ReadVersion().readVersionInfoInManifest("javax.persistence", EntityManager.class);
+					new ReadVersion().readVersionInfoInManifest("EclipseLink", org.eclipse.persistence.Version.class);
+					new ReadVersion().readVersionInfoInManifest("Postgres JDBC", org.postgresql.Driver.class);
+					new ReadVersion().readVersionInfoInManifest("Jersey", org.glassfish.jersey.internal.Version.class);
+					new ReadVersion().readVersionInfoInManifest("Tomcat", org.apache.catalina.startup.Tomcat.class);
+
+				} catch (IOException e) {
+					System.out.println("error during process command");
+				}
+
 			} else if (command.equalsIgnoreCase("sessions") || command.equalsIgnoreCase("us")) {
 				Collection<_Session> sc = SessionPool.getUserSessions().values();
 				if (sc.size() > 0) {

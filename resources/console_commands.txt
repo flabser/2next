@@ -1,4 +1,5 @@
 quit, exit (q) - stop server with safety;
+libs version (lv) - show used libraries version;
 sessions(us) - show a list of the session pool;
 job list (jl) - show a list of the current scheduled jobs;
 force database remover - start database remover immediately;
