@@ -11,7 +11,7 @@ import javax.persistence.PrePersist;
 
 import com.flabser.dataengine.DatabaseFactory;
 import com.flabser.dataengine.system.ISystemDatabase;
-
+import com.flabser.util.Util;
 
 @MappedSuperclass
 public abstract class AppEntity implements IAppEntity {
@@ -68,5 +68,10 @@ public abstract class AppEntity implements IAppEntity {
 	@Override
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
+	}
+
+	@Override
+	public String toString() {
+		return Util.toStringGettersVal(this);
 	}
 }
