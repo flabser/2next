@@ -3,7 +3,7 @@ package task.init;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.flabser.dataengine.deploing.IInitialData;
+import com.flabser.dataengine.deploying.IInitialData;
 import com.flabser.localization.LanguageType;
 import com.flabser.localization.Vocabulary;
 

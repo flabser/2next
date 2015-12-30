@@ -1,4 +1,4 @@
-package com.flabser.dataengine.deploing;
+package com.flabser.dataengine.deploying;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -26,8 +26,7 @@ public class PostInitialData {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void process(String lang) {
 		JavaClassFinder classFinder = new JavaClassFinder();
-		List<Class<? extends IInitialData>> populatingClassesList = classFinder
-				.findAllMatchingTypes(IInitialData.class);
+		List<Class<? extends IInitialData>> populatingClassesList = classFinder.findAllMatchingTypes(IInitialData.class);
 
 		for (Class<?> populatingClass : populatingClassesList) {
 			if (!populatingClass.isInterface()) {
@@ -36,9 +35,9 @@ public class PostInitialData {
 					pcInstance = (IInitialData) Class.forName(populatingClass.getCanonicalName()).newInstance();
 					List<IAppEntity> entities = pcInstance.getData(LanguageType.valueOf(lang), template.vocabulary);
 					Class<?> daoClass = pcInstance.getDAO();
-					for (IAppEntity entity : entities) {
-						IDAO dao = getDAOInstance(daoClass, entity.getClass());
-						if (dao != null) {
+					IDAO dao = getDAOInstance(daoClass);
+					if (dao != null) {
+						for (IAppEntity entity : entities) {
 							dao.add(entity);
 						}
 					}
@@ -56,7 +55,7 @@ public class PostInitialData {
 
 	}
 
-	private IDAO<?, ?> getDAOInstance(Class<?> daoClass, Class<?> cl) {
+	private IDAO<?, ?> getDAOInstance(Class<?> daoClass) {
 		@SuppressWarnings("rawtypes")
 		Class[] intArgsClass = new Class[] { _Session.class };
 		IDAO<?, ?> dao = null;

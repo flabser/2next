@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.flabser.dataengine.DatabaseFactory;
-import com.flabser.dataengine.deploing.PostInitialData;
+import com.flabser.dataengine.deploying.PostInitialData;
 import com.flabser.dataengine.system.entities.ApplicationProfile;
 import com.flabser.dataengine.system.entities.UserRole;
 import com.flabser.env.Environment;

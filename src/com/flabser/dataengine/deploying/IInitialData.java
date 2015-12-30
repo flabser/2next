@@ -1,4 +1,4 @@
-package com.flabser.dataengine.deploing;
+package com.flabser.dataengine.deploying;
 
 import java.util.List;
 
