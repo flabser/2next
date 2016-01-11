@@ -15,7 +15,7 @@ import com.flabser.scheduler.PeriodicalServices;
 
 public class Server {
 	public static com.flabser.log.ILogger logger = new Log4jLogger("Server");
-	public static final String serverVersion = "1.0.0";
+	public static final String serverVersion = "1.0.1";
 	public static String compilationTime = "";
 	public static final String serverTitle = "2Next " + serverVersion;
 	public static Date startTime = new Date();
