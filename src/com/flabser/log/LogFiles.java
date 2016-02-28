@@ -8,21 +8,22 @@ import org.apache.commons.io.comparator.LastModifiedFileComparator;
 
 public class LogFiles {
 	public File logDir;
-	
-	private  ArrayList<File> fileList = new ArrayList<File>();
-	
-	public LogFiles(){
+
+	private ArrayList<File> fileList = new ArrayList<File>();
+
+	@SuppressWarnings("unchecked")
+	public LogFiles() {
 		logDir = new File("." + File.separator + "logs");
-		if(logDir.isDirectory()){
+		if (logDir.isDirectory()) {
 			File[] list = logDir.listFiles();
 			Arrays.sort(list, LastModifiedFileComparator.LASTMODIFIED_COMPARATOR);
-			for(int i = list.length; --i>=0;){
-				fileList.add(list[i]);				
+			for (int i = list.length; --i >= 0;) {
+				fileList.add(list[i]);
 			}
-		}			
+		}
 	}
-	
-	public ArrayList<File>  getLogFileList(){
+
+	public ArrayList<File> getLogFileList() {
 		return fileList;
 	}
 
