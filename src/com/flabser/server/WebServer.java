@@ -274,8 +274,7 @@ public class WebServer implements IWebServer {
 			secureConnector.setProperty("SSLCertificateKeyFile", Environment.certKeyFile);
 			tomcat.setConnector(secureConnector);
 
-			portInfo = httpSecureSchema + "://" + tomcat.getHost().getName() + ":"
-					+ Integer.toString(Environment.secureHttpPort);
+			portInfo = httpSecureSchema + "://" + tomcat.getHost().getName() + ":" + Integer.toString(Environment.secureHttpPort);
 		} else {
 			portInfo = tomcat.getHost().getName() + Environment.getPort();
 		}
@@ -285,8 +284,7 @@ public class WebServer implements IWebServer {
 		connector.setProperty("compressionMinSize", "1024");
 		connector.setProperty("noCompressionUserAgents", "gozilla, traviata");
 		connector.setProperty("compressableMimeType",
-				"text/html, text/xml, text/plain, text/css, text/javascript, application/json,"
-						+ "application/javascript, application/x-javascript");
+		        "text/html, text/xml, text/plain, text/css, text/javascript, application/json," + "application/javascript, application/x-javascript");
 
 		return portInfo;
 	}
@@ -346,10 +344,10 @@ public class WebServer implements IWebServer {
 		ErrorPage er400 = new ErrorPage();
 		er400.setErrorCode(HttpServletResponse.SC_BAD_REQUEST);
 		er400.setLocation("/Error");
-		context.addErrorPage(er);
+		context.addErrorPage(er400);
 		ErrorPage er500 = new ErrorPage();
 		er500.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		er500.setLocation("/Error");
-		context.addErrorPage(er);
+		context.addErrorPage(er500);
 	}
 }

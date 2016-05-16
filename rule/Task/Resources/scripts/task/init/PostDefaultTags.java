@@ -3,12 +3,12 @@ package task.init;
 import java.util.ArrayList;
 import java.util.List;
 
+import task.model.Tag;
+import cashtracker.dao.TagDAO;
+
 import com.flabser.dataengine.deploying.IInitialData;
 import com.flabser.localization.LanguageType;
 import com.flabser.localization.Vocabulary;
-
-import cashtracker.dao.TagDAO;
-import task.model.Tag;
 
 public class PostDefaultTags implements IInitialData<Tag, TagDAO> {
 
